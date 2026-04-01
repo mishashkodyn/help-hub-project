@@ -1,0 +1,41 @@
+name: help-hub-project
+
+services:
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: helphub_db
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=Password_string0
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqldata:/var/opt/mssql
+    restart: unless-stopped
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    image: ghcr.io/${GITHUB_REPOSITORY_OWNER,,}/help-hub-api:latest
+    container_name: biztech_api
+    depends_on:
+      - db
+    environment:
+      - ConnectionStrings__DefaultConnection=Server=db;Database=HelpHubDb;User=sa;Password=Password_string0;TrustServerCertificate=True;
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+
+  client:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    image: ghcr.io/${GITHUB_REPOSITORY_OWNER,,}/help-hub-client:latest
+    container_name: biztech_client
+    ports:
+      - "80:80"
+    restart: unless-stopped
+
+volumes:
+  sqldata:
