@@ -21,7 +21,9 @@ jobs:
             
             git pull origin main
             
-            echo "${{ secrets.ENV_FILE_CONTENT }}" > .env
+            cat << 'EOF' > .env
+            ${{ secrets.ENV_FILE_CONTENT }}
+            EOF
             
             docker compose up -d --build
             
