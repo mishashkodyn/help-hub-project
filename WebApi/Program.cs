@@ -16,7 +16,7 @@ builder.Services.AddCors(
     {
         options.AddDefaultPolicy(builder =>
         {
-            builder.WithOrigins("http://localhost:4200", "https://localhost:4200")
+            builder.WithOrigins("http://localhost:4200", "https://localhost:4200", "http://localhost", "https://localhost", "http://161.97.111.164", "https://161.97.111.164")
                 .AllowAnyHeader()
                 .AllowAnyMethod()
                 .AllowCredentials();
@@ -93,7 +93,7 @@ using (var scope = app.Services.CreateScope())
     x.AllowAnyHeader()
     .AllowAnyMethod()
     .AllowCredentials()
-    .WithOrigins("http://localhost:4200", "https://localhost:4200"));
+    .WithOrigins("http://localhost:4200", "https://localhost:4200", "http://localhost", "https://localhost", "http://161.97.111.164", "https://161.97.111.164"));
 
 app.UseHttpsRedirection();
 

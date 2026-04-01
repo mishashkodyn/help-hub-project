@@ -1,0 +1,55 @@
+name: help-hub-project
+
+services:
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: helphub_db
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=Password_string0
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqldata:/var/opt/mssql
+    restart: unless-stopped
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    image: ghcr.io/mishashkodyn/help-hub-api:latest
+    container_name: helphub_api
+    depends_on:
+      - db
+    environment:
+      - "ConnectionStrings__DefaultConnection=Server=db;Database=HelpHubDb;User=sa;Password=${DB_PASSWORD};TrustServerCertificate=True;"
+      - ConnectionStrings__BlobConnection=${AZURE_BLOB_CONN}
+      - CloudflareConfig__ServiceUrl=${CF_SERVICE_URL}
+      - CloudflareConfig__AccessKey=${CF_ACCESS_KEY}
+      - CloudflareConfig__SecretKey=${CF_SECRET_KEY}
+      - HeadAdmin__Email=admin@example.com
+      - HeadAdmin__Name=Head
+      - HeadAdmin__Surname=Administrator
+      - HeadAdmin__Password=${DB_PASSWORD}
+      - HeadAdmin__UserName=admin@example.com
+      - HeadAdmin__PreferredAiProvider=OpenAI
+      - HeadAdmin__ProfileImage=https://cdn-icons-png.flaticon.com/512/149/149071.png
+      - AiSettings__OpenAI__ApiKey=${OPENAI_API_KEY}
+      - AiSettings__Groq__ApiKey=${GROQ_API_KEY}
+
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+
+  client:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    image: ghcr.io/mishashkodyn/help-hub-client:latest
+    container_name: helphub_client
+    ports:
+      - "80:80"
+    restart: unless-stopped
+
+volumes:
+  sqldata:
