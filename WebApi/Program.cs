@@ -11,15 +11,25 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var allowedOrigins = new[]
+{
+    "http://localhost:4200",
+    "https://localhost:4200",
+    "http://helphub-platform.fun",
+    "https://helphub-platform.fun",
+    "http://www.helphub-platform.fun",
+    "https://www.helphub-platform.fun"
+};
+
 builder.Services.AddCors(
     options =>
     {
         options.AddDefaultPolicy(builder =>
         {
-            builder.WithOrigins("http://localhost:4200", "https://localhost:4200", "http://localhost", "https://localhost", "http://161.97.111.164", "https://161.97.111.164")
-                .AllowAnyHeader()
-                .AllowAnyMethod()
-                .AllowCredentials();
+            builder.WithOrigins(allowedOrigins)
+             .AllowAnyHeader()
+             .AllowAnyMethod()
+             .AllowCredentials();
         });
     }
 );
@@ -93,7 +103,7 @@ using (var scope = app.Services.CreateScope())
     x.AllowAnyHeader()
     .AllowAnyMethod()
     .AllowCredentials()
-    .WithOrigins("http://localhost:4200", "https://localhost:4200", "http://localhost", "https://localhost", "http://161.97.111.164", "https://161.97.111.164"));
+    .WithOrigins(allowedOrigins));
 
 app.UseHttpsRedirection();
 
