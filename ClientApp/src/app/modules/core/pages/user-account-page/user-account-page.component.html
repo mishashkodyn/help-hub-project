@@ -230,11 +230,16 @@
         <div class="p-6 md:p-10 min-h-[350px]">
           @switch (activeTab) {
             @case ("about") {
-              <app-about-user-profile [userInpt]="user"></app-about-user-profile>
+              <app-about-user-profile
+                [userInpt]="user"
+              ></app-about-user-profile>
             }
 
             @case ("posts") {
-              <app-posts-user-profile></app-posts-user-profile>
+              <app-posts-user-profile
+                [user]="user"
+                [isOwnProfile]="isOwnProfile"
+              ></app-posts-user-profile>
             }
 
             @case ("reviews") {

@@ -19,6 +19,9 @@ namespace Infrastructure.Data
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<Psychologist> Psychologists { get; set; }
         public DbSet<Specialization> Specializations { get; set; }
+        public DbSet<Post> Posts { get; set; }
+        public DbSet<Comment> Comments { get; set; }
+        public DbSet<PostLike> PostLikes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -27,6 +30,9 @@ namespace Infrastructure.Data
             modelBuilder.ApplyConfiguration(new MessageConfiguration());
             modelBuilder.ApplyConfiguration(new ApplicationUserConfiguration());
             modelBuilder.ApplyConfiguration(new ApplicationsConfiguration());
+            modelBuilder.ApplyConfiguration(new PostsConfiguration());
+            modelBuilder.ApplyConfiguration(new PostLikesConfiguration());
+            modelBuilder.ApplyConfiguration(new CommentsConfiguration());
 
             //modelBuilder.Entity<ApplicationUser>()
             //    .HasMany(u => u.UserRoles)

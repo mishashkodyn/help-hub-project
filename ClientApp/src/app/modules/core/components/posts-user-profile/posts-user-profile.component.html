@@ -1,14 +1,150 @@
-<div class="text-center py-16 animate-fade-in flex flex-col items-center">
-  <div
-    class="w-24 h-24 bg-gray-50 rounded-full flex items-center justify-center mb-6 shadow-inner border border-gray-100"
-  >
-    <mat-icon class="text-5xl text-gray-300">dynamic_feed</mat-icon>
-  </div>
-  <h3 class="text-2xl font-bold text-gray-800 mb-3 tracking-tight">
-    Posts Coming Soon
-  </h3>
-  <p class="text-gray-500 max-w-sm mx-auto leading-relaxed">
-    We are building a feature allowing users to share their thoughts, supportive
-    materials, and updates.
-  </p>
+<div class="max-w-2xl mx-auto pb-10">
+
+  @if (isOwnProfile) {
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 mb-8 animate-fade-in">
+      <div class="flex gap-4">
+        <div class="w-10 h-10 rounded-full bg-gray-100 overflow-hidden shrink-0">
+          @if (user.profileImage) {
+            <img [src]="user.profileImage" class="w-full h-full object-cover">
+          } @else {
+            <mat-icon class="text-gray-400 mt-1 scale-110 ml-1">person</mat-icon>
+          }
+        </div>
+        
+        <div class="flex-grow">
+          <form [formGroup]="postForm">
+            <textarea 
+              formControlName="content"
+              rows="2"
+              placeholder="Share something helpful..." 
+              class="w-full bg-transparent border-none resize-none focus:ring-0 text-gray-800 placeholder-gray-400 text-[15px] outline-none custom-scroll"
+            ></textarea>
+          </form>
+
+          @if (previewUrls.length > 0) {
+            <div class="grid grid-cols-2 gap-2 mt-3 mb-3">
+              @for (url of previewUrls; track $index) {
+                <div class="relative h-24 rounded-xl overflow-hidden border border-gray-200">
+                  <img [src]="url" class="w-full h-full object-cover">
+                  <button (click)="removePreview($index)" class="absolute top-1 right-1 bg-black/50 text-white rounded-full p-1 hover:bg-black/70 cursor-pointer">
+                    <mat-icon class="scale-75 w-5 h-5 flex items-center justify-center">close</mat-icon>
+                  </button>
+                </div>
+              }
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="flex justify-between items-center mt-3 pt-3 border-t border-gray-100">
+        <div>
+          <input type="file" #fileInput multiple accept="image/*" (change)="onFileSelected($event)" class="hidden">
+          <button 
+            type="button" 
+            (click)="fileInput.click()"
+            [disabled]="selectedFiles.length >= 4"
+            class="p-2 text-[var(--color-primary)] bg-[var(--color-sky)]/20 hover:bg-[var(--color-sky)]/40 rounded-full transition-colors flex items-center justify-center cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+            matTooltip="Attach photos (max 4)"
+          >
+            <mat-icon class="scale-90">image</mat-icon>
+          </button>
+        </div>
+
+        <button 
+          (click)="submitPost()"
+          [disabled]="(postForm.invalid && selectedFiles.length === 0) || isSubmitting"
+          class="px-6 py-2 bg-[var(--color-primary)] text-white rounded-xl text-sm font-semibold hover:bg-[var(--color-success)] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 cursor-pointer"
+        >
+          @if (isSubmitting) {
+            <mat-icon class="animate-spin scale-75">autorenew</mat-icon>
+          }
+          Post
+        </button>
+      </div>
+    </div>
+  }
+
+  @if (isLoading && page === 1) {
+    <div class="mt-10"><app-loading-spinner></app-loading-spinner></div>
+  } @else if (posts.length === 0) {
+    <div class="text-center py-16 animate-fade-in flex flex-col items-center">
+      <div class="w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center mb-4 shadow-inner border border-gray-100">
+        <mat-icon class="text-4xl text-gray-300">history_edu</mat-icon>
+      </div>
+      <h3 class="text-xl font-bold text-gray-700 mb-2">No posts yet</h3>
+      <p class="text-gray-500 max-w-sm mx-auto">This user hasn't published anything yet.</p>
+    </div>
+  } @else {
+    <div class="flex flex-col gap-6">
+      @for (post of posts; track post.id) {
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 animate-fade-in">
+          
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-12 h-12 rounded-full bg-gray-100 overflow-hidden shrink-0 border border-gray-200">
+              @if (post.authorAvatarUrl) {
+                <img [src]="post.authorAvatarUrl" class="w-full h-full object-cover">
+              } @else {
+                <mat-icon class="text-gray-400 mt-1 ml-1 scale-125">person</mat-icon>
+              }
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <h4 class="font-bold text-gray-900">{{ post.authorName }}</h4>
+                @if (post.authorCategory === 1) {
+                  <span class="px-1.5 py-0.5 bg-olive-100 text-olive-700 rounded text-[10px] font-bold uppercase"><mat-icon class="text-[10px] w-2.5 h-2.5 align-middle">shield</mat-icon> MIL</span>
+                }
+              </div>
+              <p class="text-xs text-gray-500">{{ post.createdAt | date:'medium' }}</p>
+            </div>
+          </div>
+
+          @if (post.content) {
+            <p class="text-gray-800 text-[15px] leading-relaxed mb-4 whitespace-pre-wrap">{{ post.content }}</p>
+          }
+
+          @if (post.mediaUrls && post.mediaUrls.length > 0) {
+            <div class="grid gap-1 mb-4 rounded-xl overflow-hidden" 
+                 [ngClass]="post.mediaUrls.length === 1 ? 'grid-cols-1' : 'grid-cols-2'">
+              @for (url of post.mediaUrls; track url) {
+                <img [src]="url" class="w-full h-64 object-cover hover:opacity-95 transition-opacity cursor-pointer">
+              }
+            </div>
+          }
+
+          <div class="flex items-center gap-6 pt-3 border-t border-gray-100">
+            <button 
+              (click)="toggleLike(post)" 
+              class="flex items-center gap-1.5 text-sm font-medium transition-colors cursor-pointer group"
+              [ngClass]="post.isLikedByMe ? 'text-red-500' : 'text-gray-500 hover:text-red-500'"
+            >
+              <mat-icon class="scale-90 transition-transform group-hover:scale-110">
+                {{ post.isLikedByMe ? 'favorite' : 'favorite_border' }}
+              </mat-icon>
+              {{ post.likesCount > 0 ? post.likesCount : 'Like' }}
+            </button>
+
+            <button class="flex items-center gap-1.5 text-sm font-medium text-gray-500 hover:text-[var(--color-primary)] transition-colors cursor-pointer group">
+              <mat-icon class="scale-90 transition-transform group-hover:scale-110">chat_bubble_outline</mat-icon>
+              {{ post.commentsCount > 0 ? post.commentsCount : 'Comment' }}
+            </button>
+          </div>
+
+        </div>
+      }
+
+      @if (hasMorePosts) {
+        <button 
+          (click)="loadMore()" 
+          [disabled]="isLoading"
+          class="mx-auto block px-6 py-2 bg-gray-100 text-gray-600 rounded-full text-sm font-semibold hover:bg-gray-200 transition-colors cursor-pointer mt-2"
+        >
+          @if (isLoading) {
+            Loading...
+          } @else {
+            Load more
+          }
+        </button>
+      }
+    </div>
+  }
 </div>
