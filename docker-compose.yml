@@ -47,7 +47,7 @@ services:
     image: ghcr.io/mishashkodyn/help-hub-client:latest
     container_name: helphub_client
     ports:
-      - "4200:80"\
+      - "4200:80"
     restart: unless-stopped
 
 volumes:
