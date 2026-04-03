@@ -1,17 +1,6 @@
 name: help-hub-project
 
 services:
-  nginx:
-    image: nginx:alpine
-    container_name: helphub_nginx
-    ports:
-      - "80:80"
-    volumes:
-      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
-    depends_on:
-      - api
-      - client
-    restart: unless-stopped
   db:
     image: mcr.microsoft.com/mssql/server:2022-latest
     container_name: helphub_db
@@ -47,9 +36,8 @@ services:
       - HeadAdmin__ProfileImage=https://cdn-icons-png.flaticon.com/512/149/149071.png
       - AiSettings__OpenAI__ApiKey=${OPENAI_API_KEY}
       - AiSettings__Groq__ApiKey=${GROQ_API_KEY}
-
-    expose:
-      - "8080"
+    ports:
+      - "5000:8080"
     restart: unless-stopped
 
   client:
@@ -58,8 +46,8 @@ services:
       dockerfile: Dockerfile.frontend
     image: ghcr.io/mishashkodyn/help-hub-client:latest
     container_name: helphub_client
-    expose:
-      - "80"
+    ports:
+      - "4200:80"\
     restart: unless-stopped
 
 volumes:
