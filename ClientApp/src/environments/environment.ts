@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  hubUrl: '/hubs',
-  apiBaseUrl: '/api'
+  hubUrl: 'https://helphub-platform.fun/hubs',
+  apiBaseUrl: 'https://helphub-platform.fun/api'
 };
