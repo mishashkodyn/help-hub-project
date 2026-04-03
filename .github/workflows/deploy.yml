@@ -18,13 +18,14 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
             cd ~/projects/help-hub-project
-            
-            git pull origin main
+            git fetch --all
+            git reset --hard origin/main
             
             cat << 'EOF' > .env
             ${{ secrets.ENV_FILE_CONTENT }}
             EOF
             
-            docker compose up -d --build
+            docker compose build --no-cache client
+            docker compose up -d
 
             docker image prune -f
