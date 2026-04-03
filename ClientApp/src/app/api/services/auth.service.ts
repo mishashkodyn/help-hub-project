@@ -65,10 +65,6 @@ export class AuthService {
       formData.append('experienceYears', '0');
     }
 
-    const specsArray = data.specializations;
-    console.log("SPEC: ", data.specializations);
-    console.log(specsArray);
-
     if (data.specializations && data.specializations.length > 0) {
       data.specializations.forEach((id) => {
         formData.append('specializations', id);
@@ -93,7 +89,8 @@ export class AuthService {
       .pipe(
         tap((response) => {
           localStorage.setItem(this.token, response.data);
-          if (this.videoChatService.isConnected()) {
+          if (!this.videoChatService.isConnected()) {
+            console.log("REFRESH()");
             this.videoChatService.startConnection();
           }
           if (!this.presenceService.isConnected()) {
@@ -121,7 +118,9 @@ export class AuthService {
           if (res.isSuccess) {
             localStorage.setItem('user', JSON.stringify(res.data));
           }
-          if (this.videoChatService.isConnected()) {
+          if (!this.videoChatService.isConnected()) {
+            console.log("ME()");
+            
             this.videoChatService.startConnection();
           }
           if (!this.presenceService.isConnected()) {

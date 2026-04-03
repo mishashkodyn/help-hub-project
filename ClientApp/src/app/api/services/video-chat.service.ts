@@ -6,12 +6,17 @@ import {
   HubConnectionState,
 } from '@microsoft/signalr';
 import { AuthService } from './auth.service';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject, Subject, Subscription } from 'rxjs';
 import { FilesService } from './files.service';
+import { VideoChatComponent } from '../../modules/chat/components/video-chat/video-chat.component';
+import { MatDialog } from '@angular/material/dialog';
+import { untilDestroyed } from '@ngneat/until-destroy';
+import { UntilDestroy } from '@ngneat/until-destroy';
 
 @Injectable({
   providedIn: 'root',
 })
+@UntilDestroy()
 export class VideoChatService {
   private hubUrl = `${environment.hubUrl}/video`;
   public hubConnection: HubConnection | null = null;
@@ -29,14 +34,15 @@ export class VideoChatService {
     candidate: RTCIceCandidateInit;
   }>();
   public callEnded = new Subject<void>();
-
   public incomingCall = false;
   public isCallActive = false;
   public remoteUserId: string | null = null;
-
+  matDialog = inject(MatDialog);
   isConnected = signal<boolean>(false);
 
   async startConnection() {
+    console.log('VIDEOOOOOOOOOOOOOOOOOOOOOOOOOOOOO');
+
     if (this.hubConnection?.state === HubConnectionState.Connected) return;
 
     this.hubConnection = new HubConnectionBuilder()
@@ -69,7 +75,10 @@ export class VideoChatService {
 
     this.hubConnection
       .start()
-      .then(() => this.isConnected.set(true))
+      .then(() => {
+        this.startOfferReceive();
+        this.isConnected.set(true);
+      })
       .catch((error) =>
         console.error('Video Chat Hub Connection Error: ', error),
       );
@@ -79,6 +88,23 @@ export class VideoChatService {
     if (this.hubConnection?.state === HubConnectionState.Connected) {
       this.hubConnection.stop().then(() => this.isConnected.set(false));
     }
+  }
+
+  startOfferReceive() {
+    this.offerReceived.pipe(untilDestroyed(this)).subscribe((data) => {
+      if (data && data.senderId) {
+        this.matDialog.open(VideoChatComponent, {
+          width: '600px',
+          height: '600px',
+          disableClose: true,
+          data: {
+            isCaller: false,
+            offer: data.offer,
+            remoteUserId: data.senderId,
+          },
+        });
+      }
+    });
   }
 
   async sendOffer(receiverId: string, offer: RTCSessionDescriptionInit) {

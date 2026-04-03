@@ -14,68 +14,31 @@ import { NotificationService } from './api/services/notification.service';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent implements OnInit {
   title = 'client';
 
   public videoChatService = inject(VideoChatService);
   public authService = inject(AuthService);
   public presenceService = inject(PresenceService);
   public chatService = inject(ChatService);
-  private matDialog = inject(MatDialog);
   private notificationService = inject(NotificationService);
-  private sub = new Subscription();
 
   ngOnInit(): void {
     if (!this.authService.getAccessToken) {
       return;
     }
-    this.videoChatService.startConnection().then(() => {
-      this.startOfferReceive();
-    });
-    this.presenceService.startConnection();
-    this.chatService.startConnection();
-    this.notificationService.startConnection();
-  }
-
-  ngOnDestroy() {
-    this.sub.unsubscribe();
-  }
-
-  // 1. ВИПРАВЛЕННЯ ДЛЯ ВХІДНОГО ДЗВІНКА
-  startOfferReceive() {
-    this.sub.add(
-      this.videoChatService.offerReceived.subscribe((data) => {
-        if (data && data.senderId) {
-          this.matDialog.open(VideoChatComponent, {
-            width: '600px',
-            height: '600px',
-            disableClose: true,
-            data: {
-              isCaller: false,
-              offer: data.offer,
-              remoteUserId: data.senderId,
-            },
-          });
-        }
-      }),
-    );
-  }
-
-  displayDialog(receiverId?: string) {
-    if (!receiverId) {
-      console.error('No receiverId provided');
-      return;
+     if (!this.presenceService.isConnected()) {
+      this.presenceService.startConnection();
     }
-
-    this.matDialog.open(VideoChatComponent, {
-      width: '600px',
-      height: '600px',
-      disableClose: true,
-      autoFocus: false,
-      data: {
-        isCaller: true,
-        remoteUserId: receiverId,
-      },
-    });
+    if (!this.chatService.isConnected()) {
+      this.chatService.startConnection();
+    }
+    if (!this.notificationService.isConnected()){
+      this.notificationService.startConnection();
+    }
+    if (!this.videoChatService.isConnected()){
+      this.videoChatService.startConnection();
+    }
   }
+  // 1. ВИПРАВЛЕННЯ ДЛЯ ВХІДНОГО ДЗВІНКА
 }
