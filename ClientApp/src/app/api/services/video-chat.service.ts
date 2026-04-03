@@ -24,6 +24,8 @@ import { FilesService } from './files.service';
     public remoteUserId: string | null = null;
 
     async startConnection() {
+      console.log("VIDEOCHAT CONNECTION");
+      
       if (this.hubConnection?.state === HubConnectionState.Connected) return;
 
       this.hubConnection = new HubConnectionBuilder()

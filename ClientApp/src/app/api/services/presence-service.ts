@@ -23,8 +23,6 @@ export class PresenceService {
   constructor() {}
 
   startConnection() {
-    console.log('PRESENCE CONN');
-
     if (this.hubConnection?.state === HubConnectionState.Connected) return;
 
     this.hubConnection = new HubConnectionBuilder()

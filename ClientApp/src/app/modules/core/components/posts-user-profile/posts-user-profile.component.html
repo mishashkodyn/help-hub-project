@@ -210,18 +210,18 @@
                 >
                   @for (url of post.mediaUrls; track url) {
                     <div
-                      class="shrink-0 w-[85%] sm:w-[75%] snap-center overflow-hidden border border-gray-200 bg-gray-100 h-[300px] sm:h-[400px] relative shadow-sm"
+                      class="shrink-0 w-[85%] sm:w-[75%] snap-center overflow-hidden rounded-2xl border border-gray-200 bg-gray-50 flex items-center justify-center h-[300px] sm:h-[400px] relative shadow-sm"
                     >
                       @if (isVideo(url)) {
                         <video
                           [src]="url"
                           controls
-                          class="w-full h-full object-contain bg-black/5 outline-none"
+                          class="max-w-full max-h-full object-contain bg-black/5 outline-none"
                         ></video>
                       } @else {
                         <img
                           [src]="url"
-                          class="w-full h-full object-cover cursor-pointer hover:opacity-95 transition-opacity"
+                          class="max-w-full max-h-full object-contain cursor-pointer hover:opacity-95 transition-opacity"
                         />
                       }
                     </div>
