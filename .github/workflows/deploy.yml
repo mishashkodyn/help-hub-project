@@ -27,6 +27,4 @@ jobs:
             
             docker compose up -d --build
 
-            docker restart helphub_nginx
-            
             docker image prune -f
