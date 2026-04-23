@@ -15,6 +15,7 @@ import { AuthService } from './api/services/auth.service';
 import { catchError, of } from 'rxjs';
 import { PsychologistToolsModule } from './modules/psychologist-tools/psychologist-tools.module';
 import { ClientPortalModule } from './modules/client-portal/client-portal.module';
+import { TranslocoRootModule } from './transloco-root.module';
 
 export function initializeApp(authService: AuthService) {
   return () => {
@@ -45,6 +46,7 @@ export function initializeApp(authService: AuthService) {
     PsychologistToolsModule,
     ClientPortalModule,
     MarkdownModule.forRoot(),
+    TranslocoRootModule,
   ],
   providers: [
     {

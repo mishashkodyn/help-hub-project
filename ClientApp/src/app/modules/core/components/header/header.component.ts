@@ -6,6 +6,7 @@ import { DropdownItem } from '../../../../api/models/dropdown-item';
 import { SidebarService } from '../../../../api/services/sidebar.service';
 import { PresenceService } from '../../../../api/services/presence-service';
 import { NotificationService } from '../../../../api/services/notification.service';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-header',
@@ -15,6 +16,15 @@ import { NotificationService } from '../../../../api/services/notification.servi
 })
 export class HeaderComponent {
   isNotificationsOpen = false;
+
+  constructor(
+    protected route: Router,
+    protected authService: AuthService,
+    protected sidebarService: SidebarService,
+    protected presenceService: PresenceService,
+    protected notificationService: NotificationService,
+    public translocoService: TranslocoService
+  ) {}
 
   menuItems = signal<MenuItem[]>([
     {
@@ -29,19 +39,11 @@ export class HeaderComponent {
   ]);
 
   languages: DropdownItem[] = [
-    { label: 'EN', value: 'en' },
-    { label: 'UA', value: 'ua' },
+    { label: 'En', value: 'en' },
+    { label: 'Укр', value: 'ua' },
   ];
 
   currentLanguage = this.languages[0];
-
-  constructor(
-    protected route: Router,
-    protected authService: AuthService,
-    protected sidebarService: SidebarService,
-    protected presenceService: PresenceService,
-    protected notificationService: NotificationService,
-  ) {}
 
   navigateTo(to: string) {
     switch (to) {
@@ -85,8 +87,9 @@ export class HeaderComponent {
     this.route.navigate([`account/${this.authService.currentLoggedUser?.id}`]);
   }
 
-  onLanguageChange() {
-    console.log('Language changed to:', this.currentLanguage.value);
+  onLanguageChange(lang: string) {
+    this.translocoService.setActiveLang(lang);
+    this.currentLanguage = this.languages.find((l) => l.value === lang) || this.currentLanguage;
   }
 
   toggleNotificationsPopUp(event: Event) {

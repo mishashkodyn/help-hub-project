@@ -1,195 +1,191 @@
-<div class="relative min-h-screen bg-[#f8fafc] font-sans overflow-hidden">
-  <div
-    class="absolute left-[-10%] w-[40rem] h-[40rem] rounded-full bg-[var(--color-mint)] mix-blend-multiply filter blur-[128px] opacity-40 animate-blob pointer-events-none"
-  ></div>
-  <div
-    class="absolute top-[20%] right-[-5%] w-[35rem] h-[35rem] rounded-full bg-[var(--color-sky)] mix-blend-multiply filter blur-[128px] opacity-30 animate-blob animation-delay-2000 pointer-events-none"
-  ></div>
-  <div
-    class="absolute bottom-[-10%] left-[20%] w-[45rem] h-[45rem] rounded-full bg-[var(--color-blue)] mix-blend-multiply filter blur-[128px] opacity-20 animate-blob animation-delay-4000 pointer-events-none"
-  ></div>
+<ng-container *transloco="let t">
+  <div class="relative min-h-screen bg-[#f8fafc] font-sans overflow-hidden">
+    
+    <div class="absolute top-[-5%] left-[-10%] w-64 h-64 md:w-96 md:h-96 bg-[var(--color-mint)]/30 rounded-full mix-blend-multiply filter blur-[80px] md:blur-[100px] opacity-70 animate-blob"></div>
+    <div class="absolute top-[20%] right-[-10%] w-64 h-64 md:w-96 md:h-96 bg-[var(--color-sky)]/30 rounded-full mix-blend-multiply filter blur-[80px] md:blur-[100px] opacity-70 animate-blob animation-delay-2000"></div>
+    <div class="absolute bottom-[-10%] left-[20%] w-64 h-64 md:w-96 md:h-96 bg-[var(--color-success)]/20 rounded-full mix-blend-multiply filter blur-[80px] md:blur-[100px] opacity-70 animate-blob animation-delay-4000"></div>
 
-  <section
-    class="relative z-10 pt-32 md:pb-28 px-6 max-w-7xl mx-auto flex flex-col items-center text-center"
-  >
-    <div
-      class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/60 backdrop-blur-md border border-[var(--color-mint)] shadow-sm mb-8 animate-fade-in-up"
-    >
-      <span
-        class="w-2 h-2 rounded-full bg-[var(--color-success)] animate-pulse"
-      ></span>
-      <span
-        class="text-sm font-semibold text-[var(--color-primary)] tracking-wide"
-        >Secure & Confidential Support</span
-      >
-    </div>
+    <section class="relative z-10 pt-6 md:pt-12 pb-12 md:pb-16 px-4 sm:px-6 max-w-7xl mx-auto">
+      <div class="grid lg:grid-cols-2 gap-8 md:gap-12 items-center">
+        <div class="flex flex-col items-center lg:items-start text-center lg:text-left">
+          <div data-aos="fade-down" data-aos-duration="800" class="inline-flex items-center gap-2 px-3 md:px-4 md:py-2 rounded-full bg-white/60 backdrop-blur-md border border-white/80 shadow-sm mb-6 md:mb-8 hover:shadow-md transition-shadow">
+            <span class="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-[var(--color-success)] animate-pulse shadow-[0_0_10px_var(--color-success)]"></span>
+            <span class="text-xs md:text-sm font-semibold text-[var(--color-primary)] tracking-wide">Help Hub — {{ t('landing.platform_name') }}</span>
+          </div>
 
-    <h1
-      class="text-5xl md:text-7xl font-extrabold text-[var(--color-primary)] tracking-tight mb-6 leading-tight"
-    >
-      Your Safe Space <br class="hidden md:block" />
-      <span
-        class="text-transparent bg-clip-text bg-gradient-to-r from-[var(--color-blue)] to-[var(--color-success)]"
-      >
-        In Hard Times.
-      </span>
-    </h1>
+          <h1 data-aos="fade-right" data-aos-duration="1000" data-aos-delay="100" class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-[var(--color-primary)] tracking-tight mb-4 md:mb-6 leading-[1.1]">
+            {{ t('landing.hero_title') }}<br />
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-[var(--color-blue)] via-[var(--color-mint)] to-[var(--color-success)] animate-gradient-x inline-block mt-1 md:mt-2">
+              {{ t('landing.hero_subtitle') }}
+            </span>
+          </h1>
 
-    <p class="text-lg md:text-xl text-gray-600 max-w-2xl mb-10 leading-relaxed">
-      Professional psychological assistance for military, civilians, and those
-      affected by war. Connect with licensed therapists, compassionate AI, or
-      supportive communities—anytime, anywhere.
-    </p>
-
-    <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-      <button
-        (click)="navigateTo('registration')"
-        class="flex items-center justify-center gap-2 px-8 py-4 rounded-xl cursor-pointer bg-[var(--color-primary)] text-[var(--color-mint)] font-bold text-lg hover:bg-[#003800] hover:shadow-[0_8px_30px_rgba(53,121,4,0.3)] transition-all duration-300 transform hover:-translate-y-1"
-      >
-        <mat-icon>volunteer_activism</mat-icon>
-        Get Help
-      </button>
-      <button
-        (click)="
-          navigateTo('/register', {
-            returnUrl: '/psychologist-registration',
-          })
-        "
-        class="flex items-center justify-center gap-2 px-8 py-4 rounded-xl cursor-pointer bg-white text-[var(--color-primary)] border-2 border-[var(--color-mint)] font-bold text-lg hover:bg-[var(--color-mint)] hover:bg-opacity-10 transition-all duration-300"
-      >
-        <mat-icon>psychology_alt</mat-icon>
-        Become a psychologist
-      </button>
-    </div>
-  </section>
-
-  <div
-    class="relative z-10 border-y border-gray-200/50 bg-white/40 backdrop-blur-xl"
-  >
-    <div
-      class="max-w-7xl mx-auto px-6 py-8 flex flex-wrap justify-around gap-8 text-center"
-    >
-      <div class="flex flex-col gap-1">
-        <span class="text-3xl font-black text-[var(--color-blue)]">24/7</span>
-        <span
-          class="text-sm font-semibold text-gray-500 uppercase tracking-wider"
-          >AI Support</span
-        >
-      </div>
-      <div class="flex flex-col gap-1">
-        <span class="text-3xl font-black text-[var(--color-blue)]">100%</span>
-        <span
-          class="text-sm font-semibold text-gray-500 uppercase tracking-wider"
-          >Anonymous</span
-        >
-      </div>
-      <div class="flex flex-col gap-1">
-        <span class="text-3xl font-black text-[var(--color-blue)]"
-          >End-to-End</span
-        >
-        <span
-          class="text-sm font-semibold text-gray-500 uppercase tracking-wider"
-          >Encrypted Chats</span
-        >
-      </div>
-    </div>
-  </div>
-
-  <section class="relative z-10 py-24 px-6 max-w-7xl mx-auto">
-    <div class="text-center mb-16">
-      <h2
-        class="text-3xl md:text-5xl font-bold text-[var(--color-primary)] mb-4"
-      >
-        Comprehensive Care
-      </h2>
-      <p class="text-gray-500 max-w-xl mx-auto">
-        Tailored tools designed to help you process trauma, manage anxiety, and
-        find peace at your own pace.
-      </p>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <div
-        class="group bg-white/70 backdrop-blur-lg border border-gray-100 p-8 rounded-[2rem] shadow-sm hover:shadow-xl hover:shadow-[var(--color-sky)]/20 transition-all duration-300 cursor-pointer"
-      >
-        <div
-          class="w-14 h-14 rounded-2xl bg-[var(--color-sky)]/20 flex items-center justify-center text-[var(--color-blue)] mb-6 group-hover:scale-110 transition-transform"
-        >
-          <mat-icon class="text-3xl">videocam</mat-icon>
-        </div>
-        <h3 class="text-xl font-bold text-[var(--color-primary)] mb-3">
-          Therapist Video Calls
-        </h3>
-        <p class="text-gray-500 leading-relaxed">
-          Secure, high-quality video sessions with trauma-informed specialists.
-          Connect face-to-face when you need it most.
-        </p>
-      </div>
-
-      <div
-        class="group bg-white/70 backdrop-blur-lg border border-gray-100 p-8 rounded-[2rem] shadow-sm hover:shadow-xl hover:shadow-[var(--color-mint)]/30 transition-all duration-300 cursor-pointer"
-      >
-        <div
-          class="w-14 h-14 rounded-2xl bg-[var(--color-mint)]/30 flex items-center justify-center text-[var(--color-success)] mb-6 group-hover:scale-110 transition-transform"
-        >
-          <mat-icon class="text-3xl">smart_toy</mat-icon>
-        </div>
-        <h3 class="text-xl font-bold text-[var(--color-primary)] mb-3">
-          AI Companion
-        </h3>
-        <p class="text-gray-500 leading-relaxed">
-          An empathetic, 24/7 AI assistant trained in CBT techniques to help
-          ground you during panic attacks or sleepless nights.
-        </p>
-      </div>
-
-      <div
-        class="group bg-white/70 backdrop-blur-lg border border-gray-100 p-8 rounded-[2rem] shadow-sm hover:shadow-xl hover:shadow-[var(--color-primary)]/10 transition-all duration-300 cursor-pointer"
-      >
-        <div
-          class="w-14 h-14 rounded-2xl bg-gray-100 flex items-center justify-center text-[var(--color-primary)] mb-6 group-hover:scale-110 transition-transform"
-        >
-          <mat-icon class="text-3xl">forum</mat-icon>
-        </div>
-        <h3 class="text-xl font-bold text-[var(--color-primary)] mb-3">
-          Anonymous Text Chat
-        </h3>
-        <p class="text-gray-500 leading-relaxed">
-          Sometimes writing is easier than speaking. Chat securely with
-          counselors or in moderated peer-support groups.
-        </p>
-      </div>
-
-      <div
-        class="group bg-[var(--color-primary)] p-8 rounded-[2rem] shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer md:col-span-2 lg:col-span-3 flex flex-col md:flex-row items-center gap-8 relative overflow-hidden"
-      >
-        <div
-          class="absolute right-0 top-0 w-64 h-64 bg-[var(--color-success)] opacity-20 blur-3xl rounded-full"
-        ></div>
-
-        <div
-          class="w-16 h-16 shrink-0 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-[var(--color-mint)] backdrop-blur-sm"
-        >
-          <mat-icon class="text-3xl">self_improvement</mat-icon>
-        </div>
-
-        <div class="flex-grow z-10 text-center md:text-left">
-          <h3 class="text-2xl font-bold text-[var(--color-mint)] mb-2">
-            Interactive Grounding Toolkit
-          </h3>
-          <p class="text-gray-300 max-w-2xl">
-            Feeling overwhelmed? Access guided breathing exercises, 5-4-3-2-1
-            sensory grounding, and PTSD-specific stabilization tools instantly
-            without needing to log in.
+          <p data-aos="fade-right" data-aos-duration="1000" data-aos-delay="200" class="text-base sm:text-lg hidden md:block md:text-xl text-gray-600/90 max-w-xl mb-8 md:mb-10 leading-relaxed font-medium px-2 sm:px-0">
+            {{ t('landing.hero_description') }}
           </p>
+
+          <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full lg:w-auto px-4 sm:px-0" data-aos="zoom-in-up" data-aos-delay="400" data-aos-duration="800">
+            <button (click)="navigateTo('registration')" class="w-full sm:w-auto group flex items-center justify-center gap-2 px-6 py-3.5 md:px-8 md:py-4 rounded-2xl bg-[var(--color-primary)] text-[var(--color-mint)] font-bold text-base md:text-lg hover:bg-[#002a00] shadow-[0_8px_20px_rgba(0,0,0,0.1)] hover:shadow-[0_15px_30px_rgba(var(--color-primary-rgb),0.3)] transition-all duration-300 transform hover:-translate-y-1">
+              <mat-icon class="group-hover:scale-110 transition-transform text-[20px] md:text-[24px]">volunteer_activism</mat-icon>
+              {{ t('landing.get_help') }}
+            </button>
+            <button (click)="navigateTo('/register', { returnUrl: '/psychologist-registration' })" class="w-full sm:w-auto group flex items-center justify-center gap-2 px-6 py-3.5 md:px-8 md:py-4 rounded-2xl bg-white/80 backdrop-blur-sm text-[var(--color-primary)] border-2 border-[var(--color-mint)]/50 font-bold text-base md:text-lg hover:border-[var(--color-mint)] hover:bg-[var(--color-mint)]/5 shadow-sm transition-all duration-300 transform hover:-translate-y-1">
+              <mat-icon class="group-hover:rotate-12 transition-transform text-[20px] md:text-[24px]">psychology_alt</mat-icon>
+              {{ t('landing.become_psychologist') }}
+            </button>
+          </div>
+
+          <div class="flex flex-col sm:flex-row flex-wrap justify-center lg:justify-start items-center gap-3 sm:gap-6 mt-8 md:mt-12 text-xs sm:text-sm text-gray-500 font-medium w-full" data-aos="fade-up" data-aos-delay="600">
+            <div class="flex items-center gap-2 bg-white/50 px-4 py-2 rounded-full backdrop-blur-sm hover:scale-105 transition-transform cursor-default shadow-sm sm:shadow-none w-full sm:w-auto justify-center">
+              <mat-icon class="text-[var(--color-success)] text-base">verified</mat-icon>
+              <span>{{ t('landing.anonymous') }}</span>
+            </div>
+            <div class="flex items-center gap-2 bg-white/50 px-4 py-2 rounded-full backdrop-blur-sm hover:scale-105 transition-transform cursor-default shadow-sm sm:shadow-none w-full sm:w-auto justify-center">
+              <mat-icon class="text-[var(--color-success)] text-base">support_agent</mat-icon>
+              <span>{{ t('landing.support_24_7') }}</span>
+            </div>
+          </div>
         </div>
 
-        <button
-          class="z-10 shrink-0 px-6 py-3 rounded-xl bg-[var(--color-mint)] text-[var(--color-primary)] font-bold hover:bg-white transition-colors"
-        >
-          Explore Tools
-        </button>
+        <div class="relative hidden lg:block" data-aos="zoom-in-left" data-aos-duration="1200" data-aos-delay="300">
+          <div class="relative bg-white/60 backdrop-blur-2xl rounded-[2.5rem] p-8 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] border border-white">
+            <div class="absolute -top-6 -right-6 w-24 h-24 bg-[var(--color-mint)]/40 rounded-full blur-2xl animate-pulse"></div>
+            
+            <div class="flex items-center gap-4 mb-8 relative z-10" data-aos="fade-down" data-aos-delay="700">
+              <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-[var(--color-mint)]/30 to-[var(--color-sky)]/30 flex items-center justify-center shadow-inner border border-white/50">
+                <mat-icon class="text-3xl text-[var(--color-primary)]">auto_awesome</mat-icon>
+              </div>
+              <div>
+                <h3 class="font-bold text-lg text-[var(--color-primary)]">{{ t('ai_assistant.title') }}</h3>
+                <p class="text-sm text-gray-500 font-medium">{{ t('ai_assistant.subtitle') }}</p>
+              </div>
+            </div>
+
+            <div class="space-y-5 relative z-10">
+              <div data-aos="fade-right" data-aos-delay="900" class="bg-white rounded-2xl p-4 rounded-bl-none shadow-sm border border-gray-50 transform hover:-translate-y-0.5 transition-transform">
+                <p class="text-sm text-gray-700">{{ t('ai_assistant.demo_messages.user') }}</p>
+              </div>
+              <div data-aos="fade-left" data-aos-delay="1200" class="bg-gradient-to-r from-[var(--color-primary)]/5 to-[var(--color-mint)]/10 rounded-2xl p-4 rounded-br-none shadow-sm border border-[var(--color-mint)]/20 transform hover:-translate-y-0.5 transition-transform">
+                <p class="text-sm text-[var(--color-primary)] font-medium">{{ t('ai_assistant.demo_messages.ai') }}</p>
+              </div>
+            </div>
+
+            <div class="mt-8 pt-6 border-t border-gray-100/80 relative z-10" data-aos="fade-up" data-aos-delay="1400">
+              <div class="flex gap-3 items-center group cursor-pointer">
+                <div class="flex-1 bg-white/80 rounded-2xl px-5 py-3 text-sm text-gray-400 border border-gray-100 group-hover:border-[var(--color-mint)]/50 transition-colors">
+                  {{ t('landing.try_technique') }}
+                </div>
+                <div class="w-12 h-12 rounded-2xl bg-[var(--color-primary)] flex items-center justify-center group-hover:bg-[var(--color-success)] transition-colors shadow-md">
+                  <mat-icon class="text-[var(--color-mint)] group-hover:translate-x-1 transition-transform">arrow_forward</mat-icon>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-  </section>
-</div>
+    </section>
+
+    <section class="py-8 md:py-12 relative z-10">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6">
+        <div class="bg-white/40 backdrop-blur-xl border border-white/60 rounded-[2rem] md:rounded-[2.5rem] p-6 sm:p-8 md:p-12 shadow-[0_8px_30px_rgb(0,0,0,0.02)]" data-aos="flip-up" data-aos-duration="1000">
+          <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 lg:gap-12">
+            <div class="text-center group" data-aos="zoom-in" data-aos-delay="200">
+              <div class="text-3xl sm:text-4xl md:text-5xl font-black text-[var(--color-primary)] mb-1 md:mb-2 group-hover:scale-110 transition-transform duration-300">5000+</div>
+              <div class="text-[10px] sm:text-xs md:text-sm font-bold text-gray-500 uppercase tracking-widest">{{ t('landing.consultations') }}</div>
+            </div>
+            <div class="text-center group" data-aos="zoom-in" data-aos-delay="400">
+              <div class="text-3xl sm:text-4xl md:text-5xl font-black text-[var(--color-primary)] mb-1 md:mb-2 group-hover:scale-110 transition-transform duration-300">120+</div>
+              <div class="text-[10px] sm:text-xs md:text-sm font-bold text-gray-500 uppercase tracking-widest">{{ t('landing.psychologists') }}</div>
+            </div>
+            <div class="text-center group" data-aos="zoom-in" data-aos-delay="600">
+              <div class="text-3xl sm:text-4xl md:text-5xl font-black text-[var(--color-primary)] mb-1 md:mb-2 group-hover:scale-110 transition-transform duration-300">98%</div>
+              <div class="text-[10px] sm:text-xs md:text-sm font-bold text-gray-500 uppercase tracking-widest">{{ t('landing.satisfied') }}</div>
+            </div>
+            <div class="text-center group" data-aos="zoom-in" data-aos-delay="800">
+              <div class="text-3xl sm:text-4xl md:text-5xl font-black text-[var(--color-primary)] mb-1 md:mb-2 group-hover:scale-110 transition-transform duration-300">24/7</div>
+              <div class="text-[10px] sm:text-xs md:text-sm font-bold text-gray-500 uppercase tracking-widest">{{ t('landing.on_call') }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="md:py-24 px-4 sm:px-6 max-w-7xl mx-auto relative z-10">
+      <div class="text-center mb-10 md:mb-16" data-aos="fade-down">
+        <h2 class="text-3xl md:text-4xl lg:text-5xl font-extrabold text-[var(--color-primary)] mb-3 md:mb-4">{{ t('landing.how_we_help') }}</h2>
+        <div class="w-16 md:w-24 h-1.5 bg-gradient-to-r from-[var(--color-mint)] to-[var(--color-success)] mx-auto rounded-full" data-aos="fade-right" data-aos-delay="300"></div>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+        <div class="group bg-white/60 backdrop-blur-xl border border-white p-6 md:p-8 rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.03)] hover:shadow-[0_20px_40px_-10px_rgba(var(--color-sky-rgb),0.2)] hover:-translate-y-2 transition-all duration-500" data-aos="fade-up" data-aos-duration="800" data-aos-delay="100">
+          <div class="w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-gradient-to-br from-[var(--color-sky)]/20 to-white flex items-center justify-center text-[var(--color-blue)] mb-6 md:mb-8 group-hover:scale-110 transition-transform duration-300 border border-white">
+            <mat-icon class="text-2xl md:text-3xl">videocam</mat-icon>
+          </div>
+          <h3 class="text-xl md:text-2xl font-bold text-[var(--color-primary)] mb-3 md:mb-4">{{ t('landing.video_calls') }}</h3>
+          <p class="text-sm md:text-base text-gray-500 leading-relaxed font-medium">{{ t('landing.video_calls_desc') }}</p>
+        </div>
+
+        <div class="group bg-white/60 backdrop-blur-xl border border-white p-6 md:p-8 rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.03)] hover:shadow-[0_20px_40px_-10px_rgba(var(--color-mint-rgb),0.3)] hover:-translate-y-2 transition-all duration-500" data-aos="fade-up" data-aos-duration="800" data-aos-delay="300">
+          <div class="w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-gradient-to-br from-[var(--color-mint)]/30 to-white flex items-center justify-center text-[var(--color-success)] mb-6 md:mb-8 group-hover:scale-110 transition-transform duration-300 border border-white">
+            <mat-icon class="text-2xl md:text-3xl">smart_toy</mat-icon>
+          </div>
+          <h3 class="text-xl md:text-2xl font-bold text-[var(--color-primary)] mb-3 md:mb-4">{{ t('landing.ai_companion') }}</h3>
+          <p class="text-sm md:text-base text-gray-500 leading-relaxed font-medium">{{ t('landing.ai_companion_desc') }}</p>
+        </div>
+
+        <div class="group bg-white/60 backdrop-blur-xl border border-white p-6 md:p-8 rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.03)] hover:shadow-[0_20px_40px_-10px_rgba(var(--color-primary-rgb),0.15)] hover:-translate-y-2 transition-all duration-500 sm:col-span-2 lg:col-span-1" data-aos="fade-up" data-aos-duration="800" data-aos-delay="500">
+          <div class="w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-gradient-to-br from-gray-100 to-white flex items-center justify-center text-[var(--color-primary)] mb-6 md:mb-8 group-hover:scale-110 transition-transform duration-300 border border-white">
+            <mat-icon class="text-2xl md:text-3xl">forum</mat-icon>
+          </div>
+          <h3 class="text-xl md:text-2xl font-bold text-[var(--color-primary)] mb-3 md:mb-4">{{ t('landing.anonymous_chat') }}</h3>
+          <p class="text-sm md:text-base text-gray-500 leading-relaxed font-medium">{{ t('landing.anonymous_chat_desc') }}</p>
+        </div>
+
+        <div class="group bg-gradient-to-br from-[var(--color-primary)] to-[#002a00] p-6 sm:p-8 md:p-10 rounded-[2rem] md:rounded-[2.5rem] shadow-xl hover:shadow-2xl transition-all duration-500 sm:col-span-2 lg:col-span-3 flex flex-col md:flex-row items-center gap-6 md:gap-10 relative overflow-hidden" data-aos="zoom-in" data-aos-duration="1000" data-aos-delay="200">
+          <div class="absolute right-[-20%] md:right-[-10%] top-[-20%] w-64 h-64 md:w-96 md:h-96 bg-[var(--color-success)] opacity-20 blur-[60px] md:blur-[80px] rounded-full group-hover:opacity-30 transition-opacity duration-700"></div>
+          <div class="w-16 h-16 md:w-20 md:h-20 shrink-0 rounded-2xl md:rounded-3xl bg-white/10 border border-white/20 flex items-center justify-center text-[var(--color-mint)] backdrop-blur-md group-hover:scale-110 transition-transform duration-500">
+            <mat-icon class="text-3xl md:text-4xl">self_improvement</mat-icon>
+          </div>
+          <div class="flex-grow z-10 text-center md:text-left">
+            <h3 class="text-2xl md:text-3xl font-bold text-[var(--color-mint)] mb-2 md:mb-3">{{ t('landing.grounding_tools') }}</h3>
+            <p class="text-sm md:text-lg text-gray-300 max-w-2xl font-medium">{{ t('landing.grounding_tools_desc') }}</p>
+          </div>
+          <button class="w-full md:w-auto z-10 shrink-0 px-6 py-3.5 md:px-8 md:py-4 rounded-2xl bg-[var(--color-mint)] text-[var(--color-primary)] font-bold text-base md:text-lg hover:bg-white hover:shadow-[0_0_20px_rgba(var(--color-mint-rgb),0.4)] transition-all duration-300 transform hover:-translate-y-1 mt-2 md:mt-0">
+            {{ t('landing.try_now') }}
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-12 md:py-20 px-4 sm:px-6 relative z-10">
+      <div data-aos="zoom-out-up" data-aos-duration="1200" class="max-w-5xl mx-auto bg-gradient-to-br from-[var(--color-primary)] via-[#002a00] to-[var(--color-primary)] rounded-[2rem] md:rounded-[3rem] p-8 sm:p-12 md:p-20 text-center relative overflow-hidden shadow-[0_20px_50px_-15px_rgba(0,0,0,0.3)]">
+        <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjIiIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSIvPjwvc3ZnPg==')] opacity-30"></div>
+        <div class="absolute -top-20 -right-20 md:-top-32 md:-right-32 w-[20rem] md:w-[30rem] h-[20rem] md:h-[30rem] bg-[var(--color-success)] opacity-20 blur-[80px] md:blur-[100px] rounded-full animate-pulse"></div>
+        <div class="absolute -bottom-20 -left-20 md:-bottom-32 md:-left-32 w-[20rem] md:w-[30rem] h-[20rem] md:h-[30rem] bg-[var(--color-mint)] opacity-10 blur-[80px] md:blur-[100px] rounded-full"></div>
+        
+        <div class="relative z-10">
+          <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-4 md:mb-6 tracking-tight leading-tight">{{ t('landing.dont_keep_pain') }}</h2>
+          <p class="text-[var(--color-mint)]/90 text-base sm:text-lg md:text-xl max-w-2xl mx-auto mb-8 md:mb-10 font-medium px-2">{{ t('landing.cta_description') }}</p>
+          <div class="flex justify-center" data-aos="fade-up" data-aos-delay="400">
+            <button (click)="navigateTo('registration')" class="w-full sm:w-auto group flex items-center justify-center gap-2 md:gap-3 px-6 py-4 md:px-10 md:py-5 rounded-2xl bg-[var(--color-mint)] text-[var(--color-primary)] font-bold text-lg md:text-xl hover:bg-white transition-all duration-300 transform hover:-translate-y-1 shadow-[0_10px_30px_rgba(var(--color-mint-rgb),0.3)] hover:shadow-[0_15px_40px_rgba(255,255,255,0.4)]">
+              <mat-icon class="group-hover:scale-110 transition-transform text-[24px]">volunteer_activism</mat-icon>
+              {{ t('landing.start_now') }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="py-8 md:py-12 px-4 sm:px-6 border-t border-gray-200/50 bg-white/30 backdrop-blur-sm relative z-10">
+      <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-center sm:justify-between items-center gap-4 md:gap-6 text-center sm:text-left">
+        <div class="flex items-center gap-3" data-aos="fade-right">
+          <div class="w-10 h-10 rounded-xl bg-[var(--color-primary)]/5 flex items-center justify-center">
+            <mat-icon class="text-[var(--color-success)]">psychology</mat-icon>
+          </div>
+          <span class="font-extrabold text-lg md:text-xl text-[var(--color-primary)] tracking-tight">Help Hub</span>
+        </div>
+        <div class="text-xs md:text-sm font-medium text-gray-500" data-aos="fade-left">© 2026 Help Hub. All rights reserved.</div>
+      </div>
+    </footer>
+  </div>
+</ng-container>

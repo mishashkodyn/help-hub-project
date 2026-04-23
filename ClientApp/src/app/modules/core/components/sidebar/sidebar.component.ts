@@ -30,17 +30,17 @@ export class SidebarComponent {
   menuItems = signal<MenuItem[]>([
     {
       icon: 'people',
-      label: 'Find psychologist',
+      label: 'find_psychologist',
       route: '/catalog'
     },
     {
       icon: 'chat',
-      label: 'Chat',
+      label: 'chat',
       route: 'chat',
     },
     {
       icon: 'mail',
-      label: 'Notifications',
+      label: 'notifications',
       route: 'notifications'
     }
   ]);
@@ -48,22 +48,22 @@ export class SidebarComponent {
   adminItems = signal<MenuItem[]>([
     {
       icon: 'person',
-      label: 'Users',
+      label: 'users',
       route: 'users',
     },
     {
       icon: 'smart_toy',
-      label: 'AI Assistant',
+      label: 'ai_assistant',
       route: 'ai-chat',
     },
     {
       icon: 'dashboard',
-      label: "Dashboard",
+      label: "dashboard",
       route: 'admin',
     },
     {
       icon: 'assignment',
-      label: "Applications",
+      label: "applications",
       route: 'applications',
     }
   ]);
@@ -71,7 +71,7 @@ export class SidebarComponent {
   psychologistItems = signal<MenuItem[]>([
     {
       icon: 'psychology',
-      label: 'Psychologist Dashboard',
+      label: 'psychologist_dashboard',
       route: 'psychologist-dashboard',
     },
   ])

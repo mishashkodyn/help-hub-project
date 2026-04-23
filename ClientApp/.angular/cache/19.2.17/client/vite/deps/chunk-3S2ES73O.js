@@ -1,41 +1,41 @@
 import {
-  ScrollDispatcher,
-  ScrollingModule,
-  ViewportRuler
-} from "./chunk-2GLAJ6QU.js";
-import {
   coerceCssPixelValue
 } from "./chunk-PCQEEKRW.js";
 import {
   _isTestEnvironment
 } from "./chunk-42FJBLFI.js";
 import {
+  ScrollDispatcher,
+  ScrollingModule,
+  ViewportRuler
+} from "./chunk-DGR5Q34O.js";
+import {
+  supportsScrollBehavior
+} from "./chunk-2O4WY5GE.js";
+import {
   ESCAPE,
   _IdGenerator,
   _getEventTarget,
   coerceArray,
   hasModifierKey
-} from "./chunk-XUN77NJ6.js";
+} from "./chunk-UDNETS4A.js";
 import {
   _CdkPrivateStyleLoader,
   _bindEventWithOptions
-} from "./chunk-6BCOVTHL.js";
-import {
-  supportsScrollBehavior
-} from "./chunk-2O4WY5GE.js";
+} from "./chunk-3WTOZ3Q5.js";
 import {
   BidiModule,
   Directionality
-} from "./chunk-75TIILVR.js";
+} from "./chunk-XITAWE35.js";
 import {
   Platform
-} from "./chunk-WPRSFF4S.js";
+} from "./chunk-OOHDZCPL.js";
 import {
   Location
-} from "./chunk-UBXRTJUW.js";
+} from "./chunk-EZTQSTGQ.js";
 import {
   DOCUMENT
-} from "./chunk-RIFWDNSX.js";
+} from "./chunk-OWGY2MTO.js";
 import {
   ANIMATION_MODULE_TYPE,
   ApplicationRef,
@@ -73,7 +73,7 @@ import {
   ɵɵdefineInjector,
   ɵɵdefineNgModule,
   ɵɵgetInheritedFactory
-} from "./chunk-LUQRODUU.js";
+} from "./chunk-3HHMNJRQ.js";
 import {
   Subject,
   Subscription,
@@ -85,7 +85,7 @@ import {
 import {
   __spreadProps,
   __spreadValues
-} from "./chunk-J25FJFZE.js";
+} from "./chunk-EIB7IA3J.js";
 
 // node_modules/@angular/cdk/fesm2022/portal-directives-Bw5woq8I.mjs
 function throwNullPortalError() {
@@ -3460,4 +3460,4 @@ export {
   Overlay,
   OverlayModule
 };
-//# sourceMappingURL=chunk-YHUV7A3Q.js.map
+//# sourceMappingURL=chunk-3S2ES73O.js.map

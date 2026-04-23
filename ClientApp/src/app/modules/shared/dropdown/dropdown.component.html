@@ -2,44 +2,53 @@
   <button
     type="button"
     (click)="toggle()"
-    class="flex items-center gap-1 text-primary font-mono font-semibold hover:text-success transition-colors cursor-pointer focus:outline-none select-none"
+    class="group flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-medium text-sm transition-all outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]/30 cursor-pointer select-none hover:bg-gray-50"
+    [ngClass]="isOpen() ? 'text-[var(--color-primary)] bg-[var(--color-primary)]/5' : 'text-gray-700'"
   >
     @if (selected()) {
-      <span class="flex items-center gap-1">
+      <span class="flex items-center gap-1.5">
         @if (icon != null) {
-          <mat-icon>{{ icon() }}</mat-icon>
+          <mat-icon class="scale-90 text-[var(--color-primary)]">{{ icon() }}</mat-icon>
         }
         <span>{{ selected()?.label }}</span>
       </span>
     } @else {
       <span class="text-gray-500">{{ placeholder() }}</span>
     }
+    
     <mat-icon
+      class="w-4 h-4 text-gray-400 group-hover:text-[var(--color-primary)] transition-transform duration-300 ease-[cubic-bezier(0.87,_0,_0.13,_1)]"
       [class.rotate-180]="isOpen()"
-      class="w-3 h-3 transition-transform duration-200"
-      >keyboard_arrow_down</mat-icon
     >
+      keyboard_arrow_down
+    </mat-icon>
   </button>
 
   @if (isOpen()) {
     <div
-      class="fixed inset-0 z-40 cursor-default"
+      class="fixed inset-0 z-40"
       (click)="isOpen.set(false)"
     ></div>
 
     <div
-      class="absolute right-0 mt-1 w-auto min-w-[120px] bg-white rounded-lg shadow-xl border border-gray-300 overflow-hidden z-50 animate-in fade-in zoom-in-95 duration-100"
+      class="absolute right-0 mt-2 w-auto min-w-[160px] bg-white/95 backdrop-blur-xl rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-gray-100 p-1 z-50 animate-in fade-in zoom-in-95 duration-150 ease-out"
     >
-      <div class="flex flex-col">
+      <div class="flex flex-col gap-0.5">
         @for (item of items(); track item.value) {
           <button
             (click)="select(item)"
-            class="flex items-center gap-3 w-full text-left px-4 py-2 text-sm font-mono font-semibold transition-all duration-200"
-            [class.bg-mint]="selected()?.value === item.value"
-            [class.text-black]="selected()?.value === item.value"
-            class="hover:text-gray-500 cursor-pointer"
+            class="flex items-center justify-between w-full text-left px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 outline-none cursor-pointer"
+            [ngClass]="
+              selected()?.value === item.value
+                ? 'bg-[var(--color-mint)]/20 text-[var(--color-primary)]'
+                : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+            "
           >
             <span>{{ item.label }}</span>
+            
+            @if (selected()?.value === item.value) {
+              <mat-icon class="scale-75 text-[var(--color-primary)]">check</mat-icon>
+            }
           </button>
         }
       </div>
