@@ -1,14 +1,16 @@
-<div class="text-center py-16 animate-fade-in flex flex-col items-center">
+<ng-container *transloco="let t">
+  <div class="text-center py-16 animate-fade-in flex flex-col items-center">
   <div
     class="w-24 h-24 bg-amber-50/50 rounded-full flex items-center justify-center mb-6 shadow-inner border border-amber-100"
   >
     <mat-icon class="text-5xl text-amber-300">star_outline</mat-icon>
   </div>
   <h3 class="text-2xl font-bold text-gray-800 mb-3 tracking-tight">
-    No Reviews Yet
+    {{ t('profile.no_reviews')}}
   </h3>
   <p class="text-gray-500 max-w-sm mx-auto leading-relaxed">
-    This specialist doesn't have any reviews from sessions yet. Check back
-    later!
+    {{ t('profile.does_not_have_any_reviews')}}
   </p>
 </div>
+
+</ng-container>

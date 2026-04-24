@@ -1,4 +1,5 @@
-<div class="p-4 sm:p-6 md:p-10 bg-gray-50 min-h-screen font-sans">
+<ng-container *transloco="let t">
+  <div class="p-4 sm:p-6 md:p-10 bg-gray-50 min-h-screen font-sans">
   <div class="max-w-5xl mx-auto">
     @if (isLoading) {
       <div class="mt-32 flex justify-center animate-fade-in">
@@ -71,7 +72,7 @@
                           role === 'Client' || role === 'User',
                       }"
                     >
-                      {{ role }}
+                      {{ t(`profile.${role.toLowerCase()}`) }}
                     </span>
                   }
 
@@ -81,7 +82,7 @@
                         class="flex items-center gap-1.5 px-3.5 py-1.5 bg-olive-50 text-olive-700 border border-olive-200 rounded-full text-[11px] font-bold uppercase tracking-wider shadow-sm"
                       >
                         <mat-icon class="scale-[0.6] -mx-1">shield</mat-icon>
-                        Military
+                        {{ t('profile.military') }}
                       </span>
                     }
                     @case (2) {
@@ -89,7 +90,7 @@
                         class="flex items-center gap-1.5 px-3.5 py-1.5 bg-blue-50 text-blue-700 border border-blue-200 rounded-full text-[11px] font-bold uppercase tracking-wider shadow-sm"
                       >
                         <mat-icon class="scale-[0.6] -mx-1">verified</mat-icon>
-                        Veteran
+                        {{ t('profile.veteran') }}
                       </span>
                     }
                     @case (3) {
@@ -97,7 +98,7 @@
                         class="flex items-center gap-1.5 px-3.5 py-1.5 bg-amber-50 text-amber-700 border border-amber-200 rounded-full text-[11px] font-bold uppercase tracking-wider shadow-sm"
                       >
                         <mat-icon class="scale-[0.6] -mx-1">home_work</mat-icon>
-                        Affected / IDP
+                        {{ t('profile.affected_idp') }}
                       </span>
                     }
                   }
@@ -113,7 +114,7 @@
                       class="scale-90 text-primary group-hover:rotate-12 transition-transform"
                       >military_tech</mat-icon
                     >
-                    Status
+                    {{ t('profile.status')}}
                   </button>
 
                   @if (isPsychologist) {
@@ -125,7 +126,7 @@
                         class="scale-90 text-purple-600 group-hover:scale-110 transition-transform"
                         >manage_accounts</mat-icon
                       >
-                      Catalog
+                      {{ t('profile.catalog')}}
                     </button>
                   }
 
@@ -136,7 +137,7 @@
                       class="scale-90 group-hover:scale-110 transition-transform"
                       >edit</mat-icon
                     >
-                    Edit
+                    {{ t('profile.edit')}}
                   </button>
                 } @else {
                   <button
@@ -146,7 +147,7 @@
                       class="scale-90 text-gray-500 group-hover:text-[var(--color-primary)] transition-colors"
                       >chat</mat-icon
                     >
-                    Message
+                    {{ t('profile.message')}}
                   </button>
 
                   @if (isPsychologist) {
@@ -157,7 +158,7 @@
                         class="scale-90 group-hover:scale-110 transition-transform"
                         >event_available</mat-icon
                       >
-                      Book Session
+                      {{ t('profile.book_session') }}
                     </button>
                   }
                 }
@@ -182,7 +183,7 @@
                 : 'text-gray-400 hover:text-gray-600'
             "
           >
-            About
+            {{ t('profile.about') }}
             @if (activeTab === "about") {
               <div
                 class="absolute bottom-0 left-0 w-full h-1 bg-[var(--color-primary)] rounded-t-full animate-fade-in"
@@ -199,7 +200,7 @@
                 : 'text-gray-400 hover:text-gray-600'
             "
           >
-            Posts & Activity
+            {{ t('profile.posts') }}
             @if (activeTab === "posts") {
               <div
                 class="absolute bottom-0 left-0 w-full h-1 bg-[var(--color-primary)] rounded-t-full animate-fade-in"
@@ -217,7 +218,7 @@
                   : 'text-gray-400 hover:text-gray-600'
               "
             >
-              Reviews
+              {{ t('profile.reviews') }}
               @if (activeTab === "reviews") {
                 <div
                   class="absolute bottom-0 left-0 w-full h-1 bg-[var(--color-primary)] rounded-t-full animate-fade-in"
@@ -251,3 +252,5 @@
     }
   </div>
 </div>
+
+</ng-container>

@@ -111,16 +111,36 @@
     "message_read": "Read"
   },
   "profile": {
-    "my_profile": "My profile",
-    "edit_profile": "Edit profile",
-    "about_me": "About me",
-    "specializations": "Specializations",
-    "experience": "Experience",
-    "education": "Education",
+    "admin": "Admin",
+    "superadmin": "Superadmin",
+    "psychologist": "Psychologist",
+    "client": "Client",
+    "status": "Status",
+    "catalog": "Catalog",
+    "edit": "Edit",
+    "about": "About",
+    "posts": "Posts",
+    "post": "Post",
     "reviews": "Reviews",
+    "biography": "Biography",
+    "no_biography": "No biography provided yet. This user is a mystery!",
+    "contact_info": "Contact info",
+    "share_something": "Share something helpful..",
+    "write_comment": "Write a comment...",
+    "like": "Like",
+    "comment": "Comment",
     "no_reviews": "No reviews yet",
-    "write_review": "Write a review",
-    "years": "years"
+    "does_not_have_any_reviews": "This specialist doesn't have any reviews from sessions yet. Check back later!",
+    "message": "Message",
+    "book_session": "Book session",
+    "military": "Military",
+    "veteran": "Veteran",
+    "affected_idp": "Affected / IDP",
+    "load_more": "Load more",
+    "no_comments": "No comments yet. Be the first to reply!",
+    "no_posts": "No posts yet",
+    "no_posts_second": "This user hasn't published anything yet.",
+    "attach_file": "Attach file (max 4)"
   },
   "psychologist": {
     "registration": "Psychologist registration",
@@ -159,7 +179,7 @@
     "no_notifications": "No notifications",
     "mark_all_read": "Mark all as read"
   },
-  
+
   "ai_assistant": {
     "title": "AI Assistant",
     "subtitle": "Always nearby",
