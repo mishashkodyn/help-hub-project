@@ -2,9 +2,9 @@
   <div class="max-w-2xl mx-auto pb-10">
     @if (isOwnProfile) {
       <div
-        class="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 mb-8 animate-fade-in"
+        class="bg-white md:rounded-2xl shadow-sm border border-gray-100 p-5 animate-fade-in"
       >
-        <div class="flex gap-4">
+        <div class="flex gap-4 mt-4">
           <div
             class="w-10 h-10 rounded-full bg-gray-100 overflow-hidden shrink-0"
           >
@@ -129,7 +129,7 @@
     } @else if (posts.length === 0) {
       <div class="text-center py-16 animate-fade-in flex flex-col items-center">
         <div
-          class="w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center mb-4 shadow-inner border border-gray-100"
+          class="w-20 h-20 bg-gray-50 md:rounded-full flex items-center justify-center mb-4 shadow-inner border border-gray-100"
         >
           <mat-icon class="text-4xl text-gray-300">history_edu</mat-icon>
         </div>
@@ -142,7 +142,7 @@
       <div class="flex flex-col gap-6">
         @for (post of posts; track post.id) {
           <div
-            class="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 animate-fade-in"
+            class="bg-white md:rounded-2xl shadow-sm border border-gray-100 p-5 animate-fade-in"
           >
             <div class="flex items-center gap-3 mb-4">
               <div
