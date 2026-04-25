@@ -47,11 +47,6 @@ export class SidebarComponent {
 
   adminItems = signal<MenuItem[]>([
     {
-      icon: 'person',
-      label: 'users',
-      route: 'users',
-    },
-    {
       icon: 'smart_toy',
       label: 'ai_assistant',
       route: 'ai-chat',
@@ -60,11 +55,6 @@ export class SidebarComponent {
       icon: 'dashboard',
       label: "dashboard",
       route: 'admin',
-    },
-    {
-      icon: 'assignment',
-      label: "applications",
-      route: 'applications',
     }
   ]);
 

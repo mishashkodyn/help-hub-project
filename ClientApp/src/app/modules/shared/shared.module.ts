@@ -8,6 +8,7 @@ import { MatIcon } from "@angular/material/icon";
 import { DropdownComponent } from './dropdown/dropdown.component';
 import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
 import { ConfirmDialogModalComponent } from './confirm-dialog-modal/confirm-dialog-modal.component';
+import { TranslocoModule } from '@ngneat/transloco';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { ConfirmDialogModalComponent } from './confirm-dialog-modal/confirm-dial
   imports: [
     CommonModule,
     MatDialogModule,
-    MatIcon
+    MatIcon,
+    TranslocoModule
 ],
   exports: [
     ButtonComponent,

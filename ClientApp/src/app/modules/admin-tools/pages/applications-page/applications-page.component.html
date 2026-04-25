@@ -1,14 +1,14 @@
-<div class="p-6 sm:p-10 bg-gray-50 min-h-screen font-sans">
+<div class="md:p-6 bg-gray-50 min-h-screen font-sans">
   <div class="max-w-7xl mx-auto">
     <a
       routerLink="/admin"
-      class="inline-flex items-center gap-1 text-gray-500 hover:text-[var(--color-primary)] transition-colors text-sm font-medium mb-6 cursor-pointer w-fit"
+      class="inline-flex items-center gap-1 text-gray-500 hover:text-[var(--color-primary)] p-3 md:p-0 transition-colors text-sm font-medium md:mb-6 cursor-pointer w-fit"
     >
       <mat-icon class="scale-90">arrow_back</mat-icon>
       Back to Dashboard
     </a>
     <div
-      class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8"
+      class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 px-3 md:px-0 mb-8"
     >
       <h1 class="text-3xl font-bold text-[var(--color-primary)] tracking-tight">
         Applications
@@ -21,7 +21,7 @@
     </div>
 
     <div
-      class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 mb-6 flex flex-col md:flex-row gap-4 items-center justify-between"
+      class="bg-white p-4 md:rounded-2xl shadow-sm border border-gray-100 md:mb-6 flex flex-col md:flex-row gap-4 items-center justify-between"
     >
       <div class="relative w-full md:max-w-md">
         <mat-icon class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
@@ -60,7 +60,7 @@
       </div>
     } @else if (applications.length === 0) {
       <div
-        class="bg-white rounded-2xl shadow-sm border border-gray-100 p-12 text-center"
+        class="bg-white md:rounded-2xl shadow-sm border border-gray-100 p-12 text-center"
       >
         <mat-icon class="text-gray-300 text-6xl w-16 h-16 mb-4">inbox</mat-icon>
         <h3 class="text-xl font-medium text-gray-600">No applications yet</h3>
@@ -70,7 +70,7 @@
       </div>
     } @else if (filteredApplications.length === 0) {
       <div
-        class="bg-white rounded-2xl shadow-sm border border-gray-100 p-12 text-center"
+        class="bg-white md:rounded-2xl shadow-sm border border-gray-100 p-12 text-center"
       >
         <mat-icon class="text-gray-300 text-6xl w-16 h-16 mb-4"
           >search_off</mat-icon
@@ -88,7 +88,7 @@
       </div>
     } @else {
       <div
-        class="bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-300 overflow-hidden"
+        class="bg-white md:rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-300 overflow-hidden"
       >
         <div class="overflow-auto overflow-x-auto custom-scroll max-h-[600px]">
           <table class="w-full text-left table-fixed min-w-[900px]">

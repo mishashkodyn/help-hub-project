@@ -1,8 +1,19 @@
-<h2 mat-dialog-title>Confirm Logout</h2>
-<mat-dialog-content>
-  <p>Are you sure you want to log out?</p>
-</mat-dialog-content>
-<mat-dialog-actions align="end">
-  <button mat-button (click)="onCancel()" class="cursor-pointer">Cancel</button>
-  <button mat-raised-button color="warn" (click)="onConfirm()" class="cursor-pointer">Logout</button>
-</mat-dialog-actions>
+<ng-container *transloco="let t">
+  <h2 mat-dialog-title>{{ t("auth.confirm_logout") }}</h2>
+  <mat-dialog-content>
+    <p>{{ t("auth.confirm_logout_second") }}</p>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button (click)="onCancel()" class="cursor-pointer">
+      {{ t("common.cancel") }}
+    </button>
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="onConfirm()"
+      class="cursor-pointer"
+    >
+      {{ t("auth.logout") }}
+    </button>
+  </mat-dialog-actions>
+</ng-container>

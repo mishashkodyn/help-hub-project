@@ -33,6 +33,8 @@
     "login": "Log in",
     "sign_up": "Sign up",
     "logout": "Log out",
+    "confirm_logout": "Confirm Logout",
+    "confirm_logout_second": "Are you sure you want to log out?",
     "email": "Email",
     "password": "Password",
     "confirm_password": "Confirm password",

@@ -1,14 +1,14 @@
-<div class="p-6 sm:p-10 bg-gray-50 min-h-screen font-sans">
+<div class="md:p-6 bg-gray-50 min-h-screen font-sans">
   <div class="max-w-7xl mx-auto">
     <a 
       routerLink="/admin" 
-      class="inline-flex items-center gap-1 text-gray-500 hover:text-[var(--color-primary)] transition-colors text-sm font-medium mb-6 cursor-pointer w-fit"
+      class="inline-flex items-center gap-1 text-gray-500 p-3 md:p-0 hover:text-[var(--color-primary)] transition-colors text-sm font-medium mb-6 cursor-pointer w-fit"
     >
       <mat-icon class="scale-90">arrow_back</mat-icon>
       Back to Dashboard
     </a>
     <div
-      class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8"
+      class="flex flex-col sm:flex-row justify-between items-start sm:items-center px-3 md:px-0 gap-4 mb-8"
     >
       <div>
         <h1
@@ -37,7 +37,7 @@
       </div>
     </div>
 
-    <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 mb-6">
+    <div class="bg-white p-4 md:rounded-2xl shadow-sm border border-gray-100 md:mb-6">
       <div class="relative w-full">
         <mat-icon class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
           >search</mat-icon
@@ -57,7 +57,7 @@
       </div>
     } @else if (specializations.length === 0) {
       <div
-        class="bg-white rounded-2xl shadow-sm border border-gray-100 p-12 text-center flex flex-col items-center"
+        class="bg-white md:rounded-2xl shadow-sm border border-gray-100 p-12 text-center flex flex-col items-center"
       >
         <div
           class="w-20 h-20 mb-4 bg-purple-50 rounded-full flex items-center justify-center"
@@ -74,7 +74,7 @@
       </div>
     } @else if (filteredSpecializations.length === 0) {
       <div
-        class="bg-white rounded-2xl shadow-sm border border-gray-100 p-12 text-center"
+        class="bg-white md:rounded-2xl shadow-sm border border-gray-100 p-12 text-center"
       >
         <mat-icon class="text-gray-300 text-6xl w-16 h-16 mb-4"
           >search_off</mat-icon
@@ -89,9 +89,9 @@
         </button>
       </div>
     } @else {
-      <div class="bg-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-300 rounded-2xl">
+      <div class="bg-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-300 md:rounded-2xl">
         <div
-          class="overflow-auto custom-scroll max-h-[600px] border border-gray-200 rounded-2xl"
+          class="overflow-auto custom-scroll max-h-[600px] border border-gray-200 md:rounded-2xl"
         >
           <table
             class="w-full text-left table-fixed min-w-[700px] border-collapse"
@@ -130,7 +130,7 @@
                       [ngClass]="
                         spec.psychologistsCount > 0
                           ? 'bg-mint/20 text-success'
-                          : 'bg-gray-100 text-gray-500'
+                          : 'bg-transparent text-gray-500'
                       "
                     >
                       {{ spec.psychologistsCount }}
@@ -139,7 +139,7 @@
 
                   <td class="px-3 py-2 text-center">
                     <span
-                      class="inline-flex items-center justify-center min-w-[2.5rem] px-2 py-1 rounded-md font-medium text-sm text-gray-500 bg-gray-100"
+                      class="inline-flex items-center justify-center min-w-[2.5rem] px-2 py-1 rounded-md font-medium text-sm text-gray-500 bg-transparent"
                     >
                       {{ spec.applicationsCount }}
                     </span>
