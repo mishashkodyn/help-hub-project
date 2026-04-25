@@ -13,7 +13,7 @@ import { AuthService } from '../../../../api/services/auth.service';
 export class UserAccountPageComponent implements OnInit {
   user: UserProfileDto | null = null;
   isLoading: boolean = false;
-  activeTab: 'about' | 'posts' | 'reviews' = 'about';
+  activeTab: 'about' | 'posts' | 'reviews' = 'posts';
 
   constructor(
     private route: ActivatedRoute,

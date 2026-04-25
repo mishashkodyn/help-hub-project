@@ -25,7 +25,6 @@ export class ChatWindowComponent {
 
   constructor(
     protected chatService: ChatService,
-    private authService: AuthService,
     private filesService: FilesService,
   ) {}
 
