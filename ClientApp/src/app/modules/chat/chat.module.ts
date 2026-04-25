@@ -15,6 +15,7 @@ import { FormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { VideoChatComponent } from './components/video-chat/video-chat.component';
 import { CdkAutofill } from "@angular/cdk/text-field";
+import { TranslocoModule } from '@ngneat/transloco';
 
 
 
@@ -34,6 +35,7 @@ import { CdkAutofill } from "@angular/cdk/text-field";
     TitleCasePipe,
     MatMenuModule,
     SharedModule,
+    TranslocoModule,
     FormsModule,
     MatDialogModule,
     VideoChatComponent,

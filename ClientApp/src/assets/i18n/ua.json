@@ -100,13 +100,16 @@
     "no_messages": "Повідомлень ще немає",
     "start_conversation": "Розпочати розмову",
     "online": "Онлайн",
+    "click_chat": "Відкрити чат",
     "offline": "Офлайн",
-    "typing": "Друкує...",
+    "typing": "Друкує",
     "new_message": "Нове повідомлення",
     "select_conversation": "Виберіть розмову",
     "message_sent": "Повідомлення відправлено",
     "message_delivered": "Доставлено",
-    "message_read": "Прочитано"
+    "message_read": "Прочитано",
+    "choose_chat": "Виберіть чат для обговорення",
+    "select_contact": "Виберіть контакт зі списку ліворуч, щоб почати розмову"
   },
   "profile": {
     "admin": "Адміністратор",

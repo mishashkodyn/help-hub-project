@@ -1,28 +1,5 @@
 <ng-container *transloco="let t">
-  <div class="h-full flex flex-col overflow-y-hidden overflow-x-hidden">
-    <div
-      class="flex items-center gap-2 md:gap-4 w-full h-13 px-4 md:px-6 relative"
-    >
-      <button
-        (click)="sidebarService.toggleSideBar()"
-        class="flex items-center justify-center pr-2 text-primary cursor-pointer hover:text-success transition-colors"
-      >
-        <mat-icon class="text-2xl md:text-3xl transition-all duration-300">
-          menu
-        </mat-icon>
-      </button>
-      <div
-        class="flex items-center cursor-pointer gap-1 md:gap-0"
-        (click)="navigateTo('home')"
-      >
-        <img
-          src="/main-icon.png"
-          alt="Help hub"
-          class="w-6 h-6 md:w-8 md:h-8 shrink-0"
-        />
-        <img src="/main-icon-text.png" alt="Help hub" class="h-4 mt-1 md:h-5" />
-      </div>
-    </div>
+  <div class="h-full flex flex-col overflow-y-hidden overflow-x-hidden pt-15">
     <div
       class="flex flex-col h-full bg-white border-r border-gray-100 font-sans"
     >

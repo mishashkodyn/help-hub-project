@@ -104,11 +104,14 @@
     "online": "Online",
     "offline": "Offline",
     "typing": "Typing...",
+    "click_chat": "Click to open chat",
     "new_message": "New message",
     "select_conversation": "Select a conversation",
     "message_sent": "Message sent",
     "message_delivered": "Delivered",
-    "message_read": "Read"
+    "message_read": "Read",
+    "choose_chat": "Choose a chat to communicate",
+    "select_contact": "Select a contact from the list on the left to start a conversation"
   },
   "profile": {
     "admin": "Admin",

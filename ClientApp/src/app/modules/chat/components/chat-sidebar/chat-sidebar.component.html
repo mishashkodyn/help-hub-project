@@ -1,93 +1,95 @@
-<div class="flex flex-col h-full bg-white">
-  <div class="px-4 py-4">
-    <div
-      class="relative flex items-center w-full bg-gray-50/80 rounded-2xl border border-gray-100 focus-within:border-primary/30 focus-within:bg-white focus-within:shadow-sm transition-all duration-300"
-    >
-      <mat-icon class="text-gray-400 ml-4 mr-2 scale-90">search</mat-icon>
-      <input
-        type="text"
-        placeholder="Search..."
-        class="w-full bg-transparent border-none py-3 pr-4 text-sm text-gray-700 placeholder-gray-400 focus:outline-none"
-      />
-    </div>
-  </div>
-
-  <div class="flex-1 overflow-y-auto custom-scroll px-2 pb-2">
-    @for (user of presenceService.usersList(); track user.id) {
+<ng-container *transloco="let t">
+  <div class="flex flex-col h-full bg-white">
+    <div class="px-4 py-4">
       <div
-        (click)="openChatWindow(user)"
-        class="group flex items-center gap-3.5 p-3 mx-1 mb-1 rounded-2xl cursor-pointer transition-all duration-200 active:scale-[0.98] border border-transparent"
-        [ngClass]="
-          chatService.currentOpenedChat()?.id === user.id
-            ? 'bg-blue-100 shadow-sm border-blue-100/50'
-            : user.unreadCount > 0
-              ? 'bg-slate-50 hover:bg-gray-50'
-              : 'hover:bg-gray-50'
-        "
+        class="relative flex items-center w-full bg-gray-50/80 rounded-2xl border border-gray-100 focus-within:border-primary/30 focus-within:bg-white focus-within:shadow-sm transition-all duration-300"
       >
-        <div class="relative shrink-0">
-          <div
-            class="w-12 h-12 rounded-full overflow-hidden bg-gray-100 shadow-sm ring-2 ring-transparent group-hover:ring-white transition-all"
-          >
-            <img
-              [src]="user.profileImage"
-              class="w-full h-full object-cover"
-              alt="Avatar"
-            />
-          </div>
+        <mat-icon class="text-gray-400 ml-4 mr-2 scale-90">search</mat-icon>
+        <input
+          type="text"
+          placeholder="{{ t('common.search') }}..."
+          class="w-full bg-transparent border-none py-3 pr-4 text-sm text-gray-700 placeholder-gray-400 focus:outline-none"
+        />
+      </div>
+    </div>
 
-          @if (user.isOnline) {
+    <div class="flex-1 overflow-y-auto custom-scroll px-2 pb-2">
+      @for (user of presenceService.usersList(); track user.id) {
+        <div
+          (click)="openChatWindow(user)"
+          class="group flex items-center gap-3.5 p-3 mx-1 mb-1 rounded-2xl cursor-pointer transition-all duration-200 active:scale-[0.98] border border-transparent"
+          [ngClass]="
+            chatService.currentOpenedChat()?.id === user.id
+              ? 'bg-blue-100 shadow-sm border-blue-100/50'
+              : user.unreadCount > 0
+                ? 'bg-slate-50 hover:bg-gray-50'
+                : 'hover:bg-gray-50'
+          "
+        >
+          <div class="relative shrink-0">
             <div
-              class="absolute bottom-0 right-0 w-3.5 h-3.5 bg-green-500 rounded-full border-2 border-white shadow-sm"
-            ></div>
-          }
-        </div>
-
-        <div class="flex flex-col flex-1 min-w-0 justify-center">
-          <div class="flex items-center justify-between gap-2 mb-0.5">
-            <span
-              class="text-[15px] truncate transition-colors"
-              [ngClass]="
-                chatService.currentOpenedChat()?.id === user.id
-                  ? 'text-primary font-bold'
-                  : user.unreadCount > 0
-                    ? 'text-gray-900 font-bold'
-                    : 'text-gray-800 font-semibold'
-              "
+              class="w-12 h-12 rounded-full overflow-hidden bg-gray-100 shadow-sm ring-2 ring-transparent group-hover:ring-white transition-all"
             >
-              {{ user.name | titlecase }}
-            </span>
+              <img
+                [src]="user.profileImage"
+                class="w-full h-full object-cover"
+                alt="Avatar"
+              />
+            </div>
 
-            @if (user.unreadCount > 0) {
-              <span
-                class="shrink-0 bg-primary text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm"
-              >
-                {{ user.unreadCount > 99 ? "99+" : user.unreadCount }}
-              </span>
+            @if (user.isOnline) {
+              <div
+                class="absolute bottom-0 right-0 w-3.5 h-3.5 bg-green-500 rounded-full border-2 border-white shadow-sm"
+              ></div>
             }
           </div>
 
-          <div class="h-5 flex items-center text-sm">
-            @if (user.isTyping) {
-              <div class="text-primary flex items-center gap-1.5">
-                <span class="text-xs font-medium italic">Typing</span>
-                <app-typing-indicator />
-              </div>
-            } @else {
+          <div class="flex flex-col flex-1 min-w-0 justify-center">
+            <div class="flex items-center justify-between gap-2 mb-0.5">
               <span
-                class="text-xs truncate w-full transition-colors"
+                class="text-[15px] truncate transition-colors"
                 [ngClass]="
                   chatService.currentOpenedChat()?.id === user.id
-                    ? 'text-primary/70'
-                    : 'text-gray-500 group-hover:text-gray-600'
+                    ? 'text-primary font-bold'
+                    : user.unreadCount > 0
+                      ? 'text-gray-900 font-bold'
+                      : 'text-gray-800 font-semibold'
                 "
               >
-                Click to open chat
+                {{ user.name | titlecase }}
               </span>
-            }
+
+              @if (user.unreadCount > 0) {
+                <span
+                  class="shrink-0 bg-primary text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm"
+                >
+                  {{ user.unreadCount > 99 ? "99+" : user.unreadCount }}
+                </span>
+              }
+            </div>
+
+            <div class="h-5 flex items-center text-sm">
+              @if (user.isTyping) {
+                <div class="text-primary flex items-center gap-1.5">
+                  <span class="text-xs font-medium italic">{{ t('chat.typing') }}</span>
+                  <app-typing-indicator />
+                </div>
+              } @else {
+                <span
+                  class="text-xs truncate w-full transition-colors"
+                  [ngClass]="
+                    chatService.currentOpenedChat()?.id === user.id
+                      ? 'text-primary/70'
+                      : 'text-gray-500 group-hover:text-gray-600'
+                  "
+                >
+                  {{ t('chat.click_chat') }}
+                </span>
+              }
+            </div>
           </div>
         </div>
-      </div>
-    }
+      }
+    </div>
   </div>
-</div>
+</ng-container>
