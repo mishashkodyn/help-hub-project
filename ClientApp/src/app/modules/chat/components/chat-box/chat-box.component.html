@@ -76,13 +76,13 @@
                         [src]="att.path"
                         class="w-full h-auto max-h-[150px] md:max-h-[250px] object-cover cursor-pointer transition-transform duration-300 group-hover/img:scale-[1.02]"
                         alt="attachment"
-                        (click)="viewImage(att.path)"
+                        (click)="openMedia(att.path, 'image')"
                       />
                     </div>
                   } @else if (att.type === "video") {
                     <div
                       class="relative rounded-xl overflow-hidden bg-black/90 shadow-sm cursor-pointer group"
-                      (click)="openVideo(att.path)"
+                      (click)="openMedia(att.path, 'video')"
                     >
                       <video
                         [src]="att.path"
@@ -224,31 +224,3 @@
     </ng-container>
   </div>
 </div>
-
-@if (activeVideoUrl) {
-  <div 
-    class="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 backdrop-blur-sm"
-    (click)="closeVideo()"
-  >
-    <button 
-      class="absolute top-4 right-4 text-white/70 hover:text-white p-2 z-10 transition-colors"
-      (click)="closeVideo()"
-    >
-      <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-      </svg>
-    </button>
-
-    <div 
-      class="relative w-full h-full md:w-[85vw] md:h-[85vh] max-w-[1400px] flex items-center justify-center md:p-6"
-      (click)="$event.stopPropagation()" 
-    >
-      <video
-        [src]="activeVideoUrl"
-        controls
-        autoplay
-        class="w-full h-full object-contain rounded-none md:rounded-2xl bg-black shadow-2xl"
-      ></video>
-    </div>
-  </div>
-}

@@ -64,7 +64,7 @@
       </div>
 
       <div class="flex-1 min-h-0 w-full relative overflow-hidden bg-slate-50">
-        <app-chat-box class="h-full block relative z-10" />
+        <app-chat-box class="h-full block relative z-10" (viewMedia)="openMedia($event.url, $event.type)"/>
       </div>
 
       <div

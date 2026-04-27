@@ -3,6 +3,8 @@ import {
   Component,
   effect,
   ElementRef,
+  EventEmitter,
+  Output,
   ViewChild,
 } from '@angular/core';
 import { ChatService } from '../../../../api/services/chat.service';
@@ -17,8 +19,7 @@ import { Message } from '../../../../api/models/message';
 })
 export class ChatBoxComponent implements AfterViewInit {
   @ViewChild('scrollContainer') private scrollContainer!: ElementRef;
-
-  activeVideoUrl: string | null = null;
+  @Output() viewMedia = new EventEmitter<{ url: string; type: 'image' | 'video' }>();
 
   constructor(
     protected chatService: ChatService,
@@ -38,14 +39,8 @@ export class ChatBoxComponent implements AfterViewInit {
 
   ngOnInit(): void {}
 
-  openVideo(url: string) {
-    this.activeVideoUrl = url;
-    document.body.style.overflow = 'hidden';
-  }
-
-  closeVideo() {
-    this.activeVideoUrl = null;
-    document.body.style.overflow = 'auto';
+  openMedia(url: string, type: 'image' | 'video') {
+    this.viewMedia.emit({ url, type });
   }
 
   addReplyMessage(message: Message) {

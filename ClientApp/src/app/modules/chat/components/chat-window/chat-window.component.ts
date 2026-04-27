@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, inject, Output, ViewChild } from '@angular/core';
 import { ChatService } from '../../../../api/services/chat.service';
 import { TitleCasePipe } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
@@ -18,6 +18,7 @@ import { AuthService } from '../../../../api/services/auth.service';
 })
 export class ChatWindowComponent {
   @ViewChild('chatBox') chatContainer?: ElementRef;
+  @Output() viewMedia = new EventEmitter<{ url: string; type: 'image' | 'video' }>();
   dialog = inject(MatDialog);
   signalRService = inject(VideoChatService);
   message: string = '';
@@ -27,6 +28,10 @@ export class ChatWindowComponent {
     protected chatService: ChatService,
     private filesService: FilesService,
   ) {}
+
+  openMedia(url: string, type: 'image' | 'video') {
+    this.viewMedia.emit({ url, type });
+  }
 
   displayDialog(receiverId?: string) {
     this.dialog.open(VideoChatComponent, {
