@@ -37,16 +37,20 @@
                     class="relative h-24 rounded-xl overflow-hidden border border-gray-200 bg-gray-50 group"
                   >
                     @if (isPreviewVideo($index)) {
-                      <video
-                        [src]="url"
-                        class="w-full h-full object-cover"
-                      ></video>
                       <div
-                        class="absolute inset-0 bg-black/20 flex items-center justify-center"
+                        class="relative w-full h-full cursor-pointer group/vid"
                       >
-                        <mat-icon class="text-white text-3xl opacity-80"
-                          >play_circle_outline</mat-icon
+                        <video
+                          [src]="url"
+                          class="w-full h-full object-cover"
+                        ></video>
+                        <div
+                          class="absolute inset-0 bg-black/20 flex items-center justify-center group-hover/vid:bg-black/40 transition-colors"
                         >
+                          <mat-icon class="text-white text-3xl opacity-80"
+                            >play_circle_outline</mat-icon
+                          >
+                        </div>
                       </div>
                     } @else if (url === "UNSUPPORTED_PREVIEW_FORMAT") {
                       <div
@@ -66,7 +70,10 @@
                         >
                       </div>
                     } @else {
-                      <img [src]="url" class="w-full h-full object-cover" />
+                      <img
+                        [src]="url"
+                        class="w-full h-full object-cover cursor-pointer hover:opacity-90 transition-opacity"
+                      />
                     }
 
                     <button
@@ -133,7 +140,9 @@
         >
           <mat-icon class="text-4xl text-gray-300">history_edu</mat-icon>
         </div>
-        <h3 class="text-xl font-bold text-gray-700 mb-2">{{ t("profile.no_posts") }}</h3>
+        <h3 class="text-xl font-bold text-gray-700 mb-2">
+          {{ t("profile.no_posts") }}
+        </h3>
         <p class="text-gray-500 max-w-sm mx-auto">
           {{ t("profile.no_posts_second") }}
         </p>
@@ -193,12 +202,14 @@
                 >
                   @if (isVideo(post.mediaUrls[0])) {
                     <video
+                      (click)="openMedia(post.mediaUrls[0], 'video')"
                       [src]="post.mediaUrls[0]"
                       controls
                       class="max-w-full max-h-[500px] object-contain outline-none"
                     ></video>
                   } @else {
                     <img
+                      (click)="openMedia(post.mediaUrls[0], 'image')"
                       [src]="post.mediaUrls[0]"
                       class="max-w-full max-h-[500px] object-contain cursor-pointer transition-transform hover:scale-[1.01]"
                     />
@@ -215,12 +226,14 @@
                       >
                         @if (isVideo(url)) {
                           <video
+                            (click)="openMedia(url, 'video')"
                             [src]="url"
                             controls
                             class="max-w-full max-h-full object-contain bg-black/5 outline-none"
                           ></video>
                         } @else {
                           <img
+                            (click)="openMedia(url, 'image')"
                             [src]="url"
                             class="max-w-full max-h-full object-contain cursor-pointer hover:opacity-95 transition-opacity"
                           />
@@ -247,7 +260,7 @@
                 >
                   {{ post.isLikedByMe ? "favorite" : "favorite_border" }}
                 </mat-icon>
-                {{ post.likesCount > 0 ? post.likesCount : t('profile.like') }}
+                {{ post.likesCount > 0 ? post.likesCount : t("profile.like") }}
               </button>
 
               <button
@@ -263,7 +276,11 @@
                   class="scale-90 transition-transform group-hover:scale-110"
                   >chat_bubble_outline</mat-icon
                 >
-                {{ post.commentsCount > 0 ? post.commentsCount : t('profile.comment') }}
+                {{
+                  post.commentsCount > 0
+                    ? post.commentsCount
+                    : t("profile.comment")
+                }}
               </button>
             </div>
 

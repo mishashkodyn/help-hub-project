@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { UserProfileDto } from '../../../../api/models/user';
 import { CommentResponseDto, PostResponseDto } from '../../../../api/models/post.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -34,6 +34,7 @@ export class PostsUserProfileComponent implements OnInit {
 
   @Input() isOwnProfile!: boolean;
   @Input() user!: UserProfileDto;
+  @Output() mediaSelected = new EventEmitter<{ url: string, type: 'image' | 'video' }>();
 
   constructor(
     private fb: FormBuilder,
@@ -74,6 +75,10 @@ export class PostsUserProfileComponent implements OnInit {
           this.showError('Failed to load posts');
         },
       });
+  }
+
+  openMedia(url: string, type: 'image' | 'video') {
+    this.mediaSelected.emit({ url, type });
   }
 
   loadMore(): void {

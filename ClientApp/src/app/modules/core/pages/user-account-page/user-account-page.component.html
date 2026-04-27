@@ -35,6 +35,7 @@
                 >
                   @if (user.profileImage) {
                     <img
+                      (click)="openMedia(user.profileImage, 'image')"
                       [src]="user.profileImage"
                       alt="Avatar"
                       class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
@@ -238,6 +239,7 @@
                 <app-posts-user-profile
                   [user]="user"
                   [isOwnProfile]="isOwnProfile"
+                  (mediaSelected)="openMedia($event.url, $event.type)"
                 ></app-posts-user-profile>
               }
 
@@ -251,3 +253,10 @@
     </div>
   </div>
 </ng-container>
+
+@if (activeMedia) {
+  <app-media-player
+    [media]="activeMedia" 
+    (closeViewer)="closeMedia()">
+  </app-media-player>
+}

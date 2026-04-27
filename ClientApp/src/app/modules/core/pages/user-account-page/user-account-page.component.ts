@@ -14,6 +14,7 @@ export class UserAccountPageComponent implements OnInit {
   user: UserProfileDto | null = null;
   isLoading: boolean = false;
   activeTab: 'about' | 'posts' | 'reviews' = 'posts';
+  activeMedia: { url: string, type: 'image' | 'video' } | null = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -44,6 +45,14 @@ export class UserAccountPageComponent implements OnInit {
         },
       });
     });
+  }
+
+  openMedia(url: string, type: 'image' | 'video') {
+    this.activeMedia = { url, type };
+  }
+
+  closeMedia() {
+    this.activeMedia = null;
   }
 
   get isOwnProfile(): boolean {

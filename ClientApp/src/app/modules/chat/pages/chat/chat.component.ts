@@ -24,11 +24,9 @@ export class ChatComponent implements OnDestroy {
 
   openMedia(url: string, type: 'image' | 'video') {
     this.activeMedia = { url, type };
-    document.body.style.overflow = 'hidden';
   }
 
   closeMedia() {
     this.activeMedia = null;
-    document.body.style.overflow = 'auto';
   }
 }

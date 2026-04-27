@@ -9,6 +9,7 @@ import { DropdownComponent } from './dropdown/dropdown.component';
 import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
 import { ConfirmDialogModalComponent } from './confirm-dialog-modal/confirm-dialog-modal.component';
 import { TranslocoModule } from '@ngneat/transloco';
+import { MediaPlayerComponent } from './media-player/media-player.component';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { TranslocoModule } from '@ngneat/transloco';
     LogoutConfirmModalComponent,
     DropdownComponent,
     LoadingSpinnerComponent,
-    ConfirmDialogModalComponent
+    ConfirmDialogModalComponent,
+    MediaPlayerComponent
   ],
   imports: [
     CommonModule,
@@ -32,7 +34,8 @@ import { TranslocoModule } from '@ngneat/transloco';
     LogoutConfirmModalComponent,
     DropdownComponent,
     LoadingSpinnerComponent,
-    ConfirmDialogModalComponent
+    ConfirmDialogModalComponent,
+    MediaPlayerComponent
   ]
 })
 export class SharedModule { }

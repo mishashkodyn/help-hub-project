@@ -24,57 +24,14 @@
     [class.open]="chatService.chatRightSidebarIsOpen()"
   >
     <div class="right-sidebar-inner">
-      <app-chat-right-sidebar></app-chat-right-sidebar>
+      <app-chat-right-sidebar (mediaSelected)="openMedia($event.url, $event.type)"></app-chat-right-sidebar>
     </div>
   </div>
 </div>
 
 @if (activeMedia) {
-  <div 
-    class="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 backdrop-blur-md media-backdrop"
-    (click)="closeMedia()"
-  >
-    <div class="absolute top-0 left-0 right-0 p-4 md:p-6 flex justify-end gap-3 z-20 bg-gradient-to-b from-black/60 to-transparent">
-      <a 
-        [href]="activeMedia.url" 
-        target="_blank"
-        download
-        class="text-white/70 hover:text-white bg-black/20 hover:bg-black/50 rounded-full w-10 h-10 flex items-center justify-center transition-all backdrop-blur-sm"
-        title="Завантажити"
-        (click)="$event.stopPropagation()"
-      >
-        <i class="bi bi-download text-[20px]"></i>
-      </a>
-      
-      <button 
-        class="text-white/70 hover:text-white bg-black/20 hover:bg-black/50 rounded-full w-10 h-10 flex items-center justify-center transition-all backdrop-blur-sm"
-        (click)="closeMedia()"
-        title="Закрити"
-      >
-        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-        </svg>
-      </button>
-    </div>
-
-    <div 
-      class="relative w-full h-full md:w-[90vw] md:h-[90vh] max-w-[1400px] flex items-center justify-center p-0 md:p-6 media-content"
-      (click)="$event.stopPropagation()" 
-    >
-      @if (activeMedia.type === 'video') {
-        <video
-          [src]="activeMedia.url"
-          controls
-          autoplay
-          class="w-full h-full object-contain rounded-none md:rounded-2xl bg-black shadow-2xl outline-none"
-        ></video>
-      } @else if (activeMedia.type === 'image') {
-        <img
-          [src]="activeMedia.url"
-          class="w-full h-full object-contain rounded-none md:rounded-2xl shadow-2xl select-none"
-          alt="Перегляд фото"
-        />
-      }
-    </div>
-  </div>
+  <app-media-player 
+    [media]="activeMedia" 
+    (closeViewer)="closeMedia()">
+  </app-media-player>
 }
