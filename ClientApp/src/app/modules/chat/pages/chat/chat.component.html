@@ -24,7 +24,7 @@
     [class.open]="chatService.chatRightSidebarIsOpen()"
   >
     <div class="right-sidebar-inner">
-      <app-chat-right-sidebar></app-chat-right-sidebar>
+      <app-chat-right-sidebar (mediaSelected)="openMedia($event.url, $event.type)"></app-chat-right-sidebar>
     </div>
   </div>
 </div>

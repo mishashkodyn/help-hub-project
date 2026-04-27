@@ -35,6 +35,7 @@
                 >
                   @if (user.profileImage) {
                     <img
+                      (click)="openMedia(user.profileImage, 'image')"
                       [src]="user.profileImage"
                       alt="Avatar"
                       class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"

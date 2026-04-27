@@ -15,6 +15,7 @@ import {
 })
 export class MediaPlayerComponent implements OnInit, OnDestroy {
   @Input() media!: { url: string, type: 'image' | 'video' };
+  @Input() downloadable: boolean = false;
   @Output() closeViewer = new EventEmitter<void>();
 
   ngOnInit() {

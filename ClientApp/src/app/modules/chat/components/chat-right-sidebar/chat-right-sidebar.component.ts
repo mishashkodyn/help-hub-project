@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, signal } from '@angular/core';
 import { ChatService } from '../../../../api/services/chat.service';
 import { Router } from '@angular/router';
 import { MenuItem } from '../../../../api/models/menu-item';
@@ -11,6 +11,7 @@ import { MenuItem } from '../../../../api/models/menu-item';
 })
 export class ChatRightSidebarComponent{
   activeTab: string = 'Information';
+  @Output() mediaSelected = new EventEmitter<{ url: string; type: 'image' | 'video' }>();
 
   constructor(protected chatService: ChatService, private router: Router) {}
 
@@ -32,5 +33,9 @@ export class ChatRightSidebarComponent{
 
   setActiveTab(tab: MenuItem) {
     this.activeTab = tab.label ?? 'Information';
+  }
+
+  openMedia(url: string, type: 'image' | 'video') {
+    this.mediaSelected.emit({ url, type });
   }
 }
