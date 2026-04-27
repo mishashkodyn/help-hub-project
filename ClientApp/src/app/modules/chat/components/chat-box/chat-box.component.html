@@ -1,19 +1,21 @@
-<div class="chat-section flex flex-col h-full w-full overflow-hidden bg-[#F8F9FA]">
+<div
+  class="chat-section flex flex-col h-full w-full overflow-hidden bg-[#F8F9FA]"
+>
   <div
     #scrollContainer
     class="flex-1 custom-scroll overflow-y-auto p-3 md:p-5 flex flex-col w-full gap-1"
     style="overscroll-behavior-y: contain"
   >
-    <ng-container *ngFor="let item of chatService.chatMessages(); let i = index">
-      
+    <ng-container
+      *ngFor="let item of chatService.chatMessages(); let i = index"
+    >
       <div
         class="flex w-full items-end gap-2 group"
         [ngClass]="{
           'justify-end': item.senderId === authService.currentLoggedUser?.id,
-          'justify-start': item.senderId !== authService.currentLoggedUser?.id
+          'justify-start': item.senderId !== authService.currentLoggedUser?.id,
         }"
       >
-        
         @if (item.senderId === authService.currentLoggedUser?.id) {
           <button
             (click)="addReplyMessage(item)"
@@ -24,30 +26,40 @@
           </button>
         }
 
-        <div class="flex flex-col max-w-[85%] md:max-w-[70%] lg:max-w-[60%] min-w-[80px]">
-          
+        <div
+          class="flex flex-col max-w-[85%] md:max-w-[70%] lg:max-w-[60%] min-w-[80px]"
+        >
           <div
             class="text-[15px] leading-relaxed relative w-full break-words shadow-sm rounded-2xl"
             [ngClass]="getBubbleClass(i)"
           >
-            
             <div
               *ngIf="item.replyMessageContent"
               class="mb-2 p-2 rounded-lg bg-black/5 border-l-[4px] flex flex-col cursor-pointer hover:bg-black/10 transition-colors"
               [ngClass]="{
-                'border-primary/60': item.senderId === authService.currentLoggedUser?.id,
-                'border-white/60': item.senderId !== authService.currentLoggedUser?.id
+                'border-primary/60':
+                  item.senderId === authService.currentLoggedUser?.id,
+                'border-white/60':
+                  item.senderId !== authService.currentLoggedUser?.id,
               }"
             >
-              <span 
+              <span
                 class="font-semibold text-[13px] truncate"
-                [ngClass]="item.senderId === authService.currentLoggedUser?.id ? 'text-primary' : 'text-white/90'"
+                [ngClass]="
+                  item.senderId === authService.currentLoggedUser?.id
+                    ? 'text-primary'
+                    : 'text-white/90'
+                "
               >
                 {{ item.replyMessageSenderName || "Користувач" }}
               </span>
-              <span 
+              <span
                 class="truncate text-[13px] opacity-80 mt-[2px]"
-                [ngClass]="item.senderId === authService.currentLoggedUser?.id ? 'text-gray-700' : 'text-white'"
+                [ngClass]="
+                  item.senderId === authService.currentLoggedUser?.id
+                    ? 'text-gray-700'
+                    : 'text-white'
+                "
               >
                 {{ item.replyMessageContent }}
               </span>
@@ -56,9 +68,10 @@
             @if (item.attachments && item.attachments.length > 0) {
               <div class="flex flex-col gap-2 mb-2 w-full pt-1">
                 @for (att of item.attachments; track $index) {
-                  
                   @if (att.type === "image") {
-                    <div class="rounded-xl overflow-hidden bg-black/5 relative group/img shadow-sm">
+                    <div
+                      class="rounded-xl overflow-hidden bg-black/5 relative group/img shadow-sm"
+                    >
                       <img
                         [src]="att.path"
                         class="w-full h-auto max-h-[150px] md:max-h-[250px] object-cover cursor-pointer transition-transform duration-300 group-hover/img:scale-[1.02]"
@@ -66,16 +79,33 @@
                         (click)="viewImage(att.path)"
                       />
                     </div>
-                  
                   } @else if (att.type === "video") {
-                    <div class="rounded-xl overflow-hidden bg-black/90 shadow-sm">
+                    <div
+                      class="relative rounded-xl overflow-hidden bg-black/90 shadow-sm cursor-pointer group"
+                      (click)="openVideo(att.path)"
+                    >
                       <video
                         [src]="att.path"
-                        controls
-                        class="w-full max-h-[250px] md:max-h-[350px]"
+                        class="w-full h-[250px] md:h-[350px] object-cover opacity-70 group-hover:opacity-50 transition-opacity duration-300"
+                        preload="metadata"
                       ></video>
+
+                      <div
+                        class="absolute inset-0 flex items-center justify-center"
+                      >
+                        <div
+                          class="bg-white/20 backdrop-blur-md p-4 rounded-full group-hover:bg-white/30 group-hover:scale-110 transition-all duration-300"
+                        >
+                          <svg
+                            class="w-8 h-8 text-white ml-1"
+                            fill="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path d="M8 5v14l11-7z" />
+                          </svg>
+                        </div>
+                      </div>
                     </div>
-                  
                   } @else {
                     <a
                       [href]="att.path"
@@ -87,35 +117,53 @@
                           : 'bg-black/10 hover:bg-black/20 border-white/10'
                       "
                     >
-                      <div class="w-10 h-10 rounded-full bg-white flex items-center justify-center shrink-0 shadow-sm">
-                        <i 
+                      <div
+                        class="w-10 h-10 rounded-full bg-white flex items-center justify-center shrink-0 shadow-sm"
+                      >
+                        <i
                           class="text-[20px]"
                           [ngClass]="
-                            att.type === 'pdf' ? 'bi-file-earmark-pdf-fill text-red-500' : 
-                            att.type === 'doc' || att.type === 'docx' ? 'bi-file-earmark-word-fill text-blue-500' : 
-                            'bi-file-earmark-text-fill text-gray-500'
+                            att.type === 'pdf'
+                              ? 'bi-file-earmark-pdf-fill text-red-500'
+                              : att.type === 'doc' || att.type === 'docx'
+                                ? 'bi-file-earmark-word-fill text-blue-500'
+                                : 'bi-file-earmark-text-fill text-gray-500'
                           "
                         ></i>
                       </div>
-                      
-                      <div class="flex flex-col min-w-0 overflow-hidden w-full leading-snug">
-                        <span 
+
+                      <div
+                        class="flex flex-col min-w-0 overflow-hidden w-full leading-snug"
+                      >
+                        <span
                           class="text-[14px] font-semibold truncate"
-                          [ngClass]="item.senderId === authService.currentLoggedUser?.id ? 'text-gray-800' : 'text-white'"
+                          [ngClass]="
+                            item.senderId === authService.currentLoggedUser?.id
+                              ? 'text-gray-800'
+                              : 'text-white'
+                          "
                         >
                           {{ att.name }}
                         </span>
-                        <span 
+                        <span
                           class="text-[11px] uppercase tracking-wider mt-0.5"
-                          [ngClass]="item.senderId === authService.currentLoggedUser?.id ? 'text-gray-500' : 'text-white/70'"
+                          [ngClass]="
+                            item.senderId === authService.currentLoggedUser?.id
+                              ? 'text-gray-500'
+                              : 'text-white/70'
+                          "
                         >
                           {{ att.name.split(".").pop() }}
                         </span>
                       </div>
-                      
-                      <i 
+
+                      <i
                         class="bi bi-download text-[20px] shrink-0 transition-transform group-hover/file:-translate-y-1"
-                        [ngClass]="item.senderId === authService.currentLoggedUser?.id ? 'text-gray-400 group-hover/file:text-primary' : 'text-white/50 group-hover/file:text-white'"
+                        [ngClass]="
+                          item.senderId === authService.currentLoggedUser?.id
+                            ? 'text-gray-400 group-hover/file:text-primary'
+                            : 'text-white/50 group-hover/file:text-white'
+                        "
                       ></i>
                     </a>
                   }
@@ -129,10 +177,16 @@
               </span>
             }
 
-            <div class="flex items-center justify-end gap-1 mt-1.5 select-none float-right ml-3">
+            <div
+              class="flex items-center justify-end gap-1 mt-1.5 select-none float-right ml-3"
+            >
               <span
                 class="text-[11px] font-medium"
-                [ngClass]="item.senderId === authService.currentLoggedUser?.id ? 'text-gray-500/90' : 'text-white/80'"
+                [ngClass]="
+                  item.senderId === authService.currentLoggedUser?.id
+                    ? 'text-gray-500/90'
+                    : 'text-white/80'
+                "
               >
                 {{ item.createdDate | date: "HH:mm" }}
               </span>
@@ -142,15 +196,18 @@
                 class="flex items-center justify-center h-[14px]"
               >
                 @if (item.isRead) {
-                  <i class="bi bi-check-all text-[18px] text-blue-500 leading-none"></i>
+                  <i
+                    class="bi bi-check-all text-[18px] text-blue-500 leading-none"
+                  ></i>
                 } @else {
-                  <i class="bi bi-check text-[18px] text-gray-400 leading-none"></i>
+                  <i
+                    class="bi bi-check text-[18px] text-gray-400 leading-none"
+                  ></i>
                 }
               </div>
             </div>
-            
+
             <div class="clear-both"></div>
-            
           </div>
         </div>
 
@@ -163,8 +220,35 @@
             <i class="bi bi-reply-fill text-[18px]"></i>
           </button>
         }
-        
       </div>
     </ng-container>
   </div>
 </div>
+
+@if (activeVideoUrl) {
+  <div 
+    class="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 backdrop-blur-sm"
+    (click)="closeVideo()"
+  >
+    <button 
+      class="absolute top-4 right-4 text-white/70 hover:text-white p-2 z-10 transition-colors"
+      (click)="closeVideo()"
+    >
+      <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+      </svg>
+    </button>
+
+    <div 
+      class="relative w-full h-full md:w-[85vw] md:h-[85vh] max-w-[1400px] flex items-center justify-center md:p-6"
+      (click)="$event.stopPropagation()" 
+    >
+      <video
+        [src]="activeVideoUrl"
+        controls
+        autoplay
+        class="w-full h-full object-contain rounded-none md:rounded-2xl bg-black shadow-2xl"
+      ></video>
+    </div>
+  </div>
+}

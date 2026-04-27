@@ -1,5 +1,4 @@
 import {
-  AfterViewChecked,
   AfterViewInit,
   Component,
   effect,
@@ -19,7 +18,7 @@ import { Message } from '../../../../api/models/message';
 export class ChatBoxComponent implements AfterViewInit {
   @ViewChild('scrollContainer') private scrollContainer!: ElementRef;
 
-  private previousMessageCount = 0;
+  activeVideoUrl: string | null = null;
 
   constructor(
     protected chatService: ChatService,
@@ -38,6 +37,16 @@ export class ChatBoxComponent implements AfterViewInit {
   }
 
   ngOnInit(): void {}
+
+  openVideo(url: string) {
+    this.activeVideoUrl = url;
+    document.body.style.overflow = 'hidden';
+  }
+
+  closeVideo() {
+    this.activeVideoUrl = null;
+    document.body.style.overflow = 'auto';
+  }
 
   addReplyMessage(message: Message) {
     if (message) {

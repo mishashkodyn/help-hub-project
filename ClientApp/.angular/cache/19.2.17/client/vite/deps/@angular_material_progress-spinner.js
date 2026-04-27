@@ -1,9 +1,9 @@
 import {
   MatCommonModule
-} from "./chunk-UDNETS4A.js";
+} from "./chunk-52YLO6DR.js";
 import "./chunk-3WTOZ3Q5.js";
-import "./chunk-XITAWE35.js";
 import "./chunk-OOHDZCPL.js";
+import "./chunk-XITAWE35.js";
 import {
   NgTemplateOutlet
 } from "./chunk-EZTQSTGQ.js";
