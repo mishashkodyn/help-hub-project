@@ -12,6 +12,7 @@ export interface User {
     isTyping: boolean;
     preferredAiProvider: string;
     roles: string[];
+    gender: string;
 }
 
 export interface UserProfileDto {

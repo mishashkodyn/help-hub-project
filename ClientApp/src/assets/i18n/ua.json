@@ -35,6 +35,8 @@
     "logout": "Вийти",
     "confirm_logout": "Підтвердити вихід",
     "confirm_logout_second": "Ви впевнені що хочете вийти?",
+    "female": "Жінка",
+    "male": "Чоловік",
     "email": "Email",
     "password": "Пароль",
     "confirm_password": "Підтвердження пароля",

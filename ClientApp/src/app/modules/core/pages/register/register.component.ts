@@ -25,6 +25,7 @@ export class RegisterComponent implements OnInit {
   surname!: string;
   profilePicture: string = 'https://randomuser.me/api/portraits/lego/5.jpg';
   profileImage: File | null = null;
+  gender: 'male' | 'female' = 'male';
   hide: boolean = true;
 
   returnUrl: string = '/';
@@ -69,6 +70,7 @@ export class RegisterComponent implements OnInit {
     formData.append('name', this.name);
     formData.append('surname', this.surname);
     formData.append('profileImage', this.profileImage!);
+    formData.append('gender', this.gender ?? 'male');
 
     this.authService.register(formData).subscribe({
       next: () => {

@@ -35,6 +35,8 @@
     "logout": "Log out",
     "confirm_logout": "Confirm Logout",
     "confirm_logout_second": "Are you sure you want to log out?",
+    "female": "Female",
+    "male": "Male",
     "email": "Email",
     "password": "Password",
     "confirm_password": "Confirm password",
