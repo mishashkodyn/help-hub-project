@@ -1,4 +1,4 @@
-import { Component, HostListener, signal } from '@angular/core';
+import { Component, HostListener, OnInit, signal } from '@angular/core';
 import { MenuItem } from '../../../../api/models/menu-item';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../../api/services/auth.service';
@@ -14,7 +14,7 @@ import { TranslocoService } from '@ngneat/transloco';
   styleUrl: './header.component.scss',
   standalone: false,
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
   isNotificationsOpen = false;
 
   constructor(
@@ -25,6 +25,10 @@ export class HeaderComponent {
     protected notificationService: NotificationService,
     public translocoService: TranslocoService
   ) {}
+
+  ngOnInit(): void {
+    this.sidebarService.sideBarOpen.set(false);
+  }
 
   menuItems = signal<MenuItem[]>([
     {
