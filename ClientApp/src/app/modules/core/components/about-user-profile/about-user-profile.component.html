@@ -1,37 +1,91 @@
 <ng-container *transloco="let t">
-  <div class="animate-fade-in max-w-3xl p-2">
-    <div class="mb-8">
-      <h3 class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-3">
-        {{ t("profile.biography") }}
-      </h3>
-      <div class="bg-gray-50/80 rounded-2xl p-6 border border-gray-100">
-        <p
-          class="text-gray-700 leading-relaxed whitespace-pre-line text-[15px]"
-        >
-          {{ t('profile.no_biography') }}
-        </p>
-      </div>
-    </div>
+  <div class="animate-fade-in max-w-4xl p-2">
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12">
+      
+      <div class="md:col-span-5 space-y-8">
+        <div>
+          <h3 class="text-sm font-extrabold text-gray-400 uppercase tracking-widest mb-5">
+            {{ t("profile.contact_info") }}
+          </h3>
+          <div class="space-y-4">
+            <div class="flex items-center gap-4 bg-white border border-gray-100 p-4 rounded-2xl shadow-sm hover:shadow-md hover:border-[var(--color-sky)] transition-all group">
+              <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-500 flex items-center justify-center group-hover:bg-[var(--color-primary)] group-hover:text-white transition-all shadow-inner">
+                <mat-icon>email</mat-icon>
+              </div>
+              <div class="flex flex-col">
+                <span class="text-[10px] text-gray-400 uppercase font-bold tracking-tight">Email</span>
+                <a [href]="'mailto:' + user?.email" class="text-gray-900 font-semibold truncate hover:text-[var(--color-primary)] transition-colors">
+                  {{ user?.email }}
+                </a>
+              </div>
+            </div>
 
-    <div>
-      <h3 class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-3">
-        {{ t("profile.contact_info") }}
-      </h3>
-      <div
-        class="flex items-center gap-4 bg-white border border-gray-100 shadow-sm p-4 rounded-2xl w-fit hover:border-[var(--color-mint)] transition-colors group"
-      >
-        <div
-          class="w-10 h-10 rounded-full bg-blue-50 text-blue-500 flex items-center justify-center group-hover:bg-[var(--color-sky)] group-hover:text-white transition-colors"
-        >
-          <mat-icon class="scale-90">email</mat-icon>
+            @if (user?.psychologist?.contactPhone) {
+              <div class="flex items-center gap-4 bg-white border border-gray-100 p-4 rounded-2xl shadow-sm hover:shadow-md hover:border-green-200 transition-all group">
+                <div class="w-12 h-12 rounded-xl bg-green-50 text-green-600 flex items-center justify-center group-hover:bg-green-500 group-hover:text-white transition-all shadow-inner">
+                  <mat-icon>phone</mat-icon>
+                </div>
+                <div class="flex flex-col">
+                  <span class="text-[10px] text-gray-400 uppercase font-bold tracking-tight">{{ t('profile.phone') }}</span>
+                  <a [href]="'tel:' + user?.psychologist?.contactPhone" class="text-gray-900 font-semibold hover:text-green-600 transition-colors">
+                    {{ user?.psychologist?.contactPhone }}
+                  </a>
+                </div>
+              </div>
+            }
+          </div>
         </div>
-        <a
-          [href]="'mailto:' + user?.email"
-          class="text-gray-700 font-medium hover:text-[var(--color-primary)] transition-colors"
-        >
-          {{ user?.email }}
-        </a>
-      </div>
+
+        </div>
+
+      @if (user?.psychologist) {
+        <div class="md:col-span-7">
+          <div class="flex items-center justify-between mb-5">
+            <h3 class="text-sm font-extrabold text-gray-400 uppercase tracking-widest">
+              {{ t("profile.working_hours") }}
+            </h3>
+          </div>
+          
+          <div class="bg-white border border-gray-100 shadow-xl shadow-gray-200/40 rounded-3xl overflow-hidden">
+            <div class="flex flex-col">
+              @for (day of weeklySchedule; track day.id) {
+                <div 
+                  class="flex justify-between items-center px-6 py-4 border-b border-gray-50 last:border-0 transition-all"
+                  [ngClass]="{'bg-gray-50/30': day.isWorking, 'opacity-60': !day.isWorking}"
+                >
+                  <div class="flex items-center gap-3">
+                    <div 
+                      class="w-2 h-2 rounded-full"
+                      [ngClass]="day.isWorking ? 'bg-[var(--color-success)] shadow-[0_0_8px_var(--color-success)]' : 'bg-gray-300'"
+                    ></div>
+                    <span class="font-bold text-[15px]" [ngClass]="day.isWorking ? 'text-gray-800' : 'text-gray-400'">
+                      {{ t('days.' + day.name.toLowerCase(), day.name) }}
+                    </span>
+                  </div>
+                  
+                  <div class="flex items-center">
+                    @if (day.isWorking) {
+                      <div class="flex flex-wrap gap-2 justify-end">
+                        @for (slot of day.slots; track $index) {
+                          <span class="inline-flex items-center px-3 py-1 bg-white border border-gray-100 text-[13px] font-bold text-[var(--color-primary)] rounded-full shadow-sm">
+                            <mat-icon class="scale-[0.6] mr-[-4px]">schedule</mat-icon>
+                            {{ slot.start }} — {{ slot.end }}
+                          </span>
+                        }
+                      </div>
+                    } @else {
+                      <span class="text-[11px] font-bold text-gray-400 uppercase tracking-widest italic">
+                        {{ t('profile.day_off') }}
+                      </span>
+                    }
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+        </div>
+      }
+
     </div>
   </div>
 </ng-container>

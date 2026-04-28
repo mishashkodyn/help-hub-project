@@ -1,5 +1,5 @@
 import { Component, signal } from '@angular/core';
-import { AdminCard } from '../../../../api/models/menu-item';
+import { DashboardCardItem } from '../../../../api/models/menu-item';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -8,7 +8,7 @@ import { AdminCard } from '../../../../api/models/menu-item';
   standalone: false,
 })
 export class AdminDashboardComponent {
-  adminCards = signal<AdminCard[]>([
+  adminCards = signal<DashboardCardItem[]>([
     {
       icon: 'assignment',
       title: 'Applications',

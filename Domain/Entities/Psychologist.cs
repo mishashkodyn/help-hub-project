@@ -18,5 +18,7 @@
         public bool OffersFreeSessionsForMilitary { get; set; }
         public int DiscountForAffected { get; set; }
         public ICollection<Specialization> Specializations { get; set; } = new List<Specialization>();
+        public ICollection<WorkingHour> WorkingHours { get; set; } = new List<WorkingHour>();
+        public ICollection<Appointment> Appointments { get; set; } = new List<Appointment>();
     }
 }

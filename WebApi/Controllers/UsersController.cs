@@ -29,14 +29,19 @@ namespace API.Controllers
         [Authorize]
         public async Task<IActionResult> GetUserById(Guid id)
         {
-            var user = await _context.Users.SingleOrDefaultAsync(x => x.Id == id);
+            var user = await _context.Users
+                .SingleOrDefaultAsync(x => x.Id == id);
+            if (user == null) throw new Exception("User not found");
 
-            if (user == null) throw new Exception();
+            var psychologist = await _context.Psychologists
+                .Include(x => x.WorkingHours)
+                .SingleOrDefaultAsync(x => x.UserId == id);
+
+            user.Psychologist = psychologist;
 
             var roles = await _userManager.GetRolesAsync(user);
 
             var mappedUser = _mapper.Map<UserProfileDto>(user);
-
             mappedUser.Roles = roles;
 
             return Ok(Response<UserProfileDto>.Success(mappedUser));

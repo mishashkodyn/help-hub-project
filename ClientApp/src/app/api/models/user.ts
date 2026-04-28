@@ -1,3 +1,5 @@
+import { PsychologistProfileDto } from "./psychologist.model";
+
 export interface User {
     id: string;
     name: string;
@@ -12,6 +14,7 @@ export interface User {
     isTyping: boolean;
     preferredAiProvider: string;
     roles: string[];
+    gender: string;
 }
 
 export interface UserProfileDto {
@@ -23,4 +26,5 @@ export interface UserProfileDto {
     userName: string;
     userCategory: number;
     roles: string[];
+    psychologist?: PsychologistProfileDto;
 }

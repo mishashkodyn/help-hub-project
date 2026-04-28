@@ -164,6 +164,57 @@
             </div>
           </div>
 
+          <div class="flex gap-4 justify-center">
+            <button
+              type="button"
+              (click)="gender = 'female'"
+              [class]="
+                'flex items-center justify-center gap-2.5 px-6 py-2.5 rounded-xl border-2 transition-all duration-200 cursor-pointer min-w-[130px] ' +
+                (gender === 'female'
+                  ? 'border-[#D4537E] bg-[#FBEAF0] text-[#D4537E]'
+                  : 'border-gray-200 bg-gray-50 text-gray-500 hover:bg-gray-100 hover:border-gray-300')
+              "
+            >
+              <svg
+                width="22"
+                height="22"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path
+                  d="M10 12C10 9.5 6 7 4 7C2.5 7 2 8 2 12C2 16 2.5 17 4 17C6 17 10 14.5 10 12Z"
+                />
+                <path
+                  d="M14 12C14 9.5 18 7 20 7C21.5 7 22 8 22 12C22 16 21.5 17 20 17C18 17 14 14.5 14 12Z"
+                />
+                <rect x="9" y="9.5" width="6" height="5" rx="1.5" />
+              </svg>
+              <span class="text-sm font-semibold">{{ t("auth.female") }}</span>
+            </button>
+
+            <button
+              type="button"
+              (click)="gender = 'male'"
+              [class]="
+                'flex items-center justify-center gap-2.5 px-6 py-2.5 rounded-xl border-2 transition-all duration-200 cursor-pointer min-w-[130px] ' +
+                (gender === 'male'
+                  ? 'border-[#185FA5] bg-[#E6F1FB] text-[#185FA5]'
+                  : 'border-gray-200 bg-gray-50 text-gray-500 hover:bg-gray-100 hover:border-gray-300')
+              "
+            >
+              <svg
+                width="22"
+                height="22"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path d="M9.5 4 L14.5 4 L13.5 7.5 L10.5 7.5 Z" />
+                <path d="M10.5 8.5 L13.5 8.5 L15.5 17 L12 21.5 L8.5 17 Z" />
+              </svg>
+              <span class="text-sm font-semibold">{{ t("auth.male") }}</span>
+            </button>
+          </div>
+
           <div class="relative group">
             <div
               class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
@@ -286,7 +337,9 @@
               <div class="w-full border-t border-gray-300"></div>
             </div>
             <div class="relative flex justify-center text-xs sm:text-sm">
-              <span class="bg-white px-2 text-gray-500">{{ t("auth.or_countinue_with") }}</span>
+              <span class="bg-white px-2 text-gray-500">{{
+                t("auth.or_countinue_with")
+              }}</span>
             </div>
           </div>
 
@@ -332,17 +385,17 @@
                 [queryParams]="{ returnUrl: '/psychologist-registration' }"
                 class="font-bold text-success hover:underline hover:text-primary transition-colors"
               >
-                {{ t('landing.become_psychologist') }}
+                {{ t("landing.become_psychologist") }}
               </a>
             </p>
           } @else {
             <p class="text-center text-sm sm:text-base text-gray-600 mt-3">
-              {{ t('auth.register_as_client') }}?
+              {{ t("auth.register_as_client") }}?
               <a
                 routerLink="/register"
                 class="font-bold text-success hover:underline hover:text-primary transition-colors"
               >
-                {{ t('auth.register_now') }}
+                {{ t("auth.register_now") }}
               </a>
             </p>
           }

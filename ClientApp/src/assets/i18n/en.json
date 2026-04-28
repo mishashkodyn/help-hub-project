@@ -35,6 +35,8 @@
     "logout": "Log out",
     "confirm_logout": "Confirm Logout",
     "confirm_logout_second": "Are you sure you want to log out?",
+    "female": "Female",
+    "male": "Male",
     "email": "Email",
     "password": "Password",
     "confirm_password": "Confirm password",
@@ -133,6 +135,7 @@
     "share_something": "Share something helpful..",
     "write_comment": "Write a comment...",
     "like": "Like",
+    "working_hours": "Working hours",
     "comment": "Comment",
     "no_reviews": "No reviews yet",
     "does_not_have_any_reviews": "This specialist doesn't have any reviews from sessions yet. Check back later!",
@@ -192,5 +195,14 @@
       "user": "I dream about that day constantly. I can't sleep...",
       "ai": "I understand how difficult this is. Let's try the 5-4-3-2-1 grounding technique..."
     }
+  },
+  "days": {
+    "monday": "Monday",
+    "tuesday": "Tuesday",
+    "wednesday": "Wednesday",
+    "thursday": "Thursday",
+    "friday": "Friday",
+    "saturday": "Saturday",
+    "sunday": "Sunday" 
   }
 }

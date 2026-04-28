@@ -25,7 +25,7 @@ namespace API.Endpoints
                 group.MapPost("/register", async (HttpContext context, TokenService tokenService, 
                  IConfiguration _config, UserManager<ApplicationUser>
                  userManager, [FromForm] string name, [FromForm] string surname, [FromForm] string email,
-                 [FromForm] string password, [FromForm] IFormFile? profileImage, IStorageService blobService) =>
+                 [FromForm] string password, [FromForm] IFormFile? profileImage, [FromForm] string gender, IStorageService blobService) =>
                 {
                     var userFromDb = await userManager.FindByEmailAsync(email);
 
@@ -40,13 +40,19 @@ namespace API.Endpoints
                         profileImageUrl = await blobService.UploadFileAsync(profileImage);
                     }
 
+                    if (!Enum.TryParse<Gender>(gender, true, out var parsedGender))
+                    {
+                        return Results.BadRequest("Invalid gender value");
+                    }
+
                     var user = new ApplicationUser
                     {
                         Name = name,
                         Surname = surname,
                         Email = email,
                         UserName = email,
-                        ProfileImage = profileImageUrl
+                        ProfileImage = profileImageUrl,
+                        Gender = parsedGender
                     };
 
                     var result = await userManager.CreateAsync(user, password);
@@ -222,15 +228,16 @@ namespace API.Endpoints
 
                     var roles = await userManager.GetRolesAsync(user);
 
-                    return Results.Ok(Response<object>.Success(new
+                    return Results.Ok(Response<UserDto>.Success(new UserDto
                     {
-                        user.Id,
-                        user.Name,
-                        user.Surname,
-                        user.Email,
-                        user.ProfileImage,
-                        user.PreferredAiProvider,
-                        Roles = roles
+                        Id = user.Id,
+                        Name = user.Name,
+                        Surname = user.Surname,
+                        Email = user.Email,
+                        ProfileImage = user.ProfileImage,
+                        PreferredAiProvider = user.PreferredAiProvider,
+                        Gender = user.Gender.ToString(),
+                        Roles = roles.ToArray()
                     }, "User fetched successfully."));
                 }).RequireAuthorization();
 

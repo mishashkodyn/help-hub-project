@@ -18,6 +18,8 @@ namespace Infrastructure.Data
         public DbSet<MessageAttachment> MessageAttachments { get; set; }
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<Psychologist> Psychologists { get; set; }
+        public DbSet<WorkingHour> WorkingHours { get; set; }
+        public DbSet<Appointment> Appointments { get; set; }
         public DbSet<Specialization> Specializations { get; set; }
         public DbSet<Post> Posts { get; set; }
         public DbSet<Comment> Comments { get; set; }
@@ -33,6 +35,8 @@ namespace Infrastructure.Data
             modelBuilder.ApplyConfiguration(new PostsConfiguration());
             modelBuilder.ApplyConfiguration(new PostLikesConfiguration());
             modelBuilder.ApplyConfiguration(new CommentsConfiguration());
+            modelBuilder.ApplyConfiguration(new AppointmentConfiguration());
+            modelBuilder.ApplyConfiguration(new WorkingHourConfiguration());
 
             //modelBuilder.Entity<ApplicationUser>()
             //    .HasMany(u => u.UserRoles)

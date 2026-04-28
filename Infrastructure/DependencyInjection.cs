@@ -35,6 +35,7 @@ namespace Infrastructure
 
             services.AddScoped<IAiService, AiService>();
             services.AddScoped<INotificationService, NotificationService>();
+            services.AddScoped<IWorkingHoursService, WorkingHoursService>();
             services.AddScoped<TokenService>();
 
             if (r2Section.GetValue<bool>("Enabled"))

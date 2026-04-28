@@ -62,7 +62,7 @@ export class SidebarComponent {
     {
       icon: 'psychology',
       label: 'psychologist_dashboard',
-      route: 'psychologist-dashboard',
+      route: 'psychologist',
     },
   ])
 
