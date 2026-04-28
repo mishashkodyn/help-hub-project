@@ -83,19 +83,41 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
-
-    var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-    await db.Database.MigrateAsync();
-
+    var logger = services.GetRequiredService<ILogger<Program>>();
+    var db = services.GetRequiredService<ApplicationDbContext>();
     var configuration = services.GetRequiredService<IConfiguration>();
-    try
+
+    int retries = 5;
+    while (retries > 0)
     {
-        await DbInitializer.SeedRolesAndAdminAsync(services, configuration);
-    }
-    catch (Exception ex)
-    {
-        var logger = services.GetRequiredService<ILogger<Program>>();
-        logger.LogError(ex, "Error initializing roles or admin.");
+        try
+        {
+            logger.LogInformation("Attempting to apply database migrations...");
+            await db.Database.MigrateAsync();
+            logger.LogInformation("Database migrations applied successfully.");
+            try
+            {
+                await DbInitializer.SeedRolesAndAdminAsync(services, configuration);
+                logger.LogInformation("Roles and admin seeded successfully.");
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Error initializing roles or admin.");
+            }
+            break; 
+        }
+        catch (Microsoft.Data.SqlClient.SqlException)
+        {
+            retries--;
+            if (retries == 0)
+            {
+                logger.LogError("Could not connect to the database after multiple attempts.");
+                throw;
+            }
+            
+            logger.LogWarning($"Database is not ready yet. Waiting 5 seconds... ({retries} retries left)");
+            await Task.Delay(5000); 
+        }
     }
 }
 
