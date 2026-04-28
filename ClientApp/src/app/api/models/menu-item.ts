@@ -4,7 +4,7 @@ export type MenuItem = {
   route?: string;
 };
 
-export interface AdminCard {
+export interface DashboardCardItem {
   icon: string;
   title: string;
   description: string;

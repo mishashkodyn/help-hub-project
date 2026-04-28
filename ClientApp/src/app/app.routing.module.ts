@@ -23,6 +23,7 @@ import { PsychologistDashboardComponent } from './modules/psychologist-tools/pag
 import { HomePageResolverComponent } from './modules/core/components/home-page-resolver/home-page-resolver.component';
 import { NotificationsPageComponent } from './modules/core/pages/notifications-page/notifications-page.component';
 import { ManageSpecializationsComponent } from './modules/admin-tools/pages/manage-specializations/manage-specializations.component';
+import { PsychologistCalendarPageComponent } from './modules/psychologist-tools/pages/psychologist-calendar-page/psychologist-calendar-page.component';
 
 const routes: Routes = [
   {
@@ -34,8 +35,8 @@ const routes: Routes = [
       { path: 'admin/users', canActivate: [AuthGuard], component: UsersPageComponent },
       { path: 'account/:id', canActivate: [AuthGuard], component: UserAccountPageComponent },
       { path: 'settings', canActivate: [AuthGuard], component: SettingsPageComponent },
-      { path: 'admin', canActivate: [AuthGuard], component: AdminDashboardComponent },
       { path: 'edit-account', canActivate: [AuthGuard], component: EditAccountPageComponent },
+      { path: 'admin', canActivate: [AuthGuard], component: AdminDashboardComponent },
       { path: 'ai-chat', canActivate: [AuthGuard], component: AiChatComponent},
       { path: 'admin/applications', canActivate: [AuthGuard], component: ApplicationsPageComponent },
       { path: 'admin/specializations', canActivate: [AuthGuard], component: ManageSpecializationsComponent},
@@ -66,9 +67,14 @@ const routes: Routes = [
         canActivate: [AuthGuard],
       },
       {
-        path: 'psychologist-dashboard',
-        component: PsychologistDashboardComponent,
+        path: 'psychologist',
         canActivate: [AuthGuard],
+        component: PsychologistDashboardComponent
+      },
+      {
+        path: 'psychologist/calendar',
+        canActivate: [AuthGuard],
+        component: PsychologistCalendarPageComponent
       },
       {
         path: 'notifications',

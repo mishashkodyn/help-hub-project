@@ -1,43 +1,45 @@
 <div class="p-6 md:p-10 bg-gray-50 min-h-screen font-sans">
   <div class="max-w-7xl mx-auto">
-    
-    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-10 pb-6 border-b border-gray-200">
+    <div
+      class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-10 pb-6 border-b border-gray-200"
+    >
       <div>
-        <h1 class="text-3xl font-bold text-[var(--color-primary)] tracking-tight">Dashboard</h1>
+        <h1
+          class="text-3xl font-bold text-[var(--color-primary)] tracking-tight"
+        >
+          Dashboard
+        </h1>
         <p class="text-gray-500 mt-1.5 text-lg">
           Welcome back, Dr. {{ authService.currentLoggedUser?.name }}!
         </p>
       </div>
-      
-      <button class="px-6 py-3 bg-[var(--color-primary)] text-white rounded-xl font-semibold hover:bg-[var(--color-success)] transition-all flex items-center justify-center gap-2.5 shadow-md shadow-slate-200 cursor-pointer">
-        <mat-icon class="scale-110">calendar_today</mat-icon>
-        My Calendar
-      </button>
     </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      @for (card of psychologistCards(); track card.route) {
+        <div
+          class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 flex flex-col hover:shadow-md hover:border-mint transition-all group"
+        >
+          <div
+            class="w-12 h-12 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform"
+            [ngClass]="[card.iconBgClass, card.iconTextClass]"
+          >
+            <mat-icon>{{ card.icon }}</mat-icon>
+          </div>
 
-    <div class="bg-white rounded-3xl shadow-[0_10px_40px_rgba(0,0,0,0.03)] border border-gray-100 p-12 md:p-20 text-center animate-fade-in flex flex-col items-center">
-      
-      <div class="w-32 h-32 mb-8 relative flex items-center justify-center">
-        <div class="absolute inset-0 bg-gradient-to-br from-[var(--color-mint)] to-[var(--color-sky)] rounded-full mix-blend-multiply filter blur-2xl opacity-50 animate-blob"></div>
-        
-        <div class="relative w-24 h-24 bg-white rounded-full shadow-lg border border-gray-100 flex items-center justify-center">
-          <mat-icon class="text-6xl text-[var(--color-success)] w-16 h-16 flex items-center justify-center">construction</mat-icon>
+          <h3 class="text-lg font-bold text-gray-800 mb-2">{{ card.title }}</h3>
+
+          <p class="text-gray-500 text-sm mb-6 flex-grow">
+            {{ card.description }}
+          </p>
+
+          <button
+            [routerLink]="card.route"
+            class="w-full py-2.5 bg-gray-50 text-[var(--color-primary)] font-semibold rounded-xl hover:bg-[var(--color-primary)] hover:text-white transition-colors"
+          >
+            {{ card.buttonText }}
+          </button>
         </div>
-      </div>
-      
-      <h2 class="text-3xl font-bold text-[var(--color-primary)] mb-3 tracking-tight">
-        Under Construction
-      </h2>
-      <p class="text-gray-500 text-lg max-w-lg mx-auto leading-relaxed">
-        We are currently building this dashboard to provide you with the best tools to manage your sessions, patients, and schedule.
-      </p>
-      
-      <div class="w-full max-w-xs mt-10 p-1.5 bg-gray-100 rounded-full border border-gray-200">
-        <div class="h-3 bg-gradient-to-r from-[var(--color-success)] to-[var(--color-mint)] rounded-full animate-pulse-fast" style="width: 75%;"></div>
-      </div>
-      <p class="text-xs text-gray-400 mt-3 font-medium uppercase tracking-wider">Coming very soon</p>
-      
+      }
     </div>
-
   </div>
 </div>

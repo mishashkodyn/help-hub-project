@@ -13,6 +13,7 @@ namespace Domain.Entities
         public DateTime RefreshTokenExpiryTime { get; set; }
         public UserCategory UserCategory { get; set; } = UserCategory.Civilian;
         public Psychologist? Psychologist { get; set; }
+        public ICollection<Appointment> ClientAppointments { get; set; } = new List<Appointment>();
     }
 
     public enum UserCategory

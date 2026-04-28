@@ -43,3 +43,39 @@ export interface UpdatePsychologistProfileDto {
 
   isPublished: boolean;
 }
+
+export interface TimeSlot {
+  start: string;
+  end: string;
+}
+
+export interface WeekDay {
+  id: number;
+  name: string;
+  isActive: boolean;
+  slots: TimeSlot[];
+}
+
+export interface TimeSlotDto {
+  startTime: string;
+  endTime: string;
+}
+
+export interface DayScheduleDto {
+  dayOfWeek: number;
+  slots: TimeSlotDto[];
+}
+
+export interface WorkingHourDto {
+  dayOfWeek: number;
+  startTime: string;
+  endTime: string;
+}
+
+export interface PsychologistProfileDto {
+  bio: string;
+  contactPhone: string;
+  workingHours: WorkingHourDto[];
+}
+
+

@@ -11,8 +11,13 @@ namespace Application.AutoMapper
             CreateMap<ApplicationUser, UserProfileDto>()
             .ForMember(dest => dest.UserCategory, opt => opt.MapFrom(src => (int)src.UserCategory))
             .ForMember(dest => dest.Roles, opt => opt.Ignore())
-            .ReverseMap()
-            .ForMember(dest => dest.UserCategory, opt => opt.MapFrom(src => (UserCategory)src.UserCategory));
+            .ForMember(dest => dest.Psychologist, opt => opt.MapFrom(src => src.Psychologist));
+
+            CreateMap<Psychologist, PsychologistProfileDto>();
+
+            CreateMap<WorkingHour, WorkingHourDto>()
+                .ForMember(dest => dest.DayOfWeek, opt => opt.MapFrom(src => (int)src.DayOfWeek));
         }
     }
 }
+    
