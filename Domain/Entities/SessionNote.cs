@@ -11,7 +11,7 @@ namespace Domain.Entities
         public Appointment Appointment { get; set; } = null!;
         public Guid PsychologistUserId { get; set; }
         public string Content { get; set; } = string.Empty;
-        public DateTime CreatedDate { get; set; } = DateTime.Now;
-        public DateTime UpdatedDate { get; set; } = DateTime.Now;
+        public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
+        public DateTime UpdatedDate { get; set; } = DateTime.UtcNow;
     }
 }

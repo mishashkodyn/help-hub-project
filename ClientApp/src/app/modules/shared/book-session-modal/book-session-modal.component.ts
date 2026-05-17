@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { finalize } from 'rxjs';
-import { CreateAppointmentDto } from '../../../api/models/psychologist.model';
+import { AvailableSlot, CreateAppointmentDto } from '../../../api/models/psychologist.model';
 import { PsychologistService } from '../../../api/services/psychologist.service';
 
 @Component({
@@ -16,13 +16,13 @@ export class BookSessionModalComponent implements OnInit {
   @Output() bookingSuccess = new EventEmitter<void>();
 
   selectedDate: string = '';
-  availableSlots: string[] = [];
-  selectedTime: string | null = null;
+  availableSlots: AvailableSlot[] = [];
+  selectedSlot: AvailableSlot | null = null;
   clientNotes: string = '';
 
   isLoadingSlots: boolean = false;
   isSubmitting: boolean = false;
-  
+
   minDate: string;
 
   constructor(private appointmentService: PsychologistService) {
@@ -48,13 +48,13 @@ export class BookSessionModalComponent implements OnInit {
     const input = event.target as HTMLInputElement;
     if (input.value) {
       this.selectedDate = input.value;
-      this.selectedTime = null; 
+      this.selectedSlot = null;
       this.fetchSlots();
     }
   }
 
-  selectTime(time: string): void {
-    this.selectedTime = time;
+  selectSlot(slot: AvailableSlot): void {
+    this.selectedSlot = slot;
   }
 
   fetchSlots(): void {
@@ -66,8 +66,11 @@ export class BookSessionModalComponent implements OnInit {
     this.appointmentService.getAvailableSlots(this.psychologistId, this.selectedDate)
       .pipe(finalize(() => this.isLoadingSlots = false))
       .subscribe({
-        next: (slots) => {
-          this.availableSlots = slots;
+        next: (utcSlots) => {
+          this.availableSlots = utcSlots.map(iso => ({
+            startTimeUtc: iso,
+            label: this.formatLocalTime(iso),
+          }));
         },
         error: (err) => {
           console.error('Error fetching slots:', err);
@@ -76,14 +79,13 @@ export class BookSessionModalComponent implements OnInit {
   }
 
   confirmBooking(): void {
-    if (!this.selectedTime || this.isSubmitting) return;
+    if (!this.selectedSlot || this.isSubmitting) return;
 
     this.isSubmitting = true;
 
     const payload: CreateAppointmentDto = {
       psychologistId: this.psychologistId,
-      date: this.selectedDate,
-      startTime: this.selectedTime,
+      startTimeUtc: this.selectedSlot.startTimeUtc,
       clientNotes: this.clientNotes
     };
 
@@ -96,6 +98,13 @@ export class BookSessionModalComponent implements OnInit {
           this.close();
         }
       });
+  }
+
+  private formatLocalTime(iso: string): string {
+    const d = new Date(iso);
+    const hh = d.getHours().toString().padStart(2, '0');
+    const mm = d.getMinutes().toString().padStart(2, '0');
+    return `${hh}:${mm}`;
   }
 
   private formatDate(date: Date): string {

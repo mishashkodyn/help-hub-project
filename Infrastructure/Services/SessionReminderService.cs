@@ -48,7 +48,7 @@ namespace Infrastructure.Services
         // ── 5-min reminder ────────────────────────────────────────────────────
         private async Task CheckAndNotifyAsync()
         {
-            var now = DateTime.Now;
+            var now = DateTime.UtcNow;
             var windowStart = now.AddMinutes(4);
             var windowEnd = now.AddMinutes(6);
 
@@ -97,7 +97,7 @@ namespace Infrastructure.Services
         // ── Auto-complete ended sessions ──────────────────────────────────────
         private async Task CompleteEndedSessionsAsync()
         {
-            var now = DateTime.Now;
+            var now = DateTime.UtcNow;
 
             using var scope = _scopeFactory.CreateScope();
             var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();

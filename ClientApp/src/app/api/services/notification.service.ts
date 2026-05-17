@@ -69,7 +69,9 @@ export class NotificationService {
 
   stopConnection() {
     if (this.hubConnection) {
-      this.hubConnection.stop().then(() => this.isConnected.set(false));
+      const conn = this.hubConnection;
+      this.hubConnection = undefined;
+      conn.stop().finally(() => this.isConnected.set(false));
       this.notifications.set([]);
       this.unreadCount.set(0);
     }

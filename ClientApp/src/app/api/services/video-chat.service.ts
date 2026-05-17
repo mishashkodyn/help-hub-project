@@ -115,8 +115,13 @@ export class VideoChatService {
     this._offerSub = null;
     this._candidateHandler = null;
     this._candidateBuffer = [];
-    if (this.hubConnection?.state === HubConnectionState.Connected) {
-      this.hubConnection.stop().then(() => this.isConnected.set(false));
+    const conn = this.hubConnection;
+    if (!conn) return;
+    this.hubConnection = null;
+    if (conn.state !== HubConnectionState.Disconnected) {
+      conn.stop().finally(() => this.isConnected.set(false));
+    } else {
+      this.isConnected.set(false);
     }
   }
 

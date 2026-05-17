@@ -62,7 +62,7 @@ namespace API.Controllers
                 return BadRequest(Response<string>.Failure("Specialization with this name already exists."));
             }
 
-            var specialization = new Specialization { Name = dto.Name, CreatedAt = DateTime.Now };
+            var specialization = new Specialization { Name = dto.Name, CreatedAt = DateTime.UtcNow };
 
             _context.Specializations.Add(specialization);
             await _context.SaveChangesAsync();
@@ -83,7 +83,7 @@ namespace API.Controllers
             if (exists) return BadRequest(Response<string>.Failure("Name already in use."));
 
             specialization.Name = dto.Name;
-            specialization.UpdatedAt = DateTime.Now;
+            specialization.UpdatedAt = DateTime.UtcNow;
             await _context.SaveChangesAsync();
 
             return Ok(Response<Specialization>.Success(specialization));

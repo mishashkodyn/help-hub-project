@@ -166,8 +166,8 @@ export class AuthService {
     this.sidebarService.toggleSideBar();
     this.presenceService.stopConnection();
     this.chatService.stopConnection();
-    this.chatService.stopConnection();
     this.videoChatService.stopConnection();
+    this.notificationService.stopConnection();
     this.stopActiveSession();
     localStorage.removeItem(this.token);
     localStorage.removeItem('user');

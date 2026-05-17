@@ -126,7 +126,7 @@ namespace Infrastructure.Hubs
                     AppointmentId = appointmentId,
                     SenderId = userId,
                     Content = content,
-                    CreatedDate = DateTime.Now
+                    CreatedDate = DateTime.UtcNow
                 };
 
                 context.SessionMessages.Add(message);

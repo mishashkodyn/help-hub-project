@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System;
 
 namespace Application.DTOs
 {
@@ -10,9 +6,7 @@ namespace Application.DTOs
     {
         public Guid PsychologistId { get; set; }
 
-        public string Date { get; set; } = string.Empty;
-
-        public string StartTime { get; set; } = string.Empty;
+        public DateTime StartTimeUtc { get; set; }
 
         public string? ClientNotes { get; set; }
     }
