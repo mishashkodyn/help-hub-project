@@ -25,6 +25,30 @@ namespace Infrastructure.Hubs
             await base.OnConnectedAsync();
         }
 
+        public async Task ClearChatHistory(Guid contactId)
+        {
+            var myUserIdString = Context.UserIdentifier;
+            if (string.IsNullOrEmpty(myUserIdString) || !Guid.TryParse(myUserIdString, out var myUserId))
+            {
+                throw new HubException("User not authenticated.");
+            }
+
+            var messagesToDelete = await context.Messages
+                .Where(m =>
+                    (m.SenderId == myUserId && m.ReceiverId == contactId) ||
+                    (m.SenderId == contactId && m.ReceiverId == myUserId)
+                )
+                .ToListAsync();
+
+            if (messagesToDelete.Any())
+            {
+                context.Messages.RemoveRange(messagesToDelete);
+                await context.SaveChangesAsync();
+
+                await Clients.User(contactId.ToString()).SendAsync("ChatClearedByPartner", myUserId);
+            }
+        }
+
         public async Task LoadMessages(Guid contactId, int pageNumber = 1)
         {
             int pageSize = 10;
@@ -54,7 +78,9 @@ namespace Infrastructure.Hubs
                     SenderId = x.SenderId,
                     IsRead = x.IsRead,
                     SenderName = x.Sender != null ? x.Sender.Name : "",
-                    Attachments = x.Attachments ?? new List<MessageAttachment>()
+                    Attachments = x.Attachments ?? new List<MessageAttachment>(),
+                    MessageType = (int)x.MessageType,
+                    CallDurationSeconds = x.CallDurationSeconds
                 })
                 .ToListAsync();
 
@@ -119,6 +145,47 @@ namespace Infrastructure.Hubs
             await Clients.Caller.SendAsync("ReceiveNewMessage", messageDto);
         }
 
+        public async Task SaveCallRecord(Guid contactId, int? durationSeconds)
+        {
+            var callerIdStr = Context.UserIdentifier;
+            if (string.IsNullOrEmpty(callerIdStr) || !Guid.TryParse(callerIdStr, out var callerId))
+                return;
+
+            var callMessage = new Message
+            {
+                Id = Guid.NewGuid(),
+                SenderId = callerId,
+                ReceiverId = contactId,
+                MessageType = Domain.Entities.MessageType.VideoCall,
+                CallDurationSeconds = durationSeconds,
+                CreatedDate = DateTime.UtcNow,
+                IsRead = false,
+                Content = ""
+            };
+
+            context.Messages.Add(callMessage);
+            await context.SaveChangesAsync();
+
+            var caller = await userManager.FindByIdAsync(callerId.ToString());
+
+            var callDto = new MessageResponseDto
+            {
+                Id = callMessage.Id,
+                SenderId = callerId,
+                ReceiverId = contactId,
+                SenderName = caller?.Name ?? "",
+                MessageType = (int)Domain.Entities.MessageType.VideoCall,
+                CallDurationSeconds = durationSeconds,
+                CreatedDate = callMessage.CreatedDate,
+                IsRead = false,
+                Content = "",
+                Attachments = new List<MessageAttachment>()
+            };
+
+            await Clients.User(contactId.ToString()).SendAsync("ReceiveNewMessage", callDto);
+            await Clients.Caller.SendAsync("ReceiveNewMessage", callDto);
+        }
+
         public override async Task OnDisconnectedAsync(Exception? exception)
         {
             await base.OnDisconnectedAsync(exception);
@@ -130,6 +197,27 @@ namespace Infrastructure.Hubs
             if (string.IsNullOrEmpty(senderUserName)) return;
 
             await Clients.User(contactId.ToString()).SendAsync("NotifyTypingToUser", senderUserName);
+        }
+
+        public async Task DeleteMessage(Guid messageId)
+        {
+            var currentUserIdStr = Context.UserIdentifier;
+            if (string.IsNullOrEmpty(currentUserIdStr) || !Guid.TryParse(currentUserIdStr, out var currentUserId))
+                throw new HubException("User not authenticated.");
+
+            var message = await context.Messages
+                .FirstOrDefaultAsync(m => m.Id == messageId && m.SenderId == currentUserId);
+
+            if (message == null)
+                throw new HubException("Message not found or you don't have permission to delete it.");
+
+            var receiverId = message.ReceiverId;
+
+            context.Messages.Remove(message);
+            await context.SaveChangesAsync();
+
+            await Clients.User(receiverId.ToString()).SendAsync("MessageDeleted", messageId);
+            await Clients.Caller.SendAsync("MessageDeleted", messageId);
         }
 
         public async Task MarkChatAsRead(Guid contactId)

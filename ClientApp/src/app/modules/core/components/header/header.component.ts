@@ -7,6 +7,7 @@ import { SidebarService } from '../../../../api/services/sidebar.service';
 import { PresenceService } from '../../../../api/services/presence-service';
 import { NotificationService } from '../../../../api/services/notification.service';
 import { TranslocoService } from '@ngneat/transloco';
+import { ActiveSessionService } from '../../../../api/services/active-session.service';
 
 @Component({
   selector: 'app-header',
@@ -23,11 +24,20 @@ export class HeaderComponent implements OnInit {
     protected sidebarService: SidebarService,
     protected presenceService: PresenceService,
     protected notificationService: NotificationService,
-    public translocoService: TranslocoService
+    public translocoService: TranslocoService,
+    protected activeSessionService: ActiveSessionService
   ) {}
 
   ngOnInit(): void {
     this.sidebarService.sideBarOpen.set(false);
+    if (this.authService.isLoggedIn()) {
+      this.activeSessionService.start();
+    }
+  }
+
+  joinActiveSession(): void {
+    const session = this.activeSessionService.activeSession();
+    if (session) this.route.navigate(['/session', session.id]);
   }
 
   menuItems = signal<MenuItem[]>([
@@ -89,6 +99,15 @@ export class HeaderComponent implements OnInit {
 
   goToProfile() {
     this.route.navigate([`account/${this.authService.currentLoggedUser?.id}`]);
+  }
+
+  scrollToSection(sectionId: string): void {
+    const el = document.getElementById(sectionId);
+    if (el) {
+      const headerHeight = 56;
+      const top = el.getBoundingClientRect().top + window.scrollY - headerHeight;
+      window.scrollTo({ top, behavior: 'smooth' });
+    }
   }
 
   onLanguageChange(lang: string) {

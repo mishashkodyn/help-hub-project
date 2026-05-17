@@ -1,0 +1,24 @@
+﻿using Application.DTOs;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Infrastructure.Services.Interfaces
+{
+    public interface IAppointmentService
+    {
+        Task<List<TimeSpan>> GetAvailableSlotsAsync(Guid psychologistId, DateTime date);
+        Task CreateAppointmentAsync(Guid clientId, CreateAppointmentDto dto);
+        Task<List<AppointmentApplicationDto>> GetPsychologistApplicationsAsync(Guid userId);
+        Task ApproveAppointmentAsync(Guid psychologistUserId, Guid appointmentId);
+        Task DeclineAppointmentAsync(Guid psychologistUserId, Guid appointmentId);
+        Task<List<ClientSessionDto>> GetClientSessionsAsync(Guid clientId);
+        Task<List<ClientSessionDto>> GetPsychologistSessionsAsync(Guid psychologistUserId);
+        Task<SessionInfoDto> GetSessionInfoAsync(Guid appointmentId, Guid requestingUserId);
+        Task<List<PastSessionDto>> GetPsychologistPastSessionsAsync(Guid psychologistUserId);
+        Task<SessionNoteDto?> GetSessionNoteAsync(Guid appointmentId, Guid psychologistUserId);
+        Task<SessionNoteDto> UpsertSessionNoteAsync(Guid appointmentId, Guid psychologistUserId, string content);
+    }
+}

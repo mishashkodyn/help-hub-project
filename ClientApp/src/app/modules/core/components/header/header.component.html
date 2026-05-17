@@ -1,138 +1,146 @@
 <ng-container *transloco="let t">
-  <div
-    class="w-full h-13 flex justify-between items-center px-4 md:px-6 relative z-50"
-  >
-    <div class="flex items-center gap-4">
+  <div class="w-full h-full flex justify-between items-center px-4 sm:px-5">
+
+    <!-- ── LEFT: Hamburger + Logo ── -->
+    <div class="flex items-center gap-3">
       @if (authService.isLoggedIn()) {
         <button
           (click)="sidebarService.toggleSideBar()"
-          class="menu-btn bg-transparent"
+          class="menu-btn bg-transparent relative shrink-0"
           [class.open]="sidebarService.sideBarOpen()"
-          aria-label="Toggle menu"
+          aria-label="Toggle navigation menu"
         >
           <span class="line l1"></span>
           <span class="line l2"></span>
           <span class="line l3"></span>
           @if (presenceService.totalUnreadCount() > 0) {
-            <span
-              class="absolute -top-1 -right-1 bg-red-600 text-white text-[11px] font-bold min-w-[20px] h-[20px] px-1 flex items-center justify-center rounded-full shadow-md"
-            >
-              {{
-                presenceService.totalUnreadCount() > 99
-                  ? "99+"
-                  : presenceService.totalUnreadCount()
-              }}
+            <span class="absolute -top-1.5 -right-1.5 w-4 h-4 bg-red-500 text-white text-[10px] font-bold flex items-center justify-center rounded-full shadow">
+              {{ presenceService.totalUnreadCount() > 9 ? '9+' : presenceService.totalUnreadCount() }}
             </span>
           }
         </button>
       }
 
-      <div
-        class="flex items-center cursor-pointer gap-2"
+      <button
+        class="flex items-center gap-2 group cursor-pointer"
         (click)="navigateTo('home')"
+        aria-label="Go to homepage"
       >
         <img
           src="/main-icon.png"
-          alt="Help hub"
-          class="w-6 h-6 md:w-8 md:h-8 shrink-0"
+          alt="Help Hub logo"
+          class="w-7 h-7 shrink-0"
         />
-
-        <div class="hidden md:flex items-baseline font-semibold">
-          <span class="text-success text-lg tracking-tight">Help</span>
-          <span class="text-primary text-lg ml-1">hub</span>
+        <div class="hidden sm:flex items-baseline gap-0.5">
+          <span class="text-[var(--color-success)] font-bold text-[1.05rem] tracking-tight group-hover:text-[var(--color-success)]/80 transition-colors">Help</span>
+          <span class="text-[var(--color-primary)] font-bold text-[1.05rem] tracking-tight group-hover:text-[var(--color-primary)]/80 transition-colors">Hub</span>
         </div>
-      </div>
+      </button>
     </div>
-    <div class="flex justify-end items-center gap-2 md:gap-5">
-      <!-- @if (visibilityButtons()) {
-      <div class="hidden md:flex justify-between gap-3">
-        @for (item of menuItems(); track item) {
-          <div
-            class="flex justify-center px-3 text-primary cursor-pointer hover:text-success hover:border-b-2 border-transparent hover:border-success font-mono font-semibold transition-all"
+
+    <!-- ── CENTER: Nav links (guest + non-auth-route + desktop only) ── -->
+    @if (!authService.isLoggedIn() && !isAuthRoute()) {
+      <nav class="hidden lg:flex items-center gap-0.5" aria-label="Main navigation">
+        <button
+          (click)="scrollToSection('how-it-works')"
+          class="px-4 py-2 text-sm font-medium text-gray-600 hover:text-[var(--color-primary)] hover:bg-[var(--color-primary)]/5 rounded-lg transition-all cursor-pointer"
+        >{{ t('nav.how_it_works') }}</button>
+        <button
+          (click)="scrollToSection('services')"
+          class="px-4 py-2 text-sm font-medium text-gray-600 hover:text-[var(--color-primary)] hover:bg-[var(--color-primary)]/5 rounded-lg transition-all cursor-pointer"
+        >{{ t('nav.services') }}</button>
+        <button
+          (click)="scrollToSection('who-we-help')"
+          class="px-4 py-2 text-sm font-medium text-gray-600 hover:text-[var(--color-primary)] hover:bg-[var(--color-primary)]/5 rounded-lg transition-all cursor-pointer"
+        >{{ t('nav.who_we_help') }}</button>
+        <button
+          (click)="scrollToSection('for-psychologists')"
+          class="px-4 py-2 text-sm font-medium text-gray-600 hover:text-[var(--color-primary)] hover:bg-[var(--color-primary)]/5 rounded-lg transition-all cursor-pointer"
+        >{{ t('nav.for_psychologists') }}</button>
+      </nav>
+    }
+
+    <!-- ── RIGHT: Actions ── -->
+    <div class="flex items-center gap-1.5 sm:gap-2">
+
+      <!-- Language selector -->
+      <app-dropdown
+        [icon]="'language'"
+        [items]="languages"
+        [(selected)]="currentLanguage"
+        (onSelected)="onLanguageChange($event)"
+        class="shrink-0 flex"
+      ></app-dropdown>
+
+      <!-- Guest: Login + Register -->
+      @if (!isAuthRoute() && !authService.isLoggedIn()) {
+        <div class="flex items-center gap-1.5">
+          <button
+            (click)="navigateTo('login')"
+            class="hidden sm:inline-flex items-center px-4 py-2 text-sm font-semibold text-[var(--color-primary)] hover:bg-[var(--color-primary)]/5 rounded-xl transition-all border border-transparent hover:border-[var(--color-primary)]/15"
           >
-            {{ item.label }}
-          </div>
-        }
-      </div>
-    } -->
+            {{ t('auth.login') }}
+          </button>
+          <button
+            (click)="navigateTo('registration')"
+            class="inline-flex items-center px-4 py-2 text-sm font-semibold bg-[var(--color-primary)] text-[var(--color-mint)] rounded-xl hover:bg-[#012900] transition-all shadow-sm"
+          >
+            {{ t('auth.sign_up') }}
+          </button>
+        </div>
+      }
 
-      <div class="flex items-center gap-2 md:gap-2">
-        <app-dropdown
-          [icon]="'language'"
-          [items]="languages"
-          [(selected)]="currentLanguage"
-          (onSelected)="onLanguageChange($event)"
-          class="shrink-0 flex"
-        ></app-dropdown>
-        <!-- <button
-        (click)="onLanguageChange()"
-        class="flex items-center justify-center w-9 h-9 rounded-full bg-[var(--color-primary)] text-[var(--color-mint)] font-bold text-sm hover:bg-[#003800] transition-all cursor-pointer shrink-0"
-      >
-        {{ translationService.lang === 'en' ? 'UA' : 'EN' }}
-      </button> -->
+      <!-- Active session join button -->
+      @if (authService.isLoggedIn() && activeSessionService.activeSession()) {
+        <button
+          (click)="joinActiveSession()"
+          class="flex items-center gap-1.5 px-3 py-1.5 bg-[var(--color-success)] text-white text-xs font-semibold rounded-xl hover:bg-[var(--color-success)]/90 transition-all shadow-sm animate-pulse shrink-0"
+        >
+          <mat-icon class="text-sm">video_call</mat-icon>
+          <span class="hidden sm:inline">Join Session</span>
+        </button>
+      }
 
-        @if (!isAuthRoute() && !authService.isLoggedIn()) {
-          <div class="flex items-center gap-2 md:gap-4">
-            <div class="flex gap-2 shrink-0">
-              <button
-                (click)="navigateTo('login')"
-                class="text-sm sm:text-base flex justify-center items-center bg-transparent text-primary font-mono font-semibold border border-primary rounded transition duration-200 cursor-pointer text-xh-8 px-1 md:px-4 hover:shadow-md shadow-success whitespace-nowrap"
-              >
-                {{ t("auth.login") }}
-              </button>
-              <button
-                (click)="navigateTo('registration')"
-                class="text-sm sm:text-base flex justify-center items-center border border-primary bg-primary text-mint font-mono font-semibold rounded transition duration-200 cursor-pointer h-8 px-1 md:px-4 hover:shadow-md shadow-success whitespace-nowrap"
-              >
-                {{ t("auth.sign_up") }}
-              </button>
-            </div>
-          </div>
-        }
-      </div>
-
+      <!-- Logged in: Notifications bell -->
       @if (authService.isLoggedIn()) {
         <div
-          class="relative flex items-center mr-3"
-          [hidden]="route.url == '/notifications'"
+          class="relative flex items-center"
+          [hidden]="route.url === '/notifications'"
         >
-          <div
-            class="relative w-fit cursor-pointer"
+          <button
             (click)="toggleNotificationsPopUp($event)"
+            class="relative w-9 h-9 flex items-center justify-center rounded-xl hover:bg-gray-100 transition-colors"
+            aria-label="Notifications"
           >
-            <i
-              class="bi bi-bell-fill text-xl text-gray-500 hover:text-success transition-colors duration-200"
-            ></i>
-
-            <span
-              [hidden]="notificationService.unreadCount() == 0"
-              class="absolute -top-2 -left-3 bg-red-600 text-white text-[11px] font-bold min-w-[20px] h-[20px] px-1 flex items-center justify-center rounded-full shadow-md"
-            >
-              {{ notificationService.unreadCount() }}
-            </span>
-          </div>
+            <i class="bi bi-bell-fill text-[1.1rem] text-gray-500 hover:text-[var(--color-success)] transition-colors"></i>
+            @if (notificationService.unreadCount() > 0) {
+              <span class="absolute top-0.5 right-0.5 w-4 h-4 bg-red-500 text-white text-[10px] font-bold flex items-center justify-center rounded-full shadow-sm">
+                {{ notificationService.unreadCount() }}
+              </span>
+            }
+          </button>
 
           @if (isNotificationsOpen) {
-            <app-notifications-popup (closePopup)="isNotificationsOpen = false">
-            </app-notifications-popup>
+            <app-notifications-popup (closePopup)="isNotificationsOpen = false"></app-notifications-popup>
           }
         </div>
 
-        <div class="flex items-center gap-3 md:gap-5">
-          <div
-            class="rounded-full overflow-hidden border-2 border-mint cursor-pointer hover:shadow-sm shadow-success shrink-0"
+        <!-- Avatar -->
+        @if (authService.currentLoggedUser?.profileImage) {
+          <button
+            (click)="goToProfile()"
+            class="w-9 h-9 sm:w-10 sm:h-10 rounded-full overflow-hidden border-2 border-[var(--color-mint)] hover:border-[var(--color-success)] hover:shadow-md transition-all shrink-0"
+            aria-label="Go to profile"
           >
-            @if (authService.currentLoggedUser?.profileImage) {
-              <img
-                (click)="goToProfile()"
-                [src]="authService.currentLoggedUser?.profileImage"
-                class="w-8 h-8 md:w-10 md:h-10 object-cover"
-                alt="Avatar Preview"
-              />
-            }
-          </div>
-        </div>
+            <img
+              [src]="authService.currentLoggedUser?.profileImage"
+              class="w-full h-full object-cover"
+              alt="User avatar"
+            />
+          </button>
+        }
       }
     </div>
+
   </div>
 </ng-container>

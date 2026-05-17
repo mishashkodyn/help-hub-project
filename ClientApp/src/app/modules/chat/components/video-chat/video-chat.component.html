@@ -1,102 +1,187 @@
-<div class="relative h-full w-full bg-gray-900 overflow-hidden flex flex-col font-sans">
-  
-  <video
-    class="w-full h-full object-cover bg-gray-900"
-    #remoteVideo
-    autoplay
-    playsInline
-  ></video>
+<div class="vc-root">
 
-  <div class="absolute right-4 top-4 md:right-8 md:top-8 w-28 h-40 md:w-56 md:h-40 rounded-2xl overflow-hidden shadow-2xl border border-white/20 bg-gray-800 z-40 transition-all">
-    
+  <!-- Remote video — always in DOM, becomes visible on 'active' -->
+  <video #remoteVideo class="vc-remote" autoplay playsinline></video>
+
+  <!-- ─── INITIALIZING ─── -->
+  @if (callState() === 'initializing') {
+    <div class="vc-overlay">
+      <div class="vc-spinner"></div>
+      <p class="vc-hint">Підключення камери...</p>
+    </div>
+  }
+
+  <!-- ─── CONNECTING (callee accepted, awaiting ICE) ─── -->
+  @if (callState() === 'connecting') {
+    <div class="vc-overlay">
+      <div class="vc-spinner"></div>
+      <p class="vc-hint">Встановлення з'єднання...</p>
+    </div>
+  }
+
+  <!-- ─── CALLING (caller waits) ─── -->
+  @if (callState() === 'calling') {
+    <div class="vc-overlay">
+      <div class="vc-avatar-wrap">
+        <span class="vc-ring vc-ring-1"></span>
+        <span class="vc-ring vc-ring-2"></span>
+        <span class="vc-ring vc-ring-3"></span>
+        <div class="vc-avatar vc-avatar-blue">
+          <mat-icon>person</mat-icon>
+        </div>
+      </div>
+      <p class="vc-title">Дзвінок...</p>
+      <p class="vc-sub">Очікування відповіді</p>
+
+      <div class="vc-action-row mt-10">
+        <div class="vc-action-col">
+          <button
+            class="vc-ctrl"
+            [class.vc-ctrl-off]="isAudioMuted"
+            (click)="toggleAudio()"
+            [title]="isAudioMuted ? 'Увімкнути мікрофон' : 'Вимкнути мікрофон'"
+          >
+            <mat-icon>{{ isAudioMuted ? 'mic_off' : 'mic' }}</mat-icon>
+          </button>
+          <span class="vc-action-label">{{ isAudioMuted ? 'Мікрофон вимк.' : 'Мікрофон' }}</span>
+        </div>
+        <div class="vc-action-col">
+          <button
+            class="vc-ctrl"
+            [class.vc-ctrl-off]="isVideoMuted"
+            (click)="toggleVideo()"
+            [title]="isVideoMuted ? 'Увімкнути камеру' : 'Вимкнути камеру'"
+          >
+            <mat-icon>{{ isVideoMuted ? 'videocam_off' : 'videocam' }}</mat-icon>
+          </button>
+          <span class="vc-action-label">{{ isVideoMuted ? 'Камера вимк.' : 'Камера' }}</span>
+        </div>
+        <div class="vc-action-col">
+          <button class="vc-fab vc-fab-danger" (click)="endCall()">
+            <mat-icon>call_end</mat-icon>
+          </button>
+          <span class="vc-action-label">Завершити</span>
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- ─── INCOMING CALL ─── -->
+  @if (callState() === 'incoming') {
+    <div class="vc-overlay">
+      <div class="vc-avatar-wrap">
+        <span class="vc-ring vc-ring-1 vc-ring-green"></span>
+        <span class="vc-ring vc-ring-2 vc-ring-green"></span>
+        <div class="vc-avatar vc-avatar-green">
+          <mat-icon>person</mat-icon>
+        </div>
+      </div>
+      <p class="vc-title">Вхідний дзвінок</p>
+      <p class="vc-sub">Хтось хоче поговорити з вами</p>
+
+      <div class="vc-action-row mt-10">
+        <!-- Decline -->
+        <div class="vc-action-col">
+          <button class="vc-fab vc-fab-danger" (click)="declineCall()">
+            <mat-icon>call_end</mat-icon>
+          </button>
+          <span class="vc-action-label">Відхилити</span>
+        </div>
+
+        <!-- Mic toggle -->
+        <div class="vc-action-col">
+          <button
+            class="vc-ctrl"
+            [class.vc-ctrl-off]="isAudioMuted"
+            (click)="toggleAudio()"
+            [title]="isAudioMuted ? 'Увімкнути мікрофон' : 'Вимкнути мікрофон'"
+          >
+            <mat-icon>{{ isAudioMuted ? 'mic_off' : 'mic' }}</mat-icon>
+          </button>
+          <span class="vc-action-label">{{ isAudioMuted ? 'Мікрофон вимк.' : 'Мікрофон' }}</span>
+        </div>
+
+        <!-- Camera toggle -->
+        <div class="vc-action-col">
+          <button
+            class="vc-ctrl"
+            [class.vc-ctrl-off]="isVideoMuted"
+            (click)="toggleVideo()"
+            [title]="isVideoMuted ? 'Увімкнути камеру' : 'Вимкнути камеру'"
+          >
+            <mat-icon>{{ isVideoMuted ? 'videocam_off' : 'videocam' }}</mat-icon>
+          </button>
+          <span class="vc-action-label">{{ isVideoMuted ? 'Камера вимк.' : 'Камера' }}</span>
+        </div>
+
+        <!-- Accept -->
+        <div class="vc-action-col">
+          <button class="vc-fab vc-fab-success" (click)="acceptCall()">
+            <mat-icon>video_call</mat-icon>
+          </button>
+          <span class="vc-action-label">Прийняти</span>
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- ─── LOCAL VIDEO PiP (always mounted so ViewChild works) ─── -->
+  <div
+    class="vc-pip"
+    [class.vc-pip-visible]="callState() !== 'initializing'"
+    [class.vc-pip-corner]="callState() === 'active'"
+  >
     <video
-      [class.hidden]="isVideoMuted"
-      class="w-full h-full object-cover transition-transform duration-300"
-      [class.-scale-x-100]="isFrontCamera"
       #localVideo
       autoplay
-      playsInline
-      [muted]="true" 
+      playsinline
+      muted
+      [class.vc-hidden]="isVideoMuted"
+      [class.vc-mirror]="isFrontCamera"
     ></video>
-    
     @if (isVideoMuted) {
-      <div class="absolute inset-0 flex items-center justify-center bg-gray-800">
-        <div class="w-12 h-12 rounded-full bg-gray-700 flex items-center justify-center">
-          <mat-icon class="text-gray-400 text-2xl">person_off</mat-icon>
-        </div>
+      <div class="vc-pip-off">
+        <mat-icon>videocam_off</mat-icon>
       </div>
     }
   </div>
 
-  <div class="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-gray-900/90 to-transparent z-30 pointer-events-none"></div>
-
-  <div class="absolute bottom-8 left-0 right-0 z-50 flex flex-col items-center justify-end px-4 w-full">
-    
-    @if (signalRService.incomingCall) {
-      <div class="flex flex-col items-center gap-6 mb-4 animate-fade-in-up">
-        <div class="flex flex-col items-center gap-2">
-          <div class="w-20 h-20 rounded-full bg-gray-700/80 backdrop-blur-md mb-2 border border-white/20 shadow-lg flex items-center justify-center animate-pulse">
-            <mat-icon class="text-white text-4xl scale-110">ring_volume</mat-icon>
-          </div>
-          <span class="text-white text-2xl font-semibold tracking-tight">Incoming Call</span>
-          <span class="text-gray-300 text-sm font-medium">Someone needs help...</span>
-        </div>
-        
-        <div class="flex gap-10 mt-2">
-          <button
-            class="w-16 h-16 bg-red-500 hover:bg-red-600 shadow-[0_8px_30px_rgba(239,68,68,0.5)] text-white rounded-full flex items-center justify-center transition-all transform hover:scale-105 cursor-pointer"
-            (click)="declineCall()"
-          >
-            <mat-icon class="scale-125">call_end</mat-icon>
-          </button>
-          
-          <button
-            class="w-16 h-16 bg-green-500 hover:bg-green-600 shadow-[0_8px_30px_rgba(34,197,94,0.5)] text-white rounded-full flex items-center justify-center transition-all transform hover:scale-105 cursor-pointer"
-            (click)="acceptCall()"
-          >
-            <mat-icon class="scale-125">call</mat-icon>
-          </button>
-        </div>
-      </div>
-    }
-
-    @if (!signalRService.incomingCall) {
-      <div class="flex items-center gap-3 md:gap-5 bg-gray-800/80 backdrop-blur-xl px-6 py-4 rounded-full border border-white/10 shadow-[0_8px_30px_rgba(0,0,0,0.5)] animate-fade-in-up w-auto max-w-full overflow-x-auto custom-scroll">
-        
+  <!-- ─── ACTIVE CALL — controls ─── -->
+  @if (callState() === 'active') {
+    <div class="vc-hud">
+      <span class="vc-duration">{{ formattedDuration }}</span>
+      <div class="vc-bar">
         <button
+          class="vc-ctrl"
+          [class.vc-ctrl-off]="isAudioMuted"
           (click)="toggleAudio()"
-          class="w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center transition-all cursor-pointer shadow-sm shrink-0"
-          [ngClass]="isAudioMuted ? 'bg-red-500/20 text-red-500 hover:bg-red-500/30' : 'bg-white/10 text-white hover:bg-white/20'"
+          [title]="isAudioMuted ? 'Увімкнути мікрофон' : 'Вимкнути мікрофон'"
         >
-          <mat-icon class="scale-110">{{ isAudioMuted ? 'mic_off' : 'mic' }}</mat-icon>
+          <mat-icon>{{ isAudioMuted ? 'mic_off' : 'mic' }}</mat-icon>
         </button>
 
         <button
+          class="vc-ctrl"
+          [class.vc-ctrl-off]="isVideoMuted"
           (click)="toggleVideo()"
-          class="w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center transition-all cursor-pointer shadow-sm shrink-0"
-          [ngClass]="isVideoMuted ? 'bg-red-500/20 text-red-500 hover:bg-red-500/30' : 'bg-white/10 text-white hover:bg-white/20'"
+          [title]="isVideoMuted ? 'Увімкнути камеру' : 'Вимкнути камеру'"
         >
-          <mat-icon class="scale-110">{{ isVideoMuted ? 'videocam_off' : 'videocam' }}</mat-icon>
+          <mat-icon>{{ isVideoMuted ? 'videocam_off' : 'videocam' }}</mat-icon>
         </button>
 
         @if (hasMultipleCameras) {
-          <button
-            class="w-12 h-12 md:w-14 md:h-14 bg-white/10 hover:bg-white/20 text-white rounded-full flex items-center justify-center transition-all cursor-pointer shadow-sm shrink-0"
-            (click)="switchCamera()"
-          >
-            <mat-icon class="scale-110">flip_camera_ios</mat-icon>
+          <button class="vc-ctrl" (click)="switchCamera()" title="Переключити камеру">
+            <mat-icon>flip_camera_ios</mat-icon>
           </button>
         }
 
-        <div class="w-px h-8 bg-white/10 mx-1 md:mx-2 shrink-0"></div>
+        <span class="vc-sep"></span>
 
-        <button
-          class="w-14 h-14 md:w-16 md:h-16 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center transition-all transform hover:scale-105 shadow-[0_0_20px_rgba(239,68,68,0.4)] cursor-pointer shrink-0"
-          (click)="endCall()"
-        >
-          <mat-icon class="scale-125">call_end</mat-icon>
+        <button class="vc-ctrl vc-ctrl-end" (click)="endCall()" title="Завершити дзвінок">
+          <mat-icon>call_end</mat-icon>
         </button>
       </div>
-    }
-  </div>
+    </div>
+  }
+
 </div>

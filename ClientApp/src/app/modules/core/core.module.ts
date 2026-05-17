@@ -37,6 +37,7 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { AboutUserProfileComponent } from './components/about-user-profile/about-user-profile.component';
 import { PostsUserProfileComponent } from './components/posts-user-profile/posts-user-profile.component';
 import { ReviewsUserProfileComponent } from './components/reviews-user-profile/reviews-user-profile.component';
+import { SavedUserProfileComponent } from './components/saved-user-profile/saved-user-profile.component';
 import { TranslocoModule } from '@ngneat/transloco';
 
 @NgModule({
@@ -58,7 +59,8 @@ import { TranslocoModule } from '@ngneat/transloco';
     NotificationsPopupComponent,
     AboutUserProfileComponent,
     PostsUserProfileComponent,
-    ReviewsUserProfileComponent
+    ReviewsUserProfileComponent,
+    SavedUserProfileComponent,
   ],
   imports: [
     CommonModule,

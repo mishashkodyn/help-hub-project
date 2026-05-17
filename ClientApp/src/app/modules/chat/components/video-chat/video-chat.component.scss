@@ -1,0 +1,373 @@
+:host {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+// ─── ROOT ────────────────────────────────────────────────────────────────────
+
+.vc-root {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: #0a0d16;
+  overflow: hidden;
+  font-family: 'Inter', sans-serif;
+  color: #fff;
+}
+
+// ─── REMOTE VIDEO ────────────────────────────────────────────────────────────
+
+.vc-remote {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: #0a0d16;
+  z-index: 0;
+}
+
+// ─── OVERLAY (initializing / calling / incoming) ─────────────────────────────
+
+.vc-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: linear-gradient(145deg, #0d1117 0%, #12102a 50%, #0b1520 100%);
+  padding: 2rem;
+  text-align: center;
+}
+
+// ─── SPINNER ─────────────────────────────────────────────────────────────────
+
+.vc-spinner {
+  width: 48px;
+  height: 48px;
+  border: 3px solid rgba(255, 255, 255, 0.08);
+  border-top-color: #60a5fa;
+  border-radius: 50%;
+  animation: vc-spin 0.9s linear infinite;
+  margin-bottom: 0.5rem;
+}
+
+.vc-hint {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.45);
+  margin: 0;
+}
+
+// ─── AVATAR WITH PULSING RINGS ────────────────────────────────────────────────
+
+.vc-avatar-wrap {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.75rem;
+}
+
+.vc-ring {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(96, 165, 250, 0.12);
+  animation: vc-pulse 2.4s ease-out infinite;
+
+  &.vc-ring-1 { width: 100px; height: 100px; animation-delay: 0s; }
+  &.vc-ring-2 { width: 140px; height: 140px; animation-delay: 0.7s; }
+  &.vc-ring-3 { width: 180px; height: 180px; animation-delay: 1.4s; }
+
+  &.vc-ring-green {
+    background: rgba(34, 197, 94, 0.15);
+    animation-name: vc-pulse-green;
+  }
+}
+
+.vc-avatar {
+  position: relative;
+  z-index: 2;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+
+  mat-icon {
+    font-size: 44px;
+    width: 44px;
+    height: 44px;
+    color: #fff;
+  }
+
+  &.vc-avatar-blue {
+    background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+    box-shadow: 0 8px 32px rgba(37, 99, 235, 0.45);
+  }
+
+  &.vc-avatar-green {
+    background: linear-gradient(135deg, #059669 0%, #0ea5e9 100%);
+    box-shadow: 0 8px 32px rgba(5, 150, 105, 0.45);
+  }
+}
+
+// ─── STATE TYPOGRAPHY ─────────────────────────────────────────────────────────
+
+.vc-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0.75rem 0 0.25rem;
+  letter-spacing: -0.01em;
+}
+
+.vc-sub {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0;
+}
+
+// ─── ACTION BUTTONS (incoming / calling rows) ─────────────────────────────────
+
+.vc-action-row {
+  display: flex;
+  gap: 2rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.vc-action-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.vc-action-label {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 0.02em;
+}
+
+// ─── FAB BUTTONS ─────────────────────────────────────────────────────────────
+
+.vc-fab {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s ease, filter 0.15s ease;
+
+  mat-icon {
+    font-size: 30px;
+    width: 30px;
+    height: 30px;
+    color: #fff;
+  }
+
+  &:hover { transform: scale(1.07); }
+  &:active { transform: scale(0.95); }
+
+  &.vc-fab-danger {
+    background: #ef4444;
+    box-shadow: 0 8px 28px rgba(239, 68, 68, 0.5);
+    &:hover { filter: brightness(1.1); }
+  }
+
+  &.vc-fab-success {
+    background: #22c55e;
+    box-shadow: 0 8px 28px rgba(34, 197, 94, 0.5);
+    &:hover { filter: brightness(1.1); }
+  }
+}
+
+// Utility used inline for spacing end-call in calling state
+.mt-10 { margin-top: 2.5rem; }
+
+// ─── LOCAL VIDEO PiP ─────────────────────────────────────────────────────────
+
+.vc-pip {
+  position: absolute;
+  z-index: 20;
+  bottom: 2rem;
+  right: 1.25rem;
+  width: 150px;
+  height: 112px;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #1a1a2e;
+  border: 1.5px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.55);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease, width 0.3s ease, height 0.3s ease, top 0.3s ease,
+    bottom 0.3s ease, right 0.3s ease;
+
+  &.vc-pip-visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  // During calling / incoming: slightly larger, bottom-left
+  &.vc-pip-visible:not(.vc-pip-corner) {
+    bottom: 2rem;
+    right: 1.25rem;
+    width: 150px;
+    height: 112px;
+  }
+
+  // During active call: top-right corner, smaller
+  &.vc-pip-corner {
+    top: 1.25rem;
+    bottom: auto;
+    right: 1.25rem;
+    width: 150px;
+    height: 112px;
+
+    @media (min-width: 768px) {
+      width: 210px;
+      height: 158px;
+    }
+  }
+
+  video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+
+    &.vc-mirror { transform: scaleX(-1); }
+    &.vc-hidden { display: none; }
+  }
+
+  .vc-pip-off {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #1e1e30;
+
+    mat-icon {
+      color: rgba(255, 255, 255, 0.35);
+      font-size: 32px;
+      width: 32px;
+      height: 32px;
+    }
+  }
+}
+
+// ─── ACTIVE CALL HUD ─────────────────────────────────────────────────────────
+
+.vc-hud {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 1rem 2rem;
+  gap: 0.6rem;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.72) 0%, transparent 100%);
+}
+
+.vc-duration {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.65);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  font-variant-numeric: tabular-nums;
+}
+
+.vc-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  background: rgba(15, 18, 30, 0.82);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 9999px;
+  padding: 0.625rem 1rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+.vc-sep {
+  width: 1px;
+  height: 2rem;
+  background: rgba(255, 255, 255, 0.1);
+  margin: 0 0.25rem;
+  flex-shrink: 0;
+}
+
+.vc-ctrl {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.09);
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s ease, transform 0.15s ease;
+  flex-shrink: 0;
+
+  mat-icon {
+    font-size: 22px;
+    width: 22px;
+    height: 22px;
+  }
+
+  &:hover { background: rgba(255, 255, 255, 0.18); }
+  &:active { transform: scale(0.93); }
+
+  &.vc-ctrl-off {
+    background: rgba(239, 68, 68, 0.18);
+    color: #fca5a5;
+
+    &:hover { background: rgba(239, 68, 68, 0.28); }
+  }
+
+  &.vc-ctrl-end {
+    width: 58px;
+    height: 58px;
+    background: #ef4444;
+    box-shadow: 0 4px 18px rgba(239, 68, 68, 0.45);
+
+    mat-icon { font-size: 26px; width: 26px; height: 26px; }
+
+    &:hover { background: #dc2626; transform: scale(1.05); }
+    &:active { transform: scale(0.95); }
+  }
+}
+
+// ─── KEYFRAMES ───────────────────────────────────────────────────────────────
+
+@keyframes vc-spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes vc-pulse {
+  0%   { transform: scale(0.75); opacity: 0.55; }
+  100% { transform: scale(2);    opacity: 0; }
+}
+
+@keyframes vc-pulse-green {
+  0%   { transform: scale(0.75); opacity: 0.6; }
+  100% { transform: scale(2);    opacity: 0; }
+}

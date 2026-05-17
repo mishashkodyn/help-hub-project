@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Inject, Injectable, signal } from '@angular/core';
+import { inject, Inject, Injectable, Injector, signal } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { ApiResponse } from '../models/api-response';
 import { User } from '../models/user';
@@ -26,7 +26,20 @@ export class AuthService {
   videoChatService = inject(VideoChatService);
   chatService = inject(ChatService);
   notificationService = inject(NotificationService);
+  private injector = inject(Injector);
   router = inject(Router);
+
+  private startActiveSession(): void {
+    import('./active-session.service').then(({ ActiveSessionService }) => {
+      this.injector.get(ActiveSessionService).start();
+    });
+  }
+
+  private stopActiveSession(): void {
+    import('./active-session.service').then(({ ActiveSessionService }) => {
+      this.injector.get(ActiveSessionService).stop();
+    });
+  }
 
   register(data: FormData): Observable<ApiResponse<string>> {
     return this.httpClient
@@ -102,6 +115,7 @@ export class AuthService {
           if (!this.notificationService.isConnected()){
             this.notificationService.startConnection();
           }
+          this.startActiveSession();
         }),
       );
   }
@@ -132,6 +146,7 @@ export class AuthService {
           if (!this.notificationService.isConnected()){
             this.notificationService.startConnection();
           }
+          this.startActiveSession();
         }),
       );
   }
@@ -153,6 +168,7 @@ export class AuthService {
     this.chatService.stopConnection();
     this.chatService.stopConnection();
     this.videoChatService.stopConnection();
+    this.stopActiveSession();
     localStorage.removeItem(this.token);
     localStorage.removeItem('user');
     this.router.navigate(['/login']);

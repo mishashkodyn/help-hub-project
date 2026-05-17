@@ -7,7 +7,7 @@ import {
 import { environment } from '../../../environments/environment';
 import { AppNotification } from '../models/notification.model';
 import { HttpClient } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import { Observable, Subject, tap } from 'rxjs';
 import { ApiResponse } from '../models/api-response';
 
 @Injectable({
@@ -22,6 +22,11 @@ export class NotificationService {
   unreadCount = signal<number>(0);
   isConnected = signal<boolean>(false);
   isLoading = signal<boolean>(false);
+
+  /** Emits appointmentId when server pushes SessionStartingSoon */
+  readonly sessionStartingSoon = new Subject<string>();
+  /** Emits appointmentId when server marks a session as Completed */
+  readonly sessionCompleted = new Subject<string>();
 
   constructor(private http: HttpClient) {}
 
@@ -90,6 +95,14 @@ export class NotificationService {
         this.unreadCount.update((count) => count + 1);
       },
     );
+
+    this.hubConnection?.on('SessionStartingSoon', (appointmentId: string) => {
+      this.sessionStartingSoon.next(appointmentId);
+    });
+
+    this.hubConnection?.on('SessionCompleted', (appointmentId: string) => {
+      this.sessionCompleted.next(appointmentId);
+    });
   }
 
   markAllAsRead() {

@@ -24,6 +24,12 @@ import { HomePageResolverComponent } from './modules/core/components/home-page-r
 import { NotificationsPageComponent } from './modules/core/pages/notifications-page/notifications-page.component';
 import { ManageSpecializationsComponent } from './modules/admin-tools/pages/manage-specializations/manage-specializations.component';
 import { PsychologistCalendarPageComponent } from './modules/psychologist-tools/pages/psychologist-calendar-page/psychologist-calendar-page.component';
+import { PsychologistApplicationsComponent } from './modules/psychologist-tools/pages/psychologist-applications/psychologist-applications.component';
+import { PsychologistSessionsComponent } from './modules/psychologist-tools/pages/psychologist-sessions/psychologist-sessions.component';
+import { PsychologistPastSessionsComponent } from './modules/psychologist-tools/pages/psychologist-past-sessions/psychologist-past-sessions.component';
+import { PsychologistProfileEditorComponent } from './modules/psychologist-tools/pages/psychologist-profile-editor/psychologist-profile-editor.component';
+import { ClientSessionsComponent } from './modules/client-portal/pages/client-sessions/client-sessions.component';
+import { SessionRoomComponent } from './modules/session/pages/session-room/session-room.component';
 
 const routes: Routes = [
   {
@@ -77,8 +83,38 @@ const routes: Routes = [
         component: PsychologistCalendarPageComponent
       },
       {
+        path: 'psychologist/applications',
+        canActivate: [AuthGuard],
+        component: PsychologistApplicationsComponent
+      },
+      {
+        path: 'psychologist/sessions',
+        canActivate: [AuthGuard],
+        component: PsychologistSessionsComponent
+      },
+      {
+        path: 'psychologist/past-sessions',
+        canActivate: [AuthGuard],
+        component: PsychologistPastSessionsComponent
+      },
+      {
+        path: 'psychologist/profile',
+        canActivate: [AuthGuard],
+        component: PsychologistProfileEditorComponent
+      },
+      {
         path: 'notifications',
         component: NotificationsPageComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'my-sessions',
+        component: ClientSessionsComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'session/:id',
+        component: SessionRoomComponent,
         canActivate: [AuthGuard],
       },
     ],

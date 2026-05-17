@@ -5,4 +5,5 @@ export interface AppNotification {
   type: string;
   createdAt: string | Date;
   isRead: boolean;
+  relatedEntityId?: string | null;
 }

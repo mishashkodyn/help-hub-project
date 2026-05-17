@@ -1,0 +1,444 @@
+<div class="min-h-screen bg-[#fafafa] font-sans">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
+    <!-- Top -->
+    <div class="mb-6">
+      <button
+        (click)="cancel()"
+        class="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-gray-900 transition-colors cursor-pointer"
+      >
+        <mat-icon class="text-[18px]">arrow_back</mat-icon>
+        <span>Back</span>
+      </button>
+      <div class="flex items-end justify-between gap-4 mt-3 flex-wrap">
+        <div>
+          <h1 class="text-2xl sm:text-[28px] font-bold text-gray-900 tracking-tight">
+            My resume
+          </h1>
+          @if (!isLoading && resume) {
+            <p class="text-sm text-gray-500 mt-1">
+              @if (resume.isPublished) {
+                Visible in the catalog
+              } @else {
+                Hidden — not in the catalog yet
+              }
+            </p>
+          }
+        </div>
+
+        @if (!isLoading) {
+          <div class="flex items-center gap-3">
+            <div class="hidden sm:flex items-center gap-2 text-xs text-gray-500">
+              <div class="w-28 h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                <div
+                  class="h-full transition-all"
+                  [style.width.%]="completenessPercent"
+                  [class.bg-gray-900]="completenessPercent === 100"
+                  [class.bg-gray-400]="completenessPercent < 100"
+                ></div>
+              </div>
+              <span class="font-medium tabular-nums">{{ completenessPercent }}%</span>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+
+    @if (isLoading) {
+      <div class="flex items-center justify-center py-20">
+        <mat-spinner diameter="36"></mat-spinner>
+      </div>
+    } @else {
+      <div class="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-8">
+        <!-- Form -->
+        <form
+          [formGroup]="form"
+          (ngSubmit)="save()"
+          class="space-y-8"
+        >
+          <!-- About -->
+          <section class="space-y-5">
+            <header>
+              <h2 class="text-base font-semibold text-gray-900">About</h2>
+              <p class="text-xs text-gray-500 mt-0.5">Bio is the first thing clients read.</p>
+            </header>
+
+            <div>
+              <textarea
+                formControlName="bio"
+                rows="7"
+                maxlength="4000"
+                placeholder="Tell clients about your approach, who you work with, and what to expect from a session."
+                class="block w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900/10 focus:border-gray-900 transition-all resize-y"
+              ></textarea>
+              <div class="flex justify-between text-[11px] text-gray-400 mt-1.5">
+                <span
+                  [class.text-red-500]="form.get('bio')?.invalid && form.get('bio')?.touched"
+                >
+                  Min 50 characters
+                </span>
+                <span class="tabular-nums">{{ form.get('bio')?.value?.length || 0 }} / 4000</span>
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-medium text-gray-600 mb-1.5">
+                Video greeting link
+                <span class="text-gray-400 font-normal">— optional</span>
+              </label>
+              <input
+                type="url"
+                formControlName="videoGreetingUrl"
+                placeholder="https://"
+                class="block w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900/10 focus:border-gray-900 transition-all"
+              />
+            </div>
+          </section>
+
+          <hr class="border-gray-100" />
+
+          <!-- Credentials -->
+          <section class="space-y-5">
+            <header>
+              <h2 class="text-base font-semibold text-gray-900">Credentials</h2>
+            </header>
+
+            <div>
+              <label class="block text-xs font-medium text-gray-600 mb-1.5">Education</label>
+              <input
+                formControlName="education"
+                placeholder="University, degree, certifications"
+                class="block w-full px-4 py-2.5 bg-white border rounded-xl text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900/10 focus:border-gray-900 transition-all"
+                [class.border-red-300]="form.get('education')?.invalid && form.get('education')?.touched"
+                [class.border-gray-200]="!(form.get('education')?.invalid && form.get('education')?.touched)"
+              />
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-medium text-gray-600 mb-1.5">Years of experience</label>
+                <input
+                  type="number"
+                  min="0"
+                  max="80"
+                  formControlName="experienceYears"
+                  class="block w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-900/10 focus:border-gray-900 transition-all"
+                />
+              </div>
+
+              <div>
+                <label class="block text-xs font-medium text-gray-600 mb-1.5">Contact phone</label>
+                <input
+                  formControlName="contactPhone"
+                  placeholder="+380…"
+                  class="block w-full px-4 py-2.5 bg-white border rounded-xl text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900/10 focus:border-gray-900 transition-all"
+                  [class.border-red-300]="form.get('contactPhone')?.invalid && form.get('contactPhone')?.touched"
+                  [class.border-gray-200]="!(form.get('contactPhone')?.invalid && form.get('contactPhone')?.touched)"
+                />
+              </div>
+            </div>
+          </section>
+
+          <hr class="border-gray-100" />
+
+          <!-- Specializations -->
+          <section class="space-y-3">
+            <header class="flex items-center justify-between">
+              <h2 class="text-base font-semibold text-gray-900">Specializations</h2>
+              <span class="text-xs text-gray-500">{{ selectedSpecializationIds.size }} selected</span>
+            </header>
+
+            @if (availableSpecializations.length === 0) {
+              <p class="text-sm text-gray-400 italic">No specializations available.</p>
+            } @else {
+              <div class="flex flex-wrap gap-1.5">
+                @for (spec of availableSpecializations; track spec.id) {
+                  <button
+                    type="button"
+                    (click)="toggleSpecialization(spec.id)"
+                    class="px-3 h-8 rounded-full text-xs font-medium border transition-colors cursor-pointer"
+                    [ngClass]="
+                      isSpecializationSelected(spec.id)
+                        ? 'bg-gray-900 text-white border-gray-900'
+                        : 'bg-white text-gray-700 border-gray-200 hover:border-gray-400'
+                    "
+                  >
+                    {{ spec.name }}
+                  </button>
+                }
+              </div>
+            }
+          </section>
+
+          <hr class="border-gray-100" />
+
+          <!-- Pricing -->
+          <section class="space-y-5">
+            <header>
+              <h2 class="text-base font-semibold text-gray-900">Session</h2>
+            </header>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-medium text-gray-600 mb-1.5">Price (₴)</label>
+                <input
+                  type="number"
+                  min="0"
+                  step="50"
+                  formControlName="pricePerSession"
+                  class="block w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-900/10 focus:border-gray-900 transition-all"
+                />
+              </div>
+
+              <div>
+                <label class="block text-xs font-medium text-gray-600 mb-1.5">Length</label>
+                <select
+                  formControlName="sessionDurationMinutes"
+                  class="block w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-900/10 focus:border-gray-900 transition-all"
+                >
+                  @for (d of sessionDurations; track d) {
+                    <option [ngValue]="d">{{ d }} minutes</option>
+                  }
+                </select>
+              </div>
+            </div>
+          </section>
+
+          <hr class="border-gray-100" />
+
+          <!-- Specialised -->
+          <section class="space-y-3">
+            <header>
+              <h2 class="text-base font-semibold text-gray-900">Specialised work</h2>
+            </header>
+
+            <div class="space-y-1">
+              <label class="flex items-center justify-between py-2.5 cursor-pointer group">
+                <span class="text-sm text-gray-800">Works with military</span>
+                <input
+                  type="checkbox"
+                  formControlName="worksWithMilitary"
+                  class="w-4 h-4 accent-gray-900"
+                />
+              </label>
+              <div class="border-t border-gray-100"></div>
+              <label class="flex items-center justify-between py-2.5 cursor-pointer group">
+                <span class="text-sm text-gray-800">Trauma-informed training</span>
+                <input
+                  type="checkbox"
+                  formControlName="hasTraumaTraining"
+                  class="w-4 h-4 accent-gray-900"
+                />
+              </label>
+              <div class="border-t border-gray-100"></div>
+              <label class="flex items-center justify-between py-2.5 cursor-pointer group">
+                <span class="text-sm text-gray-800">Free sessions for military</span>
+                <input
+                  type="checkbox"
+                  formControlName="offersFreeSessionsForMilitary"
+                  class="w-4 h-4 accent-gray-900"
+                />
+              </label>
+              <div class="border-t border-gray-100"></div>
+              <div class="flex items-center justify-between py-2.5 gap-4">
+                <label class="text-sm text-gray-800" for="discount">Discount for veterans / IDP</label>
+                <div class="flex items-center gap-1.5">
+                  <input
+                    id="discount"
+                    type="number"
+                    min="0"
+                    max="100"
+                    formControlName="discountForAffected"
+                    class="w-20 px-3 py-1.5 bg-white border border-gray-200 rounded-lg text-gray-800 text-right text-sm focus:outline-none focus:ring-2 focus:ring-gray-900/10 focus:border-gray-900 transition-all"
+                  />
+                  <span class="text-sm text-gray-500">%</span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <hr class="border-gray-100" />
+
+          <!-- Publish -->
+          <section>
+            <label
+              class="flex items-center justify-between gap-4 py-3 cursor-pointer"
+              [class.opacity-50]="!canPublish && !form.value.isPublished"
+            >
+              <div>
+                <div class="text-sm font-medium text-gray-900">Show in catalog</div>
+                <div class="text-xs text-gray-500 mt-0.5">
+                  @if (!canPublish && !form.value.isPublished) {
+                    Fill the resume to enable
+                  } @else {
+                    Clients can find and book you
+                  }
+                </div>
+              </div>
+              <button
+                type="button"
+                (click)="togglePublish()"
+                [disabled]="!canPublish && !form.value.isPublished"
+                class="relative inline-flex h-6 w-11 items-center rounded-full transition-colors cursor-pointer disabled:cursor-not-allowed"
+                [ngClass]="form.value.isPublished ? 'bg-gray-900' : 'bg-gray-300'"
+                [attr.aria-pressed]="form.value.isPublished"
+              >
+                <span
+                  class="inline-block h-5 w-5 transform rounded-full bg-white shadow-sm transition-transform"
+                  [ngClass]="form.value.isPublished ? 'translate-x-5' : 'translate-x-0.5'"
+                ></span>
+              </button>
+            </label>
+          </section>
+
+          <!-- Footer actions -->
+          <div class="flex items-center justify-end gap-3 pt-2">
+            <button
+              type="button"
+              (click)="cancel()"
+              [disabled]="isSaving"
+              class="h-10 px-4 rounded-full text-sm font-medium text-gray-700 hover:bg-gray-100 transition-colors cursor-pointer disabled:opacity-50"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              [disabled]="isSaving || form.invalid"
+              class="inline-flex items-center gap-2 h-10 px-5 rounded-full bg-gray-900 hover:bg-black text-white text-sm font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+            >
+              @if (isSaving) {
+                <div
+                  class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"
+                ></div>
+                <span>Saving</span>
+              } @else {
+                <span>Save</span>
+              }
+            </button>
+          </div>
+        </form>
+
+        <!-- Preview -->
+        <aside class="lg:sticky lg:top-6 lg:self-start">
+          <div class="text-[11px] uppercase tracking-wider font-semibold text-gray-400 mb-2 px-1">
+            Catalog preview
+          </div>
+          <div
+            class="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm"
+          >
+            <div class="flex gap-4">
+              <div class="shrink-0">
+                <div
+                  class="w-16 h-16 rounded-2xl overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center text-gray-500 text-lg font-bold ring-1 ring-gray-100"
+                >
+                  @if (authService.currentLoggedUser?.profileImage) {
+                    <img
+                      [src]="authService.currentLoggedUser?.profileImage"
+                      [alt]="(authService.currentLoggedUser?.name || '') + ' ' + (authService.currentLoggedUser?.surname || '')"
+                      class="w-full h-full object-cover"
+                    />
+                  } @else {
+                    {{ initials() }}
+                  }
+                </div>
+              </div>
+
+              <div class="flex-1 min-w-0">
+                <div class="flex items-start justify-between gap-2">
+                  <div class="min-w-0">
+                    <div class="flex items-center gap-1 text-sm font-semibold text-gray-900 truncate">
+                      <span class="truncate">
+                        {{ authService.currentLoggedUser?.name }}
+                        {{ authService.currentLoggedUser?.surname }}
+                      </span>
+                      <mat-icon class="text-[14px] text-[var(--color-blue)] shrink-0">verified</mat-icon>
+                    </div>
+                    <div class="text-[11px] text-gray-500 mt-0.5">
+                      @if (form.value.experienceYears > 0) {
+                        {{ form.value.experienceYears }}
+                        {{ form.value.experienceYears === 1 ? 'year' : 'years' }}
+                      } @else {
+                        New
+                      }
+                      <span class="mx-1">·</span>
+                      {{ form.value.sessionDurationMinutes }} min
+                    </div>
+                  </div>
+                  <div class="text-right shrink-0">
+                    <div class="text-base font-bold text-gray-900 leading-none">
+                      {{ form.value.pricePerSession || 0 }}<span class="text-xs font-medium text-gray-500"> ₴</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <p class="mt-3 text-xs text-gray-700 leading-relaxed">
+              @if (form.value.bio?.trim()) {
+                {{ form.value.bio.length > 200 ? (form.value.bio | slice: 0:200) + '…' : form.value.bio }}
+              } @else {
+                <span class="text-gray-400 italic">Add a bio to preview…</span>
+              }
+            </p>
+
+            @if (selectedSpecializations().length > 0 || form.value.worksWithMilitary || form.value.hasTraumaTraining || form.value.offersFreeSessionsForMilitary || form.value.discountForAffected > 0) {
+              <div class="mt-3 flex flex-wrap gap-1">
+                @for (spec of selectedSpecializations().slice(0, 4); track spec.id) {
+                  <span class="px-2 h-5 inline-flex items-center rounded-full bg-gray-50 border border-gray-100 text-[10px] text-gray-700">
+                    {{ spec.name }}
+                  </span>
+                }
+                @if (selectedSpecializations().length > 4) {
+                  <span class="text-[10px] text-gray-400 self-center">
+                    +{{ selectedSpecializations().length - 4 }}
+                  </span>
+                }
+                @if (form.value.worksWithMilitary) {
+                  <span class="px-2 h-5 inline-flex items-center gap-1 rounded-full bg-[var(--color-mint)]/30 border border-[var(--color-mint)]/60 text-[10px] text-[var(--color-primary)] font-medium">
+                    <span class="w-1 h-1 rounded-full bg-[var(--color-success)]"></span>
+                    Military
+                  </span>
+                }
+                @if (form.value.hasTraumaTraining) {
+                  <span class="px-2 h-5 inline-flex items-center gap-1 rounded-full bg-blue-50 border border-blue-100 text-[10px] text-blue-700 font-medium">
+                    <span class="w-1 h-1 rounded-full bg-blue-500"></span>
+                    Trauma
+                  </span>
+                }
+                @if (form.value.offersFreeSessionsForMilitary) {
+                  <span class="px-2 h-5 inline-flex items-center gap-1 rounded-full bg-rose-50 border border-rose-100 text-[10px] text-rose-700 font-medium">
+                    <span class="w-1 h-1 rounded-full bg-rose-500"></span>
+                    Free for military
+                  </span>
+                }
+                @if (form.value.discountForAffected > 0) {
+                  <span class="px-2 h-5 inline-flex items-center rounded-full bg-amber-50 border border-amber-100 text-[10px] text-amber-700 font-medium">
+                    −{{ form.value.discountForAffected }}%
+                  </span>
+                }
+              </div>
+            }
+
+            <div class="mt-4 flex items-center justify-end gap-2">
+              <span
+                class="inline-flex items-center justify-center h-8 px-3 rounded-full border border-gray-200 text-xs font-medium text-gray-500"
+              >
+                View profile
+              </span>
+              <span
+                class="inline-flex items-center h-8 px-4 rounded-full bg-gray-900 text-white text-xs font-medium"
+              >
+                Book session
+              </span>
+            </div>
+          </div>
+
+          @if (!canPublish) {
+            <p class="text-[11px] text-gray-500 mt-3 px-1 leading-relaxed">
+              Bio (50+ chars), education, phone, price and at least one specialization are required to appear in the catalog.
+            </p>
+          }
+        </aside>
+      </div>
+    }
+  </div>
+</div>

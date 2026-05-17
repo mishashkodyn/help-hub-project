@@ -12,6 +12,7 @@ import { MenuItem } from '../../../../api/models/menu-item';
 export class ChatRightSidebarComponent{
   activeTab: string = 'Information';
   @Output() mediaSelected = new EventEmitter<{ url: string; type: 'image' | 'video' }>();
+  @Output() clearConversation = new EventEmitter<void>();
 
   constructor(protected chatService: ChatService, private router: Router) {}
 
@@ -37,5 +38,9 @@ export class ChatRightSidebarComponent{
 
   openMedia(url: string, type: 'image' | 'video') {
     this.mediaSelected.emit({ url, type });
+  }
+
+  clearChatHistory(){
+    this.clearConversation.emit();
   }
 }

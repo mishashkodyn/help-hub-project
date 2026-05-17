@@ -37,7 +37,8 @@ namespace Infrastructure.Services
                 message = notification.Message,
                 type = notification.Type,
                 createdAt = notification.CreatedAt,
-                isRead = false
+                isRead = false,
+                relatedEntityId = notification.RelatedEntityId
             });
         }
 

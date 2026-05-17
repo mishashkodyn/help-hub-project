@@ -34,9 +34,13 @@ namespace Infrastructure
             services.Configure<CloudflareConfig>(r2Section);
 
             services.AddScoped<IAiService, AiService>();
+            services.AddScoped<IDeepgramService, DeepgramService>();
             services.AddScoped<INotificationService, NotificationService>();
             services.AddScoped<IWorkingHoursService, WorkingHoursService>();
+            services.AddScoped<IAppointmentService, AppointmentService>();
+            services.AddScoped<IPsychologistResumeService, PsychologistResumeService>();
             services.AddScoped<TokenService>();
+            services.AddHostedService<SessionReminderService>();
 
             if (r2Section.GetValue<bool>("Enabled"))
             {

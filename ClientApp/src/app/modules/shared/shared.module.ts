@@ -10,6 +10,8 @@ import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.compo
 import { ConfirmDialogModalComponent } from './confirm-dialog-modal/confirm-dialog-modal.component';
 import { TranslocoModule } from '@ngneat/transloco';
 import { MediaPlayerComponent } from './media-player/media-player.component';
+import { BookSessionModalComponent } from './book-session-modal/book-session-modal.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -20,15 +22,19 @@ import { MediaPlayerComponent } from './media-player/media-player.component';
     DropdownComponent,
     LoadingSpinnerComponent,
     ConfirmDialogModalComponent,
-    MediaPlayerComponent
+    MediaPlayerComponent,
+    BookSessionModalComponent
   ],
   imports: [
     CommonModule,
     MatDialogModule,
     MatIcon,
-    TranslocoModule
+    TranslocoModule,
+    ReactiveFormsModule,
+    FormsModule
 ],
   exports: [
+    BookSessionModalComponent,
     ButtonComponent,
     TypingIndicatorComponent,
     LogoutConfirmModalComponent,

@@ -1,0 +1,115 @@
+<div 
+  class="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 sm:p-6"
+  (click)="close()"
+>
+  <div 
+    class="bg-white rounded-3xl shadow-2xl w-full max-w-lg overflow-hidden animate-fade-in relative flex flex-col max-h-[90vh]"
+    (click)="$event.stopPropagation()"
+  >
+    <div class="px-6 py-5 border-b border-gray-100 flex items-center justify-between bg-gray-50/50 shrink-0">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-[var(--color-sky)]/20 text-[var(--color-primary)] flex items-center justify-center">
+          <mat-icon>event_available</mat-icon>
+        </div>
+        <div>
+          <h2 class="text-xl font-bold text-gray-900 tracking-tight">Book a Session</h2>
+          <p class="text-xs text-gray-500 font-medium mt-0.5">with {{ psychologistName }}</p>
+        </div>
+      </div>
+      
+      <button 
+        (click)="close()"
+        class="w-8 h-8 flex items-center justify-center rounded-full text-gray-400 hover:bg-gray-100 hover:text-gray-700 transition-colors"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+
+    <div class="p-6 md:p-8 overflow-y-auto custom-scroll flex-1">
+      
+      <div class="mb-8">
+        <label class="block text-sm font-bold text-gray-700 uppercase tracking-widest mb-2">
+          Select Date
+        </label>
+        <div class="relative">
+          <input 
+            type="date" 
+            [min]="minDate"
+            [value]="selectedDate"
+            (change)="onDateChange($event)"
+            class="w-full pl-12 pr-4 py-3.5 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/20 outline-none text-gray-700 font-medium transition-all cursor-pointer"
+          >
+          <mat-icon class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">calendar_today</mat-icon>
+        </div>
+      </div>
+
+      <div class="mb-8">
+        <div class="flex items-center justify-between mb-3">
+          <label class="block text-sm font-bold text-gray-700 uppercase tracking-widest">
+            Available Time
+          </label>
+          <span *ngIf="selectedTime" class="text-xs font-bold text-[var(--color-primary)] bg-[var(--color-sky)]/20 px-2 py-1 rounded-md">
+            Selected: {{ selectedTime }}
+          </span>
+        </div>
+
+        <div *ngIf="isLoadingSlots" class="flex justify-center py-8">
+          <mat-icon class="animate-spin text-3xl text-[var(--color-primary)]">autorenew</mat-icon>
+        </div>
+
+        <div *ngIf="!isLoadingSlots && availableSlots.length > 0" class="grid grid-cols-3 sm:grid-cols-4 gap-3">
+          <button 
+            *ngFor="let time of availableSlots"
+            (click)="selectTime(time)"
+            class="py-2.5 rounded-xl text-sm font-bold transition-all duration-200 border-2"
+            [ngClass]="selectedTime === time 
+              ? 'border-[var(--color-primary)] bg-[var(--color-primary)] text-white shadow-md scale-105' 
+              : 'border-gray-100 bg-white text-gray-600 hover:border-blue-200 hover:bg-blue-50'"
+          >
+            {{ time }}
+          </button>
+        </div>
+
+        <div *ngIf="!isLoadingSlots && availableSlots.length === 0" class="text-center py-8 bg-gray-50 rounded-2xl border border-dashed border-gray-200">
+          <mat-icon class="text-gray-300 text-4xl mb-2">event_busy</mat-icon>
+          <p class="text-gray-500 font-medium">No available slots on this date.</p>
+          <p class="text-xs text-gray-400 mt-1">Please try selecting another day.</p>
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-sm font-bold text-gray-700 uppercase tracking-widest mb-2">
+          Notes (Optional)
+        </label>
+        <textarea 
+          [(ngModel)]="clientNotes"
+          rows="3"
+          placeholder="Briefly describe what you'd like to discuss..."
+          class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/20 outline-none text-gray-700 resize-none transition-all"
+        ></textarea>
+      </div>
+
+    </div>
+
+    <div class="px-6 py-5 border-t border-gray-100 bg-gray-50/50 flex justify-end gap-3 shrink-0">
+      <button 
+        (click)="close()"
+        class="px-5 py-2.5 rounded-xl font-bold text-gray-600 hover:bg-gray-200 transition-colors"
+      >
+        Cancel
+      </button>
+      
+      <button 
+        (click)="confirmBooking()"
+        [disabled]="!selectedTime || isSubmitting"
+        class="px-6 py-2.5 rounded-xl font-bold flex items-center gap-2 transition-all shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+        [ngClass]="selectedTime ? 'bg-[var(--color-primary)] text-white hover:bg-blue-700' : 'bg-gray-300 text-gray-500'"
+      >
+        <mat-icon *ngIf="isSubmitting" class="animate-spin scale-90">autorenew</mat-icon>
+        <mat-icon *ngIf="!isSubmitting" class="scale-90">check_circle</mat-icon>
+        {{ isSubmitting ? 'Sending Request...' : 'Confirm Booking' }}
+      </button>
+    </div>
+
+  </div>
+</div>

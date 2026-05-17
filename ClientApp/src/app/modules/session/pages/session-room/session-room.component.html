@@ -1,0 +1,352 @@
+<div class="flex flex-col h-full bg-gray-50">
+
+  <!-- Loading -->
+  @if (isLoading()) {
+    <div class="flex-1 flex items-center justify-center">
+      <mat-spinner diameter="48"></mat-spinner>
+    </div>
+  }
+
+  <!-- Access denied -->
+  @else if (isAccessDenied()) {
+    <div class="flex-1 flex flex-col items-center justify-center gap-4 text-center px-6">
+      <mat-icon class="text-6xl text-gray-300">lock</mat-icon>
+      <h2 class="text-lg font-semibold text-gray-600">Session not available</h2>
+      <p class="text-sm text-gray-400">The session room is open from 5 minutes before the start until the scheduled end time.</p>
+      <button
+        (click)="goBack()"
+        class="mt-2 px-5 py-2 bg-[var(--color-primary)] text-white rounded-xl text-sm font-medium"
+      >Back to My Sessions</button>
+    </div>
+  }
+
+  <!-- Session room -->
+  @else if (sessionInfo()) {
+    <!-- Header -->
+    <div class="flex items-center gap-2 sm:gap-3 px-2 sm:px-4 py-2 sm:py-3 bg-white border-b border-gray-100 shadow-sm shrink-0">
+      <button
+        (click)="goBack()"
+        class="w-9 h-9 flex items-center justify-center rounded-xl hover:bg-gray-100 transition-colors shrink-0"
+        title="Back"
+      >
+        <mat-icon class="text-gray-500">arrow_back</mat-icon>
+      </button>
+
+      <div class="flex-1 min-w-0">
+        <div class="flex items-center gap-1.5 min-w-0">
+          <span
+            class="w-1.5 h-1.5 rounded-full shrink-0"
+            [ngClass]="sessionHub.isConnected() ? 'bg-[var(--color-success)]' : 'bg-yellow-400 animate-pulse'"
+            [title]="sessionHub.isConnected() ? 'Connected' : 'Connecting…'"
+          ></span>
+          <p class="font-semibold text-[var(--color-primary)] text-xs sm:text-sm truncate">
+            {{ sessionInfo()!.psychologistName }}
+          </p>
+        </div>
+        <p class="text-[10px] sm:text-xs text-gray-400 truncate">
+          {{ sessionInfo()!.startTime | date:'dd MMM, HH:mm' }} – {{ sessionInfo()!.endTime | date:'HH:mm' }}
+        </p>
+      </div>
+
+      <!-- Video toggle -->
+      <button
+        (click)="toggleVideo()"
+        class="flex items-center gap-1.5 px-2.5 sm:px-3 py-2 text-xs sm:text-sm font-semibold rounded-xl transition-all shadow-sm shrink-0"
+        [ngClass]="isVideoOpen()
+          ? 'bg-red-500 text-white hover:bg-red-600'
+          : 'bg-[var(--color-success)] text-white hover:bg-[var(--color-success)]/90'"
+        [title]="isVideoOpen() ? 'Close video' : 'Start video'"
+      >
+        <mat-icon class="text-base">{{ isVideoOpen() ? 'videocam_off' : 'video_call' }}</mat-icon>
+        <span class="hidden sm:inline">{{ isVideoOpen() ? 'Close video' : 'Video' }}</span>
+      </button>
+    </div>
+
+    <!-- Body: tabs on left, video panel on right when open -->
+    <div class="flex-1 flex min-h-0 relative">
+
+      <!-- LEFT: tabs area -->
+      <div class="flex flex-col min-w-0 flex-1 bg-gray-50">
+        <!-- Tabs strip -->
+        <div class="flex items-center gap-0.5 sm:gap-1 px-2 sm:px-3 pt-1.5 sm:pt-2 bg-white border-b border-gray-100 shrink-0 overflow-x-auto custom-scroll">
+          @for (tab of tabs; track tab.id) {
+            <button
+              (click)="selectTab(tab.id)"
+              class="flex items-center gap-1.5 px-2.5 sm:px-3 py-2 text-xs sm:text-sm font-medium rounded-t-lg transition-colors whitespace-nowrap border-b-2"
+              [ngClass]="activeTab() === tab.id
+                ? 'text-[var(--color-primary)] border-[var(--color-primary)] bg-gray-50'
+                : 'text-gray-500 hover:text-gray-700 border-transparent'"
+            >
+              <mat-icon class="text-base shrink-0">{{ tab.icon }}</mat-icon>
+              <span class="hidden xs:inline sm:inline">{{ tab.label }}</span>
+            </button>
+          }
+        </div>
+
+        <!-- Tab content -->
+        <div class="flex-1 flex flex-col min-h-0">
+
+          <!-- CHAT -->
+          @if (activeTab() === 'chat') {
+            <div
+              #messagesContainer
+              class="flex-1 overflow-y-auto px-3 sm:px-4 py-3 sm:py-4 space-y-2 sm:space-y-3 custom-scroll"
+            >
+              @if (messages().length === 0) {
+                <div class="flex flex-col items-center justify-center h-full text-center">
+                  <mat-icon class="text-4xl text-gray-200 mb-2">chat_bubble_outline</mat-icon>
+                  <p class="text-sm text-gray-400">No messages yet. Say hello!</p>
+                </div>
+              }
+
+              @for (msg of messages(); track msg.id) {
+                <div
+                  class="flex"
+                  [class.justify-end]="isMine(msg)"
+                  [class.justify-start]="!isMine(msg)"
+                >
+                  <div
+                    class="max-w-[85%] sm:max-w-[75%] px-3 sm:px-4 py-2 sm:py-2.5 rounded-2xl text-sm leading-relaxed break-words"
+                    [ngClass]="isMine(msg)
+                      ? 'bg-[var(--color-primary)] text-white rounded-br-sm'
+                      : 'bg-white border border-gray-100 text-gray-800 rounded-bl-sm shadow-sm'"
+                  >
+                    @if (!isMine(msg)) {
+                      <p class="text-[10px] font-semibold mb-0.5 opacity-60">{{ msg.senderName }}</p>
+                    }
+                    <p class="whitespace-pre-wrap">{{ msg.content }}</p>
+                    <p class="text-[10px] mt-1 opacity-50 text-right">
+                      {{ msg.createdDate | date:'HH:mm' }}
+                    </p>
+                  </div>
+                </div>
+              }
+            </div>
+
+            <!-- Input -->
+            <div class="px-2 sm:px-4 py-2 sm:py-3 bg-white border-t border-gray-100 shrink-0">
+              <div class="flex items-end gap-2 bg-gray-50 rounded-2xl px-3 sm:px-4 py-1.5 sm:py-2 border border-gray-200">
+                <textarea
+                  [(ngModel)]="messageInput"
+                  (keydown)="onKeydown($event)"
+                  [placeholder]="sessionHub.isConnected() ? 'Type a message…' : 'Connecting…'"
+                  [disabled]="!sessionHub.isConnected()"
+                  rows="1"
+                  class="flex-1 resize-none bg-transparent outline-none text-sm text-gray-800 placeholder-gray-400 max-h-28 overflow-y-auto disabled:opacity-50"
+                ></textarea>
+                <button
+                  (click)="sendMessage()"
+                  [disabled]="!messageInput.trim() || !sessionHub.isConnected()"
+                  class="w-9 h-9 flex items-center justify-center rounded-xl bg-[var(--color-primary)] text-white disabled:opacity-40 transition-all shrink-0"
+                  title="Send"
+                >
+                  <mat-icon class="text-base">send</mat-icon>
+                </button>
+              </div>
+            </div>
+          }
+
+          <!-- TRANSCRIPTIONS -->
+          @else if (activeTab() === 'transcriptions') {
+            @let finals = transcripts.finals();
+            @let interims = transcripts.interims();
+            <div class="flex-1 flex flex-col min-h-0 bg-gray-50">
+              <div class="flex-1 overflow-y-auto px-3 sm:px-4 py-3 sm:py-4 space-y-2 sm:space-y-3 custom-scroll">
+                @if (finals.length === 0 && (interims | keyvalue).length === 0) {
+                  <div class="flex flex-col items-center justify-center h-full text-center text-gray-400">
+                    <mat-icon class="text-5xl text-gray-200 mb-2">subtitles</mat-icon>
+                    <p class="text-sm">Live transcriptions of your video call appear here.</p>
+                    <p class="text-xs mt-1">Start the video to begin.</p>
+                  </div>
+                }
+
+                @for (entry of finals; track entry.id) {
+                  <div
+                    class="flex"
+                    [class.justify-end]="isLocalSpeaker(entry.speaker)"
+                    [class.justify-start]="!isLocalSpeaker(entry.speaker)"
+                  >
+                    <div
+                      class="max-w-[85%] sm:max-w-[75%] px-3 sm:px-4 py-2 sm:py-2.5 rounded-2xl text-sm leading-relaxed break-words"
+                      [ngClass]="isLocalSpeaker(entry.speaker)
+                        ? 'bg-[var(--color-primary)] text-white rounded-br-sm'
+                        : 'bg-white border border-gray-100 text-gray-800 rounded-bl-sm shadow-sm'"
+                    >
+                      <p class="text-[10px] font-semibold mb-0.5 opacity-60">
+                        {{ resolveSpeakerName(entry.speaker) || (isLocalSpeaker(entry.speaker) ? 'You' : 'Speaker') }}
+                      </p>
+                      <p class="whitespace-pre-wrap">{{ entry.text }}</p>
+                      <p class="text-[10px] mt-1 opacity-50 text-right">
+                        {{ entry.timestamp | date:'HH:mm:ss' }}
+                      </p>
+                    </div>
+                  </div>
+                }
+
+                @for (interim of interims | keyvalue; track interim.key) {
+                  @if (interim.value) {
+                    <div
+                      class="flex"
+                      [class.justify-end]="isLocalSpeaker(interim.key)"
+                      [class.justify-start]="!isLocalSpeaker(interim.key)"
+                    >
+                      <div
+                        class="max-w-[85%] sm:max-w-[75%] px-3 sm:px-4 py-2 sm:py-2.5 rounded-2xl text-sm leading-relaxed break-words italic opacity-70"
+                        [ngClass]="isLocalSpeaker(interim.key)
+                          ? 'bg-[var(--color-primary)]/40 text-white rounded-br-sm'
+                          : 'bg-gray-100 border border-gray-200 text-gray-700 rounded-bl-sm'"
+                      >
+                        <p class="text-[10px] font-semibold mb-0.5 opacity-60">
+                          {{ resolveSpeakerName(interim.key) || (isLocalSpeaker(interim.key) ? 'You' : 'Speaker') }}
+                          <span class="ml-1 normal-case">· speaking…</span>
+                        </p>
+                        <p class="whitespace-pre-wrap">{{ interim.value }}</p>
+                      </div>
+                    </div>
+                  }
+                }
+              </div>
+            </div>
+          }
+
+          <!-- NOTES -->
+          @else if (activeTab() === 'notes') {
+            @if (isPsychologist) {
+              <div class="flex-1 flex flex-col min-h-0">
+                <div class="flex items-center justify-between px-4 py-2 bg-white border-b border-gray-100 shrink-0">
+                  <div class="flex items-center gap-2 text-sm">
+                    <mat-icon class="text-base text-gray-400">edit_note</mat-icon>
+                    <span class="font-semibold text-gray-700">Private notes</span>
+                  </div>
+                  <span
+                    class="text-[11px] font-medium"
+                    [ngClass]="{
+                      'text-gray-400': noteSaveState() === 'idle',
+                      'text-yellow-600': noteSaveState() === 'saving',
+                      'text-[var(--color-success)]': noteSaveState() === 'saved',
+                      'text-red-500': noteSaveState() === 'error'
+                    }"
+                  >
+                    @switch (noteSaveState()) {
+                      @case ('idle') { Auto-saved }
+                      @case ('saving') { Saving… }
+                      @case ('saved') { Saved }
+                      @case ('error') { Save failed }
+                    }
+                  </span>
+                </div>
+                <textarea
+                  [ngModel]="noteContent()"
+                  (ngModelChange)="onNoteInput($event)"
+                  placeholder="Write your private notes here. Visible only to you. Auto-saves as you type."
+                  class="flex-1 resize-none bg-white text-sm text-gray-800 placeholder-gray-400 outline-none px-4 py-3 leading-relaxed custom-scroll"
+                ></textarea>
+              </div>
+            } @else {
+              <div class="flex-1 flex flex-col items-center justify-center text-center px-6 text-gray-400">
+                <mat-icon class="text-5xl text-gray-200 mb-3">lock</mat-icon>
+                <h3 class="text-sm font-semibold text-gray-500">Private notes</h3>
+                <p class="text-xs mt-1">Only the psychologist can write and view session notes.</p>
+              </div>
+            }
+          }
+
+          <!-- AI (psychologist-only) -->
+          @else if (activeTab() === 'ai' && isPsychologist) {
+            <div class="flex-1 flex flex-col min-h-0">
+              <div class="flex items-center gap-2 px-4 py-2 bg-white border-b border-gray-100 shrink-0 text-sm">
+                <mat-icon class="text-base text-[var(--color-primary)]">smart_toy</mat-icon>
+                <span class="font-semibold text-gray-700">Personal AI Assistant</span>
+                <span class="text-[11px] text-gray-400 ml-1">— private to you, not visible to the client</span>
+              </div>
+
+              <div
+                #aiMessagesContainer
+                class="flex-1 overflow-y-auto px-3 sm:px-4 py-3 sm:py-4 space-y-2 sm:space-y-3 custom-scroll"
+              >
+                @if (aiMessages().length === 0 && !aiLoading()) {
+                  <div class="flex flex-col items-center justify-center h-full text-center text-gray-400">
+                    <mat-icon class="text-5xl text-gray-200 mb-2">auto_awesome</mat-icon>
+                    <p class="text-sm">Ask for techniques, questions, or session help.</p>
+                    <p class="text-xs mt-1">Only you can see this conversation.</p>
+                  </div>
+                }
+
+                @for (msg of aiMessages(); track $index) {
+                  <div
+                    class="flex"
+                    [class.justify-end]="msg.isUser"
+                    [class.justify-start]="!msg.isUser"
+                  >
+                    <div
+                      class="max-w-[85%] sm:max-w-[75%] px-3 sm:px-4 py-2 sm:py-2.5 rounded-2xl text-sm leading-relaxed break-words"
+                      [ngClass]="msg.isUser
+                        ? 'bg-[var(--color-primary)] text-white rounded-br-sm'
+                        : 'bg-white border border-gray-100 text-gray-800 rounded-bl-sm shadow-sm'"
+                    >
+                      @if (msg.isUser) {
+                        <p class="whitespace-pre-wrap">{{ msg.text }}</p>
+                      } @else {
+                        <markdown class="text-sm leading-relaxed block" [data]="msg.text"></markdown>
+                      }
+                      <p class="text-[10px] mt-1 opacity-50 text-right">
+                        {{ msg.timestamp | date:'HH:mm' }}
+                      </p>
+                    </div>
+                  </div>
+                }
+
+                @if (aiLoading()) {
+                  <div class="flex justify-start">
+                    <div class="bg-gray-100 px-3 py-2 rounded-2xl text-xs text-gray-500 flex items-center gap-2">
+                      <div class="flex gap-1">
+                        <span class="w-1 h-1 bg-gray-400 rounded-full animate-bounce"></span>
+                        <span class="w-1 h-1 bg-gray-400 rounded-full animate-bounce [animation-delay:0.2s]"></span>
+                        <span class="w-1 h-1 bg-gray-400 rounded-full animate-bounce [animation-delay:0.4s]"></span>
+                      </div>
+                      AI thinking…
+                    </div>
+                  </div>
+                }
+              </div>
+
+              <div class="px-2 sm:px-4 py-2 sm:py-3 bg-white border-t border-gray-100 shrink-0">
+                <div class="flex items-end gap-2 bg-gray-50 rounded-2xl px-3 sm:px-4 py-1.5 sm:py-2 border border-gray-200">
+                  <textarea
+                    [(ngModel)]="aiInput"
+                    (keydown)="onAiKeydown($event)"
+                    placeholder="Ask the AI assistant…"
+                    rows="1"
+                    [disabled]="aiLoading()"
+                    class="flex-1 resize-none bg-transparent outline-none text-sm text-gray-800 placeholder-gray-400 max-h-28 overflow-y-auto disabled:opacity-50"
+                  ></textarea>
+                  <button
+                    (click)="sendAiMessage()"
+                    [disabled]="!aiInput.trim() || aiLoading()"
+                    class="w-9 h-9 flex items-center justify-center rounded-xl bg-[var(--color-primary)] text-white disabled:opacity-40 transition-all shrink-0"
+                    title="Send"
+                  >
+                    <mat-icon class="text-base">send</mat-icon>
+                  </button>
+                </div>
+              </div>
+            </div>
+          }
+
+        </div>
+      </div>
+
+      <!-- RIGHT: video panel — fills remaining space on mobile, side panel on sm+ -->
+      @if (isVideoOpen()) {
+        <div class="absolute inset-0 z-[20] sm:static sm:inset-auto sm:z-auto sm:w-[360px] md:w-[420px] lg:w-[460px] shrink-0 sm:border-l border-gray-200 bg-gray-900">
+          <app-session-video-panel
+            [appointmentId]="appointmentId"
+            (closed)="onVideoClosed()"
+          ></app-session-video-panel>
+        </div>
+      }
+
+    </div>
+  }
+
+</div>

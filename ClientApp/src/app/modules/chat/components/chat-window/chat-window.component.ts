@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, inject, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, inject, Output, ViewChild, ElementRef } from '@angular/core';
 import { ChatService } from '../../../../api/services/chat.service';
 import { TitleCasePipe } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
@@ -14,7 +14,22 @@ import { AuthService } from '../../../../api/services/auth.service';
   selector: 'app-chat-window',
   standalone: false,
   templateUrl: './chat-window.component.html',
-  styles: ``,
+  styles: `
+    @keyframes voiceBar {
+      0%   { transform: scaleY(0.2); }
+      100% { transform: scaleY(1); }
+    }
+    .voice-rec-bar {
+      transform-origin: bottom center;
+      animation: voiceBar 0.55s ease-in-out infinite alternate;
+    }
+    mat-icon {
+      line-height: 1 !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+  `,
 })
 export class ChatWindowComponent {
   @ViewChild('chatBox') chatContainer?: ElementRef;
@@ -24,9 +39,24 @@ export class ChatWindowComponent {
   message: string = '';
   selectedFiles: { file: File; preview: string }[] = [];
 
+  voiceState: 'idle' | 'recording' = 'idle';
+  recordingSeconds = 0;
+  private mediaRecorder?: MediaRecorder;
+  private recordingInterval?: any;
+  private recordedChunks: Blob[] = [];
+  private _isCancellingRecording = false;
+
+  readonly recBars = [
+    { h: 6,  d: 0   }, { h: 14, d: 80  }, { h: 9,  d: 160 },
+    { h: 16, d: 40  }, { h: 11, d: 120 }, { h: 5,  d: 200 },
+    { h: 14, d: 60  }, { h: 8,  d: 140 }, { h: 16, d: 20  },
+    { h: 10, d: 100 }, { h: 13, d: 180 }, { h: 7,  d: 260 },
+  ];
+
   constructor(
     protected chatService: ChatService,
     private filesService: FilesService,
+    private authService: AuthService,
   ) {}
 
   openMedia(url: string, type: 'image' | 'video') {
@@ -35,8 +65,9 @@ export class ChatWindowComponent {
 
   displayDialog(receiverId?: string) {
     this.dialog.open(VideoChatComponent, {
-      width: '600px',
-      height: '600px',
+      maxWidth: '100vw',
+      maxHeight: '100vh',
+      panelClass: 'video-chat-dialog',
       disableClose: true,
       autoFocus: false,
       data: {
@@ -59,38 +90,37 @@ export class ChatWindowComponent {
 
     const contentToSend = this.message;
     const filesToSend = this.selectedFiles.map((f) => f.file);
+    const filePreviews = [...this.selectedFiles];
+    const me = this.authService.currentLoggedUser;
+    const replyMsg = this.chatService.replyMessage();
+
     this.message = '';
-    
-    const replyId = this.chatService.replyMessage()?.id;
-    const replyContent = this.chatService.replyMessage()?.content;
-    const replySender = this.chatService.replyMessage()?.senderName;
-
-    const tempAttachments = filesToSend.map((file, index) => ({
-      path: this.selectedFiles[index]?.preview,
-      type: file.type.startsWith('image') ? 'image' : 'file',
-      name: file.name,
-    }));
-
     this.selectedFiles = [];
 
-    setTimeout(() => {
-      this.scrollToBottom();
-    }, 50);
+    const optimisticAttachments = filePreviews.map((f) => ({
+      path: f.preview,
+      type: f.file.type.startsWith('image') ? 'image' :
+            f.file.type.startsWith('video') ? 'video' :
+            f.file.type.startsWith('audio') ? 'audio' : 'file',
+      name: f.file.name,
+    }));
 
-    // this.chatService.chatMessages.update((messages) => [
-    //   ...messages,
-    //   {
-    //     content: contentToSend,
-    //     senderId: this.authService.currentLoggedUser!.id,
-    //     receiverId: this.chatService.currentOpenedChat()?.id!,
-    //     createdDate: new Date().toString(),
-    //     isRead: false,
-    //     replyMessageId: replyId,
-    //     replyMessageContent: replyContent ?? undefined,
-    //     replyMessageSenderName: replySender,
-    //     attachments: tempAttachments,
-    //   },
-    // ]);
+    const localId = `pending-${Date.now()}`;
+
+    this.chatService.chatMessages.update(msgs => [...msgs, {
+      localId,
+      isPending: true,
+      senderId: me?.id,
+      senderName: me?.name ?? '',
+      receiverId: this.chatService.currentOpenedChat()?.id,
+      content: contentToSend,
+      createdDate: new Date().toISOString(),
+      isRead: false,
+      replyMessageId: replyMsg?.id,
+      replyMessageContent: replyMsg?.content ?? undefined,
+      replyMessageSenderName: replyMsg?.senderName,
+      attachments: optimisticAttachments,
+    }]);
 
     try {
       let uploadedAttachments: any[] = [];
@@ -101,18 +131,16 @@ export class ChatWindowComponent {
         );
       }
 
+      this.chatService.registerOutgoing(localId);
       await this.chatService.sendMessageHub(contentToSend, uploadedAttachments);
+      this.chatService.replyMessage.set(null);
     } catch (error) {
       console.error('Помилка відправки:', error);
+      this.chatService.deregisterOutgoing(localId);
+      this.chatService.chatMessages.update(msgs => msgs.filter(m => m.localId !== localId));
     }
   }
 
-  private scrollToBottom() {
-    if (this.chatContainer) {
-      this.chatContainer.nativeElement.scrollTop =
-        this.chatContainer.nativeElement.scrollHeight;
-    }
-  }
 
   onFileSelected(event: any) {
     const files = event.target.files;
@@ -178,5 +206,100 @@ export class ChatWindowComponent {
       return 'text-green-600';
     if (file.type.includes('word')) return 'text-blue-600';
     return 'text-gray-500';
+  }
+
+  async startRecording() {
+    let stream: MediaStream;
+    try {
+      stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    } catch {
+      console.error('Microphone access denied');
+      return;
+    }
+
+    this.recordedChunks = [];
+    this._isCancellingRecording = false;
+
+    const options = MediaRecorder.isTypeSupported('audio/webm') ? { mimeType: 'audio/webm' } : {};
+    this.mediaRecorder = new MediaRecorder(stream, options);
+
+    this.mediaRecorder.ondataavailable = (e) => {
+      if (e.data.size > 0) this.recordedChunks.push(e.data);
+    };
+
+    this.mediaRecorder.onstop = () => {
+      stream.getTracks().forEach((t) => t.stop());
+      if (this._isCancellingRecording) {
+        this._isCancellingRecording = false;
+        this.recordedChunks = [];
+        return;
+      }
+      const mimeType = this.mediaRecorder?.mimeType || 'audio/webm';
+      const blob = new Blob(this.recordedChunks, { type: mimeType });
+      this.recordedChunks = [];
+      this.sendVoiceBlob(blob, mimeType);
+    };
+
+    this.mediaRecorder.start();
+    this.voiceState = 'recording';
+    this.recordingSeconds = 0;
+    this.recordingInterval = setInterval(() => this.recordingSeconds++, 1000);
+  }
+
+  stopRecording() {
+    clearInterval(this.recordingInterval);
+    this.recordingSeconds = 0;
+    this.voiceState = 'idle';
+    this.mediaRecorder?.stop();
+  }
+
+  cancelRecording() {
+    this._isCancellingRecording = true;
+    clearInterval(this.recordingInterval);
+    this.recordingSeconds = 0;
+    this.voiceState = 'idle';
+    this.mediaRecorder?.stop();
+  }
+
+  private async sendVoiceBlob(blob: Blob, mimeType: string) {
+    const ext = mimeType.includes('ogg') ? 'ogg' : 'webm';
+    const file = new File([blob], `voice-${Date.now()}.${ext}`, { type: mimeType });
+    const localUrl = URL.createObjectURL(blob);
+    const localId = `pending-${Date.now()}`;
+    const me = this.authService.currentLoggedUser;
+
+    this.chatService.chatMessages.update(msgs => [...msgs, {
+      localId,
+      isPending: true,
+      senderId: me?.id,
+      senderName: me?.name,
+      receiverId: this.chatService.currentOpenedChat()?.id,
+      content: '',
+      createdDate: new Date().toISOString(),
+      isRead: false,
+      attachments: [{ path: localUrl, type: 'audio', name: file.name }],
+    }]);
+
+    try {
+      const uploaded = await lastValueFrom(this.filesService.uploadFiles([file]));
+      this.chatService.registerOutgoing(localId);
+      await this.chatService.sendMessageHub('', uploaded);
+    } catch (e) {
+      console.error('Failed to send voice message:', e);
+      this.chatService.deregisterOutgoing(localId);
+      this.chatService.chatMessages.update(msgs => msgs.filter(m => m.localId !== localId));
+    } finally {
+      URL.revokeObjectURL(localUrl);
+    }
+  }
+
+  handleSendButton() {
+    this.sendMessage();
+  }
+
+  formatRecordingTime(sec: number): string {
+    const m = Math.floor(sec / 60).toString().padStart(2, '0');
+    const s = (sec % 60).toString().padStart(2, '0');
+    return `${m}:${s}`;
   }
 }

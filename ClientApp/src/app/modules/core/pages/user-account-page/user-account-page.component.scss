@@ -1,0 +1,12 @@
+/* Force mat-icon to use its font-size for width/height too */
+:host ::ng-deep mat-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  line-height: 1 !important;
+  font-size: inherit;
+  width: 1em !important;
+  height: 1em !important;
+  overflow: visible;
+}

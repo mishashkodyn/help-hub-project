@@ -13,6 +13,7 @@
         public List<MessageAttachment>? Attachments { get; set; }
         public ApplicationUser? Sender { get; set; }
         public ApplicationUser? Receiver { get; set; }
-
+        public MessageType MessageType { get; set; } = MessageType.Text;
+        public int? CallDurationSeconds { get; set; }
     }
 }

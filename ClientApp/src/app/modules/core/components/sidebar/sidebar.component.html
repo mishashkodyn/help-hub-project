@@ -1,102 +1,210 @@
 <ng-container *transloco="let t">
-  <div class="h-full flex flex-col overflow-y-hidden overflow-x-hidden pt-15">
+  <div class="h-full flex flex-col bg-white border-r border-gray-100">
+    <!-- ── Brand bar ── -->
     <div
-      class="flex flex-col h-full bg-white border-r border-gray-100 font-sans"
+      class="flex items-center gap-2.5 px-5 py-4 border-b border-gray-100/80 shrink-0"
     >
-      <div class="flex-1 px-3 py-4 custom-scroll overflow-y-auto">
-        <nav class="space-y-1">
-          @for (item of menuItems(); track item.route) {
+      <div
+        class="w-8 h-8 rounded-lg bg-[var(--color-primary)]/8 flex items-center justify-center"
+      >
+        <mat-icon class="text-[var(--color-success)] text-lg"
+          >psychology</mat-icon
+        >
+      </div>
+      <span
+        class="font-extrabold text-[var(--color-primary)] text-base tracking-tight"
+        >Help Hub</span
+      >
+    </div>
+
+    <!-- ── User info ── -->
+    @if (authService.currentLoggedUser) {
+      <div class="px-4 py-3.5 border-b border-gray-100/60 shrink-0">
+        <div class="flex items-center gap-3 bg-gray-50 rounded-xl px-3 py-2.5">
+          @if (authService.currentLoggedUser?.profileImage) {
+            <img
+              [src]="authService.currentLoggedUser?.profileImage"
+              class="w-9 h-9 rounded-full object-cover border-2 border-[var(--color-mint)] shrink-0"
+              alt="User avatar"
+            />
+          } @else {
+            <div
+              class="w-9 h-9 rounded-full bg-[var(--color-mint)]/25 flex items-center justify-center shrink-0"
+            >
+              <mat-icon class="text-[var(--color-primary)] text-lg"
+                >person</mat-icon
+              >
+            </div>
+          }
+          <div class="min-w-0 flex-1">
+            <div
+              class="font-semibold text-sm text-[var(--color-primary)] truncate leading-tight"
+            >
+              {{ authService.currentLoggedUser?.name }}
+              {{ authService.currentLoggedUser?.surname }}
+            </div>
+            <div class="text-[11px] text-gray-400 font-medium mt-0.5">
+              @if (authService.isPsychologist) {
+                {{ t("profile.psychologist") }}
+              } @else if (authService.isAdmin || authService.isSuperAdmin) {
+                {{ t("profile.admin") }}
+              } @else {
+                {{ t("profile.client") }}
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    }
+
+    <!-- ── Navigation ── -->
+    <div class="flex-1 overflow-y-auto custom-scroll px-3 py-3">
+      <nav class="space-y-0.5" aria-label="Sidebar navigation">
+        <!-- Active session banner -->
+        @if (activeSessionService.activeSession()) {
+          <button
+            (click)="joinActiveSession()"
+            class="flex items-center gap-3 w-full h-auto px-3 py-2.5 rounded-xl bg-[var(--color-success)]/10 border border-[var(--color-success)]/30 hover:bg-[var(--color-success)]/20 transition-all mb-1"
+          >
+            <div class="relative shrink-0">
+              <mat-icon class="text-[var(--color-success)] text-xl"
+                >video_call</mat-icon
+              >
+              <span
+                class="absolute -top-1 -right-1 w-2.5 h-2.5 bg-[var(--color-success)] rounded-full animate-pulse"
+              ></span>
+            </div>
+            <div class="text-left min-w-0">
+              <p
+                class="text-xs font-bold text-[var(--color-success)] leading-tight"
+              >
+                Session is live!
+              </p>
+              <p class="text-[10px] text-[var(--color-success)]/70 truncate">
+                {{ activeSessionService.activeSession()!.psychologistName }}
+              </p>
+            </div>
+            <mat-icon
+              class="text-[var(--color-success)] text-base ml-auto shrink-0"
+              >arrow_forward</mat-icon
+            >
+          </button>
+        }
+
+        <!-- Main menu items -->
+        @for (item of menuItems(); track item.route) {
+          @if (!(item.label === "my_sessions" && authService.isPsychologist)) {
             <a
               [routerLink]="item.route"
               routerLinkActive="selected-menu-item"
-              #rla="routerLinkActive"
               (click)="sidebarService.toggleSideBar()"
-              class="flex items-center justify-between h-[48px] sidebar-link group px-2 hover:bg-mint/40"
+              class="flex items-center justify-between h-[46px] px-3 rounded-xl sidebar-link hover:bg-[var(--color-mint)]/25 group"
             >
-              <div class="flex">
-                <mat-icon class="link-icon">{{ item.icon }}</mat-icon>
-                <span class="link-text">{{ t(`nav.${item.label}`) }}</span>
+              <div class="flex items-center gap-3">
+                <mat-icon class="link-icon text-xl shrink-0">{{
+                  item.icon
+                }}</mat-icon>
+                <span class="link-text text-sm font-medium">{{
+                  t("nav." + item.label)
+                }}</span>
               </div>
-              @if (
-                item.label === "chat" && presenceService.totalUnreadCount() > 0
-              ) {
-                <div
-                  class="bg-red-600 text-white text-[11px] font-bold min-w-[20px] h-[20px] px-1 flex items-center justify-center rounded-full shadow-md"
-                >
-                  <span>{{
-                    presenceService.totalUnreadCount() > 99
-                      ? "99+"
-                      : presenceService.totalUnreadCount()
-                  }}</span>
-                </div>
-              }
+              <div class="flex items-center gap-1.5 shrink-0">
+                @if (
+                  item.label === "chat" &&
+                  presenceService.totalUnreadCount() > 0
+                ) {
+                  <span
+                    class="bg-red-500 text-white text-[10px] font-bold min-w-[18px] h-[18px] px-1 flex items-center justify-center rounded-full shadow-sm"
+                  >
+                    {{
+                      presenceService.totalUnreadCount() > 99
+                        ? "99+"
+                        : presenceService.totalUnreadCount()
+                    }}
+                  </span>
+                }
+                @if (
+                  item.label === "my_sessions" &&
+                  activeSessionService.activeSession()
+                ) {
+                  <span
+                    class="w-2 h-2 bg-[var(--color-success)] rounded-full animate-pulse"
+                  ></span>
+                }
+              </div>
             </a>
           }
+        }
 
-          @if (authService.isAdmin || authService.isSuperAdmin) {
-            <div class="mt-8 mb-2 px-4">
-              <span
-                class="text-[10px] uppercase tracking-widest font-bold text-success/60"
-                >{{ t("nav.admin_panel") }}</span
-              >
-            </div>
-
-            @for (item of adminItems(); track item.route) {
-              <a
-                [routerLink]="item.route"
-                routerLinkActive="selected-menu-item"
-                #rla="routerLinkActive"
-                (click)="sidebarService.toggleSideBar()"
-                class="flex items-center h-[48px] sidebar-link group px-2 hover:bg-mint/40"
-              >
-                <mat-icon class="link-icon">{{ item.icon }}</mat-icon>
-                <span class="link-text">{{ t(`nav.${item.label}`) }}</span>
-              </a>
-            }
+        <!-- Admin section -->
+        @if (authService.isAdmin || authService.isSuperAdmin) {
+          <div class="pt-5 pb-1.5 px-3">
+            <span
+              class="text-[10px] uppercase tracking-[0.18em] font-bold text-gray-400"
+              >{{ t("nav.admin_panel") }}</span
+            >
+          </div>
+          @for (item of adminItems(); track item.route) {
+            <a
+              [routerLink]="item.route"
+              routerLinkActive="selected-menu-item"
+              (click)="sidebarService.toggleSideBar()"
+              class="flex items-center gap-3 h-[46px] px-3 rounded-xl sidebar-link hover:bg-[var(--color-mint)]/25"
+            >
+              <mat-icon class="link-icon text-xl shrink-0">{{
+                item.icon
+              }}</mat-icon>
+              <span class="link-text text-sm font-medium">{{
+                t("nav." + item.label)
+              }}</span>
+            </a>
           }
+        }
 
-          @if (authService.isPsychologist) {
-            <div class="mt-8 mb-2 px-4">
-              <span
-                class="text-[10px] uppercase tracking-widest font-bold text-success/60"
-                >{{ t("nav.psychologist_panel") }}</span
-              >
-            </div>
-            @for (item of psychologistItems(); track item.route) {
-              <a
-                [routerLink]="item.route"
-                routerLinkActive="selected-menu-item"
-                #rla="routerLinkActive"
-                (click)="sidebarService.toggleSideBar()"
-                class="flex items-center h-[48px] sidebar-link group px-2 hover:bg-mint/40"
-              >
-                <mat-icon class="link-icon">{{ item.icon }}</mat-icon>
-                <span class="link-text">{{ t(`nav.${item.label}`) }}</span>
-              </a>
-            }
+        <!-- Psychologist section -->
+        @if (authService.isPsychologist) {
+          <div class="pt-5 pb-1.5 px-3">
+            <span
+              class="text-[10px] uppercase tracking-[0.18em] font-bold text-gray-400"
+              >{{ t("nav.psychologist_panel") }}</span
+            >
+          </div>
+          @for (item of psychologistItems(); track item.route) {
+            <a
+              [routerLink]="item.route"
+              routerLinkActive="selected-menu-item"
+              (click)="sidebarService.toggleSideBar()"
+              class="flex items-center gap-3 h-[46px] px-3 rounded-xl sidebar-link hover:bg-[var(--color-mint)]/25"
+            >
+              <mat-icon class="link-icon text-xl shrink-0">{{
+                item.icon
+              }}</mat-icon>
+              <span class="link-text text-sm font-medium">{{
+                t("nav." + item.label)
+              }}</span>
+            </a>
           }
-        </nav>
-      </div>
+        }
+      </nav>
+    </div>
 
-      <div
-        class="flex md:block justify-center md:justify-start items-center p-4 border-t border-gray-50"
+    <!-- ── Footer actions ── -->
+    <div class="border-t border-gray-100 px-3 py-3 space-y-0.5 shrink-0">
+      <button
+        (click)="navigateTo('settings')"
+        class="flex items-center gap-3 w-full h-[46px] px-3 rounded-xl text-gray-600 hover:bg-gray-50 transition-all"
       >
-        <button
-          (click)="navigateTo('settings')"
-          class="flex items-center items-center justify-center md:justify-start footer-link text-primary hover:bg-mint/40"
-        >
-          <mat-icon class="text-xl">settings</mat-icon>
-          <span class="font-medium text-sm">{{ t("nav.settings") }}</span>
-        </button>
+        <mat-icon class="text-xl text-gray-400 shrink-0">settings</mat-icon>
+        <span class="text-sm font-medium">{{ t("nav.settings") }}</span>
+      </button>
 
-        <button
-          (click)="logout()"
-          class="flex items-center justify-center md:justify-start footer-link text-red-600 hover:bg-red-100"
-        >
-          <mat-icon class="text-xl">logout</mat-icon>
-          <span class="font-medium text-sm">{{ t("auth.logout") }}</span>
-        </button>
-      </div>
+      <button
+        (click)="logout()"
+        class="flex items-center gap-3 w-full h-[46px] px-3 rounded-xl text-red-500 hover:bg-red-50 transition-all"
+      >
+        <mat-icon class="text-xl shrink-0">logout</mat-icon>
+        <span class="text-sm font-medium">{{ t("auth.logout") }}</span>
+      </button>
     </div>
   </div>
 </ng-container>
