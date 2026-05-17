@@ -136,6 +136,7 @@ app.MapHub<ChatHub>("hubs/chat");
 app.MapHub<VideoChatHub>("hubs/video");
 app.MapHub<OnlineUsersHub>("hubs/online-users");
 app.MapHub<NotificationHub>("hubs/notification");
+app.MapHub<SessionHub>("hubs/session");
 app.MapAccountEndpoint();
 app.MapControllers();
 

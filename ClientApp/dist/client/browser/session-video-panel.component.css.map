@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/modules/session/components/session-video-panel/session-video-panel.component.scss", "src/app/modules/session/components/session-video-panel/session-video-panel.component.scss"],
+  "sourcesContent": [":host { display: block; height: 100%; }\n", ":host {\n  display: block;\n  height: 100%;\n}\n/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJmaWxlOi8vL0M6L1VzZXJzL01pc2hhL3NvdXJjZS9yZXBvcy9odWxwLWh1Yi1wcm9qZWN0L0NsaWVudEFwcC9zcmMvYXBwL21vZHVsZXMvc2Vzc2lvbi9jb21wb25lbnRzL3Nlc3Npb24tdmlkZW8tcGFuZWwvc2Vzc2lvbi12aWRlby1wYW5lbC5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUFRO0VBQWdCIiwic291cmNlc0NvbnRlbnQiOlsiOmhvc3QgeyBkaXNwbGF5OiBibG9jazsgaGVpZ2h0OiAxMDAlOyB9XG4iXX0= */"],
+  "mappings": ";AAAA;AAAQ,WAAA;AAAgB,UAAA;ACGxB;",
+  "names": []
+}

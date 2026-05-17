@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/modules/core/pages/login/login.component.scss", "src/app/modules/core/pages/login/login.component.scss"],
+  "sourcesContent": [".text {\r\n    font-size: 60px;\r\n}", ".text {\n  font-size: 60px;\n}\n/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJmaWxlOi8vL0M6L1VzZXJzL01pc2hhL3NvdXJjZS9yZXBvcy9odWxwLWh1Yi1wcm9qZWN0L0NsaWVudEFwcC9zcmMvYXBwL21vZHVsZXMvY29yZS9wYWdlcy9sb2dpbi9sb2dpbi5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJIiwic291cmNlc0NvbnRlbnQiOlsiLnRleHQge1xyXG4gICAgZm9udC1zaXplOiA2MHB4O1xyXG59Il19 */"],
+  "mappings": ";AAAA,CAAA;AACI,aAAA;ACCJ;",
+  "names": []
+}

@@ -34,7 +34,7 @@
         >
           @for (notif of service.notifications(); track notif.id) {
             <div
-              (click)="markAsRead(notif)"
+              (click)="onNotificationClick(notif)"
               class="p-5 sm:p-6 border-b border-gray-50 flex gap-4 sm:gap-6 items-start transition-colors hover:bg-gray-50 cursor-pointer group"
               [ngClass]="{ 'bg-[var(--color-sky)]/5': !notif.isRead }"
             >

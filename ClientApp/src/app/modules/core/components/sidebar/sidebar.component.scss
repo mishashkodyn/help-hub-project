@@ -1,53 +1,55 @@
-:host * {
-  transition: all 250ms ease-in-out;
+:host {
+  display: block;
+  height: 100%;
 }
 
-.scrollbar-hidden::-webkit-scrollbar {
-  display: none;
+.custom-scroll {
+  scroll-behavior: smooth;
 }
 
-.scrollbar-hidden {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+.custom-scroll::-webkit-scrollbar {
+  width: 3px;
+}
+.custom-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scroll::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.08);
+  border-radius: 3px;
 }
 
-.hide-header-text {
-  opacity: 0;
-  height: 0px;
+.sidebar-link {
+  border-radius: 12px !important;
+  transition: all 0.18s ease !important;
+  color: #4b5563;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
 }
 
-.logout-btn {
-  margin-top: auto;
+.link-icon {
+  color: #9ca3af;
+  transition: color 0.18s ease !important;
+  font-size: 20px !important;
+  width: 20px !important;
+  height: 20px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
 }
 
-button[mat-button] {
-  border-radius: 20px;
+.link-text {
+  transition: color 0.18s ease !important;
 }
 
-.logout-btn {
-  .text {
-    display: inline-block;
-    overflow: hidden;
-    white-space: nowrap;
-    transition:
-      opacity 0.3s ease,
-      width 0.3s ease,
-      margin 0.3s ease;
-    margin-left: 0.5rem;
-    margin-top: 0.5rem;
-  }
-
-  .hide-text {
-    opacity: 0;
-    width: 0;
-    margin-left: 0;
-  }
+.sidebar-link:hover .link-icon {
+  color: var(--color-primary) !important;
 }
 
 .selected-menu-item {
   background-color: var(--color-mint) !important;
   color: var(--color-primary) !important;
-  border-radius: 8px !important;
+  border-radius: 12px !important;
 
   .link-icon {
     color: var(--color-primary) !important;
@@ -55,36 +57,7 @@ button[mat-button] {
 
   .link-text {
     font-weight: 600 !important;
-  }
-}
-
-.sidebar-link {
-  border-radius: 8px !important;
-  transition: all 0.2s ease-in-out !important;
-  color: #4a5568;
-}
-
-.link-icon {
-  margin-right: 12px !important;
-  transition: color 0.2s ease !important;
-  display: flex !important;
-  justify-content: center !important;
-  align-items: center !important;
-}
-
-.footer-link {
-  gap: 12px;
-  width: 100%;
-  padding: 10px 16px;
-  border-radius: 8px;
-  transition: all 0.2s;
-  cursor: pointer;
-  border: none;
-
-  mat-icon {
-    font-size: 20px;
-    width: 20px;
-    height: 20px;
+    color: var(--color-primary) !important;
   }
 }
 

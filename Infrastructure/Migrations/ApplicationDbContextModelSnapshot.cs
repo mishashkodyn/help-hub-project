@@ -220,6 +220,9 @@ namespace API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<int?>("CallDurationSeconds")
+                        .HasColumnType("int");
+
                     b.Property<string>("Content")
                         .HasColumnType("nvarchar(max)");
 
@@ -228,6 +231,9 @@ namespace API.Migrations
 
                     b.Property<bool>("IsRead")
                         .HasColumnType("bit");
+
+                    b.Property<int>("MessageType")
+                        .HasColumnType("int");
 
                     b.Property<Guid?>("ReceiverId")
                         .HasColumnType("uniqueidentifier");
@@ -461,6 +467,65 @@ namespace API.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("PsychologistApplications");
+                });
+
+            modelBuilder.Entity("Domain.Entities.SessionMessage", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("AppointmentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("SenderId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppointmentId");
+
+                    b.HasIndex("SenderId");
+
+                    b.ToTable("SessionMessages");
+                });
+
+            modelBuilder.Entity("Domain.Entities.SessionNote", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("AppointmentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasMaxLength(20000)
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("PsychologistUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppointmentId", "PsychologistUserId")
+                        .IsUnique();
+
+                    b.ToTable("SessionNotes");
                 });
 
             modelBuilder.Entity("Domain.Entities.Specialization", b =>
@@ -767,6 +832,36 @@ namespace API.Migrations
                     b.Navigation("ReviewedBy");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Domain.Entities.SessionMessage", b =>
+                {
+                    b.HasOne("Domain.Entities.Appointment", "Appointment")
+                        .WithMany()
+                        .HasForeignKey("AppointmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.ApplicationUser", "Sender")
+                        .WithMany()
+                        .HasForeignKey("SenderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Appointment");
+
+                    b.Navigation("Sender");
+                });
+
+            modelBuilder.Entity("Domain.Entities.SessionNote", b =>
+                {
+                    b.HasOne("Domain.Entities.Appointment", "Appointment")
+                        .WithMany()
+                        .HasForeignKey("AppointmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Appointment");
                 });
 
             modelBuilder.Entity("Domain.Entities.WorkingHour", b =>

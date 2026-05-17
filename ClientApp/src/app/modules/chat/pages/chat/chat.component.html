@@ -1,37 +1,48 @@
-<div class="flex relative overflow-hidden justify-between bg-white h-full">
-  
+<div class="flex relative overflow-hidden bg-[#f8fafc] h-full">
+  <!-- ── Left: conversation list ── -->
   <div
-    [ngClass]="chatService.currentOpenedChat() ? 'w-0 md:w-60' : 'w-full md:w-60 md:min-w-60 md:flex-shrink-0'"
-    class="bg-white border-r border-gray-200 transition-all duration-300 overflow-hidden"
+    [ngClass]="
+      chatService.currentOpenedChat()
+        ? 'w-0 md:w-64 md:min-w-64'
+        : 'w-full md:w-64 md:min-w-64'
+    "
+    class="bg-white border-r border-gray-100 transition-all duration-300 overflow-hidden shrink-0"
   >
     <app-chat-sidebar></app-chat-sidebar>
   </div>
 
+  <!-- ── Center: chat window ── -->
   <div
     [ngClass]="{
       hidden: !chatService.currentOpenedChat(),
       'block w-full': chatService.currentOpenedChat(),
     }"
-    class="md:block md:flex-1 bg-white relative z-0"
+    class="md:block md:flex-1 relative z-0 min-w-0"
   >
-    <app-chat-window (viewMedia)="openMedia($event.url, $event.type)"></app-chat-window>
+    <app-chat-window
+      (viewMedia)="openMedia($event.url, $event.type)"
+    ></app-chat-window>
   </div>
 
+  <!-- ── Right: details sidebar ── -->
   <div
-    class="right-sidebar bg-gray-50 absolute inset-0 z-50 transition-all duration-300 ease-in-out md:relative md:z-auto md:transform-none"
+    class="right-sidebar bg-white absolute inset-0 z-50 transition-all duration-300 ease-in-out md:relative md:z-auto md:transform-none border-l border-gray-100"
     [class.translate-x-full]="!chatService.chatRightSidebarIsOpen()"
     [class.translate-x-0]="chatService.chatRightSidebarIsOpen()"
     [class.open]="chatService.chatRightSidebarIsOpen()"
   >
     <div class="right-sidebar-inner">
-      <app-chat-right-sidebar (mediaSelected)="openMedia($event.url, $event.type)"></app-chat-right-sidebar>
+      <app-chat-right-sidebar
+        (mediaSelected)="openMedia($event.url, $event.type)"
+        (clearConversation)="openConfirmAction('clearConversation')"
+      ></app-chat-right-sidebar>
     </div>
   </div>
 </div>
 
 @if (activeMedia) {
-  <app-media-player 
-    [media]="activeMedia" 
-    (closeViewer)="closeMedia()">
-  </app-media-player>
+  <app-media-player
+    [media]="activeMedia"
+    (closeViewer)="closeMedia()"
+  ></app-media-player>
 }

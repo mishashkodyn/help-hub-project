@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.SignalR;
 
 namespace Infrastructure.Hubs
 {
+    [Authorize]
     public class VideoChatHub : Hub
     {
         public async Task SendOffer(string receiverId, string offer)

@@ -1,0 +1,191 @@
+<div class="min-h-screen bg-gray-50 px-4 py-6 md:px-8">
+
+  <div class="max-w-6xl mx-auto mb-6">
+    <a
+      (click)="goBack()"
+      class="inline-flex items-center gap-1 text-gray-500 hover:text-[var(--color-primary)] transition-colors text-sm font-medium mb-4 cursor-pointer w-fit"
+    >
+      <mat-icon class="scale-90">arrow_back</mat-icon>
+      Back to Dashboard
+    </a>
+
+    <div>
+      <h1 class="text-xl font-bold text-[var(--color-primary)]">Past Sessions</h1>
+      <p class="text-sm text-gray-400">Review completed sessions and your private notes</p>
+    </div>
+  </div>
+
+  <div class="max-w-6xl mx-auto">
+
+    @if (isLoading()) {
+      <div class="flex justify-center py-16">
+        <mat-spinner diameter="40"></mat-spinner>
+      </div>
+    } @else if (sessions().length === 0) {
+      <div class="flex flex-col items-center py-16 text-center">
+        <mat-icon class="text-5xl text-gray-300 mb-3">history</mat-icon>
+        <p class="text-gray-400 text-sm">No past sessions yet</p>
+      </div>
+    } @else {
+
+      <!-- DETAIL VIEW -->
+      @if (selected(); as session) {
+        <div class="flex items-center gap-3 mb-4">
+          <button
+            (click)="backToList()"
+            class="w-9 h-9 flex items-center justify-center rounded-xl bg-white border border-gray-200 hover:bg-gray-50 transition-colors"
+            title="Back to list"
+          >
+            <mat-icon class="text-gray-500">arrow_back</mat-icon>
+          </button>
+          <div class="min-w-0">
+            <h2 class="font-semibold text-[var(--color-primary)] truncate">{{ session.clientName }}</h2>
+            <p class="text-xs text-gray-400">
+              {{ session.startTime | date:'dd MMM yyyy, HH:mm' }} – {{ session.endTime | date:'HH:mm' }}
+              · <span class="font-semibold text-[var(--color-primary)]">{{ session.price }} UAH</span>
+            </p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+
+          <!-- NOTES (main) -->
+          <div class="lg:col-span-2 bg-white rounded-2xl border border-gray-100 shadow-sm flex flex-col min-h-[420px]">
+            <div class="flex items-center justify-between px-4 py-3 border-b border-gray-100">
+              <div class="flex items-center gap-2 text-sm">
+                <mat-icon class="text-base text-gray-400">edit_note</mat-icon>
+                <span class="font-semibold text-gray-700">Your private notes</span>
+              </div>
+              <span
+                class="text-[11px] font-medium"
+                [ngClass]="{
+                  'text-gray-400': noteSaveState() === 'idle',
+                  'text-yellow-600': noteSaveState() === 'saving',
+                  'text-[var(--color-success)]': noteSaveState() === 'saved',
+                  'text-red-500': noteSaveState() === 'error'
+                }"
+              >
+                @switch (noteSaveState()) {
+                  @case ('idle') { Auto-saved }
+                  @case ('saving') { Saving… }
+                  @case ('saved') { Saved }
+                  @case ('error') { Save failed }
+                }
+              </span>
+            </div>
+
+            @if (noteLoading()) {
+              <div class="flex-1 flex items-center justify-center">
+                <mat-spinner diameter="28"></mat-spinner>
+              </div>
+            } @else {
+              <textarea
+                [ngModel]="noteContent()"
+                (ngModelChange)="onNoteInput($event)"
+                placeholder="Write your private notes here. Auto-saves as you type."
+                class="flex-1 resize-none bg-white text-sm text-gray-800 placeholder-gray-400 outline-none px-4 py-3 leading-relaxed custom-scroll"
+              ></textarea>
+            }
+          </div>
+
+          <!-- Side column: client info + future widget slots -->
+          <div class="space-y-4">
+
+            <!-- Client request -->
+            <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-4">
+              <div class="flex items-center gap-2 mb-2">
+                <mat-icon class="text-base text-gray-400">person</mat-icon>
+                <h3 class="text-sm font-semibold text-gray-700">Client's request</h3>
+              </div>
+              @if (session.clientNotes) {
+                <p class="text-xs text-gray-600 whitespace-pre-wrap italic">{{ session.clientNotes }}</p>
+              } @else {
+                <p class="text-xs text-gray-400 italic">No request provided.</p>
+              }
+            </div>
+
+            <!-- Reserved slot: AI summary -->
+            <div class="bg-white rounded-2xl border border-dashed border-gray-200 p-4 text-center">
+              <mat-icon class="text-3xl text-gray-300 mb-1">auto_awesome</mat-icon>
+              <h3 class="text-sm font-semibold text-gray-500">AI summary</h3>
+              <p class="text-[11px] text-gray-400 mt-1">Coming soon</p>
+            </div>
+
+            <!-- Reserved slot: Transcript -->
+            <div class="bg-white rounded-2xl border border-dashed border-gray-200 p-4 text-center">
+              <mat-icon class="text-3xl text-gray-300 mb-1">subtitles</mat-icon>
+              <h3 class="text-sm font-semibold text-gray-500">Transcript</h3>
+              <p class="text-[11px] text-gray-400 mt-1">Coming soon</p>
+            </div>
+
+            <!-- Reserved slot: Recording -->
+            <div class="bg-white rounded-2xl border border-dashed border-gray-200 p-4 text-center">
+              <mat-icon class="text-3xl text-gray-300 mb-1">videocam</mat-icon>
+              <h3 class="text-sm font-semibold text-gray-500">Recording</h3>
+              <p class="text-[11px] text-gray-400 mt-1">Coming soon</p>
+            </div>
+
+          </div>
+        </div>
+      }
+
+      <!-- LIST VIEW -->
+      @else {
+        <!-- Search -->
+        <div class="mb-4 flex items-center gap-2 bg-white rounded-xl border border-gray-200 px-3 py-2">
+          <mat-icon class="text-gray-400 text-base">search</mat-icon>
+          <input
+            type="text"
+            [ngModel]="search()"
+            (ngModelChange)="search.set($event)"
+            placeholder="Search by client name…"
+            class="flex-1 bg-transparent outline-none text-sm"
+          />
+        </div>
+
+        @if (filtered.length === 0) {
+          <p class="text-center text-sm text-gray-400 py-12">No sessions match your search.</p>
+        } @else {
+          <div class="space-y-3">
+            @for (session of filtered; track session.id) {
+              <button
+                (click)="selectSession(session)"
+                class="w-full text-left bg-white rounded-2xl border border-gray-100 shadow-sm p-4 hover:border-[var(--color-primary)]/40 hover:shadow-md transition-all"
+              >
+                <div class="flex items-start gap-4">
+                  <div class="w-10 h-10 rounded-full bg-blue-50 text-[var(--color-primary)] flex items-center justify-center font-bold text-sm border border-blue-100 shrink-0">
+                    {{ session.clientName.charAt(0).toUpperCase() }}
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <div class="flex items-center gap-2 mb-0.5">
+                      <span class="font-semibold text-[var(--color-primary)] truncate">{{ session.clientName }}</span>
+                      @if (session.hasPsychologistNote) {
+                        <mat-icon class="text-[var(--color-success)] text-base shrink-0" title="Has notes">edit_note</mat-icon>
+                      }
+                    </div>
+                    <p class="text-xs text-gray-500">
+                      {{ session.startTime | date:'dd MMM yyyy, HH:mm' }} – {{ session.endTime | date:'HH:mm' }}
+                    </p>
+                  </div>
+                  <div class="flex flex-col items-end gap-1 shrink-0">
+                    <span
+                      class="px-2 py-0.5 rounded-full text-[10px] font-semibold"
+                      [ngClass]="{
+                        'bg-blue-100 text-blue-700': session.status === 'Completed',
+                        'bg-green-100 text-green-700': session.status === 'Confirmed',
+                        'bg-red-100 text-red-700': session.status === 'Cancelled' || session.status === 'NoShow'
+                      }"
+                    >{{ session.status }}</span>
+                    <span class="text-xs font-semibold text-[var(--color-primary)]">{{ session.price }} UAH</span>
+                  </div>
+                </div>
+              </button>
+            }
+          </div>
+        }
+      }
+
+    }
+
+  </div>
+</div>

@@ -1,0 +1,41 @@
+:host ::ng-deep mat-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  line-height: 1 !important;
+  font-size: inherit;
+  width: 1em !important;
+  height: 1em !important;
+  overflow: visible;
+}
+
+input[type='range'] {
+  height: 4px;
+  -webkit-appearance: none;
+  background: #e5e7eb;
+  border-radius: 9999px;
+  outline: none;
+
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #111827;
+    cursor: pointer;
+    border: 2px solid #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  }
+
+  &::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #111827;
+    cursor: pointer;
+    border: 2px solid #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  }
+}

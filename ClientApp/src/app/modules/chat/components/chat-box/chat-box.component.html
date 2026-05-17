@@ -1,60 +1,114 @@
-<div
-  class="chat-section flex flex-col h-full w-full overflow-hidden bg-[#F8F9FA]"
->
+<div class="flex flex-col h-full w-full overflow-hidden bg-[#f8fafc]">
   <div
     #scrollContainer
-    class="flex-1 custom-scroll overflow-y-auto p-3 md:p-5 flex flex-col w-full gap-1"
+    class="flex-1 custom-scroll overflow-y-auto px-3 md:px-5 py-4 flex flex-col gap-0.5 w-full"
     style="overscroll-behavior-y: contain"
   >
-    <ng-container
-      *ngFor="let item of chatService.chatMessages(); let i = index"
-    >
+
+    <!-- Load earlier messages -->
+    @if (chatService.chatMessages().length >= 20) {
+      <div class="flex justify-center mb-4">
+        <button
+          (click)="loadMoreMessage()"
+          class="inline-flex items-center gap-1.5 text-xs font-semibold text-gray-500 hover:text-[var(--color-primary)] bg-white border border-gray-200 hover:border-[var(--color-mint)] px-4 py-1.5 rounded-full shadow-sm transition-all"
+        >
+          <mat-icon class="!text-sm !w-4 !h-4">expand_less</mat-icon>
+          Load earlier messages
+        </button>
+      </div>
+    }
+
+    <ng-container *ngFor="let item of chatService.chatMessages(); let i = index">
       <div
-        class="flex w-full items-end gap-2 group"
+        class="flex w-full items-end gap-1.5 group"
         [ngClass]="{
           'justify-end': item.senderId === authService.currentLoggedUser?.id,
-          'justify-start': item.senderId !== authService.currentLoggedUser?.id,
+          'justify-start': item.senderId !== authService.currentLoggedUser?.id
         }"
       >
-        @if (item.senderId === authService.currentLoggedUser?.id) {
-          <button
-            (click)="addReplyMessage(item)"
-            class="text-gray-300 hover:text-primary transition-colors mb-1.5 md:opacity-0 md:group-hover:opacity-100 shrink-0 p-1.5 flex items-center justify-center rounded-full hover:bg-black/5"
-            title="Відповісти"
-          >
-            <i class="bi bi-reply-fill text-[18px]"></i>
-          </button>
+
+        <!-- Reply + Delete buttons — own messages (left of bubble) -->
+        @if (item.senderId === authService.currentLoggedUser?.id && !item.isPending && item.messageType !== 1) {
+          <div class="flex flex-col items-center gap-0.5 mb-2 md:opacity-0 md:group-hover:opacity-100 transition-opacity">
+            <button
+              (click)="addReplyMessage(item)"
+              class="text-gray-300 hover:text-[var(--color-primary)] transition-colors shrink-0 p-1 rounded-full hover:bg-black/5"
+              title="Reply"
+            >
+              <i class="bi bi-reply-fill text-base"></i>
+            </button>
+            <button
+              (click)="confirmDeleteMessage(item)"
+              class="text-gray-300 hover:text-red-500 transition-colors shrink-0 p-1 rounded-full hover:bg-red-50"
+              title="Delete message"
+            >
+              <i class="bi bi-trash text-base"></i>
+            </button>
+          </div>
         }
 
-        <div
-          class="flex flex-col max-w-[85%] md:max-w-[70%] lg:max-w-[60%] min-w-[80px]"
-        >
+        <!-- Avatar — other messages -->
+        @if (item.senderId !== authService.currentLoggedUser?.id) {
+          <div class="w-7 h-7 rounded-full overflow-hidden bg-[var(--color-primary)]/10 shrink-0 mb-2">
+            <img
+              [src]="chatService.currentOpenedChat()?.profileImage"
+              class="w-full h-full object-cover"
+              alt=""
+            />
+          </div>
+        }
+
+        <!-- Bubble -->
+        <div class="flex flex-col max-w-[85%] md:max-w-[68%] lg:max-w-[58%] min-w-[60px]">
           <div
-            class="text-[15px] leading-relaxed relative w-full break-words shadow-sm rounded-2xl"
+            class="text-[14px] md:text-[15px] leading-relaxed relative w-full break-words"
             [ngClass]="getBubbleClass(i)"
           >
+
+            <!-- ─── VIDEO CALL record ─── -->
+            @if (item.messageType === 1) {
+              <div class="flex items-center gap-2.5 py-0.5 min-w-[200px]">
+                <div
+                  class="rounded-full w-8 h-8 shrink-0 flex items-center justify-center"
+                  [ngClass]="getCallIconClass(item)"
+                >
+                  <mat-icon class="!text-[18px] !w-[18px] !h-[18px] !leading-none">
+                    {{ (item.callDurationSeconds !== null && item.callDurationSeconds !== undefined) ? 'videocam' : 'videocam_off' }}
+                  </mat-icon>
+                </div>
+                <div class="flex flex-col leading-snug">
+                  <span class="text-[13px] font-semibold">{{ getCallLabel(item) }}</span>
+                  @if (item.callDurationSeconds !== null && item.callDurationSeconds !== undefined) {
+                    <span
+                      class="text-[11px] mt-0.5"
+                      [ngClass]="item.senderId === authService.currentLoggedUser?.id ? 'text-gray-500/70' : 'text-white/55'"
+                    >{{ formatCallDuration(item.callDurationSeconds) }}</span>
+                  }
+                </div>
+              </div>
+            }
+
+            <!-- Reply quote -->
             <div
               *ngIf="item.replyMessageContent"
-              class="mb-2 p-2 rounded-lg bg-black/5 border-l-[4px] flex flex-col cursor-pointer hover:bg-black/10 transition-colors"
+              class="mb-2 p-2 rounded-lg bg-black/8 border-l-[3px] flex flex-col cursor-pointer hover:bg-black/12 transition-colors"
               [ngClass]="{
-                'border-primary/60':
-                  item.senderId === authService.currentLoggedUser?.id,
-                'border-white/60':
-                  item.senderId !== authService.currentLoggedUser?.id,
+                'border-[var(--color-primary)]/40': item.senderId === authService.currentLoggedUser?.id,
+                'border-white/40': item.senderId !== authService.currentLoggedUser?.id
               }"
             >
               <span
-                class="font-semibold text-[13px] truncate"
+                class="font-bold text-[11px] truncate mb-0.5"
                 [ngClass]="
                   item.senderId === authService.currentLoggedUser?.id
-                    ? 'text-primary'
+                    ? 'text-[var(--color-primary)]'
                     : 'text-white/90'
                 "
               >
-                {{ item.replyMessageSenderName || "Користувач" }}
+                {{ item.replyMessageSenderName || 'User' }}
               </span>
               <span
-                class="truncate text-[13px] opacity-80 mt-[2px]"
+                class="truncate text-[12px] opacity-75"
                 [ngClass]="
                   item.senderId === authService.currentLoggedUser?.id
                     ? 'text-gray-700'
@@ -65,63 +119,126 @@
               </span>
             </div>
 
+            <!-- Attachments -->
             @if (item.attachments && item.attachments.length > 0) {
-              <div class="flex flex-col gap-2 mb-2 w-full pt-1">
+              <div class="flex flex-col gap-2 mb-2 w-full pt-0.5">
                 @for (att of item.attachments; track $index) {
-                  @if (att.type === "image") {
-                    <div
-                      class="rounded-xl overflow-hidden bg-black/5 relative group/img shadow-sm"
-                    >
+
+                  @if (att.type === 'image') {
+                    <div class="rounded-xl overflow-hidden relative group/img">
                       <img
                         [src]="att.path"
-                        class="w-full h-auto max-h-[150px] md:max-h-[250px] object-cover cursor-pointer transition-transform duration-300 group-hover/img:scale-[1.02]"
+                        class="w-full h-auto max-h-[180px] md:max-h-[260px] object-cover cursor-pointer transition-transform duration-300 group-hover/img:scale-[1.02]"
                         alt="attachment"
                         (click)="openMedia(att.path, 'image')"
                       />
+                      <div class="absolute inset-0 bg-black/0 group-hover/img:bg-black/8 flex items-center justify-center transition-colors">
+                        <mat-icon class="text-white text-3xl opacity-0 group-hover/img:opacity-80 transition-opacity drop-shadow">fullscreen</mat-icon>
+                      </div>
                     </div>
-                  } @else if (att.type === "video") {
+
+                  } @else if (att.type === 'video') {
                     <div
-                      class="relative rounded-xl overflow-hidden bg-black/90 shadow-sm cursor-pointer group"
+                      class="relative rounded-xl overflow-hidden bg-black/90 cursor-pointer group/vid"
                       (click)="openMedia(att.path, 'video')"
                     >
                       <video
                         [src]="att.path"
-                        class="w-full h-[250px] md:h-[350px] object-cover opacity-70 group-hover:opacity-50 transition-opacity duration-300"
+                        class="w-full h-[180px] md:h-[250px] object-cover opacity-60 group-hover/vid:opacity-40 transition-opacity"
                         preload="metadata"
                       ></video>
-
-                      <div
-                        class="absolute inset-0 flex items-center justify-center"
-                      >
-                        <div
-                          class="bg-white/20 backdrop-blur-md p-4 rounded-full group-hover:bg-white/30 group-hover:scale-110 transition-all duration-300"
-                        >
-                          <svg
-                            class="w-8 h-8 text-white ml-1"
-                            fill="currentColor"
-                            viewBox="0 0 24 24"
-                          >
+                      <div class="absolute inset-0 flex items-center justify-center">
+                        <div class="bg-white/20 backdrop-blur-sm p-3.5 rounded-full group-hover/vid:bg-white/30 group-hover/vid:scale-110 transition-all">
+                          <svg class="w-6 h-6 text-white ml-0.5" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M8 5v14l11-7z" />
                           </svg>
                         </div>
                       </div>
                     </div>
+
+                  } @else if (att.type === 'audio') {
+                    <!-- Voice message player -->
+                    <div class="flex items-center gap-2.5 py-0.5 min-w-[190px] max-w-[260px]">
+
+                      <!-- Play / Pause button -->
+                      <button
+                        (click)="toggleAudio(att.path)"
+                        class="w-9 h-9 shrink-0 rounded-full flex items-center justify-center transition-all active:scale-95 shadow-sm"
+                        [ngClass]="
+                          item.senderId === authService.currentLoggedUser?.id
+                            ? 'bg-[var(--color-primary)] text-[var(--color-mint)] hover:bg-[#012900]'
+                            : 'bg-white/25 text-white hover:bg-white/35'
+                        "
+                      >
+                        <mat-icon class="!text-[20px] !w-5 !h-5 !leading-none">
+                          {{ isAudioPlaying(att.path) ? 'pause' : 'play_arrow' }}
+                        </mat-icon>
+                      </button>
+
+                      <!-- Waveform + duration -->
+                      <div class="flex flex-col gap-1.5 flex-1 min-w-0">
+
+                        <!-- Waveform: unplayed bars + played overlay clip -->
+                        <div
+                          class="relative flex items-end gap-[2px] h-[18px] cursor-pointer"
+                          (click)="seekAudio($event, att.path)"
+                        >
+                          <!-- Unplayed bars (sized by content, serve as reference) -->
+                          <div class="flex items-end gap-[2px] h-full">
+                            @for (bar of getWaveformBars(att.path); track $index) {
+                              <div
+                                class="w-[3px] rounded-full flex-shrink-0"
+                                [style.height.px]="bar"
+                                [ngClass]="item.senderId === authService.currentLoggedUser?.id ? 'bg-black/15' : 'bg-white/30'"
+                              ></div>
+                            }
+                          </div>
+                          <!-- Played overlay: clips from right, inner bars overflow into the hidden area -->
+                          <div
+                            class="absolute top-0 bottom-0 left-0 overflow-hidden transition-[width] duration-100"
+                            [style.width.%]="getAudioProgress(att.path)"
+                          >
+                            <div class="absolute inset-y-0 left-0 flex items-end gap-[2px]">
+                              @for (bar of getWaveformBars(att.path); track $index) {
+                                <div
+                                  class="w-[3px] rounded-full flex-shrink-0"
+                                  [style.height.px]="bar"
+                                  [ngClass]="item.senderId === authService.currentLoggedUser?.id ? 'bg-[var(--color-primary)]' : 'bg-white'"
+                                ></div>
+                              }
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- Duration / current time -->
+                        <span
+                          class="text-[10px] font-medium tabular-nums leading-none"
+                          [ngClass]="item.senderId === authService.currentLoggedUser?.id ? 'text-gray-400' : 'text-white/55'"
+                        >{{ getAudioDuration(att.path) }}</span>
+                      </div>
+
+                      <!-- Mic badge -->
+                      <mat-icon
+                        class="!text-[15px] !w-[15px] !h-[15px] !leading-none shrink-0 opacity-40"
+                        [ngClass]="item.senderId === authService.currentLoggedUser?.id ? 'text-gray-600' : 'text-white'"
+                      >mic</mat-icon>
+
+                    </div>
+
                   } @else {
                     <a
                       [href]="att.path"
                       target="_blank"
-                      class="flex items-center gap-3 p-3 rounded-xl transition-colors border no-underline group/file shadow-sm"
+                      class="flex items-center gap-3 p-2.5 rounded-xl transition-colors border no-underline group/file"
                       [ngClass]="
                         item.senderId === authService.currentLoggedUser?.id
-                          ? 'bg-white/50 hover:bg-white/80 border-black/5'
-                          : 'bg-black/10 hover:bg-black/20 border-white/10'
+                          ? 'bg-white/60 hover:bg-white border-black/5'
+                          : 'bg-black/10 hover:bg-black/15 border-white/10'
                       "
                     >
-                      <div
-                        class="w-10 h-10 rounded-full bg-white flex items-center justify-center shrink-0 shadow-sm"
-                      >
+                      <div class="w-9 h-9 rounded-xl bg-white/80 flex items-center justify-center shrink-0">
                         <i
-                          class="text-[20px]"
+                          class="text-lg"
                           [ngClass]="
                             att.type === 'pdf'
                               ? 'bi-file-earmark-pdf-fill text-red-500'
@@ -131,37 +248,29 @@
                           "
                         ></i>
                       </div>
-
-                      <div
-                        class="flex flex-col min-w-0 overflow-hidden w-full leading-snug"
-                      >
+                      <div class="flex flex-col min-w-0 flex-1 leading-snug">
                         <span
-                          class="text-[14px] font-semibold truncate"
+                          class="text-[13px] font-semibold truncate"
                           [ngClass]="
                             item.senderId === authService.currentLoggedUser?.id
                               ? 'text-gray-800'
                               : 'text-white'
                           "
-                        >
-                          {{ att.name }}
-                        </span>
+                        >{{ att.name }}</span>
                         <span
-                          class="text-[11px] uppercase tracking-wider mt-0.5"
+                          class="text-[10px] uppercase tracking-wider mt-0.5"
                           [ngClass]="
                             item.senderId === authService.currentLoggedUser?.id
-                              ? 'text-gray-500'
-                              : 'text-white/70'
+                              ? 'text-gray-400'
+                              : 'text-white/60'
                           "
-                        >
-                          {{ att.name.split(".").pop() }}
-                        </span>
+                        >{{ att.name.split('.').pop() }}</span>
                       </div>
-
                       <i
-                        class="bi bi-download text-[20px] shrink-0 transition-transform group-hover/file:-translate-y-1"
+                        class="bi bi-download text-lg shrink-0 transition-transform group-hover/file:-translate-y-0.5"
                         [ngClass]="
                           item.senderId === authService.currentLoggedUser?.id
-                            ? 'text-gray-400 group-hover/file:text-primary'
+                            ? 'text-gray-400 group-hover/file:text-[var(--color-primary)]'
                             : 'text-white/50 group-hover/file:text-white'
                         "
                       ></i>
@@ -171,55 +280,59 @@
               </div>
             }
 
+            <!-- Message text -->
             @if (item.content) {
-              <span class="block whitespace-pre-wrap word-break pt-0.5">
-                {{ item.content }}
-              </span>
+              <span class="block whitespace-pre-wrap word-break">{{ item.content }}</span>
             }
 
-            <div
-              class="flex items-center justify-end gap-1 mt-1.5 select-none float-right ml-3"
-            >
-              <span
-                class="text-[11px] font-medium"
-                [ngClass]="
-                  item.senderId === authService.currentLoggedUser?.id
-                    ? 'text-gray-500/90'
-                    : 'text-white/80'
-                "
-              >
-                {{ item.createdDate | date: "HH:mm" }}
-              </span>
+            <!-- Timestamp + read status -->
+            <div class="flex items-center justify-end gap-1 mt-1 select-none float-right ml-3">
+              @if (item.isPending) {
+                <span class="text-[10px] font-medium text-gray-400/70">Sending…</span>
+                <svg class="w-3 h-3 text-gray-400/70 animate-spin" fill="none" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+                </svg>
+              } @else {
+                <span
+                  class="text-[10px] font-medium"
+                  [ngClass]="
+                    item.senderId === authService.currentLoggedUser?.id
+                      ? 'text-gray-500/80'
+                      : 'text-white/70'
+                  "
+                >
+                  {{ item.createdDate | date: 'HH:mm' }}
+                </span>
 
-              <div
-                *ngIf="item.senderId === authService.currentLoggedUser?.id"
-                class="flex items-center justify-center h-[14px]"
-              >
-                @if (item.isRead) {
-                  <i
-                    class="bi bi-check-all text-[18px] text-blue-500 leading-none"
-                  ></i>
-                } @else {
-                  <i
-                    class="bi bi-check text-[18px] text-gray-400 leading-none"
-                  ></i>
-                }
-              </div>
+                <div
+                  *ngIf="item.senderId === authService.currentLoggedUser?.id"
+                  class="flex items-center h-[13px]"
+                >
+                  @if (item.isRead) {
+                    <i class="bi bi-check-all text-[16px] text-[var(--color-success)] leading-none"></i>
+                  } @else {
+                    <i class="bi bi-check text-[16px] text-gray-400/80 leading-none"></i>
+                  }
+                </div>
+              }
             </div>
 
             <div class="clear-both"></div>
           </div>
         </div>
 
-        @if (item.senderId !== authService.currentLoggedUser?.id) {
+        <!-- Reply button — other messages (right of bubble) -->
+        @if (item.senderId !== authService.currentLoggedUser?.id && item.messageType !== 1) {
           <button
             (click)="addReplyMessage(item)"
-            class="text-gray-300 hover:text-primary transition-colors mb-1.5 md:opacity-0 md:group-hover:opacity-100 shrink-0 p-1.5 flex items-center justify-center rounded-full hover:bg-black/5"
+            class="text-gray-300 hover:text-[var(--color-primary)] transition-colors mb-2 md:opacity-0 md:group-hover:opacity-100 shrink-0 p-1 rounded-full hover:bg-black/5"
             title="Reply"
           >
-            <i class="bi bi-reply-fill text-[18px]"></i>
+            <i class="bi bi-reply-fill text-base"></i>
           </button>
         }
+
       </div>
     </ng-container>
   </div>

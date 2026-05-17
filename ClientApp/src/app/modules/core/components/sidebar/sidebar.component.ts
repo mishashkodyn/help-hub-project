@@ -15,6 +15,7 @@ import { LogoutConfirmModalComponent } from '../../../shared/logout-confirm-moda
 import { MenuItem } from '../../../../api/models/menu-item';
 import { SidebarService } from '../../../../api/services/sidebar.service';
 import { PresenceService } from '../../../../api/services/presence-service';
+import { ActiveSessionService } from '../../../../api/services/active-session.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -32,6 +33,11 @@ export class SidebarComponent {
       icon: 'people',
       label: 'find_psychologist',
       route: '/catalog'
+    },
+    {
+      icon: 'event',
+      label: 'sessions',
+      route: '/my-sessions'
     },
     {
       icon: 'chat',
@@ -64,6 +70,21 @@ export class SidebarComponent {
       label: 'psychologist_dashboard',
       route: 'psychologist',
     },
+    {
+      icon: 'videocam',
+      label: 'sessions',
+      route: 'psychologist/sessions',
+    },
+    {
+      icon: 'assignment',
+      label: 'applications',
+      route: 'psychologist/applications',
+    },
+    {
+      icon: 'history',
+      label: 'past_sessions',
+      route: 'psychologist/past-sessions',
+    },
   ])
 
   constructor(
@@ -71,7 +92,8 @@ export class SidebarComponent {
     protected sidebarService: SidebarService,
     private router: Router,
     private dialog: MatDialog,
-    protected presenceService: PresenceService
+    protected presenceService: PresenceService,
+    protected activeSessionService: ActiveSessionService
   ) {}
 
   logout() {
@@ -84,6 +106,14 @@ export class SidebarComponent {
         this.authService.logout();
       }
     });
+  }
+
+  joinActiveSession(): void {
+    const session = this.activeSessionService.activeSession();
+    if (session) {
+      this.router.navigate(['/session', session.id]);
+      this.sidebarService.toggleSideBar();
+    }
   }
 
   navigateTo(to: string) {

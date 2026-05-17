@@ -1,10 +1,22 @@
+<!-- Mobile sidebar backdrop -->
+@if (sidebarService.sideBarOpen()) {
+  <div
+    class="fixed inset-0 bg-black/20 backdrop-blur-[2px] z-[44] md:hidden"
+    (click)="sidebarService.toggleSideBar()"
+    aria-hidden="true"
+  ></div>
+}
+
+<!-- Sidebar panel -->
 <aside
-  class="fixed z-[45] h-full w-full md:w-72 bg-white shadow-2xl transition-transform duration-300 ease-in-out"
+  class="fixed z-[45] top-0 left-0 h-full w-72 bg-white shadow-2xl transition-transform duration-300 ease-in-out"
   [class.-translate-x-full]="!sidebarService.sideBarOpen()"
+  aria-label="Sidebar"
 >
   <app-sidebar class="h-[100dvh]"></app-sidebar>
 </aside>
 
+<!-- Header bar -->
 <header
   class="fixed top-0 w-full h-13 z-50 transition-transform duration-300"
   [class.-translate-y-full]="hidden"
@@ -12,6 +24,7 @@
   <app-header></app-header>
 </header>
 
+<!-- Main content -->
 <main class="h-[100dvh] pt-13 box-border">
   <router-outlet></router-outlet>
 </main>

@@ -1,0 +1,112 @@
+<div class="min-h-screen bg-gray-50 px-4 py-6 md:px-8">
+
+  <!-- Header -->
+  <div class="max-w-4xl mx-auto mb-6">
+    <div class="flex items-center gap-3">
+      <button (click)="goBack()" class="w-9 h-9 flex items-center justify-center rounded-xl hover:bg-gray-100 transition-colors">
+        <mat-icon class="text-gray-500">arrow_back</mat-icon>
+      </button>
+      <div>
+        <h1 class="text-xl font-bold text-[var(--color-primary)]">My Sessions</h1>
+        <p class="text-sm text-gray-400">Your scheduled and past therapy sessions</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filter tabs -->
+  <div class="max-w-4xl mx-auto mb-5">
+    <div class="flex gap-2 flex-wrap">
+      @for (f of filterOptions; track f.value) {
+        <button
+          (click)="setFilter(f.value)"
+          class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-sm font-medium border transition-all"
+          [ngClass]="currentFilter === f.value
+            ? 'bg-[var(--color-primary)] text-white border-[var(--color-primary)]'
+            : 'bg-white text-gray-600 border-gray-200 hover:border-gray-300'"
+        >
+          <mat-icon class="text-base leading-none">{{ f.icon }}</mat-icon>
+          {{ f.label }}
+          <span class="text-xs opacity-70">({{ getFilterCount(f.value) }})</span>
+        </button>
+      }
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="max-w-4xl mx-auto">
+    @if (isLoading) {
+      <div class="flex justify-center py-16">
+        <mat-spinner diameter="40"></mat-spinner>
+      </div>
+    } @else if (sessions.length === 0) {
+      <div class="flex flex-col items-center py-16 text-center">
+        <mat-icon class="text-5xl text-gray-300 mb-3">calendar_today</mat-icon>
+        <p class="text-gray-400 text-sm">No sessions found</p>
+      </div>
+    } @else {
+      <div class="space-y-3">
+        @for (session of sessions; track session.id) {
+          <ng-container *ngIf="getStatus(session) as ds">
+            <div
+              class="bg-white rounded-2xl border shadow-sm p-4 sm:p-5 transition-all"
+              [ngClass]="ds.key === 'live' ? 'border-emerald-300 shadow-emerald-100' : 'border-gray-100'"
+            >
+              <div class="flex items-start gap-4">
+
+                <!-- Left: info -->
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-center gap-2 mb-1">
+                    <mat-icon class="text-[var(--color-success)] text-lg shrink-0">person</mat-icon>
+                    <span class="font-semibold text-[var(--color-primary)] truncate">{{ session.psychologistName }}</span>
+                  </div>
+
+                  <div class="flex items-center gap-3 text-xs text-gray-500 mb-2">
+                    <span class="flex items-center gap-1">
+                      <mat-icon class="text-sm">schedule</mat-icon>
+                      {{ session.startTime | date:'dd MMM yyyy, HH:mm' }}
+                    </span>
+                    <span>–</span>
+                    <span>{{ session.endTime | date:'HH:mm' }}</span>
+                  </div>
+
+                  @if (session.clientNotes) {
+                    <p class="text-xs text-gray-400 italic line-clamp-2">{{ session.clientNotes }}</p>
+                  }
+                </div>
+
+                <!-- Right: status + price + join -->
+                <div class="flex flex-col items-end gap-2 shrink-0">
+                  <!-- Status badge -->
+                  <span
+                    class="flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold"
+                    [ngClass]="ds.classes"
+                  >
+                    <mat-icon
+                      class="text-sm"
+                      [class.animate-pulse]="ds.pulse"
+                    >{{ ds.icon }}</mat-icon>
+                    {{ ds.label }}
+                  </span>
+
+                  <span class="text-sm font-semibold text-[var(--color-primary)]">{{ session.price }} UAH</span>
+
+                  @if (session.isAccessible) {
+                    <button
+                      (click)="joinSession(session)"
+                      class="flex items-center gap-1.5 px-3 py-1.5 bg-[var(--color-success)] text-white text-xs font-semibold rounded-xl hover:bg-[var(--color-success)]/90 transition-all shadow-sm"
+                      [class.animate-pulse]="ds.key === 'live'"
+                    >
+                      <mat-icon class="text-sm">video_call</mat-icon>
+                      Join
+                    </button>
+                  }
+                </div>
+
+              </div>
+            </div>
+          </ng-container>
+        }
+      </div>
+    }
+  </div>
+</div>

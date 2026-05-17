@@ -26,5 +26,6 @@ export interface UserProfileDto {
     userName: string;
     userCategory: number;
     roles: string[];
+    psychologistId?: string;
     psychologist?: PsychologistProfileDto;
 }

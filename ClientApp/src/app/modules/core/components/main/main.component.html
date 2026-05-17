@@ -1,82 +1,133 @@
 <ng-container *transloco="let t">
-  <div class="relative min-h-screen bg-[#f8fafc] font-sans overflow-hidden">
-    
-    <div class="absolute top-[-5%] left-[-10%] w-64 h-64 md:w-96 md:h-96 bg-[var(--color-mint)]/30 rounded-full mix-blend-multiply filter blur-[80px] md:blur-[100px] opacity-70 animate-blob"></div>
-    <div class="absolute top-[20%] right-[-10%] w-64 h-64 md:w-96 md:h-96 bg-[var(--color-sky)]/30 rounded-full mix-blend-multiply filter blur-[80px] md:blur-[100px] opacity-70 animate-blob animation-delay-2000"></div>
-    <div class="absolute bottom-[-10%] left-[20%] w-64 h-64 md:w-96 md:h-96 bg-[var(--color-success)]/20 rounded-full mix-blend-multiply filter blur-[80px] md:blur-[100px] opacity-70 animate-blob animation-delay-4000"></div>
+  <div class="relative bg-[#f8fafc] font-sans overflow-x-hidden">
 
-    <section class="relative z-10 pt-6 md:pt-12 pb-12 md:pb-16 px-4 sm:px-6 max-w-7xl mx-auto">
-      <div class="grid lg:grid-cols-2 gap-8 md:gap-12 items-center">
-        <div class="flex flex-col items-center lg:items-start text-center lg:text-left">
-          <div data-aos="fade-down" data-aos-duration="800" class="inline-flex items-center gap-2 px-3 md:px-4 md:py-2 rounded-full bg-white/60 backdrop-blur-md border border-white/80 shadow-sm mb-6 md:mb-8 hover:shadow-md transition-shadow">
-            <span class="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-[var(--color-success)] animate-pulse shadow-[0_0_10px_var(--color-success)]"></span>
-            <span class="text-xs md:text-sm font-semibold text-[var(--color-primary)] tracking-wide">Help Hub — {{ t('landing.platform_name') }}</span>
+    <!-- Ambient background blobs (fixed, non-interactive) -->
+    <div class="pointer-events-none fixed inset-0 overflow-hidden z-0" aria-hidden="true">
+      <div class="absolute -top-[15%] -left-[8%] w-[480px] h-[480px] bg-[var(--color-mint)]/20 rounded-full blur-[130px] animate-blob"></div>
+      <div class="absolute top-[35%] -right-[8%] w-[380px] h-[380px] bg-[var(--color-sky)]/18 rounded-full blur-[110px] animate-blob [animation-delay:2s]"></div>
+      <div class="absolute bottom-[5%] left-[25%] w-[320px] h-[320px] bg-[var(--color-success)]/12 rounded-full blur-[100px] animate-blob [animation-delay:4s]"></div>
+    </div>
+
+    <!-- ===== HERO ===== -->
+    <section class="relative z-10 min-h-[calc(100dvh-52px)] flex items-center py-16 px-4 sm:px-6">
+      <div class="max-w-7xl mx-auto w-full grid lg:grid-cols-[1.1fr_0.9fr] gap-14 items-center">
+
+        <!-- Left: Copy -->
+        <div class="flex flex-col items-start" data-aos="fade-right" data-aos-duration="800">
+
+          <div class="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white/75 backdrop-blur border border-white/90 shadow-sm mb-8">
+            <span class="w-2 h-2 rounded-full bg-[var(--color-success)] animate-pulse shadow-[0_0_8px_var(--color-success)]"></span>
+            <span class="text-xs font-bold text-[var(--color-primary)] tracking-widest uppercase">Help Hub — {{ t('landing.platform_name') }}</span>
           </div>
 
-          <h1 data-aos="fade-right" data-aos-duration="1000" data-aos-delay="100" class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-[var(--color-primary)] tracking-tight mb-4 md:mb-6 leading-[1.1]">
-            {{ t('landing.hero_title') }}<br />
-            <span class="text-transparent bg-clip-text bg-gradient-to-r from-[var(--color-blue)] via-[var(--color-mint)] to-[var(--color-success)] animate-gradient-x inline-block mt-1 md:mt-2">
+          <h1 class="text-[clamp(2.6rem,6vw,4.5rem)] font-extrabold text-[var(--color-primary)] tracking-tight leading-[1.05] mb-5">
+            {{ t('landing.hero_title') }}
+            <br />
+            <span class="bg-gradient-to-r from-[var(--color-blue)] via-[var(--color-mint)] to-[var(--color-success)] bg-clip-text text-transparent">
               {{ t('landing.hero_subtitle') }}
             </span>
           </h1>
 
-          <p data-aos="fade-right" data-aos-duration="1000" data-aos-delay="200" class="text-base sm:text-lg hidden md:block md:text-xl text-gray-600/90 max-w-xl mb-8 md:mb-10 leading-relaxed font-medium px-2 sm:px-0">
+          <p class="text-lg text-gray-600 max-w-lg mb-10 leading-relaxed hidden sm:block">
             {{ t('landing.hero_description') }}
           </p>
 
-          <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full lg:w-auto px-4 sm:px-0" data-aos="zoom-in-up" data-aos-delay="400" data-aos-duration="800">
-            <button (click)="navigateTo('registration')" class="w-full sm:w-auto group flex items-center justify-center gap-2 px-6 py-3.5 md:px-8 md:py-4 rounded-2xl bg-[var(--color-primary)] text-[var(--color-mint)] font-bold text-base md:text-lg hover:bg-[#002a00] shadow-[0_8px_20px_rgba(0,0,0,0.1)] hover:shadow-[0_15px_30px_rgba(var(--color-primary-rgb),0.3)] transition-all duration-300 transform hover:-translate-y-1">
-              <mat-icon class="group-hover:scale-110 transition-transform text-[20px] md:text-[24px]">volunteer_activism</mat-icon>
+          <div class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto mb-10">
+            <button
+              (click)="navigateTo('registration')"
+              class="group inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl bg-[var(--color-primary)] text-[var(--color-mint)] font-bold text-base hover:bg-[#012900] shadow-lg shadow-black/10 hover:shadow-xl hover:shadow-black/15 hover:-translate-y-0.5 transition-all duration-300"
+            >
+              <mat-icon class="text-xl group-hover:scale-110 transition-transform">volunteer_activism</mat-icon>
               {{ t('landing.get_help') }}
             </button>
-            <button (click)="navigateTo('/register', { returnUrl: '/psychologist-registration' })" class="w-full sm:w-auto group flex items-center justify-center gap-2 px-6 py-3.5 md:px-8 md:py-4 rounded-2xl bg-white/80 backdrop-blur-sm text-[var(--color-primary)] border-2 border-[var(--color-mint)]/50 font-bold text-base md:text-lg hover:border-[var(--color-mint)] hover:bg-[var(--color-mint)]/5 shadow-sm transition-all duration-300 transform hover:-translate-y-1">
-              <mat-icon class="group-hover:rotate-12 transition-transform text-[20px] md:text-[24px]">psychology_alt</mat-icon>
+            <button
+              (click)="navigateTo('/register', { returnUrl: '/psychologist-registration' })"
+              class="group inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl bg-white text-[var(--color-primary)] border-2 border-[var(--color-mint)] font-bold text-base hover:bg-[var(--color-mint)]/10 hover:border-[var(--color-primary)]/40 hover:-translate-y-0.5 transition-all duration-300 shadow-sm"
+            >
+              <mat-icon class="text-xl group-hover:rotate-12 transition-transform">psychology_alt</mat-icon>
               {{ t('landing.become_psychologist') }}
             </button>
           </div>
 
-          <div class="flex flex-col sm:flex-row flex-wrap justify-center lg:justify-start items-center gap-3 sm:gap-6 mt-8 md:mt-12 text-xs sm:text-sm text-gray-500 font-medium w-full" data-aos="fade-up" data-aos-delay="600">
-            <div class="flex items-center gap-2 bg-white/50 px-4 py-2 rounded-full backdrop-blur-sm hover:scale-105 transition-transform cursor-default shadow-sm sm:shadow-none w-full sm:w-auto justify-center">
-              <mat-icon class="text-[var(--color-success)] text-base">verified</mat-icon>
+          <div class="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-gray-500">
+            <div class="flex items-center gap-1.5">
+              <mat-icon class="text-base text-[var(--color-success)]">lock</mat-icon>
               <span>{{ t('landing.anonymous') }}</span>
             </div>
-            <div class="flex items-center gap-2 bg-white/50 px-4 py-2 rounded-full backdrop-blur-sm hover:scale-105 transition-transform cursor-default shadow-sm sm:shadow-none w-full sm:w-auto justify-center">
-              <mat-icon class="text-[var(--color-success)] text-base">support_agent</mat-icon>
+            <span class="w-1 h-1 rounded-full bg-gray-300 hidden sm:block"></span>
+            <div class="flex items-center gap-1.5">
+              <mat-icon class="text-base text-[var(--color-success)]">verified</mat-icon>
+              <span>{{ t('landing.verified_specialists') }}</span>
+            </div>
+            <span class="w-1 h-1 rounded-full bg-gray-300 hidden sm:block"></span>
+            <div class="flex items-center gap-1.5">
+              <mat-icon class="text-base text-[var(--color-success)]">support_agent</mat-icon>
               <span>{{ t('landing.support_24_7') }}</span>
             </div>
           </div>
         </div>
 
-        <div class="relative hidden lg:block" data-aos="zoom-in-left" data-aos-duration="1200" data-aos-delay="300">
-          <div class="relative bg-white/60 backdrop-blur-2xl rounded-[2.5rem] p-8 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] border border-white">
-            <div class="absolute -top-6 -right-6 w-24 h-24 bg-[var(--color-mint)]/40 rounded-full blur-2xl animate-pulse"></div>
-            
-            <div class="flex items-center gap-4 mb-8 relative z-10" data-aos="fade-down" data-aos-delay="700">
-              <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-[var(--color-mint)]/30 to-[var(--color-sky)]/30 flex items-center justify-center shadow-inner border border-white/50">
-                <mat-icon class="text-3xl text-[var(--color-primary)]">auto_awesome</mat-icon>
-              </div>
-              <div>
-                <h3 class="font-bold text-lg text-[var(--color-primary)]">{{ t('ai_assistant.title') }}</h3>
-                <p class="text-sm text-gray-500 font-medium">{{ t('ai_assistant.subtitle') }}</p>
-              </div>
-            </div>
+        <!-- Right: AI Chat preview card -->
+        <div class="hidden lg:block" data-aos="fade-left" data-aos-duration="900" data-aos-delay="200">
+          <div class="relative">
+            <!-- Glow -->
+            <div class="absolute -inset-6 bg-gradient-to-br from-[var(--color-mint)]/25 to-[var(--color-sky)]/15 rounded-[3.5rem] blur-3xl"></div>
 
-            <div class="space-y-5 relative z-10">
-              <div data-aos="fade-right" data-aos-delay="900" class="bg-white rounded-2xl p-4 rounded-bl-none shadow-sm border border-gray-50 transform hover:-translate-y-0.5 transition-transform">
-                <p class="text-sm text-gray-700">{{ t('ai_assistant.demo_messages.user') }}</p>
-              </div>
-              <div data-aos="fade-left" data-aos-delay="1200" class="bg-gradient-to-r from-[var(--color-primary)]/5 to-[var(--color-mint)]/10 rounded-2xl p-4 rounded-br-none shadow-sm border border-[var(--color-mint)]/20 transform hover:-translate-y-0.5 transition-transform">
-                <p class="text-sm text-[var(--color-primary)] font-medium">{{ t('ai_assistant.demo_messages.ai') }}</p>
-              </div>
-            </div>
+            <div class="relative bg-white/85 backdrop-blur-2xl rounded-[2rem] border border-white shadow-2xl shadow-black/6 overflow-hidden">
 
-            <div class="mt-8 pt-6 border-t border-gray-100/80 relative z-10" data-aos="fade-up" data-aos-delay="1400">
-              <div class="flex gap-3 items-center group cursor-pointer">
-                <div class="flex-1 bg-white/80 rounded-2xl px-5 py-3 text-sm text-gray-400 border border-gray-100 group-hover:border-[var(--color-mint)]/50 transition-colors">
-                  {{ t('landing.try_technique') }}
+              <!-- Card header -->
+              <div class="flex items-center gap-3 px-6 py-4 border-b border-gray-100/80 bg-white/50">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-[var(--color-mint)]/40 to-[var(--color-sky)]/25 flex items-center justify-center shrink-0">
+                  <mat-icon class="text-[var(--color-primary)] text-xl">auto_awesome</mat-icon>
                 </div>
-                <div class="w-12 h-12 rounded-2xl bg-[var(--color-primary)] flex items-center justify-center group-hover:bg-[var(--color-success)] transition-colors shadow-md">
-                  <mat-icon class="text-[var(--color-mint)] group-hover:translate-x-1 transition-transform">arrow_forward</mat-icon>
+                <div>
+                  <div class="font-bold text-sm text-[var(--color-primary)]">{{ t('ai_assistant.title') }}</div>
+                  <div class="flex items-center gap-1.5 text-xs text-gray-400">
+                    <span class="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse"></span>
+                    <span>Online</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Messages -->
+              <div class="p-5 space-y-4 min-h-[200px]">
+                <div data-aos="fade-right" data-aos-delay="700" class="flex justify-end">
+                  <div class="max-w-[82%] bg-[var(--color-primary)] text-[var(--color-mint)] text-sm rounded-2xl rounded-tr-sm px-4 py-3 leading-relaxed">
+                    {{ t('ai_assistant.demo_messages.user') }}
+                  </div>
+                </div>
+
+                <div data-aos="fade-left" data-aos-delay="1000" class="flex gap-2.5 items-end">
+                  <div class="w-8 h-8 rounded-full bg-gradient-to-br from-[var(--color-mint)] to-[var(--color-success)] flex-shrink-0 flex items-center justify-center shadow-sm">
+                    <mat-icon class="text-white text-base">psychology</mat-icon>
+                  </div>
+                  <div class="max-w-[82%] bg-gray-50 border border-gray-100 text-gray-700 text-sm rounded-2xl rounded-bl-sm px-4 py-3 leading-relaxed">
+                    {{ t('ai_assistant.demo_messages.ai') }}
+                  </div>
+                </div>
+
+                <!-- Typing dots -->
+                <div data-aos="fade-left" data-aos-delay="1400" class="flex gap-2.5 items-end">
+                  <div class="w-8 h-8 rounded-full bg-gradient-to-br from-[var(--color-mint)] to-[var(--color-success)] flex-shrink-0 flex items-center justify-center shadow-sm">
+                    <mat-icon class="text-white text-base">psychology</mat-icon>
+                  </div>
+                  <div class="bg-gray-50 border border-gray-100 rounded-2xl rounded-bl-sm px-4 py-3 flex gap-1 items-center">
+                    <span class="w-2 h-2 rounded-full bg-gray-400 animate-bounce" style="animation-delay:0ms"></span>
+                    <span class="w-2 h-2 rounded-full bg-gray-400 animate-bounce" style="animation-delay:150ms"></span>
+                    <span class="w-2 h-2 rounded-full bg-gray-400 animate-bounce" style="animation-delay:300ms"></span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Input area -->
+              <div class="border-t border-gray-100 px-5 py-4">
+                <div class="flex gap-2 items-center">
+                  <div class="flex-1 bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 text-sm text-gray-400 cursor-text">
+                    {{ t('landing.try_technique') }}
+                  </div>
+                  <div class="w-9 h-9 rounded-xl bg-[var(--color-primary)] flex items-center justify-center shrink-0 hover:bg-[var(--color-success)] transition-colors cursor-pointer">
+                    <mat-icon class="text-[var(--color-mint)] text-base">arrow_upward</mat-icon>
+                  </div>
                 </div>
               </div>
             </div>
@@ -85,90 +136,283 @@
       </div>
     </section>
 
-    <section class="py-8 md:py-12 relative z-10">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6">
-        <div class="bg-white/40 backdrop-blur-xl border border-white/60 rounded-[2rem] md:rounded-[2.5rem] p-6 sm:p-8 md:p-12 shadow-[0_8px_30px_rgb(0,0,0,0.02)]" data-aos="flip-up" data-aos-duration="1000">
-          <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 lg:gap-12">
-            <div class="text-center group" data-aos="zoom-in" data-aos-delay="200">
-              <div class="text-3xl sm:text-4xl md:text-5xl font-black text-[var(--color-primary)] mb-1 md:mb-2 group-hover:scale-110 transition-transform duration-300">5000+</div>
-              <div class="text-[10px] sm:text-xs md:text-sm font-bold text-gray-500 uppercase tracking-widest">{{ t('landing.consultations') }}</div>
+    <!-- ===== STATS STRIP ===== -->
+    <section class="relative z-10 py-4 px-4 sm:px-6" data-aos="fade-up" data-aos-duration="600">
+      <div class="max-w-5xl mx-auto">
+        <div class="bg-white/65 backdrop-blur-xl border border-white/80 rounded-2xl shadow-sm px-6 sm:px-12 py-7">
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-y-6">
+            <div class="text-center sm:border-r border-gray-100">
+              <div class="text-3xl sm:text-4xl font-black text-[var(--color-primary)] mb-1 tabular-nums">5 000+</div>
+              <div class="text-[11px] font-semibold text-gray-400 uppercase tracking-widest">{{ t('landing.consultations') }}</div>
             </div>
-            <div class="text-center group" data-aos="zoom-in" data-aos-delay="400">
-              <div class="text-3xl sm:text-4xl md:text-5xl font-black text-[var(--color-primary)] mb-1 md:mb-2 group-hover:scale-110 transition-transform duration-300">120+</div>
-              <div class="text-[10px] sm:text-xs md:text-sm font-bold text-gray-500 uppercase tracking-widest">{{ t('landing.psychologists') }}</div>
+            <div class="text-center sm:border-r border-gray-100">
+              <div class="text-3xl sm:text-4xl font-black text-[var(--color-primary)] mb-1 tabular-nums">120+</div>
+              <div class="text-[11px] font-semibold text-gray-400 uppercase tracking-widest">{{ t('landing.psychologists') }}</div>
             </div>
-            <div class="text-center group" data-aos="zoom-in" data-aos-delay="600">
-              <div class="text-3xl sm:text-4xl md:text-5xl font-black text-[var(--color-primary)] mb-1 md:mb-2 group-hover:scale-110 transition-transform duration-300">98%</div>
-              <div class="text-[10px] sm:text-xs md:text-sm font-bold text-gray-500 uppercase tracking-widest">{{ t('landing.satisfied') }}</div>
+            <div class="text-center sm:border-r border-gray-100">
+              <div class="text-3xl sm:text-4xl font-black text-[var(--color-primary)] mb-1 tabular-nums">98%</div>
+              <div class="text-[11px] font-semibold text-gray-400 uppercase tracking-widest">{{ t('landing.satisfied') }}</div>
             </div>
-            <div class="text-center group" data-aos="zoom-in" data-aos-delay="800">
-              <div class="text-3xl sm:text-4xl md:text-5xl font-black text-[var(--color-primary)] mb-1 md:mb-2 group-hover:scale-110 transition-transform duration-300">24/7</div>
-              <div class="text-[10px] sm:text-xs md:text-sm font-bold text-gray-500 uppercase tracking-widest">{{ t('landing.on_call') }}</div>
+            <div class="text-center">
+              <div class="text-3xl sm:text-4xl font-black text-[var(--color-primary)] mb-1">24/7</div>
+              <div class="text-[11px] font-semibold text-gray-400 uppercase tracking-widest">{{ t('landing.on_call') }}</div>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="md:py-24 px-4 sm:px-6 max-w-7xl mx-auto relative z-10">
-      <div class="text-center mb-10 md:mb-16" data-aos="fade-down">
-        <h2 class="text-3xl md:text-4xl lg:text-5xl font-extrabold text-[var(--color-primary)] mb-3 md:mb-4">{{ t('landing.how_we_help') }}</h2>
-        <div class="w-16 md:w-24 h-1.5 bg-gradient-to-r from-[var(--color-mint)] to-[var(--color-success)] mx-auto rounded-full" data-aos="fade-right" data-aos-delay="300"></div>
-      </div>
+    <!-- ===== HOW IT WORKS ===== -->
+    <section id="how-it-works" class="relative z-10 py-24 sm:py-32 px-4 sm:px-6">
+      <div class="max-w-6xl mx-auto">
 
-      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-        <div class="group bg-white/60 backdrop-blur-xl border border-white p-6 md:p-8 rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.03)] hover:shadow-[0_20px_40px_-10px_rgba(var(--color-sky-rgb),0.2)] hover:-translate-y-2 transition-all duration-500" data-aos="fade-up" data-aos-duration="800" data-aos-delay="100">
-          <div class="w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-gradient-to-br from-[var(--color-sky)]/20 to-white flex items-center justify-center text-[var(--color-blue)] mb-6 md:mb-8 group-hover:scale-110 transition-transform duration-300 border border-white">
-            <mat-icon class="text-2xl md:text-3xl">videocam</mat-icon>
-          </div>
-          <h3 class="text-xl md:text-2xl font-bold text-[var(--color-primary)] mb-3 md:mb-4">{{ t('landing.video_calls') }}</h3>
-          <p class="text-sm md:text-base text-gray-500 leading-relaxed font-medium">{{ t('landing.video_calls_desc') }}</p>
+        <div class="text-center mb-16" data-aos="fade-down">
+          <span class="inline-block text-[11px] font-bold uppercase tracking-[0.2em] text-[var(--color-success)] mb-3">{{ t('landing.easy_start_tag') }}</span>
+          <h2 class="text-4xl sm:text-5xl font-extrabold text-[var(--color-primary)] mb-4 tracking-tight">{{ t('landing.three_steps_title') }}</h2>
+          <p class="text-gray-500 text-lg max-w-lg mx-auto">{{ t('landing.three_steps_subtitle') }}</p>
         </div>
 
-        <div class="group bg-white/60 backdrop-blur-xl border border-white p-6 md:p-8 rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.03)] hover:shadow-[0_20px_40px_-10px_rgba(var(--color-mint-rgb),0.3)] hover:-translate-y-2 transition-all duration-500" data-aos="fade-up" data-aos-duration="800" data-aos-delay="300">
-          <div class="w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-gradient-to-br from-[var(--color-mint)]/30 to-white flex items-center justify-center text-[var(--color-success)] mb-6 md:mb-8 group-hover:scale-110 transition-transform duration-300 border border-white">
-            <mat-icon class="text-2xl md:text-3xl">smart_toy</mat-icon>
-          </div>
-          <h3 class="text-xl md:text-2xl font-bold text-[var(--color-primary)] mb-3 md:mb-4">{{ t('landing.ai_companion') }}</h3>
-          <p class="text-sm md:text-base text-gray-500 leading-relaxed font-medium">{{ t('landing.ai_companion_desc') }}</p>
+        <div class="grid md:grid-cols-3 gap-5 relative">
+
+          <!-- Connector line (desktop) -->
+          <div class="hidden md:block absolute top-[3.75rem] left-[calc(33.33%+1.25rem)] right-[calc(33.33%+1.25rem)] h-px bg-gradient-to-r from-[var(--color-mint)] via-[var(--color-sky)] to-[var(--color-mint)] z-0"></div>
+
+          <article class="relative bg-white border border-gray-100 rounded-2xl p-8 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 z-10" data-aos="fade-up" data-aos-delay="100">
+            <div class="w-[3.25rem] h-[3.25rem] rounded-xl bg-[var(--color-mint)]/25 flex items-center justify-center mb-7">
+              <span class="text-xl font-black text-[var(--color-primary)]">01</span>
+            </div>
+            <h3 class="text-xl font-bold text-[var(--color-primary)] mb-3">{{ t('landing.step1_title') }}</h3>
+            <p class="text-gray-500 text-sm leading-relaxed">{{ t('landing.step1_desc') }}</p>
+          </article>
+
+          <article class="relative bg-white border border-gray-100 rounded-2xl p-8 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 z-10" data-aos="fade-up" data-aos-delay="200">
+            <div class="w-[3.25rem] h-[3.25rem] rounded-xl bg-[var(--color-sky)]/25 flex items-center justify-center mb-7">
+              <span class="text-xl font-black text-[var(--color-primary)]">02</span>
+            </div>
+            <h3 class="text-xl font-bold text-[var(--color-primary)] mb-3">{{ t('landing.step2_title') }}</h3>
+            <p class="text-gray-500 text-sm leading-relaxed">{{ t('landing.step2_desc') }}</p>
+          </article>
+
+          <article class="relative bg-white border border-gray-100 rounded-2xl p-8 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 z-10" data-aos="fade-up" data-aos-delay="300">
+            <div class="w-[3.25rem] h-[3.25rem] rounded-xl bg-[var(--color-success)]/15 flex items-center justify-center mb-7">
+              <span class="text-xl font-black text-[var(--color-primary)]">03</span>
+            </div>
+            <h3 class="text-xl font-bold text-[var(--color-primary)] mb-3">{{ t('landing.step3_title') }}</h3>
+            <p class="text-gray-500 text-sm leading-relaxed">{{ t('landing.step3_desc') }}</p>
+          </article>
         </div>
 
-        <div class="group bg-white/60 backdrop-blur-xl border border-white p-6 md:p-8 rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.03)] hover:shadow-[0_20px_40px_-10px_rgba(var(--color-primary-rgb),0.15)] hover:-translate-y-2 transition-all duration-500 sm:col-span-2 lg:col-span-1" data-aos="fade-up" data-aos-duration="800" data-aos-delay="500">
-          <div class="w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-gradient-to-br from-gray-100 to-white flex items-center justify-center text-[var(--color-primary)] mb-6 md:mb-8 group-hover:scale-110 transition-transform duration-300 border border-white">
-            <mat-icon class="text-2xl md:text-3xl">forum</mat-icon>
-          </div>
-          <h3 class="text-xl md:text-2xl font-bold text-[var(--color-primary)] mb-3 md:mb-4">{{ t('landing.anonymous_chat') }}</h3>
-          <p class="text-sm md:text-base text-gray-500 leading-relaxed font-medium">{{ t('landing.anonymous_chat_desc') }}</p>
-        </div>
-
-        <div class="group bg-gradient-to-br from-[var(--color-primary)] to-[#002a00] p-6 sm:p-8 md:p-10 rounded-[2rem] md:rounded-[2.5rem] shadow-xl hover:shadow-2xl transition-all duration-500 sm:col-span-2 lg:col-span-3 flex flex-col md:flex-row items-center gap-6 md:gap-10 relative overflow-hidden" data-aos="zoom-in" data-aos-duration="1000" data-aos-delay="200">
-          <div class="absolute right-[-20%] md:right-[-10%] top-[-20%] w-64 h-64 md:w-96 md:h-96 bg-[var(--color-success)] opacity-20 blur-[60px] md:blur-[80px] rounded-full group-hover:opacity-30 transition-opacity duration-700"></div>
-          <div class="w-16 h-16 md:w-20 md:h-20 shrink-0 rounded-2xl md:rounded-3xl bg-white/10 border border-white/20 flex items-center justify-center text-[var(--color-mint)] backdrop-blur-md group-hover:scale-110 transition-transform duration-500">
-            <mat-icon class="text-3xl md:text-4xl">self_improvement</mat-icon>
-          </div>
-          <div class="flex-grow z-10 text-center md:text-left">
-            <h3 class="text-2xl md:text-3xl font-bold text-[var(--color-mint)] mb-2 md:mb-3">{{ t('landing.grounding_tools') }}</h3>
-            <p class="text-sm md:text-lg text-gray-300 max-w-2xl font-medium">{{ t('landing.grounding_tools_desc') }}</p>
-          </div>
-          <button class="w-full md:w-auto z-10 shrink-0 px-6 py-3.5 md:px-8 md:py-4 rounded-2xl bg-[var(--color-mint)] text-[var(--color-primary)] font-bold text-base md:text-lg hover:bg-white hover:shadow-[0_0_20px_rgba(var(--color-mint-rgb),0.4)] transition-all duration-300 transform hover:-translate-y-1 mt-2 md:mt-0">
-            {{ t('landing.try_now') }}
+        <div class="text-center mt-10" data-aos="fade-up" data-aos-delay="350">
+          <button
+            (click)="navigateTo('registration')"
+            class="inline-flex items-center gap-1.5 text-[var(--color-primary)] font-semibold text-sm hover:text-[var(--color-success)] transition-colors group"
+          >
+            {{ t('landing.start_now') }}
+            <mat-icon class="text-base group-hover:translate-x-1 transition-transform">arrow_forward</mat-icon>
           </button>
         </div>
       </div>
     </section>
 
-    <section class="py-12 md:py-20 px-4 sm:px-6 relative z-10">
-      <div data-aos="zoom-out-up" data-aos-duration="1200" class="max-w-5xl mx-auto bg-gradient-to-br from-[var(--color-primary)] via-[#002a00] to-[var(--color-primary)] rounded-[2rem] md:rounded-[3rem] p-8 sm:p-12 md:p-20 text-center relative overflow-hidden shadow-[0_20px_50px_-15px_rgba(0,0,0,0.3)]">
-        <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjIiIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSIvPjwvc3ZnPg==')] opacity-30"></div>
-        <div class="absolute -top-20 -right-20 md:-top-32 md:-right-32 w-[20rem] md:w-[30rem] h-[20rem] md:h-[30rem] bg-[var(--color-success)] opacity-20 blur-[80px] md:blur-[100px] rounded-full animate-pulse"></div>
-        <div class="absolute -bottom-20 -left-20 md:-bottom-32 md:-left-32 w-[20rem] md:w-[30rem] h-[20rem] md:h-[30rem] bg-[var(--color-mint)] opacity-10 blur-[80px] md:blur-[100px] rounded-full"></div>
-        
-        <div class="relative z-10">
-          <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-4 md:mb-6 tracking-tight leading-tight">{{ t('landing.dont_keep_pain') }}</h2>
-          <p class="text-[var(--color-mint)]/90 text-base sm:text-lg md:text-xl max-w-2xl mx-auto mb-8 md:mb-10 font-medium px-2">{{ t('landing.cta_description') }}</p>
-          <div class="flex justify-center" data-aos="fade-up" data-aos-delay="400">
-            <button (click)="navigateTo('registration')" class="w-full sm:w-auto group flex items-center justify-center gap-2 md:gap-3 px-6 py-4 md:px-10 md:py-5 rounded-2xl bg-[var(--color-mint)] text-[var(--color-primary)] font-bold text-lg md:text-xl hover:bg-white transition-all duration-300 transform hover:-translate-y-1 shadow-[0_10px_30px_rgba(var(--color-mint-rgb),0.3)] hover:shadow-[0_15px_40px_rgba(255,255,255,0.4)]">
-              <mat-icon class="group-hover:scale-110 transition-transform text-[24px]">volunteer_activism</mat-icon>
+    <!-- ===== WHO WE HELP ===== -->
+    <section id="who-we-help" class="relative z-10 py-24 sm:py-32 px-4 sm:px-6 bg-[var(--color-primary)]/[0.025]">
+      <div class="max-w-6xl mx-auto">
+
+        <div class="text-center mb-16" data-aos="fade-down">
+          <span class="inline-block text-[11px] font-bold uppercase tracking-[0.2em] text-[var(--color-success)] mb-3">{{ t('landing.for_everyone_tag') }}</span>
+          <h2 class="text-4xl sm:text-5xl font-extrabold text-[var(--color-primary)] mb-4 tracking-tight">{{ t('landing.for_everyone_title') }}</h2>
+          <p class="text-gray-500 text-lg max-w-lg mx-auto">{{ t('landing.for_everyone_subtitle') }}</p>
+        </div>
+
+        <div class="grid sm:grid-cols-2 gap-4">
+
+          <article class="group bg-gradient-to-br from-[var(--color-mint)]/5 to-[var(--color-mint)]/8 border border-[var(--color-mint)]/35 rounded-2xl p-7 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300" data-aos="fade-up" data-aos-delay="100">
+            <div class="w-11 h-11 rounded-xl bg-[var(--color-primary)] flex items-center justify-center mb-5">
+              <mat-icon class="text-white text-xl">military_tech</mat-icon>
+            </div>
+            <h3 class="text-lg font-bold text-[var(--color-primary)] mb-2">{{ t('landing.audience_veterans_title') }}</h3>
+            <p class="text-gray-600 text-sm leading-relaxed">{{ t('landing.audience_veterans_desc') }}</p>
+          </article>
+
+          <article class="group bg-gradient-to-br from-[var(--color-sky)]/8 to-[var(--color-blue)]/4 border border-[var(--color-sky)]/30 rounded-2xl p-7 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300" data-aos="fade-up" data-aos-delay="200">
+            <div class="w-11 h-11 rounded-xl bg-[var(--color-blue)] flex items-center justify-center mb-5">
+              <mat-icon class="text-white text-xl">people</mat-icon>
+            </div>
+            <h3 class="text-lg font-bold text-[var(--color-primary)] mb-2">{{ t('landing.audience_idp_title') }}</h3>
+            <p class="text-gray-600 text-sm leading-relaxed">{{ t('landing.audience_idp_desc') }}</p>
+          </article>
+
+          <article class="group bg-gradient-to-br from-amber-50 to-orange-50/60 border border-amber-200/60 rounded-2xl p-7 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300" data-aos="fade-up" data-aos-delay="300">
+            <div class="w-11 h-11 rounded-xl bg-amber-500 flex items-center justify-center mb-5">
+              <mat-icon class="text-white text-xl">work_off</mat-icon>
+            </div>
+            <h3 class="text-lg font-bold text-[var(--color-primary)] mb-2">{{ t('landing.audience_burnout_title') }}</h3>
+            <p class="text-gray-600 text-sm leading-relaxed">{{ t('landing.audience_burnout_desc') }}</p>
+          </article>
+
+          <article class="group bg-gradient-to-br from-rose-50 to-pink-50/60 border border-rose-200/60 rounded-2xl p-7 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300" data-aos="fade-up" data-aos-delay="400">
+            <div class="w-11 h-11 rounded-xl bg-rose-500 flex items-center justify-center mb-5">
+              <mat-icon class="text-white text-xl">favorite</mat-icon>
+            </div>
+            <h3 class="text-lg font-bold text-[var(--color-primary)] mb-2">{{ t('landing.audience_crisis_title') }}</h3>
+            <p class="text-gray-600 text-sm leading-relaxed">{{ t('landing.audience_crisis_desc') }}</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SERVICES ===== -->
+    <section id="services" class="relative z-10 py-24 sm:py-32 px-4 sm:px-6">
+      <div class="max-w-6xl mx-auto">
+
+        <div class="text-center mb-16" data-aos="fade-down">
+          <span class="inline-block text-[11px] font-bold uppercase tracking-[0.2em] text-[var(--color-success)] mb-3">{{ t('landing.services_tag') }}</span>
+          <h2 class="text-4xl sm:text-5xl font-extrabold text-[var(--color-primary)] mb-4 tracking-tight">{{ t('landing.how_we_help') }}</h2>
+          <p class="text-gray-500 text-lg max-w-lg mx-auto">{{ t('landing.services_subtitle') }}</p>
+        </div>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+
+          <article class="group bg-white border border-gray-100 rounded-2xl p-7 hover:shadow-xl hover:-translate-y-1 transition-all duration-400" data-aos="fade-up" data-aos-delay="100">
+            <div class="w-12 h-12 rounded-xl bg-[var(--color-sky)]/12 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+              <mat-icon class="text-[var(--color-blue)] text-2xl">videocam</mat-icon>
+            </div>
+            <h3 class="text-lg font-bold text-[var(--color-primary)] mb-2">{{ t('landing.video_calls') }}</h3>
+            <p class="text-gray-500 text-sm leading-relaxed">{{ t('landing.video_calls_desc') }}</p>
+          </article>
+
+          <article class="group bg-white border border-gray-100 rounded-2xl p-7 hover:shadow-xl hover:-translate-y-1 transition-all duration-400" data-aos="fade-up" data-aos-delay="200">
+            <div class="w-12 h-12 rounded-xl bg-[var(--color-mint)]/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+              <mat-icon class="text-[var(--color-success)] text-2xl">smart_toy</mat-icon>
+            </div>
+            <h3 class="text-lg font-bold text-[var(--color-primary)] mb-2">{{ t('landing.ai_companion') }}</h3>
+            <p class="text-gray-500 text-sm leading-relaxed">{{ t('landing.ai_companion_desc') }}</p>
+          </article>
+
+          <article class="group bg-white border border-gray-100 rounded-2xl p-7 hover:shadow-xl hover:-translate-y-1 transition-all duration-400 sm:col-span-2 lg:col-span-1" data-aos="fade-up" data-aos-delay="300">
+            <div class="w-12 h-12 rounded-xl bg-gray-100 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+              <mat-icon class="text-gray-500 text-2xl">forum</mat-icon>
+            </div>
+            <h3 class="text-lg font-bold text-[var(--color-primary)] mb-2">{{ t('landing.anonymous_chat') }}</h3>
+            <p class="text-gray-500 text-sm leading-relaxed">{{ t('landing.anonymous_chat_desc') }}</p>
+          </article>
+
+          <!-- Grounding Tools — featured wide card -->
+          <article class="group bg-gradient-to-br from-[var(--color-primary)] to-[#013a01] rounded-2xl p-8 hover:shadow-2xl hover:-translate-y-0.5 transition-all duration-400 sm:col-span-2 lg:col-span-3 flex flex-col md:flex-row items-start md:items-center gap-7 relative overflow-hidden" data-aos="zoom-in" data-aos-delay="350">
+            <div class="absolute -right-8 -top-8 w-56 h-56 bg-[var(--color-success)]/18 blur-3xl rounded-full pointer-events-none"></div>
+            <div class="w-14 h-14 rounded-2xl bg-white/10 border border-white/15 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform duration-300">
+              <mat-icon class="text-[var(--color-mint)] text-3xl">self_improvement</mat-icon>
+            </div>
+            <div class="flex-1 z-10">
+              <h3 class="text-2xl font-bold text-[var(--color-mint)] mb-2">{{ t('landing.grounding_tools') }}</h3>
+              <p class="text-gray-300 text-sm sm:text-base max-w-2xl leading-relaxed">{{ t('landing.grounding_tools_desc') }}</p>
+            </div>
+            <button class="z-10 shrink-0 px-6 py-3 rounded-xl bg-[var(--color-mint)] text-[var(--color-primary)] font-bold text-sm hover:bg-white transition-all duration-300 mt-2 md:mt-0 whitespace-nowrap">
+              {{ t('landing.try_now') }}
+            </button>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== FOR PSYCHOLOGISTS ===== -->
+    <section id="for-psychologists" class="relative z-10 py-24 sm:py-32 px-4 sm:px-6 bg-[var(--color-primary)]/[0.025]">
+      <div class="max-w-6xl mx-auto">
+        <div class="bg-gradient-to-br from-[var(--color-primary)]/4 to-[var(--color-mint)]/8 border border-[var(--color-mint)]/30 rounded-3xl p-10 sm:p-14 grid md:grid-cols-2 gap-12 items-center">
+
+          <!-- Left: Text + Benefits -->
+          <div data-aos="fade-right">
+            <span class="inline-block text-[11px] font-bold uppercase tracking-[0.2em] text-[var(--color-success)] mb-4">{{ t('landing.for_psychologists_tag') }}</span>
+            <h2 class="text-3xl sm:text-4xl font-extrabold text-[var(--color-primary)] mb-4 leading-tight tracking-tight">
+              {{ t('landing.for_psychologists_title') }}
+            </h2>
+            <p class="text-gray-600 mb-8 leading-relaxed text-base">
+              {{ t('landing.for_psychologists_desc') }}
+            </p>
+
+            <ul class="space-y-3 mb-9">
+              <li class="flex items-start gap-3">
+                <div class="w-5 h-5 rounded-full bg-[var(--color-success)] flex items-center justify-center shrink-0 mt-0.5">
+                  <mat-icon class="text-white !text-[12px]">check</mat-icon>
+                </div>
+                <span class="text-gray-700 text-sm leading-relaxed">{{ t('landing.benefit1') }}</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <div class="w-5 h-5 rounded-full bg-[var(--color-success)] flex items-center justify-center shrink-0 mt-0.5">
+                  <mat-icon class="text-white !text-[12px]">check</mat-icon>
+                </div>
+                <span class="text-gray-700 text-sm leading-relaxed">{{ t('landing.benefit2') }}</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <div class="w-5 h-5 rounded-full bg-[var(--color-success)] flex items-center justify-center shrink-0 mt-0.5">
+                  <mat-icon class="text-white !text-[12px]">check</mat-icon>
+                </div>
+                <span class="text-gray-700 text-sm leading-relaxed">{{ t('landing.benefit3') }}</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <div class="w-5 h-5 rounded-full bg-[var(--color-success)] flex items-center justify-center shrink-0 mt-0.5">
+                  <mat-icon class="text-white !text-[12px]">check</mat-icon>
+                </div>
+                <span class="text-gray-700 text-sm leading-relaxed">{{ t('landing.benefit4') }}</span>
+              </li>
+            </ul>
+
+            <button
+              (click)="navigateTo('/register', { returnUrl: '/psychologist-registration' })"
+              class="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-[var(--color-primary)] text-[var(--color-mint)] font-bold text-sm hover:bg-[#012900] transition-all duration-300 shadow-sm hover:shadow-lg hover:-translate-y-0.5"
+            >
+              <mat-icon>psychology_alt</mat-icon>
+              {{ t('landing.join_as_psychologist') }}
+            </button>
+          </div>
+
+          <!-- Right: Stats Grid -->
+          <div class="grid grid-cols-2 gap-4" data-aos="fade-left" data-aos-delay="200">
+            <div class="bg-white rounded-2xl p-7 text-center shadow-sm border border-gray-50/80">
+              <div class="text-4xl font-black text-[var(--color-primary)] mb-1 tabular-nums">120+</div>
+              <div class="text-[11px] font-semibold text-gray-400 uppercase tracking-wider">{{ t('landing.psychologists') }}</div>
+            </div>
+            <div class="bg-white rounded-2xl p-7 text-center shadow-sm border border-gray-50/80">
+              <div class="text-4xl font-black text-[var(--color-primary)] mb-1 tabular-nums">30+</div>
+              <div class="text-[11px] font-semibold text-gray-400 uppercase tracking-wider">{{ t('landing.stat_specializations') }}</div>
+            </div>
+            <div class="bg-white rounded-2xl p-7 text-center shadow-sm border border-gray-50/80">
+              <div class="text-4xl font-black text-[var(--color-primary)] mb-1 tabular-nums">5k+</div>
+              <div class="text-[11px] font-semibold text-gray-400 uppercase tracking-wider">{{ t('landing.stat_sessions') }}</div>
+            </div>
+            <div class="bg-[var(--color-primary)] rounded-2xl p-7 text-center">
+              <div class="text-4xl font-black text-[var(--color-mint)] mb-1 tabular-nums">98%</div>
+              <div class="text-[11px] font-semibold text-[var(--color-mint)]/60 uppercase tracking-wider">{{ t('landing.satisfied') }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CTA BANNER ===== -->
+    <section class="relative z-10 py-16 sm:py-24 px-4 sm:px-6" data-aos="zoom-out-up" data-aos-duration="700">
+      <div class="max-w-5xl mx-auto">
+        <div class="relative bg-gradient-to-br from-[var(--color-primary)] via-[#012901] to-[#001f00] rounded-3xl p-10 sm:p-16 text-center overflow-hidden">
+
+          <!-- Dot grid texture -->
+          <div class="absolute inset-0 opacity-[0.04]" style="background-image: radial-gradient(circle, white 1px, transparent 1px); background-size: 22px 22px;" aria-hidden="true"></div>
+
+          <!-- Glows -->
+          <div class="absolute -top-16 -right-16 w-72 h-72 bg-[var(--color-success)]/22 blur-[80px] rounded-full pointer-events-none" aria-hidden="true"></div>
+          <div class="absolute -bottom-16 -left-16 w-72 h-72 bg-[var(--color-mint)]/12 blur-[80px] rounded-full pointer-events-none" aria-hidden="true"></div>
+
+          <div class="relative z-10">
+            <h2 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white mb-5 leading-tight tracking-tight">
+              {{ t('landing.dont_keep_pain') }}
+            </h2>
+            <p class="text-[var(--color-mint)]/75 text-lg sm:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
+              {{ t('landing.cta_description') }}
+            </p>
+            <button
+              (click)="navigateTo('registration')"
+              class="group inline-flex items-center justify-center gap-2.5 px-10 py-5 rounded-2xl bg-[var(--color-mint)] text-[var(--color-primary)] font-bold text-lg hover:bg-white transition-all duration-300 shadow-2xl shadow-black/20 hover:-translate-y-1"
+            >
+              <mat-icon class="text-2xl group-hover:scale-110 transition-transform">volunteer_activism</mat-icon>
               {{ t('landing.start_now') }}
             </button>
           </div>
@@ -176,16 +420,61 @@
       </div>
     </section>
 
-    <footer class="py-8 md:py-12 px-4 sm:px-6 border-t border-gray-200/50 bg-white/30 backdrop-blur-sm relative z-10">
-      <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-center sm:justify-between items-center gap-4 md:gap-6 text-center sm:text-left">
-        <div class="flex items-center gap-3" data-aos="fade-right">
-          <div class="w-10 h-10 rounded-xl bg-[var(--color-primary)]/5 flex items-center justify-center">
-            <mat-icon class="text-[var(--color-success)]">psychology</mat-icon>
+    <!-- ===== FOOTER ===== -->
+    <footer class="relative z-10 border-t border-gray-200/60 bg-white/55 backdrop-blur-sm py-14 px-4 sm:px-6">
+      <div class="max-w-6xl mx-auto">
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+
+          <!-- Brand -->
+          <div class="sm:col-span-2 lg:col-span-1">
+            <div class="flex items-center gap-2.5 mb-4">
+              <div class="w-9 h-9 rounded-xl bg-[var(--color-primary)]/8 flex items-center justify-center">
+                <mat-icon class="text-[var(--color-success)] text-lg">psychology</mat-icon>
+              </div>
+              <span class="font-extrabold text-xl text-[var(--color-primary)] tracking-tight">Help Hub</span>
+            </div>
+            <p class="text-sm text-gray-500 leading-relaxed max-w-[220px]">{{ t('landing.footer_tagline') }}</p>
           </div>
-          <span class="font-extrabold text-lg md:text-xl text-[var(--color-primary)] tracking-tight">Help Hub</span>
+
+          <!-- Platform -->
+          <div>
+            <h4 class="text-[11px] font-bold uppercase tracking-[0.18em] text-gray-400 mb-5">{{ t('landing.footer_platform') }}</h4>
+            <ul class="space-y-3">
+              <li><button (click)="navigateTo('registration')" class="text-sm text-gray-600 hover:text-[var(--color-primary)] transition-colors font-medium">{{ t('landing.get_help') }}</button></li>
+              <li><button class="text-sm text-gray-600 hover:text-[var(--color-primary)] transition-colors font-medium">{{ t('landing.footer_find_psychologist') }}</button></li>
+              <li><button class="text-sm text-gray-600 hover:text-[var(--color-primary)] transition-colors font-medium">{{ t('landing.footer_ai') }}</button></li>
+              <li><button class="text-sm text-gray-600 hover:text-[var(--color-primary)] transition-colors font-medium">{{ t('landing.footer_grounding') }}</button></li>
+            </ul>
+          </div>
+
+          <!-- For psychologists -->
+          <div>
+            <h4 class="text-[11px] font-bold uppercase tracking-[0.18em] text-gray-400 mb-5">{{ t('landing.for_psychologists_tag') }}</h4>
+            <ul class="space-y-3">
+              <li><button (click)="navigateTo('/register', { returnUrl: '/psychologist-registration' })" class="text-sm text-gray-600 hover:text-[var(--color-primary)] transition-colors font-medium">{{ t('landing.footer_join') }}</button></li>
+              <li><button class="text-sm text-gray-600 hover:text-[var(--color-primary)] transition-colors font-medium">{{ t('landing.footer_terms_work') }}</button></li>
+              <li><button class="text-sm text-gray-600 hover:text-[var(--color-primary)] transition-colors font-medium">{{ t('landing.footer_faq') }}</button></li>
+            </ul>
+          </div>
+
+          <!-- Company -->
+          <div>
+            <h4 class="text-[11px] font-bold uppercase tracking-[0.18em] text-gray-400 mb-5">{{ t('landing.footer_company') }}</h4>
+            <ul class="space-y-3">
+              <li><button class="text-sm text-gray-600 hover:text-[var(--color-primary)] transition-colors font-medium">{{ t('landing.footer_about') }}</button></li>
+              <li><button class="text-sm text-gray-600 hover:text-[var(--color-primary)] transition-colors font-medium">{{ t('landing.footer_privacy') }}</button></li>
+              <li><button class="text-sm text-gray-600 hover:text-[var(--color-primary)] transition-colors font-medium">{{ t('landing.footer_terms') }}</button></li>
+              <li><button class="text-sm text-gray-600 hover:text-[var(--color-primary)] transition-colors font-medium">{{ t('landing.footer_contacts') }}</button></li>
+            </ul>
+          </div>
         </div>
-        <div class="text-xs md:text-sm font-medium text-gray-500" data-aos="fade-left">© 2026 Help Hub. All rights reserved.</div>
+
+        <div class="border-t border-gray-100 pt-7 flex flex-col sm:flex-row justify-between items-center gap-3">
+          <p class="text-xs text-gray-400">{{ t('landing.copyright') }}</p>
+          <p class="text-xs text-gray-400">{{ t('landing.made_in_ukraine') }} 🇺🇦</p>
+        </div>
       </div>
     </footer>
+
   </div>
 </ng-container>

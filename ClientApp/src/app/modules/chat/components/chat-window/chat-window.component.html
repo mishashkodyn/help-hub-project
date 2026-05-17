@@ -1,176 +1,251 @@
 <ng-container *transloco="let t">
+
   @if (chatService.currentOpenedChat()) {
-    <div
-      class="flex flex-col h-full w-full bg-[#f8fafc] relative overscroll-none"
-    >
-      <div
-        class="shrink-0 flex justify-between items-center bg-white/80 backdrop-blur-xl border-b border-gray-100/50 w-full px-4 py-3 z-20 shadow-[0_2px_10px_-3px_rgba(0,0,0,0.05)]"
-      >
-        <div class="flex items-center gap-3.5">
+    <div class="flex flex-col h-full w-full bg-[#f8fafc]">
+
+      <!-- ── Header ── -->
+      <div class="shrink-0 flex items-center justify-between bg-white/90 backdrop-blur-xl border-b border-gray-100/70 px-3 md:px-5 py-3 z-20 shadow-[0_1px_8px_-3px_rgba(0,0,0,0.06)]">
+
+        <div class="flex items-center gap-2.5 min-w-0">
+          <!-- Back (mobile) -->
           <button
             (click)="closeChatWindow()"
-            class="md:hidden w-7 h-7 md:w-9 md:h-9 flex items-center justify-center -ml-1.5 rounded-full hover:bg-gray-100 active:bg-gray-200 transition-colors text-gray-600"
+            class="md:hidden -ml-1 w-8 h-8 flex items-center justify-center rounded-xl hover:bg-gray-100 text-gray-500 transition-colors shrink-0"
           >
-            <mat-icon class="scale-90 md:scale-110">arrow_back</mat-icon>
+            <mat-icon>arrow_back</mat-icon>
           </button>
 
+          <!-- Avatar + online -->
           <div
+            class="relative cursor-pointer shrink-0"
             (click)="openRightSideBar()"
-            class="relative w-8 h-8 md:w-11 md:h-11 rounded-full cursor-pointer bg-gray-100 shadow-sm ring-2 ring-transparent group-hover:ring-white transition-all shrink-0"
           >
-            <img
-              [src]="chatService.currentOpenedChat()?.profileImage"
-              alt="IMG"
-              class="w-full h-full object-cover rounded-full"
-            />
-
+            <div class="w-9 h-9 md:w-10 md:h-10 rounded-full overflow-hidden bg-gray-100 ring-2 ring-[var(--color-mint)]/50 hover:ring-[var(--color-mint)] transition-all shadow-sm">
+              <img
+                [src]="chatService.currentOpenedChat()?.profileImage"
+                alt="Avatar"
+                class="w-full h-full object-cover"
+              />
+            </div>
             @if (chatService.currentOpenedChat()?.isOnline) {
-              <span
-                class="absolute bottom-0 right-0 w-3 h-3 md:w-3.5 md:h-3.5 bg-green-500 border-2 border-white rounded-full shadow-sm"
-              ></span>
+              <span class="absolute bottom-0 right-0 w-2.5 h-2.5 md:w-3 md:h-3 bg-green-400 border-2 border-white rounded-full shadow-sm"></span>
             }
           </div>
 
-          <div
-            class="flex flex-col cursor-pointer"
-            (click)="openRightSideBar()"
-          >
-            <h3
-              class="font-bold text-gray-900 leading-tight text-[12px] md:text-[16px]"
-            >
-              {{
-                chatService.currentOpenedChat()!.name +
-                  " " +
-                  chatService.currentOpenedChat()!.surname | titlecase
-              }}
+          <!-- Name + status -->
+          <div class="flex flex-col cursor-pointer min-w-0" (click)="openRightSideBar()">
+            <h3 class="font-bold text-[var(--color-primary)] text-sm md:text-[15px] leading-tight truncate">
+              {{ chatService.currentOpenedChat()!.name + ' ' + chatService.currentOpenedChat()!.surname | titlecase }}
             </h3>
+            <span
+              class="text-[11px] font-medium leading-none mt-0.5"
+              [ngClass]="chatService.currentOpenedChat()?.isOnline ? 'text-green-500' : 'text-gray-400'"
+            >
+              {{ chatService.currentOpenedChat()?.isOnline ? t('chat.online') : t('chat.offline') }}
+            </span>
           </div>
         </div>
 
-        <div class="flex items-center gap-1.5">
+        <!-- Actions -->
+        <div class="flex items-center gap-0.5 shrink-0">
+          <!-- Future: audio call -->
           <button
-            (click)="displayDialog(chatService.currentOpenedChat()!.id)"
-            class="w-7 h-7 md:w-10 md:h-10 flex items-center justify-center rounded-full text-gray-500 hover:text-primary hover:bg-primary/10 transition-all duration-200 cursor-pointer"
+            class="w-8 h-8 md:w-9 md:h-9 flex items-center justify-center rounded-xl text-gray-400 hover:text-[var(--color-primary)] hover:bg-[var(--color-mint)]/20 transition-all"
+            title="Audio call (coming soon)"
           >
-            <mat-icon class="scale-90 md:scale-110">video_call</mat-icon>
+            <mat-icon class="text-xl">call</mat-icon>
           </button>
 
+          <!-- Video call (existing) -->
           <button
-            class="w-7 h-7 md:w-10 md:h-10 flex items-center justify-center rounded-full text-gray-500 hover:text-gray-700 hover:bg-gray-100 transition-all duration-200 cursor-pointer"
+            (click)="displayDialog(chatService.currentOpenedChat()!.id)"
+            class="w-8 h-8 md:w-9 md:h-9 flex items-center justify-center rounded-xl text-gray-400 hover:text-[var(--color-primary)] hover:bg-[var(--color-mint)]/20 transition-all"
+            title="Video call"
           >
-            <mat-icon class="scale-90 md:scale-110">more_vert</mat-icon>
+            <mat-icon class="text-xl">video_call</mat-icon>
+          </button>
+
+          <!-- Future: search in chat -->
+          <button
+            class="hidden md:flex w-9 h-9 items-center justify-center rounded-xl text-gray-400 hover:text-[var(--color-primary)] hover:bg-[var(--color-mint)]/20 transition-all"
+            title="Search in chat (coming soon)"
+          >
+            <mat-icon class="text-xl">search</mat-icon>
+          </button>
+
+          <!-- More / right sidebar -->
+          <button
+            (click)="openRightSideBar()"
+            class="w-8 h-8 md:w-9 md:h-9 flex items-center justify-center rounded-xl text-gray-400 hover:text-[var(--color-primary)] hover:bg-[var(--color-mint)]/20 transition-all"
+          >
+            <mat-icon class="text-xl">more_vert</mat-icon>
           </button>
         </div>
       </div>
 
-      <div class="flex-1 min-h-0 w-full relative overflow-hidden bg-slate-50">
-        <app-chat-box class="h-full block relative z-10" (viewMedia)="openMedia($event.url, $event.type)"/>
+      <!-- ── Messages ── -->
+      <div class="flex-1 min-h-0 w-full relative overflow-hidden">
+        <app-chat-box class="h-full block" (viewMedia)="openMedia($event.url, $event.type)" />
       </div>
 
-      <div
-        class="shrink-0 w-full bg-white px-4 py-3 md:px-6 md:py-4 z-20 shadow-[0_-4px_20px_-5px_rgba(0,0,0,0.03)] relative"
-      >
-        <div class="flex items-end max-w-5xl mx-auto gap-3">
-          <div
-            class="relative flex-grow flex flex-col bg-gray-50/80 border border-gray-200/80 rounded-[24px] transition-all duration-300 focus-within:border-primary/40 focus-within:ring-4 focus-within:ring-primary/5 focus-within:bg-white focus-within:shadow-[0_2px_15px_-3px_rgba(6,81,237,0.08)] overflow-hidden"
-          >
+      <!-- ── Input area ── -->
+      <div class="shrink-0 w-full bg-white/95 backdrop-blur-sm border-t border-gray-100 px-3 py-2.5 md:px-5 md:py-3 z-20">
+        <div class="flex items-end gap-2 max-w-5xl mx-auto">
+
+          <!-- Input box -->
+          <div class="relative flex-1 flex flex-col bg-gray-50 border border-gray-200 rounded-2xl transition-all duration-200 focus-within:border-[var(--color-primary)]/25 focus-within:ring-2 focus-within:ring-[var(--color-primary)]/5 focus-within:bg-white overflow-hidden">
+
+            <!-- Reply preview -->
             @if (chatService.replyMessage()) {
-              <div
-                class="mx-2 mt-2 bg-gray-100/60 rounded-xl p-2.5 flex justify-between items-center border border-gray-100"
-              >
-                <div class="flex gap-3 items-center overflow-hidden pl-1">
-                  <div class="w-1 h-8 bg-primary rounded-full shrink-0"></div>
-                  <div class="flex flex-col min-w-0">
-                    <span
-                      class="block text-[11px] font-bold text-primary uppercase tracking-wider mb-0.5"
-                    >
-                      Reply to
-                      {{ chatService.replyMessage()?.senderName || "message" }}
+              <div class="mx-2.5 mt-2.5 bg-[var(--color-primary)]/5 border border-[var(--color-primary)]/10 rounded-xl p-2.5 flex items-center justify-between gap-2">
+                <div class="flex items-center gap-2.5 overflow-hidden min-w-0">
+                  <div class="w-0.5 h-8 bg-[var(--color-primary)] rounded-full shrink-0"></div>
+                  <div class="min-w-0">
+                    <span class="block text-[11px] font-bold text-[var(--color-primary)] uppercase tracking-wider mb-0.5">
+                      {{ chatService.replyMessage()?.senderName || 'Message' }}
                     </span>
-                    <span
-                      class="block text-[13px] text-gray-600 truncate opacity-90"
-                    >
+                    <span class="block text-[12px] text-gray-500 truncate">
                       {{ chatService.replyMessage()?.content }}
                     </span>
                   </div>
                 </div>
                 <button
                   (click)="chatService.replyMessage.set(null)"
-                  class="w-7 h-7 flex items-center justify-center rounded-full bg-white/50 hover:bg-white text-gray-400 hover:text-gray-600 transition-colors shrink-0"
+                  class="w-6 h-6 flex items-center justify-center rounded-lg hover:bg-gray-200 text-gray-400 hover:text-gray-600 transition-colors shrink-0"
                 >
-                  <mat-icon class="text-[16px] w-[16px] h-[16px] leading-none"
-                    >close</mat-icon
-                  >
+                  <mat-icon class="!text-base !w-4 !h-4">close</mat-icon>
                 </button>
               </div>
             }
 
+            <!-- File previews -->
             @if (selectedFiles.length > 0) {
-              <div
-                class="flex gap-2.5 px-3 pt-3 pb-1 overflow-x-auto custom-scroll"
-              >
+              <div class="flex gap-2 px-3 pt-2.5 pb-1 overflow-x-auto custom-scroll">
                 @for (file of selectedFiles; track file; let i = $index) {
-                  <div
-                    class="relative group shrink-0 w-16 h-16 rounded-xl border border-gray-200 bg-white shadow-sm overflow-hidden"
-                  >
+                  <div class="relative group shrink-0 w-14 h-14 rounded-xl border border-gray-200 bg-white overflow-hidden shadow-sm">
                     @if (isImage(file.file)) {
                       <img
                         [src]="file.preview"
-                        class="w-full h-full object-cover transition-transform group-hover:scale-110"
+                        class="w-full h-full object-cover group-hover:scale-105 transition-transform"
                         alt="preview"
                       />
                     } @else {
-                      <div
-                        class="w-full h-full flex items-center justify-center bg-gray-50"
-                      >
-                        <mat-icon
-                          class="text-gray-400"
-                          [ngClass]="getFileIconColor(file.file)"
-                          >{{ getFileIcon(file.file) }}</mat-icon
-                        >
+                      <div class="w-full h-full flex items-center justify-center bg-gray-50">
+                        <mat-icon class="text-2xl" [ngClass]="getFileIconColor(file.file)">{{ getFileIcon(file.file) }}</mat-icon>
                       </div>
                     }
-
-                    <div
+                    <button
                       (click)="removeFile(i)"
-                      class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-all cursor-pointer text-white backdrop-blur-[1px]"
+                      class="absolute inset-0 bg-black/45 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-all text-white"
                     >
-                      <mat-icon class="scale-75">delete_outline</mat-icon>
-                    </div>
+                      <mat-icon class="text-lg">close</mat-icon>
+                    </button>
                   </div>
                 }
               </div>
             }
 
-            <div class="flex items-center w-full md:pl-5 pr-2 md:py-1 px-2">
-              <input
-                type="text"
-                [(ngModel)]="message"
-                (input)="chatService.notifyTyping()"
-                (keydown.enter)="sendMessage()"
-                class="flex-grow bg-transparent border-none outline-none text-gray-900 py-2.5 placeholder:text-gray-400"
-                placeholder="Enter message..."
-              />
+            <!-- ── Recording state ── -->
+            @if (voiceState === 'recording') {
+              <div class="flex items-center gap-2.5 px-3 py-3">
 
-              <button
-                (click)="attachFile.click()"
-                class="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center text-gray-400 hover:text-primary hover:bg-primary/10 rounded-full transition-colors cursor-pointer"
-              >
-                <mat-icon class="scale-90 md:scale-110">attach_file</mat-icon>
-              </button>
-            </div>
+                <!-- Pulsing mic -->
+                <div class="relative shrink-0">
+                  <div class="w-8 h-8 rounded-full bg-red-500/10 flex items-center justify-center">
+                    <mat-icon class="!text-[18px] !w-[18px] !h-[18px] text-red-500">mic</mat-icon>
+                  </div>
+                  <span class="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse border-2 border-white"></span>
+                </div>
+
+                <!-- Animated waveform -->
+                <div class="flex items-end gap-[3px] h-5 flex-1">
+                  @for (bar of recBars; track $index) {
+                    <div
+                      class="voice-rec-bar w-[3px] rounded-full bg-red-400 flex-shrink-0"
+                      [style.height.px]="bar.h"
+                      [style.animation-delay]="bar.d + 'ms'"
+                    ></div>
+                  }
+                </div>
+
+                <!-- Timer -->
+                <span class="text-sm font-mono font-semibold text-red-500 tabular-nums shrink-0 min-w-[38px] text-right">
+                  {{ formatRecordingTime(recordingSeconds) }}
+                </span>
+
+                <!-- Cancel -->
+                <button
+                  (click)="cancelRecording()"
+                  class="w-8 h-8 flex items-center justify-center rounded-xl text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors shrink-0"
+                  title="Cancel"
+                >
+                  <mat-icon class="!text-[18px] !w-[18px] !h-[18px]">close</mat-icon>
+                </button>
+
+                <!-- Stop -->
+                <button
+                  (click)="stopRecording()"
+                  class="w-9 h-9 flex items-center justify-center rounded-full bg-red-500 hover:bg-red-600 text-white transition-all active:scale-95 shrink-0 shadow-sm shadow-red-400/40"
+                  title="Stop recording"
+                >
+                  <mat-icon class="!text-[18px] !w-[18px] !h-[18px]">stop</mat-icon>
+                </button>
+              </div>
+            }
+
+            <!-- ── Text + buttons row (idle only) ── -->
+            @if (voiceState === 'idle') {
+              <div class="flex items-center px-1 py-0.5">
+                <!-- Future: emoji -->
+                <button
+                  class="hidden md:flex w-9 h-9 items-center justify-center text-gray-400 hover:text-[var(--color-primary)] rounded-xl hover:bg-[var(--color-mint)]/15 transition-colors shrink-0"
+                  title="Emoji (coming soon)"
+                >
+                  <mat-icon class="!text-xl !w-5 !h-5">sentiment_satisfied_alt</mat-icon>
+                </button>
+
+                <input
+                  type="text"
+                  [(ngModel)]="message"
+                  (input)="chatService.notifyTyping()"
+                  (keydown.enter)="sendMessage()"
+                  class="flex-1 bg-transparent border-none outline-none text-gray-900 text-sm py-2.5 px-2 placeholder:text-gray-400"
+                  [placeholder]="t('chat.type_message')"
+                />
+
+                <!-- Attach file -->
+                <button
+                  (click)="attachFile.click()"
+                  class="w-9 h-9 flex items-center justify-center text-gray-400 hover:text-[var(--color-primary)] rounded-xl hover:bg-[var(--color-mint)]/15 transition-colors shrink-0"
+                  title="Attach file"
+                >
+                  <mat-icon class="!text-xl !w-5 !h-5">attach_file</mat-icon>
+                </button>
+
+                <!-- Voice message -->
+                <button
+                  (click)="startRecording()"
+                  class="w-9 h-9 flex items-center justify-center text-gray-400 hover:text-[var(--color-primary)] rounded-xl hover:bg-[var(--color-mint)]/15 transition-colors shrink-0"
+                  title="Voice message"
+                >
+                  <mat-icon class="!text-xl !w-5 !h-5">mic</mat-icon>
+                </button>
+              </div>
+            }
+
           </div>
 
-          <button
-            (click)="sendMessage()"
-            [disabled]="!message.trim() && selectedFiles.length === 0"
-            class="shrink-0 flex items-center justify-center w-[40px] h-[40px] md:w-[52px] md:h-[52px] rounded-[20px] bg-primary hover:bg-blue-600 disabled:bg-gray-200 disabled:text-gray-400 disabled:shadow-none disabled:cursor-not-allowed transition-all duration-300 shadow-lg shadow-primary/25 active:scale-95 text-white"
-          >
-            <mat-icon
-              class="scale-90 md:scale-110 leading-none transform translate-x-0.5"
-              >send</mat-icon
+          <!-- Send button -->
+          @if (voiceState !== 'recording') {
+            <button
+              (click)="handleSendButton()"
+              [disabled]="voiceState === 'idle' && !message.trim() && selectedFiles.length === 0"
+              class="shrink-0 flex items-center justify-center w-10 h-10 md:w-11 md:h-11 rounded-2xl bg-[var(--color-primary)] text-[var(--color-mint)] hover:bg-[#012900] disabled:bg-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed transition-all duration-200 shadow-md shadow-[var(--color-primary)]/12 active:scale-95"
             >
-          </button>
+              <mat-icon class="text-xl transform translate-x-0.5">send</mat-icon>
+            </button>
+          }
+
         </div>
       </div>
 
@@ -183,37 +258,22 @@
         accept="image/*,video/*,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.zip,.rar"
       />
     </div>
+
   } @else {
-    <div
-      class="relative flex flex-col items-center justify-center h-full p-4 bg-gray-50 overflow-hidden"
-    >
-      <div
-        class="absolute top-1/4 right-1/4 w-64 h-64 md:w-96 md:h-96 bg-mint rounded-full filter blur-3xl opacity-30 animate-blob pointer-events-none"
-      ></div>
-      <div
-        class="absolute bottom-1/4 left-1/4 w-64 h-64 md:w-96 md:h-96 bg-sky rounded-full filter blur-3xl opacity-30 animate-blob animation-delay-2000 pointer-events-none"
-      ></div>
 
-      <div class="relative z-10 flex flex-col items-center justify-center">
-        <div
-          class="w-64 h-64 mb-6 transition-transform hover:scale-105 duration-700 ease-in-out"
-        >
-          <img
-            src="chatopen.svg"
-            class="w-full h-full object-contain drop-shadow-md"
-          />
+    <!-- ── Empty state ── -->
+    <div class="relative flex flex-col items-center justify-center h-full bg-[#f8fafc] overflow-hidden">
+      <div class="pointer-events-none absolute top-1/4 right-1/3 w-72 h-72 bg-[var(--color-mint)]/18 rounded-full blur-[80px]"></div>
+      <div class="pointer-events-none absolute bottom-1/4 left-1/3 w-64 h-64 bg-[var(--color-sky)]/12 rounded-full blur-[80px]"></div>
+
+      <div class="relative z-10 flex flex-col items-center text-center px-8">
+        <div class="w-20 h-20 rounded-[28px] bg-white border border-gray-100 shadow-sm flex items-center justify-center mb-6">
+          <mat-icon class="text-[40px] text-[var(--color-mint)]">chat_bubble_outline</mat-icon>
         </div>
-
-        <h2 class="text-2xl font-bold text-gray-800 mb-3 tracking-tight">
-          {{ t('chat.choose_chat') }}
-        </h2>
-
-        <p
-          class="text-[15px] text-gray-500 text-center max-w-sm leading-relaxed"
-        >
-          {{ t('chat.select_contact') }}
-        </p>
+        <h2 class="text-xl font-bold text-[var(--color-primary)] mb-2 tracking-tight">{{ t('chat.choose_chat') }}</h2>
+        <p class="text-sm text-gray-500 max-w-[280px] leading-relaxed">{{ t('chat.select_contact') }}</p>
       </div>
     </div>
   }
+
 </ng-container>

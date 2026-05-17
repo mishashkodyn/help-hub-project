@@ -15,5 +15,7 @@ namespace Application.DTOs.Message
         public string? ReplyMessageSenderName { get; set; }
         public DateTime CreatedDate { get; set; }
         public List<MessageAttachment>? Attachments { get; set; }
+        public int MessageType { get; set; } = 0;
+        public int? CallDurationSeconds { get; set; }
     }
 }

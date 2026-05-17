@@ -1,0 +1,86 @@
+<ng-container *transloco="let t">
+  <div class="animate-fade-in pb-4">
+
+    <!-- Posts saved -->
+    <section class="mb-8">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-xl bg-[var(--color-mint)]/30 flex items-center justify-center">
+            <mat-icon class="!text-[16px] text-[var(--color-primary)]">article</mat-icon>
+          </div>
+          <h3 class="text-sm font-extrabold text-[var(--color-primary)] uppercase tracking-widest">
+            {{ t('profile.saved_posts') }}
+          </h3>
+        </div>
+        <span class="text-[11px] font-bold text-gray-400 uppercase tracking-widest">0</span>
+      </div>
+
+      <div class="bg-gradient-to-br from-gray-50 to-white border border-gray-100 rounded-2xl p-10 flex flex-col items-center text-center">
+        <div class="w-16 h-16 rounded-2xl bg-white border border-gray-100 shadow-sm flex items-center justify-center mb-4">
+          <mat-icon class="!text-[28px] text-gray-300">bookmark_border</mat-icon>
+        </div>
+        <p class="text-sm font-semibold text-gray-500 mb-1">{{ t('profile.saved_posts_empty') }}</p>
+        <p class="text-xs text-gray-400 max-w-xs">{{ t('profile.saved_posts_hint') }}</p>
+      </div>
+    </section>
+
+    <!-- Techniques saved -->
+    <section class="mb-8">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-xl bg-[var(--color-sky)]/20 flex items-center justify-center">
+            <mat-icon class="!text-[16px] text-[var(--color-blue)]">self_improvement</mat-icon>
+          </div>
+          <h3 class="text-sm font-extrabold text-[var(--color-primary)] uppercase tracking-widest">
+            {{ t('profile.saved_techniques') }}
+          </h3>
+        </div>
+        <span class="text-[11px] font-bold text-gray-400 uppercase tracking-widest">0</span>
+      </div>
+
+      <div class="bg-gradient-to-br from-[var(--color-sky)]/5 to-white border border-[var(--color-sky)]/15 rounded-2xl p-10 flex flex-col items-center text-center">
+        <div class="w-16 h-16 rounded-2xl bg-white border border-[var(--color-sky)]/20 shadow-sm flex items-center justify-center mb-4">
+          <mat-icon class="!text-[28px] text-[var(--color-sky)]">spa</mat-icon>
+        </div>
+        <p class="text-sm font-semibold text-gray-500 mb-1">{{ t('profile.saved_techniques_empty') }}</p>
+        <p class="text-xs text-gray-400 max-w-xs">{{ t('profile.saved_techniques_hint') }}</p>
+        <button
+          class="mt-4 inline-flex items-center gap-1.5 px-4 py-2 bg-[var(--color-primary)] text-[var(--color-mint)] rounded-xl text-xs font-bold hover:bg-[#012900] transition-all cursor-pointer shadow-sm hover:-translate-y-0.5"
+        >
+          <mat-icon class="!text-[14px]">explore</mat-icon>
+          {{ t('profile.explore_techniques') }}
+        </button>
+      </div>
+    </section>
+
+    <!-- Specialists saved -->
+    <section>
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-xl bg-[var(--color-success)]/15 flex items-center justify-center">
+            <mat-icon class="!text-[16px] text-[var(--color-success)]">psychology</mat-icon>
+          </div>
+          <h3 class="text-sm font-extrabold text-[var(--color-primary)] uppercase tracking-widest">
+            {{ t('profile.saved_specialists') }}
+          </h3>
+        </div>
+        <span class="text-[11px] font-bold text-gray-400 uppercase tracking-widest">0</span>
+      </div>
+
+      <div class="bg-gradient-to-br from-[var(--color-mint)]/10 to-white border border-[var(--color-mint)]/25 rounded-2xl p-10 flex flex-col items-center text-center">
+        <div class="w-16 h-16 rounded-2xl bg-white border border-[var(--color-mint)]/30 shadow-sm flex items-center justify-center mb-4">
+          <mat-icon class="!text-[28px] text-[var(--color-mint)]">person_search</mat-icon>
+        </div>
+        <p class="text-sm font-semibold text-gray-500 mb-1">{{ t('profile.saved_specialists_empty') }}</p>
+        <p class="text-xs text-gray-400 max-w-xs">{{ t('profile.saved_specialists_hint') }}</p>
+        <button
+          class="mt-4 inline-flex items-center gap-1.5 px-4 py-2 bg-[var(--color-primary)] text-[var(--color-mint)] rounded-xl text-xs font-bold hover:bg-[#012900] transition-all cursor-pointer shadow-sm hover:-translate-y-0.5"
+        >
+          <mat-icon class="!text-[14px]">search</mat-icon>
+          {{ t('profile.find_specialist') }}
+        </button>
+      </div>
+    </section>
+
+  </div>
+</ng-container>

@@ -22,7 +22,7 @@ export class PsychologistDashboardComponent {
     },
     {
       icon: 'videocam',
-      title: 'Upcoming Sessions',
+      title: 'Sessions',
       description:
         'View scheduled appointments and join video calls with clients.',
       buttonText: 'View Sessions',
@@ -59,7 +59,27 @@ export class PsychologistDashboardComponent {
       iconBgClass: 'bg-emerald-500/10',
       iconTextClass: 'text-emerald-600',
     },
+    {
+      icon: 'assignment',
+      title: 'Applications',
+      description:
+        'Review and approve pending requests from clients.',
+      buttonText: 'View Applications',
+      route: '/psychologist/applications',
+      iconBgClass: 'bg-[var(--color-sky)]/20',
+      iconTextClass: 'text-[var(--color-primary)]',
+    },
+    {
+      icon: 'history',
+      title: 'Past Sessions',
+      description:
+        'Review completed sessions and your private notes.',
+      buttonText: 'View Archive',
+      route: '/psychologist/past-sessions',
+      iconBgClass: 'bg-gray-200',
+      iconTextClass: 'text-gray-600',
+    },
   ]);
-  
+
   constructor(protected authService: AuthService) {}
 }

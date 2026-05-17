@@ -43,6 +43,7 @@ namespace API.Controllers
 
             var mappedUser = _mapper.Map<UserProfileDto>(user);
             mappedUser.Roles = roles;
+            mappedUser.PsychologistId = psychologist?.Id;
 
             return Ok(Response<UserProfileDto>.Success(mappedUser));
         }

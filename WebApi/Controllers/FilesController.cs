@@ -29,7 +29,8 @@ namespace API.Controllers
                     var url = await _blobService.UploadFileAsync(file);
 
                     var type = file.ContentType.StartsWith("image") ? "image" :
-                           file.ContentType.StartsWith("video") ? "video" : "file";
+                           file.ContentType.StartsWith("video") ? "video" :
+                           file.ContentType.StartsWith("audio") ? "audio" : "file";
 
                     uploadedUrls.Add(new MessageAttachment
                     {

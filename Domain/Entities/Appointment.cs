@@ -16,7 +16,7 @@ namespace Domain.Entities
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
 
-        public AppointmentStatus Status { get; set; } = AppointmentStatus.Scheduled;
+        public AppointmentStatus Status { get; set; } = AppointmentStatus.Pending;
 
         public decimal Price { get; set; }
         public string? MeetingLink { get; set; }
@@ -25,9 +25,10 @@ namespace Domain.Entities
 
     public enum AppointmentStatus
     {
-        Scheduled = 0,
-        Completed = 1,
-        Cancelled = 2,
-        NoShow = 3
+        Pending = 0,
+        Confirmed = 1,
+        Completed = 2,
+        Cancelled = 3,
+        NoShow = 4
     }
 }

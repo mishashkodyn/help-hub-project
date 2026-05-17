@@ -14,6 +14,8 @@ namespace Infrastructure.Data
             
         }
         public DbSet<Message> Messages { get; set; }
+        public DbSet<SessionMessage> SessionMessages { get; set; }
+        public DbSet<SessionNote> SessionNotes { get; set; }
         public DbSet<PsychologistApplication> PsychologistApplications { get; set; }
         public DbSet<MessageAttachment> MessageAttachments { get; set; }
         public DbSet<Notification> Notifications { get; set; }
@@ -37,6 +39,17 @@ namespace Infrastructure.Data
             modelBuilder.ApplyConfiguration(new CommentsConfiguration());
             modelBuilder.ApplyConfiguration(new AppointmentConfiguration());
             modelBuilder.ApplyConfiguration(new WorkingHourConfiguration());
+
+            modelBuilder.Entity<SessionNote>(e =>
+            {
+                e.HasKey(n => n.Id);
+                e.HasOne(n => n.Appointment)
+                    .WithMany()
+                    .HasForeignKey(n => n.AppointmentId)
+                    .OnDelete(DeleteBehavior.Cascade);
+                e.HasIndex(n => new { n.AppointmentId, n.PsychologistUserId }).IsUnique();
+                e.Property(n => n.Content).HasMaxLength(20000);
+            });
 
             //modelBuilder.Entity<ApplicationUser>()
             //    .HasMany(u => u.UserRoles)

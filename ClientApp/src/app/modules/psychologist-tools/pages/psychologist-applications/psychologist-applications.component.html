@@ -1,0 +1,357 @@
+<div class="md:p-6 bg-gray-50 min-h-screen font-sans">
+  <div class="max-w-7xl mx-auto pb-16">
+    <a
+      (click)="goBack()"
+      class="inline-flex items-center gap-1 text-gray-500 hover:text-[var(--color-primary)] p-3 md:p-0 transition-colors text-sm font-medium md:mb-6 cursor-pointer w-fit"
+    >
+      <mat-icon class="scale-90">arrow_back</mat-icon>
+      Back to Dashboard
+    </a>
+
+    <div
+      class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 px-3 md:px-0 mb-6"
+    >
+      <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+        <h1
+          class="text-3xl font-bold text-[var(--color-primary)] tracking-tight"
+        >
+          Applications
+        </h1>
+        <span
+          class="bg-[var(--color-mint)]/30 text-[var(--color-primary)] px-4 py-1.5 rounded-full text-sm font-bold shadow-sm flex items-center gap-2 border border-[var(--color-primary)]/10"
+        >
+          <span
+            *ngIf="getFilterCount('Pending') > 0"
+            class="flex h-2 w-2 relative"
+          >
+            <span
+              class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--color-success)] opacity-75"
+            ></span>
+            <span
+              class="relative inline-flex rounded-full h-2 w-2 bg-[var(--color-success)]"
+            ></span>
+          </span>
+          Total: {{ allApplications.length }} (Pending:
+          {{ getFilterCount("Pending") }})
+        </span>
+      </div>
+
+      <div class="relative w-full md:w-56 mt-2 md:mt-0">
+        <button
+          (click)="isSortDropdownOpen = !isSortDropdownOpen"
+          class="w-full flex items-center justify-between bg-white border border-gray-200 text-gray-700 font-medium py-2.5 pl-4 pr-3 rounded-xl shadow-sm hover:border-[var(--color-primary)]/50 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/20 transition-all cursor-pointer"
+        >
+          <div class="flex items-center gap-2">
+            <mat-icon class="text-gray-400 scale-90">sort</mat-icon>
+            <span class="text-sm font-bold">{{ getSortLabel() }}</span>
+          </div>
+          <mat-icon
+            class="text-gray-400 transition-transform duration-300"
+            [class.rotate-180]="isSortDropdownOpen"
+            >expand_more</mat-icon
+          >
+        </button>
+
+        @if (isSortDropdownOpen) {
+          <div
+            class="fixed inset-0 z-10"
+            (click)="isSortDropdownOpen = false"
+          ></div>
+
+          <div
+            class="absolute right-0 z-20 mt-2 w-full bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden animate-fade-in py-1.5"
+          >
+            <button
+              (click)="selectSort('pendingFirst')"
+              class="w-full flex items-center gap-3 px-4 py-3 text-sm font-bold transition-colors hover:bg-gray-50"
+              [ngClass]="
+                currentSort === 'pendingFirst'
+                  ? 'text-[var(--color-primary)] bg-blue-50/50'
+                  : 'text-gray-600'
+              "
+            >
+              <mat-icon
+                class="scale-75"
+                [ngClass]="
+                  currentSort === 'pendingFirst'
+                    ? 'text-[var(--color-primary)]'
+                    : 'text-gray-400'
+                "
+                >error_outline</mat-icon
+              >
+              Pending First
+            </button>
+
+            <button
+              (click)="selectSort('newestFirst')"
+              class="w-full flex items-center gap-3 px-4 py-3 text-sm font-bold transition-colors hover:bg-gray-50"
+              [ngClass]="
+                currentSort === 'newestFirst'
+                  ? 'text-[var(--color-primary)] bg-blue-50/50'
+                  : 'text-gray-600'
+              "
+            >
+              <mat-icon
+                class="scale-75"
+                [ngClass]="
+                  currentSort === 'newestFirst'
+                    ? 'text-[var(--color-primary)]'
+                    : 'text-gray-400'
+                "
+                >schedule</mat-icon
+              >
+              Nearest Date
+            </button>
+
+            <button
+              (click)="selectSort('oldestFirst')"
+              class="w-full flex items-center gap-3 px-4 py-3 text-sm font-bold transition-colors hover:bg-gray-50"
+              [ngClass]="
+                currentSort === 'oldestFirst'
+                  ? 'text-[var(--color-primary)] bg-blue-50/50'
+                  : 'text-gray-600'
+              "
+            >
+              <mat-icon
+                class="scale-75"
+                [ngClass]="
+                  currentSort === 'oldestFirst'
+                    ? 'text-[var(--color-primary)]'
+                    : 'text-gray-400'
+                "
+                >history</mat-icon
+              >
+              Furthest Date
+            </button>
+          </div>
+        }
+      </div>
+    </div>
+
+    <div class="px-3 md:px-0 mb-8">
+      <div
+        class="flex items-center gap-3 overflow-x-auto custom-scroll hide-scrollbar pb-2"
+      >
+        @for (filter of filterOptions; track filter.value) {
+          <button
+            (click)="setFilter(filter.value)"
+            class="flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold text-sm whitespace-nowrap transition-all border-2 select-none"
+            [ngClass]="
+              currentFilter === filter.value
+                ? 'border-[var(--color-primary)] bg-[var(--color-primary)] text-white shadow-md shadow-blue-100'
+                : 'border-gray-100 bg-white text-gray-600 hover:border-blue-200 hover:bg-blue-50'
+            "
+          >
+            <mat-icon
+              class="scale-75"
+              [ngClass]="
+                currentFilter === filter.value ? 'text-white' : 'text-gray-400'
+              "
+            >
+              {{ filter.icon }}
+            </mat-icon>
+            {{ filter.label }}
+
+            <span
+              class="px-2 py-0.5 rounded-lg text-[11px] font-extrabold ml-1"
+              [ngClass]="
+                currentFilter === filter.value
+                  ? 'bg-white/20 text-white'
+                  : 'bg-gray-100 text-gray-500'
+              "
+            >
+              {{ getFilterCount(filter.value) }}
+            </span>
+          </button>
+        }
+      </div>
+    </div>
+
+    @if (isLoading) {
+      <div
+        class="flex flex-col items-center justify-center py-20 w-full animate-fade-in"
+      >
+        <mat-icon class="animate-spin text-5xl text-[var(--color-primary)] mb-4"
+          >autorenew</mat-icon
+        >
+        <h3 class="text-xl font-semibold text-gray-700">
+          Loading applications...
+        </h3>
+      </div>
+    } @else if (allApplications.length === 0) {
+      <div
+        class="bg-white rounded-3xl border border-gray-100 p-16 text-center shadow-sm animate-fade-in mx-3 md:mx-0"
+      >
+        <div
+          class="w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-6"
+        >
+          <mat-icon class="text-gray-300 scale-[2]">inbox</mat-icon>
+        </div>
+        <h2 class="text-2xl font-bold text-gray-800 mb-2">
+          No applications yet
+        </h2>
+        <p class="text-gray-500">
+          When clients book a session with you, their requests will appear here.
+        </p>
+      </div>
+    }
+    @else if (applications.length === 0) {
+      <div
+        class="bg-white rounded-3xl border border-gray-100 p-16 text-center shadow-sm animate-fade-in mx-3 md:mx-0"
+      >
+        <div
+          class="w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-6"
+        >
+          <mat-icon class="text-gray-300 scale-[2]">filter_list_off</mat-icon>
+        </div>
+        <h2 class="text-2xl font-bold text-gray-800 mb-2">
+          No {{ currentFilter }} applications
+        </h2>
+        <p class="text-gray-500 mb-6">
+          You don't have any applications matching this status.
+        </p>
+        <button
+          (click)="setFilter('All')"
+          class="px-6 py-2.5 bg-gray-100 text-gray-700 font-bold rounded-xl hover:bg-gray-200 transition-colors"
+        >
+          Clear Filter
+        </button>
+      </div>
+    } @else {
+      <div
+        class="grid grid-cols-1 lg:grid-cols-2 gap-6 px-3 md:px-0 animate-fade-in"
+      >
+        @for (app of applications; track app.id) {
+          <div
+            class="bg-white rounded-3xl p-6 border transition-all duration-300 relative overflow-hidden"
+            [ngClass]="{
+              'border-[var(--color-primary)]/30 shadow-md shadow-blue-100':
+                app.status === 'Pending',
+              'border-gray-100 shadow-sm opacity-80': app.status !== 'Pending',
+            }"
+          >
+            @if (app.status === "Pending") {
+              <div
+                class="absolute left-0 top-0 bottom-0 w-1.5 bg-gradient-to-b from-[var(--color-primary)] to-[var(--color-sky)]"
+              ></div>
+            }
+
+            <div class="flex justify-between items-start mb-5">
+              <div class="flex items-center gap-4">
+                <div
+                  class="w-12 h-12 rounded-full bg-blue-50 text-[var(--color-primary)] flex items-center justify-center font-bold text-lg border border-blue-100"
+                >
+                  {{ app.clientName.charAt(0).toUpperCase() }}
+                </div>
+                <div>
+                  <h3 class="font-bold text-gray-900 text-lg leading-tight">
+                    {{ app.clientName }}
+                  </h3>
+                  <a
+                    [href]="'mailto:' + app.clientEmail"
+                    class="text-sm text-gray-500 hover:text-[var(--color-primary)] transition-colors"
+                  >
+                    {{ app.clientEmail }}
+                  </a>
+                </div>
+              </div>
+
+              <span
+                class="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider border"
+                [ngClass]="{
+                  'bg-amber-50 text-amber-600 border-amber-200':
+                    app.status === 'Pending',
+                  'bg-green-50 text-green-600 border-green-200':
+                    app.status === 'Confirmed',
+                  'bg-gray-50 text-gray-600 border-gray-200':
+                    app.status === 'Completed',
+                  'bg-red-50 text-red-600 border-red-200':
+                    app.status === 'Cancelled' || app.status === 'NoShow',
+                }"
+              >
+                {{ app.status }}
+              </span>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-4 mb-5 border border-gray-100">
+              <div class="grid grid-cols-2 gap-4">
+                <div class="flex flex-col">
+                  <span
+                    class="text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-1"
+                    >Date</span
+                  >
+                  <div
+                    class="flex items-center gap-1.5 text-gray-800 font-semibold"
+                  >
+                    <mat-icon class="scale-75 text-[var(--color-primary)]"
+                      >event</mat-icon
+                    >
+                    {{ app.startTime | date: "mediumDate" }}
+                  </div>
+                </div>
+                <div class="flex flex-col">
+                  <span
+                    class="text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-1"
+                    >Time</span
+                  >
+                  <div
+                    class="flex items-center gap-1.5 text-gray-800 font-semibold"
+                  >
+                    <mat-icon class="scale-75 text-[var(--color-primary)]"
+                      >schedule</mat-icon
+                    >
+                    {{ app.startTime | date: "HH:mm" }} -
+                    {{ app.endTime | date: "HH:mm" }}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            @if (app.clientNotes) {
+              <div class="mb-5">
+                <h4
+                  class="text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-2"
+                >
+                  Client Notes
+                </h4>
+                <p
+                  class="text-sm text-gray-600 bg-orange-50/50 p-3 rounded-xl border border-orange-100/50 italic"
+                >
+                  "{{ app.clientNotes }}"
+                </p>
+              </div>
+            }
+
+            @if (app.status === "Pending") {
+              <div
+                class="flex items-center gap-3 mt-6 pt-4 border-t border-gray-100"
+              >
+                <button
+                  (click)="approve(app.id)"
+                  [disabled]="processingId === app.id"
+                  class="flex-1 py-2.5 bg-[var(--color-primary)] text-white font-semibold rounded-xl hover:bg-blue-700 transition-colors shadow-sm disabled:opacity-50 flex justify-center items-center gap-2"
+                >
+                  @if (processingId === app.id) {
+                    <mat-icon class="animate-spin scale-75">autorenew</mat-icon>
+                  } @else {
+                    <mat-icon class="scale-75">check</mat-icon>
+                  }
+                  Approve
+                </button>
+
+                <button
+                  (click)="decline(app.id)"
+                  [disabled]="processingId === app.id"
+                  class="flex-1 py-2.5 bg-white text-red-500 font-semibold rounded-xl border border-red-200 hover:bg-red-50 transition-colors disabled:opacity-50 flex justify-center items-center gap-2"
+                >
+                  <mat-icon class="scale-75">close</mat-icon>
+                  Decline
+                </button>
+              </div>
+            }
+          </div>
+        }
+      </div>
+    }
+  </div>
+</div>

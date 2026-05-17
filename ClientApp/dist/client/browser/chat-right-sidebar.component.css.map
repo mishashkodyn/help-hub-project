@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/modules/chat/components/chat-right-sidebar/chat-right-sidebar.component.scss", "src/app/modules/chat/components/chat-right-sidebar/chat-right-sidebar.component.scss"],
+  "sourcesContent": [":host {\r\n  display: block;\r\n  height: 100%;\r\n}", ":host {\n  display: block;\n  height: 100%;\n}\n/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJmaWxlOi8vL0M6L1VzZXJzL01pc2hhL3NvdXJjZS9yZXBvcy9odWxwLWh1Yi1wcm9qZWN0L0NsaWVudEFwcC9zcmMvYXBwL21vZHVsZXMvY2hhdC9jb21wb25lbnRzL2NoYXQtcmlnaHQtc2lkZWJhci9jaGF0LXJpZ2h0LXNpZGViYXIuY29tcG9uZW50LnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRTtFQUNBIiwic291cmNlc0NvbnRlbnQiOlsiOmhvc3Qge1xyXG4gIGRpc3BsYXk6IGJsb2NrO1xyXG4gIGhlaWdodDogMTAwJTtcclxufSJdfQ== */"],
+  "mappings": ";AAAA;AACE,WAAA;AACA,UAAA;ACCF;",
+  "names": []
+}

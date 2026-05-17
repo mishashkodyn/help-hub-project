@@ -10,6 +10,10 @@ export interface Message {
   replyMessageSenderName?: string;
   isRead?: boolean;
   attachments?: Attachments[];
+  isPending?: boolean;
+  localId?: string;
+  messageType?: number; // 0 = text, 1 = videoCall
+  callDurationSeconds?: number | null;
 }
 
 export interface Attachments {

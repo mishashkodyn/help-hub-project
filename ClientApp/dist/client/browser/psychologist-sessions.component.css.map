@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/modules/psychologist-tools/pages/psychologist-sessions/psychologist-sessions.component.scss", "src/app/modules/psychologist-tools/pages/psychologist-sessions/psychologist-sessions.component.scss"],
+  "sourcesContent": [":host { display: block; }\n", ":host {\n  display: block;\n}\n/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJmaWxlOi8vL0M6L1VzZXJzL01pc2hhL3NvdXJjZS9yZXBvcy9odWxwLWh1Yi1wcm9qZWN0L0NsaWVudEFwcC9zcmMvYXBwL21vZHVsZXMvcHN5Y2hvbG9naXN0LXRvb2xzL3BhZ2VzL3BzeWNob2xvZ2lzdC1zZXNzaW9ucy9wc3ljaG9sb2dpc3Qtc2Vzc2lvbnMuY29tcG9uZW50LnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFBUSIsInNvdXJjZXNDb250ZW50IjpbIjpob3N0IHsgZGlzcGxheTogYmxvY2s7IH1cbiJdfQ== */"],
+  "mappings": ";AAAA;AAAQ,WAAA;ACER;",
+  "names": []
+}
