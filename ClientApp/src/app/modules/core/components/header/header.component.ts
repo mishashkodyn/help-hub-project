@@ -93,6 +93,10 @@ export class HeaderComponent implements OnInit {
     return ['/login', '/register', '/psychologist-registration'].includes(path);
   }
 
+  isInSessionRoom(): boolean {
+    return this.route.url.split('?')[0].startsWith('/session/');
+  }
+
   toggleSideBar() {
     this.sidebarService.sideBarOpen.set(!this.sidebarService.sideBarOpen());
   }

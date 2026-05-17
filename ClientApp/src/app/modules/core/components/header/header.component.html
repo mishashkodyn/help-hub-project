@@ -91,7 +91,7 @@
       }
 
       <!-- Active session join button -->
-      @if (authService.isLoggedIn() && activeSessionService.activeSession()) {
+      @if (authService.isLoggedIn() && activeSessionService.activeSession() && !isInSessionRoom()) {
         <button
           (click)="joinActiveSession()"
           class="flex items-center gap-1.5 px-3 py-1.5 bg-[var(--color-success)] text-white text-xs font-semibold rounded-xl hover:bg-[var(--color-success)]/90 transition-all shadow-sm animate-pulse shrink-0"
