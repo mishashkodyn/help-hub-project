@@ -36,6 +36,7 @@ services:
       - HeadAdmin__ProfileImage=https://cdn-icons-png.flaticon.com/512/149/149071.png
       - AiSettings__OpenAI__ApiKey=${OPENAI_API_KEY}
       - AiSettings__Groq__ApiKey=${GROQ_API_KEY}
+      - Deepgram__SecretKey=${DEEPGRAM_API_KEY}
     ports:
       - "5000:8080"
     restart: unless-stopped
