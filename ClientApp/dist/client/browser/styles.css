@@ -2172,6 +2172,9 @@ body[data-aos-easing=ease-in-out-quart] [data-aos] {
   .ml-1 {
     margin-left: calc(var(--spacing) * 1);
   }
+  .ml-1\.5 {
+    margin-left: calc(var(--spacing) * 1.5);
+  }
   .ml-3 {
     margin-left: calc(var(--spacing) * 3);
   }
@@ -3490,12 +3493,6 @@ body[data-aos-easing=ease-in-out-quart] [data-aos] {
     background-color: color-mix(in srgb, #002300 15%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
       background-color: color-mix(in oklab, var(--color-primary) 15%, transparent);
-    }
-  }
-  .bg-\[var\(--color-primary\)\]\/40 {
-    background-color: color-mix(in srgb, #002300 40%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-primary) 40%, transparent);
     }
   }
   .bg-\[var\(--color-primary\)\]\/\[0\.025\] {
@@ -4935,9 +4932,6 @@ body[data-aos-easing=ease-in-out-quart] [data-aos] {
   }
   .lowercase {
     text-transform: lowercase;
-  }
-  .normal-case {
-    text-transform: none;
   }
   .uppercase {
     text-transform: uppercase;
@@ -7149,6 +7143,11 @@ body[data-aos-easing=ease-in-out-quart] [data-aos] {
   .sm\:p-3 {
     @media (width >= 40rem) {
       padding: calc(var(--spacing) * 3);
+    }
+  }
+  .sm\:p-4 {
+    @media (width >= 40rem) {
+      padding: calc(var(--spacing) * 4);
     }
   }
   .sm\:p-5 {

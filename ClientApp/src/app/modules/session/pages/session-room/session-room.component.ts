@@ -1,5 +1,6 @@
 import {
   Component,
+  effect,
   ElementRef,
   inject,
   OnDestroy,
@@ -30,6 +31,7 @@ type SessionTab = 'chat' | 'transcriptions' | 'notes' | 'ai';
 export class SessionRoomComponent implements OnInit, OnDestroy {
   @ViewChild('messagesContainer') messagesContainer!: ElementRef<HTMLDivElement>;
   @ViewChild('aiMessagesContainer') aiMessagesContainer!: ElementRef<HTMLDivElement>;
+  @ViewChild('transcriptsContainer') transcriptsContainer?: ElementRef<HTMLDivElement>;
 
   sessionInfo = signal<SessionInfoDto | null>(null);
   messages = signal<SessionMessageDto[]>([]);
@@ -61,6 +63,19 @@ export class SessionRoomComponent implements OnInit, OnDestroy {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private aiService = inject(AiService);
+
+  constructor() {
+    effect(() => {
+      const finals = this.transcripts.finals();
+      const interims = this.transcripts.interims();
+      // Touch both to make the effect react to either updating.
+      void finals.length;
+      void Object.keys(interims).length;
+      if (this.activeTab() === 'transcriptions') {
+        this.scrollTranscriptsToBottom();
+      }
+    });
+  }
 
   private readonly allTabs: { id: SessionTab; label: string; icon: string }[] = [
     { id: 'chat', label: 'Chat', icon: 'chat' },
@@ -163,6 +178,24 @@ export class SessionRoomComponent implements OnInit, OnDestroy {
 
   isLocalSpeaker(speaker: string): boolean {
     return speaker === 'local';
+  }
+
+  isPsychologistSpeaker(speaker: string): boolean {
+    const info = this.sessionInfo();
+    if (!info) return false;
+    if (speaker === 'local') return this.myUserId === info.psychologistUserId;
+    return speaker === info.psychologistUserId;
+  }
+
+  roleLabel(speaker: string): string {
+    return this.isPsychologistSpeaker(speaker) ? 'Psychologist' : 'Client';
+  }
+
+  private scrollTranscriptsToBottom(): void {
+    setTimeout(() => {
+      const el = this.transcriptsContainer?.nativeElement;
+      if (el) el.scrollTop = el.scrollHeight;
+    }, 50);
   }
 
   selectTab(tab: SessionTab): void {
