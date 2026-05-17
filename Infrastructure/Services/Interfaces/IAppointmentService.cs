@@ -9,7 +9,7 @@ namespace Infrastructure.Services.Interfaces
 {
     public interface IAppointmentService
     {
-        Task<List<TimeSpan>> GetAvailableSlotsAsync(Guid psychologistId, DateTime date);
+        Task<List<DateTime>> GetAvailableSlotsAsync(Guid psychologistId, DateTime localDate);
         Task CreateAppointmentAsync(Guid clientId, CreateAppointmentDto dto);
         Task<List<AppointmentApplicationDto>> GetPsychologistApplicationsAsync(Guid userId);
         Task ApproveAppointmentAsync(Guid psychologistUserId, Guid appointmentId);

@@ -133,7 +133,10 @@ export class ChatService {
   }
 
   stopConnection() {
-    this.hubConnection?.stop().then(() => this.isConnected.set(false));
+    const conn = this.hubConnection;
+    if (!conn) return;
+    this.hubConnection = undefined;
+    conn.stop().finally(() => this.isConnected.set(false));
   }
 
   loadMessages(pageNumber: number) {

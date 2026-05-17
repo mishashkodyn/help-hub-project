@@ -157,9 +157,13 @@ export interface PsychologistCatalogFilter {
 
 export interface CreateAppointmentDto {
   psychologistId: string;
-  date: string;
-  startTime: string;
+  startTimeUtc: string;
   clientNotes?: string;
+}
+
+export interface AvailableSlot {
+  startTimeUtc: string;
+  label: string;
 }
 
 export interface AppointmentApplicationDto {

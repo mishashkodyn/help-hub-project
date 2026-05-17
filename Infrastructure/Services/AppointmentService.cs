@@ -18,13 +18,34 @@ namespace Infrastructure.Services
         private readonly ApplicationDbContext _context;
         private readonly INotificationService _notificationService;
 
+        private static readonly TimeZoneInfo DisplayTimeZone = ResolveDisplayTimeZone();
+
         public AppointmentService(ApplicationDbContext context, INotificationService notificationService)
         {
             _context = context;
             _notificationService = notificationService;
         }
 
-        public async Task<List<TimeSpan>> GetAvailableSlotsAsync(Guid psychologistId, DateTime date)
+        private static TimeZoneInfo ResolveDisplayTimeZone()
+        {
+            // Cross-platform: try IANA first, then fall back to Windows ID.
+            foreach (var id in new[] { "Europe/Kyiv", "Europe/Kiev", "FLE Standard Time" })
+            {
+                try { return TimeZoneInfo.FindSystemTimeZoneById(id); }
+                catch (TimeZoneNotFoundException) { }
+                catch (InvalidTimeZoneException) { }
+            }
+            return TimeZoneInfo.Utc;
+        }
+
+        private static string FormatLocal(DateTime utc)
+        {
+            var asUtc = DateTime.SpecifyKind(utc, DateTimeKind.Utc);
+            var local = TimeZoneInfo.ConvertTimeFromUtc(asUtc, DisplayTimeZone);
+            return local.ToString("dd MMM yyyy, HH:mm", CultureInfo.InvariantCulture);
+        }
+
+        public async Task<List<DateTime>> GetAvailableSlotsAsync(Guid psychologistId, DateTime localDate)
         {
             var psychologist = await _context.Psychologists
                 .Include(p => p.WorkingHours)
@@ -32,19 +53,24 @@ namespace Infrastructure.Services
 
             if (psychologist == null) throw new Exception("Psychologist not found");
 
-            var dayOfWeek = date.DayOfWeek;
+            var dayOfWeek = localDate.DayOfWeek;
             var workingHours = psychologist.WorkingHours.Where(w => w.DayOfWeek == dayOfWeek).ToList();
 
-            if (!workingHours.Any()) return new List<TimeSpan>();
+            if (!workingHours.Any()) return new List<DateTime>();
+
+            var sessionDuration = TimeSpan.FromMinutes(psychologist.SessionDurationMinutes);
+            var dayStartUtc = TimeZoneInfo.ConvertTimeToUtc(
+                DateTime.SpecifyKind(localDate.Date, DateTimeKind.Unspecified), DisplayTimeZone);
+            var dayEndUtc = dayStartUtc.AddDays(1);
 
             var bookedAppointments = await _context.Appointments
                 .Where(a => a.PsychologistId == psychologistId
-                         && a.StartTime.Date == date.Date
+                         && a.StartTime < dayEndUtc && a.EndTime > dayStartUtc
                          && (a.Status == AppointmentStatus.Pending || a.Status == AppointmentStatus.Confirmed))
                 .ToListAsync();
 
-            var availableSlots = new List<TimeSpan>();
-            var sessionDuration = TimeSpan.FromMinutes(psychologist.SessionDurationMinutes);
+            var nowUtc = DateTime.UtcNow;
+            var availableSlots = new List<DateTime>();
 
             foreach (var block in workingHours)
             {
@@ -54,16 +80,19 @@ namespace Infrastructure.Services
                 {
                     var currentSlotEnd = currentSlotStart.Add(sessionDuration);
 
+                    var slotStartLocal = DateTime.SpecifyKind(localDate.Date.Add(currentSlotStart), DateTimeKind.Unspecified);
+                    var slotEndLocal = DateTime.SpecifyKind(localDate.Date.Add(currentSlotEnd), DateTimeKind.Unspecified);
+                    var slotStartUtc = TimeZoneInfo.ConvertTimeToUtc(slotStartLocal, DisplayTimeZone);
+                    var slotEndUtc = TimeZoneInfo.ConvertTimeToUtc(slotEndLocal, DisplayTimeZone);
+
                     bool isOverlapping = bookedAppointments.Any(a =>
-                        currentSlotStart < a.EndTime.TimeOfDay && currentSlotEnd > a.StartTime.TimeOfDay);
+                        slotStartUtc < a.EndTime && slotEndUtc > a.StartTime);
 
-                    var slotDateTime = date.Date + currentSlotStart;
-
-                    bool isPast = slotDateTime <= DateTime.Now;
+                    bool isPast = slotStartUtc <= nowUtc;
 
                     if (!isOverlapping && !isPast)
                     {
-                        availableSlots.Add(currentSlotStart);
+                        availableSlots.Add(slotStartUtc);
                     }
 
                     currentSlotStart = currentSlotStart.Add(sessionDuration);
@@ -75,26 +104,19 @@ namespace Infrastructure.Services
 
         public async Task CreateAppointmentAsync(Guid clientId, CreateAppointmentDto dto)
         {
-            if (!DateTime.TryParseExact(dto.Date, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out var parsedDate))
-                throw new ArgumentException("Invalid date format. Expected YYYY-MM-DD.");
-
-            if (!TimeSpan.TryParseExact(dto.StartTime, @"hh\:mm", CultureInfo.InvariantCulture, out var parsedTime))
-                throw new ArgumentException("Invalid time format. Expected HH:mm.");
-
             var psychologist = await _context.Psychologists
                 .FirstOrDefaultAsync(p => p.Id == dto.PsychologistId);
 
             if (psychologist == null)
                 throw new Exception("Psychologist not found.");
 
-            var startDateTime = parsedDate.Date + parsedTime;
-            var endDateTime = startDateTime.AddMinutes(psychologist.SessionDurationMinutes);
+            var startUtc = DateTime.SpecifyKind(dto.StartTimeUtc, DateTimeKind.Utc);
+            var endUtc = startUtc.AddMinutes(psychologist.SessionDurationMinutes);
 
             var isOverlapping = await _context.Appointments
                 .AnyAsync(a => a.PsychologistId == dto.PsychologistId
-                            && a.StartTime.Date == parsedDate.Date
                             && (a.Status == AppointmentStatus.Pending || a.Status == AppointmentStatus.Confirmed)
-                            && (parsedTime < a.EndTime.TimeOfDay && endDateTime.TimeOfDay > a.StartTime.TimeOfDay));
+                            && startUtc < a.EndTime && endUtc > a.StartTime);
 
             if (isOverlapping)
                 throw new Exception("This time slot has already been booked. Please choose another time.");
@@ -103,8 +125,8 @@ namespace Infrastructure.Services
             {
                 PsychologistId = psychologist.Id,
                 ClientId = clientId,
-                StartTime = startDateTime,
-                EndTime = endDateTime,
+                StartTime = startUtc,
+                EndTime = endUtc,
                 Status = AppointmentStatus.Pending,
                 Price = psychologist.PricePerSession,
                 ClientNotes = dto.ClientNotes
@@ -122,7 +144,7 @@ namespace Infrastructure.Services
             {
                 UserId = psychologist.UserId,
                 Title = "New Session Request",
-                Message = $"{clientName} requested a session on {appointment.StartTime.ToString("dd MMM yyyy, HH:mm")}.",
+                Message = $"{clientName} requested a session on {FormatLocal(appointment.StartTime)}.",
                 Type = NotificationType.Application,
                 RelatedEntityId = appointment.Id
             });
@@ -173,7 +195,7 @@ namespace Infrastructure.Services
             {
                 UserId = appointment.ClientId,
                 Title = "Session Confirmed",
-                Message = $"Your session scheduled for {appointment.StartTime.ToString("dd MMM yyyy, HH:mm")} has been confirmed by the psychologist.",
+                Message = $"Your session scheduled for {FormatLocal(appointment.StartTime)} has been confirmed by the psychologist.",
                 Type = NotificationType.Application,
                 RelatedEntityId = appointment.Id
             });
@@ -194,7 +216,7 @@ namespace Infrastructure.Services
             {
                 UserId = appointment.ClientId,
                 Title = "Session Declined",
-                Message = $"Unfortunately, your session scheduled for {appointment.StartTime.ToString("dd MMM yyyy, HH:mm")} was declined by the psychologist.",
+                Message = $"Unfortunately, your session scheduled for {FormatLocal(appointment.StartTime)} was declined by the psychologist.",
                 Type = NotificationType.Application,
                 RelatedEntityId = appointment.Id
             });
@@ -202,7 +224,7 @@ namespace Infrastructure.Services
 
         public async Task<List<ClientSessionDto>> GetClientSessionsAsync(Guid clientId)
         {
-            var now = DateTime.Now;
+            var now = DateTime.UtcNow;
 
             var appointments = await _context.Appointments
                 .Include(a => a.Psychologist).ThenInclude(p => p.User)
@@ -239,7 +261,7 @@ namespace Infrastructure.Services
             if (psychologist == null)
                 throw new Exception("Psychologist profile not found.");
 
-            var now = DateTime.Now;
+            var now = DateTime.UtcNow;
 
             var appointments = await _context.Appointments
                 .Include(a => a.Client)
@@ -289,7 +311,7 @@ namespace Infrastructure.Services
             if (!isPsychologist && !isClient)
                 throw new UnauthorizedAccessException("You are not a participant in this session.");
 
-            var now = DateTime.Now;
+            var now = DateTime.UtcNow;
             var isAccessible = appointment.Status == AppointmentStatus.Confirmed
                 && now >= appointment.StartTime.AddMinutes(-5)
                 && now <= appointment.EndTime;
@@ -316,7 +338,7 @@ namespace Infrastructure.Services
             if (psychologist == null)
                 throw new Exception("Psychologist profile not found.");
 
-            var now = DateTime.Now;
+            var now = DateTime.UtcNow;
 
             var appointments = await _context.Appointments
                 .Include(a => a.Client)
@@ -374,7 +396,7 @@ namespace Infrastructure.Services
             var note = await _context.SessionNotes
                 .FirstOrDefaultAsync(n => n.AppointmentId == appointmentId && n.PsychologistUserId == psychologistUserId);
 
-            var now = DateTime.Now;
+            var now = DateTime.UtcNow;
 
             if (note == null)
             {

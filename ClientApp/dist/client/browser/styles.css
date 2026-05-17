@@ -1950,9 +1950,6 @@ body[data-aos-easing=ease-in-out-quart] [data-aos] {
   .left-1\/4 {
     left: calc(1/4 * 100%);
   }
-  .left-2 {
-    left: calc(var(--spacing) * 2);
-  }
   .left-3 {
     left: calc(var(--spacing) * 3);
   }
@@ -2992,12 +2989,6 @@ body[data-aos-easing=ease-in-out-quart] [data-aos] {
   .self-center {
     align-self: center;
   }
-  .self-end {
-    align-self: flex-end;
-  }
-  .self-start {
-    align-self: flex-start;
-  }
   .truncate {
     overflow: hidden;
     text-overflow: ellipsis;
@@ -3507,12 +3498,6 @@ body[data-aos-easing=ease-in-out-quart] [data-aos] {
       background-color: color-mix(in oklab, var(--color-primary) 40%, transparent);
     }
   }
-  .bg-\[var\(--color-primary\)\]\/85 {
-    background-color: color-mix(in srgb, #002300 85%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-primary) 85%, transparent);
-    }
-  }
   .bg-\[var\(--color-primary\)\]\/\[0\.025\] {
     background-color: color-mix(in srgb, #002300 2.5%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
@@ -3679,12 +3664,6 @@ body[data-aos-easing=ease-in-out-quart] [data-aos] {
     background-color: color-mix(in srgb, #000 60%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
       background-color: color-mix(in oklab, var(--color-black) 60%, transparent);
-    }
-  }
-  .bg-black\/70 {
-    background-color: color-mix(in srgb, #000 70%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-black) 70%, transparent);
     }
   }
   .bg-black\/90 {
@@ -3890,12 +3869,6 @@ body[data-aos-easing=ease-in-out-quart] [data-aos] {
   }
   .bg-white {
     background-color: var(--color-white);
-  }
-  .bg-white\/5 {
-    background-color: color-mix(in srgb, #fff 5%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-white) 5%, transparent);
-    }
   }
   .bg-white\/10 {
     background-color: color-mix(in srgb, #fff 10%, transparent);
@@ -6873,16 +6846,6 @@ body[data-aos-easing=ease-in-out-quart] [data-aos] {
       right: calc(var(--spacing) * 0);
     }
   }
-  .sm\:right-4 {
-    @media (width >= 40rem) {
-      right: calc(var(--spacing) * 4);
-    }
-  }
-  .sm\:left-4 {
-    @media (width >= 40rem) {
-      left: calc(var(--spacing) * 4);
-    }
-  }
   .sm\:left-8 {
     @media (width >= 40rem) {
       left: calc(var(--spacing) * 8);
@@ -7076,11 +7039,6 @@ body[data-aos-easing=ease-in-out-quart] [data-aos] {
   .sm\:w-auto {
     @media (width >= 40rem) {
       width: auto;
-    }
-  }
-  .sm\:max-w-\[70\%\] {
-    @media (width >= 40rem) {
-      max-width: 70%;
     }
   }
   .sm\:max-w-\[75\%\] {

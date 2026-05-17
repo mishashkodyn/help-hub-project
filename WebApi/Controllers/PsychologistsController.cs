@@ -86,9 +86,7 @@ namespace API.Controllers
         public async Task<IActionResult> GetAvailableSlots([FromQuery] Guid psychologistId, [FromQuery] DateTime date)
         {
             var slots = await _appointmentService.GetAvailableSlotsAsync(psychologistId, date);
-            var formattedSlots = slots.Select(s => s.ToString(@"hh\:mm")).ToList();
-
-            return Ok(formattedSlots);
+            return Ok(slots);
         }
 
         [HttpPost("book")]

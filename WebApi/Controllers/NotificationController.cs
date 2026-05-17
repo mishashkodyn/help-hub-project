@@ -60,7 +60,7 @@ namespace API.Controllers
             }
 
             notification.IsRead = true;
-            notification.ReadAt = DateTime.Now;
+            notification.ReadAt = DateTime.UtcNow;
 
             await _context.SaveChangesAsync();
 

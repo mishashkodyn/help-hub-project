@@ -36,6 +36,7 @@ export class PsychologistService {
     return this.http.get<string[]>(`${this.apiUrl}/available-slots`, { params });
   }
 
+
   createAppointment(payload: CreateAppointmentDto): Observable<any> {
     return this.http.post(`${this.apiUrl}/book`, payload);
   }

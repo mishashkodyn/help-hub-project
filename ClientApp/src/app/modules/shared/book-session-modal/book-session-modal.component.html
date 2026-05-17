@@ -48,8 +48,8 @@
           <label class="block text-sm font-bold text-gray-700 uppercase tracking-widest">
             Available Time
           </label>
-          <span *ngIf="selectedTime" class="text-xs font-bold text-[var(--color-primary)] bg-[var(--color-sky)]/20 px-2 py-1 rounded-md">
-            Selected: {{ selectedTime }}
+          <span *ngIf="selectedSlot" class="text-xs font-bold text-[var(--color-primary)] bg-[var(--color-sky)]/20 px-2 py-1 rounded-md">
+            Selected: {{ selectedSlot.label }}
           </span>
         </div>
 
@@ -58,15 +58,15 @@
         </div>
 
         <div *ngIf="!isLoadingSlots && availableSlots.length > 0" class="grid grid-cols-3 sm:grid-cols-4 gap-3">
-          <button 
-            *ngFor="let time of availableSlots"
-            (click)="selectTime(time)"
+          <button
+            *ngFor="let slot of availableSlots"
+            (click)="selectSlot(slot)"
             class="py-2.5 rounded-xl text-sm font-bold transition-all duration-200 border-2"
-            [ngClass]="selectedTime === time 
-              ? 'border-[var(--color-primary)] bg-[var(--color-primary)] text-white shadow-md scale-105' 
+            [ngClass]="selectedSlot?.startTimeUtc === slot.startTimeUtc
+              ? 'border-[var(--color-primary)] bg-[var(--color-primary)] text-white shadow-md scale-105'
               : 'border-gray-100 bg-white text-gray-600 hover:border-blue-200 hover:bg-blue-50'"
           >
-            {{ time }}
+            {{ slot.label }}
           </button>
         </div>
 
@@ -99,11 +99,11 @@
         Cancel
       </button>
       
-      <button 
+      <button
         (click)="confirmBooking()"
-        [disabled]="!selectedTime || isSubmitting"
+        [disabled]="!selectedSlot || isSubmitting"
         class="px-6 py-2.5 rounded-xl font-bold flex items-center gap-2 transition-all shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
-        [ngClass]="selectedTime ? 'bg-[var(--color-primary)] text-white hover:bg-blue-700' : 'bg-gray-300 text-gray-500'"
+        [ngClass]="selectedSlot ? 'bg-[var(--color-primary)] text-white hover:bg-blue-700' : 'bg-gray-300 text-gray-500'"
       >
         <mat-icon *ngIf="isSubmitting" class="animate-spin scale-90">autorenew</mat-icon>
         <mat-icon *ngIf="!isSubmitting" class="scale-90">check_circle</mat-icon>

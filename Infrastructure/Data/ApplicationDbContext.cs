@@ -3,12 +3,21 @@ using Infrastructure.Data.EntityConfigurations;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Infrastructure.Data
 
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, Guid>
     {
+        // Every DateTime persisted/read goes through UTC so client receives ISO with 'Z'.
+        private static readonly ValueConverter<DateTime, DateTime> UtcConverter =
+            new(v => v.Kind == DateTimeKind.Utc ? v : DateTime.SpecifyKind(v, DateTimeKind.Utc),
+                v => DateTime.SpecifyKind(v, DateTimeKind.Utc));
+
+        private static readonly ValueConverter<DateTime?, DateTime?> UtcNullableConverter =
+            new(v => v.HasValue ? (v.Value.Kind == DateTimeKind.Utc ? v.Value : DateTime.SpecifyKind(v.Value, DateTimeKind.Utc)) : v,
+                v => v.HasValue ? DateTime.SpecifyKind(v.Value, DateTimeKind.Utc) : v);
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
             
@@ -50,6 +59,17 @@ namespace Infrastructure.Data
                 e.HasIndex(n => new { n.AppointmentId, n.PsychologistUserId }).IsUnique();
                 e.Property(n => n.Content).HasMaxLength(20000);
             });
+
+            foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+            {
+                foreach (var property in entityType.GetProperties())
+                {
+                    if (property.ClrType == typeof(DateTime))
+                        property.SetValueConverter(UtcConverter);
+                    else if (property.ClrType == typeof(DateTime?))
+                        property.SetValueConverter(UtcNullableConverter);
+                }
+            }
 
             //modelBuilder.Entity<ApplicationUser>()
             //    .HasMany(u => u.UserRoles)
