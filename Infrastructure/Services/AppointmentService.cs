@@ -74,9 +74,14 @@ namespace Infrastructure.Services
 
             foreach (var block in workingHours)
             {
+                // EndTime == 00:00 (or any value <= StartTime) is treated as end-of-day,
+                // so a block like 09:00 → 00:00 means "until midnight".
+                var blockEnd = block.EndTime <= block.StartTime
+                    ? block.EndTime + TimeSpan.FromDays(1)
+                    : block.EndTime;
                 var currentSlotStart = block.StartTime;
 
-                while (currentSlotStart.Add(sessionDuration) <= block.EndTime)
+                while (currentSlotStart.Add(sessionDuration) <= blockEnd)
                 {
                     var currentSlotEnd = currentSlotStart.Add(sessionDuration);
 
