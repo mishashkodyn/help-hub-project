@@ -150,8 +150,11 @@
           @else if (activeTab() === 'transcriptions') {
             @let finals = transcripts.finals();
             @let interims = transcripts.interims();
-            <div class="flex-1 flex flex-col min-h-0 bg-gray-50">
-              <div class="flex-1 overflow-y-auto px-3 sm:px-4 py-3 sm:py-4 space-y-2 sm:space-y-3 custom-scroll">
+            <div class="flex-1 flex flex-col min-h-0 bg-gray-50 p-3 sm:p-4">
+              <div
+                #transcriptsContainer
+                class="flex-1 min-h-0 overflow-y-auto custom-scroll bg-white border border-gray-100 rounded-2xl shadow-sm p-3 sm:p-4 font-mono text-[13px] leading-snug"
+              >
                 @if (finals.length === 0 && (interims | keyvalue).length === 0) {
                   <div class="flex flex-col items-center justify-center h-full text-center text-gray-400">
                     <mat-icon class="text-5xl text-gray-200 mb-2">subtitles</mat-icon>
@@ -161,47 +164,25 @@
                 }
 
                 @for (entry of finals; track entry.id) {
-                  <div
-                    class="flex"
-                    [class.justify-end]="isLocalSpeaker(entry.speaker)"
-                    [class.justify-start]="!isLocalSpeaker(entry.speaker)"
-                  >
-                    <div
-                      class="max-w-[85%] sm:max-w-[75%] px-3 sm:px-4 py-2 sm:py-2.5 rounded-2xl text-sm leading-relaxed break-words"
-                      [ngClass]="isLocalSpeaker(entry.speaker)
-                        ? 'bg-[var(--color-primary)] text-white rounded-br-sm'
-                        : 'bg-white border border-gray-100 text-gray-800 rounded-bl-sm shadow-sm'"
-                    >
-                      <p class="text-[10px] font-semibold mb-0.5 opacity-60">
-                        {{ resolveSpeakerName(entry.speaker) || (isLocalSpeaker(entry.speaker) ? 'You' : 'Speaker') }}
-                      </p>
-                      <p class="whitespace-pre-wrap">{{ entry.text }}</p>
-                      <p class="text-[10px] mt-1 opacity-50 text-right">
-                        {{ entry.timestamp | date:'HH:mm:ss' }}
-                      </p>
-                    </div>
+                  <div>
+                    <span class="text-gray-400">[{{ entry.timestamp | date:'HH:mm:ss' }}]</span>
+                    <span
+                      class="ml-1.5 font-semibold"
+                      [ngClass]="isPsychologistSpeaker(entry.speaker) ? 'text-[var(--color-primary)]' : 'text-[var(--color-success)]'"
+                    >{{ roleLabel(entry.speaker) }}:</span>
+                    <span class="ml-1 text-gray-800 whitespace-pre-wrap break-words">{{ entry.text }}</span>
                   </div>
                 }
 
                 @for (interim of interims | keyvalue; track interim.key) {
                   @if (interim.value) {
-                    <div
-                      class="flex"
-                      [class.justify-end]="isLocalSpeaker(interim.key)"
-                      [class.justify-start]="!isLocalSpeaker(interim.key)"
-                    >
-                      <div
-                        class="max-w-[85%] sm:max-w-[75%] px-3 sm:px-4 py-2 sm:py-2.5 rounded-2xl text-sm leading-relaxed break-words italic opacity-70"
-                        [ngClass]="isLocalSpeaker(interim.key)
-                          ? 'bg-[var(--color-primary)]/40 text-white rounded-br-sm'
-                          : 'bg-gray-100 border border-gray-200 text-gray-700 rounded-bl-sm'"
-                      >
-                        <p class="text-[10px] font-semibold mb-0.5 opacity-60">
-                          {{ resolveSpeakerName(interim.key) || (isLocalSpeaker(interim.key) ? 'You' : 'Speaker') }}
-                          <span class="ml-1 normal-case">· speaking…</span>
-                        </p>
-                        <p class="whitespace-pre-wrap">{{ interim.value }}</p>
-                      </div>
+                    <div class="italic opacity-60">
+                      <span class="text-gray-400">[…]</span>
+                      <span
+                        class="ml-1.5 font-semibold"
+                        [ngClass]="isPsychologistSpeaker(interim.key) ? 'text-[var(--color-primary)]' : 'text-[var(--color-success)]'"
+                      >{{ roleLabel(interim.key) }}:</span>
+                      <span class="ml-1 text-gray-700 whitespace-pre-wrap break-words">{{ interim.value }}</span>
                     </div>
                   }
                 }

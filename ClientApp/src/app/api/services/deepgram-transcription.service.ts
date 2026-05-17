@@ -14,8 +14,8 @@ export interface DeepgramTranscriptChunk {
 export class DeepgramTranscriptionService {
   private static readonly DEEPGRAM_URL =
     'wss://api.deepgram.com/v1/listen' +
-    '?model=nova-3' +
-    '&language=multi' +
+    '?model=nova-2' +
+    '&language=uk' +
     '&interim_results=true' +
     '&smart_format=true' +
     '&punctuate=true' +

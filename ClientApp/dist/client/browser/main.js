@@ -49385,7 +49385,7 @@ var SessionTranscriptStore = class _SessionTranscriptStore {
 
 // src/app/api/services/deepgram-transcription.service.ts
 var DeepgramTranscriptionService = class _DeepgramTranscriptionService {
-  static DEEPGRAM_URL = "wss://api.deepgram.com/v1/listen?model=nova-2&language=multi&interim_results=true&smart_format=true&punctuate=true&endpointing=300";
+  static DEEPGRAM_URL = "wss://api.deepgram.com/v1/listen?model=nova-2&language=uk&interim_results=true&smart_format=true&punctuate=true&endpointing=300";
   ws = null;
   recorder = null;
   keepAliveTimer = null;
@@ -49776,7 +49776,11 @@ var SessionVideoPanelComponent = class _SessionVideoPanelComponent {
         return;
       try {
         this.localStream = yield navigator.mediaDevices.getUserMedia({
-          audio: true,
+          audio: {
+            echoCancellation: true,
+            noiseSuppression: true,
+            autoGainControl: true
+          },
           video: { facingMode: "user" }
         });
         if (this.localVideoEl?.nativeElement) {
@@ -50104,29 +50108,30 @@ var SessionVideoPanelComponent = class _SessionVideoPanelComponent {
 // src/app/modules/session/pages/session-room/session-room.component.ts
 var _c030 = ["messagesContainer"];
 var _c118 = ["aiMessagesContainer"];
-var _c212 = (a0, a1, a2, a3) => ({ "text-gray-400": a0, "text-yellow-600": a1, "text-[var(--color-success)]": a2, "text-red-500": a3 });
+var _c212 = ["transcriptsContainer"];
+var _c39 = (a0, a1, a2, a3) => ({ "text-gray-400": a0, "text-yellow-600": a1, "text-[var(--color-success)]": a2, "text-red-500": a3 });
 var _forTrack019 = ($index, $item) => $item.id;
 var _forTrack15 = ($index, $item) => $item.key;
 function SessionRoomComponent_Conditional_1_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 3);
-    \u0275\u0275element(1, "mat-spinner", 5);
+    \u0275\u0275elementStart(0, "div", 4);
+    \u0275\u0275element(1, "mat-spinner", 6);
     \u0275\u0275elementEnd();
   }
 }
 function SessionRoomComponent_Conditional_2_Template(rf, ctx) {
   if (rf & 1) {
     const _r1 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "div", 4)(1, "mat-icon", 6);
+    \u0275\u0275elementStart(0, "div", 5)(1, "mat-icon", 7);
     \u0275\u0275text(2, "lock");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(3, "h2", 7);
+    \u0275\u0275elementStart(3, "h2", 8);
     \u0275\u0275text(4, "Session not available");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(5, "p", 8);
+    \u0275\u0275elementStart(5, "p", 9);
     \u0275\u0275text(6, "The session room is open from 5 minutes before the start until the scheduled end time.");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(7, "button", 9);
+    \u0275\u0275elementStart(7, "button", 10);
     \u0275\u0275listener("click", function SessionRoomComponent_Conditional_2_Template_button_click_7_listener() {
       \u0275\u0275restoreView(_r1);
       const ctx_r1 = \u0275\u0275nextContext();
@@ -50139,16 +50144,16 @@ function SessionRoomComponent_Conditional_2_Template(rf, ctx) {
 function SessionRoomComponent_Conditional_3_For_22_Template(rf, ctx) {
   if (rf & 1) {
     const _r4 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "button", 28);
+    \u0275\u0275elementStart(0, "button", 29);
     \u0275\u0275listener("click", function SessionRoomComponent_Conditional_3_For_22_Template_button_click_0_listener() {
       const tab_r5 = \u0275\u0275restoreView(_r4).$implicit;
       const ctx_r1 = \u0275\u0275nextContext(2);
       return \u0275\u0275resetView(ctx_r1.selectTab(tab_r5.id));
     });
-    \u0275\u0275elementStart(1, "mat-icon", 29);
+    \u0275\u0275elementStart(1, "mat-icon", 30);
     \u0275\u0275text(2);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(3, "span", 30);
+    \u0275\u0275elementStart(3, "span", 31);
     \u0275\u0275text(4);
     \u0275\u0275elementEnd()();
   }
@@ -50164,17 +50169,17 @@ function SessionRoomComponent_Conditional_3_For_22_Template(rf, ctx) {
 }
 function SessionRoomComponent_Conditional_3_Conditional_24_Conditional_2_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 32)(1, "mat-icon", 38);
+    \u0275\u0275elementStart(0, "div", 33)(1, "mat-icon", 39);
     \u0275\u0275text(2, "chat_bubble_outline");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(3, "p", 8);
+    \u0275\u0275elementStart(3, "p", 9);
     \u0275\u0275text(4, "No messages yet. Say hello!");
     \u0275\u0275elementEnd()();
   }
 }
 function SessionRoomComponent_Conditional_3_Conditional_24_For_4_Conditional_2_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "p", 41);
+    \u0275\u0275elementStart(0, "p", 42);
     \u0275\u0275text(1);
     \u0275\u0275elementEnd();
   }
@@ -50186,12 +50191,12 @@ function SessionRoomComponent_Conditional_3_Conditional_24_For_4_Conditional_2_T
 }
 function SessionRoomComponent_Conditional_3_Conditional_24_For_4_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 39)(1, "div", 40);
-    \u0275\u0275template(2, SessionRoomComponent_Conditional_3_Conditional_24_For_4_Conditional_2_Template, 2, 1, "p", 41);
-    \u0275\u0275elementStart(3, "p", 42);
+    \u0275\u0275elementStart(0, "div", 40)(1, "div", 41);
+    \u0275\u0275template(2, SessionRoomComponent_Conditional_3_Conditional_24_For_4_Conditional_2_Template, 2, 1, "p", 42);
+    \u0275\u0275elementStart(3, "p", 43);
     \u0275\u0275text(4);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(5, "p", 43);
+    \u0275\u0275elementStart(5, "p", 44);
     \u0275\u0275text(6);
     \u0275\u0275pipe(7, "date");
     \u0275\u0275elementEnd()()();
@@ -50213,11 +50218,11 @@ function SessionRoomComponent_Conditional_3_Conditional_24_For_4_Template(rf, ct
 function SessionRoomComponent_Conditional_3_Conditional_24_Template(rf, ctx) {
   if (rf & 1) {
     const _r6 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "div", 31, 0);
-    \u0275\u0275template(2, SessionRoomComponent_Conditional_3_Conditional_24_Conditional_2_Template, 5, 0, "div", 32);
-    \u0275\u0275repeaterCreate(3, SessionRoomComponent_Conditional_3_Conditional_24_For_4_Template, 8, 11, "div", 33, _forTrack019);
+    \u0275\u0275elementStart(0, "div", 32, 0);
+    \u0275\u0275template(2, SessionRoomComponent_Conditional_3_Conditional_24_Conditional_2_Template, 5, 0, "div", 33);
+    \u0275\u0275repeaterCreate(3, SessionRoomComponent_Conditional_3_Conditional_24_For_4_Template, 8, 11, "div", 34, _forTrack019);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(5, "div", 34)(6, "div", 35)(7, "textarea", 36);
+    \u0275\u0275elementStart(5, "div", 35)(6, "div", 36)(7, "textarea", 37);
     \u0275\u0275twoWayListener("ngModelChange", function SessionRoomComponent_Conditional_3_Conditional_24_Template_textarea_ngModelChange_7_listener($event) {
       \u0275\u0275restoreView(_r6);
       const ctx_r1 = \u0275\u0275nextContext(2);
@@ -50230,13 +50235,13 @@ function SessionRoomComponent_Conditional_3_Conditional_24_Template(rf, ctx) {
       return \u0275\u0275resetView(ctx_r1.onKeydown($event));
     });
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(8, "button", 37);
+    \u0275\u0275elementStart(8, "button", 38);
     \u0275\u0275listener("click", function SessionRoomComponent_Conditional_3_Conditional_24_Template_button_click_8_listener() {
       \u0275\u0275restoreView(_r6);
       const ctx_r1 = \u0275\u0275nextContext(2);
       return \u0275\u0275resetView(ctx_r1.sendMessage());
     });
-    \u0275\u0275elementStart(9, "mat-icon", 19);
+    \u0275\u0275elementStart(9, "mat-icon", 20);
     \u0275\u0275text(10, "send");
     \u0275\u0275elementEnd()()()();
   }
@@ -50253,72 +50258,71 @@ function SessionRoomComponent_Conditional_3_Conditional_24_Template(rf, ctx) {
     \u0275\u0275property("disabled", !ctx_r1.messageInput.trim() || !ctx_r1.sessionHub.isConnected());
   }
 }
-function SessionRoomComponent_Conditional_3_Conditional_25_Conditional_4_Template(rf, ctx) {
+function SessionRoomComponent_Conditional_3_Conditional_25_Conditional_5_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 44)(1, "mat-icon", 45);
+    \u0275\u0275elementStart(0, "div", 46)(1, "mat-icon", 47);
     \u0275\u0275text(2, "subtitles");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(3, "p", 46);
+    \u0275\u0275elementStart(3, "p", 48);
     \u0275\u0275text(4, "Live transcriptions of your video call appear here.");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(5, "p", 47);
+    \u0275\u0275elementStart(5, "p", 49);
     \u0275\u0275text(6, "Start the video to begin.");
     \u0275\u0275elementEnd()();
   }
 }
-function SessionRoomComponent_Conditional_3_Conditional_25_For_7_Template(rf, ctx) {
+function SessionRoomComponent_Conditional_3_Conditional_25_For_8_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 39)(1, "div", 40)(2, "p", 41);
-    \u0275\u0275text(3);
+    \u0275\u0275elementStart(0, "div")(1, "span", 50);
+    \u0275\u0275text(2);
+    \u0275\u0275pipe(3, "date");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(4, "p", 42);
+    \u0275\u0275elementStart(4, "span", 51);
     \u0275\u0275text(5);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(6, "p", 43);
+    \u0275\u0275elementStart(6, "span", 52);
     \u0275\u0275text(7);
-    \u0275\u0275pipe(8, "date");
-    \u0275\u0275elementEnd()()();
+    \u0275\u0275elementEnd()();
   }
   if (rf & 2) {
     const entry_r8 = ctx.$implicit;
     const ctx_r1 = \u0275\u0275nextContext(3);
-    \u0275\u0275classProp("justify-end", ctx_r1.isLocalSpeaker(entry_r8.speaker))("justify-start", !ctx_r1.isLocalSpeaker(entry_r8.speaker));
-    \u0275\u0275advance();
-    \u0275\u0275property("ngClass", ctx_r1.isLocalSpeaker(entry_r8.speaker) ? "bg-[var(--color-primary)] text-white rounded-br-sm" : "bg-white border border-gray-100 text-gray-800 rounded-bl-sm shadow-sm");
     \u0275\u0275advance(2);
-    \u0275\u0275textInterpolate1(" ", ctx_r1.resolveSpeakerName(entry_r8.speaker) || (ctx_r1.isLocalSpeaker(entry_r8.speaker) ? "You" : "Speaker"), " ");
+    \u0275\u0275textInterpolate1("[", \u0275\u0275pipeBind2(3, 4, entry_r8.timestamp, "HH:mm:ss"), "]");
+    \u0275\u0275advance(2);
+    \u0275\u0275property("ngClass", ctx_r1.isPsychologistSpeaker(entry_r8.speaker) ? "text-[var(--color-primary)]" : "text-[var(--color-success)]");
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate1("", ctx_r1.roleLabel(entry_r8.speaker), ":");
     \u0275\u0275advance(2);
     \u0275\u0275textInterpolate(entry_r8.text);
-    \u0275\u0275advance(2);
-    \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind2(8, 8, entry_r8.timestamp, "HH:mm:ss"), " ");
   }
 }
-function SessionRoomComponent_Conditional_3_Conditional_25_For_9_Conditional_0_Template(rf, ctx) {
+function SessionRoomComponent_Conditional_3_Conditional_25_For_10_Conditional_0_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 39)(1, "div", 48)(2, "p", 41);
-    \u0275\u0275text(3);
-    \u0275\u0275elementStart(4, "span", 49);
-    \u0275\u0275text(5, "\xB7 speaking\u2026");
+    \u0275\u0275elementStart(0, "div", 53)(1, "span", 50);
+    \u0275\u0275text(2, "[\u2026]");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(3, "span", 51);
+    \u0275\u0275text(4);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(5, "span", 54);
+    \u0275\u0275text(6);
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(6, "p", 42);
-    \u0275\u0275text(7);
-    \u0275\u0275elementEnd()()();
   }
   if (rf & 2) {
     const interim_r9 = \u0275\u0275nextContext().$implicit;
     const ctx_r1 = \u0275\u0275nextContext(3);
-    \u0275\u0275classProp("justify-end", ctx_r1.isLocalSpeaker(interim_r9.key))("justify-start", !ctx_r1.isLocalSpeaker(interim_r9.key));
+    \u0275\u0275advance(3);
+    \u0275\u0275property("ngClass", ctx_r1.isPsychologistSpeaker(interim_r9.key) ? "text-[var(--color-primary)]" : "text-[var(--color-success)]");
     \u0275\u0275advance();
-    \u0275\u0275property("ngClass", ctx_r1.isLocalSpeaker(interim_r9.key) ? "bg-[var(--color-primary)]/40 text-white rounded-br-sm" : "bg-gray-100 border border-gray-200 text-gray-700 rounded-bl-sm");
+    \u0275\u0275textInterpolate1("", ctx_r1.roleLabel(interim_r9.key), ":");
     \u0275\u0275advance(2);
-    \u0275\u0275textInterpolate1(" ", ctx_r1.resolveSpeakerName(interim_r9.key) || (ctx_r1.isLocalSpeaker(interim_r9.key) ? "You" : "Speaker"), " ");
-    \u0275\u0275advance(4);
     \u0275\u0275textInterpolate(interim_r9.value);
   }
 }
-function SessionRoomComponent_Conditional_3_Conditional_25_For_9_Template(rf, ctx) {
+function SessionRoomComponent_Conditional_3_Conditional_25_For_10_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275template(0, SessionRoomComponent_Conditional_3_Conditional_25_For_9_Conditional_0_Template, 8, 7, "div", 33);
+    \u0275\u0275template(0, SessionRoomComponent_Conditional_3_Conditional_25_For_10_Conditional_0_Template, 7, 3, "div", 53);
   }
   if (rf & 2) {
     const interim_r9 = ctx.$implicit;
@@ -50328,24 +50332,24 @@ function SessionRoomComponent_Conditional_3_Conditional_25_For_9_Template(rf, ct
 function SessionRoomComponent_Conditional_3_Conditional_25_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275declareLet(0)(1);
-    \u0275\u0275elementStart(2, "div", 26)(3, "div", 31);
-    \u0275\u0275template(4, SessionRoomComponent_Conditional_3_Conditional_25_Conditional_4_Template, 7, 0, "div", 44);
-    \u0275\u0275pipe(5, "keyvalue");
-    \u0275\u0275repeaterCreate(6, SessionRoomComponent_Conditional_3_Conditional_25_For_7_Template, 9, 11, "div", 33, _forTrack019);
-    \u0275\u0275repeaterCreate(8, SessionRoomComponent_Conditional_3_Conditional_25_For_9_Template, 1, 1, null, null, _forTrack15);
-    \u0275\u0275pipe(10, "keyvalue");
+    \u0275\u0275elementStart(2, "div", 27)(3, "div", 45, 1);
+    \u0275\u0275template(5, SessionRoomComponent_Conditional_3_Conditional_25_Conditional_5_Template, 7, 0, "div", 46);
+    \u0275\u0275pipe(6, "keyvalue");
+    \u0275\u0275repeaterCreate(7, SessionRoomComponent_Conditional_3_Conditional_25_For_8_Template, 8, 7, "div", null, _forTrack019);
+    \u0275\u0275repeaterCreate(9, SessionRoomComponent_Conditional_3_Conditional_25_For_10_Template, 1, 1, null, null, _forTrack15);
+    \u0275\u0275pipe(11, "keyvalue");
     \u0275\u0275elementEnd()();
   }
   if (rf & 2) {
     const ctx_r1 = \u0275\u0275nextContext(2);
     const finals_r10 = ctx_r1.transcripts.finals();
     const interims_r11 = ctx_r1.transcripts.interims();
-    \u0275\u0275advance(4);
-    \u0275\u0275conditional(finals_r10.length === 0 && \u0275\u0275pipeBind1(5, 1, interims_r11).length === 0 ? 4 : -1);
+    \u0275\u0275advance(5);
+    \u0275\u0275conditional(finals_r10.length === 0 && \u0275\u0275pipeBind1(6, 1, interims_r11).length === 0 ? 5 : -1);
     \u0275\u0275advance(2);
     \u0275\u0275repeater(finals_r10);
     \u0275\u0275advance(2);
-    \u0275\u0275repeater(\u0275\u0275pipeBind1(10, 3, interims_r11));
+    \u0275\u0275repeater(\u0275\u0275pipeBind1(11, 3, interims_r11));
   }
 }
 function SessionRoomComponent_Conditional_3_Conditional_26_Conditional_0_Case_8_Template(rf, ctx) {
@@ -50371,16 +50375,16 @@ function SessionRoomComponent_Conditional_3_Conditional_26_Conditional_0_Case_11
 function SessionRoomComponent_Conditional_3_Conditional_26_Conditional_0_Template(rf, ctx) {
   if (rf & 1) {
     const _r12 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "div", 25)(1, "div", 51)(2, "div", 52)(3, "mat-icon", 53);
+    \u0275\u0275elementStart(0, "div", 26)(1, "div", 56)(2, "div", 57)(3, "mat-icon", 58);
     \u0275\u0275text(4, "edit_note");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(5, "span", 54);
+    \u0275\u0275elementStart(5, "span", 59);
     \u0275\u0275text(6, "Private notes");
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(7, "span", 55);
+    \u0275\u0275elementStart(7, "span", 60);
     \u0275\u0275template(8, SessionRoomComponent_Conditional_3_Conditional_26_Conditional_0_Case_8_Template, 1, 0)(9, SessionRoomComponent_Conditional_3_Conditional_26_Conditional_0_Case_9_Template, 1, 0)(10, SessionRoomComponent_Conditional_3_Conditional_26_Conditional_0_Case_10_Template, 1, 0)(11, SessionRoomComponent_Conditional_3_Conditional_26_Conditional_0_Case_11_Template, 1, 0);
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(12, "textarea", 56);
+    \u0275\u0275elementStart(12, "textarea", 61);
     \u0275\u0275listener("ngModelChange", function SessionRoomComponent_Conditional_3_Conditional_26_Conditional_0_Template_textarea_ngModelChange_12_listener($event) {
       \u0275\u0275restoreView(_r12);
       const ctx_r1 = \u0275\u0275nextContext(3);
@@ -50392,7 +50396,7 @@ function SessionRoomComponent_Conditional_3_Conditional_26_Conditional_0_Templat
     let tmp_4_0;
     const ctx_r1 = \u0275\u0275nextContext(3);
     \u0275\u0275advance(7);
-    \u0275\u0275property("ngClass", \u0275\u0275pureFunction4(3, _c212, ctx_r1.noteSaveState() === "idle", ctx_r1.noteSaveState() === "saving", ctx_r1.noteSaveState() === "saved", ctx_r1.noteSaveState() === "error"));
+    \u0275\u0275property("ngClass", \u0275\u0275pureFunction4(3, _c39, ctx_r1.noteSaveState() === "idle", ctx_r1.noteSaveState() === "saving", ctx_r1.noteSaveState() === "saved", ctx_r1.noteSaveState() === "error"));
     \u0275\u0275advance();
     \u0275\u0275conditional((tmp_4_0 = ctx_r1.noteSaveState()) === "idle" ? 8 : tmp_4_0 === "saving" ? 9 : tmp_4_0 === "saved" ? 10 : tmp_4_0 === "error" ? 11 : -1);
     \u0275\u0275advance(4);
@@ -50401,20 +50405,20 @@ function SessionRoomComponent_Conditional_3_Conditional_26_Conditional_0_Templat
 }
 function SessionRoomComponent_Conditional_3_Conditional_26_Conditional_1_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 50)(1, "mat-icon", 57);
+    \u0275\u0275elementStart(0, "div", 55)(1, "mat-icon", 62);
     \u0275\u0275text(2, "lock");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(3, "h3", 58);
+    \u0275\u0275elementStart(3, "h3", 63);
     \u0275\u0275text(4, "Private notes");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(5, "p", 47);
+    \u0275\u0275elementStart(5, "p", 49);
     \u0275\u0275text(6, "Only the psychologist can write and view session notes.");
     \u0275\u0275elementEnd()();
   }
 }
 function SessionRoomComponent_Conditional_3_Conditional_26_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275template(0, SessionRoomComponent_Conditional_3_Conditional_26_Conditional_0_Template, 13, 8, "div", 25)(1, SessionRoomComponent_Conditional_3_Conditional_26_Conditional_1_Template, 7, 0, "div", 50);
+    \u0275\u0275template(0, SessionRoomComponent_Conditional_3_Conditional_26_Conditional_0_Template, 13, 8, "div", 26)(1, SessionRoomComponent_Conditional_3_Conditional_26_Conditional_1_Template, 7, 0, "div", 55);
   }
   if (rf & 2) {
     const ctx_r1 = \u0275\u0275nextContext(2);
@@ -50423,20 +50427,20 @@ function SessionRoomComponent_Conditional_3_Conditional_26_Template(rf, ctx) {
 }
 function SessionRoomComponent_Conditional_3_Conditional_27_Conditional_10_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 44)(1, "mat-icon", 45);
+    \u0275\u0275elementStart(0, "div", 46)(1, "mat-icon", 47);
     \u0275\u0275text(2, "auto_awesome");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(3, "p", 46);
+    \u0275\u0275elementStart(3, "p", 48);
     \u0275\u0275text(4, "Ask for techniques, questions, or session help.");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(5, "p", 47);
+    \u0275\u0275elementStart(5, "p", 49);
     \u0275\u0275text(6, "Only you can see this conversation.");
     \u0275\u0275elementEnd()();
   }
 }
 function SessionRoomComponent_Conditional_3_Conditional_27_For_12_Conditional_2_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "p", 42);
+    \u0275\u0275elementStart(0, "p", 43);
     \u0275\u0275text(1);
     \u0275\u0275elementEnd();
   }
@@ -50448,7 +50452,7 @@ function SessionRoomComponent_Conditional_3_Conditional_27_For_12_Conditional_2_
 }
 function SessionRoomComponent_Conditional_3_Conditional_27_For_12_Conditional_3_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275element(0, "markdown", 64);
+    \u0275\u0275element(0, "markdown", 69);
   }
   if (rf & 2) {
     const msg_r14 = \u0275\u0275nextContext().$implicit;
@@ -50457,9 +50461,9 @@ function SessionRoomComponent_Conditional_3_Conditional_27_For_12_Conditional_3_
 }
 function SessionRoomComponent_Conditional_3_Conditional_27_For_12_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 39)(1, "div", 40);
-    \u0275\u0275template(2, SessionRoomComponent_Conditional_3_Conditional_27_For_12_Conditional_2_Template, 2, 1, "p", 42)(3, SessionRoomComponent_Conditional_3_Conditional_27_For_12_Conditional_3_Template, 1, 1, "markdown", 64);
-    \u0275\u0275elementStart(4, "p", 43);
+    \u0275\u0275elementStart(0, "div", 40)(1, "div", 41);
+    \u0275\u0275template(2, SessionRoomComponent_Conditional_3_Conditional_27_For_12_Conditional_2_Template, 2, 1, "p", 43)(3, SessionRoomComponent_Conditional_3_Conditional_27_For_12_Conditional_3_Template, 1, 1, "markdown", 69);
+    \u0275\u0275elementStart(4, "p", 44);
     \u0275\u0275text(5);
     \u0275\u0275pipe(6, "date");
     \u0275\u0275elementEnd()()();
@@ -50477,8 +50481,8 @@ function SessionRoomComponent_Conditional_3_Conditional_27_For_12_Template(rf, c
 }
 function SessionRoomComponent_Conditional_3_Conditional_27_Conditional_13_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 62)(1, "div", 65)(2, "div", 66);
-    \u0275\u0275element(3, "span", 67)(4, "span", 68)(5, "span", 69);
+    \u0275\u0275elementStart(0, "div", 67)(1, "div", 70)(2, "div", 71);
+    \u0275\u0275element(3, "span", 72)(4, "span", 73)(5, "span", 74);
     \u0275\u0275elementEnd();
     \u0275\u0275text(6, " AI thinking\u2026 ");
     \u0275\u0275elementEnd()();
@@ -50487,21 +50491,21 @@ function SessionRoomComponent_Conditional_3_Conditional_27_Conditional_13_Templa
 function SessionRoomComponent_Conditional_3_Conditional_27_Template(rf, ctx) {
   if (rf & 1) {
     const _r13 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "div", 25)(1, "div", 59)(2, "mat-icon", 60);
+    \u0275\u0275elementStart(0, "div", 26)(1, "div", 64)(2, "mat-icon", 65);
     \u0275\u0275text(3, "smart_toy");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(4, "span", 54);
+    \u0275\u0275elementStart(4, "span", 59);
     \u0275\u0275text(5, "Personal AI Assistant");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(6, "span", 61);
+    \u0275\u0275elementStart(6, "span", 66);
     \u0275\u0275text(7, "\u2014 private to you, not visible to the client");
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(8, "div", 31, 1);
-    \u0275\u0275template(10, SessionRoomComponent_Conditional_3_Conditional_27_Conditional_10_Template, 7, 0, "div", 44);
-    \u0275\u0275repeaterCreate(11, SessionRoomComponent_Conditional_3_Conditional_27_For_12_Template, 7, 10, "div", 33, \u0275\u0275repeaterTrackByIndex);
-    \u0275\u0275template(13, SessionRoomComponent_Conditional_3_Conditional_27_Conditional_13_Template, 7, 0, "div", 62);
+    \u0275\u0275elementStart(8, "div", 32, 2);
+    \u0275\u0275template(10, SessionRoomComponent_Conditional_3_Conditional_27_Conditional_10_Template, 7, 0, "div", 46);
+    \u0275\u0275repeaterCreate(11, SessionRoomComponent_Conditional_3_Conditional_27_For_12_Template, 7, 10, "div", 34, \u0275\u0275repeaterTrackByIndex);
+    \u0275\u0275template(13, SessionRoomComponent_Conditional_3_Conditional_27_Conditional_13_Template, 7, 0, "div", 67);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(14, "div", 34)(15, "div", 35)(16, "textarea", 63);
+    \u0275\u0275elementStart(14, "div", 35)(15, "div", 36)(16, "textarea", 68);
     \u0275\u0275twoWayListener("ngModelChange", function SessionRoomComponent_Conditional_3_Conditional_27_Template_textarea_ngModelChange_16_listener($event) {
       \u0275\u0275restoreView(_r13);
       const ctx_r1 = \u0275\u0275nextContext(2);
@@ -50514,13 +50518,13 @@ function SessionRoomComponent_Conditional_3_Conditional_27_Template(rf, ctx) {
       return \u0275\u0275resetView(ctx_r1.onAiKeydown($event));
     });
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(17, "button", 37);
+    \u0275\u0275elementStart(17, "button", 38);
     \u0275\u0275listener("click", function SessionRoomComponent_Conditional_3_Conditional_27_Template_button_click_17_listener() {
       \u0275\u0275restoreView(_r13);
       const ctx_r1 = \u0275\u0275nextContext(2);
       return \u0275\u0275resetView(ctx_r1.sendAiMessage());
     });
-    \u0275\u0275elementStart(18, "mat-icon", 19);
+    \u0275\u0275elementStart(18, "mat-icon", 20);
     \u0275\u0275text(19, "send");
     \u0275\u0275elementEnd()()()()();
   }
@@ -50542,7 +50546,7 @@ function SessionRoomComponent_Conditional_3_Conditional_27_Template(rf, ctx) {
 function SessionRoomComponent_Conditional_3_Conditional_28_Template(rf, ctx) {
   if (rf & 1) {
     const _r15 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "div", 27)(1, "app-session-video-panel", 70);
+    \u0275\u0275elementStart(0, "div", 28)(1, "app-session-video-panel", 75);
     \u0275\u0275listener("closed", function SessionRoomComponent_Conditional_3_Conditional_28_Template_app_session_video_panel_closed_1_listener() {
       \u0275\u0275restoreView(_r15);
       const ctx_r1 = \u0275\u0275nextContext(2);
@@ -50559,44 +50563,44 @@ function SessionRoomComponent_Conditional_3_Conditional_28_Template(rf, ctx) {
 function SessionRoomComponent_Conditional_3_Template(rf, ctx) {
   if (rf & 1) {
     const _r3 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "div", 10)(1, "button", 11);
+    \u0275\u0275elementStart(0, "div", 11)(1, "button", 12);
     \u0275\u0275listener("click", function SessionRoomComponent_Conditional_3_Template_button_click_1_listener() {
       \u0275\u0275restoreView(_r3);
       const ctx_r1 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r1.goBack());
     });
-    \u0275\u0275elementStart(2, "mat-icon", 12);
+    \u0275\u0275elementStart(2, "mat-icon", 13);
     \u0275\u0275text(3, "arrow_back");
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(4, "div", 13)(5, "div", 14);
-    \u0275\u0275element(6, "span", 15);
-    \u0275\u0275elementStart(7, "p", 16);
+    \u0275\u0275elementStart(4, "div", 14)(5, "div", 15);
+    \u0275\u0275element(6, "span", 16);
+    \u0275\u0275elementStart(7, "p", 17);
     \u0275\u0275text(8);
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(9, "p", 17);
+    \u0275\u0275elementStart(9, "p", 18);
     \u0275\u0275text(10);
     \u0275\u0275pipe(11, "date");
     \u0275\u0275pipe(12, "date");
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(13, "button", 18);
+    \u0275\u0275elementStart(13, "button", 19);
     \u0275\u0275listener("click", function SessionRoomComponent_Conditional_3_Template_button_click_13_listener() {
       \u0275\u0275restoreView(_r3);
       const ctx_r1 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r1.toggleVideo());
     });
-    \u0275\u0275elementStart(14, "mat-icon", 19);
+    \u0275\u0275elementStart(14, "mat-icon", 20);
     \u0275\u0275text(15);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(16, "span", 20);
+    \u0275\u0275elementStart(16, "span", 21);
     \u0275\u0275text(17);
     \u0275\u0275elementEnd()()();
-    \u0275\u0275elementStart(18, "div", 21)(19, "div", 22)(20, "div", 23);
-    \u0275\u0275repeaterCreate(21, SessionRoomComponent_Conditional_3_For_22_Template, 5, 3, "button", 24, _forTrack019);
+    \u0275\u0275elementStart(18, "div", 22)(19, "div", 23)(20, "div", 24);
+    \u0275\u0275repeaterCreate(21, SessionRoomComponent_Conditional_3_For_22_Template, 5, 3, "button", 25, _forTrack019);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(23, "div", 25);
-    \u0275\u0275template(24, SessionRoomComponent_Conditional_3_Conditional_24_Template, 11, 5)(25, SessionRoomComponent_Conditional_3_Conditional_25_Template, 11, 5, "div", 26)(26, SessionRoomComponent_Conditional_3_Conditional_26_Template, 2, 1)(27, SessionRoomComponent_Conditional_3_Conditional_27_Template, 20, 5, "div", 25);
+    \u0275\u0275elementStart(23, "div", 26);
+    \u0275\u0275template(24, SessionRoomComponent_Conditional_3_Conditional_24_Template, 11, 5)(25, SessionRoomComponent_Conditional_3_Conditional_25_Template, 12, 5, "div", 27)(26, SessionRoomComponent_Conditional_3_Conditional_26_Template, 2, 1)(27, SessionRoomComponent_Conditional_3_Conditional_27_Template, 20, 5, "div", 26);
     \u0275\u0275elementEnd()();
-    \u0275\u0275template(28, SessionRoomComponent_Conditional_3_Conditional_28_Template, 2, 1, "div", 27);
+    \u0275\u0275template(28, SessionRoomComponent_Conditional_3_Conditional_28_Template, 2, 1, "div", 28);
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
@@ -50624,6 +50628,7 @@ function SessionRoomComponent_Conditional_3_Template(rf, ctx) {
 var SessionRoomComponent = class _SessionRoomComponent {
   messagesContainer;
   aiMessagesContainer;
+  transcriptsContainer;
   sessionInfo = signal(null);
   messages = signal([]);
   isLoading = signal(true);
@@ -50650,6 +50655,17 @@ var SessionRoomComponent = class _SessionRoomComponent {
   route = inject(ActivatedRoute);
   router = inject(Router);
   aiService = inject(AiService);
+  constructor() {
+    effect(() => {
+      const finals = this.transcripts.finals();
+      const interims = this.transcripts.interims();
+      void finals.length;
+      void Object.keys(interims).length;
+      if (this.activeTab() === "transcriptions") {
+        this.scrollTranscriptsToBottom();
+      }
+    });
+  }
   allTabs = [
     { id: "chat", label: "Chat", icon: "chat" },
     { id: "transcriptions", label: "Transcriptions", icon: "subtitles" },
@@ -50727,6 +50743,24 @@ var SessionRoomComponent = class _SessionRoomComponent {
   }
   isLocalSpeaker(speaker) {
     return speaker === "local";
+  }
+  isPsychologistSpeaker(speaker) {
+    const info = this.sessionInfo();
+    if (!info)
+      return false;
+    if (speaker === "local")
+      return this.myUserId === info.psychologistUserId;
+    return speaker === info.psychologistUserId;
+  }
+  roleLabel(speaker) {
+    return this.isPsychologistSpeaker(speaker) ? "Psychologist" : "Client";
+  }
+  scrollTranscriptsToBottom() {
+    setTimeout(() => {
+      const el = this.transcriptsContainer?.nativeElement;
+      if (el)
+        el.scrollTop = el.scrollHeight;
+    }, 50);
   }
   selectTab(tab) {
     this.activeTab.set(tab);
@@ -50862,16 +50896,18 @@ var SessionRoomComponent = class _SessionRoomComponent {
     if (rf & 1) {
       \u0275\u0275viewQuery(_c030, 5);
       \u0275\u0275viewQuery(_c118, 5);
+      \u0275\u0275viewQuery(_c212, 5);
     }
     if (rf & 2) {
       let _t;
       \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.messagesContainer = _t.first);
       \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.aiMessagesContainer = _t.first);
+      \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.transcriptsContainer = _t.first);
     }
-  }, standalone: false, decls: 4, vars: 1, consts: [["messagesContainer", ""], ["aiMessagesContainer", ""], [1, "flex", "flex-col", "h-full", "bg-gray-50"], [1, "flex-1", "flex", "items-center", "justify-center"], [1, "flex-1", "flex", "flex-col", "items-center", "justify-center", "gap-4", "text-center", "px-6"], ["diameter", "48"], [1, "text-6xl", "text-gray-300"], [1, "text-lg", "font-semibold", "text-gray-600"], [1, "text-sm", "text-gray-400"], [1, "mt-2", "px-5", "py-2", "bg-[var(--color-primary)]", "text-white", "rounded-xl", "text-sm", "font-medium", 3, "click"], [1, "flex", "items-center", "gap-2", "sm:gap-3", "px-2", "sm:px-4", "py-2", "sm:py-3", "bg-white", "border-b", "border-gray-100", "shadow-sm", "shrink-0"], ["title", "Back", 1, "w-9", "h-9", "flex", "items-center", "justify-center", "rounded-xl", "hover:bg-gray-100", "transition-colors", "shrink-0", 3, "click"], [1, "text-gray-500"], [1, "flex-1", "min-w-0"], [1, "flex", "items-center", "gap-1.5", "min-w-0"], [1, "w-1.5", "h-1.5", "rounded-full", "shrink-0", 3, "ngClass", "title"], [1, "font-semibold", "text-[var(--color-primary)]", "text-xs", "sm:text-sm", "truncate"], [1, "text-[10px]", "sm:text-xs", "text-gray-400", "truncate"], [1, "flex", "items-center", "gap-1.5", "px-2.5", "sm:px-3", "py-2", "text-xs", "sm:text-sm", "font-semibold", "rounded-xl", "transition-all", "shadow-sm", "shrink-0", 3, "click", "ngClass", "title"], [1, "text-base"], [1, "hidden", "sm:inline"], [1, "flex-1", "flex", "min-h-0", "relative"], [1, "flex", "flex-col", "min-w-0", "flex-1", "bg-gray-50"], [1, "flex", "items-center", "gap-0.5", "sm:gap-1", "px-2", "sm:px-3", "pt-1.5", "sm:pt-2", "bg-white", "border-b", "border-gray-100", "shrink-0", "overflow-x-auto", "custom-scroll"], [1, "flex", "items-center", "gap-1.5", "px-2.5", "sm:px-3", "py-2", "text-xs", "sm:text-sm", "font-medium", "rounded-t-lg", "transition-colors", "whitespace-nowrap", "border-b-2", 3, "ngClass"], [1, "flex-1", "flex", "flex-col", "min-h-0"], [1, "flex-1", "flex", "flex-col", "min-h-0", "bg-gray-50"], [1, "absolute", "inset-0", "z-[20]", "sm:static", "sm:inset-auto", "sm:z-auto", "sm:w-[360px]", "md:w-[420px]", "lg:w-[460px]", "shrink-0", "sm:border-l", "border-gray-200", "bg-gray-900"], [1, "flex", "items-center", "gap-1.5", "px-2.5", "sm:px-3", "py-2", "text-xs", "sm:text-sm", "font-medium", "rounded-t-lg", "transition-colors", "whitespace-nowrap", "border-b-2", 3, "click", "ngClass"], [1, "text-base", "shrink-0"], [1, "hidden", "xs:inline", "sm:inline"], [1, "flex-1", "overflow-y-auto", "px-3", "sm:px-4", "py-3", "sm:py-4", "space-y-2", "sm:space-y-3", "custom-scroll"], [1, "flex", "flex-col", "items-center", "justify-center", "h-full", "text-center"], [1, "flex", 3, "justify-end", "justify-start"], [1, "px-2", "sm:px-4", "py-2", "sm:py-3", "bg-white", "border-t", "border-gray-100", "shrink-0"], [1, "flex", "items-end", "gap-2", "bg-gray-50", "rounded-2xl", "px-3", "sm:px-4", "py-1.5", "sm:py-2", "border", "border-gray-200"], ["rows", "1", 1, "flex-1", "resize-none", "bg-transparent", "outline-none", "text-sm", "text-gray-800", "placeholder-gray-400", "max-h-28", "overflow-y-auto", "disabled:opacity-50", 3, "ngModelChange", "keydown", "ngModel", "placeholder", "disabled"], ["title", "Send", 1, "w-9", "h-9", "flex", "items-center", "justify-center", "rounded-xl", "bg-[var(--color-primary)]", "text-white", "disabled:opacity-40", "transition-all", "shrink-0", 3, "click", "disabled"], [1, "text-4xl", "text-gray-200", "mb-2"], [1, "flex"], [1, "max-w-[85%]", "sm:max-w-[75%]", "px-3", "sm:px-4", "py-2", "sm:py-2.5", "rounded-2xl", "text-sm", "leading-relaxed", "break-words", 3, "ngClass"], [1, "text-[10px]", "font-semibold", "mb-0.5", "opacity-60"], [1, "whitespace-pre-wrap"], [1, "text-[10px]", "mt-1", "opacity-50", "text-right"], [1, "flex", "flex-col", "items-center", "justify-center", "h-full", "text-center", "text-gray-400"], [1, "text-5xl", "text-gray-200", "mb-2"], [1, "text-sm"], [1, "text-xs", "mt-1"], [1, "max-w-[85%]", "sm:max-w-[75%]", "px-3", "sm:px-4", "py-2", "sm:py-2.5", "rounded-2xl", "text-sm", "leading-relaxed", "break-words", "italic", "opacity-70", 3, "ngClass"], [1, "ml-1", "normal-case"], [1, "flex-1", "flex", "flex-col", "items-center", "justify-center", "text-center", "px-6", "text-gray-400"], [1, "flex", "items-center", "justify-between", "px-4", "py-2", "bg-white", "border-b", "border-gray-100", "shrink-0"], [1, "flex", "items-center", "gap-2", "text-sm"], [1, "text-base", "text-gray-400"], [1, "font-semibold", "text-gray-700"], [1, "text-[11px]", "font-medium", 3, "ngClass"], ["placeholder", "Write your private notes here. Visible only to you. Auto-saves as you type.", 1, "flex-1", "resize-none", "bg-white", "text-sm", "text-gray-800", "placeholder-gray-400", "outline-none", "px-4", "py-3", "leading-relaxed", "custom-scroll", 3, "ngModelChange", "ngModel"], [1, "text-5xl", "text-gray-200", "mb-3"], [1, "text-sm", "font-semibold", "text-gray-500"], [1, "flex", "items-center", "gap-2", "px-4", "py-2", "bg-white", "border-b", "border-gray-100", "shrink-0", "text-sm"], [1, "text-base", "text-[var(--color-primary)]"], [1, "text-[11px]", "text-gray-400", "ml-1"], [1, "flex", "justify-start"], ["placeholder", "Ask the AI assistant\u2026", "rows", "1", 1, "flex-1", "resize-none", "bg-transparent", "outline-none", "text-sm", "text-gray-800", "placeholder-gray-400", "max-h-28", "overflow-y-auto", "disabled:opacity-50", 3, "ngModelChange", "keydown", "ngModel", "disabled"], [1, "text-sm", "leading-relaxed", "block", 3, "data"], [1, "bg-gray-100", "px-3", "py-2", "rounded-2xl", "text-xs", "text-gray-500", "flex", "items-center", "gap-2"], [1, "flex", "gap-1"], [1, "w-1", "h-1", "bg-gray-400", "rounded-full", "animate-bounce"], [1, "w-1", "h-1", "bg-gray-400", "rounded-full", "animate-bounce", "[animation-delay:0.2s]"], [1, "w-1", "h-1", "bg-gray-400", "rounded-full", "animate-bounce", "[animation-delay:0.4s]"], [3, "closed", "appointmentId"]], template: function SessionRoomComponent_Template(rf, ctx) {
+  }, standalone: false, decls: 4, vars: 1, consts: [["messagesContainer", ""], ["transcriptsContainer", ""], ["aiMessagesContainer", ""], [1, "flex", "flex-col", "h-full", "bg-gray-50"], [1, "flex-1", "flex", "items-center", "justify-center"], [1, "flex-1", "flex", "flex-col", "items-center", "justify-center", "gap-4", "text-center", "px-6"], ["diameter", "48"], [1, "text-6xl", "text-gray-300"], [1, "text-lg", "font-semibold", "text-gray-600"], [1, "text-sm", "text-gray-400"], [1, "mt-2", "px-5", "py-2", "bg-[var(--color-primary)]", "text-white", "rounded-xl", "text-sm", "font-medium", 3, "click"], [1, "flex", "items-center", "gap-2", "sm:gap-3", "px-2", "sm:px-4", "py-2", "sm:py-3", "bg-white", "border-b", "border-gray-100", "shadow-sm", "shrink-0"], ["title", "Back", 1, "w-9", "h-9", "flex", "items-center", "justify-center", "rounded-xl", "hover:bg-gray-100", "transition-colors", "shrink-0", 3, "click"], [1, "text-gray-500"], [1, "flex-1", "min-w-0"], [1, "flex", "items-center", "gap-1.5", "min-w-0"], [1, "w-1.5", "h-1.5", "rounded-full", "shrink-0", 3, "ngClass", "title"], [1, "font-semibold", "text-[var(--color-primary)]", "text-xs", "sm:text-sm", "truncate"], [1, "text-[10px]", "sm:text-xs", "text-gray-400", "truncate"], [1, "flex", "items-center", "gap-1.5", "px-2.5", "sm:px-3", "py-2", "text-xs", "sm:text-sm", "font-semibold", "rounded-xl", "transition-all", "shadow-sm", "shrink-0", 3, "click", "ngClass", "title"], [1, "text-base"], [1, "hidden", "sm:inline"], [1, "flex-1", "flex", "min-h-0", "relative"], [1, "flex", "flex-col", "min-w-0", "flex-1", "bg-gray-50"], [1, "flex", "items-center", "gap-0.5", "sm:gap-1", "px-2", "sm:px-3", "pt-1.5", "sm:pt-2", "bg-white", "border-b", "border-gray-100", "shrink-0", "overflow-x-auto", "custom-scroll"], [1, "flex", "items-center", "gap-1.5", "px-2.5", "sm:px-3", "py-2", "text-xs", "sm:text-sm", "font-medium", "rounded-t-lg", "transition-colors", "whitespace-nowrap", "border-b-2", 3, "ngClass"], [1, "flex-1", "flex", "flex-col", "min-h-0"], [1, "flex-1", "flex", "flex-col", "min-h-0", "bg-gray-50", "p-3", "sm:p-4"], [1, "absolute", "inset-0", "z-[20]", "sm:static", "sm:inset-auto", "sm:z-auto", "sm:w-[360px]", "md:w-[420px]", "lg:w-[460px]", "shrink-0", "sm:border-l", "border-gray-200", "bg-gray-900"], [1, "flex", "items-center", "gap-1.5", "px-2.5", "sm:px-3", "py-2", "text-xs", "sm:text-sm", "font-medium", "rounded-t-lg", "transition-colors", "whitespace-nowrap", "border-b-2", 3, "click", "ngClass"], [1, "text-base", "shrink-0"], [1, "hidden", "xs:inline", "sm:inline"], [1, "flex-1", "overflow-y-auto", "px-3", "sm:px-4", "py-3", "sm:py-4", "space-y-2", "sm:space-y-3", "custom-scroll"], [1, "flex", "flex-col", "items-center", "justify-center", "h-full", "text-center"], [1, "flex", 3, "justify-end", "justify-start"], [1, "px-2", "sm:px-4", "py-2", "sm:py-3", "bg-white", "border-t", "border-gray-100", "shrink-0"], [1, "flex", "items-end", "gap-2", "bg-gray-50", "rounded-2xl", "px-3", "sm:px-4", "py-1.5", "sm:py-2", "border", "border-gray-200"], ["rows", "1", 1, "flex-1", "resize-none", "bg-transparent", "outline-none", "text-sm", "text-gray-800", "placeholder-gray-400", "max-h-28", "overflow-y-auto", "disabled:opacity-50", 3, "ngModelChange", "keydown", "ngModel", "placeholder", "disabled"], ["title", "Send", 1, "w-9", "h-9", "flex", "items-center", "justify-center", "rounded-xl", "bg-[var(--color-primary)]", "text-white", "disabled:opacity-40", "transition-all", "shrink-0", 3, "click", "disabled"], [1, "text-4xl", "text-gray-200", "mb-2"], [1, "flex"], [1, "max-w-[85%]", "sm:max-w-[75%]", "px-3", "sm:px-4", "py-2", "sm:py-2.5", "rounded-2xl", "text-sm", "leading-relaxed", "break-words", 3, "ngClass"], [1, "text-[10px]", "font-semibold", "mb-0.5", "opacity-60"], [1, "whitespace-pre-wrap"], [1, "text-[10px]", "mt-1", "opacity-50", "text-right"], [1, "flex-1", "min-h-0", "overflow-y-auto", "custom-scroll", "bg-white", "border", "border-gray-100", "rounded-2xl", "shadow-sm", "p-3", "sm:p-4", "font-mono", "text-[13px]", "leading-snug"], [1, "flex", "flex-col", "items-center", "justify-center", "h-full", "text-center", "text-gray-400"], [1, "text-5xl", "text-gray-200", "mb-2"], [1, "text-sm"], [1, "text-xs", "mt-1"], [1, "text-gray-400"], [1, "ml-1.5", "font-semibold", 3, "ngClass"], [1, "ml-1", "text-gray-800", "whitespace-pre-wrap", "break-words"], [1, "italic", "opacity-60"], [1, "ml-1", "text-gray-700", "whitespace-pre-wrap", "break-words"], [1, "flex-1", "flex", "flex-col", "items-center", "justify-center", "text-center", "px-6", "text-gray-400"], [1, "flex", "items-center", "justify-between", "px-4", "py-2", "bg-white", "border-b", "border-gray-100", "shrink-0"], [1, "flex", "items-center", "gap-2", "text-sm"], [1, "text-base", "text-gray-400"], [1, "font-semibold", "text-gray-700"], [1, "text-[11px]", "font-medium", 3, "ngClass"], ["placeholder", "Write your private notes here. Visible only to you. Auto-saves as you type.", 1, "flex-1", "resize-none", "bg-white", "text-sm", "text-gray-800", "placeholder-gray-400", "outline-none", "px-4", "py-3", "leading-relaxed", "custom-scroll", 3, "ngModelChange", "ngModel"], [1, "text-5xl", "text-gray-200", "mb-3"], [1, "text-sm", "font-semibold", "text-gray-500"], [1, "flex", "items-center", "gap-2", "px-4", "py-2", "bg-white", "border-b", "border-gray-100", "shrink-0", "text-sm"], [1, "text-base", "text-[var(--color-primary)]"], [1, "text-[11px]", "text-gray-400", "ml-1"], [1, "flex", "justify-start"], ["placeholder", "Ask the AI assistant\u2026", "rows", "1", 1, "flex-1", "resize-none", "bg-transparent", "outline-none", "text-sm", "text-gray-800", "placeholder-gray-400", "max-h-28", "overflow-y-auto", "disabled:opacity-50", 3, "ngModelChange", "keydown", "ngModel", "disabled"], [1, "text-sm", "leading-relaxed", "block", 3, "data"], [1, "bg-gray-100", "px-3", "py-2", "rounded-2xl", "text-xs", "text-gray-500", "flex", "items-center", "gap-2"], [1, "flex", "gap-1"], [1, "w-1", "h-1", "bg-gray-400", "rounded-full", "animate-bounce"], [1, "w-1", "h-1", "bg-gray-400", "rounded-full", "animate-bounce", "[animation-delay:0.2s]"], [1, "w-1", "h-1", "bg-gray-400", "rounded-full", "animate-bounce", "[animation-delay:0.4s]"], [3, "closed", "appointmentId"]], template: function SessionRoomComponent_Template(rf, ctx) {
     if (rf & 1) {
-      \u0275\u0275elementStart(0, "div", 2);
-      \u0275\u0275template(1, SessionRoomComponent_Conditional_1_Template, 2, 0, "div", 3)(2, SessionRoomComponent_Conditional_2_Template, 9, 0, "div", 4)(3, SessionRoomComponent_Conditional_3_Template, 29, 17);
+      \u0275\u0275elementStart(0, "div", 3);
+      \u0275\u0275template(1, SessionRoomComponent_Conditional_1_Template, 2, 0, "div", 4)(2, SessionRoomComponent_Conditional_2_Template, 9, 0, "div", 5)(3, SessionRoomComponent_Conditional_3_Template, 29, 17);
       \u0275\u0275elementEnd();
     }
     if (rf & 2) {
@@ -51035,8 +51071,11 @@ var SessionRoomComponent = class _SessionRoomComponent {
           @else if (activeTab() === 'transcriptions') {
             @let finals = transcripts.finals();
             @let interims = transcripts.interims();
-            <div class="flex-1 flex flex-col min-h-0 bg-gray-50">
-              <div class="flex-1 overflow-y-auto px-3 sm:px-4 py-3 sm:py-4 space-y-2 sm:space-y-3 custom-scroll">
+            <div class="flex-1 flex flex-col min-h-0 bg-gray-50 p-3 sm:p-4">
+              <div
+                #transcriptsContainer
+                class="flex-1 min-h-0 overflow-y-auto custom-scroll bg-white border border-gray-100 rounded-2xl shadow-sm p-3 sm:p-4 font-mono text-[13px] leading-snug"
+              >
                 @if (finals.length === 0 && (interims | keyvalue).length === 0) {
                   <div class="flex flex-col items-center justify-center h-full text-center text-gray-400">
                     <mat-icon class="text-5xl text-gray-200 mb-2">subtitles</mat-icon>
@@ -51046,47 +51085,25 @@ var SessionRoomComponent = class _SessionRoomComponent {
                 }
 
                 @for (entry of finals; track entry.id) {
-                  <div
-                    class="flex"
-                    [class.justify-end]="isLocalSpeaker(entry.speaker)"
-                    [class.justify-start]="!isLocalSpeaker(entry.speaker)"
-                  >
-                    <div
-                      class="max-w-[85%] sm:max-w-[75%] px-3 sm:px-4 py-2 sm:py-2.5 rounded-2xl text-sm leading-relaxed break-words"
-                      [ngClass]="isLocalSpeaker(entry.speaker)
-                        ? 'bg-[var(--color-primary)] text-white rounded-br-sm'
-                        : 'bg-white border border-gray-100 text-gray-800 rounded-bl-sm shadow-sm'"
-                    >
-                      <p class="text-[10px] font-semibold mb-0.5 opacity-60">
-                        {{ resolveSpeakerName(entry.speaker) || (isLocalSpeaker(entry.speaker) ? 'You' : 'Speaker') }}
-                      </p>
-                      <p class="whitespace-pre-wrap">{{ entry.text }}</p>
-                      <p class="text-[10px] mt-1 opacity-50 text-right">
-                        {{ entry.timestamp | date:'HH:mm:ss' }}
-                      </p>
-                    </div>
+                  <div>
+                    <span class="text-gray-400">[{{ entry.timestamp | date:'HH:mm:ss' }}]</span>
+                    <span
+                      class="ml-1.5 font-semibold"
+                      [ngClass]="isPsychologistSpeaker(entry.speaker) ? 'text-[var(--color-primary)]' : 'text-[var(--color-success)]'"
+                    >{{ roleLabel(entry.speaker) }}:</span>
+                    <span class="ml-1 text-gray-800 whitespace-pre-wrap break-words">{{ entry.text }}</span>
                   </div>
                 }
 
                 @for (interim of interims | keyvalue; track interim.key) {
                   @if (interim.value) {
-                    <div
-                      class="flex"
-                      [class.justify-end]="isLocalSpeaker(interim.key)"
-                      [class.justify-start]="!isLocalSpeaker(interim.key)"
-                    >
-                      <div
-                        class="max-w-[85%] sm:max-w-[75%] px-3 sm:px-4 py-2 sm:py-2.5 rounded-2xl text-sm leading-relaxed break-words italic opacity-70"
-                        [ngClass]="isLocalSpeaker(interim.key)
-                          ? 'bg-[var(--color-primary)]/40 text-white rounded-br-sm'
-                          : 'bg-gray-100 border border-gray-200 text-gray-700 rounded-bl-sm'"
-                      >
-                        <p class="text-[10px] font-semibold mb-0.5 opacity-60">
-                          {{ resolveSpeakerName(interim.key) || (isLocalSpeaker(interim.key) ? 'You' : 'Speaker') }}
-                          <span class="ml-1 normal-case">\xB7 speaking\u2026</span>
-                        </p>
-                        <p class="whitespace-pre-wrap">{{ interim.value }}</p>
-                      </div>
+                    <div class="italic opacity-60">
+                      <span class="text-gray-400">[\u2026]</span>
+                      <span
+                        class="ml-1.5 font-semibold"
+                        [ngClass]="isPsychologistSpeaker(interim.key) ? 'text-[var(--color-primary)]' : 'text-[var(--color-success)]'"
+                      >{{ roleLabel(interim.key) }}:</span>
+                      <span class="ml-1 text-gray-700 whitespace-pre-wrap break-words">{{ interim.value }}</span>
                     </div>
                   }
                 }
@@ -51236,16 +51253,19 @@ var SessionRoomComponent = class _SessionRoomComponent {
 
 </div>
 `, styles: ["/* src/app/modules/session/pages/session-room/session-room.component.scss */\n:host {\n  display: block;\n  height: 100%;\n}\n/*# sourceMappingURL=session-room.component.css.map */\n"] }]
-  }], null, { messagesContainer: [{
+  }], () => [], { messagesContainer: [{
     type: ViewChild,
     args: ["messagesContainer"]
   }], aiMessagesContainer: [{
     type: ViewChild,
     args: ["aiMessagesContainer"]
+  }], transcriptsContainer: [{
+    type: ViewChild,
+    args: ["transcriptsContainer"]
   }] });
 })();
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(SessionRoomComponent, { className: "SessionRoomComponent", filePath: "src/app/modules/session/pages/session-room/session-room.component.ts", lineNumber: 30 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(SessionRoomComponent, { className: "SessionRoomComponent", filePath: "src/app/modules/session/pages/session-room/session-room.component.ts", lineNumber: 31 });
 })();
 
 // src/app/app.routing.module.ts

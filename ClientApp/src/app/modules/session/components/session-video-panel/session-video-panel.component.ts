@@ -231,7 +231,11 @@ export class SessionVideoPanelComponent implements OnInit, AfterViewInit, OnDest
     if (!navigator.mediaDevices?.getUserMedia) return;
     try {
       this.localStream = await navigator.mediaDevices.getUserMedia({
-        audio: true,
+        audio: {
+          echoCancellation: true,
+          noiseSuppression: true,
+          autoGainControl: true,
+        },
         video: { facingMode: 'user' },
       });
       if (this.localVideoEl?.nativeElement) {
