@@ -27,7 +27,5 @@ jobs:
             
             docker compose build --no-cache
             docker compose up -d
-
-	          docker compose exec -T nginx nginx -s reload
-
+            docker compose exec -T nginx nginx -s reload
             docker image prune -f
