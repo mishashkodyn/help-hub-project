@@ -1,0 +1,352 @@
+<ng-container *transloco="let t">
+  <div class="md:p-6 bg-gray-50 min-h-screen font-sans">
+    <div class="max-w-7xl mx-auto">
+      <a
+        routerLink="/admin"
+        class="inline-flex items-center gap-1 text-gray-500 hover:text-[var(--color-primary)] p-3 md:p-0 transition-colors text-sm font-medium md:mb-6 cursor-pointer w-fit"
+      >
+        <mat-icon class="scale-90">arrow_back</mat-icon>
+        {{ t("category_application.admin.back") }}
+      </a>
+      <div
+        class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 px-3 md:px-0 mb-8"
+      >
+        <h1
+          class="text-3xl font-bold text-[var(--color-primary)] tracking-tight"
+        >
+          {{ t("category_application.admin.title") }}
+        </h1>
+        <span
+          class="bg-[var(--color-mint)] text-[var(--color-success)] px-4 py-1.5 rounded-full text-sm font-semibold shadow-sm"
+        >
+          {{
+            t("category_application.admin.filtered_of", {
+              filtered: filtered.length,
+              total: applications.length,
+            })
+          }}
+        </span>
+      </div>
+
+      <div
+        class="bg-white p-4 md:rounded-2xl shadow-sm border border-gray-100 md:mb-6 flex flex-col md:flex-row gap-4 items-center justify-between"
+      >
+        <div class="relative w-full md:max-w-md">
+          <mat-icon
+            class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+            >search</mat-icon
+          >
+          <input
+            type="text"
+            (input)="onSearch($event)"
+            [placeholder]="t('category_application.admin.search_placeholder')"
+            class="w-full pl-10 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-mint)] focus:bg-white transition-all text-sm"
+          />
+        </div>
+
+        <div
+          class="flex gap-2 w-full md:w-auto overflow-x-auto pb-1 md:pb-0 custom-scroll"
+        >
+          @for (status of availableStatuses; track status) {
+            <button
+              (click)="setStatusFilter(status)"
+              class="px-4 py-2 rounded-xl text-sm font-medium transition-all shrink-0 cursor-pointer border"
+              [ngClass]="
+                statusFilter === status
+                  ? 'bg-[var(--color-primary)] text-white border-[var(--color-primary)] shadow-md shadow-gray-200'
+                  : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50 hover:border-gray-300'
+              "
+            >
+              @switch (status) {
+                @case ('All') { {{ t("admin.all") }} }
+                @case ('Pending') { {{ t("category_application.admin.status_pending") }} }
+                @case ('Approved') { {{ t("category_application.admin.status_approved") }} }
+                @case ('Rejected') { {{ t("category_application.admin.status_rejected") }} }
+              }
+            </button>
+          }
+        </div>
+      </div>
+
+      @if (isLoading) {
+        <div class="flex justify-center items-center h-64">
+          <app-loading-spinner></app-loading-spinner>
+        </div>
+      } @else if (applications.length === 0) {
+        <div
+          class="bg-white md:rounded-2xl shadow-sm border border-gray-100 p-12 text-center"
+        >
+          <mat-icon class="text-gray-300 text-6xl w-16 h-16 mb-4"
+            >inbox</mat-icon
+          >
+          <h3 class="text-xl font-medium text-gray-600">
+            {{ t("category_application.admin.empty_title") }}
+          </h3>
+          <p class="text-gray-400 mt-2">
+            {{ t("category_application.admin.empty_subtitle") }}
+          </p>
+        </div>
+      } @else if (filtered.length === 0) {
+        <div
+          class="bg-white md:rounded-2xl shadow-sm border border-gray-100 p-12 text-center"
+        >
+          <mat-icon class="text-gray-300 text-6xl w-16 h-16 mb-4"
+            >search_off</mat-icon
+          >
+          <h3 class="text-xl font-medium text-gray-600">
+            {{ t("category_application.admin.no_match") }}
+          </h3>
+        </div>
+      } @else {
+        <div
+          class="bg-white md:rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-300 overflow-hidden"
+        >
+          <div class="overflow-auto custom-scroll max-h-[600px]">
+            <table class="w-full text-left table-fixed min-w-[900px]">
+              <thead class="z-10 bg-gray-200 shadow-sm">
+                <tr
+                  class="border-b border-gray-300 text-gray-500 text-sm uppercase tracking-wider"
+                >
+                  <th class="px-3 py-2 w-3/12">
+                    {{ t("category_application.admin.user") }}
+                  </th>
+                  <th class="px-3 py-2 w-2/12">
+                    {{ t("category_application.admin.category") }}
+                  </th>
+                  <th class="px-3 py-2 w-3/12">
+                    {{ t("category_application.admin.comment") }}
+                  </th>
+                  <th class="px-3 py-2 w-2/12">
+                    {{ t("category_application.admin.status") }}
+                  </th>
+                  <th class="px-3 py-2 w-1/12">
+                    {{ t("category_application.admin.date") }}
+                  </th>
+                  <th class="px-3 py-2 w-1/12">
+                    {{ t("category_application.admin.actions") }}
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-100">
+                @for (app of filtered; track app.id) {
+                  <tr
+                    class="even:bg-gray-100 odd:bg-gray-50/50 hover:bg-gray-200 border-b border-gray-300 transition-colors"
+                  >
+                    <td class="px-3 py-2 overflow-hidden">
+                      <div class="font-medium text-gray-800 truncate">
+                        {{ app.firstName }} {{ app.lastName }}
+                      </div>
+                      <div
+                        class="text-sm text-gray-500 truncate"
+                        [title]="app.email"
+                      >
+                        {{ app.email }}
+                      </div>
+                    </td>
+
+                    <td class="px-3 py-2">
+                      <span class="text-sm text-gray-800 font-medium">
+                        {{ app.requestedCategoryName }}
+                      </span>
+                    </td>
+
+                    <td
+                      class="px-3 py-2 text-sm text-gray-700 truncate"
+                      [title]="app.comment"
+                    >
+                      {{ app.comment || "—" }}
+                    </td>
+
+                    <td class="px-3 py-2">
+                      @switch (app.status) {
+                        @case ("Pending") {
+                          <span
+                            class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-amber-50 text-amber-700 border border-amber-200"
+                          >
+                            <span
+                              class="w-1.5 h-1.5 rounded-full bg-amber-500"
+                            ></span>
+                            {{ t("category_application.admin.status_pending") }}
+                          </span>
+                        }
+                        @case ("Approved") {
+                          <span
+                            class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200"
+                          >
+                            <span
+                              class="w-1.5 h-1.5 rounded-full bg-emerald-500"
+                            ></span>
+                            {{ t("category_application.admin.status_approved") }}
+                          </span>
+                        }
+                        @case ("Rejected") {
+                          <span
+                            class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-red-50 text-red-700 border border-red-200"
+                          >
+                            <span
+                              class="w-1.5 h-1.5 rounded-full bg-red-500"
+                            ></span>
+                            {{ t("category_application.admin.status_rejected") }}
+                          </span>
+                        }
+                      }
+                    </td>
+
+                    <td class="px-3 py-2 text-sm text-gray-500">
+                      {{ app.createdAt | date: "MMM d, yyyy" }}
+                    </td>
+
+                    <td class="px-3 py-2">
+                      <button
+                        (click)="startReview(app)"
+                        class="px-4 py-2 bg-white border border-gray-200 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-50 hover:border-[var(--color-mint)] hover:text-[var(--color-success)] transition-all cursor-pointer"
+                      >
+                        {{ t("category_application.admin.review") }}
+                      </button>
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+
+  @if (reviewing) {
+    <div
+      class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4"
+      (click)="cancelReview()"
+    >
+      <div
+        (click)="$event.stopPropagation()"
+        class="bg-white rounded-2xl shadow-2xl max-w-lg w-full p-6 sm:p-8 space-y-4"
+      >
+        <div class="flex items-start justify-between">
+          <div>
+            <h2 class="text-lg font-bold text-gray-900">
+              {{ t("category_application.admin.modal_title") }}
+            </h2>
+            <p class="text-sm text-gray-500 mt-1">
+              {{ reviewing.firstName }} {{ reviewing.lastName }} ·
+              {{ reviewing.email }}
+            </p>
+          </div>
+          <button
+            type="button"
+            (click)="cancelReview()"
+            class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors cursor-pointer"
+          >
+            <mat-icon class="text-[18px]">close</mat-icon>
+          </button>
+        </div>
+
+        <button
+          type="button"
+          (click)="openChatWithApplicant(reviewing)"
+          class="w-full inline-flex items-center justify-center gap-2 h-10 px-4 rounded-xl bg-[var(--color-mint)]/30 hover:bg-[var(--color-mint)]/50 text-[var(--color-success)] text-sm font-semibold transition-colors cursor-pointer"
+        >
+          <mat-icon class="text-[18px]">chat</mat-icon>
+          {{ t("category_application.admin.modal_open_chat") }}
+        </button>
+
+        <div class="bg-gray-50 border border-gray-100 rounded-xl p-4 space-y-2">
+          <div class="flex justify-between text-sm">
+            <span class="text-gray-500">{{
+              t("category_application.admin.modal_category")
+            }}</span>
+            <span class="font-semibold text-gray-900">{{
+              reviewing.requestedCategoryName
+            }}</span>
+          </div>
+          <div class="flex justify-between text-sm">
+            <span class="text-gray-500">{{
+              t("category_application.admin.modal_submitted_at")
+            }}</span>
+            <span class="text-gray-800">{{
+              reviewing.createdAt | date: "MMM d, yyyy HH:mm"
+            }}</span>
+          </div>
+        </div>
+
+        <div>
+          <p class="text-xs uppercase tracking-wider text-gray-400 mb-1">
+            {{ t("category_application.admin.modal_user_comment") }}
+          </p>
+          <p
+            class="text-sm text-gray-800 leading-relaxed whitespace-pre-line bg-gray-50 border border-gray-100 rounded-xl p-3"
+          >
+            {{ reviewing.comment || "—" }}
+          </p>
+        </div>
+
+        @if (reviewing.documentUrls.length) {
+          <div>
+            <p class="text-xs uppercase tracking-wider text-gray-400 mb-1">
+              {{ t("category_application.admin.modal_documents") }}
+            </p>
+            <ul class="space-y-1.5">
+              @for (
+                url of reviewing.documentUrls;
+                track url;
+                let i = $index
+              ) {
+                <li>
+                  <a
+                    [href]="url"
+                    target="_blank"
+                    rel="noopener"
+                    class="inline-flex items-center gap-2 text-sm text-[var(--color-primary)] hover:underline"
+                  >
+                    <mat-icon class="text-[16px]">description</mat-icon>
+                    {{
+                      t("category_application.admin.modal_document_label", {
+                        index: i + 1,
+                      })
+                    }}
+                  </a>
+                </li>
+              }
+            </ul>
+          </div>
+        }
+
+        @if (reviewing.status === 'Pending') {
+          <div>
+            <label class="block text-sm font-semibold text-gray-900 mb-1">
+              {{ t("category_application.admin.modal_rejection_label") }}
+            </label>
+            <textarea
+              rows="3"
+              [(ngModel)]="rejectionReason"
+              [placeholder]="
+                t('category_application.admin.modal_rejection_placeholder')
+              "
+              class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-mint)] focus:bg-white transition-all text-sm resize-none"
+            ></textarea>
+          </div>
+
+          <div class="flex justify-end gap-2 pt-2">
+            <button
+              type="button"
+              (click)="reject()"
+              [disabled]="isSubmittingReview"
+              class="inline-flex items-center justify-center h-10 px-5 rounded-full border border-rose-200 text-rose-700 bg-rose-50 hover:bg-rose-100 text-sm font-medium transition-colors cursor-pointer disabled:opacity-50"
+            >
+              {{ t("category_application.admin.modal_reject") }}
+            </button>
+            <button
+              type="button"
+              (click)="approve()"
+              [disabled]="isSubmittingReview"
+              class="inline-flex items-center justify-center h-10 px-5 rounded-full bg-gray-900 hover:bg-black text-white text-sm font-medium transition-colors cursor-pointer disabled:opacity-50"
+            >
+              {{ t("category_application.admin.modal_approve") }}
+            </button>
+          </div>
+        }
+      </div>
+    </div>
+  }
+</ng-container>

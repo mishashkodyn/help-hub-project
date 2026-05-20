@@ -1,43 +1,45 @@
-<div class="p-6 sm:p-10 bg-gray-50 min-h-screen font-sans">
-  <div class="max-w-7xl mx-auto">
-    
-    <div class="mb-8">
-      <h1 class="text-3xl font-bold text-[var(--color-primary)] tracking-tight">
-        Admin Dashboard
-      </h1>
-      <p class="text-gray-500 mt-2">
-        Manage users, applications, and platform settings.
-      </p>
-    </div>
+<ng-container *transloco="let t">
+  <div class="p-6 sm:p-10 bg-gray-50 min-h-screen font-sans">
+    <div class="max-w-7xl mx-auto">
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-      
-      @for (card of adminCards(); track card.route) {
-        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 flex flex-col hover:shadow-md hover:border-mint transition-all group">
-          
-          <div 
-            class="w-12 h-12 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform"
-            [ngClass]="[card.iconBgClass, card.iconTextClass]"
-          >
-            <mat-icon>{{ card.icon }}</mat-icon>
+      <div class="mb-8">
+        <h1 class="text-3xl font-bold text-[var(--color-primary)] tracking-tight">
+          {{ t('admin.dashboard.title') }}
+        </h1>
+        <p class="text-gray-500 mt-2">
+          {{ t('admin.dashboard.subtitle') }}
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+        @for (card of adminCards(); track card.route) {
+          <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 flex flex-col hover:shadow-md hover:border-mint transition-all group">
+
+            <div
+              class="w-12 h-12 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform"
+              [ngClass]="[card.iconBgClass, card.iconTextClass]"
+            >
+              <mat-icon>{{ card.icon }}</mat-icon>
+            </div>
+
+            <h3 class="text-lg font-bold text-gray-800 mb-2">{{ t(card.titleKey) }}</h3>
+
+            <p class="text-gray-500 text-sm mb-6 flex-grow">
+              {{ t(card.descriptionKey) }}
+            </p>
+
+            <button
+              [routerLink]="card.route"
+              class="w-full py-2.5 bg-gray-50 text-[var(--color-primary)] font-semibold rounded-xl hover:bg-[var(--color-primary)] hover:text-white transition-colors"
+            >
+              {{ t(card.buttonKey) }}
+            </button>
+
           </div>
-          
-          <h3 class="text-lg font-bold text-gray-800 mb-2">{{ card.title }}</h3>
-          
-          <p class="text-gray-500 text-sm mb-6 flex-grow">
-            {{ card.description }}
-          </p>
-          
-          <button 
-            [routerLink]="card.route" 
-            class="w-full py-2.5 bg-gray-50 text-[var(--color-primary)] font-semibold rounded-xl hover:bg-[var(--color-primary)] hover:text-white transition-colors"
-          >
-            {{ card.buttonText }}
-          </button>
-          
-        </div>
-      }
+        }
 
+      </div>
     </div>
   </div>
-</div>
+</ng-container>

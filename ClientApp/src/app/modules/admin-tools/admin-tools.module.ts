@@ -12,6 +12,9 @@ import { SpecializationDialogComponent } from './components/specialization-dialo
 import { ReactiveFormsModule } from '@angular/forms';
 import { UsersPageComponent } from './pages/users-page/users-page.component';
 import { SharedModule } from '../shared/shared.module';
+import { FormsModule } from '@angular/forms';
+import { UserCategoryApplicationsPageComponent } from './pages/user-category-applications-page/user-category-applications-page.component';
+import { TranslocoModule } from '@ngneat/transloco';
 
 
 
@@ -22,7 +25,8 @@ import { SharedModule } from '../shared/shared.module';
     ApplicationDetailsDialogComponent,
     ManageSpecializationsComponent,
     SpecializationDialogComponent,
-    UsersPageComponent
+    UsersPageComponent,
+    UserCategoryApplicationsPageComponent
   ],
   imports: [
     CommonModule,
@@ -32,7 +36,9 @@ import { SharedModule } from '../shared/shared.module';
     MatDialogContent,
     RouterModule,
     ReactiveFormsModule,
-    SharedModule
+    FormsModule,
+    SharedModule,
+    TranslocoModule
   ]
 })
 export class AdminToolsModule { }

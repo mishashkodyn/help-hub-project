@@ -1,5 +1,14 @@
 import { Component, signal } from '@angular/core';
-import { DashboardCardItem } from '../../../../api/models/menu-item';
+
+export interface AdminDashboardCard {
+  icon: string;
+  titleKey: string;
+  descriptionKey: string;
+  buttonKey: string;
+  route: string;
+  iconBgClass: string;
+  iconTextClass: string;
+}
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -8,43 +17,48 @@ import { DashboardCardItem } from '../../../../api/models/menu-item';
   standalone: false,
 })
 export class AdminDashboardComponent {
-  adminCards = signal<DashboardCardItem[]>([
+  adminCards = signal<AdminDashboardCard[]>([
     {
       icon: 'assignment',
-      title: 'Applications',
-      description:
-        'Review and approve pending requests from psychologists to join the platform.',
-      buttonText: 'View Applications',
+      titleKey: 'admin.dashboard.applications_title',
+      descriptionKey: 'admin.dashboard.applications_desc',
+      buttonKey: 'admin.dashboard.applications_btn',
       route: '/admin/applications',
       iconBgClass: 'bg-[var(--color-sky)]/20',
       iconTextClass: 'text-[var(--color-primary)]',
     },
     {
       icon: 'category',
-      title: 'Specializations',
-      description:
-        'Manage the list of expertises and topics (e.g., PTSD, Depression) used in the catalog.',
-      buttonText: 'Manage Topics',
+      titleKey: 'admin.dashboard.specializations_title',
+      descriptionKey: 'admin.dashboard.specializations_desc',
+      buttonKey: 'admin.dashboard.specializations_btn',
       route: '/admin/specializations',
       iconBgClass: 'bg-purple-100',
       iconTextClass: 'text-purple-600',
     },
     {
+      icon: 'verified_user',
+      titleKey: 'category_application.admin.dashboard_card_title',
+      descriptionKey: 'category_application.admin.dashboard_card_desc',
+      buttonKey: 'category_application.admin.dashboard_card_button',
+      route: '/admin/category-applications',
+      iconBgClass: 'bg-emerald-100',
+      iconTextClass: 'text-emerald-600',
+    },
+    {
       icon: 'people',
-      title: 'Users & Roles',
-      description:
-        'View all registered clients and specialists, assign roles, and handle permissions.',
-      buttonText: 'Manage Users',
+      titleKey: 'admin.dashboard.users_title',
+      descriptionKey: 'admin.dashboard.users_desc',
+      buttonKey: 'admin.dashboard.users_btn',
       route: '/admin/users',
       iconBgClass: 'bg-mint/20',
       iconTextClass: 'text-success',
     },
     {
       icon: 'insights',
-      title: 'Analytics',
-      description:
-        'View platform statistics, user growth, and session metrics.',
-      buttonText: 'View Stats',
+      titleKey: 'admin.dashboard.analytics_title',
+      descriptionKey: 'admin.dashboard.analytics_desc',
+      buttonKey: 'admin.dashboard.analytics_btn',
       route: '/admin/analytics',
       iconBgClass: 'bg-orange-100',
       iconTextClass: 'text-orange-500',

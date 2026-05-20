@@ -26,6 +26,7 @@ namespace Infrastructure.Data
         public DbSet<SessionMessage> SessionMessages { get; set; }
         public DbSet<SessionNote> SessionNotes { get; set; }
         public DbSet<PsychologistApplication> PsychologistApplications { get; set; }
+        public DbSet<UserCategoryApplication> UserCategoryApplications { get; set; }
         public DbSet<MessageAttachment> MessageAttachments { get; set; }
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<Psychologist> Psychologists { get; set; }
@@ -48,6 +49,7 @@ namespace Infrastructure.Data
             modelBuilder.ApplyConfiguration(new CommentsConfiguration());
             modelBuilder.ApplyConfiguration(new AppointmentConfiguration());
             modelBuilder.ApplyConfiguration(new WorkingHourConfiguration());
+            modelBuilder.ApplyConfiguration(new UserCategoryApplicationConfiguration());
 
             modelBuilder.Entity<SessionNote>(e =>
             {

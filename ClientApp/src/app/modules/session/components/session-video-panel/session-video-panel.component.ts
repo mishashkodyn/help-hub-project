@@ -27,7 +27,10 @@ type CallState = 'initializing' | 'waiting' | 'connecting' | 'active' | 'ended';
 })
 export class SessionVideoPanelComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input({ required: true }) appointmentId!: string;
+  @Input() isMinimized = false;
   @Output() closed = new EventEmitter<void>();
+  @Output() minimizeToggled = new EventEmitter<void>();
+  @Output() expandRequested = new EventEmitter<void>();
 
   @ViewChild('localVideo') localVideoEl!: ElementRef<HTMLVideoElement>;
   @ViewChild('remoteVideo') remoteVideoEl!: ElementRef<HTMLVideoElement>;
@@ -301,6 +304,12 @@ export class SessionVideoPanelComponent implements OnInit, AfterViewInit, OnDest
 
   endCall() {
     this.closed.emit();
+  }
+
+  onPanelClick(_event: MouseEvent) {
+    if (this.isMinimized) {
+      this.expandRequested.emit();
+    }
   }
 
   private startTimer() {

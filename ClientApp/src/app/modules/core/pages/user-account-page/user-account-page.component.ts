@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { TranslocoService } from '@ngneat/transloco';
 import { User, UserProfileDto } from '../../../../api/models/user';
 import { UsersService } from '../../../../api/services/users.service';
 import { AuthService } from '../../../../api/services/auth.service';
@@ -23,6 +25,9 @@ export class UserAccountPageComponent implements OnInit {
 
   isOnline: boolean = true;
 
+  isUploadingAvatar = false;
+  isUploadingCover = false;
+
   stats = {
     posts: 0,
     sessions: 0,
@@ -39,7 +44,9 @@ export class UserAccountPageComponent implements OnInit {
     private authService: AuthService,
     private chatService: ChatService,
     private presenceService: PresenceService,
-    private location: Location
+    private location: Location,
+    private snackBar: MatSnackBar,
+    private transloco: TranslocoService,
   ) {}
 
   goBack(): void {
@@ -164,5 +171,113 @@ export class UserAccountPageComponent implements OnInit {
       navigator.clipboard?.writeText(window.location.href);
     }
     this.showActionsMenu = false;
+  }
+
+  onProfileImageSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+    input.value = '';
+    if (!file || !this.user) return;
+
+    if (!file.type.startsWith('image/')) {
+      this.snackBar.open(
+        this.transloco.translate('profile.only_images_allowed'),
+        'OK',
+        { duration: 3000 },
+      );
+      return;
+    }
+    if (file.size > 10 * 1024 * 1024) {
+      this.snackBar.open(
+        this.transloco.translate('profile.image_too_large'),
+        'OK',
+        { duration: 3000 },
+      );
+      return;
+    }
+
+    this.isUploadingAvatar = true;
+    this.authService.uploadProfileImage(file).subscribe({
+      next: (res) => {
+        this.isUploadingAvatar = false;
+        if (!res.isSuccess) {
+          this.snackBar.open(
+            res.error || this.transloco.translate('profile.upload_failed'),
+            'OK',
+            { duration: 3000 },
+          );
+          return;
+        }
+        if (this.user) this.user.profileImage = res.data;
+        this.authService.updateStoredUserImages(res.data, undefined);
+        this.snackBar.open(
+          this.transloco.translate('profile.profile_image_updated'),
+          'OK',
+          { duration: 3000 },
+        );
+      },
+      error: () => {
+        this.isUploadingAvatar = false;
+        this.snackBar.open(
+          this.transloco.translate('profile.upload_failed'),
+          'OK',
+          { duration: 3000 },
+        );
+      },
+    });
+  }
+
+  onCoverImageSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+    input.value = '';
+    if (!file || !this.user) return;
+
+    if (!file.type.startsWith('image/')) {
+      this.snackBar.open(
+        this.transloco.translate('profile.only_images_allowed'),
+        'OK',
+        { duration: 3000 },
+      );
+      return;
+    }
+    if (file.size > 10 * 1024 * 1024) {
+      this.snackBar.open(
+        this.transloco.translate('profile.image_too_large'),
+        'OK',
+        { duration: 3000 },
+      );
+      return;
+    }
+
+    this.isUploadingCover = true;
+    this.authService.uploadCoverImage(file).subscribe({
+      next: (res) => {
+        this.isUploadingCover = false;
+        if (!res.isSuccess) {
+          this.snackBar.open(
+            res.error || this.transloco.translate('profile.upload_failed'),
+            'OK',
+            { duration: 3000 },
+          );
+          return;
+        }
+        if (this.user) this.user.coverImage = res.data;
+        this.authService.updateStoredUserImages(undefined, res.data);
+        this.snackBar.open(
+          this.transloco.translate('profile.cover_image_updated'),
+          'OK',
+          { duration: 3000 },
+        );
+      },
+      error: () => {
+        this.isUploadingCover = false;
+        this.snackBar.open(
+          this.transloco.translate('profile.upload_failed'),
+          'OK',
+          { duration: 3000 },
+        );
+      },
+    });
   }
 }

@@ -37,12 +37,29 @@ export class NotificationsPopupComponent implements OnInit {
       this.service.markAsRead(notif.id).subscribe();
     }
 
-    if (notif.relatedEntityId) {
-      const target = this.authService.isPsychologist
-        ? '/psychologist/applications'
-        : '/my-sessions';
+    if (!notif.relatedEntityId) return;
+
+    const target = this.resolveTarget(notif);
+    if (target) {
       this.router.navigate([target]);
       this.closePopup.emit();
     }
+  }
+
+  private resolveTarget(notif: AppNotification): string | null {
+    if (this.isCategoryNotification(notif)) {
+      return this.authService.isAdmin || this.authService.isSuperAdmin
+        ? '/admin/category-applications'
+        : '/category-application';
+    }
+
+    return this.authService.isPsychologist
+      ? '/psychologist/applications'
+      : '/my-sessions';
+  }
+
+  private isCategoryNotification(notif: AppNotification): boolean {
+    const t = notif.type as unknown;
+    return t === 4 || t === '4' || t === 'UserCategoryApplication';
   }
 }

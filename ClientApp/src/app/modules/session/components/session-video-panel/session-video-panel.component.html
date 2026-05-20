@@ -1,44 +1,58 @@
-<div #panelRoot class="flex flex-col h-full bg-gray-900 text-white relative overflow-hidden">
+<div
+  #panelRoot
+  class="flex flex-col h-full bg-gray-900 text-white relative overflow-hidden"
+  (click)="onPanelClick($event)"
+>
 
-  <!-- Header -->
-  <div class="flex items-center justify-between px-3 py-2 bg-black/40 shrink-0">
-    <div class="flex items-center gap-2 text-xs">
-      <span
-        class="w-2 h-2 rounded-full"
-        [ngClass]="{
-          'bg-yellow-400 animate-pulse': callState() === 'waiting' || callState() === 'connecting' || callState() === 'initializing',
-          'bg-green-400': callState() === 'active',
-          'bg-red-400': callState() === 'ended'
-        }"
-      ></span>
-      <span class="font-medium">
-        @switch (callState()) {
-          @case ('initializing') { Initializing… }
-          @case ('waiting') { Waiting for the other side… }
-          @case ('connecting') { Connecting… }
-          @case ('active') { {{ formattedDuration }} }
-          @case ('ended') { Call ended }
-        }
-      </span>
-    </div>
+  <!-- Header (hidden when minimized) -->
+  @if (!isMinimized) {
+    <div class="flex items-center justify-between px-3 py-2 bg-black/40 shrink-0">
+      <div class="flex items-center gap-2 text-xs">
+        <span
+          class="w-2 h-2 rounded-full"
+          [ngClass]="{
+            'bg-yellow-400 animate-pulse': callState() === 'waiting' || callState() === 'connecting' || callState() === 'initializing',
+            'bg-green-400': callState() === 'active',
+            'bg-red-400': callState() === 'ended'
+          }"
+        ></span>
+        <span class="font-medium">
+          @switch (callState()) {
+            @case ('initializing') { Initializing… }
+            @case ('waiting') { Waiting for the other side… }
+            @case ('connecting') { Connecting… }
+            @case ('active') { {{ formattedDuration }} }
+            @case ('ended') { Call ended }
+          }
+        </span>
+      </div>
 
-    <div class="flex items-center gap-1">
-      <button
-        (click)="toggleFullscreen()"
-        class="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-white/10"
-        [title]="isFullscreen() ? 'Exit fullscreen' : 'Fullscreen'"
-      >
-        <mat-icon class="text-base">{{ isFullscreen() ? 'fullscreen_exit' : 'fullscreen' }}</mat-icon>
-      </button>
-      <button
-        (click)="endCall()"
-        class="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-white/10"
-        title="Close"
-      >
-        <mat-icon class="text-base">close</mat-icon>
-      </button>
+      <div class="flex items-center gap-1">
+        <!-- Minimize (mobile only) -->
+        <button
+          (click)="minimizeToggled.emit()"
+          class="w-7 h-7 sm:hidden flex items-center justify-center rounded-lg hover:bg-white/10"
+          title="Minimize"
+        >
+          <mat-icon class="text-base">picture_in_picture_alt</mat-icon>
+        </button>
+        <button
+          (click)="toggleFullscreen()"
+          class="w-7 h-7 hidden sm:flex items-center justify-center rounded-lg hover:bg-white/10"
+          [title]="isFullscreen() ? 'Exit fullscreen' : 'Fullscreen'"
+        >
+          <mat-icon class="text-base">{{ isFullscreen() ? 'fullscreen_exit' : 'fullscreen' }}</mat-icon>
+        </button>
+        <button
+          (click)="endCall()"
+          class="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-white/10"
+          title="Close"
+        >
+          <mat-icon class="text-base">close</mat-icon>
+        </button>
+      </div>
     </div>
-  </div>
+  }
 
   <!-- Video stage -->
   <div class="flex-1 min-h-0 relative bg-black">
@@ -53,64 +67,103 @@
 
     <!-- Waiting overlay -->
     @if (callState() !== 'active') {
-      <div class="absolute inset-0 flex flex-col items-center justify-center text-center px-4 bg-black/60">
-        <mat-icon class="text-5xl text-white/40 mb-2">person_outline</mat-icon>
-        <p class="text-sm text-white/80 font-medium">
-          @switch (callState()) {
-            @case ('waiting') { Waiting for the other participant to join… }
-            @case ('connecting') { Connecting… }
-            @case ('initializing') { Preparing camera… }
-            @case ('ended') { Call ended }
-          }
-        </p>
+      <div class="absolute inset-0 flex flex-col items-center justify-center text-center px-2 bg-black/60">
+        @if (!isMinimized) {
+          <mat-icon class="text-5xl text-white/40 mb-2">person_outline</mat-icon>
+          <p class="text-sm text-white/80 font-medium">
+            @switch (callState()) {
+              @case ('waiting') { Waiting for the other participant to join… }
+              @case ('connecting') { Connecting… }
+              @case ('initializing') { Preparing camera… }
+              @case ('ended') { Call ended }
+            }
+          </p>
+        } @else {
+          <mat-icon class="text-3xl text-white/50">person_outline</mat-icon>
+          <p class="text-[10px] text-white/70 mt-1">
+            @switch (callState()) {
+              @case ('waiting') { Waiting… }
+              @case ('connecting') { Connecting… }
+              @case ('initializing') { Camera… }
+              @case ('ended') { Ended }
+            }
+          </p>
+        }
       </div>
     }
 
-    <!-- Local preview (picture-in-picture) -->
-    <div class="absolute bottom-3 right-3 w-28 h-20 sm:w-36 sm:h-24 rounded-lg overflow-hidden border-2 border-white/20 shadow-lg bg-black">
+    <!-- Local preview (hidden when minimized) -->
+    @if (!isMinimized) {
+      <div class="absolute bottom-3 right-3 w-28 h-20 sm:w-36 sm:h-24 rounded-lg overflow-hidden border-2 border-white/20 shadow-lg bg-black">
+        <video
+          #localVideo
+          autoplay
+          playsinline
+          muted
+          class="w-full h-full object-cover"
+          [class.opacity-30]="isVideoMuted()"
+        ></video>
+        @if (isVideoMuted()) {
+          <div class="absolute inset-0 flex items-center justify-center">
+            <mat-icon class="text-white/60 text-base">videocam_off</mat-icon>
+          </div>
+        }
+      </div>
+    } @else {
+      <!-- Keep local video element mounted (hidden) so the stream stays attached -->
       <video
         #localVideo
         autoplay
         playsinline
         muted
-        class="w-full h-full object-cover"
-        [class.opacity-30]="isVideoMuted()"
+        class="hidden"
       ></video>
-      @if (isVideoMuted()) {
-        <div class="absolute inset-0 flex items-center justify-center">
-          <mat-icon class="text-white/60 text-base">videocam_off</mat-icon>
-        </div>
-      }
+
+      <!-- Minimized overlay: tap-to-expand badge + close -->
+      <button
+        type="button"
+        (click)="endCall(); $event.stopPropagation()"
+        class="absolute top-1 right-1 w-6 h-6 flex items-center justify-center rounded-full bg-black/60 hover:bg-black/80 z-10"
+        title="Close"
+      >
+        <mat-icon class="!text-[14px] !w-[14px] !h-[14px] leading-none">close</mat-icon>
+      </button>
+      <div class="absolute bottom-1 left-1 flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-black/60 text-[10px] pointer-events-none">
+        <mat-icon class="!text-[12px] !w-[12px] !h-[12px] leading-none">open_in_full</mat-icon>
+        <span>Tap</span>
+      </div>
+    }
+
+  </div>
+
+  <!-- Controls (hidden when minimized) -->
+  @if (!isMinimized) {
+    <div class="flex items-center justify-center gap-2 px-3 py-3 bg-black/40 shrink-0">
+      <button
+        (click)="toggleAudio()"
+        class="w-10 h-10 flex items-center justify-center rounded-full transition-colors"
+        [ngClass]="isAudioMuted() ? 'bg-red-500/80 hover:bg-red-500' : 'bg-white/10 hover:bg-white/20'"
+        [title]="isAudioMuted() ? 'Unmute' : 'Mute'"
+      >
+        <mat-icon class="text-base">{{ isAudioMuted() ? 'mic_off' : 'mic' }}</mat-icon>
+      </button>
+
+      <button
+        (click)="toggleVideo()"
+        class="w-10 h-10 flex items-center justify-center rounded-full transition-colors"
+        [ngClass]="isVideoMuted() ? 'bg-red-500/80 hover:bg-red-500' : 'bg-white/10 hover:bg-white/20'"
+        [title]="isVideoMuted() ? 'Camera on' : 'Camera off'"
+      >
+        <mat-icon class="text-base">{{ isVideoMuted() ? 'videocam_off' : 'videocam' }}</mat-icon>
+      </button>
+
+      <button
+        (click)="endCall()"
+        class="w-10 h-10 flex items-center justify-center rounded-full bg-red-500 hover:bg-red-600 transition-colors"
+        title="Leave"
+      >
+        <mat-icon class="text-base">call_end</mat-icon>
+      </button>
     </div>
-
-  </div>
-
-  <!-- Controls -->
-  <div class="flex items-center justify-center gap-2 px-3 py-3 bg-black/40 shrink-0">
-    <button
-      (click)="toggleAudio()"
-      class="w-10 h-10 flex items-center justify-center rounded-full transition-colors"
-      [ngClass]="isAudioMuted() ? 'bg-red-500/80 hover:bg-red-500' : 'bg-white/10 hover:bg-white/20'"
-      [title]="isAudioMuted() ? 'Unmute' : 'Mute'"
-    >
-      <mat-icon class="text-base">{{ isAudioMuted() ? 'mic_off' : 'mic' }}</mat-icon>
-    </button>
-
-    <button
-      (click)="toggleVideo()"
-      class="w-10 h-10 flex items-center justify-center rounded-full transition-colors"
-      [ngClass]="isVideoMuted() ? 'bg-red-500/80 hover:bg-red-500' : 'bg-white/10 hover:bg-white/20'"
-      [title]="isVideoMuted() ? 'Camera on' : 'Camera off'"
-    >
-      <mat-icon class="text-base">{{ isVideoMuted() ? 'videocam_off' : 'videocam' }}</mat-icon>
-    </button>
-
-    <button
-      (click)="endCall()"
-      class="w-10 h-10 flex items-center justify-center rounded-full bg-red-500 hover:bg-red-600 transition-colors"
-      title="Leave"
-    >
-      <mat-icon class="text-base">call_end</mat-icon>
-    </button>
-  </div>
+  }
 </div>

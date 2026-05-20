@@ -235,11 +235,64 @@ namespace API.Endpoints
                         Surname = user.Surname,
                         Email = user.Email,
                         ProfileImage = user.ProfileImage,
+                        CoverImage = user.CoverImage,
                         PreferredAiProvider = user.PreferredAiProvider,
                         Gender = user.Gender.ToString(),
                         Roles = roles.ToArray()
                     }, "User fetched successfully."));
                 }).RequireAuthorization();
+
+                group.MapPost("/profile-image", async (HttpContext context, UserManager<ApplicationUser> userManager,
+                    IStorageService blobService, [FromForm] IFormFile file) =>
+                {
+                    if (file is null || file.Length == 0)
+                        return Results.BadRequest(Response<string>.Failure("File is required."));
+
+                    if (!file.ContentType.StartsWith("image/"))
+                        return Results.BadRequest(Response<string>.Failure("Only image files are allowed."));
+
+                    var userId = context.User.GetUserId();
+                    var user = await userManager.FindByIdAsync(userId.ToString());
+                    if (user is null) return Results.NotFound();
+
+                    var newUrl = await blobService.UploadFileAsync(file);
+                    var oldUrl = user.ProfileImage;
+                    user.ProfileImage = newUrl;
+                    await userManager.UpdateAsync(user);
+
+                    if (!string.IsNullOrEmpty(oldUrl))
+                    {
+                        try { await blobService.DeleteFileAsync(oldUrl); } catch { }
+                    }
+
+                    return Results.Ok(Response<string>.Success(newUrl, "Profile image updated."));
+                }).DisableAntiforgery().RequireAuthorization();
+
+                group.MapPost("/cover-image", async (HttpContext context, UserManager<ApplicationUser> userManager,
+                    IStorageService blobService, [FromForm] IFormFile file) =>
+                {
+                    if (file is null || file.Length == 0)
+                        return Results.BadRequest(Response<string>.Failure("File is required."));
+
+                    if (!file.ContentType.StartsWith("image/"))
+                        return Results.BadRequest(Response<string>.Failure("Only image files are allowed."));
+
+                    var userId = context.User.GetUserId();
+                    var user = await userManager.FindByIdAsync(userId.ToString());
+                    if (user is null) return Results.NotFound();
+
+                    var newUrl = await blobService.UploadFileAsync(file);
+                    var oldUrl = user.CoverImage;
+                    user.CoverImage = newUrl;
+                    await userManager.UpdateAsync(user);
+
+                    if (!string.IsNullOrEmpty(oldUrl))
+                    {
+                        try { await blobService.DeleteFileAsync(oldUrl); } catch { }
+                    }
+
+                    return Results.Ok(Response<string>.Success(newUrl, "Cover image updated."));
+                }).DisableAntiforgery().RequireAuthorization();
 
                 group.MapGet("/AIprovider", async (HttpContext context, UserManager<ApplicationUser> userManager) =>
                 {

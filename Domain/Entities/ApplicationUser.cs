@@ -7,6 +7,7 @@ namespace Domain.Entities
         public string? Name { get; set; }
         public string? Surname { get; set; }
         public string? ProfileImage { get; set; }
+        public string? CoverImage { get; set; }
         public Gender Gender { get; set; } = Gender.Male;
         public string PreferredAiProvider { get; set; } = "Groq";
         public Guid? RefreshToken { get; set; }

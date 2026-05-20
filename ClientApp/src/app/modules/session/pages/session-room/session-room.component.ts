@@ -19,8 +19,34 @@ import { SessionInfoDto, SessionMessageDto } from '../../../../api/models/sessio
 import { AiService } from '../../../../api/services/ai.service';
 import { AiChatMessage } from '../../../../api/models/ai-chat-message';
 import { AiChatRequest, AiMessage } from '../../../../api/models/ai-chat-request';
+import {
+  TranscriptAnalysisAction,
+  TranscriptAnalysisRequest,
+} from '../../../../api/models/transcript-analysis-request';
 
 type SessionTab = 'chat' | 'transcriptions' | 'notes' | 'ai';
+
+type TimeRangeId = '5m' | '15m' | '30m' | 'all';
+
+interface TimeRangeOption {
+  id: TimeRangeId;
+  label: string;
+  minutes: number | null;
+}
+
+interface AnalysisActionOption {
+  id: TranscriptAnalysisAction;
+  label: string;
+  icon: string;
+  description: string;
+}
+
+interface SelectionTooltipState {
+  visible: boolean;
+  x: number;
+  y: number;
+  text: string;
+}
 
 @Component({
   selector: 'app-session-room',
@@ -39,6 +65,7 @@ export class SessionRoomComponent implements OnInit, OnDestroy {
   isAccessDenied = signal(false);
   activeTab = signal<SessionTab>('chat');
   isVideoOpen = signal(false);
+  isVideoMinimized = signal(false);
 
   // Notes
   noteContent = signal('');
@@ -51,6 +78,35 @@ export class SessionRoomComponent implements OnInit, OnDestroy {
   aiInput = '';
   aiLoading = signal(false);
   private aiProvider = 'Groq';
+
+  // Transcript analysis (psychologist-only)
+  isAnalysisMenuOpen = signal(false);
+  isAnalyzing = signal(false);
+  selectedRangeId = signal<TimeRangeId>('all');
+
+  readonly timeRanges: TimeRangeOption[] = [
+    { id: '5m', label: 'Last 5 min', minutes: 5 },
+    { id: '15m', label: 'Last 15 min', minutes: 15 },
+    { id: '30m', label: 'Last 30 min', minutes: 30 },
+    { id: 'all', label: 'Whole session', minutes: null },
+  ];
+
+  readonly rangeAnalysisActions: AnalysisActionOption[] = [
+    { id: 'summarize', label: 'Summary', icon: 'summarize', description: 'Clinical recap of the range' },
+    { id: 'emotions', label: 'Emotional dynamics', icon: 'mood', description: 'Track emotion shifts' },
+    { id: 'patterns', label: 'Patterns & distortions', icon: 'psychology', description: 'Find cognitive patterns' },
+    { id: 'questions', label: 'Follow-up questions', icon: 'help_outline', description: 'Suggest next questions' },
+    { id: 'risks', label: 'Risk assessment', icon: 'report', description: 'Flag risk factors' },
+  ];
+
+  readonly selectionActions: AnalysisActionOption[] = [
+    { id: 'explain', label: 'Explain', icon: 'lightbulb', description: 'What client may have meant' },
+    { id: 'rephrase', label: 'Reflect', icon: 'autorenew', description: 'Reflective reformulations' },
+    { id: 'intervention', label: 'Intervention', icon: 'medical_services', description: 'Suggest a technique' },
+    { id: 'questions', label: 'Ask next', icon: 'help_outline', description: 'Follow-up questions' },
+  ];
+
+  selectionTooltip = signal<SelectionTooltipState>({ visible: false, x: 0, y: 0, text: '' });
 
   messageInput = '';
   appointmentId!: string;
@@ -300,10 +356,22 @@ export class SessionRoomComponent implements OnInit, OnDestroy {
 
   toggleVideo(): void {
     this.isVideoOpen.update((v) => !v);
+    if (!this.isVideoOpen()) {
+      this.isVideoMinimized.set(false);
+    }
   }
 
   onVideoClosed(): void {
     this.isVideoOpen.set(false);
+    this.isVideoMinimized.set(false);
+  }
+
+  toggleVideoMinimized(): void {
+    this.isVideoMinimized.update((v) => !v);
+  }
+
+  expandVideo(): void {
+    this.isVideoMinimized.set(false);
   }
 
   async sendMessage(): Promise<void> {
@@ -333,6 +401,174 @@ export class SessionRoomComponent implements OnInit, OnDestroy {
       const el = this.messagesContainer?.nativeElement;
       if (el) el.scrollTop = el.scrollHeight;
     }, 50);
+  }
+
+  // ---------- Transcript analysis ----------
+
+  toggleAnalysisMenu(): void {
+    this.isAnalysisMenuOpen.update((v) => !v);
+  }
+
+  closeAnalysisMenu(): void {
+    this.isAnalysisMenuOpen.set(false);
+  }
+
+  selectRange(rangeId: TimeRangeId): void {
+    this.selectedRangeId.set(rangeId);
+  }
+
+  get selectedRange(): TimeRangeOption {
+    return this.timeRanges.find((r) => r.id === this.selectedRangeId())!;
+  }
+
+  runRangeAnalysis(action: TranscriptAnalysisAction): void {
+    this.closeAnalysisMenu();
+    const range = this.selectedRange;
+    const transcript = this.buildTranscriptForRange(range);
+
+    if (!transcript) {
+      this.pushAiSystemMessage(
+        `_No transcript available for **${range.label}** yet._`
+      );
+      this.activeTab.set('ai');
+      this.scrollAiToBottom();
+      return;
+    }
+
+    const actionMeta = this.rangeAnalysisActions.find((a) => a.id === action);
+    const headerLabel = actionMeta?.label ?? action;
+
+    this.dispatchAnalysis({
+      transcript,
+      action,
+      timeRangeLabel: range.label,
+      userName: this.fullUserName(),
+    }, `**${headerLabel}** — ${range.label}`);
+  }
+
+  runSelectionAnalysis(action: TranscriptAnalysisAction): void {
+    const state = this.selectionTooltip();
+    const text = state.text;
+    this.hideSelectionTooltip();
+    if (!text) return;
+
+    const actionMeta = this.selectionActions.find((a) => a.id === action);
+    const headerLabel = actionMeta?.label ?? action;
+    const preview = text.length > 120 ? text.slice(0, 120) + '…' : text;
+
+    this.dispatchAnalysis({
+      transcript: this.buildTranscriptForRange(this.timeRanges.find((r) => r.id === 'all')!) || text,
+      selectedText: text,
+      action,
+      userName: this.fullUserName(),
+    }, `**${headerLabel}** on selection\n\n> ${preview}`);
+  }
+
+  private dispatchAnalysis(request: TranscriptAnalysisRequest, header: string): void {
+    if (this.isAnalyzing()) return;
+    this.isAnalyzing.set(true);
+
+    this.pushAiUserMessage(header);
+    this.activeTab.set('ai');
+    this.scrollAiToBottom();
+
+    this.aiService.analyzeTranscriptAsync(request).subscribe({
+      next: (response) => {
+        this.aiMessages.update((m) => [
+          ...m,
+          { text: response.data, isUser: false, timestamp: new Date() },
+        ]);
+        this.isAnalyzing.set(false);
+        this.scrollAiToBottom();
+      },
+      error: () => {
+        this.aiMessages.update((m) => [
+          ...m,
+          { text: 'AI analysis failed. Try again in a moment.', isUser: false, timestamp: new Date() },
+        ]);
+        this.isAnalyzing.set(false);
+        this.scrollAiToBottom();
+      },
+    });
+  }
+
+  private buildTranscriptForRange(range: TimeRangeOption): string {
+    const finals = this.transcripts.finals();
+    if (finals.length === 0) return '';
+
+    const cutoff = range.minutes != null ? Date.now() - range.minutes * 60_000 : null;
+
+    const filtered = cutoff == null
+      ? finals
+      : finals.filter((f) => {
+          const t = Date.parse(f.timestamp);
+          return Number.isFinite(t) ? t >= cutoff : true;
+        });
+
+    if (filtered.length === 0) return '';
+
+    return filtered
+      .map((f) => {
+        const time = new Date(f.timestamp);
+        const hh = String(time.getHours()).padStart(2, '0');
+        const mm = String(time.getMinutes()).padStart(2, '0');
+        const ss = String(time.getSeconds()).padStart(2, '0');
+        return `[${hh}:${mm}:${ss}] ${this.roleLabel(f.speaker)}: ${f.text}`;
+      })
+      .join('\n');
+  }
+
+  private pushAiUserMessage(text: string): void {
+    this.aiMessages.update((m) => [
+      ...m,
+      { text, isUser: true, timestamp: new Date() },
+    ]);
+  }
+
+  private pushAiSystemMessage(text: string): void {
+    this.aiMessages.update((m) => [
+      ...m,
+      { text, isUser: false, timestamp: new Date() },
+    ]);
+  }
+
+  private fullUserName(): string {
+    const u = this.authService.currentLoggedUser;
+    return ((u?.name ?? '') + ' ' + (u?.surname ?? '')).trim();
+  }
+
+  // ---------- Selection tooltip ----------
+
+  onTranscriptMouseUp(event: MouseEvent): void {
+    if (!this.isPsychologist) return;
+    const selection = window.getSelection?.();
+    const text = selection?.toString().trim() ?? '';
+    if (!text) {
+      this.hideSelectionTooltip();
+      return;
+    }
+
+    const container = this.transcriptsContainer?.nativeElement;
+    if (container && selection && selection.rangeCount > 0) {
+      const range = selection.getRangeAt(0);
+      if (!container.contains(range.commonAncestorContainer)) {
+        this.hideSelectionTooltip();
+        return;
+      }
+    }
+
+    const padding = 8;
+    const tooltipWidth = 280;
+    const x = Math.max(padding, Math.min(window.innerWidth - tooltipWidth - padding, event.clientX));
+    const y = Math.max(padding, event.clientY - 12);
+
+    this.selectionTooltip.set({ visible: true, x, y, text });
+  }
+
+  hideSelectionTooltip(): void {
+    if (this.selectionTooltip().visible) {
+      this.selectionTooltip.set({ visible: false, x: 0, y: 0, text: '' });
+    }
   }
 
   ngOnDestroy(): void {

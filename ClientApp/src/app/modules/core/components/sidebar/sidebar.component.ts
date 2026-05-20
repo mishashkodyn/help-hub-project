@@ -48,6 +48,11 @@ export class SidebarComponent {
       icon: 'mail',
       label: 'notifications',
       route: 'notifications'
+    },
+    {
+      icon: 'verified_user',
+      label: 'category_application',
+      route: 'category-application'
     }
   ]);
 

@@ -41,6 +41,35 @@ export class AuthService {
     });
   }
 
+  uploadProfileImage(file: File): Observable<ApiResponse<string>> {
+    const formData = new FormData();
+    formData.append('file', file, file.name);
+    return this.httpClient.post<ApiResponse<string>>(
+      `${this.baseUrl}/profile-image`,
+      formData,
+    );
+  }
+
+  uploadCoverImage(file: File): Observable<ApiResponse<string>> {
+    const formData = new FormData();
+    formData.append('file', file, file.name);
+    return this.httpClient.post<ApiResponse<string>>(
+      `${this.baseUrl}/cover-image`,
+      formData,
+    );
+  }
+
+  updateStoredUserImages(profileImage?: string, coverImage?: string): void {
+    try {
+      const raw = localStorage.getItem('user');
+      if (!raw) return;
+      const parsed = JSON.parse(raw);
+      if (profileImage !== undefined) parsed.profileImage = profileImage;
+      if (coverImage !== undefined) parsed.coverImage = coverImage;
+      localStorage.setItem('user', JSON.stringify(parsed));
+    } catch {}
+  }
+
   register(data: FormData): Observable<ApiResponse<string>> {
     return this.httpClient
       .post<ApiResponse<string>>(`${this.baseUrl}/register`, data)

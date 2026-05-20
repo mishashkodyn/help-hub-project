@@ -83,6 +83,20 @@
         </div>
       </div>
 
+      <!-- ── Back row (under header) ── -->
+      @if (showBackToOrigin) {
+        <div class="shrink-0 w-full bg-white/70 backdrop-blur-sm border-b border-gray-100/70 px-3 md:px-5 py-1.5">
+          <button
+            type="button"
+            (click)="goBack()"
+            class="inline-flex items-center gap-1 text-gray-500 hover:text-[var(--color-primary)] transition-colors text-sm font-medium cursor-pointer"
+          >
+            <mat-icon class="scale-90">arrow_back</mat-icon>
+            {{ t('common.back') }}
+          </button>
+        </div>
+      }
+
       <!-- ── Messages ── -->
       <div class="flex-1 min-h-0 w-full relative overflow-hidden">
         <app-chat-box class="h-full block" (viewMedia)="openMedia($event.url, $event.type)" />
