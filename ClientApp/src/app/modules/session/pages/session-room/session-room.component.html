@@ -383,10 +383,17 @@
 
       <!-- RIGHT: video panel — fills remaining space on mobile, side panel on sm+ -->
       @if (isVideoOpen()) {
-        <div class="absolute inset-0 z-[20] sm:static sm:inset-auto sm:z-auto sm:w-[360px] md:w-[420px] lg:w-[460px] shrink-0 min-h-0 overflow-hidden sm:border-l border-gray-200 bg-gray-900">
+        <div
+          [ngClass]="isVideoMinimized()
+            ? 'fixed bottom-4 right-3 w-32 h-44 z-[40] rounded-2xl shadow-2xl border border-white/20 overflow-hidden bg-gray-900 sm:static sm:inset-auto sm:bottom-auto sm:right-auto sm:w-[360px] md:w-[420px] lg:w-[460px] sm:h-auto sm:rounded-none sm:shadow-none sm:border-0 sm:border-l sm:border-gray-200 sm:z-auto shrink-0 min-h-0'
+            : 'absolute inset-0 z-[20] sm:static sm:inset-auto sm:z-auto sm:w-[360px] md:w-[420px] lg:w-[460px] shrink-0 min-h-0 overflow-hidden sm:border-l border-gray-200 bg-gray-900'"
+        >
           <app-session-video-panel
             [appointmentId]="appointmentId"
+            [isMinimized]="isVideoMinimized()"
             (closed)="onVideoClosed()"
+            (minimizeToggled)="toggleVideoMinimized()"
+            (expandRequested)="expandVideo()"
           ></app-session-video-panel>
         </div>
       }

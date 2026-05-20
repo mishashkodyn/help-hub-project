@@ -50684,82 +50684,262 @@ var _c029 = ["localVideo"];
 var _c117 = ["remoteVideo"];
 var _c211 = ["panelRoot"];
 var _c38 = (a0, a1, a2) => ({ "bg-yellow-400 animate-pulse": a0, "bg-green-400": a1, "bg-red-400": a2 });
-function SessionVideoPanelComponent_Case_6_Template(rf, ctx) {
+function SessionVideoPanelComponent_Conditional_2_Case_4_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275text(0, " Initializing\u2026 ");
   }
 }
-function SessionVideoPanelComponent_Case_7_Template(rf, ctx) {
+function SessionVideoPanelComponent_Conditional_2_Case_5_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275text(0, " Waiting for the other side\u2026 ");
   }
 }
-function SessionVideoPanelComponent_Case_8_Template(rf, ctx) {
+function SessionVideoPanelComponent_Conditional_2_Case_6_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275text(0, " Connecting\u2026 ");
   }
 }
-function SessionVideoPanelComponent_Case_9_Template(rf, ctx) {
+function SessionVideoPanelComponent_Conditional_2_Case_7_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275text(0);
   }
   if (rf & 2) {
-    const ctx_r1 = \u0275\u0275nextContext();
-    \u0275\u0275textInterpolate1(" ", ctx_r1.formattedDuration, " ");
+    const ctx_r2 = \u0275\u0275nextContext(2);
+    \u0275\u0275textInterpolate1(" ", ctx_r2.formattedDuration, " ");
   }
 }
-function SessionVideoPanelComponent_Case_10_Template(rf, ctx) {
+function SessionVideoPanelComponent_Conditional_2_Case_8_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275text(0, " Call ended ");
   }
 }
-function SessionVideoPanelComponent_Conditional_21_Case_4_Template(rf, ctx) {
+function SessionVideoPanelComponent_Conditional_2_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r2 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "div", 4)(1, "div", 10);
+    \u0275\u0275element(2, "span", 11);
+    \u0275\u0275elementStart(3, "span", 12);
+    \u0275\u0275template(4, SessionVideoPanelComponent_Conditional_2_Case_4_Template, 1, 0)(5, SessionVideoPanelComponent_Conditional_2_Case_5_Template, 1, 0)(6, SessionVideoPanelComponent_Conditional_2_Case_6_Template, 1, 0)(7, SessionVideoPanelComponent_Conditional_2_Case_7_Template, 1, 1)(8, SessionVideoPanelComponent_Conditional_2_Case_8_Template, 1, 0);
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(9, "div", 13)(10, "button", 14);
+    \u0275\u0275listener("click", function SessionVideoPanelComponent_Conditional_2_Template_button_click_10_listener() {
+      \u0275\u0275restoreView(_r2);
+      const ctx_r2 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r2.minimizeToggled.emit());
+    });
+    \u0275\u0275elementStart(11, "mat-icon", 15);
+    \u0275\u0275text(12, "picture_in_picture_alt");
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(13, "button", 16);
+    \u0275\u0275listener("click", function SessionVideoPanelComponent_Conditional_2_Template_button_click_13_listener() {
+      \u0275\u0275restoreView(_r2);
+      const ctx_r2 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r2.toggleFullscreen());
+    });
+    \u0275\u0275elementStart(14, "mat-icon", 15);
+    \u0275\u0275text(15);
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(16, "button", 17);
+    \u0275\u0275listener("click", function SessionVideoPanelComponent_Conditional_2_Template_button_click_16_listener() {
+      \u0275\u0275restoreView(_r2);
+      const ctx_r2 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r2.endCall());
+    });
+    \u0275\u0275elementStart(17, "mat-icon", 15);
+    \u0275\u0275text(18, "close");
+    \u0275\u0275elementEnd()()()();
+  }
+  if (rf & 2) {
+    let tmp_4_0;
+    const ctx_r2 = \u0275\u0275nextContext();
+    \u0275\u0275advance(2);
+    \u0275\u0275property("ngClass", \u0275\u0275pureFunction3(4, _c38, ctx_r2.callState() === "waiting" || ctx_r2.callState() === "connecting" || ctx_r2.callState() === "initializing", ctx_r2.callState() === "active", ctx_r2.callState() === "ended"));
+    \u0275\u0275advance(2);
+    \u0275\u0275conditional((tmp_4_0 = ctx_r2.callState()) === "initializing" ? 4 : tmp_4_0 === "waiting" ? 5 : tmp_4_0 === "connecting" ? 6 : tmp_4_0 === "active" ? 7 : tmp_4_0 === "ended" ? 8 : -1);
+    \u0275\u0275advance(9);
+    \u0275\u0275property("title", ctx_r2.isFullscreen() ? "Exit fullscreen" : "Fullscreen");
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate(ctx_r2.isFullscreen() ? "fullscreen_exit" : "fullscreen");
+  }
+}
+function SessionVideoPanelComponent_Conditional_6_Conditional_1_Case_3_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275text(0, " Waiting for the other participant to join\u2026 ");
   }
 }
-function SessionVideoPanelComponent_Conditional_21_Case_5_Template(rf, ctx) {
+function SessionVideoPanelComponent_Conditional_6_Conditional_1_Case_4_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275text(0, " Connecting\u2026 ");
   }
 }
-function SessionVideoPanelComponent_Conditional_21_Case_6_Template(rf, ctx) {
+function SessionVideoPanelComponent_Conditional_6_Conditional_1_Case_5_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275text(0, " Preparing camera\u2026 ");
   }
 }
-function SessionVideoPanelComponent_Conditional_21_Case_7_Template(rf, ctx) {
+function SessionVideoPanelComponent_Conditional_6_Conditional_1_Case_6_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275text(0, " Call ended ");
   }
 }
-function SessionVideoPanelComponent_Conditional_21_Template(rf, ctx) {
+function SessionVideoPanelComponent_Conditional_6_Conditional_1_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 14)(1, "mat-icon", 21);
-    \u0275\u0275text(2, "person_outline");
+    \u0275\u0275elementStart(0, "mat-icon", 18);
+    \u0275\u0275text(1, "person_outline");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(3, "p", 22);
-    \u0275\u0275template(4, SessionVideoPanelComponent_Conditional_21_Case_4_Template, 1, 0)(5, SessionVideoPanelComponent_Conditional_21_Case_5_Template, 1, 0)(6, SessionVideoPanelComponent_Conditional_21_Case_6_Template, 1, 0)(7, SessionVideoPanelComponent_Conditional_21_Case_7_Template, 1, 0);
-    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(2, "p", 19);
+    \u0275\u0275template(3, SessionVideoPanelComponent_Conditional_6_Conditional_1_Case_3_Template, 1, 0)(4, SessionVideoPanelComponent_Conditional_6_Conditional_1_Case_4_Template, 1, 0)(5, SessionVideoPanelComponent_Conditional_6_Conditional_1_Case_5_Template, 1, 0)(6, SessionVideoPanelComponent_Conditional_6_Conditional_1_Case_6_Template, 1, 0);
+    \u0275\u0275elementEnd();
   }
   if (rf & 2) {
     let tmp_4_0;
-    const ctx_r1 = \u0275\u0275nextContext();
-    \u0275\u0275advance(4);
-    \u0275\u0275conditional((tmp_4_0 = ctx_r1.callState()) === "waiting" ? 4 : tmp_4_0 === "connecting" ? 5 : tmp_4_0 === "initializing" ? 6 : tmp_4_0 === "ended" ? 7 : -1);
+    const ctx_r2 = \u0275\u0275nextContext(2);
+    \u0275\u0275advance(3);
+    \u0275\u0275conditional((tmp_4_0 = ctx_r2.callState()) === "waiting" ? 3 : tmp_4_0 === "connecting" ? 4 : tmp_4_0 === "initializing" ? 5 : tmp_4_0 === "ended" ? 6 : -1);
   }
 }
-function SessionVideoPanelComponent_Conditional_25_Template(rf, ctx) {
+function SessionVideoPanelComponent_Conditional_6_Conditional_2_Case_3_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 17)(1, "mat-icon", 23);
+    \u0275\u0275text(0, " Waiting\u2026 ");
+  }
+}
+function SessionVideoPanelComponent_Conditional_6_Conditional_2_Case_4_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275text(0, " Connecting\u2026 ");
+  }
+}
+function SessionVideoPanelComponent_Conditional_6_Conditional_2_Case_5_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275text(0, " Camera\u2026 ");
+  }
+}
+function SessionVideoPanelComponent_Conditional_6_Conditional_2_Case_6_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275text(0, " Ended ");
+  }
+}
+function SessionVideoPanelComponent_Conditional_6_Conditional_2_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "mat-icon", 20);
+    \u0275\u0275text(1, "person_outline");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(2, "p", 21);
+    \u0275\u0275template(3, SessionVideoPanelComponent_Conditional_6_Conditional_2_Case_3_Template, 1, 0)(4, SessionVideoPanelComponent_Conditional_6_Conditional_2_Case_4_Template, 1, 0)(5, SessionVideoPanelComponent_Conditional_6_Conditional_2_Case_5_Template, 1, 0)(6, SessionVideoPanelComponent_Conditional_6_Conditional_2_Case_6_Template, 1, 0);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    let tmp_4_0;
+    const ctx_r2 = \u0275\u0275nextContext(2);
+    \u0275\u0275advance(3);
+    \u0275\u0275conditional((tmp_4_0 = ctx_r2.callState()) === "waiting" ? 3 : tmp_4_0 === "connecting" ? 4 : tmp_4_0 === "initializing" ? 5 : tmp_4_0 === "ended" ? 6 : -1);
+  }
+}
+function SessionVideoPanelComponent_Conditional_6_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "div", 7);
+    \u0275\u0275template(1, SessionVideoPanelComponent_Conditional_6_Conditional_1_Template, 7, 1)(2, SessionVideoPanelComponent_Conditional_6_Conditional_2_Template, 7, 1);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const ctx_r2 = \u0275\u0275nextContext();
+    \u0275\u0275advance();
+    \u0275\u0275conditional(!ctx_r2.isMinimized ? 1 : 2);
+  }
+}
+function SessionVideoPanelComponent_Conditional_7_Conditional_3_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "div", 23)(1, "mat-icon", 24);
     \u0275\u0275text(2, "videocam_off");
     \u0275\u0275elementEnd()();
+  }
+}
+function SessionVideoPanelComponent_Conditional_7_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "div", 8);
+    \u0275\u0275element(1, "video", 22, 2);
+    \u0275\u0275template(3, SessionVideoPanelComponent_Conditional_7_Conditional_3_Template, 3, 0, "div", 23);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const ctx_r2 = \u0275\u0275nextContext();
+    \u0275\u0275advance();
+    \u0275\u0275classProp("opacity-30", ctx_r2.isVideoMuted());
+    \u0275\u0275advance(2);
+    \u0275\u0275conditional(ctx_r2.isVideoMuted() ? 3 : -1);
+  }
+}
+function SessionVideoPanelComponent_Conditional_8_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r4 = \u0275\u0275getCurrentView();
+    \u0275\u0275element(0, "video", 25, 2);
+    \u0275\u0275elementStart(2, "button", 26);
+    \u0275\u0275listener("click", function SessionVideoPanelComponent_Conditional_8_Template_button_click_2_listener($event) {
+      \u0275\u0275restoreView(_r4);
+      const ctx_r2 = \u0275\u0275nextContext();
+      ctx_r2.endCall();
+      return \u0275\u0275resetView($event.stopPropagation());
+    });
+    \u0275\u0275elementStart(3, "mat-icon", 27);
+    \u0275\u0275text(4, "close");
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(5, "div", 28)(6, "mat-icon", 29);
+    \u0275\u0275text(7, "open_in_full");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(8, "span");
+    \u0275\u0275text(9, "Tap");
+    \u0275\u0275elementEnd()();
+  }
+}
+function SessionVideoPanelComponent_Conditional_9_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r5 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "div", 9)(1, "button", 30);
+    \u0275\u0275listener("click", function SessionVideoPanelComponent_Conditional_9_Template_button_click_1_listener() {
+      \u0275\u0275restoreView(_r5);
+      const ctx_r2 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r2.toggleAudio());
+    });
+    \u0275\u0275elementStart(2, "mat-icon", 15);
+    \u0275\u0275text(3);
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(4, "button", 30);
+    \u0275\u0275listener("click", function SessionVideoPanelComponent_Conditional_9_Template_button_click_4_listener() {
+      \u0275\u0275restoreView(_r5);
+      const ctx_r2 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r2.toggleVideo());
+    });
+    \u0275\u0275elementStart(5, "mat-icon", 15);
+    \u0275\u0275text(6);
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(7, "button", 31);
+    \u0275\u0275listener("click", function SessionVideoPanelComponent_Conditional_9_Template_button_click_7_listener() {
+      \u0275\u0275restoreView(_r5);
+      const ctx_r2 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r2.endCall());
+    });
+    \u0275\u0275elementStart(8, "mat-icon", 15);
+    \u0275\u0275text(9, "call_end");
+    \u0275\u0275elementEnd()()();
+  }
+  if (rf & 2) {
+    const ctx_r2 = \u0275\u0275nextContext();
+    \u0275\u0275advance();
+    \u0275\u0275property("ngClass", ctx_r2.isAudioMuted() ? "bg-red-500/80 hover:bg-red-500" : "bg-white/10 hover:bg-white/20")("title", ctx_r2.isAudioMuted() ? "Unmute" : "Mute");
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate(ctx_r2.isAudioMuted() ? "mic_off" : "mic");
+    \u0275\u0275advance();
+    \u0275\u0275property("ngClass", ctx_r2.isVideoMuted() ? "bg-red-500/80 hover:bg-red-500" : "bg-white/10 hover:bg-white/20")("title", ctx_r2.isVideoMuted() ? "Camera on" : "Camera off");
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate(ctx_r2.isVideoMuted() ? "videocam_off" : "videocam");
   }
 }
 var SessionVideoPanelComponent = class _SessionVideoPanelComponent {
   hub;
   appointmentId;
+  isMinimized = false;
   closed = new EventEmitter();
+  minimizeToggled = new EventEmitter();
+  expandRequested = new EventEmitter();
   localVideoEl;
   remoteVideoEl;
   panelRoot;
@@ -50997,6 +51177,11 @@ var SessionVideoPanelComponent = class _SessionVideoPanelComponent {
   endCall() {
     this.closed.emit();
   }
+  onPanelClick(_event) {
+    if (this.isMinimized) {
+      this.expandRequested.emit();
+    }
+  }
   startTimer() {
     if (this.timerStarted)
       return;
@@ -51039,135 +51224,94 @@ var SessionVideoPanelComponent = class _SessionVideoPanelComponent {
       \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.remoteVideoEl = _t.first);
       \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.panelRoot = _t.first);
     }
-  }, inputs: { appointmentId: "appointmentId" }, outputs: { closed: "closed" }, standalone: false, decls: 36, vars: 20, consts: [["panelRoot", ""], ["remoteVideo", ""], ["localVideo", ""], [1, "flex", "flex-col", "h-full", "bg-gray-900", "text-white", "relative", "overflow-hidden"], [1, "flex", "items-center", "justify-between", "px-3", "py-2", "bg-black/40", "shrink-0"], [1, "flex", "items-center", "gap-2", "text-xs"], [1, "w-2", "h-2", "rounded-full", 3, "ngClass"], [1, "font-medium"], [1, "flex", "items-center", "gap-1"], [1, "w-7", "h-7", "flex", "items-center", "justify-center", "rounded-lg", "hover:bg-white/10", 3, "click", "title"], [1, "text-base"], ["title", "Close", 1, "w-7", "h-7", "flex", "items-center", "justify-center", "rounded-lg", "hover:bg-white/10", 3, "click"], [1, "flex-1", "min-h-0", "relative", "bg-black"], ["autoplay", "", "playsinline", "", 1, "w-full", "h-full", "object-cover"], [1, "absolute", "inset-0", "flex", "flex-col", "items-center", "justify-center", "text-center", "px-4", "bg-black/60"], [1, "absolute", "bottom-3", "right-3", "w-28", "h-20", "sm:w-36", "sm:h-24", "rounded-lg", "overflow-hidden", "border-2", "border-white/20", "shadow-lg", "bg-black"], ["autoplay", "", "playsinline", "", "muted", "", 1, "w-full", "h-full", "object-cover"], [1, "absolute", "inset-0", "flex", "items-center", "justify-center"], [1, "flex", "items-center", "justify-center", "gap-2", "px-3", "py-3", "bg-black/40", "shrink-0"], [1, "w-10", "h-10", "flex", "items-center", "justify-center", "rounded-full", "transition-colors", 3, "click", "ngClass", "title"], ["title", "Leave", 1, "w-10", "h-10", "flex", "items-center", "justify-center", "rounded-full", "bg-red-500", "hover:bg-red-600", "transition-colors", 3, "click"], [1, "text-5xl", "text-white/40", "mb-2"], [1, "text-sm", "text-white/80", "font-medium"], [1, "text-white/60", "text-base"]], template: function SessionVideoPanelComponent_Template(rf, ctx) {
+  }, inputs: { appointmentId: "appointmentId", isMinimized: "isMinimized" }, outputs: { closed: "closed", minimizeToggled: "minimizeToggled", expandRequested: "expandRequested" }, standalone: false, decls: 10, vars: 6, consts: [["panelRoot", ""], ["remoteVideo", ""], ["localVideo", ""], [1, "flex", "flex-col", "h-full", "bg-gray-900", "text-white", "relative", "overflow-hidden", 3, "click"], [1, "flex", "items-center", "justify-between", "px-3", "py-2", "bg-black/40", "shrink-0"], [1, "flex-1", "min-h-0", "relative", "bg-black"], ["autoplay", "", "playsinline", "", 1, "w-full", "h-full", "object-cover"], [1, "absolute", "inset-0", "flex", "flex-col", "items-center", "justify-center", "text-center", "px-2", "bg-black/60"], [1, "absolute", "bottom-3", "right-3", "w-28", "h-20", "sm:w-36", "sm:h-24", "rounded-lg", "overflow-hidden", "border-2", "border-white/20", "shadow-lg", "bg-black"], [1, "flex", "items-center", "justify-center", "gap-2", "px-3", "py-3", "bg-black/40", "shrink-0"], [1, "flex", "items-center", "gap-2", "text-xs"], [1, "w-2", "h-2", "rounded-full", 3, "ngClass"], [1, "font-medium"], [1, "flex", "items-center", "gap-1"], ["title", "Minimize", 1, "w-7", "h-7", "sm:hidden", "flex", "items-center", "justify-center", "rounded-lg", "hover:bg-white/10", 3, "click"], [1, "text-base"], [1, "w-7", "h-7", "hidden", "sm:flex", "items-center", "justify-center", "rounded-lg", "hover:bg-white/10", 3, "click", "title"], ["title", "Close", 1, "w-7", "h-7", "flex", "items-center", "justify-center", "rounded-lg", "hover:bg-white/10", 3, "click"], [1, "text-5xl", "text-white/40", "mb-2"], [1, "text-sm", "text-white/80", "font-medium"], [1, "text-3xl", "text-white/50"], [1, "text-[10px]", "text-white/70", "mt-1"], ["autoplay", "", "playsinline", "", "muted", "", 1, "w-full", "h-full", "object-cover"], [1, "absolute", "inset-0", "flex", "items-center", "justify-center"], [1, "text-white/60", "text-base"], ["autoplay", "", "playsinline", "", "muted", "", 1, "hidden"], ["type", "button", "title", "Close", 1, "absolute", "top-1", "right-1", "w-6", "h-6", "flex", "items-center", "justify-center", "rounded-full", "bg-black/60", "hover:bg-black/80", "z-10", 3, "click"], [1, "!text-[14px]", "!w-[14px]", "!h-[14px]", "leading-none"], [1, "absolute", "bottom-1", "left-1", "flex", "items-center", "gap-1", "px-1.5", "py-0.5", "rounded-full", "bg-black/60", "text-[10px]", "pointer-events-none"], [1, "!text-[12px]", "!w-[12px]", "!h-[12px]", "leading-none"], [1, "w-10", "h-10", "flex", "items-center", "justify-center", "rounded-full", "transition-colors", 3, "click", "ngClass", "title"], ["title", "Leave", 1, "w-10", "h-10", "flex", "items-center", "justify-center", "rounded-full", "bg-red-500", "hover:bg-red-600", "transition-colors", 3, "click"]], template: function SessionVideoPanelComponent_Template(rf, ctx) {
     if (rf & 1) {
       const _r1 = \u0275\u0275getCurrentView();
-      \u0275\u0275elementStart(0, "div", 3, 0)(2, "div", 4)(3, "div", 5);
-      \u0275\u0275element(4, "span", 6);
-      \u0275\u0275elementStart(5, "span", 7);
-      \u0275\u0275template(6, SessionVideoPanelComponent_Case_6_Template, 1, 0)(7, SessionVideoPanelComponent_Case_7_Template, 1, 0)(8, SessionVideoPanelComponent_Case_8_Template, 1, 0)(9, SessionVideoPanelComponent_Case_9_Template, 1, 1)(10, SessionVideoPanelComponent_Case_10_Template, 1, 0);
-      \u0275\u0275elementEnd()();
-      \u0275\u0275elementStart(11, "div", 8)(12, "button", 9);
-      \u0275\u0275listener("click", function SessionVideoPanelComponent_Template_button_click_12_listener() {
+      \u0275\u0275elementStart(0, "div", 3, 0);
+      \u0275\u0275listener("click", function SessionVideoPanelComponent_Template_div_click_0_listener($event) {
         \u0275\u0275restoreView(_r1);
-        return \u0275\u0275resetView(ctx.toggleFullscreen());
+        return \u0275\u0275resetView(ctx.onPanelClick($event));
       });
-      \u0275\u0275elementStart(13, "mat-icon", 10);
-      \u0275\u0275text(14);
-      \u0275\u0275elementEnd()();
-      \u0275\u0275elementStart(15, "button", 11);
-      \u0275\u0275listener("click", function SessionVideoPanelComponent_Template_button_click_15_listener() {
-        \u0275\u0275restoreView(_r1);
-        return \u0275\u0275resetView(ctx.endCall());
-      });
-      \u0275\u0275elementStart(16, "mat-icon", 10);
-      \u0275\u0275text(17, "close");
-      \u0275\u0275elementEnd()()()();
-      \u0275\u0275elementStart(18, "div", 12);
-      \u0275\u0275element(19, "video", 13, 1);
-      \u0275\u0275template(21, SessionVideoPanelComponent_Conditional_21_Template, 8, 1, "div", 14);
-      \u0275\u0275elementStart(22, "div", 15);
-      \u0275\u0275element(23, "video", 16, 2);
-      \u0275\u0275template(25, SessionVideoPanelComponent_Conditional_25_Template, 3, 0, "div", 17);
-      \u0275\u0275elementEnd()();
-      \u0275\u0275elementStart(26, "div", 18)(27, "button", 19);
-      \u0275\u0275listener("click", function SessionVideoPanelComponent_Template_button_click_27_listener() {
-        \u0275\u0275restoreView(_r1);
-        return \u0275\u0275resetView(ctx.toggleAudio());
-      });
-      \u0275\u0275elementStart(28, "mat-icon", 10);
-      \u0275\u0275text(29);
-      \u0275\u0275elementEnd()();
-      \u0275\u0275elementStart(30, "button", 19);
-      \u0275\u0275listener("click", function SessionVideoPanelComponent_Template_button_click_30_listener() {
-        \u0275\u0275restoreView(_r1);
-        return \u0275\u0275resetView(ctx.toggleVideo());
-      });
-      \u0275\u0275elementStart(31, "mat-icon", 10);
-      \u0275\u0275text(32);
-      \u0275\u0275elementEnd()();
-      \u0275\u0275elementStart(33, "button", 20);
-      \u0275\u0275listener("click", function SessionVideoPanelComponent_Template_button_click_33_listener() {
-        \u0275\u0275restoreView(_r1);
-        return \u0275\u0275resetView(ctx.endCall());
-      });
-      \u0275\u0275elementStart(34, "mat-icon", 10);
-      \u0275\u0275text(35, "call_end");
-      \u0275\u0275elementEnd()()()();
+      \u0275\u0275template(2, SessionVideoPanelComponent_Conditional_2_Template, 19, 8, "div", 4);
+      \u0275\u0275elementStart(3, "div", 5);
+      \u0275\u0275element(4, "video", 6, 1);
+      \u0275\u0275template(6, SessionVideoPanelComponent_Conditional_6_Template, 3, 1, "div", 7)(7, SessionVideoPanelComponent_Conditional_7_Template, 4, 3, "div", 8)(8, SessionVideoPanelComponent_Conditional_8_Template, 10, 0);
+      \u0275\u0275elementEnd();
+      \u0275\u0275template(9, SessionVideoPanelComponent_Conditional_9_Template, 10, 6, "div", 9);
+      \u0275\u0275elementEnd();
     }
     if (rf & 2) {
-      let tmp_4_0;
-      \u0275\u0275advance(4);
-      \u0275\u0275property("ngClass", \u0275\u0275pureFunction3(16, _c38, ctx.callState() === "waiting" || ctx.callState() === "connecting" || ctx.callState() === "initializing", ctx.callState() === "active", ctx.callState() === "ended"));
       \u0275\u0275advance(2);
-      \u0275\u0275conditional((tmp_4_0 = ctx.callState()) === "initializing" ? 6 : tmp_4_0 === "waiting" ? 7 : tmp_4_0 === "connecting" ? 8 : tmp_4_0 === "active" ? 9 : tmp_4_0 === "ended" ? 10 : -1);
-      \u0275\u0275advance(6);
-      \u0275\u0275property("title", ctx.isFullscreen() ? "Exit fullscreen" : "Fullscreen");
+      \u0275\u0275conditional(!ctx.isMinimized ? 2 : -1);
       \u0275\u0275advance(2);
-      \u0275\u0275textInterpolate(ctx.isFullscreen() ? "fullscreen_exit" : "fullscreen");
-      \u0275\u0275advance(5);
       \u0275\u0275classProp("opacity-0", ctx.callState() !== "active");
       \u0275\u0275advance(2);
-      \u0275\u0275conditional(ctx.callState() !== "active" ? 21 : -1);
-      \u0275\u0275advance(2);
-      \u0275\u0275classProp("opacity-30", ctx.isVideoMuted());
-      \u0275\u0275advance(2);
-      \u0275\u0275conditional(ctx.isVideoMuted() ? 25 : -1);
-      \u0275\u0275advance(2);
-      \u0275\u0275property("ngClass", ctx.isAudioMuted() ? "bg-red-500/80 hover:bg-red-500" : "bg-white/10 hover:bg-white/20")("title", ctx.isAudioMuted() ? "Unmute" : "Mute");
-      \u0275\u0275advance(2);
-      \u0275\u0275textInterpolate(ctx.isAudioMuted() ? "mic_off" : "mic");
+      \u0275\u0275conditional(ctx.callState() !== "active" ? 6 : -1);
       \u0275\u0275advance();
-      \u0275\u0275property("ngClass", ctx.isVideoMuted() ? "bg-red-500/80 hover:bg-red-500" : "bg-white/10 hover:bg-white/20")("title", ctx.isVideoMuted() ? "Camera on" : "Camera off");
+      \u0275\u0275conditional(!ctx.isMinimized ? 7 : 8);
       \u0275\u0275advance(2);
-      \u0275\u0275textInterpolate(ctx.isVideoMuted() ? "videocam_off" : "videocam");
+      \u0275\u0275conditional(!ctx.isMinimized ? 9 : -1);
     }
   }, dependencies: [NgClass, MatIcon], styles: ["\n\n[_nghost-%COMP%] {\n  display: block;\n  height: 100%;\n}\n/*# sourceMappingURL=session-video-panel.component.css.map */"] });
 };
 (() => {
   (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(SessionVideoPanelComponent, [{
     type: Component,
-    args: [{ selector: "app-session-video-panel", standalone: false, template: `<div #panelRoot class="flex flex-col h-full bg-gray-900 text-white relative overflow-hidden">
+    args: [{ selector: "app-session-video-panel", standalone: false, template: `<div
+  #panelRoot
+  class="flex flex-col h-full bg-gray-900 text-white relative overflow-hidden"
+  (click)="onPanelClick($event)"
+>
 
-  <!-- Header -->
-  <div class="flex items-center justify-between px-3 py-2 bg-black/40 shrink-0">
-    <div class="flex items-center gap-2 text-xs">
-      <span
-        class="w-2 h-2 rounded-full"
-        [ngClass]="{
-          'bg-yellow-400 animate-pulse': callState() === 'waiting' || callState() === 'connecting' || callState() === 'initializing',
-          'bg-green-400': callState() === 'active',
-          'bg-red-400': callState() === 'ended'
-        }"
-      ></span>
-      <span class="font-medium">
-        @switch (callState()) {
-          @case ('initializing') { Initializing\u2026 }
-          @case ('waiting') { Waiting for the other side\u2026 }
-          @case ('connecting') { Connecting\u2026 }
-          @case ('active') { {{ formattedDuration }} }
-          @case ('ended') { Call ended }
-        }
-      </span>
-    </div>
+  <!-- Header (hidden when minimized) -->
+  @if (!isMinimized) {
+    <div class="flex items-center justify-between px-3 py-2 bg-black/40 shrink-0">
+      <div class="flex items-center gap-2 text-xs">
+        <span
+          class="w-2 h-2 rounded-full"
+          [ngClass]="{
+            'bg-yellow-400 animate-pulse': callState() === 'waiting' || callState() === 'connecting' || callState() === 'initializing',
+            'bg-green-400': callState() === 'active',
+            'bg-red-400': callState() === 'ended'
+          }"
+        ></span>
+        <span class="font-medium">
+          @switch (callState()) {
+            @case ('initializing') { Initializing\u2026 }
+            @case ('waiting') { Waiting for the other side\u2026 }
+            @case ('connecting') { Connecting\u2026 }
+            @case ('active') { {{ formattedDuration }} }
+            @case ('ended') { Call ended }
+          }
+        </span>
+      </div>
 
-    <div class="flex items-center gap-1">
-      <button
-        (click)="toggleFullscreen()"
-        class="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-white/10"
-        [title]="isFullscreen() ? 'Exit fullscreen' : 'Fullscreen'"
-      >
-        <mat-icon class="text-base">{{ isFullscreen() ? 'fullscreen_exit' : 'fullscreen' }}</mat-icon>
-      </button>
-      <button
-        (click)="endCall()"
-        class="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-white/10"
-        title="Close"
-      >
-        <mat-icon class="text-base">close</mat-icon>
-      </button>
+      <div class="flex items-center gap-1">
+        <!-- Minimize (mobile only) -->
+        <button
+          (click)="minimizeToggled.emit()"
+          class="w-7 h-7 sm:hidden flex items-center justify-center rounded-lg hover:bg-white/10"
+          title="Minimize"
+        >
+          <mat-icon class="text-base">picture_in_picture_alt</mat-icon>
+        </button>
+        <button
+          (click)="toggleFullscreen()"
+          class="w-7 h-7 hidden sm:flex items-center justify-center rounded-lg hover:bg-white/10"
+          [title]="isFullscreen() ? 'Exit fullscreen' : 'Fullscreen'"
+        >
+          <mat-icon class="text-base">{{ isFullscreen() ? 'fullscreen_exit' : 'fullscreen' }}</mat-icon>
+        </button>
+        <button
+          (click)="endCall()"
+          class="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-white/10"
+          title="Close"
+        >
+          <mat-icon class="text-base">close</mat-icon>
+        </button>
+      </div>
     </div>
-  </div>
+  }
 
   <!-- Video stage -->
   <div class="flex-1 min-h-0 relative bg-black">
@@ -51182,72 +51326,117 @@ var SessionVideoPanelComponent = class _SessionVideoPanelComponent {
 
     <!-- Waiting overlay -->
     @if (callState() !== 'active') {
-      <div class="absolute inset-0 flex flex-col items-center justify-center text-center px-4 bg-black/60">
-        <mat-icon class="text-5xl text-white/40 mb-2">person_outline</mat-icon>
-        <p class="text-sm text-white/80 font-medium">
-          @switch (callState()) {
-            @case ('waiting') { Waiting for the other participant to join\u2026 }
-            @case ('connecting') { Connecting\u2026 }
-            @case ('initializing') { Preparing camera\u2026 }
-            @case ('ended') { Call ended }
-          }
-        </p>
+      <div class="absolute inset-0 flex flex-col items-center justify-center text-center px-2 bg-black/60">
+        @if (!isMinimized) {
+          <mat-icon class="text-5xl text-white/40 mb-2">person_outline</mat-icon>
+          <p class="text-sm text-white/80 font-medium">
+            @switch (callState()) {
+              @case ('waiting') { Waiting for the other participant to join\u2026 }
+              @case ('connecting') { Connecting\u2026 }
+              @case ('initializing') { Preparing camera\u2026 }
+              @case ('ended') { Call ended }
+            }
+          </p>
+        } @else {
+          <mat-icon class="text-3xl text-white/50">person_outline</mat-icon>
+          <p class="text-[10px] text-white/70 mt-1">
+            @switch (callState()) {
+              @case ('waiting') { Waiting\u2026 }
+              @case ('connecting') { Connecting\u2026 }
+              @case ('initializing') { Camera\u2026 }
+              @case ('ended') { Ended }
+            }
+          </p>
+        }
       </div>
     }
 
-    <!-- Local preview (picture-in-picture) -->
-    <div class="absolute bottom-3 right-3 w-28 h-20 sm:w-36 sm:h-24 rounded-lg overflow-hidden border-2 border-white/20 shadow-lg bg-black">
+    <!-- Local preview (hidden when minimized) -->
+    @if (!isMinimized) {
+      <div class="absolute bottom-3 right-3 w-28 h-20 sm:w-36 sm:h-24 rounded-lg overflow-hidden border-2 border-white/20 shadow-lg bg-black">
+        <video
+          #localVideo
+          autoplay
+          playsinline
+          muted
+          class="w-full h-full object-cover"
+          [class.opacity-30]="isVideoMuted()"
+        ></video>
+        @if (isVideoMuted()) {
+          <div class="absolute inset-0 flex items-center justify-center">
+            <mat-icon class="text-white/60 text-base">videocam_off</mat-icon>
+          </div>
+        }
+      </div>
+    } @else {
+      <!-- Keep local video element mounted (hidden) so the stream stays attached -->
       <video
         #localVideo
         autoplay
         playsinline
         muted
-        class="w-full h-full object-cover"
-        [class.opacity-30]="isVideoMuted()"
+        class="hidden"
       ></video>
-      @if (isVideoMuted()) {
-        <div class="absolute inset-0 flex items-center justify-center">
-          <mat-icon class="text-white/60 text-base">videocam_off</mat-icon>
-        </div>
-      }
+
+      <!-- Minimized overlay: tap-to-expand badge + close -->
+      <button
+        type="button"
+        (click)="endCall(); $event.stopPropagation()"
+        class="absolute top-1 right-1 w-6 h-6 flex items-center justify-center rounded-full bg-black/60 hover:bg-black/80 z-10"
+        title="Close"
+      >
+        <mat-icon class="!text-[14px] !w-[14px] !h-[14px] leading-none">close</mat-icon>
+      </button>
+      <div class="absolute bottom-1 left-1 flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-black/60 text-[10px] pointer-events-none">
+        <mat-icon class="!text-[12px] !w-[12px] !h-[12px] leading-none">open_in_full</mat-icon>
+        <span>Tap</span>
+      </div>
+    }
+
+  </div>
+
+  <!-- Controls (hidden when minimized) -->
+  @if (!isMinimized) {
+    <div class="flex items-center justify-center gap-2 px-3 py-3 bg-black/40 shrink-0">
+      <button
+        (click)="toggleAudio()"
+        class="w-10 h-10 flex items-center justify-center rounded-full transition-colors"
+        [ngClass]="isAudioMuted() ? 'bg-red-500/80 hover:bg-red-500' : 'bg-white/10 hover:bg-white/20'"
+        [title]="isAudioMuted() ? 'Unmute' : 'Mute'"
+      >
+        <mat-icon class="text-base">{{ isAudioMuted() ? 'mic_off' : 'mic' }}</mat-icon>
+      </button>
+
+      <button
+        (click)="toggleVideo()"
+        class="w-10 h-10 flex items-center justify-center rounded-full transition-colors"
+        [ngClass]="isVideoMuted() ? 'bg-red-500/80 hover:bg-red-500' : 'bg-white/10 hover:bg-white/20'"
+        [title]="isVideoMuted() ? 'Camera on' : 'Camera off'"
+      >
+        <mat-icon class="text-base">{{ isVideoMuted() ? 'videocam_off' : 'videocam' }}</mat-icon>
+      </button>
+
+      <button
+        (click)="endCall()"
+        class="w-10 h-10 flex items-center justify-center rounded-full bg-red-500 hover:bg-red-600 transition-colors"
+        title="Leave"
+      >
+        <mat-icon class="text-base">call_end</mat-icon>
+      </button>
     </div>
-
-  </div>
-
-  <!-- Controls -->
-  <div class="flex items-center justify-center gap-2 px-3 py-3 bg-black/40 shrink-0">
-    <button
-      (click)="toggleAudio()"
-      class="w-10 h-10 flex items-center justify-center rounded-full transition-colors"
-      [ngClass]="isAudioMuted() ? 'bg-red-500/80 hover:bg-red-500' : 'bg-white/10 hover:bg-white/20'"
-      [title]="isAudioMuted() ? 'Unmute' : 'Mute'"
-    >
-      <mat-icon class="text-base">{{ isAudioMuted() ? 'mic_off' : 'mic' }}</mat-icon>
-    </button>
-
-    <button
-      (click)="toggleVideo()"
-      class="w-10 h-10 flex items-center justify-center rounded-full transition-colors"
-      [ngClass]="isVideoMuted() ? 'bg-red-500/80 hover:bg-red-500' : 'bg-white/10 hover:bg-white/20'"
-      [title]="isVideoMuted() ? 'Camera on' : 'Camera off'"
-    >
-      <mat-icon class="text-base">{{ isVideoMuted() ? 'videocam_off' : 'videocam' }}</mat-icon>
-    </button>
-
-    <button
-      (click)="endCall()"
-      class="w-10 h-10 flex items-center justify-center rounded-full bg-red-500 hover:bg-red-600 transition-colors"
-      title="Leave"
-    >
-      <mat-icon class="text-base">call_end</mat-icon>
-    </button>
-  </div>
+  }
 </div>
 `, styles: ["/* src/app/modules/session/components/session-video-panel/session-video-panel.component.scss */\n:host {\n  display: block;\n  height: 100%;\n}\n/*# sourceMappingURL=session-video-panel.component.css.map */\n"] }]
   }], () => [{ type: SessionHubService }], { appointmentId: [{
     type: Input,
     args: [{ required: true }]
+  }], isMinimized: [{
+    type: Input
   }], closed: [{
+    type: Output
+  }], minimizeToggled: [{
+    type: Output
+  }], expandRequested: [{
     type: Output
   }], localVideoEl: [{
     type: ViewChild,
@@ -51856,13 +52045,22 @@ function SessionRoomComponent_Conditional_3_Conditional_28_Template(rf, ctx) {
       \u0275\u0275restoreView(_r22);
       const ctx_r1 = \u0275\u0275nextContext(2);
       return \u0275\u0275resetView(ctx_r1.onVideoClosed());
+    })("minimizeToggled", function SessionRoomComponent_Conditional_3_Conditional_28_Template_app_session_video_panel_minimizeToggled_1_listener() {
+      \u0275\u0275restoreView(_r22);
+      const ctx_r1 = \u0275\u0275nextContext(2);
+      return \u0275\u0275resetView(ctx_r1.toggleVideoMinimized());
+    })("expandRequested", function SessionRoomComponent_Conditional_3_Conditional_28_Template_app_session_video_panel_expandRequested_1_listener() {
+      \u0275\u0275restoreView(_r22);
+      const ctx_r1 = \u0275\u0275nextContext(2);
+      return \u0275\u0275resetView(ctx_r1.expandVideo());
     });
     \u0275\u0275elementEnd()();
   }
   if (rf & 2) {
     const ctx_r1 = \u0275\u0275nextContext(2);
+    \u0275\u0275property("ngClass", ctx_r1.isVideoMinimized() ? "fixed bottom-4 right-3 w-32 h-44 z-[40] rounded-2xl shadow-2xl border border-white/20 overflow-hidden bg-gray-900 sm:static sm:inset-auto sm:bottom-auto sm:right-auto sm:w-[360px] md:w-[420px] lg:w-[460px] sm:h-auto sm:rounded-none sm:shadow-none sm:border-0 sm:border-l sm:border-gray-200 sm:z-auto shrink-0 min-h-0" : "absolute inset-0 z-[20] sm:static sm:inset-auto sm:z-auto sm:w-[360px] md:w-[420px] lg:w-[460px] shrink-0 min-h-0 overflow-hidden sm:border-l border-gray-200 bg-gray-900");
     \u0275\u0275advance();
-    \u0275\u0275property("appointmentId", ctx_r1.appointmentId);
+    \u0275\u0275property("appointmentId", ctx_r1.appointmentId)("isMinimized", ctx_r1.isVideoMinimized());
   }
 }
 function SessionRoomComponent_Conditional_3_Conditional_29_For_12_Template(rf, ctx) {
@@ -51973,7 +52171,7 @@ function SessionRoomComponent_Conditional_3_Template(rf, ctx) {
     \u0275\u0275elementStart(23, "div", 26);
     \u0275\u0275template(24, SessionRoomComponent_Conditional_3_Conditional_24_Template, 11, 5)(25, SessionRoomComponent_Conditional_3_Conditional_25_Template, 13, 6, "div", 27)(26, SessionRoomComponent_Conditional_3_Conditional_26_Template, 2, 1)(27, SessionRoomComponent_Conditional_3_Conditional_27_Template, 20, 5, "div", 26);
     \u0275\u0275elementEnd()();
-    \u0275\u0275template(28, SessionRoomComponent_Conditional_3_Conditional_28_Template, 2, 1, "div", 28);
+    \u0275\u0275template(28, SessionRoomComponent_Conditional_3_Conditional_28_Template, 2, 3, "div", 28);
     \u0275\u0275elementEnd();
     \u0275\u0275template(29, SessionRoomComponent_Conditional_3_Conditional_29_Template, 13, 4, "div", 29);
   }
@@ -52011,6 +52209,7 @@ var SessionRoomComponent = class _SessionRoomComponent {
   isAccessDenied = signal(false);
   activeTab = signal("chat");
   isVideoOpen = signal(false);
+  isVideoMinimized = signal(false);
   // Notes
   noteContent = signal("");
   noteSaveState = signal("idle");
@@ -52252,9 +52451,19 @@ var SessionRoomComponent = class _SessionRoomComponent {
   }
   toggleVideo() {
     this.isVideoOpen.update((v) => !v);
+    if (!this.isVideoOpen()) {
+      this.isVideoMinimized.set(false);
+    }
   }
   onVideoClosed() {
     this.isVideoOpen.set(false);
+    this.isVideoMinimized.set(false);
+  }
+  toggleVideoMinimized() {
+    this.isVideoMinimized.update((v) => !v);
+  }
+  expandVideo() {
+    this.isVideoMinimized.set(false);
   }
   sendMessage() {
     return __async(this, null, function* () {
@@ -52444,7 +52653,7 @@ var SessionRoomComponent = class _SessionRoomComponent {
       \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.aiMessagesContainer = _t.first);
       \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.transcriptsContainer = _t.first);
     }
-  }, standalone: false, decls: 4, vars: 1, consts: [["messagesContainer", ""], ["transcriptsContainer", ""], ["aiMessagesContainer", ""], [1, "flex", "flex-col", "h-full", "bg-gray-50", 3, "click"], [1, "flex-1", "flex", "items-center", "justify-center"], [1, "flex-1", "flex", "flex-col", "items-center", "justify-center", "gap-4", "text-center", "px-6"], ["diameter", "48"], [1, "text-6xl", "text-gray-300"], [1, "text-lg", "font-semibold", "text-gray-600"], [1, "text-sm", "text-gray-400"], [1, "mt-2", "px-5", "py-2", "bg-[var(--color-primary)]", "text-white", "rounded-xl", "text-sm", "font-medium", 3, "click"], [1, "flex", "items-center", "gap-2", "sm:gap-3", "px-2", "sm:px-4", "py-2", "sm:py-3", "bg-white", "border-b", "border-gray-100", "shadow-sm", "shrink-0"], ["title", "Back", 1, "w-9", "h-9", "flex", "items-center", "justify-center", "rounded-xl", "hover:bg-gray-100", "transition-colors", "shrink-0", 3, "click"], [1, "text-gray-500"], [1, "flex-1", "min-w-0"], [1, "flex", "items-center", "gap-1.5", "min-w-0"], [1, "w-1.5", "h-1.5", "rounded-full", "shrink-0", 3, "ngClass", "title"], [1, "font-semibold", "text-[var(--color-primary)]", "text-xs", "sm:text-sm", "truncate"], [1, "text-[10px]", "sm:text-xs", "text-gray-400", "truncate"], [1, "flex", "items-center", "gap-1.5", "px-2.5", "sm:px-3", "py-2", "text-xs", "sm:text-sm", "font-semibold", "rounded-xl", "transition-all", "shadow-sm", "shrink-0", 3, "click", "ngClass", "title"], [1, "text-base"], [1, "hidden", "sm:inline"], [1, "flex-1", "flex", "min-h-0", "relative"], [1, "flex", "flex-col", "min-w-0", "flex-1", "bg-gray-50"], [1, "flex", "items-center", "gap-0.5", "sm:gap-1", "px-2", "sm:px-3", "pt-1.5", "sm:pt-2", "bg-white", "border-b", "border-gray-100", "shrink-0", "overflow-x-auto", "custom-scroll"], [1, "flex", "items-center", "gap-1.5", "px-2.5", "sm:px-3", "py-2", "text-xs", "sm:text-sm", "font-medium", "rounded-t-lg", "transition-colors", "whitespace-nowrap", "border-b-2", 3, "ngClass"], [1, "flex-1", "flex", "flex-col", "min-h-0"], [1, "flex-1", "flex", "flex-col", "min-h-0", "bg-gray-50", "p-3", "sm:p-4", "gap-2"], [1, "absolute", "inset-0", "z-[20]", "sm:static", "sm:inset-auto", "sm:z-auto", "sm:w-[360px]", "md:w-[420px]", "lg:w-[460px]", "shrink-0", "min-h-0", "overflow-hidden", "sm:border-l", "border-gray-200", "bg-gray-900"], [1, "fixed", "z-50", "w-72", "bg-gray-900", "text-white", "rounded-xl", "shadow-2xl", "border", "border-gray-700", "p-2", 2, "transform", "translate(-50%, -100%)", 3, "left", "top"], [1, "flex", "items-center", "gap-1.5", "px-2.5", "sm:px-3", "py-2", "text-xs", "sm:text-sm", "font-medium", "rounded-t-lg", "transition-colors", "whitespace-nowrap", "border-b-2", 3, "click", "ngClass"], [1, "text-base", "shrink-0"], [1, "hidden", "xs:inline", "sm:inline"], [1, "flex-1", "overflow-y-auto", "px-3", "sm:px-4", "py-3", "sm:py-4", "space-y-2", "sm:space-y-3", "custom-scroll"], [1, "flex", "flex-col", "items-center", "justify-center", "h-full", "text-center"], [1, "flex", 3, "justify-end", "justify-start"], [1, "px-2", "sm:px-4", "py-2", "sm:py-3", "bg-white", "border-t", "border-gray-100", "shrink-0"], [1, "flex", "items-end", "gap-2", "bg-gray-50", "rounded-2xl", "px-3", "sm:px-4", "py-1.5", "sm:py-2", "border", "border-gray-200"], ["rows", "1", 1, "flex-1", "resize-none", "bg-transparent", "outline-none", "text-sm", "text-gray-800", "placeholder-gray-400", "max-h-28", "overflow-y-auto", "disabled:opacity-50", 3, "ngModelChange", "keydown", "ngModel", "placeholder", "disabled"], ["title", "Send", 1, "w-9", "h-9", "flex", "items-center", "justify-center", "rounded-xl", "bg-[var(--color-primary)]", "text-white", "disabled:opacity-40", "transition-all", "shrink-0", 3, "click", "disabled"], [1, "text-4xl", "text-gray-200", "mb-2"], [1, "flex"], [1, "max-w-[85%]", "sm:max-w-[75%]", "px-3", "sm:px-4", "py-2", "sm:py-2.5", "rounded-2xl", "text-sm", "leading-relaxed", "break-words", 3, "ngClass"], [1, "text-[10px]", "font-semibold", "mb-0.5", "opacity-60"], [1, "whitespace-pre-wrap"], [1, "text-[10px]", "mt-1", "opacity-50", "text-right"], [1, "relative", "flex", "items-center", "justify-between", "bg-white", "border", "border-gray-100", "rounded-xl", "px-3", "py-2", "shadow-sm", "shrink-0"], [1, "flex-1", "min-h-0", "overflow-y-auto", "custom-scroll", "bg-white", "border", "border-gray-100", "rounded-2xl", "shadow-sm", "p-3", "sm:p-4", "font-mono", "text-[13px]", "leading-snug", "select-text", 3, "mouseup"], [1, "flex", "flex-col", "items-center", "justify-center", "h-full", "text-center", "text-gray-400"], [1, "flex", "items-center", "gap-1.5", "text-xs", "text-gray-500"], [1, "text-base", "text-[var(--color-primary)]"], ["type", "button", 1, "flex", "items-center", "gap-1.5", "px-3", "py-1.5", "rounded-lg", "bg-[var(--color-primary)]", "text-white", "text-xs", "font-semibold", "hover:opacity-90", "disabled:opacity-50", "shrink-0", 3, "click", "disabled"], [1, "absolute", "right-2", "top-full", "mt-1", "z-30", "w-72", "bg-white", "border", "border-gray-200", "rounded-xl", "shadow-xl", "py-2"], ["diameter", "14", "mode", "indeterminate", 1, "!text-white"], [1, "absolute", "right-2", "top-full", "mt-1", "z-30", "w-72", "bg-white", "border", "border-gray-200", "rounded-xl", "shadow-xl", "py-2", 3, "click"], [1, "px-3", "py-1.5", "text-[10px]", "font-semibold", "uppercase", "tracking-wider", "text-gray-400"], [1, "px-2", "grid", "grid-cols-2", "gap-1"], ["type", "button", 1, "px-2", "py-1.5", "rounded-lg", "text-xs", "font-medium", "transition-colors", "text-left", 3, "ngClass"], [1, "mt-2", "px-3", "py-1.5", "text-[10px]", "font-semibold", "uppercase", "tracking-wider", "text-gray-400", "border-t", "border-gray-100"], ["type", "button", 1, "w-full", "flex", "items-start", "gap-2", "px-3", "py-2", "hover:bg-gray-50", "text-left", "transition-colors"], ["type", "button", 1, "px-2", "py-1.5", "rounded-lg", "text-xs", "font-medium", "transition-colors", "text-left", 3, "click", "ngClass"], ["type", "button", 1, "w-full", "flex", "items-start", "gap-2", "px-3", "py-2", "hover:bg-gray-50", "text-left", "transition-colors", 3, "click"], [1, "text-base", "text-[var(--color-primary)]", "mt-0.5"], [1, "min-w-0"], [1, "text-sm", "font-medium", "text-gray-800"], [1, "text-[11px]", "text-gray-400"], [1, "text-5xl", "text-gray-200", "mb-2"], [1, "text-sm"], [1, "text-xs", "mt-1"], [1, "text-gray-400"], [1, "ml-1.5", "font-semibold", 3, "ngClass"], [1, "ml-1", "text-gray-800", "whitespace-pre-wrap", "break-words"], [1, "italic", "opacity-60"], [1, "ml-1", "text-gray-700", "whitespace-pre-wrap", "break-words"], [1, "flex-1", "flex", "flex-col", "items-center", "justify-center", "text-center", "px-6", "text-gray-400"], [1, "flex", "items-center", "justify-between", "px-4", "py-2", "bg-white", "border-b", "border-gray-100", "shrink-0"], [1, "flex", "items-center", "gap-2", "text-sm"], [1, "text-base", "text-gray-400"], [1, "font-semibold", "text-gray-700"], [1, "text-[11px]", "font-medium", 3, "ngClass"], ["placeholder", "Write your private notes here. Visible only to you. Auto-saves as you type.", 1, "flex-1", "resize-none", "bg-white", "text-sm", "text-gray-800", "placeholder-gray-400", "outline-none", "px-4", "py-3", "leading-relaxed", "custom-scroll", 3, "ngModelChange", "ngModel"], [1, "text-5xl", "text-gray-200", "mb-3"], [1, "text-sm", "font-semibold", "text-gray-500"], [1, "flex", "items-center", "gap-2", "px-4", "py-2", "bg-white", "border-b", "border-gray-100", "shrink-0", "text-sm"], [1, "text-[11px]", "text-gray-400", "ml-1"], [1, "flex", "justify-start"], ["placeholder", "Ask the AI assistant\u2026", "rows", "1", 1, "flex-1", "resize-none", "bg-transparent", "outline-none", "text-sm", "text-gray-800", "placeholder-gray-400", "max-h-28", "overflow-y-auto", "disabled:opacity-50", 3, "ngModelChange", "keydown", "ngModel", "disabled"], [1, "text-sm", "leading-relaxed", "block", "prose-invert", 3, "data"], [1, "text-sm", "leading-relaxed", "block", 3, "data"], [1, "bg-gray-100", "px-3", "py-2", "rounded-2xl", "text-xs", "text-gray-500", "flex", "items-center", "gap-2"], [1, "flex", "gap-1"], [1, "w-1", "h-1", "bg-gray-400", "rounded-full", "animate-bounce"], [1, "w-1", "h-1", "bg-gray-400", "rounded-full", "animate-bounce", "[animation-delay:0.2s]"], [1, "w-1", "h-1", "bg-gray-400", "rounded-full", "animate-bounce", "[animation-delay:0.4s]"], [3, "closed", "appointmentId"], [1, "fixed", "z-50", "w-72", "bg-gray-900", "text-white", "rounded-xl", "shadow-2xl", "border", "border-gray-700", "p-2", 2, "transform", "translate(-50%, -100%)", 3, "click", "mousedown"], [1, "flex", "items-center", "justify-between", "px-1.5", "pb-1.5", "border-b", "border-gray-700", "mb-1"], [1, "flex", "items-center", "gap-1", "text-[11px]", "font-semibold", "text-gray-300"], ["type", "button", "title", "Close", 1, "w-5", "h-5", "flex", "items-center", "justify-center", "rounded", "hover:bg-gray-700", 3, "click"], [1, "grid", "grid-cols-2", "gap-1"], ["type", "button", 1, "flex", "flex-col", "items-start", "gap-0.5", "px-2", "py-1.5", "rounded-lg", "bg-gray-800", "hover:bg-gray-700", "disabled:opacity-50", "transition-colors", "text-left", 3, "disabled", "title"], ["type", "button", 1, "flex", "flex-col", "items-start", "gap-0.5", "px-2", "py-1.5", "rounded-lg", "bg-gray-800", "hover:bg-gray-700", "disabled:opacity-50", "transition-colors", "text-left", 3, "click", "disabled", "title"], [1, "flex", "items-center", "gap-1"], [1, "text-xs", "font-medium"], [1, "text-[10px]", "text-gray-400", "leading-tight"]], template: function SessionRoomComponent_Template(rf, ctx) {
+  }, standalone: false, decls: 4, vars: 1, consts: [["messagesContainer", ""], ["transcriptsContainer", ""], ["aiMessagesContainer", ""], [1, "flex", "flex-col", "h-full", "bg-gray-50", 3, "click"], [1, "flex-1", "flex", "items-center", "justify-center"], [1, "flex-1", "flex", "flex-col", "items-center", "justify-center", "gap-4", "text-center", "px-6"], ["diameter", "48"], [1, "text-6xl", "text-gray-300"], [1, "text-lg", "font-semibold", "text-gray-600"], [1, "text-sm", "text-gray-400"], [1, "mt-2", "px-5", "py-2", "bg-[var(--color-primary)]", "text-white", "rounded-xl", "text-sm", "font-medium", 3, "click"], [1, "flex", "items-center", "gap-2", "sm:gap-3", "px-2", "sm:px-4", "py-2", "sm:py-3", "bg-white", "border-b", "border-gray-100", "shadow-sm", "shrink-0"], ["title", "Back", 1, "w-9", "h-9", "flex", "items-center", "justify-center", "rounded-xl", "hover:bg-gray-100", "transition-colors", "shrink-0", 3, "click"], [1, "text-gray-500"], [1, "flex-1", "min-w-0"], [1, "flex", "items-center", "gap-1.5", "min-w-0"], [1, "w-1.5", "h-1.5", "rounded-full", "shrink-0", 3, "ngClass", "title"], [1, "font-semibold", "text-[var(--color-primary)]", "text-xs", "sm:text-sm", "truncate"], [1, "text-[10px]", "sm:text-xs", "text-gray-400", "truncate"], [1, "flex", "items-center", "gap-1.5", "px-2.5", "sm:px-3", "py-2", "text-xs", "sm:text-sm", "font-semibold", "rounded-xl", "transition-all", "shadow-sm", "shrink-0", 3, "click", "ngClass", "title"], [1, "text-base"], [1, "hidden", "sm:inline"], [1, "flex-1", "flex", "min-h-0", "relative"], [1, "flex", "flex-col", "min-w-0", "flex-1", "bg-gray-50"], [1, "flex", "items-center", "gap-0.5", "sm:gap-1", "px-2", "sm:px-3", "pt-1.5", "sm:pt-2", "bg-white", "border-b", "border-gray-100", "shrink-0", "overflow-x-auto", "custom-scroll"], [1, "flex", "items-center", "gap-1.5", "px-2.5", "sm:px-3", "py-2", "text-xs", "sm:text-sm", "font-medium", "rounded-t-lg", "transition-colors", "whitespace-nowrap", "border-b-2", 3, "ngClass"], [1, "flex-1", "flex", "flex-col", "min-h-0"], [1, "flex-1", "flex", "flex-col", "min-h-0", "bg-gray-50", "p-3", "sm:p-4", "gap-2"], [3, "ngClass"], [1, "fixed", "z-50", "w-72", "bg-gray-900", "text-white", "rounded-xl", "shadow-2xl", "border", "border-gray-700", "p-2", 2, "transform", "translate(-50%, -100%)", 3, "left", "top"], [1, "flex", "items-center", "gap-1.5", "px-2.5", "sm:px-3", "py-2", "text-xs", "sm:text-sm", "font-medium", "rounded-t-lg", "transition-colors", "whitespace-nowrap", "border-b-2", 3, "click", "ngClass"], [1, "text-base", "shrink-0"], [1, "hidden", "xs:inline", "sm:inline"], [1, "flex-1", "overflow-y-auto", "px-3", "sm:px-4", "py-3", "sm:py-4", "space-y-2", "sm:space-y-3", "custom-scroll"], [1, "flex", "flex-col", "items-center", "justify-center", "h-full", "text-center"], [1, "flex", 3, "justify-end", "justify-start"], [1, "px-2", "sm:px-4", "py-2", "sm:py-3", "bg-white", "border-t", "border-gray-100", "shrink-0"], [1, "flex", "items-end", "gap-2", "bg-gray-50", "rounded-2xl", "px-3", "sm:px-4", "py-1.5", "sm:py-2", "border", "border-gray-200"], ["rows", "1", 1, "flex-1", "resize-none", "bg-transparent", "outline-none", "text-sm", "text-gray-800", "placeholder-gray-400", "max-h-28", "overflow-y-auto", "disabled:opacity-50", 3, "ngModelChange", "keydown", "ngModel", "placeholder", "disabled"], ["title", "Send", 1, "w-9", "h-9", "flex", "items-center", "justify-center", "rounded-xl", "bg-[var(--color-primary)]", "text-white", "disabled:opacity-40", "transition-all", "shrink-0", 3, "click", "disabled"], [1, "text-4xl", "text-gray-200", "mb-2"], [1, "flex"], [1, "max-w-[85%]", "sm:max-w-[75%]", "px-3", "sm:px-4", "py-2", "sm:py-2.5", "rounded-2xl", "text-sm", "leading-relaxed", "break-words", 3, "ngClass"], [1, "text-[10px]", "font-semibold", "mb-0.5", "opacity-60"], [1, "whitespace-pre-wrap"], [1, "text-[10px]", "mt-1", "opacity-50", "text-right"], [1, "relative", "flex", "items-center", "justify-between", "bg-white", "border", "border-gray-100", "rounded-xl", "px-3", "py-2", "shadow-sm", "shrink-0"], [1, "flex-1", "min-h-0", "overflow-y-auto", "custom-scroll", "bg-white", "border", "border-gray-100", "rounded-2xl", "shadow-sm", "p-3", "sm:p-4", "font-mono", "text-[13px]", "leading-snug", "select-text", 3, "mouseup"], [1, "flex", "flex-col", "items-center", "justify-center", "h-full", "text-center", "text-gray-400"], [1, "flex", "items-center", "gap-1.5", "text-xs", "text-gray-500"], [1, "text-base", "text-[var(--color-primary)]"], ["type", "button", 1, "flex", "items-center", "gap-1.5", "px-3", "py-1.5", "rounded-lg", "bg-[var(--color-primary)]", "text-white", "text-xs", "font-semibold", "hover:opacity-90", "disabled:opacity-50", "shrink-0", 3, "click", "disabled"], [1, "absolute", "right-2", "top-full", "mt-1", "z-30", "w-72", "bg-white", "border", "border-gray-200", "rounded-xl", "shadow-xl", "py-2"], ["diameter", "14", "mode", "indeterminate", 1, "!text-white"], [1, "absolute", "right-2", "top-full", "mt-1", "z-30", "w-72", "bg-white", "border", "border-gray-200", "rounded-xl", "shadow-xl", "py-2", 3, "click"], [1, "px-3", "py-1.5", "text-[10px]", "font-semibold", "uppercase", "tracking-wider", "text-gray-400"], [1, "px-2", "grid", "grid-cols-2", "gap-1"], ["type", "button", 1, "px-2", "py-1.5", "rounded-lg", "text-xs", "font-medium", "transition-colors", "text-left", 3, "ngClass"], [1, "mt-2", "px-3", "py-1.5", "text-[10px]", "font-semibold", "uppercase", "tracking-wider", "text-gray-400", "border-t", "border-gray-100"], ["type", "button", 1, "w-full", "flex", "items-start", "gap-2", "px-3", "py-2", "hover:bg-gray-50", "text-left", "transition-colors"], ["type", "button", 1, "px-2", "py-1.5", "rounded-lg", "text-xs", "font-medium", "transition-colors", "text-left", 3, "click", "ngClass"], ["type", "button", 1, "w-full", "flex", "items-start", "gap-2", "px-3", "py-2", "hover:bg-gray-50", "text-left", "transition-colors", 3, "click"], [1, "text-base", "text-[var(--color-primary)]", "mt-0.5"], [1, "min-w-0"], [1, "text-sm", "font-medium", "text-gray-800"], [1, "text-[11px]", "text-gray-400"], [1, "text-5xl", "text-gray-200", "mb-2"], [1, "text-sm"], [1, "text-xs", "mt-1"], [1, "text-gray-400"], [1, "ml-1.5", "font-semibold", 3, "ngClass"], [1, "ml-1", "text-gray-800", "whitespace-pre-wrap", "break-words"], [1, "italic", "opacity-60"], [1, "ml-1", "text-gray-700", "whitespace-pre-wrap", "break-words"], [1, "flex-1", "flex", "flex-col", "items-center", "justify-center", "text-center", "px-6", "text-gray-400"], [1, "flex", "items-center", "justify-between", "px-4", "py-2", "bg-white", "border-b", "border-gray-100", "shrink-0"], [1, "flex", "items-center", "gap-2", "text-sm"], [1, "text-base", "text-gray-400"], [1, "font-semibold", "text-gray-700"], [1, "text-[11px]", "font-medium", 3, "ngClass"], ["placeholder", "Write your private notes here. Visible only to you. Auto-saves as you type.", 1, "flex-1", "resize-none", "bg-white", "text-sm", "text-gray-800", "placeholder-gray-400", "outline-none", "px-4", "py-3", "leading-relaxed", "custom-scroll", 3, "ngModelChange", "ngModel"], [1, "text-5xl", "text-gray-200", "mb-3"], [1, "text-sm", "font-semibold", "text-gray-500"], [1, "flex", "items-center", "gap-2", "px-4", "py-2", "bg-white", "border-b", "border-gray-100", "shrink-0", "text-sm"], [1, "text-[11px]", "text-gray-400", "ml-1"], [1, "flex", "justify-start"], ["placeholder", "Ask the AI assistant\u2026", "rows", "1", 1, "flex-1", "resize-none", "bg-transparent", "outline-none", "text-sm", "text-gray-800", "placeholder-gray-400", "max-h-28", "overflow-y-auto", "disabled:opacity-50", 3, "ngModelChange", "keydown", "ngModel", "disabled"], [1, "text-sm", "leading-relaxed", "block", "prose-invert", 3, "data"], [1, "text-sm", "leading-relaxed", "block", 3, "data"], [1, "bg-gray-100", "px-3", "py-2", "rounded-2xl", "text-xs", "text-gray-500", "flex", "items-center", "gap-2"], [1, "flex", "gap-1"], [1, "w-1", "h-1", "bg-gray-400", "rounded-full", "animate-bounce"], [1, "w-1", "h-1", "bg-gray-400", "rounded-full", "animate-bounce", "[animation-delay:0.2s]"], [1, "w-1", "h-1", "bg-gray-400", "rounded-full", "animate-bounce", "[animation-delay:0.4s]"], [3, "closed", "minimizeToggled", "expandRequested", "appointmentId", "isMinimized"], [1, "fixed", "z-50", "w-72", "bg-gray-900", "text-white", "rounded-xl", "shadow-2xl", "border", "border-gray-700", "p-2", 2, "transform", "translate(-50%, -100%)", 3, "click", "mousedown"], [1, "flex", "items-center", "justify-between", "px-1.5", "pb-1.5", "border-b", "border-gray-700", "mb-1"], [1, "flex", "items-center", "gap-1", "text-[11px]", "font-semibold", "text-gray-300"], ["type", "button", "title", "Close", 1, "w-5", "h-5", "flex", "items-center", "justify-center", "rounded", "hover:bg-gray-700", 3, "click"], [1, "grid", "grid-cols-2", "gap-1"], ["type", "button", 1, "flex", "flex-col", "items-start", "gap-0.5", "px-2", "py-1.5", "rounded-lg", "bg-gray-800", "hover:bg-gray-700", "disabled:opacity-50", "transition-colors", "text-left", 3, "disabled", "title"], ["type", "button", 1, "flex", "flex-col", "items-start", "gap-0.5", "px-2", "py-1.5", "rounded-lg", "bg-gray-800", "hover:bg-gray-700", "disabled:opacity-50", "transition-colors", "text-left", 3, "click", "disabled", "title"], [1, "flex", "items-center", "gap-1"], [1, "text-xs", "font-medium"], [1, "text-[10px]", "text-gray-400", "leading-tight"]], template: function SessionRoomComponent_Template(rf, ctx) {
     if (rf & 1) {
       \u0275\u0275elementStart(0, "div", 3);
       \u0275\u0275listener("click", function SessionRoomComponent_Template_div_click_0_listener() {
@@ -52847,10 +53056,17 @@ var SessionRoomComponent = class _SessionRoomComponent {
 
       <!-- RIGHT: video panel \u2014 fills remaining space on mobile, side panel on sm+ -->
       @if (isVideoOpen()) {
-        <div class="absolute inset-0 z-[20] sm:static sm:inset-auto sm:z-auto sm:w-[360px] md:w-[420px] lg:w-[460px] shrink-0 min-h-0 overflow-hidden sm:border-l border-gray-200 bg-gray-900">
+        <div
+          [ngClass]="isVideoMinimized()
+            ? 'fixed bottom-4 right-3 w-32 h-44 z-[40] rounded-2xl shadow-2xl border border-white/20 overflow-hidden bg-gray-900 sm:static sm:inset-auto sm:bottom-auto sm:right-auto sm:w-[360px] md:w-[420px] lg:w-[460px] sm:h-auto sm:rounded-none sm:shadow-none sm:border-0 sm:border-l sm:border-gray-200 sm:z-auto shrink-0 min-h-0'
+            : 'absolute inset-0 z-[20] sm:static sm:inset-auto sm:z-auto sm:w-[360px] md:w-[420px] lg:w-[460px] shrink-0 min-h-0 overflow-hidden sm:border-l border-gray-200 bg-gray-900'"
+        >
           <app-session-video-panel
             [appointmentId]="appointmentId"
+            [isMinimized]="isVideoMinimized()"
             (closed)="onVideoClosed()"
+            (minimizeToggled)="toggleVideoMinimized()"
+            (expandRequested)="expandVideo()"
           ></app-session-video-panel>
         </div>
       }

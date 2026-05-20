@@ -65,6 +65,7 @@ export class SessionRoomComponent implements OnInit, OnDestroy {
   isAccessDenied = signal(false);
   activeTab = signal<SessionTab>('chat');
   isVideoOpen = signal(false);
+  isVideoMinimized = signal(false);
 
   // Notes
   noteContent = signal('');
@@ -355,10 +356,22 @@ export class SessionRoomComponent implements OnInit, OnDestroy {
 
   toggleVideo(): void {
     this.isVideoOpen.update((v) => !v);
+    if (!this.isVideoOpen()) {
+      this.isVideoMinimized.set(false);
+    }
   }
 
   onVideoClosed(): void {
     this.isVideoOpen.set(false);
+    this.isVideoMinimized.set(false);
+  }
+
+  toggleVideoMinimized(): void {
+    this.isVideoMinimized.update((v) => !v);
+  }
+
+  expandVideo(): void {
+    this.isVideoMinimized.set(false);
   }
 
   async sendMessage(): Promise<void> {
