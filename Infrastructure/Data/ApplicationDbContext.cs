@@ -25,6 +25,8 @@ namespace Infrastructure.Data
         public DbSet<Message> Messages { get; set; }
         public DbSet<SessionMessage> SessionMessages { get; set; }
         public DbSet<SessionNote> SessionNotes { get; set; }
+        public DbSet<SessionTranscript> SessionTranscripts { get; set; }
+        public DbSet<SessionAiMessage> SessionAiMessages { get; set; }
         public DbSet<PsychologistApplication> PsychologistApplications { get; set; }
         public DbSet<UserCategoryApplication> UserCategoryApplications { get; set; }
         public DbSet<MessageAttachment> MessageAttachments { get; set; }
@@ -60,6 +62,31 @@ namespace Infrastructure.Data
                     .OnDelete(DeleteBehavior.Cascade);
                 e.HasIndex(n => new { n.AppointmentId, n.PsychologistUserId }).IsUnique();
                 e.Property(n => n.Content).HasMaxLength(20000);
+            });
+
+            modelBuilder.Entity<SessionTranscript>(e =>
+            {
+                e.HasKey(t => t.Id);
+                e.HasOne(t => t.Appointment)
+                    .WithMany()
+                    .HasForeignKey(t => t.AppointmentId)
+                    .OnDelete(DeleteBehavior.Cascade);
+                e.HasOne(t => t.Sender)
+                    .WithMany()
+                    .HasForeignKey(t => t.SenderId)
+                    .OnDelete(DeleteBehavior.Restrict);
+                e.HasIndex(t => new { t.AppointmentId, t.Timestamp });
+            });
+
+            modelBuilder.Entity<SessionAiMessage>(e =>
+            {
+                e.HasKey(a => a.Id);
+                e.HasOne(a => a.Appointment)
+                    .WithMany()
+                    .HasForeignKey(a => a.AppointmentId)
+                    .OnDelete(DeleteBehavior.Cascade);
+                e.Property(a => a.Role).HasMaxLength(16);
+                e.HasIndex(a => new { a.AppointmentId, a.PsychologistUserId, a.Timestamp });
             });
 
             foreach (var entityType in modelBuilder.Model.GetEntityTypes())

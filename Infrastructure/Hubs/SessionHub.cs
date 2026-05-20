@@ -216,15 +216,37 @@ namespace Infrastructure.Hubs
 
         /// <summary>
         /// Relays a transcript chunk (interim or final) produced by the caller's Deepgram stream
-        /// to every other participant of the same appointment.
+        /// to every other participant of the same appointment. Final chunks are persisted.
         /// </summary>
         public async Task SendTranscript(Guid appointmentId, string text, bool isFinal)
         {
             if (!await IsParticipantAsync(appointmentId)) return;
 
-            var senderId = Context.UserIdentifier!;
+            var userId = Guid.Parse(Context.UserIdentifier!);
+            var timestamp = DateTime.UtcNow;
+
+            if (isFinal && !string.IsNullOrWhiteSpace(text))
+            {
+                context.SessionTranscripts.Add(new SessionTranscript
+                {
+                    Id = Guid.NewGuid(),
+                    AppointmentId = appointmentId,
+                    SenderId = userId,
+                    Text = text,
+                    Timestamp = timestamp
+                });
+                try
+                {
+                    await context.SaveChangesAsync();
+                }
+                catch (Exception ex)
+                {
+                    logger.LogError(ex, "SessionHub: failed to persist transcript for {AppointmentId}", appointmentId);
+                }
+            }
+
             await Clients.GroupExcept(appointmentId.ToString(), Context.ConnectionId)
-                .SendAsync("ReceiveTranscript", senderId, text, isFinal, DateTime.UtcNow);
+                .SendAsync("ReceiveTranscript", userId.ToString(), text, isFinal, timestamp);
         }
 
         // ───────────── Helpers ─────────────

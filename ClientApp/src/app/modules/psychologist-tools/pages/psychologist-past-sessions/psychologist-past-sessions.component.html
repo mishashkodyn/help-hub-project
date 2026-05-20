@@ -104,25 +104,124 @@
               }
             </div>
 
-            <!-- Reserved slot: AI summary -->
-            <div class="bg-white rounded-2xl border border-dashed border-gray-200 p-4 text-center">
-              <mat-icon class="text-3xl text-gray-300 mb-1">auto_awesome</mat-icon>
-              <h3 class="text-sm font-semibold text-gray-500">AI summary</h3>
-              <p class="text-[11px] text-gray-400 mt-1">Coming soon</p>
+            @if (sessionDataLoading()) {
+              <div class="flex justify-center py-4">
+                <mat-spinner diameter="24"></mat-spinner>
+              </div>
+            }
+
+            <!-- Chat -->
+            <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+              <button
+                type="button"
+                (click)="toggleExpanded('chat')"
+                class="w-full flex items-center justify-between px-4 py-3 hover:bg-gray-50 transition-colors"
+              >
+                <div class="flex items-center gap-2 text-sm">
+                  <mat-icon class="text-base text-gray-400">chat</mat-icon>
+                  <span class="font-semibold text-gray-700">Chat</span>
+                  <span class="text-[11px] text-gray-400">({{ chatMessages().length }})</span>
+                </div>
+                <mat-icon class="text-gray-400">{{ expanded().chat ? 'expand_less' : 'expand_more' }}</mat-icon>
+              </button>
+              @if (expanded().chat) {
+                <div class="border-t border-gray-100 max-h-80 overflow-y-auto custom-scroll px-3 py-2 space-y-2">
+                  @if (chatMessages().length === 0) {
+                    <p class="text-xs text-gray-400 italic text-center py-3">No messages were exchanged.</p>
+                  }
+                  @for (msg of chatMessages(); track msg.id) {
+                    <div
+                      class="flex"
+                      [class.justify-end]="isPsychologistSpeaker(msg.senderId)"
+                      [class.justify-start]="!isPsychologistSpeaker(msg.senderId)"
+                    >
+                      <div
+                        class="max-w-[85%] px-3 py-2 rounded-2xl text-xs leading-relaxed break-words"
+                        [ngClass]="isPsychologistSpeaker(msg.senderId)
+                          ? 'bg-[var(--color-primary)] text-white rounded-br-sm'
+                          : 'bg-gray-50 border border-gray-100 text-gray-800 rounded-bl-sm'"
+                      >
+                        <p class="text-[10px] font-semibold mb-0.5 opacity-60">{{ msg.senderName }}</p>
+                        <p class="whitespace-pre-wrap">{{ msg.content }}</p>
+                        <p class="text-[10px] mt-1 opacity-50 text-right">{{ msg.createdDate | date:'HH:mm' }}</p>
+                      </div>
+                    </div>
+                  }
+                </div>
+              }
             </div>
 
-            <!-- Reserved slot: Transcript -->
-            <div class="bg-white rounded-2xl border border-dashed border-gray-200 p-4 text-center">
-              <mat-icon class="text-3xl text-gray-300 mb-1">subtitles</mat-icon>
-              <h3 class="text-sm font-semibold text-gray-500">Transcript</h3>
-              <p class="text-[11px] text-gray-400 mt-1">Coming soon</p>
+            <!-- AI conversation -->
+            <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+              <button
+                type="button"
+                (click)="toggleExpanded('ai')"
+                class="w-full flex items-center justify-between px-4 py-3 hover:bg-gray-50 transition-colors"
+              >
+                <div class="flex items-center gap-2 text-sm">
+                  <mat-icon class="text-base text-[var(--color-primary)]">auto_awesome</mat-icon>
+                  <span class="font-semibold text-gray-700">AI conversation</span>
+                  <span class="text-[11px] text-gray-400">({{ aiMessages().length }})</span>
+                </div>
+                <mat-icon class="text-gray-400">{{ expanded().ai ? 'expand_less' : 'expand_more' }}</mat-icon>
+              </button>
+              @if (expanded().ai) {
+                <div class="border-t border-gray-100 max-h-80 overflow-y-auto custom-scroll px-3 py-2 space-y-2">
+                  @if (aiMessages().length === 0) {
+                    <p class="text-xs text-gray-400 italic text-center py-3">No AI conversation in this session.</p>
+                  }
+                  @for (msg of aiMessages(); track msg.id) {
+                    <div
+                      class="flex"
+                      [class.justify-end]="msg.role === 'user'"
+                      [class.justify-start]="msg.role !== 'user'"
+                    >
+                      <div
+                        class="max-w-[85%] px-3 py-2 rounded-2xl text-xs leading-relaxed break-words"
+                        [ngClass]="msg.role === 'user'
+                          ? 'bg-[var(--color-primary)] text-white rounded-br-sm'
+                          : 'bg-gray-50 border border-gray-100 text-gray-800 rounded-bl-sm'"
+                      >
+                        <markdown class="block" [data]="msg.content"></markdown>
+                        <p class="text-[10px] mt-1 opacity-50 text-right">{{ msg.timestamp | date:'HH:mm' }}</p>
+                      </div>
+                    </div>
+                  }
+                </div>
+              }
             </div>
 
-            <!-- Reserved slot: Recording -->
-            <div class="bg-white rounded-2xl border border-dashed border-gray-200 p-4 text-center">
-              <mat-icon class="text-3xl text-gray-300 mb-1">videocam</mat-icon>
-              <h3 class="text-sm font-semibold text-gray-500">Recording</h3>
-              <p class="text-[11px] text-gray-400 mt-1">Coming soon</p>
+            <!-- Transcript -->
+            <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+              <button
+                type="button"
+                (click)="toggleExpanded('transcript')"
+                class="w-full flex items-center justify-between px-4 py-3 hover:bg-gray-50 transition-colors"
+              >
+                <div class="flex items-center gap-2 text-sm">
+                  <mat-icon class="text-base text-gray-400">subtitles</mat-icon>
+                  <span class="font-semibold text-gray-700">Transcript</span>
+                  <span class="text-[11px] text-gray-400">({{ transcripts().length }})</span>
+                </div>
+                <mat-icon class="text-gray-400">{{ expanded().transcript ? 'expand_less' : 'expand_more' }}</mat-icon>
+              </button>
+              @if (expanded().transcript) {
+                <div class="border-t border-gray-100 max-h-80 overflow-y-auto custom-scroll px-3 py-2 font-mono text-[11px] leading-snug">
+                  @if (transcripts().length === 0) {
+                    <p class="text-xs text-gray-400 italic text-center py-3 font-sans">No transcript recorded for this session.</p>
+                  }
+                  @for (entry of transcripts(); track entry.id) {
+                    <div class="mb-1">
+                      <span class="text-gray-400">[{{ entry.timestamp | date:'HH:mm:ss' }}]</span>
+                      <span
+                        class="ml-1 font-semibold"
+                        [ngClass]="isPsychologistSpeaker(entry.senderId) ? 'text-[var(--color-primary)]' : 'text-[var(--color-success)]'"
+                      >{{ isPsychologistSpeaker(entry.senderId) ? 'Psychologist' : 'Client' }}:</span>
+                      <span class="ml-1 text-gray-800 whitespace-pre-wrap break-words">{{ entry.text }}</span>
+                    </div>
+                  }
+                </div>
+              }
             </div>
 
           </div>

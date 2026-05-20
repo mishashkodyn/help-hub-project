@@ -20,5 +20,9 @@ namespace Infrastructure.Services.Interfaces
         Task<List<PastSessionDto>> GetPsychologistPastSessionsAsync(Guid psychologistUserId);
         Task<SessionNoteDto?> GetSessionNoteAsync(Guid appointmentId, Guid psychologistUserId);
         Task<SessionNoteDto> UpsertSessionNoteAsync(Guid appointmentId, Guid psychologistUserId, string content);
+        Task<List<SessionMessageDto>> GetSessionMessagesAsync(Guid appointmentId, Guid psychologistUserId);
+        Task<List<SessionTranscriptDto>> GetSessionTranscriptsAsync(Guid appointmentId, Guid psychologistUserId);
+        Task<List<SessionAiMessageDto>> GetSessionAiMessagesAsync(Guid appointmentId, Guid psychologistUserId);
+        Task<List<SessionAiMessageDto>> SaveSessionAiMessagesAsync(Guid appointmentId, Guid psychologistUserId, List<SaveAiMessageDto> messages);
     }
 }

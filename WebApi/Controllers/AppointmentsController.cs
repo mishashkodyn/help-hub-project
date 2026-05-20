@@ -114,6 +114,82 @@ namespace API.Controllers
             }
         }
 
+        [HttpGet("{id}/messages")]
+        public async Task<IActionResult> GetSessionMessages(Guid id)
+        {
+            try
+            {
+                var userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+                var messages = await _appointmentService.GetSessionMessagesAsync(id, userId);
+                return Ok(messages);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return Forbid();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
+        }
+
+        [HttpGet("{id}/transcripts")]
+        public async Task<IActionResult> GetSessionTranscripts(Guid id)
+        {
+            try
+            {
+                var userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+                var transcripts = await _appointmentService.GetSessionTranscriptsAsync(id, userId);
+                return Ok(transcripts);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return Forbid();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
+        }
+
+        [HttpGet("{id}/ai-messages")]
+        public async Task<IActionResult> GetSessionAiMessages(Guid id)
+        {
+            try
+            {
+                var userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+                var messages = await _appointmentService.GetSessionAiMessagesAsync(id, userId);
+                return Ok(messages);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return Forbid();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
+        }
+
+        [HttpPost("{id}/ai-messages")]
+        public async Task<IActionResult> SaveSessionAiMessages(Guid id, [FromBody] Application.DTOs.SaveAiMessagesDto dto)
+        {
+            try
+            {
+                var userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+                var saved = await _appointmentService.SaveSessionAiMessagesAsync(id, userId, dto?.Messages ?? new());
+                return Ok(saved);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return Forbid();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
+        }
+
         [HttpGet("{id}/transcription-token")]
         public async Task<IActionResult> GetTranscriptionToken(Guid id)
         {

@@ -83,3 +83,28 @@ export interface PastSessionDto {
   clientNotes?: string;
   hasPsychologistNote: boolean;
 }
+
+export interface SessionTranscriptDto {
+  id: string;
+  appointmentId: string;
+  senderId: string;
+  senderName: string;
+  text: string;
+  timestamp: string;
+}
+
+export type SessionAiMessageRole = 'user' | 'assistant';
+
+export interface SessionAiMessageDto {
+  id: string;
+  appointmentId: string;
+  role: SessionAiMessageRole;
+  content: string;
+  timestamp: string;
+}
+
+export interface SaveAiMessageDto {
+  role: SessionAiMessageRole;
+  content: string;
+  timestamp?: string;
+}
