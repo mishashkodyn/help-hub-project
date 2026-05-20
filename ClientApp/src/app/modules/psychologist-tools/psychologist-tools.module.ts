@@ -12,6 +12,7 @@ import { PsychologistPastSessionsComponent } from './pages/psychologist-past-ses
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { PsychologistProfileEditorComponent } from './pages/psychologist-profile-editor/psychologist-profile-editor.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MarkdownModule } from 'ngx-markdown';
 
 
 
@@ -31,7 +32,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     RouterLink,
     FormsModule,
     ReactiveFormsModule,
-    SharedModule
+    SharedModule,
+    MarkdownModule
   ]
 })
 export class PsychologistToolsModule { }

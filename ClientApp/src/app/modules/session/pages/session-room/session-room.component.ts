@@ -15,7 +15,11 @@ import { AppointmentClientService } from '../../../../api/services/appointment-c
 import { SessionHubService } from '../../../../api/services/session-hub.service';
 import { AuthService } from '../../../../api/services/auth.service';
 import { SessionTranscriptStore } from '../../../../api/services/session-transcript-store.service';
-import { SessionInfoDto, SessionMessageDto } from '../../../../api/models/session.model';
+import {
+  SaveAiMessageDto,
+  SessionInfoDto,
+  SessionMessageDto,
+} from '../../../../api/models/session.model';
 import { AiService } from '../../../../api/services/ai.service';
 import { AiChatMessage } from '../../../../api/models/ai-chat-message';
 import { AiChatRequest, AiMessage } from '../../../../api/models/ai-chat-request';
@@ -78,6 +82,7 @@ export class SessionRoomComponent implements OnInit, OnDestroy {
   aiInput = '';
   aiLoading = signal(false);
   private aiProvider = 'Groq';
+  private aiHistoryLoaded = false;
 
   // Transcript analysis (psychologist-only)
   isAnalysisMenuOpen = signal(false);
@@ -174,7 +179,32 @@ export class SessionRoomComponent implements OnInit, OnDestroy {
           this.aiProvider = 'Groq';
         },
       });
+      this.loadAiHistory();
     }
+  }
+
+  private loadAiHistory(): void {
+    if (this.aiHistoryLoaded) return;
+    this.appointmentService.getSessionAiMessages(this.appointmentId).subscribe({
+      next: (history) => {
+        const restored: AiChatMessage[] = history.map((m) => ({
+          text: m.content,
+          isUser: m.role === 'user',
+          timestamp: new Date(m.timestamp),
+        }));
+        if (restored.length) this.aiMessages.set(restored);
+        this.aiHistoryLoaded = true;
+        this.scrollAiToBottom();
+      },
+      error: (err) => console.error('[AI] Failed to load history', err),
+    });
+  }
+
+  private persistAiMessages(messages: SaveAiMessageDto[]): void {
+    if (!messages.length) return;
+    this.appointmentService.saveSessionAiMessages(this.appointmentId, messages).subscribe({
+      error: (err) => console.error('[AI] Failed to persist messages', err),
+    });
   }
 
   private loadSession(): void {
@@ -296,20 +326,32 @@ export class SessionRoomComponent implements OnInit, OnDestroy {
 
     this.aiService.chatAsync(payload).subscribe({
       next: (response) => {
-        this.aiMessages.update((m) => [
-          ...m,
-          { text: response.data, isUser: false, timestamp: new Date() },
-        ]);
+        const assistantMsg: AiChatMessage = {
+          text: response.data,
+          isUser: false,
+          timestamp: new Date(),
+        };
+        this.aiMessages.update((m) => [...m, assistantMsg]);
         this.aiLoading.set(false);
         this.scrollAiToBottom();
+        this.persistAiMessages([
+          { role: 'user', content: userMsg.text, timestamp: userMsg.timestamp.toISOString() },
+          { role: 'assistant', content: assistantMsg.text, timestamp: assistantMsg.timestamp.toISOString() },
+        ]);
       },
       error: () => {
-        this.aiMessages.update((m) => [
-          ...m,
-          { text: 'AI did not answer', isUser: false, timestamp: new Date() },
-        ]);
+        const errMsg: AiChatMessage = {
+          text: 'AI did not answer',
+          isUser: false,
+          timestamp: new Date(),
+        };
+        this.aiMessages.update((m) => [...m, errMsg]);
         this.aiLoading.set(false);
         this.scrollAiToBottom();
+        this.persistAiMessages([
+          { role: 'user', content: userMsg.text, timestamp: userMsg.timestamp.toISOString() },
+          { role: 'assistant', content: errMsg.text, timestamp: errMsg.timestamp.toISOString() },
+        ]);
       },
     });
   }
@@ -468,26 +510,38 @@ export class SessionRoomComponent implements OnInit, OnDestroy {
     if (this.isAnalyzing()) return;
     this.isAnalyzing.set(true);
 
-    this.pushAiUserMessage(header);
+    const headerMsg = this.pushAiUserMessage(header);
     this.activeTab.set('ai');
     this.scrollAiToBottom();
 
     this.aiService.analyzeTranscriptAsync(request).subscribe({
       next: (response) => {
-        this.aiMessages.update((m) => [
-          ...m,
-          { text: response.data, isUser: false, timestamp: new Date() },
-        ]);
+        const reply: AiChatMessage = {
+          text: response.data,
+          isUser: false,
+          timestamp: new Date(),
+        };
+        this.aiMessages.update((m) => [...m, reply]);
         this.isAnalyzing.set(false);
         this.scrollAiToBottom();
+        this.persistAiMessages([
+          { role: 'user', content: headerMsg.text, timestamp: headerMsg.timestamp.toISOString() },
+          { role: 'assistant', content: reply.text, timestamp: reply.timestamp.toISOString() },
+        ]);
       },
       error: () => {
-        this.aiMessages.update((m) => [
-          ...m,
-          { text: 'AI analysis failed. Try again in a moment.', isUser: false, timestamp: new Date() },
-        ]);
+        const errMsg: AiChatMessage = {
+          text: 'AI analysis failed. Try again in a moment.',
+          isUser: false,
+          timestamp: new Date(),
+        };
+        this.aiMessages.update((m) => [...m, errMsg]);
         this.isAnalyzing.set(false);
         this.scrollAiToBottom();
+        this.persistAiMessages([
+          { role: 'user', content: headerMsg.text, timestamp: headerMsg.timestamp.toISOString() },
+          { role: 'assistant', content: errMsg.text, timestamp: errMsg.timestamp.toISOString() },
+        ]);
       },
     });
   }
@@ -518,17 +572,17 @@ export class SessionRoomComponent implements OnInit, OnDestroy {
       .join('\n');
   }
 
-  private pushAiUserMessage(text: string): void {
-    this.aiMessages.update((m) => [
-      ...m,
-      { text, isUser: true, timestamp: new Date() },
-    ]);
+  private pushAiUserMessage(text: string): AiChatMessage {
+    const msg: AiChatMessage = { text, isUser: true, timestamp: new Date() };
+    this.aiMessages.update((m) => [...m, msg]);
+    return msg;
   }
 
   private pushAiSystemMessage(text: string): void {
-    this.aiMessages.update((m) => [
-      ...m,
-      { text, isUser: false, timestamp: new Date() },
+    const msg: AiChatMessage = { text, isUser: false, timestamp: new Date() };
+    this.aiMessages.update((m) => [...m, msg]);
+    this.persistAiMessages([
+      { role: 'assistant', content: msg.text, timestamp: msg.timestamp.toISOString() },
     ]);
   }
 

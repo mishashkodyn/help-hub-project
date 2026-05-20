@@ -447,6 +447,95 @@ namespace Infrastructure.Services
                 throw new UnauthorizedAccessException("This appointment does not belong to you.");
         }
 
+        public async Task<List<SessionMessageDto>> GetSessionMessagesAsync(Guid appointmentId, Guid psychologistUserId)
+        {
+            await EnsurePsychologistOwnsAppointmentAsync(psychologistUserId, appointmentId);
+
+            return await _context.SessionMessages
+                .Include(m => m.Sender)
+                .Where(m => m.AppointmentId == appointmentId)
+                .OrderBy(m => m.CreatedDate)
+                .Select(m => new SessionMessageDto
+                {
+                    Id = m.Id,
+                    AppointmentId = m.AppointmentId,
+                    SenderId = m.SenderId,
+                    SenderName = m.Sender.Name ?? string.Empty,
+                    Content = m.Content,
+                    CreatedDate = m.CreatedDate
+                })
+                .ToListAsync();
+        }
+
+        public async Task<List<SessionTranscriptDto>> GetSessionTranscriptsAsync(Guid appointmentId, Guid psychologistUserId)
+        {
+            await EnsurePsychologistOwnsAppointmentAsync(psychologistUserId, appointmentId);
+
+            return await _context.SessionTranscripts
+                .Include(t => t.Sender)
+                .Where(t => t.AppointmentId == appointmentId)
+                .OrderBy(t => t.Timestamp)
+                .Select(t => new SessionTranscriptDto
+                {
+                    Id = t.Id,
+                    AppointmentId = t.AppointmentId,
+                    SenderId = t.SenderId,
+                    SenderName = t.Sender.Name ?? string.Empty,
+                    Text = t.Text,
+                    Timestamp = t.Timestamp
+                })
+                .ToListAsync();
+        }
+
+        public async Task<List<SessionAiMessageDto>> GetSessionAiMessagesAsync(Guid appointmentId, Guid psychologistUserId)
+        {
+            await EnsurePsychologistOwnsAppointmentAsync(psychologistUserId, appointmentId);
+
+            return await _context.SessionAiMessages
+                .Where(a => a.AppointmentId == appointmentId && a.PsychologistUserId == psychologistUserId)
+                .OrderBy(a => a.Timestamp)
+                .Select(a => new SessionAiMessageDto
+                {
+                    Id = a.Id,
+                    AppointmentId = a.AppointmentId,
+                    Role = a.Role,
+                    Content = a.Content,
+                    Timestamp = a.Timestamp
+                })
+                .ToListAsync();
+        }
+
+        public async Task<List<SessionAiMessageDto>> SaveSessionAiMessagesAsync(Guid appointmentId, Guid psychologistUserId, List<SaveAiMessageDto> messages)
+        {
+            await EnsurePsychologistOwnsAppointmentAsync(psychologistUserId, appointmentId);
+            if (messages == null || messages.Count == 0) return new List<SessionAiMessageDto>();
+
+            var now = DateTime.UtcNow;
+            var entities = messages.Select(m => new SessionAiMessage
+            {
+                Id = Guid.NewGuid(),
+                AppointmentId = appointmentId,
+                PsychologistUserId = psychologistUserId,
+                Role = string.IsNullOrWhiteSpace(m.Role) ? "user" : m.Role,
+                Content = m.Content ?? string.Empty,
+                Timestamp = m.Timestamp.HasValue
+                    ? DateTime.SpecifyKind(m.Timestamp.Value, DateTimeKind.Utc)
+                    : now
+            }).ToList();
+
+            _context.SessionAiMessages.AddRange(entities);
+            await _context.SaveChangesAsync();
+
+            return entities.Select(a => new SessionAiMessageDto
+            {
+                Id = a.Id,
+                AppointmentId = a.AppointmentId,
+                Role = a.Role,
+                Content = a.Content,
+                Timestamp = a.Timestamp
+            }).ToList();
+        }
+
         private async Task<Appointment> GetAppointmentForPsychologistAsync(Guid userId, Guid appointmentId)
         {
             var psychologist = await _context.Psychologists.FirstOrDefaultAsync(p => p.UserId == userId);

@@ -1,9 +1,15 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { finalize, Subject } from 'rxjs';
+import { finalize, forkJoin, Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { AppointmentClientService } from '../../../../api/services/appointment-client.service';
-import { PastSessionDto, SessionNoteDto } from '../../../../api/models/session.model';
+import {
+  PastSessionDto,
+  SessionAiMessageDto,
+  SessionMessageDto,
+  SessionNoteDto,
+  SessionTranscriptDto,
+} from '../../../../api/models/session.model';
 
 @Component({
   selector: 'app-psychologist-past-sessions',
@@ -21,6 +27,16 @@ export class PsychologistPastSessionsComponent implements OnInit {
   noteSaveState = signal<'idle' | 'saving' | 'saved' | 'error'>('idle');
   private noteSave$ = new Subject<string>();
   search = signal('');
+
+  chatMessages = signal<SessionMessageDto[]>([]);
+  aiMessages = signal<SessionAiMessageDto[]>([]);
+  transcripts = signal<SessionTranscriptDto[]>([]);
+  sessionDataLoading = signal(false);
+  expanded = signal<{ chat: boolean; ai: boolean; transcript: boolean }>({
+    chat: false,
+    ai: false,
+    transcript: false,
+  });
 
   constructor(
     private appointmentService: AppointmentClientService,
@@ -64,6 +80,10 @@ export class PsychologistPastSessionsComponent implements OnInit {
     this.noteContent.set('');
     this.noteSaveState.set('idle');
     this.noteLoading.set(true);
+    this.chatMessages.set([]);
+    this.aiMessages.set([]);
+    this.transcripts.set([]);
+    this.expanded.set({ chat: false, ai: false, transcript: false });
 
     this.appointmentService.getSessionNote(session.id)
       .pipe(finalize(() => this.noteLoading.set(false)))
@@ -71,6 +91,32 @@ export class PsychologistPastSessionsComponent implements OnInit {
         next: (note: SessionNoteDto | null) => this.noteContent.set(note?.content ?? ''),
         error: () => this.noteContent.set(''),
       });
+
+    this.sessionDataLoading.set(true);
+    forkJoin({
+      messages: this.appointmentService.getSessionMessages(session.id),
+      ai: this.appointmentService.getSessionAiMessages(session.id),
+      transcripts: this.appointmentService.getSessionTranscripts(session.id),
+    })
+      .pipe(finalize(() => this.sessionDataLoading.set(false)))
+      .subscribe({
+        next: ({ messages, ai, transcripts }) => {
+          this.chatMessages.set(messages);
+          this.aiMessages.set(ai);
+          this.transcripts.set(transcripts);
+        },
+        error: (err) => console.error('Failed to load past session details', err),
+      });
+  }
+
+  toggleExpanded(key: 'chat' | 'ai' | 'transcript'): void {
+    this.expanded.update((e) => ({ ...e, [key]: !e[key] }));
+  }
+
+  isPsychologistSpeaker(senderId: string): boolean {
+    const session = this.selected();
+    if (!session) return false;
+    return senderId !== session.clientUserId;
   }
 
   onNoteInput(value: string): void {
