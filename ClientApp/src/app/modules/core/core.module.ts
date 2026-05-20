@@ -39,6 +39,7 @@ import { PostsUserProfileComponent } from './components/posts-user-profile/posts
 import { ReviewsUserProfileComponent } from './components/reviews-user-profile/reviews-user-profile.component';
 import { SavedUserProfileComponent } from './components/saved-user-profile/saved-user-profile.component';
 import { TranslocoModule } from '@ngneat/transloco';
+import { UserCategoryApplicationComponent } from './pages/user-category-application/user-category-application.component';
 
 @NgModule({
   declarations: [
@@ -61,6 +62,7 @@ import { TranslocoModule } from '@ngneat/transloco';
     PostsUserProfileComponent,
     ReviewsUserProfileComponent,
     SavedUserProfileComponent,
+    UserCategoryApplicationComponent,
   ],
   imports: [
     CommonModule,

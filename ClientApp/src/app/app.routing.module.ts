@@ -30,6 +30,8 @@ import { PsychologistPastSessionsComponent } from './modules/psychologist-tools/
 import { PsychologistProfileEditorComponent } from './modules/psychologist-tools/pages/psychologist-profile-editor/psychologist-profile-editor.component';
 import { ClientSessionsComponent } from './modules/client-portal/pages/client-sessions/client-sessions.component';
 import { SessionRoomComponent } from './modules/session/pages/session-room/session-room.component';
+import { UserCategoryApplicationComponent } from './modules/core/pages/user-category-application/user-category-application.component';
+import { UserCategoryApplicationsPageComponent } from './modules/admin-tools/pages/user-category-applications-page/user-category-applications-page.component';
 
 const routes: Routes = [
   {
@@ -45,7 +47,9 @@ const routes: Routes = [
       { path: 'admin', canActivate: [AuthGuard], component: AdminDashboardComponent },
       { path: 'ai-chat', canActivate: [AuthGuard], component: AiChatComponent},
       { path: 'admin/applications', canActivate: [AuthGuard], component: ApplicationsPageComponent },
+      { path: 'admin/category-applications', canActivate: [AuthGuard], component: UserCategoryApplicationsPageComponent },
       { path: 'admin/specializations', canActivate: [AuthGuard], component: ManageSpecializationsComponent},
+      { path: 'category-application', canActivate: [AuthGuard], component: UserCategoryApplicationComponent },
       { path: '', component: HomePageResolverComponent},
       {
         path: 'register',

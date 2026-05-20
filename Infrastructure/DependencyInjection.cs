@@ -39,6 +39,7 @@ namespace Infrastructure
             services.AddScoped<IWorkingHoursService, WorkingHoursService>();
             services.AddScoped<IAppointmentService, AppointmentService>();
             services.AddScoped<IPsychologistResumeService, PsychologistResumeService>();
+            services.AddScoped<IUserCategoryApplicationService, UserCategoryApplicationService>();
             services.AddScoped<TokenService>();
             services.AddHostedService<SessionReminderService>();
 

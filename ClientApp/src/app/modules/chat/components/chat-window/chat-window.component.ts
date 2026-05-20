@@ -1,6 +1,7 @@
 import { Component, EventEmitter, inject, Output, ViewChild, ElementRef } from '@angular/core';
 import { ChatService } from '../../../../api/services/chat.service';
-import { TitleCasePipe } from '@angular/common';
+import { Location, TitleCasePipe } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { ChatBoxComponent } from '../chat-box/chat-box.component';
 import { VideoChatService } from '../../../../api/services/video-chat.service';
@@ -57,7 +58,13 @@ export class ChatWindowComponent {
     protected chatService: ChatService,
     private filesService: FilesService,
     private authService: AuthService,
+    private location: Location,
+    private route: ActivatedRoute,
   ) {}
+
+  get showBackToOrigin(): boolean {
+    return this.route.snapshot.queryParamMap.has('back');
+  }
 
   openMedia(url: string, type: 'image' | 'video') {
     this.viewMedia.emit({ url, type });
@@ -79,6 +86,16 @@ export class ChatWindowComponent {
 
   closeChatWindow() {
     this.chatService.currentOpenedChat.set(null);
+  }
+
+  goBack() {
+    this.chatService.currentOpenedChat.set(null);
+    this.chatService.chatRightSidebarIsOpen.set(false);
+    if (window.history.length > 1) {
+      this.location.back();
+    } else {
+      this.location.go('/');
+    }
   }
 
   openRightSideBar() {

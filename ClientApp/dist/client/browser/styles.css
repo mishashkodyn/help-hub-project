@@ -1896,6 +1896,9 @@ body[data-aos-easing=ease-in-out-quart] [data-aos] {
   .right-\[calc\(33\.33\%\+1\.25rem\)\] {
     right: calc(33.33% + 1.25rem);
   }
+  .-bottom-1 {
+    bottom: calc(var(--spacing) * -1);
+  }
   .-bottom-12 {
     bottom: calc(var(--spacing) * -12);
   }
@@ -2580,6 +2583,9 @@ body[data-aos-easing=ease-in-out-quart] [data-aos] {
   .max-w-2xl {
     max-width: var(--container-2xl);
   }
+  .max-w-3xl {
+    max-width: var(--container-3xl);
+  }
   .max-w-4xl {
     max-width: var(--container-4xl);
   }
@@ -2779,6 +2785,9 @@ body[data-aos-easing=ease-in-out-quart] [data-aos] {
   .cursor-default {
     cursor: default;
   }
+  .cursor-not-allowed {
+    cursor: not-allowed;
+  }
   .cursor-pointer {
     cursor: pointer;
   }
@@ -2908,6 +2917,13 @@ body[data-aos-easing=ease-in-out-quart] [data-aos] {
       --tw-space-y-reverse: 0;
       margin-block-start: calc(calc(var(--spacing) * 1) * var(--tw-space-y-reverse));
       margin-block-end: calc(calc(var(--spacing) * 1) * calc(1 - var(--tw-space-y-reverse)));
+    }
+  }
+  .space-y-1\.5 {
+    :where(& > :not(:last-child)) {
+      --tw-space-y-reverse: 0;
+      margin-block-start: calc(calc(var(--spacing) * 1.5) * var(--tw-space-y-reverse));
+      margin-block-end: calc(calc(var(--spacing) * 1.5) * calc(1 - var(--tw-space-y-reverse)));
     }
   }
   .space-y-2 {
@@ -3339,6 +3355,9 @@ body[data-aos-easing=ease-in-out-quart] [data-aos] {
   .border-rose-100 {
     border-color: var(--color-rose-100);
   }
+  .border-rose-200 {
+    border-color: var(--color-rose-200);
+  }
   .border-rose-200\/60 {
     border-color: color-mix(in srgb, oklch(89.2% 0.058 10.001) 60%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
@@ -3696,6 +3715,9 @@ body[data-aos-easing=ease-in-out-quart] [data-aos] {
   .bg-emerald-50 {
     background-color: var(--color-emerald-50);
   }
+  .bg-emerald-100 {
+    background-color: var(--color-emerald-100);
+  }
   .bg-emerald-500 {
     background-color: var(--color-emerald-500);
   }
@@ -3919,6 +3941,12 @@ body[data-aos-easing=ease-in-out-quart] [data-aos] {
     background-color: color-mix(in srgb, #fff 65%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
       background-color: color-mix(in oklab, var(--color-white) 65%, transparent);
+    }
+  }
+  .bg-white\/70 {
+    background-color: color-mix(in srgb, #fff 70%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-white) 70%, transparent);
     }
   }
   .bg-white\/75 {
@@ -4255,6 +4283,9 @@ body[data-aos-easing=ease-in-out-quart] [data-aos] {
   }
   .px-1 {
     padding-inline: calc(var(--spacing) * 1);
+  }
+  .px-1\.5 {
+    padding-inline: calc(var(--spacing) * 1.5);
   }
   .px-2 {
     padding-inline: calc(var(--spacing) * 2);
@@ -4678,6 +4709,9 @@ body[data-aos-easing=ease-in-out-quart] [data-aos] {
   .whitespace-pre-wrap {
     white-space: pre-wrap;
   }
+  .\!text-white {
+    color: var(--color-white) !important;
+  }
   .text-\[\#185FA5\] {
     color: #185FA5;
   }
@@ -4740,6 +4774,9 @@ body[data-aos-easing=ease-in-out-quart] [data-aos] {
   }
   .text-amber-700 {
     color: var(--color-amber-700);
+  }
+  .text-amber-800 {
+    color: var(--color-amber-800);
   }
   .text-amber-800\/80 {
     color: color-mix(in srgb, oklch(47.3% 0.137 46.201) 80%, transparent);
@@ -4866,6 +4903,9 @@ body[data-aos-easing=ease-in-out-quart] [data-aos] {
   }
   .text-rose-500 {
     color: var(--color-rose-500);
+  }
+  .text-rose-600 {
+    color: var(--color-rose-600);
   }
   .text-rose-700 {
     color: var(--color-rose-700);
@@ -5481,6 +5521,10 @@ body[data-aos-easing=ease-in-out-quart] [data-aos] {
   .select-none {
     -webkit-user-select: none;
     user-select: none;
+  }
+  .select-text {
+    -webkit-user-select: text;
+    user-select: text;
   }
   .\[animation-delay\:0\.2s\] {
     animation-delay: 0.2s;
@@ -6142,6 +6186,16 @@ body[data-aos-easing=ease-in-out-quart] [data-aos] {
       }
     }
   }
+  .hover\:bg-\[var\(--color-mint\)\]\/50 {
+    &:hover {
+      @media (hover: hover) {
+        background-color: color-mix(in srgb, #A6D3BC 50%, transparent);
+        @supports (color: color-mix(in lab, red, red)) {
+          background-color: color-mix(in oklab, var(--color-mint) 50%, transparent);
+        }
+      }
+    }
+  }
   .hover\:bg-\[var\(--color-primary\)\] {
     &:hover {
       @media (hover: hover) {
@@ -6322,6 +6376,13 @@ body[data-aos-easing=ease-in-out-quart] [data-aos] {
       }
     }
   }
+  .hover\:bg-gray-700 {
+    &:hover {
+      @media (hover: hover) {
+        background-color: var(--color-gray-700);
+      }
+    }
+  }
   .hover\:bg-green-600 {
     &:hover {
       @media (hover: hover) {
@@ -6354,6 +6415,20 @@ body[data-aos-easing=ease-in-out-quart] [data-aos] {
     &:hover {
       @media (hover: hover) {
         background-color: var(--color-red-600);
+      }
+    }
+  }
+  .hover\:bg-rose-50 {
+    &:hover {
+      @media (hover: hover) {
+        background-color: var(--color-rose-50);
+      }
+    }
+  }
+  .hover\:bg-rose-100 {
+    &:hover {
+      @media (hover: hover) {
+        background-color: var(--color-rose-100);
       }
     }
   }
@@ -6501,6 +6576,13 @@ body[data-aos-easing=ease-in-out-quart] [data-aos] {
       }
     }
   }
+  .hover\:text-rose-600 {
+    &:hover {
+      @media (hover: hover) {
+        color: var(--color-rose-600);
+      }
+    }
+  }
   .hover\:text-success {
     &:hover {
       @media (hover: hover) {
@@ -6519,6 +6601,13 @@ body[data-aos-easing=ease-in-out-quart] [data-aos] {
     &:hover {
       @media (hover: hover) {
         text-decoration-line: underline;
+      }
+    }
+  }
+  .hover\:opacity-90 {
+    &:hover {
+      @media (hover: hover) {
+        opacity: 90%;
       }
     }
   }
@@ -7056,6 +7145,11 @@ body[data-aos-easing=ease-in-out-quart] [data-aos] {
   .sm\:grid-cols-2 {
     @media (width >= 40rem) {
       grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  .sm\:grid-cols-3 {
+    @media (width >= 40rem) {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
     }
   }
   .sm\:grid-cols-4 {

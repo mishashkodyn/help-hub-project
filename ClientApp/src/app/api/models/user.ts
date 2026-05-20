@@ -6,6 +6,7 @@ export interface User {
     surname: string;
     profilePicture: string;
     profileImage: string;
+    coverImage?: string;
     isOnline: boolean;
     userName: string;
     connectionId: string;
@@ -23,6 +24,7 @@ export interface UserProfileDto {
     email: string;
     surname: string;
     profileImage: string;
+    coverImage?: string;
     userName: string;
     userCategory: number;
     roles: string[];

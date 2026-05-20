@@ -8,6 +8,7 @@
         public string? Surname { get; set; }
         public string? Email { get; set; }
         public string? ProfileImage { get; set; }
+        public string? CoverImage { get; set; }
         public int UserCategory { get; set; }
         public IList<string> Roles { get; set; } = new List<string>();
         public Guid? PsychologistId { get; set; }

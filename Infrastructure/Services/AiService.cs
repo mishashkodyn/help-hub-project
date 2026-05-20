@@ -1,4 +1,4 @@
-﻿using Application.DTOs.AI;
+using Application.DTOs.AI;
 using Infrastructure.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
@@ -9,6 +9,8 @@ namespace Infrastructure.Services
 {
     public class AiService : IAiService
     {
+        private const int GroqStructuringThreshold = 1200;
+
         private readonly HttpClient _http;
         private readonly IConfiguration _config;
 
@@ -18,16 +20,70 @@ namespace Infrastructure.Services
             _config = config;
         }
 
-        public async Task<string> ChatAsync(AiChatRequestDto request) 
+        public async Task<string> ChatAsync(AiChatRequestDto request)
         {
             if (request is null)
             {
                 throw new Exception("Request cannot be empty");
             }
 
+            var systemPrompt = BuildSystemPrompt(request);
+            var messages = new List<(string role, string content)>
+            {
+                ("system", systemPrompt)
+            };
+
+            messages.AddRange(request.Messages
+                .Where(msg => msg.Role == "user" || msg.Role == "assistant")
+                .Select(msg => (msg.Role, msg.Content)));
+
+            return await CallProviderAsync(request.Provider, messages);
+        }
+
+        public async Task<string> AnalyzeTranscriptAsync(TranscriptAnalysisRequestDto request)
+        {
+            if (request is null)
+            {
+                throw new Exception("Request cannot be empty");
+            }
+
+            var source = (request.SelectedText ?? request.Transcript ?? string.Empty).Trim();
+            if (string.IsNullOrWhiteSpace(source))
+            {
+                throw new Exception("Transcript text cannot be empty");
+            }
+
+            // Stage 1 — if the source is large, run it through Groq to structure/condense.
+            // We keep timestamps and roles intact and strip filler so GPT spends fewer tokens.
+            string structured;
+            if (source.Length > GroqStructuringThreshold)
+            {
+                structured = await CallProviderAsync("Groq", new List<(string role, string content)>
+                {
+                    ("system", BuildStructuringSystemPrompt()),
+                    ("user", source)
+                });
+            }
+            else
+            {
+                structured = source;
+            }
+
+            // Stage 2 — GPT does the heavy analytical reasoning on the condensed text.
+            var gptMessages = new List<(string role, string content)>
+            {
+                ("system", BuildAnalysisSystemPrompt(request)),
+                ("user", BuildAnalysisUserMessage(request, structured))
+            };
+
+            return await CallProviderAsync("OpenAI", gptMessages);
+        }
+
+        private async Task<string> CallProviderAsync(string provider, List<(string role, string content)> messages)
+        {
             string apiKey, model, baseUrl;
 
-            if (request.Provider == "OpenAI")
+            if (provider == "OpenAI")
             {
                 apiKey = _config["AiSettings:OpenAI:ApiKey"]!;
                 model = _config["AiSettings:OpenAI:Model"]!;
@@ -42,17 +98,10 @@ namespace Infrastructure.Services
 
             _http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", apiKey);
 
-            var systemMessage = new
-            {
-                role = "system",
-                content = BuildSystemPrompt(request)
-            };
-
-            var messagesPayload = new List<object> { systemMessage };
-
-            messagesPayload.AddRange(request.Messages
-                    .Where(msg => msg.Role == "user" || msg.Role == "assistant")
-                    .Select(msg => new { role = msg.Role, content = msg.Content }));
+            var messagesPayload = messages
+                .Select(m => new { role = m.role, content = m.content })
+                .Cast<object>()
+                .ToList();
 
             var payloadData = new Dictionary<string, object>
             {
@@ -61,13 +110,13 @@ namespace Infrastructure.Services
                 { "temperature", 1.0 }
             };
 
-            if (request.Provider == "OpenAI")
+            if (provider == "OpenAI")
             {
                 payloadData.Add("max_completion_tokens", 2000);
             }
             else
             {
-                payloadData.Add("max_tokens", 1000);
+                payloadData.Add("max_tokens", 1500);
             }
 
             var response = await _http.PostAsJsonAsync(baseUrl, payloadData);
@@ -75,13 +124,104 @@ namespace Infrastructure.Services
             if (!response.IsSuccessStatusCode)
             {
                 var errorBody = await response.Content.ReadAsStringAsync();
-                throw new Exception($"OpenAI API Error: {response.StatusCode} - {errorBody}");
+                throw new Exception($"AI API Error ({provider}): {response.StatusCode} - {errorBody}");
             }
 
             var result = await response.Content.ReadFromJsonAsync<AiResponse>();
 
             return result?.choices?.FirstOrDefault()?.message?.content
                 ?? "The model did not return a response.";
+        }
+
+        private static string BuildStructuringSystemPrompt()
+        {
+            return "Ти — швидкий пре-процесор тексту для іншої AI-моделі. " +
+                   "На вхід ти отримуєш сирий транскрипт терапевтичної сесії з мітками часу та ролями ('Psychologist', 'Client'). " +
+                   "Твоя задача — стиснути його до структурованого конспекту, який збереже усю клінічно значущу інформацію, " +
+                   "але без води, повторів та філлерів (е-е, ну, типу тощо).\n\n" +
+                   "ВИМОГИ:\n" +
+                   "• Збережи хронологію та мітки часу [HH:MM:SS] біля ключових реплік.\n" +
+                   "• Збережи розрізнення ролей (Psychologist / Client).\n" +
+                   "• Об'єднуй послідовні короткі репліки однієї ролі в один блок.\n" +
+                   "• Виділяй: скарги, симптоми, тригери, переконання, емоції, інтервенції психолога, реакції клієнта.\n" +
+                   "• НЕ роби висновків та НЕ давай інтерпретацій — це робитиме наступна модель.\n" +
+                   "• Відповідай тією ж мовою, що і транскрипт.\n" +
+                   "• Формат: маркований список з тайм-кодами. Без вступу, без підсумку.";
+        }
+
+        private static string BuildAnalysisSystemPrompt(TranscriptAnalysisRequestDto request)
+        {
+            return $"[СИСТЕМНА ІНФОРМАЦІЯ]\n" +
+                   $"Ім'я психолога: {request.UserName}\n" +
+                   "Контекст: психолог попросив проаналізувати фрагмент транскрипту своєї сесії з клієнтом на платформі 'Help hub'. " +
+                   "Цей чат бачить ТІЛЬКИ психолог.\n\n" +
+
+                   "[РОЛЬ]\n" +
+                   "Ти — клінічний AI-супервізор. Аналізуєш транскрипт як старший колега: " +
+                   "конкретно, без виховання, без дисклеймерів типу 'я не лікар' чи 'зверніться до спеціаліста'.\n\n" +
+
+                   "[ЯК ВІДПОВІДАТИ]\n" +
+                   "• Українською (якщо транскрипт іншою — підлаштуйся).\n" +
+                   "• Markdown: заголовки, списки, жирний для ключового.\n" +
+                   "• Стисло, по суті. Жодних 'як AI-модель я...'.\n" +
+                   "• Не діагностуй — формулюй як робочі гіпотези.\n" +
+                   "• Посилайся на конкретні моменти транскрипту (з тайм-кодом, якщо є).";
+        }
+
+        private static string BuildAnalysisUserMessage(TranscriptAnalysisRequestDto request, string structuredTranscript)
+        {
+            var action = (request.Action ?? "summarize").ToLowerInvariant();
+            var rangeLabel = string.IsNullOrWhiteSpace(request.TimeRangeLabel)
+                ? "увесь доступний фрагмент"
+                : request.TimeRangeLabel;
+
+            var actionPrompt = action switch
+            {
+                "summarize" =>
+                    $"Зроби стислий клінічний конспект цього фрагменту сесії ({rangeLabel}). " +
+                    "Структура: **Основна скарга/тема**, **Ключові моменти**, **Емоційний стан клієнта**, **Інтервенції психолога**, **Рекомендації на наступну сесію**.",
+
+                "emotions" =>
+                    $"Проаналізуй емоційну динаміку клієнта впродовж фрагменту ({rangeLabel}). " +
+                    "Виділи: домінуючі емоції, переходи між станами, тілесні маркери (якщо згадані), точки активації / уникання. " +
+                    "Закінчи короткою гіпотезою про основний емоційний патерн.",
+
+                "patterns" =>
+                    $"Знайди когнітивні викривлення, повторювані патерни мислення та поведінкові схеми у фрагменті ({rangeLabel}). " +
+                    "Для кожного: назва, цитата/тайм-код, коротке пояснення, можлива інтервенція (КПТ, схема-терапія, ACT тощо).",
+
+                "questions" =>
+                    $"На основі фрагменту ({rangeLabel}) запропонуй 5-8 уточнювальних запитань, які психолог може поставити клієнту далі, " +
+                    "щоб поглибити розуміння або просунути терапевтичний процес. Згрупуй за метою (прояснення / поглиблення / виклик переконанню / поведінковий експеримент).",
+
+                "risks" =>
+                    $"Оціни ризик-фактори у фрагменті ({rangeLabel}): суїцидальні думки, самопошкодження, насильство, зловживання речовинами, гострий стрес. " +
+                    "Для кожного знайденого — рівень (низький/середній/високий), цитата/тайм-код, рекомендована дія психолога зараз.",
+
+                "explain" =>
+                    "Психолог виділив фрагмент тексту нижче. Поясни, що саме клієнт міг мати на увазі — " +
+                    "можливі підтексти, захисні механізми, прихований запит. Дай 2-3 робочі гіпотези.",
+
+                "rephrase" =>
+                    "Психолог виділив фрагмент тексту нижче. Переформулюй цю репліку клієнта 3 різними способами так, " +
+                    "як її можна було б віддзеркалити клієнту (reflective listening) — щоб допомогти йому глибше усвідомити сказане.",
+
+                "intervention" =>
+                    "Психолог виділив фрагмент тексту нижче. Запропонуй 2-3 конкретні терапевтичні інтервенції/техніки, " +
+                    "які доречні саме тут. Для кожної: назва підходу, як саме застосувати в цій ситуації, очікуваний ефект.",
+
+                "custom" =>
+                    $"Психолог просить наступне: \"{request.Instruction}\". Виконай це над поданим нижче матеріалом.",
+
+                _ =>
+                    $"Зроби стислий клінічний конспект цього фрагменту сесії ({rangeLabel})."
+            };
+
+            var sourceLabel = string.IsNullOrWhiteSpace(request.SelectedText)
+                ? "ТРАНСКРИПТ (попередньо структурований):"
+                : "ВИДІЛЕНИЙ ФРАГМЕНТ:";
+
+            return $"{actionPrompt}\n\n{sourceLabel}\n{structuredTranscript}";
         }
 
         private static string BuildSystemPrompt(AiChatRequestDto request)

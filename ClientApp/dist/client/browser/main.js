@@ -255,11 +255,12 @@ import {
   ɵɵtextInterpolate,
   ɵɵtextInterpolate1,
   ɵɵtextInterpolate2,
+  ɵɵtextInterpolate3,
   ɵɵtwoWayBindingSet,
   ɵɵtwoWayListener,
   ɵɵtwoWayProperty,
   ɵɵviewQuery
-} from "./chunk-U7SKNGHQ.js";
+} from "./chunk-URFODPGO.js";
 
 // node_modules/aos/dist/aos.js
 var require_aos = __commonJS({
@@ -11006,24 +11007,45 @@ function ChatWindowComponent_ng_container_0_Conditional_1_Conditional_9_Template
     \u0275\u0275element(0, "span", 10);
   }
 }
-function ChatWindowComponent_ng_container_0_Conditional_1_Conditional_34_Template(rf, ctx) {
+function ChatWindowComponent_ng_container_0_Conditional_1_Conditional_29_Template(rf, ctx) {
   if (rf & 1) {
     const _r3 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "div", 25)(1, "div", 31);
-    \u0275\u0275element(2, "div", 32);
-    \u0275\u0275elementStart(3, "div", 33)(4, "span", 34);
+    \u0275\u0275elementStart(0, "div", 20)(1, "button", 32);
+    \u0275\u0275listener("click", function ChatWindowComponent_ng_container_0_Conditional_1_Conditional_29_Template_button_click_1_listener() {
+      \u0275\u0275restoreView(_r3);
+      const ctx_r1 = \u0275\u0275nextContext(3);
+      return \u0275\u0275resetView(ctx_r1.goBack());
+    });
+    \u0275\u0275elementStart(2, "mat-icon", 33);
+    \u0275\u0275text(3, "arrow_back");
+    \u0275\u0275elementEnd();
+    \u0275\u0275text(4);
+    \u0275\u0275elementEnd()();
+  }
+  if (rf & 2) {
+    const t_r4 = \u0275\u0275nextContext(2).$implicit;
+    \u0275\u0275advance(4);
+    \u0275\u0275textInterpolate1(" ", t_r4("common.back"), " ");
+  }
+}
+function ChatWindowComponent_ng_container_0_Conditional_1_Conditional_35_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r5 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "div", 26)(1, "div", 34);
+    \u0275\u0275element(2, "div", 35);
+    \u0275\u0275elementStart(3, "div", 36)(4, "span", 37);
     \u0275\u0275text(5);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(6, "span", 35);
+    \u0275\u0275elementStart(6, "span", 38);
     \u0275\u0275text(7);
     \u0275\u0275elementEnd()()();
-    \u0275\u0275elementStart(8, "button", 36);
-    \u0275\u0275listener("click", function ChatWindowComponent_ng_container_0_Conditional_1_Conditional_34_Template_button_click_8_listener() {
-      \u0275\u0275restoreView(_r3);
+    \u0275\u0275elementStart(8, "button", 39);
+    \u0275\u0275listener("click", function ChatWindowComponent_ng_container_0_Conditional_1_Conditional_35_Template_button_click_8_listener() {
+      \u0275\u0275restoreView(_r5);
       const ctx_r1 = \u0275\u0275nextContext(3);
       return \u0275\u0275resetView(ctx_r1.chatService.replyMessage.set(null));
     });
-    \u0275\u0275elementStart(9, "mat-icon", 37);
+    \u0275\u0275elementStart(9, "mat-icon", 40);
     \u0275\u0275text(10, "close");
     \u0275\u0275elementEnd()()();
   }
@@ -11037,56 +11059,56 @@ function ChatWindowComponent_ng_container_0_Conditional_1_Conditional_34_Templat
     \u0275\u0275textInterpolate1(" ", (tmp_6_0 = ctx_r1.chatService.replyMessage()) == null ? null : tmp_6_0.content, " ");
   }
 }
-function ChatWindowComponent_ng_container_0_Conditional_1_Conditional_35_For_2_Conditional_1_Template(rf, ctx) {
+function ChatWindowComponent_ng_container_0_Conditional_1_Conditional_36_For_2_Conditional_1_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275element(0, "img", 39);
+    \u0275\u0275element(0, "img", 42);
   }
   if (rf & 2) {
-    const file_r5 = \u0275\u0275nextContext().$implicit;
-    \u0275\u0275property("src", file_r5.preview, \u0275\u0275sanitizeUrl);
+    const file_r7 = \u0275\u0275nextContext().$implicit;
+    \u0275\u0275property("src", file_r7.preview, \u0275\u0275sanitizeUrl);
   }
 }
-function ChatWindowComponent_ng_container_0_Conditional_1_Conditional_35_For_2_Conditional_2_Template(rf, ctx) {
+function ChatWindowComponent_ng_container_0_Conditional_1_Conditional_36_For_2_Conditional_2_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 40)(1, "mat-icon", 43);
+    \u0275\u0275elementStart(0, "div", 43)(1, "mat-icon", 46);
     \u0275\u0275text(2);
     \u0275\u0275elementEnd()();
   }
   if (rf & 2) {
-    const file_r5 = \u0275\u0275nextContext().$implicit;
+    const file_r7 = \u0275\u0275nextContext().$implicit;
     const ctx_r1 = \u0275\u0275nextContext(4);
     \u0275\u0275advance();
-    \u0275\u0275property("ngClass", ctx_r1.getFileIconColor(file_r5.file));
+    \u0275\u0275property("ngClass", ctx_r1.getFileIconColor(file_r7.file));
     \u0275\u0275advance();
-    \u0275\u0275textInterpolate(ctx_r1.getFileIcon(file_r5.file));
+    \u0275\u0275textInterpolate(ctx_r1.getFileIcon(file_r7.file));
   }
 }
-function ChatWindowComponent_ng_container_0_Conditional_1_Conditional_35_For_2_Template(rf, ctx) {
+function ChatWindowComponent_ng_container_0_Conditional_1_Conditional_36_For_2_Template(rf, ctx) {
   if (rf & 1) {
-    const _r4 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "div", 38);
-    \u0275\u0275template(1, ChatWindowComponent_ng_container_0_Conditional_1_Conditional_35_For_2_Conditional_1_Template, 1, 1, "img", 39)(2, ChatWindowComponent_ng_container_0_Conditional_1_Conditional_35_For_2_Conditional_2_Template, 3, 2, "div", 40);
-    \u0275\u0275elementStart(3, "button", 41);
-    \u0275\u0275listener("click", function ChatWindowComponent_ng_container_0_Conditional_1_Conditional_35_For_2_Template_button_click_3_listener() {
-      const \u0275$index_90_r6 = \u0275\u0275restoreView(_r4).$index;
+    const _r6 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "div", 41);
+    \u0275\u0275template(1, ChatWindowComponent_ng_container_0_Conditional_1_Conditional_36_For_2_Conditional_1_Template, 1, 1, "img", 42)(2, ChatWindowComponent_ng_container_0_Conditional_1_Conditional_36_For_2_Conditional_2_Template, 3, 2, "div", 43);
+    \u0275\u0275elementStart(3, "button", 44);
+    \u0275\u0275listener("click", function ChatWindowComponent_ng_container_0_Conditional_1_Conditional_36_For_2_Template_button_click_3_listener() {
+      const \u0275$index_99_r8 = \u0275\u0275restoreView(_r6).$index;
       const ctx_r1 = \u0275\u0275nextContext(4);
-      return \u0275\u0275resetView(ctx_r1.removeFile(\u0275$index_90_r6));
+      return \u0275\u0275resetView(ctx_r1.removeFile(\u0275$index_99_r8));
     });
-    \u0275\u0275elementStart(4, "mat-icon", 42);
+    \u0275\u0275elementStart(4, "mat-icon", 45);
     \u0275\u0275text(5, "close");
     \u0275\u0275elementEnd()()();
   }
   if (rf & 2) {
-    const file_r5 = ctx.$implicit;
+    const file_r7 = ctx.$implicit;
     const ctx_r1 = \u0275\u0275nextContext(4);
     \u0275\u0275advance();
-    \u0275\u0275conditional(ctx_r1.isImage(file_r5.file) ? 1 : 2);
+    \u0275\u0275conditional(ctx_r1.isImage(file_r7.file) ? 1 : 2);
   }
 }
-function ChatWindowComponent_ng_container_0_Conditional_1_Conditional_35_Template(rf, ctx) {
+function ChatWindowComponent_ng_container_0_Conditional_1_Conditional_36_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 26);
-    \u0275\u0275repeaterCreate(1, ChatWindowComponent_ng_container_0_Conditional_1_Conditional_35_For_2_Template, 6, 1, "div", 38, \u0275\u0275repeaterTrackByIdentity);
+    \u0275\u0275elementStart(0, "div", 27);
+    \u0275\u0275repeaterCreate(1, ChatWindowComponent_ng_container_0_Conditional_1_Conditional_36_For_2_Template, 6, 1, "div", 41, \u0275\u0275repeaterTrackByIdentity);
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
@@ -11095,45 +11117,45 @@ function ChatWindowComponent_ng_container_0_Conditional_1_Conditional_35_Templat
     \u0275\u0275repeater(ctx_r1.selectedFiles);
   }
 }
-function ChatWindowComponent_ng_container_0_Conditional_1_Conditional_36_For_8_Template(rf, ctx) {
+function ChatWindowComponent_ng_container_0_Conditional_1_Conditional_37_For_8_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275element(0, "div", 54);
+    \u0275\u0275element(0, "div", 57);
   }
   if (rf & 2) {
-    const bar_r8 = ctx.$implicit;
-    \u0275\u0275styleProp("height", bar_r8.h, "px")("animation-delay", bar_r8.d + "ms");
+    const bar_r10 = ctx.$implicit;
+    \u0275\u0275styleProp("height", bar_r10.h, "px")("animation-delay", bar_r10.d + "ms");
   }
 }
-function ChatWindowComponent_ng_container_0_Conditional_1_Conditional_36_Template(rf, ctx) {
+function ChatWindowComponent_ng_container_0_Conditional_1_Conditional_37_Template(rf, ctx) {
   if (rf & 1) {
-    const _r7 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "div", 27)(1, "div", 44)(2, "div", 45)(3, "mat-icon", 46);
+    const _r9 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "div", 28)(1, "div", 47)(2, "div", 48)(3, "mat-icon", 49);
     \u0275\u0275text(4, "mic");
     \u0275\u0275elementEnd()();
-    \u0275\u0275element(5, "span", 47);
+    \u0275\u0275element(5, "span", 50);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(6, "div", 48);
-    \u0275\u0275repeaterCreate(7, ChatWindowComponent_ng_container_0_Conditional_1_Conditional_36_For_8_Template, 1, 4, "div", 49, \u0275\u0275repeaterTrackByIndex);
+    \u0275\u0275elementStart(6, "div", 51);
+    \u0275\u0275repeaterCreate(7, ChatWindowComponent_ng_container_0_Conditional_1_Conditional_37_For_8_Template, 1, 4, "div", 52, \u0275\u0275repeaterTrackByIndex);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(9, "span", 50);
+    \u0275\u0275elementStart(9, "span", 53);
     \u0275\u0275text(10);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(11, "button", 51);
-    \u0275\u0275listener("click", function ChatWindowComponent_ng_container_0_Conditional_1_Conditional_36_Template_button_click_11_listener() {
-      \u0275\u0275restoreView(_r7);
+    \u0275\u0275elementStart(11, "button", 54);
+    \u0275\u0275listener("click", function ChatWindowComponent_ng_container_0_Conditional_1_Conditional_37_Template_button_click_11_listener() {
+      \u0275\u0275restoreView(_r9);
       const ctx_r1 = \u0275\u0275nextContext(3);
       return \u0275\u0275resetView(ctx_r1.cancelRecording());
     });
-    \u0275\u0275elementStart(12, "mat-icon", 52);
+    \u0275\u0275elementStart(12, "mat-icon", 55);
     \u0275\u0275text(13, "close");
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(14, "button", 53);
-    \u0275\u0275listener("click", function ChatWindowComponent_ng_container_0_Conditional_1_Conditional_36_Template_button_click_14_listener() {
-      \u0275\u0275restoreView(_r7);
+    \u0275\u0275elementStart(14, "button", 56);
+    \u0275\u0275listener("click", function ChatWindowComponent_ng_container_0_Conditional_1_Conditional_37_Template_button_click_14_listener() {
+      \u0275\u0275restoreView(_r9);
       const ctx_r1 = \u0275\u0275nextContext(3);
       return \u0275\u0275resetView(ctx_r1.stopRecording());
     });
-    \u0275\u0275elementStart(15, "mat-icon", 52);
+    \u0275\u0275elementStart(15, "mat-icon", 55);
     \u0275\u0275text(16, "stop");
     \u0275\u0275elementEnd()()();
   }
@@ -11145,67 +11167,67 @@ function ChatWindowComponent_ng_container_0_Conditional_1_Conditional_36_Templat
     \u0275\u0275textInterpolate1(" ", ctx_r1.formatRecordingTime(ctx_r1.recordingSeconds), " ");
   }
 }
-function ChatWindowComponent_ng_container_0_Conditional_1_Conditional_37_Template(rf, ctx) {
+function ChatWindowComponent_ng_container_0_Conditional_1_Conditional_38_Template(rf, ctx) {
   if (rf & 1) {
-    const _r9 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "div", 28)(1, "button", 55)(2, "mat-icon", 56);
+    const _r11 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "div", 29)(1, "button", 58)(2, "mat-icon", 59);
     \u0275\u0275text(3, "sentiment_satisfied_alt");
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(4, "input", 57);
-    \u0275\u0275twoWayListener("ngModelChange", function ChatWindowComponent_ng_container_0_Conditional_1_Conditional_37_Template_input_ngModelChange_4_listener($event) {
-      \u0275\u0275restoreView(_r9);
+    \u0275\u0275elementStart(4, "input", 60);
+    \u0275\u0275twoWayListener("ngModelChange", function ChatWindowComponent_ng_container_0_Conditional_1_Conditional_38_Template_input_ngModelChange_4_listener($event) {
+      \u0275\u0275restoreView(_r11);
       const ctx_r1 = \u0275\u0275nextContext(3);
       \u0275\u0275twoWayBindingSet(ctx_r1.message, $event) || (ctx_r1.message = $event);
       return \u0275\u0275resetView($event);
     });
-    \u0275\u0275listener("input", function ChatWindowComponent_ng_container_0_Conditional_1_Conditional_37_Template_input_input_4_listener() {
-      \u0275\u0275restoreView(_r9);
+    \u0275\u0275listener("input", function ChatWindowComponent_ng_container_0_Conditional_1_Conditional_38_Template_input_input_4_listener() {
+      \u0275\u0275restoreView(_r11);
       const ctx_r1 = \u0275\u0275nextContext(3);
       return \u0275\u0275resetView(ctx_r1.chatService.notifyTyping());
-    })("keydown.enter", function ChatWindowComponent_ng_container_0_Conditional_1_Conditional_37_Template_input_keydown_enter_4_listener() {
-      \u0275\u0275restoreView(_r9);
+    })("keydown.enter", function ChatWindowComponent_ng_container_0_Conditional_1_Conditional_38_Template_input_keydown_enter_4_listener() {
+      \u0275\u0275restoreView(_r11);
       const ctx_r1 = \u0275\u0275nextContext(3);
       return \u0275\u0275resetView(ctx_r1.sendMessage());
     });
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(5, "button", 58);
-    \u0275\u0275listener("click", function ChatWindowComponent_ng_container_0_Conditional_1_Conditional_37_Template_button_click_5_listener() {
-      \u0275\u0275restoreView(_r9);
+    \u0275\u0275elementStart(5, "button", 61);
+    \u0275\u0275listener("click", function ChatWindowComponent_ng_container_0_Conditional_1_Conditional_38_Template_button_click_5_listener() {
+      \u0275\u0275restoreView(_r11);
       \u0275\u0275nextContext();
-      const attachFile_r10 = \u0275\u0275reference(40);
-      return \u0275\u0275resetView(attachFile_r10.click());
+      const attachFile_r12 = \u0275\u0275reference(41);
+      return \u0275\u0275resetView(attachFile_r12.click());
     });
-    \u0275\u0275elementStart(6, "mat-icon", 56);
+    \u0275\u0275elementStart(6, "mat-icon", 59);
     \u0275\u0275text(7, "attach_file");
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(8, "button", 59);
-    \u0275\u0275listener("click", function ChatWindowComponent_ng_container_0_Conditional_1_Conditional_37_Template_button_click_8_listener() {
-      \u0275\u0275restoreView(_r9);
+    \u0275\u0275elementStart(8, "button", 62);
+    \u0275\u0275listener("click", function ChatWindowComponent_ng_container_0_Conditional_1_Conditional_38_Template_button_click_8_listener() {
+      \u0275\u0275restoreView(_r11);
       const ctx_r1 = \u0275\u0275nextContext(3);
       return \u0275\u0275resetView(ctx_r1.startRecording());
     });
-    \u0275\u0275elementStart(9, "mat-icon", 56);
+    \u0275\u0275elementStart(9, "mat-icon", 59);
     \u0275\u0275text(10, "mic");
     \u0275\u0275elementEnd()()();
   }
   if (rf & 2) {
-    const t_r11 = \u0275\u0275nextContext(2).$implicit;
+    const t_r4 = \u0275\u0275nextContext(2).$implicit;
     const ctx_r1 = \u0275\u0275nextContext();
     \u0275\u0275advance(4);
     \u0275\u0275twoWayProperty("ngModel", ctx_r1.message);
-    \u0275\u0275property("placeholder", t_r11("chat.type_message"));
+    \u0275\u0275property("placeholder", t_r4("chat.type_message"));
   }
 }
-function ChatWindowComponent_ng_container_0_Conditional_1_Conditional_38_Template(rf, ctx) {
+function ChatWindowComponent_ng_container_0_Conditional_1_Conditional_39_Template(rf, ctx) {
   if (rf & 1) {
-    const _r12 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "button", 60);
-    \u0275\u0275listener("click", function ChatWindowComponent_ng_container_0_Conditional_1_Conditional_38_Template_button_click_0_listener() {
-      \u0275\u0275restoreView(_r12);
+    const _r13 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "button", 63);
+    \u0275\u0275listener("click", function ChatWindowComponent_ng_container_0_Conditional_1_Conditional_39_Template_button_click_0_listener() {
+      \u0275\u0275restoreView(_r13);
       const ctx_r1 = \u0275\u0275nextContext(3);
       return \u0275\u0275resetView(ctx_r1.handleSendButton());
     });
-    \u0275\u0275elementStart(1, "mat-icon", 61);
+    \u0275\u0275elementStart(1, "mat-icon", 64);
     \u0275\u0275text(2, "send");
     \u0275\u0275elementEnd()();
   }
@@ -11274,20 +11296,21 @@ function ChatWindowComponent_ng_container_0_Conditional_1_Template(rf, ctx) {
     \u0275\u0275elementStart(27, "mat-icon", 16);
     \u0275\u0275text(28, "more_vert");
     \u0275\u0275elementEnd()()()();
-    \u0275\u0275elementStart(29, "div", 20)(30, "app-chat-box", 21);
-    \u0275\u0275listener("viewMedia", function ChatWindowComponent_ng_container_0_Conditional_1_Template_app_chat_box_viewMedia_30_listener($event) {
+    \u0275\u0275template(29, ChatWindowComponent_ng_container_0_Conditional_1_Conditional_29_Template, 5, 1, "div", 20);
+    \u0275\u0275elementStart(30, "div", 21)(31, "app-chat-box", 22);
+    \u0275\u0275listener("viewMedia", function ChatWindowComponent_ng_container_0_Conditional_1_Template_app_chat_box_viewMedia_31_listener($event) {
       \u0275\u0275restoreView(_r1);
       const ctx_r1 = \u0275\u0275nextContext(2);
       return \u0275\u0275resetView(ctx_r1.openMedia($event.url, $event.type));
     });
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(31, "div", 22)(32, "div", 23)(33, "div", 24);
-    \u0275\u0275template(34, ChatWindowComponent_ng_container_0_Conditional_1_Conditional_34_Template, 11, 2, "div", 25)(35, ChatWindowComponent_ng_container_0_Conditional_1_Conditional_35_Template, 3, 0, "div", 26)(36, ChatWindowComponent_ng_container_0_Conditional_1_Conditional_36_Template, 17, 1, "div", 27)(37, ChatWindowComponent_ng_container_0_Conditional_1_Conditional_37_Template, 11, 2, "div", 28);
+    \u0275\u0275elementStart(32, "div", 23)(33, "div", 24)(34, "div", 25);
+    \u0275\u0275template(35, ChatWindowComponent_ng_container_0_Conditional_1_Conditional_35_Template, 11, 2, "div", 26)(36, ChatWindowComponent_ng_container_0_Conditional_1_Conditional_36_Template, 3, 0, "div", 27)(37, ChatWindowComponent_ng_container_0_Conditional_1_Conditional_37_Template, 17, 1, "div", 28)(38, ChatWindowComponent_ng_container_0_Conditional_1_Conditional_38_Template, 11, 2, "div", 29);
     \u0275\u0275elementEnd();
-    \u0275\u0275template(38, ChatWindowComponent_ng_container_0_Conditional_1_Conditional_38_Template, 3, 1, "button", 29);
+    \u0275\u0275template(39, ChatWindowComponent_ng_container_0_Conditional_1_Conditional_39_Template, 3, 1, "button", 30);
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(39, "input", 30, 0);
-    \u0275\u0275listener("change", function ChatWindowComponent_ng_container_0_Conditional_1_Template_input_change_39_listener($event) {
+    \u0275\u0275elementStart(40, "input", 31, 0);
+    \u0275\u0275listener("change", function ChatWindowComponent_ng_container_0_Conditional_1_Template_input_change_40_listener($event) {
       \u0275\u0275restoreView(_r1);
       const ctx_r1 = \u0275\u0275nextContext(2);
       return \u0275\u0275resetView(ctx_r1.onFileSelected($event));
@@ -11299,56 +11322,58 @@ function ChatWindowComponent_ng_container_0_Conditional_1_Template(rf, ctx) {
     let tmp_5_0;
     let tmp_7_0;
     let tmp_8_0;
-    const t_r11 = \u0275\u0275nextContext().$implicit;
+    const t_r4 = \u0275\u0275nextContext().$implicit;
     const ctx_r1 = \u0275\u0275nextContext();
     \u0275\u0275advance(8);
     \u0275\u0275property("src", (tmp_4_0 = ctx_r1.chatService.currentOpenedChat()) == null ? null : tmp_4_0.profileImage, \u0275\u0275sanitizeUrl);
     \u0275\u0275advance();
     \u0275\u0275conditional(((tmp_5_0 = ctx_r1.chatService.currentOpenedChat()) == null ? null : tmp_5_0.isOnline) ? 9 : -1);
     \u0275\u0275advance(3);
-    \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(13, 10, ctx_r1.chatService.currentOpenedChat().name + " " + ctx_r1.chatService.currentOpenedChat().surname), " ");
+    \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(13, 11, ctx_r1.chatService.currentOpenedChat().name + " " + ctx_r1.chatService.currentOpenedChat().surname), " ");
     \u0275\u0275advance(2);
     \u0275\u0275property("ngClass", ((tmp_7_0 = ctx_r1.chatService.currentOpenedChat()) == null ? null : tmp_7_0.isOnline) ? "text-green-500" : "text-gray-400");
     \u0275\u0275advance();
-    \u0275\u0275textInterpolate1(" ", ((tmp_8_0 = ctx_r1.chatService.currentOpenedChat()) == null ? null : tmp_8_0.isOnline) ? t_r11("chat.online") : t_r11("chat.offline"), " ");
-    \u0275\u0275advance(19);
-    \u0275\u0275conditional(ctx_r1.chatService.replyMessage() ? 34 : -1);
+    \u0275\u0275textInterpolate1(" ", ((tmp_8_0 = ctx_r1.chatService.currentOpenedChat()) == null ? null : tmp_8_0.isOnline) ? t_r4("chat.online") : t_r4("chat.offline"), " ");
+    \u0275\u0275advance(14);
+    \u0275\u0275conditional(ctx_r1.showBackToOrigin ? 29 : -1);
+    \u0275\u0275advance(6);
+    \u0275\u0275conditional(ctx_r1.chatService.replyMessage() ? 35 : -1);
     \u0275\u0275advance();
-    \u0275\u0275conditional(ctx_r1.selectedFiles.length > 0 ? 35 : -1);
+    \u0275\u0275conditional(ctx_r1.selectedFiles.length > 0 ? 36 : -1);
     \u0275\u0275advance();
-    \u0275\u0275conditional(ctx_r1.voiceState === "recording" ? 36 : -1);
+    \u0275\u0275conditional(ctx_r1.voiceState === "recording" ? 37 : -1);
     \u0275\u0275advance();
-    \u0275\u0275conditional(ctx_r1.voiceState === "idle" ? 37 : -1);
+    \u0275\u0275conditional(ctx_r1.voiceState === "idle" ? 38 : -1);
     \u0275\u0275advance();
-    \u0275\u0275conditional(ctx_r1.voiceState !== "recording" ? 38 : -1);
+    \u0275\u0275conditional(ctx_r1.voiceState !== "recording" ? 39 : -1);
   }
 }
 function ChatWindowComponent_ng_container_0_Conditional_2_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "div", 3);
-    \u0275\u0275element(1, "div", 62)(2, "div", 63);
-    \u0275\u0275elementStart(3, "div", 64)(4, "div", 65)(5, "mat-icon", 66);
+    \u0275\u0275element(1, "div", 65)(2, "div", 66);
+    \u0275\u0275elementStart(3, "div", 67)(4, "div", 68)(5, "mat-icon", 69);
     \u0275\u0275text(6, "chat_bubble_outline");
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(7, "h2", 67);
+    \u0275\u0275elementStart(7, "h2", 70);
     \u0275\u0275text(8);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(9, "p", 68);
+    \u0275\u0275elementStart(9, "p", 71);
     \u0275\u0275text(10);
     \u0275\u0275elementEnd()()();
   }
   if (rf & 2) {
-    const t_r11 = \u0275\u0275nextContext().$implicit;
+    const t_r4 = \u0275\u0275nextContext().$implicit;
     \u0275\u0275advance(8);
-    \u0275\u0275textInterpolate(t_r11("chat.choose_chat"));
+    \u0275\u0275textInterpolate(t_r4("chat.choose_chat"));
     \u0275\u0275advance(2);
-    \u0275\u0275textInterpolate(t_r11("chat.select_contact"));
+    \u0275\u0275textInterpolate(t_r4("chat.select_contact"));
   }
 }
 function ChatWindowComponent_ng_container_0_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementContainerStart(0);
-    \u0275\u0275template(1, ChatWindowComponent_ng_container_0_Conditional_1_Template, 41, 12, "div", 2)(2, ChatWindowComponent_ng_container_0_Conditional_2_Template, 11, 2, "div", 3);
+    \u0275\u0275template(1, ChatWindowComponent_ng_container_0_Conditional_1_Template, 42, 13, "div", 2)(2, ChatWindowComponent_ng_container_0_Conditional_2_Template, 11, 2, "div", 3);
     \u0275\u0275elementContainerEnd();
   }
   if (rf & 2) {
@@ -11361,6 +11386,8 @@ var ChatWindowComponent = class _ChatWindowComponent {
   chatService;
   filesService;
   authService;
+  location;
+  route;
   chatContainer;
   viewMedia = new EventEmitter();
   dialog = inject(MatDialog);
@@ -11387,10 +11414,15 @@ var ChatWindowComponent = class _ChatWindowComponent {
     { h: 13, d: 180 },
     { h: 7, d: 260 }
   ];
-  constructor(chatService, filesService, authService) {
+  constructor(chatService, filesService, authService, location, route) {
     this.chatService = chatService;
     this.filesService = filesService;
     this.authService = authService;
+    this.location = location;
+    this.route = route;
+  }
+  get showBackToOrigin() {
+    return this.route.snapshot.queryParamMap.has("back");
   }
   openMedia(url, type) {
     this.viewMedia.emit({ url, type });
@@ -11410,6 +11442,15 @@ var ChatWindowComponent = class _ChatWindowComponent {
   }
   closeChatWindow() {
     this.chatService.currentOpenedChat.set(null);
+  }
+  goBack() {
+    this.chatService.currentOpenedChat.set(null);
+    this.chatService.chatRightSidebarIsOpen.set(false);
+    if (window.history.length > 1) {
+      this.location.back();
+    } else {
+      this.location.go("/");
+    }
   }
   openRightSideBar() {
     this.chatService.chatRightSidebarIsOpen.set(true);
@@ -11610,7 +11651,7 @@ var ChatWindowComponent = class _ChatWindowComponent {
     return `${m}:${s}`;
   }
   static \u0275fac = function ChatWindowComponent_Factory(__ngFactoryType__) {
-    return new (__ngFactoryType__ || _ChatWindowComponent)(\u0275\u0275directiveInject(ChatService), \u0275\u0275directiveInject(FilesService), \u0275\u0275directiveInject(AuthService));
+    return new (__ngFactoryType__ || _ChatWindowComponent)(\u0275\u0275directiveInject(ChatService), \u0275\u0275directiveInject(FilesService), \u0275\u0275directiveInject(AuthService), \u0275\u0275directiveInject(Location), \u0275\u0275directiveInject(ActivatedRoute));
   };
   static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _ChatWindowComponent, selectors: [["app-chat-window"]], viewQuery: function ChatWindowComponent_Query(rf, ctx) {
     if (rf & 1) {
@@ -11620,7 +11661,7 @@ var ChatWindowComponent = class _ChatWindowComponent {
       let _t;
       \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.chatContainer = _t.first);
     }
-  }, outputs: { viewMedia: "viewMedia" }, standalone: false, decls: 1, vars: 0, consts: [["attachFile", ""], [4, "transloco"], [1, "flex", "flex-col", "h-full", "w-full", "bg-[#f8fafc]"], [1, "relative", "flex", "flex-col", "items-center", "justify-center", "h-full", "bg-[#f8fafc]", "overflow-hidden"], [1, "shrink-0", "flex", "items-center", "justify-between", "bg-white/90", "backdrop-blur-xl", "border-b", "border-gray-100/70", "px-3", "md:px-5", "py-3", "z-20", "shadow-[0_1px_8px_-3px_rgba(0,0,0,0.06)]"], [1, "flex", "items-center", "gap-2.5", "min-w-0"], [1, "md:hidden", "-ml-1", "w-8", "h-8", "flex", "items-center", "justify-center", "rounded-xl", "hover:bg-gray-100", "text-gray-500", "transition-colors", "shrink-0", 3, "click"], [1, "relative", "cursor-pointer", "shrink-0", 3, "click"], [1, "w-9", "h-9", "md:w-10", "md:h-10", "rounded-full", "overflow-hidden", "bg-gray-100", "ring-2", "ring-[var(--color-mint)]/50", "hover:ring-[var(--color-mint)]", "transition-all", "shadow-sm"], ["alt", "Avatar", 1, "w-full", "h-full", "object-cover", 3, "src"], [1, "absolute", "bottom-0", "right-0", "w-2.5", "h-2.5", "md:w-3", "md:h-3", "bg-green-400", "border-2", "border-white", "rounded-full", "shadow-sm"], [1, "flex", "flex-col", "cursor-pointer", "min-w-0", 3, "click"], [1, "font-bold", "text-[var(--color-primary)]", "text-sm", "md:text-[15px]", "leading-tight", "truncate"], [1, "text-[11px]", "font-medium", "leading-none", "mt-0.5", 3, "ngClass"], [1, "flex", "items-center", "gap-0.5", "shrink-0"], ["title", "Audio call (coming soon)", 1, "w-8", "h-8", "md:w-9", "md:h-9", "flex", "items-center", "justify-center", "rounded-xl", "text-gray-400", "hover:text-[var(--color-primary)]", "hover:bg-[var(--color-mint)]/20", "transition-all"], [1, "text-xl"], ["title", "Video call", 1, "w-8", "h-8", "md:w-9", "md:h-9", "flex", "items-center", "justify-center", "rounded-xl", "text-gray-400", "hover:text-[var(--color-primary)]", "hover:bg-[var(--color-mint)]/20", "transition-all", 3, "click"], ["title", "Search in chat (coming soon)", 1, "hidden", "md:flex", "w-9", "h-9", "items-center", "justify-center", "rounded-xl", "text-gray-400", "hover:text-[var(--color-primary)]", "hover:bg-[var(--color-mint)]/20", "transition-all"], [1, "w-8", "h-8", "md:w-9", "md:h-9", "flex", "items-center", "justify-center", "rounded-xl", "text-gray-400", "hover:text-[var(--color-primary)]", "hover:bg-[var(--color-mint)]/20", "transition-all", 3, "click"], [1, "flex-1", "min-h-0", "w-full", "relative", "overflow-hidden"], [1, "h-full", "block", 3, "viewMedia"], [1, "shrink-0", "w-full", "bg-white/95", "backdrop-blur-sm", "border-t", "border-gray-100", "px-3", "py-2.5", "md:px-5", "md:py-3", "z-20"], [1, "flex", "items-end", "gap-2", "max-w-5xl", "mx-auto"], [1, "relative", "flex-1", "flex", "flex-col", "bg-gray-50", "border", "border-gray-200", "rounded-2xl", "transition-all", "duration-200", "focus-within:border-[var(--color-primary)]/25", "focus-within:ring-2", "focus-within:ring-[var(--color-primary)]/5", "focus-within:bg-white", "overflow-hidden"], [1, "mx-2.5", "mt-2.5", "bg-[var(--color-primary)]/5", "border", "border-[var(--color-primary)]/10", "rounded-xl", "p-2.5", "flex", "items-center", "justify-between", "gap-2"], [1, "flex", "gap-2", "px-3", "pt-2.5", "pb-1", "overflow-x-auto", "custom-scroll"], [1, "flex", "items-center", "gap-2.5", "px-3", "py-3"], [1, "flex", "items-center", "px-1", "py-0.5"], [1, "shrink-0", "flex", "items-center", "justify-center", "w-10", "h-10", "md:w-11", "md:h-11", "rounded-2xl", "bg-[var(--color-primary)]", "text-[var(--color-mint)]", "hover:bg-[#012900]", "disabled:bg-gray-200", "disabled:text-gray-400", "disabled:cursor-not-allowed", "transition-all", "duration-200", "shadow-md", "shadow-[var(--color-primary)]/12", "active:scale-95", 3, "disabled"], ["type", "file", "hidden", "", "multiple", "", "accept", "image/*,video/*,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.zip,.rar", 3, "change"], [1, "flex", "items-center", "gap-2.5", "overflow-hidden", "min-w-0"], [1, "w-0.5", "h-8", "bg-[var(--color-primary)]", "rounded-full", "shrink-0"], [1, "min-w-0"], [1, "block", "text-[11px]", "font-bold", "text-[var(--color-primary)]", "uppercase", "tracking-wider", "mb-0.5"], [1, "block", "text-[12px]", "text-gray-500", "truncate"], [1, "w-6", "h-6", "flex", "items-center", "justify-center", "rounded-lg", "hover:bg-gray-200", "text-gray-400", "hover:text-gray-600", "transition-colors", "shrink-0", 3, "click"], [1, "!text-base", "!w-4", "!h-4"], [1, "relative", "group", "shrink-0", "w-14", "h-14", "rounded-xl", "border", "border-gray-200", "bg-white", "overflow-hidden", "shadow-sm"], ["alt", "preview", 1, "w-full", "h-full", "object-cover", "group-hover:scale-105", "transition-transform", 3, "src"], [1, "w-full", "h-full", "flex", "items-center", "justify-center", "bg-gray-50"], [1, "absolute", "inset-0", "bg-black/45", "opacity-0", "group-hover:opacity-100", "flex", "items-center", "justify-center", "transition-all", "text-white", 3, "click"], [1, "text-lg"], [1, "text-2xl", 3, "ngClass"], [1, "relative", "shrink-0"], [1, "w-8", "h-8", "rounded-full", "bg-red-500/10", "flex", "items-center", "justify-center"], [1, "!text-[18px]", "!w-[18px]", "!h-[18px]", "text-red-500"], [1, "absolute", "-top-0.5", "-right-0.5", "w-2.5", "h-2.5", "rounded-full", "bg-red-500", "animate-pulse", "border-2", "border-white"], [1, "flex", "items-end", "gap-[3px]", "h-5", "flex-1"], [1, "voice-rec-bar", "w-[3px]", "rounded-full", "bg-red-400", "flex-shrink-0", 3, "height", "animation-delay"], [1, "text-sm", "font-mono", "font-semibold", "text-red-500", "tabular-nums", "shrink-0", "min-w-[38px]", "text-right"], ["title", "Cancel", 1, "w-8", "h-8", "flex", "items-center", "justify-center", "rounded-xl", "text-gray-400", "hover:text-gray-600", "hover:bg-gray-100", "transition-colors", "shrink-0", 3, "click"], [1, "!text-[18px]", "!w-[18px]", "!h-[18px]"], ["title", "Stop recording", 1, "w-9", "h-9", "flex", "items-center", "justify-center", "rounded-full", "bg-red-500", "hover:bg-red-600", "text-white", "transition-all", "active:scale-95", "shrink-0", "shadow-sm", "shadow-red-400/40", 3, "click"], [1, "voice-rec-bar", "w-[3px]", "rounded-full", "bg-red-400", "flex-shrink-0"], ["title", "Emoji (coming soon)", 1, "hidden", "md:flex", "w-9", "h-9", "items-center", "justify-center", "text-gray-400", "hover:text-[var(--color-primary)]", "rounded-xl", "hover:bg-[var(--color-mint)]/15", "transition-colors", "shrink-0"], [1, "!text-xl", "!w-5", "!h-5"], ["type", "text", 1, "flex-1", "bg-transparent", "border-none", "outline-none", "text-gray-900", "text-sm", "py-2.5", "px-2", "placeholder:text-gray-400", 3, "ngModelChange", "input", "keydown.enter", "ngModel", "placeholder"], ["title", "Attach file", 1, "w-9", "h-9", "flex", "items-center", "justify-center", "text-gray-400", "hover:text-[var(--color-primary)]", "rounded-xl", "hover:bg-[var(--color-mint)]/15", "transition-colors", "shrink-0", 3, "click"], ["title", "Voice message", 1, "w-9", "h-9", "flex", "items-center", "justify-center", "text-gray-400", "hover:text-[var(--color-primary)]", "rounded-xl", "hover:bg-[var(--color-mint)]/15", "transition-colors", "shrink-0", 3, "click"], [1, "shrink-0", "flex", "items-center", "justify-center", "w-10", "h-10", "md:w-11", "md:h-11", "rounded-2xl", "bg-[var(--color-primary)]", "text-[var(--color-mint)]", "hover:bg-[#012900]", "disabled:bg-gray-200", "disabled:text-gray-400", "disabled:cursor-not-allowed", "transition-all", "duration-200", "shadow-md", "shadow-[var(--color-primary)]/12", "active:scale-95", 3, "click", "disabled"], [1, "text-xl", "transform", "translate-x-0.5"], [1, "pointer-events-none", "absolute", "top-1/4", "right-1/3", "w-72", "h-72", "bg-[var(--color-mint)]/18", "rounded-full", "blur-[80px]"], [1, "pointer-events-none", "absolute", "bottom-1/4", "left-1/3", "w-64", "h-64", "bg-[var(--color-sky)]/12", "rounded-full", "blur-[80px]"], [1, "relative", "z-10", "flex", "flex-col", "items-center", "text-center", "px-8"], [1, "w-20", "h-20", "rounded-[28px]", "bg-white", "border", "border-gray-100", "shadow-sm", "flex", "items-center", "justify-center", "mb-6"], [1, "text-[40px]", "text-[var(--color-mint)]"], [1, "text-xl", "font-bold", "text-[var(--color-primary)]", "mb-2", "tracking-tight"], [1, "text-sm", "text-gray-500", "max-w-[280px]", "leading-relaxed"]], template: function ChatWindowComponent_Template(rf, ctx) {
+  }, outputs: { viewMedia: "viewMedia" }, standalone: false, decls: 1, vars: 0, consts: [["attachFile", ""], [4, "transloco"], [1, "flex", "flex-col", "h-full", "w-full", "bg-[#f8fafc]"], [1, "relative", "flex", "flex-col", "items-center", "justify-center", "h-full", "bg-[#f8fafc]", "overflow-hidden"], [1, "shrink-0", "flex", "items-center", "justify-between", "bg-white/90", "backdrop-blur-xl", "border-b", "border-gray-100/70", "px-3", "md:px-5", "py-3", "z-20", "shadow-[0_1px_8px_-3px_rgba(0,0,0,0.06)]"], [1, "flex", "items-center", "gap-2.5", "min-w-0"], [1, "md:hidden", "-ml-1", "w-8", "h-8", "flex", "items-center", "justify-center", "rounded-xl", "hover:bg-gray-100", "text-gray-500", "transition-colors", "shrink-0", 3, "click"], [1, "relative", "cursor-pointer", "shrink-0", 3, "click"], [1, "w-9", "h-9", "md:w-10", "md:h-10", "rounded-full", "overflow-hidden", "bg-gray-100", "ring-2", "ring-[var(--color-mint)]/50", "hover:ring-[var(--color-mint)]", "transition-all", "shadow-sm"], ["alt", "Avatar", 1, "w-full", "h-full", "object-cover", 3, "src"], [1, "absolute", "bottom-0", "right-0", "w-2.5", "h-2.5", "md:w-3", "md:h-3", "bg-green-400", "border-2", "border-white", "rounded-full", "shadow-sm"], [1, "flex", "flex-col", "cursor-pointer", "min-w-0", 3, "click"], [1, "font-bold", "text-[var(--color-primary)]", "text-sm", "md:text-[15px]", "leading-tight", "truncate"], [1, "text-[11px]", "font-medium", "leading-none", "mt-0.5", 3, "ngClass"], [1, "flex", "items-center", "gap-0.5", "shrink-0"], ["title", "Audio call (coming soon)", 1, "w-8", "h-8", "md:w-9", "md:h-9", "flex", "items-center", "justify-center", "rounded-xl", "text-gray-400", "hover:text-[var(--color-primary)]", "hover:bg-[var(--color-mint)]/20", "transition-all"], [1, "text-xl"], ["title", "Video call", 1, "w-8", "h-8", "md:w-9", "md:h-9", "flex", "items-center", "justify-center", "rounded-xl", "text-gray-400", "hover:text-[var(--color-primary)]", "hover:bg-[var(--color-mint)]/20", "transition-all", 3, "click"], ["title", "Search in chat (coming soon)", 1, "hidden", "md:flex", "w-9", "h-9", "items-center", "justify-center", "rounded-xl", "text-gray-400", "hover:text-[var(--color-primary)]", "hover:bg-[var(--color-mint)]/20", "transition-all"], [1, "w-8", "h-8", "md:w-9", "md:h-9", "flex", "items-center", "justify-center", "rounded-xl", "text-gray-400", "hover:text-[var(--color-primary)]", "hover:bg-[var(--color-mint)]/20", "transition-all", 3, "click"], [1, "shrink-0", "w-full", "bg-white/70", "backdrop-blur-sm", "border-b", "border-gray-100/70", "px-3", "md:px-5", "py-1.5"], [1, "flex-1", "min-h-0", "w-full", "relative", "overflow-hidden"], [1, "h-full", "block", 3, "viewMedia"], [1, "shrink-0", "w-full", "bg-white/95", "backdrop-blur-sm", "border-t", "border-gray-100", "px-3", "py-2.5", "md:px-5", "md:py-3", "z-20"], [1, "flex", "items-end", "gap-2", "max-w-5xl", "mx-auto"], [1, "relative", "flex-1", "flex", "flex-col", "bg-gray-50", "border", "border-gray-200", "rounded-2xl", "transition-all", "duration-200", "focus-within:border-[var(--color-primary)]/25", "focus-within:ring-2", "focus-within:ring-[var(--color-primary)]/5", "focus-within:bg-white", "overflow-hidden"], [1, "mx-2.5", "mt-2.5", "bg-[var(--color-primary)]/5", "border", "border-[var(--color-primary)]/10", "rounded-xl", "p-2.5", "flex", "items-center", "justify-between", "gap-2"], [1, "flex", "gap-2", "px-3", "pt-2.5", "pb-1", "overflow-x-auto", "custom-scroll"], [1, "flex", "items-center", "gap-2.5", "px-3", "py-3"], [1, "flex", "items-center", "px-1", "py-0.5"], [1, "shrink-0", "flex", "items-center", "justify-center", "w-10", "h-10", "md:w-11", "md:h-11", "rounded-2xl", "bg-[var(--color-primary)]", "text-[var(--color-mint)]", "hover:bg-[#012900]", "disabled:bg-gray-200", "disabled:text-gray-400", "disabled:cursor-not-allowed", "transition-all", "duration-200", "shadow-md", "shadow-[var(--color-primary)]/12", "active:scale-95", 3, "disabled"], ["type", "file", "hidden", "", "multiple", "", "accept", "image/*,video/*,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.zip,.rar", 3, "change"], ["type", "button", 1, "inline-flex", "items-center", "gap-1", "text-gray-500", "hover:text-[var(--color-primary)]", "transition-colors", "text-sm", "font-medium", "cursor-pointer", 3, "click"], [1, "scale-90"], [1, "flex", "items-center", "gap-2.5", "overflow-hidden", "min-w-0"], [1, "w-0.5", "h-8", "bg-[var(--color-primary)]", "rounded-full", "shrink-0"], [1, "min-w-0"], [1, "block", "text-[11px]", "font-bold", "text-[var(--color-primary)]", "uppercase", "tracking-wider", "mb-0.5"], [1, "block", "text-[12px]", "text-gray-500", "truncate"], [1, "w-6", "h-6", "flex", "items-center", "justify-center", "rounded-lg", "hover:bg-gray-200", "text-gray-400", "hover:text-gray-600", "transition-colors", "shrink-0", 3, "click"], [1, "!text-base", "!w-4", "!h-4"], [1, "relative", "group", "shrink-0", "w-14", "h-14", "rounded-xl", "border", "border-gray-200", "bg-white", "overflow-hidden", "shadow-sm"], ["alt", "preview", 1, "w-full", "h-full", "object-cover", "group-hover:scale-105", "transition-transform", 3, "src"], [1, "w-full", "h-full", "flex", "items-center", "justify-center", "bg-gray-50"], [1, "absolute", "inset-0", "bg-black/45", "opacity-0", "group-hover:opacity-100", "flex", "items-center", "justify-center", "transition-all", "text-white", 3, "click"], [1, "text-lg"], [1, "text-2xl", 3, "ngClass"], [1, "relative", "shrink-0"], [1, "w-8", "h-8", "rounded-full", "bg-red-500/10", "flex", "items-center", "justify-center"], [1, "!text-[18px]", "!w-[18px]", "!h-[18px]", "text-red-500"], [1, "absolute", "-top-0.5", "-right-0.5", "w-2.5", "h-2.5", "rounded-full", "bg-red-500", "animate-pulse", "border-2", "border-white"], [1, "flex", "items-end", "gap-[3px]", "h-5", "flex-1"], [1, "voice-rec-bar", "w-[3px]", "rounded-full", "bg-red-400", "flex-shrink-0", 3, "height", "animation-delay"], [1, "text-sm", "font-mono", "font-semibold", "text-red-500", "tabular-nums", "shrink-0", "min-w-[38px]", "text-right"], ["title", "Cancel", 1, "w-8", "h-8", "flex", "items-center", "justify-center", "rounded-xl", "text-gray-400", "hover:text-gray-600", "hover:bg-gray-100", "transition-colors", "shrink-0", 3, "click"], [1, "!text-[18px]", "!w-[18px]", "!h-[18px]"], ["title", "Stop recording", 1, "w-9", "h-9", "flex", "items-center", "justify-center", "rounded-full", "bg-red-500", "hover:bg-red-600", "text-white", "transition-all", "active:scale-95", "shrink-0", "shadow-sm", "shadow-red-400/40", 3, "click"], [1, "voice-rec-bar", "w-[3px]", "rounded-full", "bg-red-400", "flex-shrink-0"], ["title", "Emoji (coming soon)", 1, "hidden", "md:flex", "w-9", "h-9", "items-center", "justify-center", "text-gray-400", "hover:text-[var(--color-primary)]", "rounded-xl", "hover:bg-[var(--color-mint)]/15", "transition-colors", "shrink-0"], [1, "!text-xl", "!w-5", "!h-5"], ["type", "text", 1, "flex-1", "bg-transparent", "border-none", "outline-none", "text-gray-900", "text-sm", "py-2.5", "px-2", "placeholder:text-gray-400", 3, "ngModelChange", "input", "keydown.enter", "ngModel", "placeholder"], ["title", "Attach file", 1, "w-9", "h-9", "flex", "items-center", "justify-center", "text-gray-400", "hover:text-[var(--color-primary)]", "rounded-xl", "hover:bg-[var(--color-mint)]/15", "transition-colors", "shrink-0", 3, "click"], ["title", "Voice message", 1, "w-9", "h-9", "flex", "items-center", "justify-center", "text-gray-400", "hover:text-[var(--color-primary)]", "rounded-xl", "hover:bg-[var(--color-mint)]/15", "transition-colors", "shrink-0", 3, "click"], [1, "shrink-0", "flex", "items-center", "justify-center", "w-10", "h-10", "md:w-11", "md:h-11", "rounded-2xl", "bg-[var(--color-primary)]", "text-[var(--color-mint)]", "hover:bg-[#012900]", "disabled:bg-gray-200", "disabled:text-gray-400", "disabled:cursor-not-allowed", "transition-all", "duration-200", "shadow-md", "shadow-[var(--color-primary)]/12", "active:scale-95", 3, "click", "disabled"], [1, "text-xl", "transform", "translate-x-0.5"], [1, "pointer-events-none", "absolute", "top-1/4", "right-1/3", "w-72", "h-72", "bg-[var(--color-mint)]/18", "rounded-full", "blur-[80px]"], [1, "pointer-events-none", "absolute", "bottom-1/4", "left-1/3", "w-64", "h-64", "bg-[var(--color-sky)]/12", "rounded-full", "blur-[80px]"], [1, "relative", "z-10", "flex", "flex-col", "items-center", "text-center", "px-8"], [1, "w-20", "h-20", "rounded-[28px]", "bg-white", "border", "border-gray-100", "shadow-sm", "flex", "items-center", "justify-center", "mb-6"], [1, "text-[40px]", "text-[var(--color-mint)]"], [1, "text-xl", "font-bold", "text-[var(--color-primary)]", "mb-2", "tracking-tight"], [1, "text-sm", "text-gray-500", "max-w-[280px]", "leading-relaxed"]], template: function ChatWindowComponent_Template(rf, ctx) {
     if (rf & 1) {
       \u0275\u0275template(0, ChatWindowComponent_ng_container_0_Template, 3, 1, "ng-container", 1);
     }
@@ -11713,6 +11754,20 @@ var ChatWindowComponent = class _ChatWindowComponent {
           </button>
         </div>
       </div>
+
+      <!-- \u2500\u2500 Back row (under header) \u2500\u2500 -->
+      @if (showBackToOrigin) {
+        <div class="shrink-0 w-full bg-white/70 backdrop-blur-sm border-b border-gray-100/70 px-3 md:px-5 py-1.5">
+          <button
+            type="button"
+            (click)="goBack()"
+            class="inline-flex items-center gap-1 text-gray-500 hover:text-[var(--color-primary)] transition-colors text-sm font-medium cursor-pointer"
+          >
+            <mat-icon class="scale-90">arrow_back</mat-icon>
+            {{ t('common.back') }}
+          </button>
+        </div>
+      }
 
       <!-- \u2500\u2500 Messages \u2500\u2500 -->
       <div class="flex-1 min-h-0 w-full relative overflow-hidden">
@@ -11909,7 +11964,7 @@ var ChatWindowComponent = class _ChatWindowComponent {
 
 </ng-container>
 `, styles: ["/* angular:styles/component:scss;17974b3ae425c30212316189143d5dbcece66f08532f4f66d976cff8cdfb46dc;C:/Users/Misha/source/repos/hulp-hub-project/ClientApp/src/app/modules/chat/components/chat-window/chat-window.component.ts */\n@keyframes voiceBar {\n  0% {\n    transform: scaleY(0.2);\n  }\n  100% {\n    transform: scaleY(1);\n  }\n}\n.voice-rec-bar {\n  transform-origin: bottom center;\n  animation: voiceBar 0.55s ease-in-out infinite alternate;\n}\nmat-icon {\n  line-height: 1 !important;\n  display: inline-flex !important;\n  align-items: center !important;\n  justify-content: center !important;\n}\n/*# sourceMappingURL=chat-window.component.css.map */\n"] }]
-  }], () => [{ type: ChatService }, { type: FilesService }, { type: AuthService }], { chatContainer: [{
+  }], () => [{ type: ChatService }, { type: FilesService }, { type: AuthService }, { type: Location }, { type: ActivatedRoute }], { chatContainer: [{
     type: ViewChild,
     args: ["chatBox"]
   }], viewMedia: [{
@@ -11917,7 +11972,7 @@ var ChatWindowComponent = class _ChatWindowComponent {
   }] });
 })();
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(ChatWindowComponent, { className: "ChatWindowComponent", filePath: "src/app/modules/chat/components/chat-window/chat-window.component.ts", lineNumber: 34 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(ChatWindowComponent, { className: "ChatWindowComponent", filePath: "src/app/modules/chat/components/chat-window/chat-window.component.ts", lineNumber: 35 });
 })();
 
 // node_modules/@angular/material/fesm2022/progress-spinner.mjs
@@ -21714,7 +21769,7 @@ function SidebarComponent_ng_container_0_For_13_Template(rf, ctx) {
   if (rf & 2) {
     const item_r6 = ctx.$implicit;
     const ctx_r1 = \u0275\u0275nextContext(2);
-    \u0275\u0275conditional(!(item_r6.label === "my_sessions" && ctx_r1.authService.isPsychologist) ? 0 : -1);
+    \u0275\u0275conditional(!(item_r6.label === "my_sessions" && ctx_r1.authService.isPsychologist) && !(item_r6.label === "category_application" && (ctx_r1.authService.isAdmin || ctx_r1.authService.isSuperAdmin || ctx_r1.authService.isPsychologist)) ? 0 : -1);
   }
 }
 function SidebarComponent_ng_container_0_Conditional_14_For_4_Template(rf, ctx) {
@@ -21891,6 +21946,11 @@ var SidebarComponent = class _SidebarComponent {
       icon: "mail",
       label: "notifications",
       route: "notifications"
+    },
+    {
+      icon: "verified_user",
+      label: "category_application",
+      route: "category-application"
     }
   ]);
   adminItems = signal([
@@ -22073,7 +22133,15 @@ var SidebarComponent = class _SidebarComponent {
 
         <!-- Main menu items -->
         @for (item of menuItems(); track item.route) {
-          @if (!(item.label === "my_sessions" && authService.isPsychologist)) {
+          @if (
+            !(item.label === "my_sessions" && authService.isPsychologist) &&
+            !(
+              item.label === "category_application" &&
+              (authService.isAdmin ||
+                authService.isSuperAdmin ||
+                authService.isPsychologist)
+            )
+          ) {
             <a
               [routerLink]="item.route"
               routerLinkActive="selected-menu-item"
@@ -22302,11 +22370,23 @@ var NotificationsPopupComponent = class _NotificationsPopupComponent {
       notif.isRead = true;
       this.service.markAsRead(notif.id).subscribe();
     }
-    if (notif.relatedEntityId) {
-      const target = this.authService.isPsychologist ? "/psychologist/applications" : "/my-sessions";
+    if (!notif.relatedEntityId)
+      return;
+    const target = this.resolveTarget(notif);
+    if (target) {
       this.router.navigate([target]);
       this.closePopup.emit();
     }
+  }
+  resolveTarget(notif) {
+    if (this.isCategoryNotification(notif)) {
+      return this.authService.isAdmin || this.authService.isSuperAdmin ? "/admin/category-applications" : "/category-application";
+    }
+    return this.authService.isPsychologist ? "/psychologist/applications" : "/my-sessions";
+  }
+  isCategoryNotification(notif) {
+    const t = notif.type;
+    return t === 4 || t === "4" || t === "UserCategoryApplication";
   }
   static \u0275fac = function NotificationsPopupComponent_Factory(__ngFactoryType__) {
     return new (__ngFactoryType__ || _NotificationsPopupComponent)(\u0275\u0275directiveInject(Router), \u0275\u0275directiveInject(NotificationService), \u0275\u0275directiveInject(AuthService));
@@ -22681,7 +22761,7 @@ function HeaderComponent_ng_container_0_Template(rf, ctx) {
     \u0275\u0275advance();
     \u0275\u0275conditional(!ctx_r2.isAuthRoute() && !ctx_r2.authService.isLoggedIn() ? 14 : -1);
     \u0275\u0275advance();
-    \u0275\u0275conditional(ctx_r2.authService.isLoggedIn() && ctx_r2.activeSessionService.activeSession() ? 15 : -1);
+    \u0275\u0275conditional(ctx_r2.authService.isLoggedIn() && ctx_r2.activeSessionService.activeSession() && !ctx_r2.isInSessionRoom() ? 15 : -1);
     \u0275\u0275advance();
     \u0275\u0275conditional(ctx_r2.authService.isLoggedIn() ? 16 : -1);
   }
@@ -22761,6 +22841,9 @@ var HeaderComponent = class _HeaderComponent {
   isAuthRoute() {
     const path = this.route.url.split("?")[0];
     return ["/login", "/register", "/psychologist-registration"].includes(path);
+  }
+  isInSessionRoom() {
+    return this.route.url.split("?")[0].startsWith("/session/");
   }
   toggleSideBar() {
     this.sidebarService.sideBarOpen.set(!this.sidebarService.sideBarOpen());
@@ -22898,7 +22981,7 @@ var HeaderComponent = class _HeaderComponent {
       }
 
       <!-- Active session join button -->
-      @if (authService.isLoggedIn() && activeSessionService.activeSession()) {
+      @if (authService.isLoggedIn() && activeSessionService.activeSession() && !isInSessionRoom()) {
         <button
           (click)="joinActiveSession()"
           class="flex items-center gap-1.5 px-3 py-1.5 bg-[var(--color-success)] text-white text-xs font-semibold rounded-xl hover:bg-[var(--color-success)]/90 transition-all shadow-sm animate-pulse shrink-0"
@@ -30632,17 +30715,17 @@ function UserAccountPageComponent_ng_container_0_Conditional_7_Template(rf, ctx)
 function UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_6_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "div", 13);
-    \u0275\u0275element(1, "div", 59);
-    \u0275\u0275elementStart(2, "div", 60)(3, "div", 61)(4, "mat-icon");
+    \u0275\u0275element(1, "div", 60);
+    \u0275\u0275elementStart(2, "div", 61)(3, "div", 62)(4, "mat-icon");
     \u0275\u0275text(5, "visibility_off");
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(6, "div", 32)(7, "h3", 62);
+    \u0275\u0275elementStart(6, "div", 33)(7, "h3", 63);
     \u0275\u0275text(8);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(9, "p", 63);
+    \u0275\u0275elementStart(9, "p", 64);
     \u0275\u0275text(10);
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(11, "button", 64)(12, "mat-icon", 65);
+    \u0275\u0275elementStart(11, "button", 65)(12, "mat-icon", 66);
     \u0275\u0275text(13, "edit_note");
     \u0275\u0275elementEnd();
     \u0275\u0275elementStart(14, "span");
@@ -30659,23 +30742,55 @@ function UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_6_Tem
     \u0275\u0275textInterpolate(t_r3("profile.complete_resume"));
   }
 }
-function UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_13_Template(rf, ctx) {
+function UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_12_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "button", 20)(1, "mat-icon");
-    \u0275\u0275text(2, "photo_camera");
+    \u0275\u0275element(0, "img", 67)(1, "div", 68);
+  }
+  if (rf & 2) {
+    const ctx_r1 = \u0275\u0275nextContext(3);
+    \u0275\u0275property("src", ctx_r1.user.coverImage, \u0275\u0275sanitizeUrl);
+  }
+}
+function UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_14_Conditional_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275element(0, "div", 70);
+  }
+}
+function UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_14_Conditional_2_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "mat-icon");
+    \u0275\u0275text(1, "photo_camera");
+    \u0275\u0275elementEnd();
+  }
+}
+function UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_14_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r4 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "label", 69);
+    \u0275\u0275template(1, UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_14_Conditional_1_Template, 1, 0, "div", 70)(2, UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_14_Conditional_2_Template, 2, 0, "mat-icon");
+    \u0275\u0275elementStart(3, "input", 71);
+    \u0275\u0275listener("change", function UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_14_Template_input_change_3_listener($event) {
+      \u0275\u0275restoreView(_r4);
+      const ctx_r1 = \u0275\u0275nextContext(3);
+      return \u0275\u0275resetView(ctx_r1.onCoverImageSelected($event));
+    });
     \u0275\u0275elementEnd()();
   }
   if (rf & 2) {
     const t_r3 = \u0275\u0275nextContext(2).$implicit;
+    const ctx_r1 = \u0275\u0275nextContext();
+    \u0275\u0275classProp("opacity-60", ctx_r1.isUploadingCover)("pointer-events-none", ctx_r1.isUploadingCover);
     \u0275\u0275property("title", t_r3("profile.change_cover"));
+    \u0275\u0275advance();
+    \u0275\u0275conditional(ctx_r1.isUploadingCover ? 1 : 2);
   }
 }
-function UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_18_Conditional_13_Template(rf, ctx) {
+function UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_19_Conditional_13_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "button", 70)(1, "span", 71)(2, "mat-icon");
+    \u0275\u0275elementStart(0, "button", 76)(1, "span", 77)(2, "mat-icon");
     \u0275\u0275text(3, "flag");
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(4, "span", 68);
+    \u0275\u0275elementStart(4, "span", 74);
     \u0275\u0275text(5);
     \u0275\u0275elementEnd()();
   }
@@ -30685,28 +30800,28 @@ function UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_18_Co
     \u0275\u0275textInterpolate(t_r3("profile.report"));
   }
 }
-function UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_18_Template(rf, ctx) {
+function UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_19_Template(rf, ctx) {
   if (rf & 1) {
-    const _r4 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "div", 23)(1, "button", 66);
-    \u0275\u0275listener("click", function UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_18_Template_button_click_1_listener() {
-      \u0275\u0275restoreView(_r4);
+    const _r5 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "div", 23)(1, "button", 72);
+    \u0275\u0275listener("click", function UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_19_Template_button_click_1_listener() {
+      \u0275\u0275restoreView(_r5);
       const ctx_r1 = \u0275\u0275nextContext(3);
       return \u0275\u0275resetView(ctx_r1.copyProfileLink());
     });
-    \u0275\u0275elementStart(2, "span", 67)(3, "mat-icon");
+    \u0275\u0275elementStart(2, "span", 73)(3, "mat-icon");
     \u0275\u0275text(4, "link");
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(5, "span", 68);
+    \u0275\u0275elementStart(5, "span", 74);
     \u0275\u0275text(6);
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(7, "button", 69)(8, "span", 67)(9, "mat-icon");
+    \u0275\u0275elementStart(7, "button", 75)(8, "span", 73)(9, "mat-icon");
     \u0275\u0275text(10, "share");
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(11, "span", 68);
+    \u0275\u0275elementStart(11, "span", 74);
     \u0275\u0275text(12);
     \u0275\u0275elementEnd()();
-    \u0275\u0275template(13, UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_18_Conditional_13_Template, 6, 1, "button", 70);
+    \u0275\u0275template(13, UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_19_Conditional_13_Template, 6, 1, "button", 76);
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
@@ -30720,12 +30835,12 @@ function UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_18_Te
     \u0275\u0275conditional(!ctx_r1.isOwnProfile ? 13 : -1);
   }
 }
-function UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_23_Template(rf, ctx) {
+function UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_24_Template(rf, ctx) {
   if (rf & 1) {
-    const _r5 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "img", 72);
-    \u0275\u0275listener("click", function UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_23_Template_img_click_0_listener() {
-      \u0275\u0275restoreView(_r5);
+    const _r6 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "img", 78);
+    \u0275\u0275listener("click", function UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_24_Template_img_click_0_listener() {
+      \u0275\u0275restoreView(_r6);
       const ctx_r1 = \u0275\u0275nextContext(3);
       return \u0275\u0275resetView(ctx_r1.openMedia(ctx_r1.user.profileImage, "image"));
     });
@@ -30736,21 +30851,55 @@ function UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_23_Te
     \u0275\u0275property("src", ctx_r1.user.profileImage, \u0275\u0275sanitizeUrl);
   }
 }
-function UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_24_Template(rf, ctx) {
+function UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_25_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "span", 28)(1, "mat-icon");
     \u0275\u0275text(2, "person");
     \u0275\u0275elementEnd()();
   }
 }
-function UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_25_Template(rf, ctx) {
+function UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_26_Conditional_1_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275element(0, "div", 29);
+    \u0275\u0275element(0, "div", 70);
   }
 }
-function UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_32_Template(rf, ctx) {
+function UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_26_Conditional_2_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "span", 35)(1, "mat-icon");
+    \u0275\u0275elementStart(0, "mat-icon", 80);
+    \u0275\u0275text(1, "photo_camera");
+    \u0275\u0275elementEnd();
+  }
+}
+function UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_26_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r7 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "label", 79);
+    \u0275\u0275template(1, UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_26_Conditional_1_Template, 1, 0, "div", 70)(2, UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_26_Conditional_2_Template, 2, 0, "mat-icon", 80);
+    \u0275\u0275elementStart(3, "input", 71);
+    \u0275\u0275listener("change", function UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_26_Template_input_change_3_listener($event) {
+      \u0275\u0275restoreView(_r7);
+      const ctx_r1 = \u0275\u0275nextContext(3);
+      return \u0275\u0275resetView(ctx_r1.onProfileImageSelected($event));
+    });
+    \u0275\u0275elementEnd()();
+  }
+  if (rf & 2) {
+    const t_r3 = \u0275\u0275nextContext(2).$implicit;
+    const ctx_r1 = \u0275\u0275nextContext();
+    \u0275\u0275classProp("opacity-60", ctx_r1.isUploadingAvatar)("pointer-events-none", ctx_r1.isUploadingAvatar);
+    \u0275\u0275property("title", t_r3("profile.change_avatar"));
+    \u0275\u0275advance();
+    \u0275\u0275conditional(ctx_r1.isUploadingAvatar ? 1 : 2);
+  }
+}
+function UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_27_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275element(0, "div", 30);
+  }
+}
+function UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_34_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "span", 36)(1, "mat-icon");
     \u0275\u0275text(2, "check");
     \u0275\u0275elementEnd()();
   }
@@ -30759,9 +30908,9 @@ function UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_32_Te
     \u0275\u0275property("title", t_r3("profile.verified"));
   }
 }
-function UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_33_Template(rf, ctx) {
+function UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_35_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "p", 36);
+    \u0275\u0275elementStart(0, "p", 37);
     \u0275\u0275text(1);
     \u0275\u0275elementEnd();
   }
@@ -30771,23 +30920,23 @@ function UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_33_Te
     \u0275\u0275textInterpolate1(" @", ctx_r1.user.userName, " ");
   }
 }
-function UserAccountPageComponent_ng_container_0_Conditional_8_For_36_Template(rf, ctx) {
+function UserAccountPageComponent_ng_container_0_Conditional_8_For_38_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "span", 38);
+    \u0275\u0275elementStart(0, "span", 39);
     \u0275\u0275text(1);
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
-    const role_r6 = ctx.$implicit;
+    const role_r8 = ctx.$implicit;
     const t_r3 = \u0275\u0275nextContext(2).$implicit;
-    \u0275\u0275property("ngClass", \u0275\u0275pureFunction4(2, _c28, role_r6 === "Superadmin", role_r6 === "Admin", role_r6 === "Psychologist", role_r6 === "Client" || role_r6 === "User"));
+    \u0275\u0275property("ngClass", \u0275\u0275pureFunction4(2, _c28, role_r8 === "Superadmin", role_r8 === "Admin", role_r8 === "Psychologist", role_r8 === "Client" || role_r8 === "User"));
     \u0275\u0275advance();
-    \u0275\u0275textInterpolate(t_r3("profile." + role_r6.toLowerCase()));
+    \u0275\u0275textInterpolate(t_r3("profile." + role_r8.toLowerCase()));
   }
 }
-function UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_37_Template(rf, ctx) {
+function UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_39_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "span", 39)(1, "span", 73)(2, "mat-icon");
+    \u0275\u0275elementStart(0, "span", 40)(1, "span", 81)(2, "mat-icon");
     \u0275\u0275text(3, "verified");
     \u0275\u0275elementEnd()();
     \u0275\u0275text(4);
@@ -30799,9 +30948,9 @@ function UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_37_Te
     \u0275\u0275textInterpolate1(" ", t_r3("profile.verified_specialist"), " ");
   }
 }
-function UserAccountPageComponent_ng_container_0_Conditional_8_Case_38_Template(rf, ctx) {
+function UserAccountPageComponent_ng_container_0_Conditional_8_Case_40_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "span", 40)(1, "span", 73)(2, "mat-icon");
+    \u0275\u0275elementStart(0, "span", 41)(1, "span", 81)(2, "mat-icon");
     \u0275\u0275text(3, "shield");
     \u0275\u0275elementEnd()();
     \u0275\u0275text(4);
@@ -30813,9 +30962,9 @@ function UserAccountPageComponent_ng_container_0_Conditional_8_Case_38_Template(
     \u0275\u0275textInterpolate1(" ", t_r3("profile.military"), " ");
   }
 }
-function UserAccountPageComponent_ng_container_0_Conditional_8_Case_39_Template(rf, ctx) {
+function UserAccountPageComponent_ng_container_0_Conditional_8_Case_41_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "span", 41)(1, "span", 73)(2, "mat-icon");
+    \u0275\u0275elementStart(0, "span", 42)(1, "span", 81)(2, "mat-icon");
     \u0275\u0275text(3, "verified");
     \u0275\u0275elementEnd()();
     \u0275\u0275text(4);
@@ -30827,9 +30976,9 @@ function UserAccountPageComponent_ng_container_0_Conditional_8_Case_39_Template(
     \u0275\u0275textInterpolate1(" ", t_r3("profile.veteran"), " ");
   }
 }
-function UserAccountPageComponent_ng_container_0_Conditional_8_Case_40_Template(rf, ctx) {
+function UserAccountPageComponent_ng_container_0_Conditional_8_Case_42_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "span", 42)(1, "span", 73)(2, "mat-icon");
+    \u0275\u0275elementStart(0, "span", 43)(1, "span", 81)(2, "mat-icon");
     \u0275\u0275text(3, "home_work");
     \u0275\u0275elementEnd()();
     \u0275\u0275text(4);
@@ -30841,12 +30990,12 @@ function UserAccountPageComponent_ng_container_0_Conditional_8_Case_40_Template(
     \u0275\u0275textInterpolate1(" ", t_r3("profile.affected_idp"), " ");
   }
 }
-function UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_42_Conditional_5_Template(rf, ctx) {
+function UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_44_Conditional_5_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "button", 77)(1, "mat-icon", 81);
+    \u0275\u0275elementStart(0, "button", 85)(1, "mat-icon", 89);
     \u0275\u0275text(2, "manage_accounts");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(3, "span", 76);
+    \u0275\u0275elementStart(3, "span", 84);
     \u0275\u0275text(4);
     \u0275\u0275elementEnd()();
   }
@@ -30856,19 +31005,19 @@ function UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_42_Co
     \u0275\u0275textInterpolate(t_r3("profile.catalog"));
   }
 }
-function UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_42_Template(rf, ctx) {
+function UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_44_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "button", 74)(1, "mat-icon", 75);
+    \u0275\u0275elementStart(0, "button", 82)(1, "mat-icon", 83);
     \u0275\u0275text(2, "military_tech");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(3, "span", 76);
+    \u0275\u0275elementStart(3, "span", 84);
     \u0275\u0275text(4);
     \u0275\u0275elementEnd()();
-    \u0275\u0275template(5, UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_42_Conditional_5_Template, 5, 1, "button", 77);
-    \u0275\u0275elementStart(6, "button", 78)(7, "mat-icon", 79);
+    \u0275\u0275template(5, UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_44_Conditional_5_Template, 5, 1, "button", 85);
+    \u0275\u0275elementStart(6, "button", 86)(7, "mat-icon", 87);
     \u0275\u0275text(8, "edit");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(9, "span", 80);
+    \u0275\u0275elementStart(9, "span", 88);
     \u0275\u0275text(10);
     \u0275\u0275elementEnd()();
   }
@@ -30883,19 +31032,19 @@ function UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_42_Te
     \u0275\u0275textInterpolate(t_r3("profile.edit"));
   }
 }
-function UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_43_Conditional_5_Template(rf, ctx) {
+function UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_45_Conditional_5_Template(rf, ctx) {
   if (rf & 1) {
-    const _r8 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "button", 84);
-    \u0275\u0275listener("click", function UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_43_Conditional_5_Template_button_click_0_listener() {
-      \u0275\u0275restoreView(_r8);
+    const _r10 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "button", 92);
+    \u0275\u0275listener("click", function UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_45_Conditional_5_Template_button_click_0_listener() {
+      \u0275\u0275restoreView(_r10);
       const ctx_r1 = \u0275\u0275nextContext(4);
       return \u0275\u0275resetView(ctx_r1.isBookingModalOpen = true);
     });
-    \u0275\u0275elementStart(1, "mat-icon", 79);
+    \u0275\u0275elementStart(1, "mat-icon", 87);
     \u0275\u0275text(2, "event_available");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(3, "span", 80);
+    \u0275\u0275elementStart(3, "span", 88);
     \u0275\u0275text(4);
     \u0275\u0275elementEnd()();
   }
@@ -30905,22 +31054,22 @@ function UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_43_Co
     \u0275\u0275textInterpolate(t_r3("profile.book_session"));
   }
 }
-function UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_43_Template(rf, ctx) {
+function UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_45_Template(rf, ctx) {
   if (rf & 1) {
-    const _r7 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "button", 82);
-    \u0275\u0275listener("click", function UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_43_Template_button_click_0_listener() {
-      \u0275\u0275restoreView(_r7);
+    const _r9 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "button", 90);
+    \u0275\u0275listener("click", function UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_45_Template_button_click_0_listener() {
+      \u0275\u0275restoreView(_r9);
       const ctx_r1 = \u0275\u0275nextContext(3);
       return \u0275\u0275resetView(ctx_r1.openChat());
     });
-    \u0275\u0275elementStart(1, "mat-icon", 83);
+    \u0275\u0275elementStart(1, "mat-icon", 91);
     \u0275\u0275text(2, "chat");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(3, "span", 80);
+    \u0275\u0275elementStart(3, "span", 88);
     \u0275\u0275text(4);
     \u0275\u0275elementEnd()();
-    \u0275\u0275template(5, UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_43_Conditional_5_Template, 5, 1, "button", 78);
+    \u0275\u0275template(5, UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_45_Conditional_5_Template, 5, 1, "button", 86);
   }
   if (rf & 2) {
     const t_r3 = \u0275\u0275nextContext(2).$implicit;
@@ -30931,24 +31080,24 @@ function UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_43_Te
     \u0275\u0275conditional(ctx_r1.isPsychologist ? 5 : -1);
   }
 }
-function UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_53_Template(rf, ctx) {
+function UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_55_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 45)(1, "div", 85)(2, "mat-icon");
+    \u0275\u0275elementStart(0, "div", 46)(1, "div", 93)(2, "mat-icon");
     \u0275\u0275text(3, "event_available");
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(4, "div", 47);
+    \u0275\u0275elementStart(4, "div", 48);
     \u0275\u0275text(5);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(6, "div", 48);
+    \u0275\u0275elementStart(6, "div", 49);
     \u0275\u0275text(7);
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(8, "div", 45)(9, "div", 86)(10, "mat-icon");
+    \u0275\u0275elementStart(8, "div", 46)(9, "div", 94)(10, "mat-icon");
     \u0275\u0275text(11, "star");
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(12, "div", 47);
+    \u0275\u0275elementStart(12, "div", 48);
     \u0275\u0275text(13);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(14, "div", 48);
+    \u0275\u0275elementStart(14, "div", 49);
     \u0275\u0275text(15);
     \u0275\u0275elementEnd()();
   }
@@ -30965,24 +31114,24 @@ function UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_53_Te
     \u0275\u0275textInterpolate1(" ", t_r3("profile.rating"), " ");
   }
 }
-function UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_54_Template(rf, ctx) {
+function UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_56_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 45)(1, "div", 85)(2, "mat-icon");
+    \u0275\u0275elementStart(0, "div", 46)(1, "div", 93)(2, "mat-icon");
     \u0275\u0275text(3, "group");
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(4, "div", 47);
+    \u0275\u0275elementStart(4, "div", 48);
     \u0275\u0275text(5, " 0 ");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(6, "div", 48);
+    \u0275\u0275elementStart(6, "div", 49);
     \u0275\u0275text(7);
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(8, "div", 45)(9, "div", 87)(10, "mat-icon");
+    \u0275\u0275elementStart(8, "div", 46)(9, "div", 95)(10, "mat-icon");
     \u0275\u0275text(11, "favorite");
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(12, "div", 47);
+    \u0275\u0275elementStart(12, "div", 48);
     \u0275\u0275text(13, " 0 ");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(14, "div", 48);
+    \u0275\u0275elementStart(14, "div", 49);
     \u0275\u0275text(15);
     \u0275\u0275elementEnd()();
   }
@@ -30994,33 +31143,33 @@ function UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_54_Te
     \u0275\u0275textInterpolate1(" ", t_r3("profile.likes"), " ");
   }
 }
-function UserAccountPageComponent_ng_container_0_Conditional_8_For_67_Template(rf, ctx) {
+function UserAccountPageComponent_ng_container_0_Conditional_8_For_69_Template(rf, ctx) {
   if (rf & 1) {
-    const _r9 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "button", 88);
-    \u0275\u0275listener("click", function UserAccountPageComponent_ng_container_0_Conditional_8_For_67_Template_button_click_0_listener() {
-      const tab_r10 = \u0275\u0275restoreView(_r9).$implicit;
+    const _r11 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "button", 96);
+    \u0275\u0275listener("click", function UserAccountPageComponent_ng_container_0_Conditional_8_For_69_Template_button_click_0_listener() {
+      const tab_r12 = \u0275\u0275restoreView(_r11).$implicit;
       const ctx_r1 = \u0275\u0275nextContext(3);
-      return \u0275\u0275resetView(ctx_r1.setTab(tab_r10));
+      return \u0275\u0275resetView(ctx_r1.setTab(tab_r12));
     });
     \u0275\u0275text(1);
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
-    const tab_r10 = ctx.$implicit;
+    const tab_r12 = ctx.$implicit;
     const t_r3 = \u0275\u0275nextContext(2).$implicit;
     const ctx_r1 = \u0275\u0275nextContext();
-    \u0275\u0275property("ngClass", ctx_r1.activeTab === tab_r10 ? "bg-[var(--color-primary)] text-[var(--color-mint)] shadow-md shadow-black/10" : "text-gray-500 hover:text-[var(--color-primary)] hover:bg-white");
+    \u0275\u0275property("ngClass", ctx_r1.activeTab === tab_r12 ? "bg-[var(--color-primary)] text-[var(--color-mint)] shadow-md shadow-black/10" : "text-gray-500 hover:text-[var(--color-primary)] hover:bg-white");
     \u0275\u0275advance();
-    \u0275\u0275textInterpolate1(" ", t_r3("profile." + tab_r10), " ");
+    \u0275\u0275textInterpolate1(" ", t_r3("profile." + tab_r12), " ");
   }
 }
-function UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_68_Template(rf, ctx) {
+function UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_70_Template(rf, ctx) {
   if (rf & 1) {
-    const _r11 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "button", 88);
-    \u0275\u0275listener("click", function UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_68_Template_button_click_0_listener() {
-      \u0275\u0275restoreView(_r11);
+    const _r13 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "button", 96);
+    \u0275\u0275listener("click", function UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_70_Template_button_click_0_listener() {
+      \u0275\u0275restoreView(_r13);
       const ctx_r1 = \u0275\u0275nextContext(3);
       return \u0275\u0275resetView(ctx_r1.setTab("saved"));
     });
@@ -31035,12 +31184,12 @@ function UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_68_Te
     \u0275\u0275textInterpolate1(" ", t_r3("profile.saved"), " ");
   }
 }
-function UserAccountPageComponent_ng_container_0_Conditional_8_Case_70_Template(rf, ctx) {
+function UserAccountPageComponent_ng_container_0_Conditional_8_Case_72_Template(rf, ctx) {
   if (rf & 1) {
-    const _r12 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "app-posts-user-profile", 89);
-    \u0275\u0275listener("mediaSelected", function UserAccountPageComponent_ng_container_0_Conditional_8_Case_70_Template_app_posts_user_profile_mediaSelected_0_listener($event) {
-      \u0275\u0275restoreView(_r12);
+    const _r14 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "app-posts-user-profile", 97);
+    \u0275\u0275listener("mediaSelected", function UserAccountPageComponent_ng_container_0_Conditional_8_Case_72_Template_app_posts_user_profile_mediaSelected_0_listener($event) {
+      \u0275\u0275restoreView(_r14);
       const ctx_r1 = \u0275\u0275nextContext(3);
       return \u0275\u0275resetView(ctx_r1.openMedia($event.url, $event.type));
     });
@@ -31051,10 +31200,10 @@ function UserAccountPageComponent_ng_container_0_Conditional_8_Case_70_Template(
     \u0275\u0275property("user", ctx_r1.user)("isOwnProfile", ctx_r1.isOwnProfile);
   }
 }
-function UserAccountPageComponent_ng_container_0_Conditional_8_Case_71_Template(rf, ctx) {
+function UserAccountPageComponent_ng_container_0_Conditional_8_Case_73_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 57);
-    \u0275\u0275element(1, "app-about-user-profile", 90);
+    \u0275\u0275elementStart(0, "div", 58);
+    \u0275\u0275element(1, "app-about-user-profile", 98);
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
@@ -31063,42 +31212,42 @@ function UserAccountPageComponent_ng_container_0_Conditional_8_Case_71_Template(
     \u0275\u0275property("userInpt", ctx_r1.user);
   }
 }
-function UserAccountPageComponent_ng_container_0_Conditional_8_Case_72_Template(rf, ctx) {
+function UserAccountPageComponent_ng_container_0_Conditional_8_Case_74_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275element(0, "app-reviews-user-profile");
   }
 }
-function UserAccountPageComponent_ng_container_0_Conditional_8_Case_73_Template(rf, ctx) {
+function UserAccountPageComponent_ng_container_0_Conditional_8_Case_75_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 57);
+    \u0275\u0275elementStart(0, "div", 58);
     \u0275\u0275element(1, "app-saved-user-profile");
     \u0275\u0275elementEnd();
   }
 }
-function UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_74_Template(rf, ctx) {
+function UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_76_Template(rf, ctx) {
   if (rf & 1) {
-    const _r13 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "div", 58);
-    \u0275\u0275element(1, "div", 91)(2, "div", 92)(3, "div", 93);
-    \u0275\u0275elementStart(4, "div", 94)(5, "div", 95)(6, "mat-icon");
+    const _r15 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "div", 59);
+    \u0275\u0275element(1, "div", 99)(2, "div", 100)(3, "div", 101);
+    \u0275\u0275elementStart(4, "div", 102)(5, "div", 103)(6, "mat-icon");
     \u0275\u0275text(7, "event_available");
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(8, "div", 96)(9, "h3", 97);
+    \u0275\u0275elementStart(8, "div", 104)(9, "h3", 105);
     \u0275\u0275text(10);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(11, "p", 98);
+    \u0275\u0275elementStart(11, "p", 106);
     \u0275\u0275text(12);
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(13, "button", 99);
-    \u0275\u0275listener("click", function UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_74_Template_button_click_13_listener() {
-      \u0275\u0275restoreView(_r13);
+    \u0275\u0275elementStart(13, "button", 107);
+    \u0275\u0275listener("click", function UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_76_Template_button_click_13_listener() {
+      \u0275\u0275restoreView(_r15);
       const ctx_r1 = \u0275\u0275nextContext(3);
       return \u0275\u0275resetView(ctx_r1.isBookingModalOpen = true);
     });
-    \u0275\u0275elementStart(14, "mat-icon", 79);
+    \u0275\u0275elementStart(14, "mat-icon", 87);
     \u0275\u0275text(15, "calendar_today");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(16, "span", 80);
+    \u0275\u0275elementStart(16, "span", 88);
     \u0275\u0275text(17);
     \u0275\u0275elementEnd()()()();
   }
@@ -31130,115 +31279,120 @@ function UserAccountPageComponent_ng_container_0_Conditional_8_Template(rf, ctx)
     \u0275\u0275template(6, UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_6_Template, 16, 3, "div", 13);
     \u0275\u0275elementStart(7, "div", 14)(8, "div", 15);
     \u0275\u0275element(9, "div", 16)(10, "div", 17)(11, "div", 18);
-    \u0275\u0275elementStart(12, "div", 19);
-    \u0275\u0275template(13, UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_13_Template, 3, 1, "button", 20);
-    \u0275\u0275elementStart(14, "div", 21)(15, "button", 22);
-    \u0275\u0275listener("click", function UserAccountPageComponent_ng_container_0_Conditional_8_Template_button_click_15_listener() {
+    \u0275\u0275template(12, UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_12_Template, 2, 1);
+    \u0275\u0275elementStart(13, "div", 19);
+    \u0275\u0275template(14, UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_14_Template, 4, 6, "label", 20);
+    \u0275\u0275elementStart(15, "div", 21)(16, "button", 22);
+    \u0275\u0275listener("click", function UserAccountPageComponent_ng_container_0_Conditional_8_Template_button_click_16_listener() {
       \u0275\u0275restoreView(_r1);
       const ctx_r1 = \u0275\u0275nextContext(2);
       return \u0275\u0275resetView(ctx_r1.toggleActionsMenu());
     });
-    \u0275\u0275elementStart(16, "mat-icon");
-    \u0275\u0275text(17, "more_horiz");
+    \u0275\u0275elementStart(17, "mat-icon");
+    \u0275\u0275text(18, "more_horiz");
     \u0275\u0275elementEnd()();
-    \u0275\u0275template(18, UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_18_Template, 14, 3, "div", 23);
+    \u0275\u0275template(19, UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_19_Template, 14, 3, "div", 23);
     \u0275\u0275elementEnd()()();
-    \u0275\u0275elementStart(19, "div", 24)(20, "div", 25)(21, "div", 21)(22, "div", 26);
-    \u0275\u0275template(23, UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_23_Template, 1, 1, "img", 27)(24, UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_24_Template, 3, 0, "span", 28);
+    \u0275\u0275elementStart(20, "div", 24)(21, "div", 25)(22, "div", 21)(23, "div", 26);
+    \u0275\u0275template(24, UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_24_Template, 1, 1, "img", 27)(25, UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_25_Template, 3, 0, "span", 28);
     \u0275\u0275elementEnd();
-    \u0275\u0275template(25, UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_25_Template, 1, 0, "div", 29);
+    \u0275\u0275template(26, UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_26_Template, 4, 6, "label", 29)(27, UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_27_Template, 1, 0, "div", 30);
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(26, "div", 30)(27, "div", 31)(28, "div", 32)(29, "div", 33)(30, "h1", 34);
-    \u0275\u0275text(31);
+    \u0275\u0275elementStart(28, "div", 31)(29, "div", 32)(30, "div", 33)(31, "div", 34)(32, "h1", 35);
+    \u0275\u0275text(33);
     \u0275\u0275elementEnd();
-    \u0275\u0275template(32, UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_32_Template, 3, 1, "span", 35);
+    \u0275\u0275template(34, UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_34_Template, 3, 1, "span", 36);
     \u0275\u0275elementEnd();
-    \u0275\u0275template(33, UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_33_Template, 2, 1, "p", 36);
-    \u0275\u0275elementStart(34, "div", 37);
-    \u0275\u0275repeaterCreate(35, UserAccountPageComponent_ng_container_0_Conditional_8_For_36_Template, 2, 7, "span", 38, \u0275\u0275repeaterTrackByIdentity);
-    \u0275\u0275template(37, UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_37_Template, 5, 1, "span", 39)(38, UserAccountPageComponent_ng_container_0_Conditional_8_Case_38_Template, 5, 1, "span", 40)(39, UserAccountPageComponent_ng_container_0_Conditional_8_Case_39_Template, 5, 1, "span", 41)(40, UserAccountPageComponent_ng_container_0_Conditional_8_Case_40_Template, 5, 1, "span", 42);
+    \u0275\u0275template(35, UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_35_Template, 2, 1, "p", 37);
+    \u0275\u0275elementStart(36, "div", 38);
+    \u0275\u0275repeaterCreate(37, UserAccountPageComponent_ng_container_0_Conditional_8_For_38_Template, 2, 7, "span", 39, \u0275\u0275repeaterTrackByIdentity);
+    \u0275\u0275template(39, UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_39_Template, 5, 1, "span", 40)(40, UserAccountPageComponent_ng_container_0_Conditional_8_Case_40_Template, 5, 1, "span", 41)(41, UserAccountPageComponent_ng_container_0_Conditional_8_Case_41_Template, 5, 1, "span", 42)(42, UserAccountPageComponent_ng_container_0_Conditional_8_Case_42_Template, 5, 1, "span", 43);
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(41, "div", 43);
-    \u0275\u0275template(42, UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_42_Template, 11, 3)(43, UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_43_Template, 6, 2);
+    \u0275\u0275elementStart(43, "div", 44);
+    \u0275\u0275template(44, UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_44_Template, 11, 3)(45, UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_45_Template, 6, 2);
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(44, "div", 44)(45, "div", 45)(46, "div", 46)(47, "mat-icon");
-    \u0275\u0275text(48, "article");
+    \u0275\u0275elementStart(46, "div", 45)(47, "div", 46)(48, "div", 47)(49, "mat-icon");
+    \u0275\u0275text(50, "article");
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(49, "div", 47);
-    \u0275\u0275text(50);
-    \u0275\u0275elementEnd();
     \u0275\u0275elementStart(51, "div", 48);
     \u0275\u0275text(52);
-    \u0275\u0275elementEnd()();
-    \u0275\u0275template(53, UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_53_Template, 16, 4)(54, UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_54_Template, 16, 2);
-    \u0275\u0275elementStart(55, "div", 45)(56, "div", 49)(57, "mat-icon");
-    \u0275\u0275text(58, "calendar_month");
-    \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(59, "div", 50);
-    \u0275\u0275text(60);
-    \u0275\u0275pipe(61, "date");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(62, "div", 51);
-    \u0275\u0275text(63);
+    \u0275\u0275elementStart(53, "div", 49);
+    \u0275\u0275text(54);
+    \u0275\u0275elementEnd()();
+    \u0275\u0275template(55, UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_55_Template, 16, 4)(56, UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_56_Template, 16, 2);
+    \u0275\u0275elementStart(57, "div", 46)(58, "div", 50)(59, "mat-icon");
+    \u0275\u0275text(60, "calendar_month");
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(61, "div", 51);
+    \u0275\u0275text(62);
+    \u0275\u0275pipe(63, "date");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(64, "div", 52);
+    \u0275\u0275text(65);
     \u0275\u0275elementEnd()()()()();
-    \u0275\u0275elementStart(64, "div", 52)(65, "div", 53);
-    \u0275\u0275repeaterCreate(66, UserAccountPageComponent_ng_container_0_Conditional_8_For_67_Template, 2, 2, "button", 54, \u0275\u0275repeaterTrackByIdentity);
-    \u0275\u0275template(68, UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_68_Template, 2, 2, "button", 54);
+    \u0275\u0275elementStart(66, "div", 53)(67, "div", 54);
+    \u0275\u0275repeaterCreate(68, UserAccountPageComponent_ng_container_0_Conditional_8_For_69_Template, 2, 2, "button", 55, \u0275\u0275repeaterTrackByIdentity);
+    \u0275\u0275template(70, UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_70_Template, 2, 2, "button", 55);
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(69, "div", 55);
-    \u0275\u0275template(70, UserAccountPageComponent_ng_container_0_Conditional_8_Case_70_Template, 1, 2, "app-posts-user-profile", 56)(71, UserAccountPageComponent_ng_container_0_Conditional_8_Case_71_Template, 2, 1, "div", 57)(72, UserAccountPageComponent_ng_container_0_Conditional_8_Case_72_Template, 1, 0, "app-reviews-user-profile")(73, UserAccountPageComponent_ng_container_0_Conditional_8_Case_73_Template, 2, 0, "div", 57);
+    \u0275\u0275elementStart(71, "div", 56);
+    \u0275\u0275template(72, UserAccountPageComponent_ng_container_0_Conditional_8_Case_72_Template, 1, 2, "app-posts-user-profile", 57)(73, UserAccountPageComponent_ng_container_0_Conditional_8_Case_73_Template, 2, 1, "div", 58)(74, UserAccountPageComponent_ng_container_0_Conditional_8_Case_74_Template, 1, 0, "app-reviews-user-profile")(75, UserAccountPageComponent_ng_container_0_Conditional_8_Case_75_Template, 2, 0, "div", 58);
     \u0275\u0275elementEnd()();
-    \u0275\u0275template(74, UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_74_Template, 18, 3, "div", 58);
+    \u0275\u0275template(76, UserAccountPageComponent_ng_container_0_Conditional_8_Conditional_76_Template, 18, 3, "div", 59);
   }
   if (rf & 2) {
-    let tmp_14_0;
-    let tmp_23_0;
+    let tmp_16_0;
+    let tmp_25_0;
     const t_r3 = \u0275\u0275nextContext().$implicit;
     const ctx_r1 = \u0275\u0275nextContext();
     \u0275\u0275advance(5);
     \u0275\u0275textInterpolate(t_r3("common.back"));
     \u0275\u0275advance();
     \u0275\u0275conditional(ctx_r1.isPsychologistUnpublished ? 6 : -1);
-    \u0275\u0275advance(7);
-    \u0275\u0275conditional(ctx_r1.isOwnProfile ? 13 : -1);
-    \u0275\u0275advance(5);
-    \u0275\u0275conditional(ctx_r1.showActionsMenu ? 18 : -1);
-    \u0275\u0275advance(5);
-    \u0275\u0275conditional(ctx_r1.user.profileImage ? 23 : 24);
+    \u0275\u0275advance(6);
+    \u0275\u0275conditional(ctx_r1.user.coverImage ? 12 : -1);
     \u0275\u0275advance(2);
-    \u0275\u0275conditional(ctx_r1.isUserOnline ? 25 : -1);
+    \u0275\u0275conditional(ctx_r1.isOwnProfile ? 14 : -1);
+    \u0275\u0275advance(5);
+    \u0275\u0275conditional(ctx_r1.showActionsMenu ? 19 : -1);
+    \u0275\u0275advance(5);
+    \u0275\u0275conditional(ctx_r1.user.profileImage ? 24 : 25);
+    \u0275\u0275advance(2);
+    \u0275\u0275conditional(ctx_r1.isOwnProfile ? 26 : -1);
+    \u0275\u0275advance();
+    \u0275\u0275conditional(ctx_r1.isUserOnline ? 27 : -1);
     \u0275\u0275advance(6);
     \u0275\u0275textInterpolate2(" ", ctx_r1.user.name, " ", ctx_r1.user.surname, " ");
     \u0275\u0275advance();
-    \u0275\u0275conditional(ctx_r1.isVerified ? 32 : -1);
+    \u0275\u0275conditional(ctx_r1.isVerified ? 34 : -1);
     \u0275\u0275advance();
-    \u0275\u0275conditional(ctx_r1.user.userName ? 33 : -1);
+    \u0275\u0275conditional(ctx_r1.user.userName ? 35 : -1);
     \u0275\u0275advance(2);
     \u0275\u0275repeater(ctx_r1.displayRoles);
     \u0275\u0275advance(2);
-    \u0275\u0275conditional(ctx_r1.isPsychologist ? 37 : -1);
+    \u0275\u0275conditional(ctx_r1.isPsychologist ? 39 : -1);
     \u0275\u0275advance();
-    \u0275\u0275conditional((tmp_14_0 = ctx_r1.user.userCategory) === 1 ? 38 : tmp_14_0 === 2 ? 39 : tmp_14_0 === 3 ? 40 : -1);
+    \u0275\u0275conditional((tmp_16_0 = ctx_r1.user.userCategory) === 1 ? 40 : tmp_16_0 === 2 ? 41 : tmp_16_0 === 3 ? 42 : -1);
     \u0275\u0275advance(4);
-    \u0275\u0275conditional(ctx_r1.isOwnProfile ? 42 : 43);
+    \u0275\u0275conditional(ctx_r1.isOwnProfile ? 44 : 45);
     \u0275\u0275advance(8);
     \u0275\u0275textInterpolate1(" ", ctx_r1.stats.posts, " ");
     \u0275\u0275advance(2);
     \u0275\u0275textInterpolate1(" ", t_r3("profile.posts"), " ");
     \u0275\u0275advance();
-    \u0275\u0275conditional(ctx_r1.isPsychologist ? 53 : 54);
+    \u0275\u0275conditional(ctx_r1.isPsychologist ? 55 : 56);
     \u0275\u0275advance(7);
-    \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind2(61, 21, ctx_r1.joinedDate, "MMM yyyy"), " ");
+    \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind2(63, 23, ctx_r1.joinedDate, "MMM yyyy"), " ");
     \u0275\u0275advance(3);
     \u0275\u0275textInterpolate1(" ", t_r3("profile.joined"), " ");
     \u0275\u0275advance(3);
-    \u0275\u0275repeater(ctx_r1.isPsychologist ? \u0275\u0275pureFunction0(24, _c018) : \u0275\u0275pureFunction0(25, _c110));
+    \u0275\u0275repeater(ctx_r1.isPsychologist ? \u0275\u0275pureFunction0(26, _c018) : \u0275\u0275pureFunction0(27, _c110));
     \u0275\u0275advance(2);
-    \u0275\u0275conditional(ctx_r1.isOwnProfile ? 68 : -1);
+    \u0275\u0275conditional(ctx_r1.isOwnProfile ? 70 : -1);
     \u0275\u0275advance(2);
-    \u0275\u0275conditional((tmp_23_0 = ctx_r1.activeTab) === "posts" ? 70 : tmp_23_0 === "about" ? 71 : tmp_23_0 === "reviews" ? 72 : tmp_23_0 === "saved" ? 73 : -1);
+    \u0275\u0275conditional((tmp_25_0 = ctx_r1.activeTab) === "posts" ? 72 : tmp_25_0 === "about" ? 73 : tmp_25_0 === "reviews" ? 74 : tmp_25_0 === "saved" ? 75 : -1);
     \u0275\u0275advance(4);
-    \u0275\u0275conditional(!ctx_r1.isOwnProfile && ctx_r1.isPsychologist ? 74 : -1);
+    \u0275\u0275conditional(!ctx_r1.isOwnProfile && ctx_r1.isPsychologist ? 76 : -1);
   }
 }
 function UserAccountPageComponent_ng_container_0_Template(rf, ctx) {
@@ -31248,7 +31402,7 @@ function UserAccountPageComponent_ng_container_0_Template(rf, ctx) {
     \u0275\u0275element(3, "div", 5)(4, "div", 6)(5, "div", 7);
     \u0275\u0275elementEnd();
     \u0275\u0275elementStart(6, "div", 8);
-    \u0275\u0275template(7, UserAccountPageComponent_ng_container_0_Conditional_7_Template, 2, 0, "div", 9)(8, UserAccountPageComponent_ng_container_0_Conditional_8_Template, 75, 26);
+    \u0275\u0275template(7, UserAccountPageComponent_ng_container_0_Conditional_7_Template, 2, 0, "div", 9)(8, UserAccountPageComponent_ng_container_0_Conditional_8_Template, 77, 28);
     \u0275\u0275elementEnd()();
     \u0275\u0275elementContainerEnd();
   }
@@ -31260,10 +31414,10 @@ function UserAccountPageComponent_ng_container_0_Template(rf, ctx) {
 }
 function UserAccountPageComponent_Conditional_1_Template(rf, ctx) {
   if (rf & 1) {
-    const _r14 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "app-media-player", 100);
+    const _r16 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "app-media-player", 108);
     \u0275\u0275listener("closeViewer", function UserAccountPageComponent_Conditional_1_Template_app_media_player_closeViewer_0_listener() {
-      \u0275\u0275restoreView(_r14);
+      \u0275\u0275restoreView(_r16);
       const ctx_r1 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r1.closeMedia());
     });
@@ -31276,14 +31430,14 @@ function UserAccountPageComponent_Conditional_1_Template(rf, ctx) {
 }
 function UserAccountPageComponent_Conditional_2_Template(rf, ctx) {
   if (rf & 1) {
-    const _r15 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "app-book-session-modal", 101);
+    const _r17 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "app-book-session-modal", 109);
     \u0275\u0275listener("closeModal", function UserAccountPageComponent_Conditional_2_Template_app_book_session_modal_closeModal_0_listener() {
-      \u0275\u0275restoreView(_r15);
+      \u0275\u0275restoreView(_r17);
       const ctx_r1 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r1.isBookingModalOpen = false);
     })("bookingSuccess", function UserAccountPageComponent_Conditional_2_Template_app_book_session_modal_bookingSuccess_0_listener() {
-      \u0275\u0275restoreView(_r15);
+      \u0275\u0275restoreView(_r17);
       const ctx_r1 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r1.isBookingModalOpen = false);
     });
@@ -31302,6 +31456,8 @@ var UserAccountPageComponent = class _UserAccountPageComponent {
   chatService;
   presenceService;
   location;
+  snackBar;
+  transloco;
   user = null;
   isLoading = false;
   activeTab = "posts";
@@ -31309,6 +31465,8 @@ var UserAccountPageComponent = class _UserAccountPageComponent {
   isBookingModalOpen = false;
   showActionsMenu = false;
   isOnline = true;
+  isUploadingAvatar = false;
+  isUploadingCover = false;
   stats = {
     posts: 0,
     sessions: 0,
@@ -31316,7 +31474,7 @@ var UserAccountPageComponent = class _UserAccountPageComponent {
     reviews: 0
   };
   joinedDate = /* @__PURE__ */ new Date();
-  constructor(route, service2, router, authService, chatService, presenceService, location) {
+  constructor(route, service2, router, authService, chatService, presenceService, location, snackBar, transloco) {
     this.route = route;
     this.service = service2;
     this.router = router;
@@ -31324,6 +31482,8 @@ var UserAccountPageComponent = class _UserAccountPageComponent {
     this.chatService = chatService;
     this.presenceService = presenceService;
     this.location = location;
+    this.snackBar = snackBar;
+    this.transloco = transloco;
   }
   goBack() {
     if (window.history.length > 1) {
@@ -31419,10 +31579,76 @@ var UserAccountPageComponent = class _UserAccountPageComponent {
     }
     this.showActionsMenu = false;
   }
+  onProfileImageSelected(event) {
+    const input2 = event.target;
+    const file = input2.files?.[0];
+    input2.value = "";
+    if (!file || !this.user)
+      return;
+    if (!file.type.startsWith("image/")) {
+      this.snackBar.open(this.transloco.translate("profile.only_images_allowed"), "OK", { duration: 3e3 });
+      return;
+    }
+    if (file.size > 10 * 1024 * 1024) {
+      this.snackBar.open(this.transloco.translate("profile.image_too_large"), "OK", { duration: 3e3 });
+      return;
+    }
+    this.isUploadingAvatar = true;
+    this.authService.uploadProfileImage(file).subscribe({
+      next: (res) => {
+        this.isUploadingAvatar = false;
+        if (!res.isSuccess) {
+          this.snackBar.open(res.error || this.transloco.translate("profile.upload_failed"), "OK", { duration: 3e3 });
+          return;
+        }
+        if (this.user)
+          this.user.profileImage = res.data;
+        this.authService.updateStoredUserImages(res.data, void 0);
+        this.snackBar.open(this.transloco.translate("profile.profile_image_updated"), "OK", { duration: 3e3 });
+      },
+      error: () => {
+        this.isUploadingAvatar = false;
+        this.snackBar.open(this.transloco.translate("profile.upload_failed"), "OK", { duration: 3e3 });
+      }
+    });
+  }
+  onCoverImageSelected(event) {
+    const input2 = event.target;
+    const file = input2.files?.[0];
+    input2.value = "";
+    if (!file || !this.user)
+      return;
+    if (!file.type.startsWith("image/")) {
+      this.snackBar.open(this.transloco.translate("profile.only_images_allowed"), "OK", { duration: 3e3 });
+      return;
+    }
+    if (file.size > 10 * 1024 * 1024) {
+      this.snackBar.open(this.transloco.translate("profile.image_too_large"), "OK", { duration: 3e3 });
+      return;
+    }
+    this.isUploadingCover = true;
+    this.authService.uploadCoverImage(file).subscribe({
+      next: (res) => {
+        this.isUploadingCover = false;
+        if (!res.isSuccess) {
+          this.snackBar.open(res.error || this.transloco.translate("profile.upload_failed"), "OK", { duration: 3e3 });
+          return;
+        }
+        if (this.user)
+          this.user.coverImage = res.data;
+        this.authService.updateStoredUserImages(void 0, res.data);
+        this.snackBar.open(this.transloco.translate("profile.cover_image_updated"), "OK", { duration: 3e3 });
+      },
+      error: () => {
+        this.isUploadingCover = false;
+        this.snackBar.open(this.transloco.translate("profile.upload_failed"), "OK", { duration: 3e3 });
+      }
+    });
+  }
   static \u0275fac = function UserAccountPageComponent_Factory(__ngFactoryType__) {
-    return new (__ngFactoryType__ || _UserAccountPageComponent)(\u0275\u0275directiveInject(ActivatedRoute), \u0275\u0275directiveInject(UsersService), \u0275\u0275directiveInject(Router), \u0275\u0275directiveInject(AuthService), \u0275\u0275directiveInject(ChatService), \u0275\u0275directiveInject(PresenceService), \u0275\u0275directiveInject(Location));
+    return new (__ngFactoryType__ || _UserAccountPageComponent)(\u0275\u0275directiveInject(ActivatedRoute), \u0275\u0275directiveInject(UsersService), \u0275\u0275directiveInject(Router), \u0275\u0275directiveInject(AuthService), \u0275\u0275directiveInject(ChatService), \u0275\u0275directiveInject(PresenceService), \u0275\u0275directiveInject(Location), \u0275\u0275directiveInject(MatSnackBar), \u0275\u0275directiveInject(TranslocoService));
   };
-  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _UserAccountPageComponent, selectors: [["app-user-account-page"]], standalone: false, decls: 3, vars: 2, consts: [[4, "transloco"], [3, "media"], [3, "psychologistId", "psychologistName"], [1, "relative", "min-h-screen", "bg-[#f8fafc]", "font-sans", "pb-16"], ["aria-hidden", "true", 1, "pointer-events-none", "fixed", "inset-0", "z-0", "overflow-hidden"], [1, "absolute", "-top-[12%]", "-left-[8%]", "w-[420px]", "h-[420px]", "rounded-full", "blur-[130px]", "bg-[var(--color-mint)]/25"], [1, "absolute", "top-[40%]", "-right-[8%]", "w-[360px]", "h-[360px]", "rounded-full", "blur-[110px]", "bg-[var(--color-sky)]/18"], [1, "absolute", "bottom-[5%]", "left-[20%]", "w-[320px]", "h-[320px]", "rounded-full", "blur-[100px]", "bg-[var(--color-success)]/10"], [1, "relative", "z-10", "max-w-5xl", "mx-auto", "px-3", "sm:px-6", "pt-4", "sm:pt-8"], [1, "mt-32", "flex", "justify-center", "animate-fade-in"], [1, "mb-4", "animate-fade-in"], ["type", "button", 1, "inline-flex", "items-center", "gap-2", "h-10", "pl-3", "pr-4", "rounded-full", "bg-white", "border", "border-gray-200", "hover:border-gray-300", "hover:bg-gray-50", "text-sm", "font-medium", "text-gray-700", "shadow-sm", "transition-all", "cursor-pointer", "hover:-translate-x-0.5", 3, "click"], [1, "text-[20px]"], [1, "mb-5", "relative", "rounded-3xl", "overflow-hidden", "bg-gradient-to-br", "from-amber-50", "via-amber-50", "to-orange-50", "border", "border-amber-200", "p-5", "sm:p-6", "animate-fade-in"], [1, "rounded-3xl", "overflow-hidden", "bg-white", "shadow-xl", "shadow-black/6", "border", "border-gray-100", "animate-fade-in"], [1, "relative", "h-40", "md:h-56", "bg-gradient-to-br", "from-[var(--color-primary)]", "via-[#013a01]", "to-[var(--color-success)]", "overflow-hidden"], [1, "absolute", "-top-16", "-right-16", "w-72", "h-72", "rounded-full", "blur-[80px]", "bg-[var(--color-mint)]/30", "pointer-events-none"], [1, "absolute", "-bottom-20", "-left-12", "w-72", "h-72", "rounded-full", "blur-[80px]", "bg-[var(--color-sky)]/25", "pointer-events-none"], ["aria-hidden", "true", 1, "absolute", "inset-0", "opacity-[0.06]", 2, "background-image", "radial-gradient(\n                  circle,\n                  white 1px,\n                  transparent 1px\n                )", "background-size", "22px 22px"], [1, "absolute", "top-3", "right-3", "flex", "items-center", "gap-2", "z-10"], [1, "w-9", "h-9", "flex", "items-center", "justify-center", "rounded-full", "bg-white/15", "hover:bg-white/30", "border", "border-white/20", "text-white", "backdrop-blur-sm", "transition-all", "cursor-pointer", "hover:scale-105", "text-[20px]", 3, "title"], [1, "relative"], [1, "w-9", "h-9", "flex", "items-center", "justify-center", "rounded-full", "bg-white/15", "hover:bg-white/30", "border", "border-white/20", "text-white", "backdrop-blur-sm", "transition-all", "cursor-pointer", "hover:scale-105", "text-[20px]", 3, "click"], [1, "absolute", "right-0", "top-11", "w-52", "bg-white", "rounded-2xl", "border", "border-gray-100", "shadow-2xl", "overflow-hidden", "z-50", "animate-fade-in"], [1, "relative", "px-5", "sm:px-8", "pb-6"], [1, "absolute", "left-5", "sm:left-8", "top-0", "-translate-y-1/2", "z-10"], [1, "w-24", "h-24", "md:w-32", "md:h-32", "rounded-full", "ring-4", "ring-white", "shadow-xl", "bg-gradient-to-br", "from-gray-50", "to-gray-100", "overflow-hidden", "flex", "items-center", "justify-center", "group", "cursor-pointer", "transition-shadow", "hover:shadow-2xl"], ["alt", "Avatar", 1, "w-full", "h-full", "object-cover", "transition-transform", "duration-500", "group-hover:scale-110", 3, "src"], [1, "text-[64px]", "md:text-[80px]", "text-gray-300", "flex", "items-center", "justify-center"], ["title", "Online", 1, "absolute", "bottom-2", "right-2", "w-6", "h-6", "md:w-8", "md:h-8", "bg-[var(--color-success)]", "border-4", "border-white", "rounded-full", "z-20"], [1, "pt-14", "md:pt-20"], [1, "flex", "flex-col", "sm:flex-row", "sm:items-start", "sm:justify-between", "gap-3", "sm:gap-4"], [1, "flex-1", "min-w-0"], [1, "flex", "flex-wrap", "items-center", "gap-2", "mb-1"], [1, "text-2xl", "sm:text-3xl", "md:text-4xl", "font-extrabold", "text-[var(--color-primary)]", "tracking-tight", "leading-tight"], [1, "w-6", "h-6", "rounded-full", "bg-[var(--color-blue)]", "shadow-md", "flex", "items-center", "justify-center", "flex-shrink-0", "text-[14px]", "text-white", 3, "title"], [1, "text-sm", "text-gray-500", "mb-3"], [1, "flex", "flex-wrap", "items-center", "gap-2"], [1, "px-3", "py-1", "rounded-full", "text-[10px]", "font-bold", "uppercase", "tracking-wider", "border", "shadow-sm", 3, "ngClass"], [1, "inline-flex", "items-center", "gap-1", "px-3", "py-1", "bg-[var(--color-sky)]/15", "text-[var(--color-blue)]", "border", "border-[var(--color-sky)]/30", "rounded-full", "text-[10px]", "font-bold", "uppercase", "tracking-wider"], [1, "inline-flex", "items-center", "gap-1", "px-3", "py-1", "bg-[var(--color-primary)]/8", "text-[var(--color-primary)]", "border", "border-[var(--color-primary)]/15", "rounded-full", "text-[10px]", "font-bold", "uppercase", "tracking-wider"], [1, "inline-flex", "items-center", "gap-1", "px-3", "py-1", "bg-blue-50", "text-blue-700", "border", "border-blue-200", "rounded-full", "text-[10px]", "font-bold", "uppercase", "tracking-wider"], [1, "inline-flex", "items-center", "gap-1", "px-3", "py-1", "bg-amber-50", "text-amber-700", "border", "border-amber-200", "rounded-full", "text-[10px]", "font-bold", "uppercase", "tracking-wider"], [1, "flex", "flex-wrap", "items-center", "gap-2", "shrink-0"], [1, "mt-6", "grid", "grid-cols-2", "sm:grid-cols-4", "gap-3"], [1, "bg-gray-50", "border", "border-gray-100", "rounded-2xl", "p-4", "text-center", "hover:shadow-md", "transition-shadow"], [1, "w-10", "h-10", "mx-auto", "mb-2", "rounded-xl", "bg-[var(--color-mint)]/30", "flex", "items-center", "justify-center", "text-[22px]", "text-[var(--color-primary)]"], [1, "text-2xl", "font-black", "text-[var(--color-primary)]", "tabular-nums"], [1, "text-[10px]", "font-bold", "text-gray-400", "uppercase", "tracking-widest", "mt-0.5"], [1, "w-10", "h-10", "mx-auto", "mb-2", "rounded-xl", "bg-[var(--color-success)]/15", "flex", "items-center", "justify-center", "text-[22px]", "text-[var(--color-success)]"], [1, "text-base", "font-black", "text-[var(--color-primary)]", "leading-tight", "mt-0.5"], [1, "text-[10px]", "font-bold", "text-gray-400", "uppercase", "tracking-widest", "mt-1"], [1, "border-t", "border-gray-100", "bg-gray-50/50"], [1, "flex", "items-center", "gap-1", "px-4", "sm:px-7", "py-3", "overflow-x-auto", "custom-scroll", "hide-scrollbar"], [1, "inline-flex", "items-center", "gap-1.5", "px-4", "sm:px-5", "py-2", "rounded-full", "text-sm", "font-bold", "whitespace-nowrap", "transition-all", "outline-none", "cursor-pointer", 3, "ngClass"], [1, "min-h-[350px]", "py-6", "md:py-8"], [3, "user", "isOwnProfile"], [1, "px-5", "sm:px-8"], [1, "mt-6", "relative", "rounded-3xl", "overflow-hidden", "bg-gradient-to-br", "from-[var(--color-primary)]", "via-[#012901]", "to-[#001f00]", "p-7", "sm:p-10", "animate-fade-in"], [1, "absolute", "-top-10", "-right-10", "w-40", "h-40", "rounded-full", "blur-[60px]", "bg-amber-200/40", "pointer-events-none"], [1, "relative", "z-10", "flex", "flex-col", "sm:flex-row", "sm:items-center", "gap-4"], [1, "w-12", "h-12", "rounded-2xl", "bg-amber-100", "border", "border-amber-200", "flex", "items-center", "justify-center", "text-[22px]", "text-amber-600", "shrink-0"], [1, "text-base", "sm:text-lg", "font-extrabold", "text-amber-900", "mb-0.5"], [1, "text-sm", "text-amber-800/80", "leading-relaxed"], ["routerLink", "/psychologist/profile", 1, "inline-flex", "items-center", "gap-2", "px-5", "py-2.5", "rounded-xl", "bg-amber-500", "hover:bg-amber-600", "text-white", "font-bold", "text-sm", "shadow-md", "hover:shadow-lg", "transition-all", "hover:-translate-y-0.5", "cursor-pointer", "group", "whitespace-nowrap"], [1, "text-[18px]", "group-hover:scale-110", "transition-transform"], [1, "w-full", "flex", "items-center", "gap-3", "px-4", "py-3", "text-sm", "text-gray-700", "hover:bg-gray-50", "transition-colors", "cursor-pointer", 3, "click"], [1, "text-[20px]", "text-gray-400", "flex", "items-center"], [1, "font-semibold"], [1, "w-full", "flex", "items-center", "gap-3", "px-4", "py-3", "text-sm", "text-gray-700", "hover:bg-gray-50", "transition-colors", "cursor-pointer", "border-t", "border-gray-50"], [1, "w-full", "flex", "items-center", "gap-3", "px-4", "py-3", "text-sm", "text-red-600", "hover:bg-red-50", "transition-colors", "cursor-pointer", "border-t", "border-gray-50"], [1, "text-[20px]", "flex", "items-center"], ["alt", "Avatar", 1, "w-full", "h-full", "object-cover", "transition-transform", "duration-500", "group-hover:scale-110", 3, "click", "src"], [1, "text-[12px]", "flex", "items-center"], [1, "inline-flex", "items-center", "gap-2", "px-4", "h-9", "bg-white", "text-[var(--color-primary)]", "rounded-xl", "text-sm", "font-semibold", "border", "border-gray-200", "shadow-sm", "hover:shadow", "hover:-translate-y-0.5", "transition-all", "cursor-pointer", "group", "text-[20px]"], [1, "group-hover:rotate-12", "transition-transform"], [1, "hidden", "sm:inline", "text-sm"], ["routerLink", "/psychologist/profile", 1, "inline-flex", "items-center", "gap-2", "px-4", "h-9", "bg-white", "text-[var(--color-primary)]", "rounded-xl", "text-sm", "font-semibold", "border", "border-gray-200", "shadow-sm", "hover:shadow", "hover:-translate-y-0.5", "transition-all", "cursor-pointer", "group", "text-[20px]"], [1, "inline-flex", "items-center", "gap-2", "px-5", "h-9", "bg-[var(--color-primary)]", "text-[var(--color-mint)]", "rounded-xl", "text-sm", "font-bold", "shadow-md", "hover:shadow-lg", "hover:bg-[#012900]", "transition-all", "hover:-translate-y-0.5", "cursor-pointer", "group", "text-[20px]"], [1, "group-hover:scale-110", "transition-transform"], [1, "text-sm"], [1, "text-purple-600", "group-hover:scale-110", "transition-transform"], [1, "inline-flex", "items-center", "gap-2", "px-4", "h-9", "bg-white", "text-gray-700", "rounded-xl", "text-sm", "font-semibold", "border", "border-gray-200", "shadow-sm", "hover:shadow", "hover:border-[var(--color-mint)]", "hover:-translate-y-0.5", "transition-all", "cursor-pointer", "group", "text-[20px]", 3, "click"], [1, "text-gray-400", "group-hover:text-[var(--color-primary)]", "transition-colors"], [1, "inline-flex", "items-center", "gap-2", "px-5", "h-9", "bg-[var(--color-primary)]", "text-[var(--color-mint)]", "rounded-xl", "text-sm", "font-bold", "shadow-md", "hover:shadow-lg", "hover:bg-[#012900]", "transition-all", "hover:-translate-y-0.5", "cursor-pointer", "group", "text-[20px]", 3, "click"], [1, "w-10", "h-10", "mx-auto", "mb-2", "rounded-xl", "bg-[var(--color-sky)]/20", "flex", "items-center", "justify-center", "text-[22px]", "text-[var(--color-blue)]"], [1, "w-10", "h-10", "mx-auto", "mb-2", "rounded-xl", "bg-amber-50", "flex", "items-center", "justify-center", "text-[22px]", "text-amber-500"], [1, "w-10", "h-10", "mx-auto", "mb-2", "rounded-xl", "bg-rose-50", "flex", "items-center", "justify-center", "text-[22px]", "text-rose-500"], [1, "inline-flex", "items-center", "gap-1.5", "px-4", "sm:px-5", "py-2", "rounded-full", "text-sm", "font-bold", "whitespace-nowrap", "transition-all", "outline-none", "cursor-pointer", 3, "click", "ngClass"], [3, "mediaSelected", "user", "isOwnProfile"], [3, "userInpt"], [1, "absolute", "-top-12", "-right-12", "w-56", "h-56", "rounded-full", "blur-[80px]", "bg-[var(--color-success)]/22", "pointer-events-none"], [1, "absolute", "-bottom-12", "-left-12", "w-56", "h-56", "rounded-full", "blur-[80px]", "bg-[var(--color-mint)]/15", "pointer-events-none"], ["aria-hidden", "true", 1, "absolute", "inset-0", "opacity-[0.04]", 2, "background-image", "radial-gradient(\n                  circle,\n                  white 1px,\n                  transparent 1px\n                )", "background-size", "22px 22px"], [1, "relative", "z-10", "flex", "flex-col", "md:flex-row", "items-center", "gap-6", "text-center", "md:text-left"], [1, "w-14", "h-14", "rounded-2xl", "bg-white/10", "border", "border-white/15", "flex", "items-center", "justify-center", "text-[28px]", "text-[var(--color-mint)]"], [1, "flex-1"], [1, "text-xl", "sm:text-2xl", "font-extrabold", "text-white", "mb-1"], [1, "text-[var(--color-mint)]/80", "text-sm", "leading-relaxed"], [1, "inline-flex", "items-center", "gap-2", "px-6", "py-3", "rounded-xl", "bg-[var(--color-mint)]", "text-[var(--color-primary)]", "font-bold", "text-sm", "hover:bg-white", "transition-all", "shadow-lg", "hover:-translate-y-0.5", "cursor-pointer", "group", "whitespace-nowrap", "text-[20px]", 3, "click"], [3, "closeViewer", "media"], [3, "closeModal", "bookingSuccess", "psychologistId", "psychologistName"]], template: function UserAccountPageComponent_Template(rf, ctx) {
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _UserAccountPageComponent, selectors: [["app-user-account-page"]], standalone: false, decls: 3, vars: 2, consts: [[4, "transloco"], [3, "media"], [3, "psychologistId", "psychologistName"], [1, "relative", "min-h-screen", "bg-[#f8fafc]", "font-sans", "pb-16"], ["aria-hidden", "true", 1, "pointer-events-none", "fixed", "inset-0", "z-0", "overflow-hidden"], [1, "absolute", "-top-[12%]", "-left-[8%]", "w-[420px]", "h-[420px]", "rounded-full", "blur-[130px]", "bg-[var(--color-mint)]/25"], [1, "absolute", "top-[40%]", "-right-[8%]", "w-[360px]", "h-[360px]", "rounded-full", "blur-[110px]", "bg-[var(--color-sky)]/18"], [1, "absolute", "bottom-[5%]", "left-[20%]", "w-[320px]", "h-[320px]", "rounded-full", "blur-[100px]", "bg-[var(--color-success)]/10"], [1, "relative", "z-10", "max-w-5xl", "mx-auto", "px-3", "sm:px-6", "pt-4", "sm:pt-8"], [1, "mt-32", "flex", "justify-center", "animate-fade-in"], [1, "mb-4", "animate-fade-in"], ["type", "button", 1, "inline-flex", "items-center", "gap-2", "h-10", "pl-3", "pr-4", "rounded-full", "bg-white", "border", "border-gray-200", "hover:border-gray-300", "hover:bg-gray-50", "text-sm", "font-medium", "text-gray-700", "shadow-sm", "transition-all", "cursor-pointer", "hover:-translate-x-0.5", 3, "click"], [1, "text-[20px]"], [1, "mb-5", "relative", "rounded-3xl", "overflow-hidden", "bg-gradient-to-br", "from-amber-50", "via-amber-50", "to-orange-50", "border", "border-amber-200", "p-5", "sm:p-6", "animate-fade-in"], [1, "rounded-3xl", "overflow-hidden", "bg-white", "shadow-xl", "shadow-black/6", "border", "border-gray-100", "animate-fade-in"], [1, "relative", "h-40", "md:h-56", "bg-gradient-to-br", "from-[var(--color-primary)]", "via-[#013a01]", "to-[var(--color-success)]", "overflow-hidden"], [1, "absolute", "-top-16", "-right-16", "w-72", "h-72", "rounded-full", "blur-[80px]", "bg-[var(--color-mint)]/30", "pointer-events-none"], [1, "absolute", "-bottom-20", "-left-12", "w-72", "h-72", "rounded-full", "blur-[80px]", "bg-[var(--color-sky)]/25", "pointer-events-none"], ["aria-hidden", "true", 1, "absolute", "inset-0", "opacity-[0.06]", 2, "background-image", "radial-gradient(\n                  circle,\n                  white 1px,\n                  transparent 1px\n                )", "background-size", "22px 22px"], [1, "absolute", "top-3", "right-3", "flex", "items-center", "gap-2", "z-10"], [1, "w-9", "h-9", "flex", "items-center", "justify-center", "rounded-full", "bg-white/15", "hover:bg-white/30", "border", "border-white/20", "text-white", "backdrop-blur-sm", "transition-all", "cursor-pointer", "hover:scale-105", "text-[20px]", 3, "title", "opacity-60", "pointer-events-none"], [1, "relative"], [1, "w-9", "h-9", "flex", "items-center", "justify-center", "rounded-full", "bg-white/15", "hover:bg-white/30", "border", "border-white/20", "text-white", "backdrop-blur-sm", "transition-all", "cursor-pointer", "hover:scale-105", "text-[20px]", 3, "click"], [1, "absolute", "right-0", "top-11", "w-52", "bg-white", "rounded-2xl", "border", "border-gray-100", "shadow-2xl", "overflow-hidden", "z-50", "animate-fade-in"], [1, "relative", "px-5", "sm:px-8", "pb-6"], [1, "absolute", "left-5", "sm:left-8", "top-0", "-translate-y-1/2", "z-10"], [1, "w-24", "h-24", "md:w-32", "md:h-32", "rounded-full", "ring-4", "ring-white", "shadow-xl", "bg-gradient-to-br", "from-gray-50", "to-gray-100", "overflow-hidden", "flex", "items-center", "justify-center", "group", "cursor-pointer", "transition-shadow", "hover:shadow-2xl"], ["alt", "Avatar", 1, "w-full", "h-full", "object-cover", "transition-transform", "duration-500", "group-hover:scale-110", 3, "src"], [1, "text-[64px]", "md:text-[80px]", "text-gray-300", "flex", "items-center", "justify-center"], [1, "absolute", "-bottom-1", "-right-1", "w-9", "h-9", "md:w-10", "md:h-10", "rounded-full", "bg-[var(--color-primary)]", "hover:bg-[#012900]", "border-2", "border-white", "shadow-lg", "text-white", "flex", "items-center", "justify-center", "cursor-pointer", "transition-all", "hover:scale-105", "z-20", 3, "title", "opacity-60", "pointer-events-none"], ["title", "Online", 1, "absolute", "bottom-2", "right-2", "w-6", "h-6", "md:w-8", "md:h-8", "bg-[var(--color-success)]", "border-4", "border-white", "rounded-full", "z-20"], [1, "pt-14", "md:pt-20"], [1, "flex", "flex-col", "sm:flex-row", "sm:items-start", "sm:justify-between", "gap-3", "sm:gap-4"], [1, "flex-1", "min-w-0"], [1, "flex", "flex-wrap", "items-center", "gap-2", "mb-1"], [1, "text-2xl", "sm:text-3xl", "md:text-4xl", "font-extrabold", "text-[var(--color-primary)]", "tracking-tight", "leading-tight"], [1, "w-6", "h-6", "rounded-full", "bg-[var(--color-blue)]", "shadow-md", "flex", "items-center", "justify-center", "flex-shrink-0", "text-[14px]", "text-white", 3, "title"], [1, "text-sm", "text-gray-500", "mb-3"], [1, "flex", "flex-wrap", "items-center", "gap-2"], [1, "px-3", "py-1", "rounded-full", "text-[10px]", "font-bold", "uppercase", "tracking-wider", "border", "shadow-sm", 3, "ngClass"], [1, "inline-flex", "items-center", "gap-1", "px-3", "py-1", "bg-[var(--color-sky)]/15", "text-[var(--color-blue)]", "border", "border-[var(--color-sky)]/30", "rounded-full", "text-[10px]", "font-bold", "uppercase", "tracking-wider"], [1, "inline-flex", "items-center", "gap-1", "px-3", "py-1", "bg-[var(--color-primary)]/8", "text-[var(--color-primary)]", "border", "border-[var(--color-primary)]/15", "rounded-full", "text-[10px]", "font-bold", "uppercase", "tracking-wider"], [1, "inline-flex", "items-center", "gap-1", "px-3", "py-1", "bg-blue-50", "text-blue-700", "border", "border-blue-200", "rounded-full", "text-[10px]", "font-bold", "uppercase", "tracking-wider"], [1, "inline-flex", "items-center", "gap-1", "px-3", "py-1", "bg-amber-50", "text-amber-700", "border", "border-amber-200", "rounded-full", "text-[10px]", "font-bold", "uppercase", "tracking-wider"], [1, "flex", "flex-wrap", "items-center", "gap-2", "shrink-0"], [1, "mt-6", "grid", "grid-cols-2", "sm:grid-cols-4", "gap-3"], [1, "bg-gray-50", "border", "border-gray-100", "rounded-2xl", "p-4", "text-center", "hover:shadow-md", "transition-shadow"], [1, "w-10", "h-10", "mx-auto", "mb-2", "rounded-xl", "bg-[var(--color-mint)]/30", "flex", "items-center", "justify-center", "text-[22px]", "text-[var(--color-primary)]"], [1, "text-2xl", "font-black", "text-[var(--color-primary)]", "tabular-nums"], [1, "text-[10px]", "font-bold", "text-gray-400", "uppercase", "tracking-widest", "mt-0.5"], [1, "w-10", "h-10", "mx-auto", "mb-2", "rounded-xl", "bg-[var(--color-success)]/15", "flex", "items-center", "justify-center", "text-[22px]", "text-[var(--color-success)]"], [1, "text-base", "font-black", "text-[var(--color-primary)]", "leading-tight", "mt-0.5"], [1, "text-[10px]", "font-bold", "text-gray-400", "uppercase", "tracking-widest", "mt-1"], [1, "border-t", "border-gray-100", "bg-gray-50/50"], [1, "flex", "items-center", "gap-1", "px-4", "sm:px-7", "py-3", "overflow-x-auto", "custom-scroll", "hide-scrollbar"], [1, "inline-flex", "items-center", "gap-1.5", "px-4", "sm:px-5", "py-2", "rounded-full", "text-sm", "font-bold", "whitespace-nowrap", "transition-all", "outline-none", "cursor-pointer", 3, "ngClass"], [1, "min-h-[350px]", "py-6", "md:py-8"], [3, "user", "isOwnProfile"], [1, "px-5", "sm:px-8"], [1, "mt-6", "relative", "rounded-3xl", "overflow-hidden", "bg-gradient-to-br", "from-[var(--color-primary)]", "via-[#012901]", "to-[#001f00]", "p-7", "sm:p-10", "animate-fade-in"], [1, "absolute", "-top-10", "-right-10", "w-40", "h-40", "rounded-full", "blur-[60px]", "bg-amber-200/40", "pointer-events-none"], [1, "relative", "z-10", "flex", "flex-col", "sm:flex-row", "sm:items-center", "gap-4"], [1, "w-12", "h-12", "rounded-2xl", "bg-amber-100", "border", "border-amber-200", "flex", "items-center", "justify-center", "text-[22px]", "text-amber-600", "shrink-0"], [1, "text-base", "sm:text-lg", "font-extrabold", "text-amber-900", "mb-0.5"], [1, "text-sm", "text-amber-800/80", "leading-relaxed"], ["routerLink", "/psychologist/profile", 1, "inline-flex", "items-center", "gap-2", "px-5", "py-2.5", "rounded-xl", "bg-amber-500", "hover:bg-amber-600", "text-white", "font-bold", "text-sm", "shadow-md", "hover:shadow-lg", "transition-all", "hover:-translate-y-0.5", "cursor-pointer", "group", "whitespace-nowrap"], [1, "text-[18px]", "group-hover:scale-110", "transition-transform"], ["alt", "Cover", 1, "absolute", "inset-0", "w-full", "h-full", "object-cover", 3, "src"], [1, "absolute", "inset-0", "bg-black/15"], [1, "w-9", "h-9", "flex", "items-center", "justify-center", "rounded-full", "bg-white/15", "hover:bg-white/30", "border", "border-white/20", "text-white", "backdrop-blur-sm", "transition-all", "cursor-pointer", "hover:scale-105", "text-[20px]", 3, "title"], [1, "w-4", "h-4", "border-2", "border-white", "border-t-transparent", "rounded-full", "animate-spin"], ["type", "file", "accept", "image/*", 1, "hidden", 3, "change"], [1, "w-full", "flex", "items-center", "gap-3", "px-4", "py-3", "text-sm", "text-gray-700", "hover:bg-gray-50", "transition-colors", "cursor-pointer", 3, "click"], [1, "text-[20px]", "text-gray-400", "flex", "items-center"], [1, "font-semibold"], [1, "w-full", "flex", "items-center", "gap-3", "px-4", "py-3", "text-sm", "text-gray-700", "hover:bg-gray-50", "transition-colors", "cursor-pointer", "border-t", "border-gray-50"], [1, "w-full", "flex", "items-center", "gap-3", "px-4", "py-3", "text-sm", "text-red-600", "hover:bg-red-50", "transition-colors", "cursor-pointer", "border-t", "border-gray-50"], [1, "text-[20px]", "flex", "items-center"], ["alt", "Avatar", 1, "w-full", "h-full", "object-cover", "transition-transform", "duration-500", "group-hover:scale-110", 3, "click", "src"], [1, "absolute", "-bottom-1", "-right-1", "w-9", "h-9", "md:w-10", "md:h-10", "rounded-full", "bg-[var(--color-primary)]", "hover:bg-[#012900]", "border-2", "border-white", "shadow-lg", "text-white", "flex", "items-center", "justify-center", "cursor-pointer", "transition-all", "hover:scale-105", "z-20", 3, "title"], [1, "text-[18px]"], [1, "text-[12px]", "flex", "items-center"], [1, "inline-flex", "items-center", "gap-2", "px-4", "h-9", "bg-white", "text-[var(--color-primary)]", "rounded-xl", "text-sm", "font-semibold", "border", "border-gray-200", "shadow-sm", "hover:shadow", "hover:-translate-y-0.5", "transition-all", "cursor-pointer", "group", "text-[20px]"], [1, "group-hover:rotate-12", "transition-transform"], [1, "hidden", "sm:inline", "text-sm"], ["routerLink", "/psychologist/profile", 1, "inline-flex", "items-center", "gap-2", "px-4", "h-9", "bg-white", "text-[var(--color-primary)]", "rounded-xl", "text-sm", "font-semibold", "border", "border-gray-200", "shadow-sm", "hover:shadow", "hover:-translate-y-0.5", "transition-all", "cursor-pointer", "group", "text-[20px]"], [1, "inline-flex", "items-center", "gap-2", "px-5", "h-9", "bg-[var(--color-primary)]", "text-[var(--color-mint)]", "rounded-xl", "text-sm", "font-bold", "shadow-md", "hover:shadow-lg", "hover:bg-[#012900]", "transition-all", "hover:-translate-y-0.5", "cursor-pointer", "group", "text-[20px]"], [1, "group-hover:scale-110", "transition-transform"], [1, "text-sm"], [1, "text-purple-600", "group-hover:scale-110", "transition-transform"], [1, "inline-flex", "items-center", "gap-2", "px-4", "h-9", "bg-white", "text-gray-700", "rounded-xl", "text-sm", "font-semibold", "border", "border-gray-200", "shadow-sm", "hover:shadow", "hover:border-[var(--color-mint)]", "hover:-translate-y-0.5", "transition-all", "cursor-pointer", "group", "text-[20px]", 3, "click"], [1, "text-gray-400", "group-hover:text-[var(--color-primary)]", "transition-colors"], [1, "inline-flex", "items-center", "gap-2", "px-5", "h-9", "bg-[var(--color-primary)]", "text-[var(--color-mint)]", "rounded-xl", "text-sm", "font-bold", "shadow-md", "hover:shadow-lg", "hover:bg-[#012900]", "transition-all", "hover:-translate-y-0.5", "cursor-pointer", "group", "text-[20px]", 3, "click"], [1, "w-10", "h-10", "mx-auto", "mb-2", "rounded-xl", "bg-[var(--color-sky)]/20", "flex", "items-center", "justify-center", "text-[22px]", "text-[var(--color-blue)]"], [1, "w-10", "h-10", "mx-auto", "mb-2", "rounded-xl", "bg-amber-50", "flex", "items-center", "justify-center", "text-[22px]", "text-amber-500"], [1, "w-10", "h-10", "mx-auto", "mb-2", "rounded-xl", "bg-rose-50", "flex", "items-center", "justify-center", "text-[22px]", "text-rose-500"], [1, "inline-flex", "items-center", "gap-1.5", "px-4", "sm:px-5", "py-2", "rounded-full", "text-sm", "font-bold", "whitespace-nowrap", "transition-all", "outline-none", "cursor-pointer", 3, "click", "ngClass"], [3, "mediaSelected", "user", "isOwnProfile"], [3, "userInpt"], [1, "absolute", "-top-12", "-right-12", "w-56", "h-56", "rounded-full", "blur-[80px]", "bg-[var(--color-success)]/22", "pointer-events-none"], [1, "absolute", "-bottom-12", "-left-12", "w-56", "h-56", "rounded-full", "blur-[80px]", "bg-[var(--color-mint)]/15", "pointer-events-none"], ["aria-hidden", "true", 1, "absolute", "inset-0", "opacity-[0.04]", 2, "background-image", "radial-gradient(\n                  circle,\n                  white 1px,\n                  transparent 1px\n                )", "background-size", "22px 22px"], [1, "relative", "z-10", "flex", "flex-col", "md:flex-row", "items-center", "gap-6", "text-center", "md:text-left"], [1, "w-14", "h-14", "rounded-2xl", "bg-white/10", "border", "border-white/15", "flex", "items-center", "justify-center", "text-[28px]", "text-[var(--color-mint)]"], [1, "flex-1"], [1, "text-xl", "sm:text-2xl", "font-extrabold", "text-white", "mb-1"], [1, "text-[var(--color-mint)]/80", "text-sm", "leading-relaxed"], [1, "inline-flex", "items-center", "gap-2", "px-6", "py-3", "rounded-xl", "bg-[var(--color-mint)]", "text-[var(--color-primary)]", "font-bold", "text-sm", "hover:bg-white", "transition-all", "shadow-lg", "hover:-translate-y-0.5", "cursor-pointer", "group", "whitespace-nowrap", "text-[20px]", 3, "click"], [3, "closeViewer", "media"], [3, "closeModal", "bookingSuccess", "psychologistId", "psychologistName"]], template: function UserAccountPageComponent_Template(rf, ctx) {
     if (rf & 1) {
       \u0275\u0275template(0, UserAccountPageComponent_ng_container_0_Template, 9, 1, "ng-container", 0)(1, UserAccountPageComponent_Conditional_1_Template, 1, 1, "app-media-player", 1)(2, UserAccountPageComponent_Conditional_2_Template, 1, 2, "app-book-session-modal", 2);
     }
@@ -31536,15 +31762,38 @@ var UserAccountPageComponent = class _UserAccountPageComponent {
               aria-hidden="true"
             ></div>
 
+            @if (user.coverImage) {
+              <img
+                [src]="user.coverImage"
+                alt="Cover"
+                class="absolute inset-0 w-full h-full object-cover"
+              />
+              <div class="absolute inset-0 bg-black/15"></div>
+            }
+
             <!-- Cover controls -->
             <div class="absolute top-3 right-3 flex items-center gap-2 z-10">
               @if (isOwnProfile) {
-                <button
+                <label
                   class="w-9 h-9 flex items-center justify-center rounded-full bg-white/15 hover:bg-white/30 border border-white/20 text-white backdrop-blur-sm transition-all cursor-pointer hover:scale-105 text-[20px]"
                   [title]="t('profile.change_cover')"
+                  [class.opacity-60]="isUploadingCover"
+                  [class.pointer-events-none]="isUploadingCover"
                 >
-                  <mat-icon>photo_camera</mat-icon>
-                </button>
+                  @if (isUploadingCover) {
+                    <div
+                      class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"
+                    ></div>
+                  } @else {
+                    <mat-icon>photo_camera</mat-icon>
+                  }
+                  <input
+                    type="file"
+                    accept="image/*"
+                    class="hidden"
+                    (change)="onCoverImageSelected($event)"
+                  />
+                </label>
               }
               <div class="relative">
                 <button
@@ -31619,6 +31868,30 @@ var UserAccountPageComponent = class _UserAccountPageComponent {
                     </span>
                   }
                 </div>
+
+                @if (isOwnProfile) {
+                  <label
+                    class="absolute -bottom-1 -right-1 w-9 h-9 md:w-10 md:h-10 rounded-full bg-[var(--color-primary)] hover:bg-[#012900] border-2 border-white shadow-lg text-white flex items-center justify-center cursor-pointer transition-all hover:scale-105 z-20"
+                    [title]="t('profile.change_avatar')"
+                    [class.opacity-60]="isUploadingAvatar"
+                    [class.pointer-events-none]="isUploadingAvatar"
+                  >
+                    @if (isUploadingAvatar) {
+                      <div
+                        class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"
+                      ></div>
+                    } @else {
+                      <mat-icon class="text-[18px]">photo_camera</mat-icon>
+                    }
+                    <input
+                      type="file"
+                      accept="image/*"
+                      class="hidden"
+                      (change)="onProfileImageSelected($event)"
+                    />
+                  </label>
+                }
+
                 @if (isUserOnline) {
                   <div
                     class="absolute bottom-2 right-2 w-6 h-6 md:w-8 md:h-8 bg-[var(--color-success)] border-4 border-white rounded-full z-20"
@@ -32062,10 +32335,10 @@ var UserAccountPageComponent = class _UserAccountPageComponent {
   </app-book-session-modal>
 }
 `, styles: ["/* src/app/modules/core/pages/user-account-page/user-account-page.component.scss */\n:host ::ng-deep mat-icon {\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  flex-shrink: 0;\n  line-height: 1 !important;\n  font-size: inherit;\n  width: 1em !important;\n  height: 1em !important;\n  overflow: visible;\n}\n/*# sourceMappingURL=user-account-page.component.css.map */\n"] }]
-  }], () => [{ type: ActivatedRoute }, { type: UsersService }, { type: Router }, { type: AuthService }, { type: ChatService }, { type: PresenceService }, { type: Location }], null);
+  }], () => [{ type: ActivatedRoute }, { type: UsersService }, { type: Router }, { type: AuthService }, { type: ChatService }, { type: PresenceService }, { type: Location }, { type: MatSnackBar }, { type: TranslocoService }], null);
 })();
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(UserAccountPageComponent, { className: "UserAccountPageComponent", filePath: "src/app/modules/core/pages/user-account-page/user-account-page.component.ts", lineNumber: 16 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(UserAccountPageComponent, { className: "UserAccountPageComponent", filePath: "src/app/modules/core/pages/user-account-page/user-account-page.component.ts", lineNumber: 18 });
 })();
 
 // src/app/modules/core/pages/settings-page/settings-page.component.ts
@@ -37746,10 +38019,22 @@ var NotificationsPageComponent = class _NotificationsPageComponent {
       notif.isRead = true;
       this.service.markAsRead(notif.id).subscribe();
     }
-    if (notif.relatedEntityId) {
-      const target = this.authService.isPsychologist ? "/psychologist/applications" : "/my-sessions";
+    if (!notif.relatedEntityId)
+      return;
+    const target = this.resolveTarget(notif);
+    if (target) {
       this.router.navigate([target]);
     }
+  }
+  resolveTarget(notif) {
+    if (this.isCategoryNotification(notif)) {
+      return this.authService.isAdmin || this.authService.isSuperAdmin ? "/admin/category-applications" : "/category-application";
+    }
+    return this.authService.isPsychologist ? "/psychologist/applications" : "/my-sessions";
+  }
+  isCategoryNotification(notif) {
+    const t = notif.type;
+    return t === 4 || t === "4" || t === "UserCategoryApplication";
   }
   markAllAsRead() {
     this.service.markAllAsRead();
@@ -37911,6 +38196,807 @@ var NotificationsPageComponent = class _NotificationsPageComponent {
   (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(NotificationsPageComponent, { className: "NotificationsPageComponent", filePath: "src/app/modules/core/pages/notifications-page/notifications-page.component.ts", lineNumber: 13 });
 })();
 
+// src/app/api/models/user-category-application.model.ts
+var UserCategoryValue;
+(function(UserCategoryValue2) {
+  UserCategoryValue2[UserCategoryValue2["Civilian"] = 0] = "Civilian";
+  UserCategoryValue2[UserCategoryValue2["Military"] = 1] = "Military";
+  UserCategoryValue2[UserCategoryValue2["Veteran"] = 2] = "Veteran";
+  UserCategoryValue2[UserCategoryValue2["IDP"] = 3] = "IDP";
+})(UserCategoryValue || (UserCategoryValue = {}));
+var USER_CATEGORY_OPTIONS = [
+  {
+    value: UserCategoryValue.Military,
+    label: "\u0412\u0456\u0439\u0441\u044C\u043A\u043E\u0432\u0438\u0439",
+    description: "\u0427\u0438\u043D\u043D\u0438\u0439 \u0432\u0456\u0439\u0441\u044C\u043A\u043E\u0432\u043E\u0441\u043B\u0443\u0436\u0431\u043E\u0432\u0435\u0446\u044C \u0417\u0431\u0440\u043E\u0439\u043D\u0438\u0445 \u0421\u0438\u043B \u0423\u043A\u0440\u0430\u0457\u043D\u0438."
+  },
+  {
+    value: UserCategoryValue.Veteran,
+    label: "\u041F\u043E\u0441\u0442\u0440\u0430\u0436\u0434\u0430\u043B\u0438\u0439 \u0432\u0456\u0434 \u0432\u0456\u0439\u043D\u0438",
+    description: "\u041E\u0441\u043E\u0431\u0430, \u044F\u043A\u0430 \u043F\u043E\u0441\u0442\u0440\u0430\u0436\u0434\u0430\u043B\u0430 \u0432\u043D\u0430\u0441\u043B\u0456\u0434\u043E\u043A \u0431\u043E\u0439\u043E\u0432\u0438\u0445 \u0434\u0456\u0439 \u0430\u0431\u043E \u0430\u0433\u0440\u0435\u0441\u0456\u0457."
+  },
+  {
+    value: UserCategoryValue.IDP,
+    label: "\u041F\u0435\u0440\u0435\u0441\u0435\u043B\u0435\u043D\u0435\u0446\u044C",
+    description: "\u0412\u043D\u0443\u0442\u0440\u0456\u0448\u043D\u044C\u043E \u043F\u0435\u0440\u0435\u043C\u0456\u0449\u0435\u043D\u0430 \u043E\u0441\u043E\u0431\u0430."
+  }
+];
+
+// src/app/api/services/user-category-application.service.ts
+var UserCategoryApplicationService = class _UserCategoryApplicationService {
+  baseUrl = `${environment.apiBaseUrl}/usercategoryapplications`;
+  http = inject(HttpClient);
+  submit(data) {
+    const formData = new FormData();
+    formData.append("requestedCategory", String(data.requestedCategory));
+    formData.append("comment", data.comment ?? "");
+    (data.documents || []).forEach((file) => {
+      formData.append("documents", file, file.name);
+    });
+    return this.http.post(this.baseUrl, formData);
+  }
+  getMyApplication() {
+    return this.http.get(`${this.baseUrl}/my`);
+  }
+  getAll() {
+    return this.http.get(this.baseUrl);
+  }
+  review(id, dto) {
+    return this.http.post(`${this.baseUrl}/${id}/review`, dto);
+  }
+  static \u0275fac = function UserCategoryApplicationService_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || _UserCategoryApplicationService)();
+  };
+  static \u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({ token: _UserCategoryApplicationService, factory: _UserCategoryApplicationService.\u0275fac, providedIn: "root" });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(UserCategoryApplicationService, [{
+    type: Injectable,
+    args: [{
+      providedIn: "root"
+    }]
+  }], null, null);
+})();
+
+// src/app/modules/core/pages/user-category-application/user-category-application.component.ts
+var _forTrack09 = ($index, $item) => $item.value;
+var _forTrack1 = ($index, $item) => $item.name;
+function UserCategoryApplicationComponent_ng_container_0_Conditional_12_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "div", 8);
+    \u0275\u0275element(1, "app-loading-spinner");
+    \u0275\u0275elementEnd();
+  }
+}
+function UserCategoryApplicationComponent_ng_container_0_Conditional_13_Conditional_0_Conditional_6_Conditional_9_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "p", 30);
+    \u0275\u0275text(1);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const t_r4 = \u0275\u0275nextContext(4).$implicit;
+    const ctx_r1 = \u0275\u0275nextContext();
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate2(" ", t_r4("category_application.rejection_reason"), " ", ctx_r1.latestApplication.rejectionReason, " ");
+  }
+}
+function UserCategoryApplicationComponent_ng_container_0_Conditional_13_Conditional_0_Conditional_6_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "p", 29);
+    \u0275\u0275text(1);
+    \u0275\u0275elementStart(2, "strong");
+    \u0275\u0275text(3);
+    \u0275\u0275elementEnd();
+    \u0275\u0275text(4);
+    \u0275\u0275elementStart(5, "strong");
+    \u0275\u0275text(6);
+    \u0275\u0275elementEnd();
+    \u0275\u0275text(7);
+    \u0275\u0275pipe(8, "date");
+    \u0275\u0275elementEnd();
+    \u0275\u0275template(9, UserCategoryApplicationComponent_ng_container_0_Conditional_13_Conditional_0_Conditional_6_Conditional_9_Template, 2, 2, "p", 30);
+  }
+  if (rf & 2) {
+    const t_r4 = \u0275\u0275nextContext(3).$implicit;
+    const ctx_r1 = \u0275\u0275nextContext();
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate1(" ", t_r4("category_application.last_application"), " ");
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate(ctx_r1.latestApplication.requestedCategoryName);
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate1(" \xB7 ", t_r4("category_application.status_label"), " ");
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate(ctx_r1.latestApplication.status);
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate2(" \xB7 ", t_r4("category_application.submitted_at"), " ", \u0275\u0275pipeBind2(8, 7, ctx_r1.latestApplication.createdAt, "MMM d, yyyy"), " ");
+    \u0275\u0275advance(2);
+    \u0275\u0275conditional(ctx_r1.latestApplication.status === "Rejected" && ctx_r1.latestApplication.rejectionReason ? 9 : -1);
+  }
+}
+function UserCategoryApplicationComponent_ng_container_0_Conditional_13_Conditional_0_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "div", 9)(1, "mat-icon", 27);
+    \u0275\u0275text(2, "info");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(3, "div")(4, "p", 28);
+    \u0275\u0275text(5);
+    \u0275\u0275elementEnd();
+    \u0275\u0275template(6, UserCategoryApplicationComponent_ng_container_0_Conditional_13_Conditional_0_Conditional_6_Template, 10, 10);
+    \u0275\u0275elementEnd()();
+  }
+  if (rf & 2) {
+    const ctx_r1 = \u0275\u0275nextContext(3);
+    \u0275\u0275advance(5);
+    \u0275\u0275textInterpolate(ctx_r1.blockedReason);
+    \u0275\u0275advance();
+    \u0275\u0275conditional(ctx_r1.latestApplication ? 6 : -1);
+  }
+}
+function UserCategoryApplicationComponent_ng_container_0_Conditional_13_Conditional_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "div", 10)(1, "p", 31);
+    \u0275\u0275text(2);
+    \u0275\u0275elementEnd()();
+  }
+  if (rf & 2) {
+    const t_r4 = \u0275\u0275nextContext(2).$implicit;
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate1(" ", t_r4("category_application.rejected_can_retry"), " ");
+  }
+}
+function UserCategoryApplicationComponent_ng_container_0_Conditional_13_For_8_Case_4_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275text(0);
+  }
+  if (rf & 2) {
+    const t_r4 = \u0275\u0275nextContext(3).$implicit;
+    \u0275\u0275textInterpolate1(" ", t_r4("category_application.categories.military_desc"), " ");
+  }
+}
+function UserCategoryApplicationComponent_ng_container_0_Conditional_13_For_8_Case_5_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275text(0);
+  }
+  if (rf & 2) {
+    const t_r4 = \u0275\u0275nextContext(3).$implicit;
+    \u0275\u0275textInterpolate1(" ", t_r4("category_application.categories.veteran_desc"), " ");
+  }
+}
+function UserCategoryApplicationComponent_ng_container_0_Conditional_13_For_8_Case_6_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275text(0);
+  }
+  if (rf & 2) {
+    const t_r4 = \u0275\u0275nextContext(3).$implicit;
+    \u0275\u0275textInterpolate1(" ", t_r4("category_application.categories.idp_desc"), " ");
+  }
+}
+function UserCategoryApplicationComponent_ng_container_0_Conditional_13_For_8_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r5 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "button", 32);
+    \u0275\u0275listener("click", function UserCategoryApplicationComponent_ng_container_0_Conditional_13_For_8_Template_button_click_0_listener() {
+      const opt_r6 = \u0275\u0275restoreView(_r5).$implicit;
+      const ctx_r1 = \u0275\u0275nextContext(3);
+      return \u0275\u0275resetView(ctx_r1.selectCategory(opt_r6.value));
+    });
+    \u0275\u0275elementStart(1, "div", 33);
+    \u0275\u0275text(2);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(3, "div", 34);
+    \u0275\u0275template(4, UserCategoryApplicationComponent_ng_container_0_Conditional_13_For_8_Case_4_Template, 1, 1)(5, UserCategoryApplicationComponent_ng_container_0_Conditional_13_For_8_Case_5_Template, 1, 1)(6, UserCategoryApplicationComponent_ng_container_0_Conditional_13_For_8_Case_6_Template, 1, 1);
+    \u0275\u0275elementEnd()();
+  }
+  if (rf & 2) {
+    let tmp_17_0;
+    const opt_r6 = ctx.$implicit;
+    const ctx_r1 = \u0275\u0275nextContext(3);
+    \u0275\u0275property("disabled", !ctx_r1.canSubmit)("ngClass", ctx_r1.form.value.requestedCategory === opt_r6.value ? "bg-gray-900 text-white border-gray-900" : "bg-white text-gray-800 border-gray-200 hover:border-gray-400");
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate1(" ", ctx_r1.categoryLabel(opt_r6.value), " ");
+    \u0275\u0275advance();
+    \u0275\u0275property("ngClass", ctx_r1.form.value.requestedCategory === opt_r6.value ? "text-gray-200" : "text-gray-500");
+    \u0275\u0275advance();
+    \u0275\u0275conditional((tmp_17_0 = opt_r6.value) === 1 ? 4 : tmp_17_0 === 2 ? 5 : tmp_17_0 === 3 ? 6 : -1);
+  }
+}
+function UserCategoryApplicationComponent_ng_container_0_Conditional_13_Conditional_15_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "p", 18);
+    \u0275\u0275text(1);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const t_r4 = \u0275\u0275nextContext(2).$implicit;
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate1(" ", t_r4("category_application.comment_required"), " ");
+  }
+}
+function UserCategoryApplicationComponent_ng_container_0_Conditional_13_Conditional_27_For_2_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r7 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "li", 35)(1, "div", 36)(2, "mat-icon", 37);
+    \u0275\u0275text(3, "description");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(4, "span", 38);
+    \u0275\u0275text(5);
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(6, "button", 39);
+    \u0275\u0275listener("click", function UserCategoryApplicationComponent_ng_container_0_Conditional_13_Conditional_27_For_2_Template_button_click_6_listener() {
+      const \u0275$index_121_r8 = \u0275\u0275restoreView(_r7).$index;
+      const ctx_r1 = \u0275\u0275nextContext(4);
+      return \u0275\u0275resetView(ctx_r1.removeFile(\u0275$index_121_r8));
+    });
+    \u0275\u0275elementStart(7, "mat-icon", 40);
+    \u0275\u0275text(8, "close");
+    \u0275\u0275elementEnd()()();
+  }
+  if (rf & 2) {
+    const item_r9 = ctx.$implicit;
+    \u0275\u0275advance(5);
+    \u0275\u0275textInterpolate(item_r9.name);
+  }
+}
+function UserCategoryApplicationComponent_ng_container_0_Conditional_13_Conditional_27_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "ul", 24);
+    \u0275\u0275repeaterCreate(1, UserCategoryApplicationComponent_ng_container_0_Conditional_13_Conditional_27_For_2_Template, 9, 1, "li", 35, _forTrack1);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const ctx_r1 = \u0275\u0275nextContext(3);
+    \u0275\u0275advance();
+    \u0275\u0275repeater(ctx_r1.selectedFiles);
+  }
+}
+function UserCategoryApplicationComponent_ng_container_0_Conditional_13_Conditional_30_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275element(0, "div", 41);
+    \u0275\u0275elementStart(1, "span");
+    \u0275\u0275text(2);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const t_r4 = \u0275\u0275nextContext(2).$implicit;
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate(t_r4("category_application.submitting"));
+  }
+}
+function UserCategoryApplicationComponent_ng_container_0_Conditional_13_Conditional_31_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "span");
+    \u0275\u0275text(1);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const t_r4 = \u0275\u0275nextContext(2).$implicit;
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate(t_r4("category_application.submit"));
+  }
+}
+function UserCategoryApplicationComponent_ng_container_0_Conditional_13_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r3 = \u0275\u0275getCurrentView();
+    \u0275\u0275template(0, UserCategoryApplicationComponent_ng_container_0_Conditional_13_Conditional_0_Template, 7, 2, "div", 9)(1, UserCategoryApplicationComponent_ng_container_0_Conditional_13_Conditional_1_Template, 3, 1, "div", 10);
+    \u0275\u0275elementStart(2, "form", 11);
+    \u0275\u0275listener("ngSubmit", function UserCategoryApplicationComponent_ng_container_0_Conditional_13_Template_form_ngSubmit_2_listener() {
+      \u0275\u0275restoreView(_r3);
+      const ctx_r1 = \u0275\u0275nextContext(2);
+      return \u0275\u0275resetView(ctx_r1.submit());
+    });
+    \u0275\u0275elementStart(3, "section")(4, "h2", 12);
+    \u0275\u0275text(5);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(6, "div", 13);
+    \u0275\u0275repeaterCreate(7, UserCategoryApplicationComponent_ng_container_0_Conditional_13_For_8_Template, 7, 5, "button", 14, _forTrack09);
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(9, "section")(10, "label", 15);
+    \u0275\u0275text(11);
+    \u0275\u0275elementStart(12, "span", 16);
+    \u0275\u0275text(13, "*");
+    \u0275\u0275elementEnd()();
+    \u0275\u0275element(14, "textarea", 17);
+    \u0275\u0275template(15, UserCategoryApplicationComponent_ng_container_0_Conditional_13_Conditional_15_Template, 2, 1, "p", 18);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(16, "section")(17, "label", 19);
+    \u0275\u0275text(18);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(19, "p", 20);
+    \u0275\u0275text(20);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(21, "label", 21)(22, "mat-icon", 22);
+    \u0275\u0275text(23, "attach_file");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(24, "span");
+    \u0275\u0275text(25);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(26, "input", 23);
+    \u0275\u0275listener("change", function UserCategoryApplicationComponent_ng_container_0_Conditional_13_Template_input_change_26_listener($event) {
+      \u0275\u0275restoreView(_r3);
+      const ctx_r1 = \u0275\u0275nextContext(2);
+      return \u0275\u0275resetView(ctx_r1.onFileSelected($event));
+    });
+    \u0275\u0275elementEnd()();
+    \u0275\u0275template(27, UserCategoryApplicationComponent_ng_container_0_Conditional_13_Conditional_27_Template, 3, 0, "ul", 24);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(28, "div", 25)(29, "button", 26);
+    \u0275\u0275template(30, UserCategoryApplicationComponent_ng_container_0_Conditional_13_Conditional_30_Template, 3, 1)(31, UserCategoryApplicationComponent_ng_container_0_Conditional_13_Conditional_31_Template, 2, 1, "span");
+    \u0275\u0275elementEnd()()();
+  }
+  if (rf & 2) {
+    let tmp_11_0;
+    const t_r4 = \u0275\u0275nextContext().$implicit;
+    const ctx_r1 = \u0275\u0275nextContext();
+    \u0275\u0275conditional(ctx_r1.blockedReason ? 0 : -1);
+    \u0275\u0275advance();
+    \u0275\u0275conditional(ctx_r1.latestApplication && ctx_r1.latestApplication.status === "Rejected" && ctx_r1.currentCategory === 0 && !ctx_r1.isRoleBlocked ? 1 : -1);
+    \u0275\u0275advance();
+    \u0275\u0275property("formGroup", ctx_r1.form);
+    \u0275\u0275advance(3);
+    \u0275\u0275textInterpolate1(" ", t_r4("category_application.choose_category"), " ");
+    \u0275\u0275advance(2);
+    \u0275\u0275repeater(ctx_r1.options);
+    \u0275\u0275advance(4);
+    \u0275\u0275textInterpolate1(" ", t_r4("category_application.comment"), " ");
+    \u0275\u0275advance(3);
+    \u0275\u0275property("placeholder", t_r4("category_application.comment_placeholder"))("disabled", !ctx_r1.canSubmit);
+    \u0275\u0275advance();
+    \u0275\u0275conditional(((tmp_11_0 = ctx_r1.form.get("comment")) == null ? null : tmp_11_0.touched) && ((tmp_11_0 = ctx_r1.form.get("comment")) == null ? null : tmp_11_0.invalid) ? 15 : -1);
+    \u0275\u0275advance(3);
+    \u0275\u0275textInterpolate1(" ", t_r4("category_application.documents"), " ");
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate1(" ", t_r4("category_application.documents_hint"), " ");
+    \u0275\u0275advance();
+    \u0275\u0275classProp("opacity-60", !ctx_r1.canSubmit)("cursor-not-allowed", !ctx_r1.canSubmit);
+    \u0275\u0275advance(4);
+    \u0275\u0275textInterpolate(t_r4("category_application.upload_file"));
+    \u0275\u0275advance();
+    \u0275\u0275property("disabled", !ctx_r1.canSubmit);
+    \u0275\u0275advance();
+    \u0275\u0275conditional(ctx_r1.selectedFiles.length > 0 ? 27 : -1);
+    \u0275\u0275advance(2);
+    \u0275\u0275property("disabled", !ctx_r1.canSubmit || ctx_r1.isSubmitting);
+    \u0275\u0275advance();
+    \u0275\u0275conditional(ctx_r1.isSubmitting ? 30 : 31);
+  }
+}
+function UserCategoryApplicationComponent_ng_container_0_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r1 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementContainerStart(0);
+    \u0275\u0275elementStart(1, "div", 1)(2, "div", 2)(3, "button", 3);
+    \u0275\u0275listener("click", function UserCategoryApplicationComponent_ng_container_0_Template_button_click_3_listener() {
+      \u0275\u0275restoreView(_r1);
+      const ctx_r1 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r1.goBack());
+    });
+    \u0275\u0275elementStart(4, "mat-icon", 4);
+    \u0275\u0275text(5, "arrow_back");
+    \u0275\u0275elementEnd();
+    \u0275\u0275text(6);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(7, "header", 5)(8, "h1", 6);
+    \u0275\u0275text(9);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(10, "p", 7);
+    \u0275\u0275text(11);
+    \u0275\u0275elementEnd()();
+    \u0275\u0275template(12, UserCategoryApplicationComponent_ng_container_0_Conditional_12_Template, 2, 0, "div", 8)(13, UserCategoryApplicationComponent_ng_container_0_Conditional_13_Template, 32, 19);
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementContainerEnd();
+  }
+  if (rf & 2) {
+    const t_r4 = ctx.$implicit;
+    const ctx_r1 = \u0275\u0275nextContext();
+    \u0275\u0275advance(6);
+    \u0275\u0275textInterpolate1(" ", t_r4("common.back"), " ");
+    \u0275\u0275advance(3);
+    \u0275\u0275textInterpolate1(" ", t_r4("category_application.title"), " ");
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate1(" ", t_r4("category_application.subtitle"), " ");
+    \u0275\u0275advance();
+    \u0275\u0275conditional(ctx_r1.isLoading ? 12 : 13);
+  }
+}
+var UserCategoryApplicationComponent = class _UserCategoryApplicationComponent {
+  fb;
+  service;
+  authService;
+  usersService;
+  snackBar;
+  router;
+  transloco;
+  form;
+  options = USER_CATEGORY_OPTIONS;
+  isLoading = false;
+  isSubmitting = false;
+  currentCategory = UserCategoryValue.Civilian;
+  latestApplication = null;
+  selectedFiles = [];
+  constructor(fb, service2, authService, usersService, snackBar, router, transloco) {
+    this.fb = fb;
+    this.service = service2;
+    this.authService = authService;
+    this.usersService = usersService;
+    this.snackBar = snackBar;
+    this.router = router;
+    this.transloco = transloco;
+  }
+  categoryLabel(value) {
+    switch (value) {
+      case UserCategoryValue.Military:
+        return this.transloco.translate("category_application.categories.military");
+      case UserCategoryValue.Veteran:
+        return this.transloco.translate("category_application.categories.veteran");
+      case UserCategoryValue.IDP:
+        return this.transloco.translate("category_application.categories.idp");
+      default:
+        return this.transloco.translate("profile.client");
+    }
+  }
+  get isRoleBlocked() {
+    return this.authService.isAdmin || this.authService.isSuperAdmin || this.authService.isPsychologist;
+  }
+  ngOnInit() {
+    this.form = this.fb.group({
+      requestedCategory: [null, Validators.required],
+      comment: ["", [Validators.required, Validators.minLength(10)]],
+      documents: [[]]
+    });
+    this.loadInitialState();
+  }
+  loadInitialState() {
+    if (this.isRoleBlocked) {
+      this.isLoading = false;
+      return;
+    }
+    this.isLoading = true;
+    const userId = this.authService.currentLoggedUser?.id;
+    if (!userId) {
+      this.isLoading = false;
+      return;
+    }
+    this.usersService.getUser(userId).subscribe({
+      next: (res) => {
+        if (res.isSuccess && res.data) {
+          this.currentCategory = res.data.userCategory ?? UserCategoryValue.Civilian;
+        }
+        this.loadLatestApplication();
+      },
+      error: () => {
+        this.loadLatestApplication();
+      }
+    });
+  }
+  loadLatestApplication() {
+    this.service.getMyApplication().subscribe({
+      next: (res) => {
+        this.latestApplication = res.data ?? null;
+        this.isLoading = false;
+      },
+      error: () => {
+        this.isLoading = false;
+      }
+    });
+  }
+  get canSubmit() {
+    if (this.isRoleBlocked)
+      return false;
+    if (this.currentCategory !== UserCategoryValue.Civilian)
+      return false;
+    if (this.latestApplication?.status === "Pending")
+      return false;
+    return true;
+  }
+  get blockedReason() {
+    if (this.isRoleBlocked) {
+      return this.transloco.translate("category_application.not_allowed_role");
+    }
+    if (this.currentCategory !== UserCategoryValue.Civilian) {
+      return this.transloco.translate("category_application.already_approved", {
+        category: this.categoryLabel(this.currentCategory)
+      });
+    }
+    if (this.latestApplication?.status === "Pending") {
+      return this.transloco.translate("category_application.already_pending");
+    }
+    return null;
+  }
+  selectCategory(value) {
+    this.form.get("requestedCategory")?.setValue(value);
+    this.form.get("requestedCategory")?.markAsTouched();
+  }
+  onFileSelected(event) {
+    const input2 = event.target;
+    const files = input2.files;
+    if (!files || files.length === 0)
+      return;
+    const current = this.form.get("documents")?.value || [];
+    const next = [...current];
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      if (file.size > 10 * 1024 * 1024) {
+        this.snackBar.open(this.transloco.translate("category_application.file_too_large", {
+          name: file.name
+        }), "OK", { duration: 3e3 });
+        continue;
+      }
+      next.push(file);
+      this.selectedFiles.push({ file, name: file.name });
+    }
+    this.form.get("documents")?.setValue(next);
+    input2.value = "";
+  }
+  removeFile(index) {
+    this.selectedFiles.splice(index, 1);
+    const current = this.form.get("documents")?.value || [];
+    current.splice(index, 1);
+    this.form.get("documents")?.setValue(current);
+  }
+  submit() {
+    if (!this.canSubmit)
+      return;
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      this.snackBar.open(this.transloco.translate("category_application.fill_required"), "OK", { duration: 3e3 });
+      return;
+    }
+    this.isSubmitting = true;
+    const value = this.form.value;
+    this.service.submit({
+      requestedCategory: value.requestedCategory,
+      comment: value.comment,
+      documents: value.documents || []
+    }).subscribe({
+      next: (res) => {
+        this.isSubmitting = false;
+        if (!res.isSuccess) {
+          this.snackBar.open(res.error || this.transloco.translate("category_application.submit_failed"), "OK", { duration: 4e3 });
+          return;
+        }
+        this.latestApplication = res.data;
+        this.snackBar.open(this.transloco.translate("category_application.success_submitted"), "OK", { duration: 3e3 });
+      },
+      error: (err) => {
+        this.isSubmitting = false;
+        const message = err?.error?.error || this.transloco.translate("category_application.submit_failed");
+        this.snackBar.open(message, "OK", { duration: 4e3 });
+      }
+    });
+  }
+  goBack() {
+    this.router.navigate(["/home"]);
+  }
+  static \u0275fac = function UserCategoryApplicationComponent_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || _UserCategoryApplicationComponent)(\u0275\u0275directiveInject(FormBuilder), \u0275\u0275directiveInject(UserCategoryApplicationService), \u0275\u0275directiveInject(AuthService), \u0275\u0275directiveInject(UsersService), \u0275\u0275directiveInject(MatSnackBar), \u0275\u0275directiveInject(Router), \u0275\u0275directiveInject(TranslocoService));
+  };
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _UserCategoryApplicationComponent, selectors: [["app-user-category-application"]], standalone: false, decls: 1, vars: 0, consts: [[4, "transloco"], [1, "min-h-screen", "bg-[#fafafa]", "py-8", "px-4", "sm:px-6", "lg:px-8"], [1, "max-w-3xl", "mx-auto"], ["type", "button", 1, "inline-flex", "items-center", "gap-1", "text-gray-500", "hover:text-[var(--color-primary)]", "transition-colors", "text-sm", "font-medium", "mb-6", "cursor-pointer", 3, "click"], [1, "scale-90"], [1, "mb-8"], [1, "text-2xl", "sm:text-3xl", "font-bold", "text-gray-900", "tracking-tight"], [1, "text-sm", "text-gray-500", "mt-2", "leading-relaxed"], [1, "flex", "justify-center", "py-12"], [1, "bg-amber-50", "border", "border-amber-200", "rounded-2xl", "p-5", "mb-6", "flex", "gap-3", "items-start"], [1, "bg-white", "border", "border-gray-100", "rounded-2xl", "p-5", "mb-6"], [1, "bg-white", "border", "border-gray-100", "rounded-2xl", "p-6", "sm:p-8", "space-y-6", 3, "ngSubmit", "formGroup"], [1, "text-base", "font-semibold", "text-gray-900", "mb-3"], [1, "grid", "grid-cols-1", "sm:grid-cols-3", "gap-3"], ["type", "button", 1, "text-left", "p-4", "rounded-xl", "border", "transition-all", "cursor-pointer", "disabled:cursor-not-allowed", "disabled:opacity-60", 3, "disabled", "ngClass"], ["for", "comment", 1, "block", "text-sm", "font-semibold", "text-gray-900", "mb-2"], [1, "text-rose-500"], ["id", "comment", "formControlName", "comment", "rows", "4", 1, "w-full", "px-4", "py-3", "bg-gray-50", "border", "border-gray-200", "rounded-xl", "focus:outline-none", "focus:ring-2", "focus:ring-[var(--color-mint)]", "focus:bg-white", "transition-all", "text-sm", "resize-none", "disabled:opacity-60", 3, "placeholder", "disabled"], [1, "text-xs", "text-rose-600", "mt-1"], [1, "block", "text-sm", "font-semibold", "text-gray-900", "mb-2"], [1, "text-xs", "text-gray-500", "mb-3"], [1, "flex", "items-center", "justify-center", "gap-2", "h-11", "px-4", "bg-white", "border", "border-dashed", "border-gray-300", "rounded-xl", "text-sm", "font-medium", "text-gray-700", "hover:border-gray-400", "cursor-pointer", "transition-colors"], [1, "text-[20px]", "text-gray-500"], ["type", "file", "multiple", "", 1, "hidden", 3, "change", "disabled"], [1, "mt-3", "space-y-2"], [1, "flex", "justify-end", "pt-2"], ["type", "submit", 1, "inline-flex", "items-center", "gap-2", "h-11", "px-6", "rounded-full", "bg-gray-900", "hover:bg-black", "text-white", "text-sm", "font-medium", "transition-colors", "cursor-pointer", "disabled:opacity-50", "disabled:cursor-not-allowed", 3, "disabled"], [1, "text-amber-600", "shrink-0"], [1, "text-sm", "text-amber-900", "font-medium"], [1, "text-xs", "text-amber-800", "mt-2"], [1, "text-xs", "text-amber-800", "mt-1"], [1, "text-sm", "text-gray-700"], ["type", "button", 1, "text-left", "p-4", "rounded-xl", "border", "transition-all", "cursor-pointer", "disabled:cursor-not-allowed", "disabled:opacity-60", 3, "click", "disabled", "ngClass"], [1, "font-semibold", "mb-1"], [1, "text-xs", "leading-relaxed", 3, "ngClass"], [1, "flex", "items-center", "justify-between", "gap-3", "px-3", "py-2", "bg-gray-50", "border", "border-gray-200", "rounded-lg"], [1, "flex", "items-center", "gap-2", "min-w-0"], [1, "text-gray-500", "text-[18px]"], [1, "text-sm", "text-gray-700", "truncate"], ["type", "button", 1, "w-7", "h-7", "flex", "items-center", "justify-center", "rounded-full", "text-gray-400", "hover:text-rose-600", "hover:bg-rose-50", "transition-colors", "cursor-pointer", 3, "click"], [1, "text-[16px]"], [1, "w-4", "h-4", "border-2", "border-white", "border-t-transparent", "rounded-full", "animate-spin"]], template: function UserCategoryApplicationComponent_Template(rf, ctx) {
+    if (rf & 1) {
+      \u0275\u0275template(0, UserCategoryApplicationComponent_ng_container_0_Template, 14, 4, "ng-container", 0);
+    }
+  }, dependencies: [NgClass, LoadingSpinnerComponent, MatIcon, \u0275NgNoValidate, DefaultValueAccessor, NgControlStatus, NgControlStatusGroup, FormGroupDirective, FormControlName, TranslocoDirective, DatePipe], styles: ["\n\n[_nghost-%COMP%] {\n  display: block;\n}\n/*# sourceMappingURL=user-category-application.component.css.map */"] });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(UserCategoryApplicationComponent, [{
+    type: Component,
+    args: [{ selector: "app-user-category-application", standalone: false, template: `<ng-container *transloco="let t">
+  <div class="min-h-screen bg-[#fafafa] py-8 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-3xl mx-auto">
+      <button
+        type="button"
+        (click)="goBack()"
+        class="inline-flex items-center gap-1 text-gray-500 hover:text-[var(--color-primary)] transition-colors text-sm font-medium mb-6 cursor-pointer"
+      >
+        <mat-icon class="scale-90">arrow_back</mat-icon>
+        {{ t("common.back") }}
+      </button>
+
+      <header class="mb-8">
+        <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight">
+          {{ t("category_application.title") }}
+        </h1>
+        <p class="text-sm text-gray-500 mt-2 leading-relaxed">
+          {{ t("category_application.subtitle") }}
+        </p>
+      </header>
+
+      @if (isLoading) {
+        <div class="flex justify-center py-12">
+          <app-loading-spinner></app-loading-spinner>
+        </div>
+      } @else {
+        @if (blockedReason) {
+          <div
+            class="bg-amber-50 border border-amber-200 rounded-2xl p-5 mb-6 flex gap-3 items-start"
+          >
+            <mat-icon class="text-amber-600 shrink-0">info</mat-icon>
+            <div>
+              <p class="text-sm text-amber-900 font-medium">{{ blockedReason }}</p>
+              @if (latestApplication) {
+                <p class="text-xs text-amber-800 mt-2">
+                  {{ t("category_application.last_application") }}
+                  <strong>{{ latestApplication.requestedCategoryName }}</strong>
+                  \xB7
+                  {{ t("category_application.status_label") }}
+                  <strong>{{ latestApplication.status }}</strong>
+                  \xB7
+                  {{ t("category_application.submitted_at") }}
+                  {{ latestApplication.createdAt | date: "MMM d, yyyy" }}
+                </p>
+                @if (
+                  latestApplication.status === "Rejected" &&
+                  latestApplication.rejectionReason
+                ) {
+                  <p class="text-xs text-amber-800 mt-1">
+                    {{ t("category_application.rejection_reason") }}
+                    {{ latestApplication.rejectionReason }}
+                  </p>
+                }
+              }
+            </div>
+          </div>
+        }
+
+        @if (
+          latestApplication &&
+          latestApplication.status === "Rejected" &&
+          currentCategory === 0 &&
+          !isRoleBlocked
+        ) {
+          <div class="bg-white border border-gray-100 rounded-2xl p-5 mb-6">
+            <p class="text-sm text-gray-700">
+              {{ t("category_application.rejected_can_retry") }}
+            </p>
+          </div>
+        }
+
+        <form
+          [formGroup]="form"
+          (ngSubmit)="submit()"
+          class="bg-white border border-gray-100 rounded-2xl p-6 sm:p-8 space-y-6"
+        >
+          <section>
+            <h2 class="text-base font-semibold text-gray-900 mb-3">
+              {{ t("category_application.choose_category") }}
+            </h2>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              @for (opt of options; track opt.value) {
+                <button
+                  type="button"
+                  (click)="selectCategory(opt.value)"
+                  [disabled]="!canSubmit"
+                  class="text-left p-4 rounded-xl border transition-all cursor-pointer disabled:cursor-not-allowed disabled:opacity-60"
+                  [ngClass]="
+                    form.value.requestedCategory === opt.value
+                      ? 'bg-gray-900 text-white border-gray-900'
+                      : 'bg-white text-gray-800 border-gray-200 hover:border-gray-400'
+                  "
+                >
+                  <div class="font-semibold mb-1">
+                    {{ categoryLabel(opt.value) }}
+                  </div>
+                  <div
+                    class="text-xs leading-relaxed"
+                    [ngClass]="
+                      form.value.requestedCategory === opt.value
+                        ? 'text-gray-200'
+                        : 'text-gray-500'
+                    "
+                  >
+                    @switch (opt.value) {
+                      @case (1) { {{ t("category_application.categories.military_desc") }} }
+                      @case (2) { {{ t("category_application.categories.veteran_desc") }} }
+                      @case (3) { {{ t("category_application.categories.idp_desc") }} }
+                    }
+                  </div>
+                </button>
+              }
+            </div>
+          </section>
+
+          <section>
+            <label
+              for="comment"
+              class="block text-sm font-semibold text-gray-900 mb-2"
+            >
+              {{ t("category_application.comment") }}
+              <span class="text-rose-500">*</span>
+            </label>
+            <textarea
+              id="comment"
+              formControlName="comment"
+              rows="4"
+              [placeholder]="t('category_application.comment_placeholder')"
+              [disabled]="!canSubmit"
+              class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-mint)] focus:bg-white transition-all text-sm resize-none disabled:opacity-60"
+            ></textarea>
+            @if (form.get("comment")?.touched && form.get("comment")?.invalid) {
+              <p class="text-xs text-rose-600 mt-1">
+                {{ t("category_application.comment_required") }}
+              </p>
+            }
+          </section>
+
+          <section>
+            <label class="block text-sm font-semibold text-gray-900 mb-2">
+              {{ t("category_application.documents") }}
+            </label>
+            <p class="text-xs text-gray-500 mb-3">
+              {{ t("category_application.documents_hint") }}
+            </p>
+
+            <label
+              class="flex items-center justify-center gap-2 h-11 px-4 bg-white border border-dashed border-gray-300 rounded-xl text-sm font-medium text-gray-700 hover:border-gray-400 cursor-pointer transition-colors"
+              [class.opacity-60]="!canSubmit"
+              [class.cursor-not-allowed]="!canSubmit"
+            >
+              <mat-icon class="text-[20px] text-gray-500">attach_file</mat-icon>
+              <span>{{ t("category_application.upload_file") }}</span>
+              <input
+                type="file"
+                multiple
+                class="hidden"
+                [disabled]="!canSubmit"
+                (change)="onFileSelected($event)"
+              />
+            </label>
+
+            @if (selectedFiles.length > 0) {
+              <ul class="mt-3 space-y-2">
+                @for (item of selectedFiles; track item.name; let i = $index) {
+                  <li
+                    class="flex items-center justify-between gap-3 px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg"
+                  >
+                    <div class="flex items-center gap-2 min-w-0">
+                      <mat-icon class="text-gray-500 text-[18px]"
+                        >description</mat-icon
+                      >
+                      <span class="text-sm text-gray-700 truncate">{{
+                        item.name
+                      }}</span>
+                    </div>
+                    <button
+                      type="button"
+                      (click)="removeFile(i)"
+                      class="w-7 h-7 flex items-center justify-center rounded-full text-gray-400 hover:text-rose-600 hover:bg-rose-50 transition-colors cursor-pointer"
+                    >
+                      <mat-icon class="text-[16px]">close</mat-icon>
+                    </button>
+                  </li>
+                }
+              </ul>
+            }
+          </section>
+
+          <div class="flex justify-end pt-2">
+            <button
+              type="submit"
+              [disabled]="!canSubmit || isSubmitting"
+              class="inline-flex items-center gap-2 h-11 px-6 rounded-full bg-gray-900 hover:bg-black text-white text-sm font-medium transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              @if (isSubmitting) {
+                <div
+                  class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"
+                ></div>
+                <span>{{ t("category_application.submitting") }}</span>
+              } @else {
+                <span>{{ t("category_application.submit") }}</span>
+              }
+            </button>
+          </div>
+        </form>
+      }
+    </div>
+  </div>
+</ng-container>
+`, styles: ["/* src/app/modules/core/pages/user-category-application/user-category-application.component.scss */\n:host {\n  display: block;\n}\n/*# sourceMappingURL=user-category-application.component.css.map */\n"] }]
+  }], () => [{ type: FormBuilder }, { type: UserCategoryApplicationService }, { type: AuthService }, { type: UsersService }, { type: MatSnackBar }, { type: Router }, { type: TranslocoService }], null);
+})();
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(UserCategoryApplicationComponent, { className: "UserCategoryApplicationComponent", filePath: "src/app/modules/core/pages/user-category-application/user-category-application.component.ts", lineNumber: 21 });
+})();
+
 // src/app/modules/core/core.module.ts
 var CoreModule = class _CoreModule {
   static \u0275fac = function CoreModule_Factory(__ngFactoryType__) {
@@ -37958,7 +39044,8 @@ var CoreModule = class _CoreModule {
         AboutUserProfileComponent,
         PostsUserProfileComponent,
         ReviewsUserProfileComponent,
-        SavedUserProfileComponent
+        SavedUserProfileComponent,
+        UserCategoryApplicationComponent
       ],
       imports: [
         CommonModule,
@@ -38053,6 +39140,9 @@ var AiService = class _AiService {
   http = inject(HttpClient);
   chatAsync(request) {
     return this.http.post(`${this.baseUrl}/chat`, request);
+  }
+  analyzeTranscriptAsync(request) {
+    return this.http.post(`${this.baseUrl}/analyze-transcript`, request);
   }
   static \u0275fac = function AiService_Factory(__ngFactoryType__) {
     return new (__ngFactoryType__ || _AiService)();
@@ -41542,72 +42632,107 @@ var AiChatComponent = class _AiChatComponent {
 
 // src/app/modules/admin-tools/pages/admin-dashboard/admin-dashboard.component.ts
 var _c023 = (a0, a1) => [a0, a1];
-var _forTrack09 = ($index, $item) => $item.route;
-function AdminDashboardComponent_For_9_Template(rf, ctx) {
+var _forTrack010 = ($index, $item) => $item.route;
+function AdminDashboardComponent_ng_container_0_For_10_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 6)(1, "div", 7)(2, "mat-icon");
+    \u0275\u0275elementStart(0, "div", 7)(1, "div", 8)(2, "mat-icon");
     \u0275\u0275text(3);
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(4, "h3", 8);
+    \u0275\u0275elementStart(4, "h3", 9);
     \u0275\u0275text(5);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(6, "p", 9);
+    \u0275\u0275elementStart(6, "p", 10);
     \u0275\u0275text(7);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(8, "button", 10);
+    \u0275\u0275elementStart(8, "button", 11);
     \u0275\u0275text(9);
     \u0275\u0275elementEnd()();
   }
   if (rf & 2) {
     const card_r1 = ctx.$implicit;
+    const t_r2 = \u0275\u0275nextContext().$implicit;
     \u0275\u0275advance();
     \u0275\u0275property("ngClass", \u0275\u0275pureFunction2(6, _c023, card_r1.iconBgClass, card_r1.iconTextClass));
     \u0275\u0275advance(2);
     \u0275\u0275textInterpolate(card_r1.icon);
     \u0275\u0275advance(2);
-    \u0275\u0275textInterpolate(card_r1.title);
+    \u0275\u0275textInterpolate(t_r2(card_r1.titleKey));
     \u0275\u0275advance(2);
-    \u0275\u0275textInterpolate1(" ", card_r1.description, " ");
+    \u0275\u0275textInterpolate1(" ", t_r2(card_r1.descriptionKey), " ");
     \u0275\u0275advance();
     \u0275\u0275property("routerLink", card_r1.route);
     \u0275\u0275advance();
-    \u0275\u0275textInterpolate1(" ", card_r1.buttonText, " ");
+    \u0275\u0275textInterpolate1(" ", t_r2(card_r1.buttonKey), " ");
+  }
+}
+function AdminDashboardComponent_ng_container_0_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainerStart(0);
+    \u0275\u0275elementStart(1, "div", 1)(2, "div", 2)(3, "div", 3)(4, "h1", 4);
+    \u0275\u0275text(5);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(6, "p", 5);
+    \u0275\u0275text(7);
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(8, "div", 6);
+    \u0275\u0275repeaterCreate(9, AdminDashboardComponent_ng_container_0_For_10_Template, 10, 9, "div", 7, _forTrack010);
+    \u0275\u0275elementEnd()()();
+    \u0275\u0275elementContainerEnd();
+  }
+  if (rf & 2) {
+    const t_r2 = ctx.$implicit;
+    const ctx_r2 = \u0275\u0275nextContext();
+    \u0275\u0275advance(5);
+    \u0275\u0275textInterpolate1(" ", t_r2("admin.dashboard.title"), " ");
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate1(" ", t_r2("admin.dashboard.subtitle"), " ");
+    \u0275\u0275advance(2);
+    \u0275\u0275repeater(ctx_r2.adminCards());
   }
 }
 var AdminDashboardComponent = class _AdminDashboardComponent {
   adminCards = signal([
     {
       icon: "assignment",
-      title: "Applications",
-      description: "Review and approve pending requests from psychologists to join the platform.",
-      buttonText: "View Applications",
+      titleKey: "admin.dashboard.applications_title",
+      descriptionKey: "admin.dashboard.applications_desc",
+      buttonKey: "admin.dashboard.applications_btn",
       route: "/admin/applications",
       iconBgClass: "bg-[var(--color-sky)]/20",
       iconTextClass: "text-[var(--color-primary)]"
     },
     {
       icon: "category",
-      title: "Specializations",
-      description: "Manage the list of expertises and topics (e.g., PTSD, Depression) used in the catalog.",
-      buttonText: "Manage Topics",
+      titleKey: "admin.dashboard.specializations_title",
+      descriptionKey: "admin.dashboard.specializations_desc",
+      buttonKey: "admin.dashboard.specializations_btn",
       route: "/admin/specializations",
       iconBgClass: "bg-purple-100",
       iconTextClass: "text-purple-600"
     },
     {
+      icon: "verified_user",
+      titleKey: "category_application.admin.dashboard_card_title",
+      descriptionKey: "category_application.admin.dashboard_card_desc",
+      buttonKey: "category_application.admin.dashboard_card_button",
+      route: "/admin/category-applications",
+      iconBgClass: "bg-emerald-100",
+      iconTextClass: "text-emerald-600"
+    },
+    {
       icon: "people",
-      title: "Users & Roles",
-      description: "View all registered clients and specialists, assign roles, and handle permissions.",
-      buttonText: "Manage Users",
+      titleKey: "admin.dashboard.users_title",
+      descriptionKey: "admin.dashboard.users_desc",
+      buttonKey: "admin.dashboard.users_btn",
       route: "/admin/users",
       iconBgClass: "bg-mint/20",
       iconTextClass: "text-success"
     },
     {
       icon: "insights",
-      title: "Analytics",
-      description: "View platform statistics, user growth, and session metrics.",
-      buttonText: "View Stats",
+      titleKey: "admin.dashboard.analytics_title",
+      descriptionKey: "admin.dashboard.analytics_desc",
+      buttonKey: "admin.dashboard.analytics_btn",
       route: "/admin/analytics",
       iconBgClass: "bg-orange-100",
       iconTextClass: "text-orange-500"
@@ -41616,32 +42741,65 @@ var AdminDashboardComponent = class _AdminDashboardComponent {
   static \u0275fac = function AdminDashboardComponent_Factory(__ngFactoryType__) {
     return new (__ngFactoryType__ || _AdminDashboardComponent)();
   };
-  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _AdminDashboardComponent, selectors: [["app-admin-dashboard"]], standalone: false, decls: 10, vars: 0, consts: [[1, "p-6", "sm:p-10", "bg-gray-50", "min-h-screen", "font-sans"], [1, "max-w-7xl", "mx-auto"], [1, "mb-8"], [1, "text-3xl", "font-bold", "text-[var(--color-primary)]", "tracking-tight"], [1, "text-gray-500", "mt-2"], [1, "grid", "grid-cols-1", "md:grid-cols-2", "lg:grid-cols-4", "gap-6"], [1, "bg-white", "rounded-2xl", "shadow-sm", "border", "border-gray-100", "p-6", "flex", "flex-col", "hover:shadow-md", "hover:border-mint", "transition-all", "group"], [1, "w-12", "h-12", "rounded-xl", "flex", "items-center", "justify-center", "mb-4", "group-hover:scale-110", "transition-transform", 3, "ngClass"], [1, "text-lg", "font-bold", "text-gray-800", "mb-2"], [1, "text-gray-500", "text-sm", "mb-6", "flex-grow"], [1, "w-full", "py-2.5", "bg-gray-50", "text-[var(--color-primary)]", "font-semibold", "rounded-xl", "hover:bg-[var(--color-primary)]", "hover:text-white", "transition-colors", 3, "routerLink"]], template: function AdminDashboardComponent_Template(rf, ctx) {
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _AdminDashboardComponent, selectors: [["app-admin-dashboard"]], standalone: false, decls: 1, vars: 0, consts: [[4, "transloco"], [1, "p-6", "sm:p-10", "bg-gray-50", "min-h-screen", "font-sans"], [1, "max-w-7xl", "mx-auto"], [1, "mb-8"], [1, "text-3xl", "font-bold", "text-[var(--color-primary)]", "tracking-tight"], [1, "text-gray-500", "mt-2"], [1, "grid", "grid-cols-1", "md:grid-cols-2", "lg:grid-cols-4", "gap-6"], [1, "bg-white", "rounded-2xl", "shadow-sm", "border", "border-gray-100", "p-6", "flex", "flex-col", "hover:shadow-md", "hover:border-mint", "transition-all", "group"], [1, "w-12", "h-12", "rounded-xl", "flex", "items-center", "justify-center", "mb-4", "group-hover:scale-110", "transition-transform", 3, "ngClass"], [1, "text-lg", "font-bold", "text-gray-800", "mb-2"], [1, "text-gray-500", "text-sm", "mb-6", "flex-grow"], [1, "w-full", "py-2.5", "bg-gray-50", "text-[var(--color-primary)]", "font-semibold", "rounded-xl", "hover:bg-[var(--color-primary)]", "hover:text-white", "transition-colors", 3, "routerLink"]], template: function AdminDashboardComponent_Template(rf, ctx) {
     if (rf & 1) {
-      \u0275\u0275elementStart(0, "div", 0)(1, "div", 1)(2, "div", 2)(3, "h1", 3);
-      \u0275\u0275text(4, " Admin Dashboard ");
-      \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(5, "p", 4);
-      \u0275\u0275text(6, " Manage users, applications, and platform settings. ");
-      \u0275\u0275elementEnd()();
-      \u0275\u0275elementStart(7, "div", 5);
-      \u0275\u0275repeaterCreate(8, AdminDashboardComponent_For_9_Template, 10, 9, "div", 6, _forTrack09);
-      \u0275\u0275elementEnd()()();
+      \u0275\u0275template(0, AdminDashboardComponent_ng_container_0_Template, 11, 2, "ng-container", 0);
     }
-    if (rf & 2) {
-      \u0275\u0275advance(8);
-      \u0275\u0275repeater(ctx.adminCards());
-    }
-  }, dependencies: [NgClass, MatIcon, RouterLink], encapsulation: 2 });
+  }, dependencies: [NgClass, MatIcon, RouterLink, TranslocoDirective], encapsulation: 2 });
 };
 (() => {
   (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(AdminDashboardComponent, [{
     type: Component,
-    args: [{ selector: "app-admin-dashboard", standalone: false, template: '<div class="p-6 sm:p-10 bg-gray-50 min-h-screen font-sans">\r\n  <div class="max-w-7xl mx-auto">\r\n    \r\n    <div class="mb-8">\r\n      <h1 class="text-3xl font-bold text-[var(--color-primary)] tracking-tight">\r\n        Admin Dashboard\r\n      </h1>\r\n      <p class="text-gray-500 mt-2">\r\n        Manage users, applications, and platform settings.\r\n      </p>\r\n    </div>\r\n\r\n    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">\r\n      \r\n      @for (card of adminCards(); track card.route) {\r\n        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 flex flex-col hover:shadow-md hover:border-mint transition-all group">\r\n          \r\n          <div \r\n            class="w-12 h-12 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform"\r\n            [ngClass]="[card.iconBgClass, card.iconTextClass]"\r\n          >\r\n            <mat-icon>{{ card.icon }}</mat-icon>\r\n          </div>\r\n          \r\n          <h3 class="text-lg font-bold text-gray-800 mb-2">{{ card.title }}</h3>\r\n          \r\n          <p class="text-gray-500 text-sm mb-6 flex-grow">\r\n            {{ card.description }}\r\n          </p>\r\n          \r\n          <button \r\n            [routerLink]="card.route" \r\n            class="w-full py-2.5 bg-gray-50 text-[var(--color-primary)] font-semibold rounded-xl hover:bg-[var(--color-primary)] hover:text-white transition-colors"\r\n          >\r\n            {{ card.buttonText }}\r\n          </button>\r\n          \r\n        </div>\r\n      }\r\n\r\n    </div>\r\n  </div>\r\n</div>' }]
+    args: [{ selector: "app-admin-dashboard", standalone: false, template: `<ng-container *transloco="let t">
+  <div class="p-6 sm:p-10 bg-gray-50 min-h-screen font-sans">
+    <div class="max-w-7xl mx-auto">
+
+      <div class="mb-8">
+        <h1 class="text-3xl font-bold text-[var(--color-primary)] tracking-tight">
+          {{ t('admin.dashboard.title') }}
+        </h1>
+        <p class="text-gray-500 mt-2">
+          {{ t('admin.dashboard.subtitle') }}
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+        @for (card of adminCards(); track card.route) {
+          <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 flex flex-col hover:shadow-md hover:border-mint transition-all group">
+
+            <div
+              class="w-12 h-12 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform"
+              [ngClass]="[card.iconBgClass, card.iconTextClass]"
+            >
+              <mat-icon>{{ card.icon }}</mat-icon>
+            </div>
+
+            <h3 class="text-lg font-bold text-gray-800 mb-2">{{ t(card.titleKey) }}</h3>
+
+            <p class="text-gray-500 text-sm mb-6 flex-grow">
+              {{ t(card.descriptionKey) }}
+            </p>
+
+            <button
+              [routerLink]="card.route"
+              class="w-full py-2.5 bg-gray-50 text-[var(--color-primary)] font-semibold rounded-xl hover:bg-[var(--color-primary)] hover:text-white transition-colors"
+            >
+              {{ t(card.buttonKey) }}
+            </button>
+
+          </div>
+        }
+
+      </div>
+    </div>
+  </div>
+</ng-container>
+` }]
   }], null, null);
 })();
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(AdminDashboardComponent, { className: "AdminDashboardComponent", filePath: "src/app/modules/admin-tools/pages/admin-dashboard/admin-dashboard.component.ts", lineNumber: 10 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(AdminDashboardComponent, { className: "AdminDashboardComponent", filePath: "src/app/modules/admin-tools/pages/admin-dashboard/admin-dashboard.component.ts", lineNumber: 19 });
 })();
 
 // src/app/modules/admin-tools/components/application-details-dialog/application-details-dialog.component.ts
@@ -41990,7 +43148,7 @@ var ApplicationsService = class _ApplicationsService {
 })();
 
 // src/app/modules/admin-tools/pages/applications-page/applications-page.component.ts
-var _forTrack010 = ($index, $item) => $item.id;
+var _forTrack011 = ($index, $item) => $item.id;
 function ApplicationsPageComponent_For_18_Template(rf, ctx) {
   if (rf & 1) {
     const _r1 = \u0275\u0275getCurrentView();
@@ -42156,7 +43314,7 @@ function ApplicationsPageComponent_Conditional_22_Template(rf, ctx) {
     \u0275\u0275text(16, "Actions");
     \u0275\u0275elementEnd()()();
     \u0275\u0275elementStart(17, "tbody", 28);
-    \u0275\u0275repeaterCreate(18, ApplicationsPageComponent_Conditional_22_For_19_Template, 24, 13, "tr", 29, _forTrack010);
+    \u0275\u0275repeaterCreate(18, ApplicationsPageComponent_Conditional_22_For_19_Template, 24, 13, "tr", 29, _forTrack011);
     \u0275\u0275elementEnd()()()();
   }
   if (rf & 2) {
@@ -42497,8 +43655,8 @@ var ApplicationsPageComponent = class _ApplicationsPageComponent {
 var _c024 = () => [0, 1, 3, 5];
 var _c114 = () => [1, 2, 3];
 var _c210 = (a0) => ["/account", a0];
-var _forTrack011 = ($index, $item) => $item.value;
-var _forTrack1 = ($index, $item) => $item.id;
+var _forTrack012 = ($index, $item) => $item.value;
+var _forTrack12 = ($index, $item) => $item.id;
 function PsychologistListComponent_Conditional_5_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "p", 4);
@@ -42572,7 +43730,7 @@ function PsychologistListComponent_Conditional_27_For_2_Template(rf, ctx) {
 function PsychologistListComponent_Conditional_27_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "div", 20);
-    \u0275\u0275repeaterCreate(1, PsychologistListComponent_Conditional_27_For_2_Template, 4, 8, "button", 46, _forTrack011);
+    \u0275\u0275repeaterCreate(1, PsychologistListComponent_Conditional_27_For_2_Template, 4, 8, "button", 46, _forTrack012);
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
@@ -42782,7 +43940,7 @@ function PsychologistListComponent_Conditional_72_For_2_Template(rf, ctx) {
 function PsychologistListComponent_Conditional_72_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "div", 39);
-    \u0275\u0275repeaterCreate(1, PsychologistListComponent_Conditional_72_For_2_Template, 2, 2, "button", 54, _forTrack1);
+    \u0275\u0275repeaterCreate(1, PsychologistListComponent_Conditional_72_For_2_Template, 2, 2, "button", 54, _forTrack12);
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
@@ -42990,7 +44148,7 @@ function PsychologistListComponent_Conditional_76_For_2_Conditional_29_Condition
 function PsychologistListComponent_Conditional_76_For_2_Conditional_29_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "div", 86);
-    \u0275\u0275repeaterCreate(1, PsychologistListComponent_Conditional_76_For_2_Conditional_29_For_2_Template, 2, 1, "span", 98, _forTrack1);
+    \u0275\u0275repeaterCreate(1, PsychologistListComponent_Conditional_76_For_2_Conditional_29_For_2_Template, 2, 1, "span", 98, _forTrack12);
     \u0275\u0275template(3, PsychologistListComponent_Conditional_76_For_2_Conditional_29_Conditional_3_Template, 3, 0, "span", 99)(4, PsychologistListComponent_Conditional_76_For_2_Conditional_29_Conditional_4_Template, 3, 0, "span", 100)(5, PsychologistListComponent_Conditional_76_For_2_Conditional_29_Conditional_5_Template, 3, 0, "span", 101)(6, PsychologistListComponent_Conditional_76_For_2_Conditional_29_Conditional_6_Template, 2, 1, "span", 102);
     \u0275\u0275elementEnd();
   }
@@ -43122,7 +44280,7 @@ function PsychologistListComponent_Conditional_76_Conditional_3_Template(rf, ctx
 function PsychologistListComponent_Conditional_76_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "ul", 67);
-    \u0275\u0275repeaterCreate(1, PsychologistListComponent_Conditional_76_For_2_Template, 41, 18, "li", 68, _forTrack1);
+    \u0275\u0275repeaterCreate(1, PsychologistListComponent_Conditional_76_For_2_Template, 41, 18, "li", 68, _forTrack12);
     \u0275\u0275elementEnd();
     \u0275\u0275template(3, PsychologistListComponent_Conditional_76_Conditional_3_Template, 4, 2, "div", 69);
   }
@@ -43280,7 +44438,7 @@ function PsychologistListComponent_Conditional_77_Template(rf, ctx) {
     \u0275\u0275text(43, "Specializations");
     \u0275\u0275elementEnd();
     \u0275\u0275elementStart(44, "div", 39);
-    \u0275\u0275repeaterCreate(45, PsychologistListComponent_Conditional_77_For_46_Template, 2, 2, "button", 54, _forTrack1);
+    \u0275\u0275repeaterCreate(45, PsychologistListComponent_Conditional_77_For_46_Template, 2, 2, "button", 54, _forTrack12);
     \u0275\u0275elementEnd()()();
     \u0275\u0275elementStart(47, "div", 118)(48, "button", 119);
     \u0275\u0275listener("click", function PsychologistListComponent_Conditional_77_Template_button_click_48_listener() {
@@ -43740,6 +44898,7 @@ var PsychologistListComponent = class _PsychologistListComponent {
         </div>
 
         <!-- Filters (mobile) -->
+         
         <button
           (click)="isFiltersDrawerOpen = true"
           class="lg:hidden inline-flex items-center justify-center gap-2 h-11 px-4 bg-white border border-gray-200 hover:border-gray-300 rounded-full text-sm font-medium text-gray-700 transition-colors cursor-pointer relative"
@@ -44361,7 +45520,7 @@ var PsychologistListComponent = class _PsychologistListComponent {
 
 // src/app/modules/psychologist-tools/pages/psychologist-dashboard/psychologist-dashboard.component.ts
 var _c025 = (a0, a1) => [a0, a1];
-var _forTrack012 = ($index, $item) => $item.route;
+var _forTrack013 = ($index, $item) => $item.route;
 function PsychologistDashboardComponent_For_10_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "div", 6)(1, "div", 7)(2, "mat-icon");
@@ -44475,7 +45634,7 @@ var PsychologistDashboardComponent = class _PsychologistDashboardComponent {
       \u0275\u0275text(7);
       \u0275\u0275elementEnd()()();
       \u0275\u0275elementStart(8, "div", 5);
-      \u0275\u0275repeaterCreate(9, PsychologistDashboardComponent_For_10_Template, 10, 9, "div", 6, _forTrack012);
+      \u0275\u0275repeaterCreate(9, PsychologistDashboardComponent_For_10_Template, 10, 9, "div", 6, _forTrack013);
       \u0275\u0275elementEnd()()();
     }
     if (rf & 2) {
@@ -44632,7 +45791,7 @@ var SpecializationDialogComponent = class _SpecializationDialogComponent {
 })();
 
 // src/app/modules/admin-tools/pages/manage-specializations/manage-specializations.component.ts
-var _forTrack013 = ($index, $item) => $item.id;
+var _forTrack014 = ($index, $item) => $item.id;
 function ManageSpecializationsComponent_Conditional_24_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "div", 14);
@@ -44736,7 +45895,7 @@ function ManageSpecializationsComponent_Conditional_27_Template(rf, ctx) {
     \u0275\u0275text(12, "Actions");
     \u0275\u0275elementEnd()()();
     \u0275\u0275elementStart(13, "tbody", 32);
-    \u0275\u0275repeaterCreate(14, ManageSpecializationsComponent_Conditional_27_For_15_Template, 21, 4, "tr", 33, _forTrack013);
+    \u0275\u0275repeaterCreate(14, ManageSpecializationsComponent_Conditional_27_For_15_Template, 21, 4, "tr", 33, _forTrack014);
     \u0275\u0275elementEnd()()()();
   }
   if (rf & 2) {
@@ -45769,8 +46928,8 @@ var PsychologistCalendarPageComponent = class _PsychologistCalendarPageComponent
 // src/app/modules/psychologist-tools/pages/psychologist-applications/psychologist-applications.component.ts
 var _c027 = (a0, a1) => ({ "border-[var(--color-primary)]/30 shadow-md shadow-blue-100": a0, "border-gray-100 shadow-sm opacity-80": a1 });
 var _c115 = (a0, a1, a2, a3) => ({ "bg-amber-50 text-amber-600 border-amber-200": a0, "bg-green-50 text-green-600 border-green-200": a1, "bg-gray-50 text-gray-600 border-gray-200": a2, "bg-red-50 text-red-600 border-red-200": a3 });
-var _forTrack014 = ($index, $item) => $item.value;
-var _forTrack12 = ($index, $item) => $item.id;
+var _forTrack015 = ($index, $item) => $item.value;
+var _forTrack13 = ($index, $item) => $item.id;
 function PsychologistApplicationsComponent_span_11_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "span", 21);
@@ -46060,7 +47219,7 @@ function PsychologistApplicationsComponent_Conditional_30_For_2_Template(rf, ctx
 function PsychologistApplicationsComponent_Conditional_30_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "div", 20);
-    \u0275\u0275repeaterCreate(1, PsychologistApplicationsComponent_Conditional_30_For_2_Template, 34, 30, "div", 38, _forTrack12);
+    \u0275\u0275repeaterCreate(1, PsychologistApplicationsComponent_Conditional_30_For_2_Template, 34, 30, "div", 38, _forTrack13);
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
@@ -46232,7 +47391,7 @@ var PsychologistApplicationsComponent = class _PsychologistApplicationsComponent
       \u0275\u0275template(22, PsychologistApplicationsComponent_Conditional_22_Template, 14, 6);
       \u0275\u0275elementEnd()();
       \u0275\u0275elementStart(23, "div", 15)(24, "div", 16);
-      \u0275\u0275repeaterCreate(25, PsychologistApplicationsComponent_For_26_Template, 6, 6, "button", 17, _forTrack014);
+      \u0275\u0275repeaterCreate(25, PsychologistApplicationsComponent_For_26_Template, 6, 6, "button", 17, _forTrack015);
       \u0275\u0275elementEnd()();
       \u0275\u0275template(27, PsychologistApplicationsComponent_Conditional_27_Template, 5, 0, "div", 18)(28, PsychologistApplicationsComponent_Conditional_28_Template, 8, 0, "div", 19)(29, PsychologistApplicationsComponent_Conditional_29_Template, 10, 1, "div", 19)(30, PsychologistApplicationsComponent_Conditional_30_Template, 3, 0, "div", 20);
       \u0275\u0275elementEnd()();
@@ -46649,8 +47808,8 @@ function resolveDisplayStatus(session) {
 }
 
 // src/app/modules/psychologist-tools/pages/psychologist-sessions/psychologist-sessions.component.ts
-var _forTrack015 = ($index, $item) => $item.value;
-var _forTrack13 = ($index, $item) => $item.id;
+var _forTrack016 = ($index, $item) => $item.value;
+var _forTrack14 = ($index, $item) => $item.id;
 function PsychologistSessionsComponent_For_14_Template(rf, ctx) {
   if (rf & 1) {
     const _r1 = \u0275\u0275getCurrentView();
@@ -46806,7 +47965,7 @@ function PsychologistSessionsComponent_Conditional_18_For_2_Template(rf, ctx) {
 function PsychologistSessionsComponent_Conditional_18_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "div", 12);
-    \u0275\u0275repeaterCreate(1, PsychologistSessionsComponent_Conditional_18_For_2_Template, 1, 1, "ng-container", null, _forTrack13);
+    \u0275\u0275repeaterCreate(1, PsychologistSessionsComponent_Conditional_18_For_2_Template, 1, 1, "ng-container", null, _forTrack14);
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
@@ -46926,7 +48085,7 @@ var PsychologistSessionsComponent = class _PsychologistSessionsComponent {
       \u0275\u0275text(10, "Your confirmed and past sessions with clients");
       \u0275\u0275elementEnd()()();
       \u0275\u0275elementStart(11, "div", 6)(12, "div", 7);
-      \u0275\u0275repeaterCreate(13, PsychologistSessionsComponent_For_14_Template, 6, 4, "button", 8, _forTrack015);
+      \u0275\u0275repeaterCreate(13, PsychologistSessionsComponent_For_14_Template, 6, 4, "button", 8, _forTrack016);
       \u0275\u0275elementEnd()();
       \u0275\u0275elementStart(15, "div", 9);
       \u0275\u0275template(16, PsychologistSessionsComponent_Conditional_16_Template, 2, 0, "div", 10)(17, PsychologistSessionsComponent_Conditional_17_Template, 5, 0, "div", 11)(18, PsychologistSessionsComponent_Conditional_18_Template, 3, 0, "div", 12);
@@ -47053,7 +48212,7 @@ var PsychologistSessionsComponent = class _PsychologistSessionsComponent {
 // src/app/modules/psychologist-tools/pages/psychologist-past-sessions/psychologist-past-sessions.component.ts
 var _c028 = (a0, a1, a2, a3) => ({ "text-gray-400": a0, "text-yellow-600": a1, "text-[var(--color-success)]": a2, "text-red-500": a3 });
 var _c116 = (a0, a1, a2) => ({ "bg-blue-100 text-blue-700": a0, "bg-green-100 text-green-700": a1, "bg-red-100 text-red-700": a2 });
-var _forTrack016 = ($index, $item) => $item.id;
+var _forTrack017 = ($index, $item) => $item.id;
 function PsychologistPastSessionsComponent_Conditional_12_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "div", 7);
@@ -47286,7 +48445,7 @@ function PsychologistPastSessionsComponent_Conditional_14_Conditional_1_Conditio
 function PsychologistPastSessionsComponent_Conditional_14_Conditional_1_Conditional_5_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "div", 44);
-    \u0275\u0275repeaterCreate(1, PsychologistPastSessionsComponent_Conditional_14_Conditional_1_Conditional_5_For_2_Template, 18, 18, "button", 45, _forTrack016);
+    \u0275\u0275repeaterCreate(1, PsychologistPastSessionsComponent_Conditional_14_Conditional_1_Conditional_5_For_2_Template, 18, 18, "button", 45, _forTrack017);
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
@@ -47627,7 +48786,7 @@ var PsychologistPastSessionsComponent = class _PsychologistPastSessionsComponent
 })();
 
 // src/app/modules/psychologist-tools/pages/psychologist-profile-editor/psychologist-profile-editor.component.ts
-var _forTrack017 = ($index, $item) => $item.id;
+var _forTrack018 = ($index, $item) => $item.id;
 function PsychologistProfileEditorComponent_Conditional_12_Conditional_1_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275text(0, " Visible in the catalog ");
@@ -47705,7 +48864,7 @@ function PsychologistProfileEditorComponent_Conditional_15_Conditional_47_For_2_
 function PsychologistProfileEditorComponent_Conditional_15_Conditional_47_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "div", 35);
-    \u0275\u0275repeaterCreate(1, PsychologistProfileEditorComponent_Conditional_15_Conditional_47_For_2_Template, 2, 2, "button", 83, _forTrack017);
+    \u0275\u0275repeaterCreate(1, PsychologistProfileEditorComponent_Conditional_15_Conditional_47_For_2_Template, 2, 2, "button", 83, _forTrack018);
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
@@ -47864,7 +49023,7 @@ function PsychologistProfileEditorComponent_Conditional_15_Conditional_140_Condi
 function PsychologistProfileEditorComponent_Conditional_15_Conditional_140_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "div", 78);
-    \u0275\u0275repeaterCreate(1, PsychologistProfileEditorComponent_Conditional_15_Conditional_140_For_2_Template, 2, 1, "span", 86, _forTrack017);
+    \u0275\u0275repeaterCreate(1, PsychologistProfileEditorComponent_Conditional_15_Conditional_140_For_2_Template, 2, 1, "span", 86, _forTrack018);
     \u0275\u0275template(3, PsychologistProfileEditorComponent_Conditional_15_Conditional_140_Conditional_3_Template, 2, 1, "span", 87)(4, PsychologistProfileEditorComponent_Conditional_15_Conditional_140_Conditional_4_Template, 3, 0, "span", 88)(5, PsychologistProfileEditorComponent_Conditional_15_Conditional_140_Conditional_5_Template, 3, 0, "span", 89)(6, PsychologistProfileEditorComponent_Conditional_15_Conditional_140_Conditional_6_Template, 3, 0, "span", 90)(7, PsychologistProfileEditorComponent_Conditional_15_Conditional_140_Conditional_7_Template, 2, 1, "span", 91);
     \u0275\u0275elementEnd();
   }
@@ -48779,8 +49938,8 @@ var PsychologistProfileEditorComponent = class _PsychologistProfileEditorCompone
 })();
 
 // src/app/modules/client-portal/pages/client-sessions/client-sessions.component.ts
-var _forTrack018 = ($index, $item) => $item.value;
-var _forTrack14 = ($index, $item) => $item.id;
+var _forTrack019 = ($index, $item) => $item.value;
+var _forTrack15 = ($index, $item) => $item.id;
 function ClientSessionsComponent_For_14_Template(rf, ctx) {
   if (rf & 1) {
     const _r1 = \u0275\u0275getCurrentView();
@@ -48936,7 +50095,7 @@ function ClientSessionsComponent_Conditional_18_For_2_Template(rf, ctx) {
 function ClientSessionsComponent_Conditional_18_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "div", 13);
-    \u0275\u0275repeaterCreate(1, ClientSessionsComponent_Conditional_18_For_2_Template, 1, 1, "ng-container", null, _forTrack14);
+    \u0275\u0275repeaterCreate(1, ClientSessionsComponent_Conditional_18_For_2_Template, 1, 1, "ng-container", null, _forTrack15);
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
@@ -49054,7 +50213,7 @@ var ClientSessionsComponent = class _ClientSessionsComponent {
       \u0275\u0275text(10, "Your scheduled and past therapy sessions");
       \u0275\u0275elementEnd()()()();
       \u0275\u0275elementStart(11, "div", 7)(12, "div", 8);
-      \u0275\u0275repeaterCreate(13, ClientSessionsComponent_For_14_Template, 6, 4, "button", 9, _forTrack018);
+      \u0275\u0275repeaterCreate(13, ClientSessionsComponent_For_14_Template, 6, 4, "button", 9, _forTrack019);
       \u0275\u0275elementEnd()();
       \u0275\u0275elementStart(15, "div", 10);
       \u0275\u0275template(16, ClientSessionsComponent_Conditional_16_Template, 2, 0, "div", 11)(17, ClientSessionsComponent_Conditional_17_Template, 5, 0, "div", 12)(18, ClientSessionsComponent_Conditional_18_Template, 3, 0, "div", 13);
@@ -49880,7 +51039,7 @@ var SessionVideoPanelComponent = class _SessionVideoPanelComponent {
       \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.remoteVideoEl = _t.first);
       \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.panelRoot = _t.first);
     }
-  }, inputs: { appointmentId: "appointmentId" }, outputs: { closed: "closed" }, standalone: false, decls: 36, vars: 20, consts: [["panelRoot", ""], ["remoteVideo", ""], ["localVideo", ""], [1, "flex", "flex-col", "h-full", "bg-gray-900", "text-white", "relative", "overflow-hidden"], [1, "flex", "items-center", "justify-between", "px-3", "py-2", "bg-black/40", "shrink-0"], [1, "flex", "items-center", "gap-2", "text-xs"], [1, "w-2", "h-2", "rounded-full", 3, "ngClass"], [1, "font-medium"], [1, "flex", "items-center", "gap-1"], [1, "w-7", "h-7", "flex", "items-center", "justify-center", "rounded-lg", "hover:bg-white/10", 3, "click", "title"], [1, "text-base"], ["title", "Close", 1, "w-7", "h-7", "flex", "items-center", "justify-center", "rounded-lg", "hover:bg-white/10", 3, "click"], [1, "flex-1", "relative", "bg-black"], ["autoplay", "", "playsinline", "", 1, "w-full", "h-full", "object-cover"], [1, "absolute", "inset-0", "flex", "flex-col", "items-center", "justify-center", "text-center", "px-4", "bg-black/60"], [1, "absolute", "bottom-3", "right-3", "w-28", "h-20", "sm:w-36", "sm:h-24", "rounded-lg", "overflow-hidden", "border-2", "border-white/20", "shadow-lg", "bg-black"], ["autoplay", "", "playsinline", "", "muted", "", 1, "w-full", "h-full", "object-cover"], [1, "absolute", "inset-0", "flex", "items-center", "justify-center"], [1, "flex", "items-center", "justify-center", "gap-2", "px-3", "py-3", "bg-black/40", "shrink-0"], [1, "w-10", "h-10", "flex", "items-center", "justify-center", "rounded-full", "transition-colors", 3, "click", "ngClass", "title"], ["title", "Leave", 1, "w-10", "h-10", "flex", "items-center", "justify-center", "rounded-full", "bg-red-500", "hover:bg-red-600", "transition-colors", 3, "click"], [1, "text-5xl", "text-white/40", "mb-2"], [1, "text-sm", "text-white/80", "font-medium"], [1, "text-white/60", "text-base"]], template: function SessionVideoPanelComponent_Template(rf, ctx) {
+  }, inputs: { appointmentId: "appointmentId" }, outputs: { closed: "closed" }, standalone: false, decls: 36, vars: 20, consts: [["panelRoot", ""], ["remoteVideo", ""], ["localVideo", ""], [1, "flex", "flex-col", "h-full", "bg-gray-900", "text-white", "relative", "overflow-hidden"], [1, "flex", "items-center", "justify-between", "px-3", "py-2", "bg-black/40", "shrink-0"], [1, "flex", "items-center", "gap-2", "text-xs"], [1, "w-2", "h-2", "rounded-full", 3, "ngClass"], [1, "font-medium"], [1, "flex", "items-center", "gap-1"], [1, "w-7", "h-7", "flex", "items-center", "justify-center", "rounded-lg", "hover:bg-white/10", 3, "click", "title"], [1, "text-base"], ["title", "Close", 1, "w-7", "h-7", "flex", "items-center", "justify-center", "rounded-lg", "hover:bg-white/10", 3, "click"], [1, "flex-1", "min-h-0", "relative", "bg-black"], ["autoplay", "", "playsinline", "", 1, "w-full", "h-full", "object-cover"], [1, "absolute", "inset-0", "flex", "flex-col", "items-center", "justify-center", "text-center", "px-4", "bg-black/60"], [1, "absolute", "bottom-3", "right-3", "w-28", "h-20", "sm:w-36", "sm:h-24", "rounded-lg", "overflow-hidden", "border-2", "border-white/20", "shadow-lg", "bg-black"], ["autoplay", "", "playsinline", "", "muted", "", 1, "w-full", "h-full", "object-cover"], [1, "absolute", "inset-0", "flex", "items-center", "justify-center"], [1, "flex", "items-center", "justify-center", "gap-2", "px-3", "py-3", "bg-black/40", "shrink-0"], [1, "w-10", "h-10", "flex", "items-center", "justify-center", "rounded-full", "transition-colors", 3, "click", "ngClass", "title"], ["title", "Leave", 1, "w-10", "h-10", "flex", "items-center", "justify-center", "rounded-full", "bg-red-500", "hover:bg-red-600", "transition-colors", 3, "click"], [1, "text-5xl", "text-white/40", "mb-2"], [1, "text-sm", "text-white/80", "font-medium"], [1, "text-white/60", "text-base"]], template: function SessionVideoPanelComponent_Template(rf, ctx) {
     if (rf & 1) {
       const _r1 = \u0275\u0275getCurrentView();
       \u0275\u0275elementStart(0, "div", 3, 0)(2, "div", 4)(3, "div", 5);
@@ -50011,7 +51170,7 @@ var SessionVideoPanelComponent = class _SessionVideoPanelComponent {
   </div>
 
   <!-- Video stage -->
-  <div class="flex-1 relative bg-black">
+  <div class="flex-1 min-h-0 relative bg-black">
     <!-- Remote -->
     <video
       #remoteVideo
@@ -50110,8 +51269,8 @@ var _c030 = ["messagesContainer"];
 var _c118 = ["aiMessagesContainer"];
 var _c212 = ["transcriptsContainer"];
 var _c39 = (a0, a1, a2, a3) => ({ "text-gray-400": a0, "text-yellow-600": a1, "text-[var(--color-success)]": a2, "text-red-500": a3 });
-var _forTrack019 = ($index, $item) => $item.id;
-var _forTrack15 = ($index, $item) => $item.key;
+var _forTrack020 = ($index, $item) => $item.id;
+var _forTrack16 = ($index, $item) => $item.key;
 function SessionRoomComponent_Conditional_1_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "div", 4);
@@ -50144,16 +51303,16 @@ function SessionRoomComponent_Conditional_2_Template(rf, ctx) {
 function SessionRoomComponent_Conditional_3_For_22_Template(rf, ctx) {
   if (rf & 1) {
     const _r4 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "button", 29);
+    \u0275\u0275elementStart(0, "button", 30);
     \u0275\u0275listener("click", function SessionRoomComponent_Conditional_3_For_22_Template_button_click_0_listener() {
       const tab_r5 = \u0275\u0275restoreView(_r4).$implicit;
       const ctx_r1 = \u0275\u0275nextContext(2);
       return \u0275\u0275resetView(ctx_r1.selectTab(tab_r5.id));
     });
-    \u0275\u0275elementStart(1, "mat-icon", 30);
+    \u0275\u0275elementStart(1, "mat-icon", 31);
     \u0275\u0275text(2);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(3, "span", 31);
+    \u0275\u0275elementStart(3, "span", 32);
     \u0275\u0275text(4);
     \u0275\u0275elementEnd()();
   }
@@ -50169,7 +51328,7 @@ function SessionRoomComponent_Conditional_3_For_22_Template(rf, ctx) {
 }
 function SessionRoomComponent_Conditional_3_Conditional_24_Conditional_2_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 33)(1, "mat-icon", 39);
+    \u0275\u0275elementStart(0, "div", 34)(1, "mat-icon", 40);
     \u0275\u0275text(2, "chat_bubble_outline");
     \u0275\u0275elementEnd();
     \u0275\u0275elementStart(3, "p", 9);
@@ -50179,7 +51338,7 @@ function SessionRoomComponent_Conditional_3_Conditional_24_Conditional_2_Templat
 }
 function SessionRoomComponent_Conditional_3_Conditional_24_For_4_Conditional_2_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "p", 42);
+    \u0275\u0275elementStart(0, "p", 43);
     \u0275\u0275text(1);
     \u0275\u0275elementEnd();
   }
@@ -50191,12 +51350,12 @@ function SessionRoomComponent_Conditional_3_Conditional_24_For_4_Conditional_2_T
 }
 function SessionRoomComponent_Conditional_3_Conditional_24_For_4_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 40)(1, "div", 41);
-    \u0275\u0275template(2, SessionRoomComponent_Conditional_3_Conditional_24_For_4_Conditional_2_Template, 2, 1, "p", 42);
-    \u0275\u0275elementStart(3, "p", 43);
+    \u0275\u0275elementStart(0, "div", 41)(1, "div", 42);
+    \u0275\u0275template(2, SessionRoomComponent_Conditional_3_Conditional_24_For_4_Conditional_2_Template, 2, 1, "p", 43);
+    \u0275\u0275elementStart(3, "p", 44);
     \u0275\u0275text(4);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(5, "p", 44);
+    \u0275\u0275elementStart(5, "p", 45);
     \u0275\u0275text(6);
     \u0275\u0275pipe(7, "date");
     \u0275\u0275elementEnd()()();
@@ -50218,11 +51377,11 @@ function SessionRoomComponent_Conditional_3_Conditional_24_For_4_Template(rf, ct
 function SessionRoomComponent_Conditional_3_Conditional_24_Template(rf, ctx) {
   if (rf & 1) {
     const _r6 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "div", 32, 0);
-    \u0275\u0275template(2, SessionRoomComponent_Conditional_3_Conditional_24_Conditional_2_Template, 5, 0, "div", 33);
-    \u0275\u0275repeaterCreate(3, SessionRoomComponent_Conditional_3_Conditional_24_For_4_Template, 8, 11, "div", 34, _forTrack019);
+    \u0275\u0275elementStart(0, "div", 33, 0);
+    \u0275\u0275template(2, SessionRoomComponent_Conditional_3_Conditional_24_Conditional_2_Template, 5, 0, "div", 34);
+    \u0275\u0275repeaterCreate(3, SessionRoomComponent_Conditional_3_Conditional_24_For_4_Template, 8, 11, "div", 35, _forTrack020);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(5, "div", 35)(6, "div", 36)(7, "textarea", 37);
+    \u0275\u0275elementStart(5, "div", 36)(6, "div", 37)(7, "textarea", 38);
     \u0275\u0275twoWayListener("ngModelChange", function SessionRoomComponent_Conditional_3_Conditional_24_Template_textarea_ngModelChange_7_listener($event) {
       \u0275\u0275restoreView(_r6);
       const ctx_r1 = \u0275\u0275nextContext(2);
@@ -50235,7 +51394,7 @@ function SessionRoomComponent_Conditional_3_Conditional_24_Template(rf, ctx) {
       return \u0275\u0275resetView(ctx_r1.onKeydown($event));
     });
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(8, "button", 38);
+    \u0275\u0275elementStart(8, "button", 39);
     \u0275\u0275listener("click", function SessionRoomComponent_Conditional_3_Conditional_24_Template_button_click_8_listener() {
       \u0275\u0275restoreView(_r6);
       const ctx_r1 = \u0275\u0275nextContext(2);
@@ -50258,98 +51417,242 @@ function SessionRoomComponent_Conditional_3_Conditional_24_Template(rf, ctx) {
     \u0275\u0275property("disabled", !ctx_r1.messageInput.trim() || !ctx_r1.sessionHub.isConnected());
   }
 }
-function SessionRoomComponent_Conditional_3_Conditional_25_Conditional_5_Template(rf, ctx) {
+function SessionRoomComponent_Conditional_3_Conditional_25_Conditional_3_Conditional_7_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 46)(1, "mat-icon", 47);
+    \u0275\u0275element(0, "mat-spinner", 53);
+    \u0275\u0275elementStart(1, "span");
+    \u0275\u0275text(2, "Analyzing\u2026");
+    \u0275\u0275elementEnd();
+  }
+}
+function SessionRoomComponent_Conditional_3_Conditional_25_Conditional_3_Conditional_8_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "mat-icon", 20);
+    \u0275\u0275text(1, "analytics");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(2, "span");
+    \u0275\u0275text(3, "Analyze");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(4, "mat-icon", 20);
+    \u0275\u0275text(5);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const ctx_r1 = \u0275\u0275nextContext(4);
+    \u0275\u0275advance(5);
+    \u0275\u0275textInterpolate(ctx_r1.isAnalysisMenuOpen() ? "expand_less" : "expand_more");
+  }
+}
+function SessionRoomComponent_Conditional_3_Conditional_25_Conditional_3_Conditional_9_For_5_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r11 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "button", 60);
+    \u0275\u0275listener("click", function SessionRoomComponent_Conditional_3_Conditional_25_Conditional_3_Conditional_9_For_5_Template_button_click_0_listener() {
+      const range_r12 = \u0275\u0275restoreView(_r11).$implicit;
+      const ctx_r1 = \u0275\u0275nextContext(5);
+      return \u0275\u0275resetView(ctx_r1.selectRange(range_r12.id));
+    });
+    \u0275\u0275text(1);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const range_r12 = ctx.$implicit;
+    const ctx_r1 = \u0275\u0275nextContext(5);
+    \u0275\u0275property("ngClass", ctx_r1.selectedRangeId() === range_r12.id ? "bg-[var(--color-primary)] text-white" : "bg-gray-50 text-gray-700 hover:bg-gray-100");
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate(range_r12.label);
+  }
+}
+function SessionRoomComponent_Conditional_3_Conditional_25_Conditional_3_Conditional_9_For_9_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r13 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "button", 61);
+    \u0275\u0275listener("click", function SessionRoomComponent_Conditional_3_Conditional_25_Conditional_3_Conditional_9_For_9_Template_button_click_0_listener() {
+      const act_r14 = \u0275\u0275restoreView(_r13).$implicit;
+      const ctx_r1 = \u0275\u0275nextContext(5);
+      return \u0275\u0275resetView(ctx_r1.runRangeAnalysis(act_r14.id));
+    });
+    \u0275\u0275elementStart(1, "mat-icon", 62);
+    \u0275\u0275text(2);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(3, "div", 63)(4, "div", 64);
+    \u0275\u0275text(5);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(6, "div", 65);
+    \u0275\u0275text(7);
+    \u0275\u0275elementEnd()()();
+  }
+  if (rf & 2) {
+    const act_r14 = ctx.$implicit;
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate(act_r14.icon);
+    \u0275\u0275advance(3);
+    \u0275\u0275textInterpolate(act_r14.label);
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate(act_r14.description);
+  }
+}
+function SessionRoomComponent_Conditional_3_Conditional_25_Conditional_3_Conditional_9_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r10 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "div", 54);
+    \u0275\u0275listener("click", function SessionRoomComponent_Conditional_3_Conditional_25_Conditional_3_Conditional_9_Template_div_click_0_listener($event) {
+      \u0275\u0275restoreView(_r10);
+      return \u0275\u0275resetView($event.stopPropagation());
+    });
+    \u0275\u0275elementStart(1, "div", 55);
+    \u0275\u0275text(2, "Time range");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(3, "div", 56);
+    \u0275\u0275repeaterCreate(4, SessionRoomComponent_Conditional_3_Conditional_25_Conditional_3_Conditional_9_For_5_Template, 2, 2, "button", 57, _forTrack020);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(6, "div", 58);
+    \u0275\u0275text(7, "Action");
+    \u0275\u0275elementEnd();
+    \u0275\u0275repeaterCreate(8, SessionRoomComponent_Conditional_3_Conditional_25_Conditional_3_Conditional_9_For_9_Template, 8, 3, "button", 59, _forTrack020);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const ctx_r1 = \u0275\u0275nextContext(4);
+    \u0275\u0275advance(4);
+    \u0275\u0275repeater(ctx_r1.timeRanges);
+    \u0275\u0275advance(4);
+    \u0275\u0275repeater(ctx_r1.rangeAnalysisActions);
+  }
+}
+function SessionRoomComponent_Conditional_3_Conditional_25_Conditional_3_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r9 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "div", 46)(1, "div", 49)(2, "mat-icon", 50);
+    \u0275\u0275text(3, "auto_awesome");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(4, "span");
+    \u0275\u0275text(5, "Select text in transcript for AI actions, or analyze a range:");
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(6, "button", 51);
+    \u0275\u0275listener("click", function SessionRoomComponent_Conditional_3_Conditional_25_Conditional_3_Template_button_click_6_listener($event) {
+      \u0275\u0275restoreView(_r9);
+      const ctx_r1 = \u0275\u0275nextContext(3);
+      $event.stopPropagation();
+      return \u0275\u0275resetView(ctx_r1.toggleAnalysisMenu());
+    });
+    \u0275\u0275template(7, SessionRoomComponent_Conditional_3_Conditional_25_Conditional_3_Conditional_7_Template, 3, 0)(8, SessionRoomComponent_Conditional_3_Conditional_25_Conditional_3_Conditional_8_Template, 6, 1);
+    \u0275\u0275elementEnd();
+    \u0275\u0275template(9, SessionRoomComponent_Conditional_3_Conditional_25_Conditional_3_Conditional_9_Template, 10, 0, "div", 52);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const ctx_r1 = \u0275\u0275nextContext(3);
+    \u0275\u0275advance(6);
+    \u0275\u0275property("disabled", ctx_r1.isAnalyzing());
+    \u0275\u0275advance();
+    \u0275\u0275conditional(ctx_r1.isAnalyzing() ? 7 : 8);
+    \u0275\u0275advance(2);
+    \u0275\u0275conditional(ctx_r1.isAnalysisMenuOpen() ? 9 : -1);
+  }
+}
+function SessionRoomComponent_Conditional_3_Conditional_25_Conditional_6_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "div", 48)(1, "mat-icon", 66);
     \u0275\u0275text(2, "subtitles");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(3, "p", 48);
+    \u0275\u0275elementStart(3, "p", 67);
     \u0275\u0275text(4, "Live transcriptions of your video call appear here.");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(5, "p", 49);
+    \u0275\u0275elementStart(5, "p", 68);
     \u0275\u0275text(6, "Start the video to begin.");
     \u0275\u0275elementEnd()();
   }
 }
-function SessionRoomComponent_Conditional_3_Conditional_25_For_8_Template(rf, ctx) {
+function SessionRoomComponent_Conditional_3_Conditional_25_For_9_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div")(1, "span", 50);
+    \u0275\u0275elementStart(0, "div")(1, "span", 69);
     \u0275\u0275text(2);
     \u0275\u0275pipe(3, "date");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(4, "span", 51);
+    \u0275\u0275elementStart(4, "span", 70);
     \u0275\u0275text(5);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(6, "span", 52);
+    \u0275\u0275elementStart(6, "span", 71);
     \u0275\u0275text(7);
     \u0275\u0275elementEnd()();
   }
   if (rf & 2) {
-    const entry_r8 = ctx.$implicit;
+    const entry_r15 = ctx.$implicit;
     const ctx_r1 = \u0275\u0275nextContext(3);
     \u0275\u0275advance(2);
-    \u0275\u0275textInterpolate1("[", \u0275\u0275pipeBind2(3, 4, entry_r8.timestamp, "HH:mm:ss"), "]");
+    \u0275\u0275textInterpolate1("[", \u0275\u0275pipeBind2(3, 4, entry_r15.timestamp, "HH:mm:ss"), "]");
     \u0275\u0275advance(2);
-    \u0275\u0275property("ngClass", ctx_r1.isPsychologistSpeaker(entry_r8.speaker) ? "text-[var(--color-primary)]" : "text-[var(--color-success)]");
+    \u0275\u0275property("ngClass", ctx_r1.isPsychologistSpeaker(entry_r15.speaker) ? "text-[var(--color-primary)]" : "text-[var(--color-success)]");
     \u0275\u0275advance();
-    \u0275\u0275textInterpolate1("", ctx_r1.roleLabel(entry_r8.speaker), ":");
+    \u0275\u0275textInterpolate1("", ctx_r1.roleLabel(entry_r15.speaker), ":");
     \u0275\u0275advance(2);
-    \u0275\u0275textInterpolate(entry_r8.text);
+    \u0275\u0275textInterpolate(entry_r15.text);
   }
 }
-function SessionRoomComponent_Conditional_3_Conditional_25_For_10_Conditional_0_Template(rf, ctx) {
+function SessionRoomComponent_Conditional_3_Conditional_25_For_11_Conditional_0_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 53)(1, "span", 50);
+    \u0275\u0275elementStart(0, "div", 72)(1, "span", 69);
     \u0275\u0275text(2, "[\u2026]");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(3, "span", 51);
+    \u0275\u0275elementStart(3, "span", 70);
     \u0275\u0275text(4);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(5, "span", 54);
+    \u0275\u0275elementStart(5, "span", 73);
     \u0275\u0275text(6);
     \u0275\u0275elementEnd()();
   }
   if (rf & 2) {
-    const interim_r9 = \u0275\u0275nextContext().$implicit;
+    const interim_r16 = \u0275\u0275nextContext().$implicit;
     const ctx_r1 = \u0275\u0275nextContext(3);
     \u0275\u0275advance(3);
-    \u0275\u0275property("ngClass", ctx_r1.isPsychologistSpeaker(interim_r9.key) ? "text-[var(--color-primary)]" : "text-[var(--color-success)]");
+    \u0275\u0275property("ngClass", ctx_r1.isPsychologistSpeaker(interim_r16.key) ? "text-[var(--color-primary)]" : "text-[var(--color-success)]");
     \u0275\u0275advance();
-    \u0275\u0275textInterpolate1("", ctx_r1.roleLabel(interim_r9.key), ":");
+    \u0275\u0275textInterpolate1("", ctx_r1.roleLabel(interim_r16.key), ":");
     \u0275\u0275advance(2);
-    \u0275\u0275textInterpolate(interim_r9.value);
+    \u0275\u0275textInterpolate(interim_r16.value);
   }
 }
-function SessionRoomComponent_Conditional_3_Conditional_25_For_10_Template(rf, ctx) {
+function SessionRoomComponent_Conditional_3_Conditional_25_For_11_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275template(0, SessionRoomComponent_Conditional_3_Conditional_25_For_10_Conditional_0_Template, 7, 3, "div", 53);
+    \u0275\u0275template(0, SessionRoomComponent_Conditional_3_Conditional_25_For_11_Conditional_0_Template, 7, 3, "div", 72);
   }
   if (rf & 2) {
-    const interim_r9 = ctx.$implicit;
-    \u0275\u0275conditional(interim_r9.value ? 0 : -1);
+    const interim_r16 = ctx.$implicit;
+    \u0275\u0275conditional(interim_r16.value ? 0 : -1);
   }
 }
 function SessionRoomComponent_Conditional_3_Conditional_25_Template(rf, ctx) {
   if (rf & 1) {
+    const _r8 = \u0275\u0275getCurrentView();
     \u0275\u0275declareLet(0)(1);
-    \u0275\u0275elementStart(2, "div", 27)(3, "div", 45, 1);
-    \u0275\u0275template(5, SessionRoomComponent_Conditional_3_Conditional_25_Conditional_5_Template, 7, 0, "div", 46);
-    \u0275\u0275pipe(6, "keyvalue");
-    \u0275\u0275repeaterCreate(7, SessionRoomComponent_Conditional_3_Conditional_25_For_8_Template, 8, 7, "div", null, _forTrack019);
-    \u0275\u0275repeaterCreate(9, SessionRoomComponent_Conditional_3_Conditional_25_For_10_Template, 1, 1, null, null, _forTrack15);
-    \u0275\u0275pipe(11, "keyvalue");
+    \u0275\u0275elementStart(2, "div", 27);
+    \u0275\u0275template(3, SessionRoomComponent_Conditional_3_Conditional_25_Conditional_3_Template, 10, 3, "div", 46);
+    \u0275\u0275elementStart(4, "div", 47, 1);
+    \u0275\u0275listener("mouseup", function SessionRoomComponent_Conditional_3_Conditional_25_Template_div_mouseup_4_listener($event) {
+      \u0275\u0275restoreView(_r8);
+      const ctx_r1 = \u0275\u0275nextContext(2);
+      return \u0275\u0275resetView(ctx_r1.onTranscriptMouseUp($event));
+    });
+    \u0275\u0275template(6, SessionRoomComponent_Conditional_3_Conditional_25_Conditional_6_Template, 7, 0, "div", 48);
+    \u0275\u0275pipe(7, "keyvalue");
+    \u0275\u0275repeaterCreate(8, SessionRoomComponent_Conditional_3_Conditional_25_For_9_Template, 8, 7, "div", null, _forTrack020);
+    \u0275\u0275repeaterCreate(10, SessionRoomComponent_Conditional_3_Conditional_25_For_11_Template, 1, 1, null, null, _forTrack16);
+    \u0275\u0275pipe(12, "keyvalue");
     \u0275\u0275elementEnd()();
   }
   if (rf & 2) {
     const ctx_r1 = \u0275\u0275nextContext(2);
-    const finals_r10 = ctx_r1.transcripts.finals();
-    const interims_r11 = ctx_r1.transcripts.interims();
-    \u0275\u0275advance(5);
-    \u0275\u0275conditional(finals_r10.length === 0 && \u0275\u0275pipeBind1(6, 1, interims_r11).length === 0 ? 5 : -1);
+    const finals_r17 = ctx_r1.transcripts.finals();
+    const interims_r18 = ctx_r1.transcripts.interims();
+    \u0275\u0275advance(3);
+    \u0275\u0275conditional(ctx_r1.isPsychologist ? 3 : -1);
+    \u0275\u0275advance(3);
+    \u0275\u0275conditional(finals_r17.length === 0 && \u0275\u0275pipeBind1(7, 2, interims_r18).length === 0 ? 6 : -1);
     \u0275\u0275advance(2);
-    \u0275\u0275repeater(finals_r10);
+    \u0275\u0275repeater(finals_r17);
     \u0275\u0275advance(2);
-    \u0275\u0275repeater(\u0275\u0275pipeBind1(11, 3, interims_r11));
+    \u0275\u0275repeater(\u0275\u0275pipeBind1(12, 4, interims_r18));
   }
 }
 function SessionRoomComponent_Conditional_3_Conditional_26_Conditional_0_Case_8_Template(rf, ctx) {
@@ -50374,19 +51677,19 @@ function SessionRoomComponent_Conditional_3_Conditional_26_Conditional_0_Case_11
 }
 function SessionRoomComponent_Conditional_3_Conditional_26_Conditional_0_Template(rf, ctx) {
   if (rf & 1) {
-    const _r12 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "div", 26)(1, "div", 56)(2, "div", 57)(3, "mat-icon", 58);
+    const _r19 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "div", 26)(1, "div", 75)(2, "div", 76)(3, "mat-icon", 77);
     \u0275\u0275text(4, "edit_note");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(5, "span", 59);
+    \u0275\u0275elementStart(5, "span", 78);
     \u0275\u0275text(6, "Private notes");
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(7, "span", 60);
+    \u0275\u0275elementStart(7, "span", 79);
     \u0275\u0275template(8, SessionRoomComponent_Conditional_3_Conditional_26_Conditional_0_Case_8_Template, 1, 0)(9, SessionRoomComponent_Conditional_3_Conditional_26_Conditional_0_Case_9_Template, 1, 0)(10, SessionRoomComponent_Conditional_3_Conditional_26_Conditional_0_Case_10_Template, 1, 0)(11, SessionRoomComponent_Conditional_3_Conditional_26_Conditional_0_Case_11_Template, 1, 0);
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(12, "textarea", 61);
+    \u0275\u0275elementStart(12, "textarea", 80);
     \u0275\u0275listener("ngModelChange", function SessionRoomComponent_Conditional_3_Conditional_26_Conditional_0_Template_textarea_ngModelChange_12_listener($event) {
-      \u0275\u0275restoreView(_r12);
+      \u0275\u0275restoreView(_r19);
       const ctx_r1 = \u0275\u0275nextContext(3);
       return \u0275\u0275resetView(ctx_r1.onNoteInput($event));
     });
@@ -50405,20 +51708,20 @@ function SessionRoomComponent_Conditional_3_Conditional_26_Conditional_0_Templat
 }
 function SessionRoomComponent_Conditional_3_Conditional_26_Conditional_1_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 55)(1, "mat-icon", 62);
+    \u0275\u0275elementStart(0, "div", 74)(1, "mat-icon", 81);
     \u0275\u0275text(2, "lock");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(3, "h3", 63);
+    \u0275\u0275elementStart(3, "h3", 82);
     \u0275\u0275text(4, "Private notes");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(5, "p", 49);
+    \u0275\u0275elementStart(5, "p", 68);
     \u0275\u0275text(6, "Only the psychologist can write and view session notes.");
     \u0275\u0275elementEnd()();
   }
 }
 function SessionRoomComponent_Conditional_3_Conditional_26_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275template(0, SessionRoomComponent_Conditional_3_Conditional_26_Conditional_0_Template, 13, 8, "div", 26)(1, SessionRoomComponent_Conditional_3_Conditional_26_Conditional_1_Template, 7, 0, "div", 55);
+    \u0275\u0275template(0, SessionRoomComponent_Conditional_3_Conditional_26_Conditional_0_Template, 13, 8, "div", 26)(1, SessionRoomComponent_Conditional_3_Conditional_26_Conditional_1_Template, 7, 0, "div", 74);
   }
   if (rf & 2) {
     const ctx_r1 = \u0275\u0275nextContext(2);
@@ -50427,100 +51730,102 @@ function SessionRoomComponent_Conditional_3_Conditional_26_Template(rf, ctx) {
 }
 function SessionRoomComponent_Conditional_3_Conditional_27_Conditional_10_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 46)(1, "mat-icon", 47);
+    \u0275\u0275elementStart(0, "div", 48)(1, "mat-icon", 66);
     \u0275\u0275text(2, "auto_awesome");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(3, "p", 48);
+    \u0275\u0275elementStart(3, "p", 67);
     \u0275\u0275text(4, "Ask for techniques, questions, or session help.");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(5, "p", 49);
+    \u0275\u0275elementStart(5, "p", 68);
     \u0275\u0275text(6, "Only you can see this conversation.");
     \u0275\u0275elementEnd()();
   }
 }
 function SessionRoomComponent_Conditional_3_Conditional_27_For_12_Conditional_2_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "p", 43);
-    \u0275\u0275text(1);
-    \u0275\u0275elementEnd();
+    \u0275\u0275element(0, "markdown", 87);
   }
   if (rf & 2) {
-    const msg_r14 = \u0275\u0275nextContext().$implicit;
-    \u0275\u0275advance();
-    \u0275\u0275textInterpolate(msg_r14.text);
+    const msg_r21 = \u0275\u0275nextContext().$implicit;
+    \u0275\u0275property("data", msg_r21.text);
   }
 }
 function SessionRoomComponent_Conditional_3_Conditional_27_For_12_Conditional_3_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275element(0, "markdown", 69);
+    \u0275\u0275element(0, "markdown", 88);
   }
   if (rf & 2) {
-    const msg_r14 = \u0275\u0275nextContext().$implicit;
-    \u0275\u0275property("data", msg_r14.text);
+    const msg_r21 = \u0275\u0275nextContext().$implicit;
+    \u0275\u0275property("data", msg_r21.text);
   }
 }
 function SessionRoomComponent_Conditional_3_Conditional_27_For_12_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 40)(1, "div", 41);
-    \u0275\u0275template(2, SessionRoomComponent_Conditional_3_Conditional_27_For_12_Conditional_2_Template, 2, 1, "p", 43)(3, SessionRoomComponent_Conditional_3_Conditional_27_For_12_Conditional_3_Template, 1, 1, "markdown", 69);
-    \u0275\u0275elementStart(4, "p", 44);
+    \u0275\u0275elementStart(0, "div", 41)(1, "div", 42);
+    \u0275\u0275template(2, SessionRoomComponent_Conditional_3_Conditional_27_For_12_Conditional_2_Template, 1, 1, "markdown", 87)(3, SessionRoomComponent_Conditional_3_Conditional_27_For_12_Conditional_3_Template, 1, 1, "markdown", 88);
+    \u0275\u0275elementStart(4, "p", 45);
     \u0275\u0275text(5);
     \u0275\u0275pipe(6, "date");
     \u0275\u0275elementEnd()()();
   }
   if (rf & 2) {
-    const msg_r14 = ctx.$implicit;
-    \u0275\u0275classProp("justify-end", msg_r14.isUser)("justify-start", !msg_r14.isUser);
+    const msg_r21 = ctx.$implicit;
+    \u0275\u0275classProp("justify-end", msg_r21.isUser)("justify-start", !msg_r21.isUser);
     \u0275\u0275advance();
-    \u0275\u0275property("ngClass", msg_r14.isUser ? "bg-[var(--color-primary)] text-white rounded-br-sm" : "bg-white border border-gray-100 text-gray-800 rounded-bl-sm shadow-sm");
+    \u0275\u0275property("ngClass", msg_r21.isUser ? "bg-[var(--color-primary)] text-white rounded-br-sm" : "bg-white border border-gray-100 text-gray-800 rounded-bl-sm shadow-sm");
     \u0275\u0275advance();
-    \u0275\u0275conditional(msg_r14.isUser ? 2 : 3);
+    \u0275\u0275conditional(msg_r21.isUser ? 2 : 3);
     \u0275\u0275advance(3);
-    \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind2(6, 7, msg_r14.timestamp, "HH:mm"), " ");
+    \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind2(6, 7, msg_r21.timestamp, "HH:mm"), " ");
   }
 }
 function SessionRoomComponent_Conditional_3_Conditional_27_Conditional_13_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 67)(1, "div", 70)(2, "div", 71);
-    \u0275\u0275element(3, "span", 72)(4, "span", 73)(5, "span", 74);
+    \u0275\u0275elementStart(0, "div", 85)(1, "div", 89)(2, "div", 90);
+    \u0275\u0275element(3, "span", 91)(4, "span", 92)(5, "span", 93);
     \u0275\u0275elementEnd();
-    \u0275\u0275text(6, " AI thinking\u2026 ");
+    \u0275\u0275text(6);
     \u0275\u0275elementEnd()();
+  }
+  if (rf & 2) {
+    const ctx_r1 = \u0275\u0275nextContext(3);
+    \u0275\u0275advance(6);
+    \u0275\u0275textInterpolate1(" ", ctx_r1.isAnalyzing() ? "Analyzing transcript\u2026" : "AI thinking\u2026", " ");
   }
 }
 function SessionRoomComponent_Conditional_3_Conditional_27_Template(rf, ctx) {
   if (rf & 1) {
-    const _r13 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "div", 26)(1, "div", 64)(2, "mat-icon", 65);
+    const _r20 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "div", 26)(1, "div", 83)(2, "mat-icon", 50);
     \u0275\u0275text(3, "smart_toy");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(4, "span", 59);
+    \u0275\u0275elementStart(4, "span", 78);
     \u0275\u0275text(5, "Personal AI Assistant");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(6, "span", 66);
+    \u0275\u0275elementStart(6, "span", 84);
     \u0275\u0275text(7, "\u2014 private to you, not visible to the client");
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(8, "div", 32, 2);
-    \u0275\u0275template(10, SessionRoomComponent_Conditional_3_Conditional_27_Conditional_10_Template, 7, 0, "div", 46);
-    \u0275\u0275repeaterCreate(11, SessionRoomComponent_Conditional_3_Conditional_27_For_12_Template, 7, 10, "div", 34, \u0275\u0275repeaterTrackByIndex);
-    \u0275\u0275template(13, SessionRoomComponent_Conditional_3_Conditional_27_Conditional_13_Template, 7, 0, "div", 67);
+    \u0275\u0275elementStart(8, "div", 33, 2);
+    \u0275\u0275template(10, SessionRoomComponent_Conditional_3_Conditional_27_Conditional_10_Template, 7, 0, "div", 48);
+    \u0275\u0275repeaterCreate(11, SessionRoomComponent_Conditional_3_Conditional_27_For_12_Template, 7, 10, "div", 35, \u0275\u0275repeaterTrackByIndex);
+    \u0275\u0275template(13, SessionRoomComponent_Conditional_3_Conditional_27_Conditional_13_Template, 7, 1, "div", 85);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(14, "div", 35)(15, "div", 36)(16, "textarea", 68);
+    \u0275\u0275elementStart(14, "div", 36)(15, "div", 37)(16, "textarea", 86);
     \u0275\u0275twoWayListener("ngModelChange", function SessionRoomComponent_Conditional_3_Conditional_27_Template_textarea_ngModelChange_16_listener($event) {
-      \u0275\u0275restoreView(_r13);
+      \u0275\u0275restoreView(_r20);
       const ctx_r1 = \u0275\u0275nextContext(2);
       \u0275\u0275twoWayBindingSet(ctx_r1.aiInput, $event) || (ctx_r1.aiInput = $event);
       return \u0275\u0275resetView($event);
     });
     \u0275\u0275listener("keydown", function SessionRoomComponent_Conditional_3_Conditional_27_Template_textarea_keydown_16_listener($event) {
-      \u0275\u0275restoreView(_r13);
+      \u0275\u0275restoreView(_r20);
       const ctx_r1 = \u0275\u0275nextContext(2);
       return \u0275\u0275resetView(ctx_r1.onAiKeydown($event));
     });
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(17, "button", 38);
+    \u0275\u0275elementStart(17, "button", 39);
     \u0275\u0275listener("click", function SessionRoomComponent_Conditional_3_Conditional_27_Template_button_click_17_listener() {
-      \u0275\u0275restoreView(_r13);
+      \u0275\u0275restoreView(_r20);
       const ctx_r1 = \u0275\u0275nextContext(2);
       return \u0275\u0275resetView(ctx_r1.sendAiMessage());
     });
@@ -50535,7 +51840,7 @@ function SessionRoomComponent_Conditional_3_Conditional_27_Template(rf, ctx) {
     \u0275\u0275advance();
     \u0275\u0275repeater(ctx_r1.aiMessages());
     \u0275\u0275advance(2);
-    \u0275\u0275conditional(ctx_r1.aiLoading() ? 13 : -1);
+    \u0275\u0275conditional(ctx_r1.aiLoading() || ctx_r1.isAnalyzing() ? 13 : -1);
     \u0275\u0275advance(3);
     \u0275\u0275twoWayProperty("ngModel", ctx_r1.aiInput);
     \u0275\u0275property("disabled", ctx_r1.aiLoading());
@@ -50545,10 +51850,10 @@ function SessionRoomComponent_Conditional_3_Conditional_27_Template(rf, ctx) {
 }
 function SessionRoomComponent_Conditional_3_Conditional_28_Template(rf, ctx) {
   if (rf & 1) {
-    const _r15 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "div", 28)(1, "app-session-video-panel", 75);
+    const _r22 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "div", 28)(1, "app-session-video-panel", 94);
     \u0275\u0275listener("closed", function SessionRoomComponent_Conditional_3_Conditional_28_Template_app_session_video_panel_closed_1_listener() {
-      \u0275\u0275restoreView(_r15);
+      \u0275\u0275restoreView(_r22);
       const ctx_r1 = \u0275\u0275nextContext(2);
       return \u0275\u0275resetView(ctx_r1.onVideoClosed());
     });
@@ -50558,6 +51863,74 @@ function SessionRoomComponent_Conditional_3_Conditional_28_Template(rf, ctx) {
     const ctx_r1 = \u0275\u0275nextContext(2);
     \u0275\u0275advance();
     \u0275\u0275property("appointmentId", ctx_r1.appointmentId);
+  }
+}
+function SessionRoomComponent_Conditional_3_Conditional_29_For_12_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r24 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "button", 101);
+    \u0275\u0275listener("click", function SessionRoomComponent_Conditional_3_Conditional_29_For_12_Template_button_click_0_listener() {
+      const act_r25 = \u0275\u0275restoreView(_r24).$implicit;
+      const ctx_r1 = \u0275\u0275nextContext(3);
+      return \u0275\u0275resetView(ctx_r1.runSelectionAnalysis(act_r25.id));
+    });
+    \u0275\u0275elementStart(1, "div", 102)(2, "mat-icon", 50);
+    \u0275\u0275text(3);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(4, "span", 103);
+    \u0275\u0275text(5);
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(6, "span", 104);
+    \u0275\u0275text(7);
+    \u0275\u0275elementEnd()();
+  }
+  if (rf & 2) {
+    const act_r25 = ctx.$implicit;
+    const ctx_r1 = \u0275\u0275nextContext(3);
+    \u0275\u0275property("disabled", ctx_r1.isAnalyzing())("title", act_r25.description);
+    \u0275\u0275advance(3);
+    \u0275\u0275textInterpolate(act_r25.icon);
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate(act_r25.label);
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate(act_r25.description);
+  }
+}
+function SessionRoomComponent_Conditional_3_Conditional_29_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r23 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "div", 95);
+    \u0275\u0275listener("click", function SessionRoomComponent_Conditional_3_Conditional_29_Template_div_click_0_listener($event) {
+      \u0275\u0275restoreView(_r23);
+      return \u0275\u0275resetView($event.stopPropagation());
+    })("mousedown", function SessionRoomComponent_Conditional_3_Conditional_29_Template_div_mousedown_0_listener($event) {
+      \u0275\u0275restoreView(_r23);
+      return \u0275\u0275resetView($event.stopPropagation());
+    });
+    \u0275\u0275elementStart(1, "div", 96)(2, "div", 97)(3, "mat-icon", 50);
+    \u0275\u0275text(4, "auto_awesome");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(5, "span");
+    \u0275\u0275text(6, "AI on selection");
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(7, "button", 98);
+    \u0275\u0275listener("click", function SessionRoomComponent_Conditional_3_Conditional_29_Template_button_click_7_listener() {
+      \u0275\u0275restoreView(_r23);
+      const ctx_r1 = \u0275\u0275nextContext(2);
+      return \u0275\u0275resetView(ctx_r1.hideSelectionTooltip());
+    });
+    \u0275\u0275elementStart(8, "mat-icon", 9);
+    \u0275\u0275text(9, "close");
+    \u0275\u0275elementEnd()()();
+    \u0275\u0275elementStart(10, "div", 99);
+    \u0275\u0275repeaterCreate(11, SessionRoomComponent_Conditional_3_Conditional_29_For_12_Template, 8, 5, "button", 100, _forTrack020);
+    \u0275\u0275elementEnd()();
+  }
+  if (rf & 2) {
+    const ctx_r1 = \u0275\u0275nextContext(2);
+    \u0275\u0275styleProp("left", ctx_r1.selectionTooltip().x, "px")("top", ctx_r1.selectionTooltip().y, "px");
+    \u0275\u0275advance(11);
+    \u0275\u0275repeater(ctx_r1.selectionActions);
   }
 }
 function SessionRoomComponent_Conditional_3_Template(rf, ctx) {
@@ -50595,13 +51968,14 @@ function SessionRoomComponent_Conditional_3_Template(rf, ctx) {
     \u0275\u0275text(17);
     \u0275\u0275elementEnd()()();
     \u0275\u0275elementStart(18, "div", 22)(19, "div", 23)(20, "div", 24);
-    \u0275\u0275repeaterCreate(21, SessionRoomComponent_Conditional_3_For_22_Template, 5, 3, "button", 25, _forTrack019);
+    \u0275\u0275repeaterCreate(21, SessionRoomComponent_Conditional_3_For_22_Template, 5, 3, "button", 25, _forTrack020);
     \u0275\u0275elementEnd();
     \u0275\u0275elementStart(23, "div", 26);
-    \u0275\u0275template(24, SessionRoomComponent_Conditional_3_Conditional_24_Template, 11, 5)(25, SessionRoomComponent_Conditional_3_Conditional_25_Template, 12, 5, "div", 27)(26, SessionRoomComponent_Conditional_3_Conditional_26_Template, 2, 1)(27, SessionRoomComponent_Conditional_3_Conditional_27_Template, 20, 5, "div", 26);
+    \u0275\u0275template(24, SessionRoomComponent_Conditional_3_Conditional_24_Template, 11, 5)(25, SessionRoomComponent_Conditional_3_Conditional_25_Template, 13, 6, "div", 27)(26, SessionRoomComponent_Conditional_3_Conditional_26_Template, 2, 1)(27, SessionRoomComponent_Conditional_3_Conditional_27_Template, 20, 5, "div", 26);
     \u0275\u0275elementEnd()();
     \u0275\u0275template(28, SessionRoomComponent_Conditional_3_Conditional_28_Template, 2, 1, "div", 28);
     \u0275\u0275elementEnd();
+    \u0275\u0275template(29, SessionRoomComponent_Conditional_3_Conditional_29_Template, 13, 4, "div", 29);
   }
   if (rf & 2) {
     const ctx_r1 = \u0275\u0275nextContext();
@@ -50610,7 +51984,7 @@ function SessionRoomComponent_Conditional_3_Template(rf, ctx) {
     \u0275\u0275advance(2);
     \u0275\u0275textInterpolate1(" ", ctx_r1.sessionInfo().psychologistName, " ");
     \u0275\u0275advance(2);
-    \u0275\u0275textInterpolate2(" ", \u0275\u0275pipeBind2(11, 11, ctx_r1.sessionInfo().startTime, "dd MMM, HH:mm"), " \u2013 ", \u0275\u0275pipeBind2(12, 14, ctx_r1.sessionInfo().endTime, "HH:mm"), " ");
+    \u0275\u0275textInterpolate2(" ", \u0275\u0275pipeBind2(11, 12, ctx_r1.sessionInfo().startTime, "dd MMM, HH:mm"), " \u2013 ", \u0275\u0275pipeBind2(12, 15, ctx_r1.sessionInfo().endTime, "HH:mm"), " ");
     \u0275\u0275advance(3);
     \u0275\u0275property("ngClass", ctx_r1.isVideoOpen() ? "bg-red-500 text-white hover:bg-red-600" : "bg-[var(--color-success)] text-white hover:bg-[var(--color-success)]/90")("title", ctx_r1.isVideoOpen() ? "Close video" : "Start video");
     \u0275\u0275advance(2);
@@ -50623,6 +51997,8 @@ function SessionRoomComponent_Conditional_3_Template(rf, ctx) {
     \u0275\u0275conditional(ctx_r1.activeTab() === "chat" ? 24 : ctx_r1.activeTab() === "transcriptions" ? 25 : ctx_r1.activeTab() === "notes" ? 26 : ctx_r1.activeTab() === "ai" && ctx_r1.isPsychologist ? 27 : -1);
     \u0275\u0275advance(4);
     \u0275\u0275conditional(ctx_r1.isVideoOpen() ? 28 : -1);
+    \u0275\u0275advance();
+    \u0275\u0275conditional(ctx_r1.selectionTooltip().visible && ctx_r1.activeTab() === "transcriptions" ? 29 : -1);
   }
 }
 var SessionRoomComponent = class _SessionRoomComponent {
@@ -50645,6 +52021,30 @@ var SessionRoomComponent = class _SessionRoomComponent {
   aiInput = "";
   aiLoading = signal(false);
   aiProvider = "Groq";
+  // Transcript analysis (psychologist-only)
+  isAnalysisMenuOpen = signal(false);
+  isAnalyzing = signal(false);
+  selectedRangeId = signal("all");
+  timeRanges = [
+    { id: "5m", label: "Last 5 min", minutes: 5 },
+    { id: "15m", label: "Last 15 min", minutes: 15 },
+    { id: "30m", label: "Last 30 min", minutes: 30 },
+    { id: "all", label: "Whole session", minutes: null }
+  ];
+  rangeAnalysisActions = [
+    { id: "summarize", label: "Summary", icon: "summarize", description: "Clinical recap of the range" },
+    { id: "emotions", label: "Emotional dynamics", icon: "mood", description: "Track emotion shifts" },
+    { id: "patterns", label: "Patterns & distortions", icon: "psychology", description: "Find cognitive patterns" },
+    { id: "questions", label: "Follow-up questions", icon: "help_outline", description: "Suggest next questions" },
+    { id: "risks", label: "Risk assessment", icon: "report", description: "Flag risk factors" }
+  ];
+  selectionActions = [
+    { id: "explain", label: "Explain", icon: "lightbulb", description: "What client may have meant" },
+    { id: "rephrase", label: "Reflect", icon: "autorenew", description: "Reflective reformulations" },
+    { id: "intervention", label: "Intervention", icon: "medical_services", description: "Suggest a technique" },
+    { id: "questions", label: "Ask next", icon: "help_outline", description: "Follow-up questions" }
+  ];
+  selectionTooltip = signal({ visible: false, x: 0, y: 0, text: "" });
   messageInput = "";
   appointmentId;
   subs = new Subscription();
@@ -50884,6 +52284,146 @@ var SessionRoomComponent = class _SessionRoomComponent {
         el.scrollTop = el.scrollHeight;
     }, 50);
   }
+  // ---------- Transcript analysis ----------
+  toggleAnalysisMenu() {
+    this.isAnalysisMenuOpen.update((v) => !v);
+  }
+  closeAnalysisMenu() {
+    this.isAnalysisMenuOpen.set(false);
+  }
+  selectRange(rangeId) {
+    this.selectedRangeId.set(rangeId);
+  }
+  get selectedRange() {
+    return this.timeRanges.find((r) => r.id === this.selectedRangeId());
+  }
+  runRangeAnalysis(action) {
+    this.closeAnalysisMenu();
+    const range = this.selectedRange;
+    const transcript = this.buildTranscriptForRange(range);
+    if (!transcript) {
+      this.pushAiSystemMessage(`_No transcript available for **${range.label}** yet._`);
+      this.activeTab.set("ai");
+      this.scrollAiToBottom();
+      return;
+    }
+    const actionMeta = this.rangeAnalysisActions.find((a) => a.id === action);
+    const headerLabel = actionMeta?.label ?? action;
+    this.dispatchAnalysis({
+      transcript,
+      action,
+      timeRangeLabel: range.label,
+      userName: this.fullUserName()
+    }, `**${headerLabel}** \u2014 ${range.label}`);
+  }
+  runSelectionAnalysis(action) {
+    const state = this.selectionTooltip();
+    const text = state.text;
+    this.hideSelectionTooltip();
+    if (!text)
+      return;
+    const actionMeta = this.selectionActions.find((a) => a.id === action);
+    const headerLabel = actionMeta?.label ?? action;
+    const preview = text.length > 120 ? text.slice(0, 120) + "\u2026" : text;
+    this.dispatchAnalysis({
+      transcript: this.buildTranscriptForRange(this.timeRanges.find((r) => r.id === "all")) || text,
+      selectedText: text,
+      action,
+      userName: this.fullUserName()
+    }, `**${headerLabel}** on selection
+
+> ${preview}`);
+  }
+  dispatchAnalysis(request, header) {
+    if (this.isAnalyzing())
+      return;
+    this.isAnalyzing.set(true);
+    this.pushAiUserMessage(header);
+    this.activeTab.set("ai");
+    this.scrollAiToBottom();
+    this.aiService.analyzeTranscriptAsync(request).subscribe({
+      next: (response) => {
+        this.aiMessages.update((m) => [
+          ...m,
+          { text: response.data, isUser: false, timestamp: /* @__PURE__ */ new Date() }
+        ]);
+        this.isAnalyzing.set(false);
+        this.scrollAiToBottom();
+      },
+      error: () => {
+        this.aiMessages.update((m) => [
+          ...m,
+          { text: "AI analysis failed. Try again in a moment.", isUser: false, timestamp: /* @__PURE__ */ new Date() }
+        ]);
+        this.isAnalyzing.set(false);
+        this.scrollAiToBottom();
+      }
+    });
+  }
+  buildTranscriptForRange(range) {
+    const finals = this.transcripts.finals();
+    if (finals.length === 0)
+      return "";
+    const cutoff = range.minutes != null ? Date.now() - range.minutes * 6e4 : null;
+    const filtered = cutoff == null ? finals : finals.filter((f) => {
+      const t = Date.parse(f.timestamp);
+      return Number.isFinite(t) ? t >= cutoff : true;
+    });
+    if (filtered.length === 0)
+      return "";
+    return filtered.map((f) => {
+      const time = new Date(f.timestamp);
+      const hh = String(time.getHours()).padStart(2, "0");
+      const mm = String(time.getMinutes()).padStart(2, "0");
+      const ss = String(time.getSeconds()).padStart(2, "0");
+      return `[${hh}:${mm}:${ss}] ${this.roleLabel(f.speaker)}: ${f.text}`;
+    }).join("\n");
+  }
+  pushAiUserMessage(text) {
+    this.aiMessages.update((m) => [
+      ...m,
+      { text, isUser: true, timestamp: /* @__PURE__ */ new Date() }
+    ]);
+  }
+  pushAiSystemMessage(text) {
+    this.aiMessages.update((m) => [
+      ...m,
+      { text, isUser: false, timestamp: /* @__PURE__ */ new Date() }
+    ]);
+  }
+  fullUserName() {
+    const u = this.authService.currentLoggedUser;
+    return ((u?.name ?? "") + " " + (u?.surname ?? "")).trim();
+  }
+  // ---------- Selection tooltip ----------
+  onTranscriptMouseUp(event) {
+    if (!this.isPsychologist)
+      return;
+    const selection = window.getSelection?.();
+    const text = selection?.toString().trim() ?? "";
+    if (!text) {
+      this.hideSelectionTooltip();
+      return;
+    }
+    const container = this.transcriptsContainer?.nativeElement;
+    if (container && selection && selection.rangeCount > 0) {
+      const range = selection.getRangeAt(0);
+      if (!container.contains(range.commonAncestorContainer)) {
+        this.hideSelectionTooltip();
+        return;
+      }
+    }
+    const padding = 8;
+    const tooltipWidth = 280;
+    const x = Math.max(padding, Math.min(window.innerWidth - tooltipWidth - padding, event.clientX));
+    const y = Math.max(padding, event.clientY - 12);
+    this.selectionTooltip.set({ visible: true, x, y, text });
+  }
+  hideSelectionTooltip() {
+    if (this.selectionTooltip().visible) {
+      this.selectionTooltip.set({ visible: false, x: 0, y: 0, text: "" });
+    }
+  }
   ngOnDestroy() {
     this.subs.unsubscribe();
     this.transcripts.clear();
@@ -50904,10 +52444,13 @@ var SessionRoomComponent = class _SessionRoomComponent {
       \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.aiMessagesContainer = _t.first);
       \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.transcriptsContainer = _t.first);
     }
-  }, standalone: false, decls: 4, vars: 1, consts: [["messagesContainer", ""], ["transcriptsContainer", ""], ["aiMessagesContainer", ""], [1, "flex", "flex-col", "h-full", "bg-gray-50"], [1, "flex-1", "flex", "items-center", "justify-center"], [1, "flex-1", "flex", "flex-col", "items-center", "justify-center", "gap-4", "text-center", "px-6"], ["diameter", "48"], [1, "text-6xl", "text-gray-300"], [1, "text-lg", "font-semibold", "text-gray-600"], [1, "text-sm", "text-gray-400"], [1, "mt-2", "px-5", "py-2", "bg-[var(--color-primary)]", "text-white", "rounded-xl", "text-sm", "font-medium", 3, "click"], [1, "flex", "items-center", "gap-2", "sm:gap-3", "px-2", "sm:px-4", "py-2", "sm:py-3", "bg-white", "border-b", "border-gray-100", "shadow-sm", "shrink-0"], ["title", "Back", 1, "w-9", "h-9", "flex", "items-center", "justify-center", "rounded-xl", "hover:bg-gray-100", "transition-colors", "shrink-0", 3, "click"], [1, "text-gray-500"], [1, "flex-1", "min-w-0"], [1, "flex", "items-center", "gap-1.5", "min-w-0"], [1, "w-1.5", "h-1.5", "rounded-full", "shrink-0", 3, "ngClass", "title"], [1, "font-semibold", "text-[var(--color-primary)]", "text-xs", "sm:text-sm", "truncate"], [1, "text-[10px]", "sm:text-xs", "text-gray-400", "truncate"], [1, "flex", "items-center", "gap-1.5", "px-2.5", "sm:px-3", "py-2", "text-xs", "sm:text-sm", "font-semibold", "rounded-xl", "transition-all", "shadow-sm", "shrink-0", 3, "click", "ngClass", "title"], [1, "text-base"], [1, "hidden", "sm:inline"], [1, "flex-1", "flex", "min-h-0", "relative"], [1, "flex", "flex-col", "min-w-0", "flex-1", "bg-gray-50"], [1, "flex", "items-center", "gap-0.5", "sm:gap-1", "px-2", "sm:px-3", "pt-1.5", "sm:pt-2", "bg-white", "border-b", "border-gray-100", "shrink-0", "overflow-x-auto", "custom-scroll"], [1, "flex", "items-center", "gap-1.5", "px-2.5", "sm:px-3", "py-2", "text-xs", "sm:text-sm", "font-medium", "rounded-t-lg", "transition-colors", "whitespace-nowrap", "border-b-2", 3, "ngClass"], [1, "flex-1", "flex", "flex-col", "min-h-0"], [1, "flex-1", "flex", "flex-col", "min-h-0", "bg-gray-50", "p-3", "sm:p-4"], [1, "absolute", "inset-0", "z-[20]", "sm:static", "sm:inset-auto", "sm:z-auto", "sm:w-[360px]", "md:w-[420px]", "lg:w-[460px]", "shrink-0", "sm:border-l", "border-gray-200", "bg-gray-900"], [1, "flex", "items-center", "gap-1.5", "px-2.5", "sm:px-3", "py-2", "text-xs", "sm:text-sm", "font-medium", "rounded-t-lg", "transition-colors", "whitespace-nowrap", "border-b-2", 3, "click", "ngClass"], [1, "text-base", "shrink-0"], [1, "hidden", "xs:inline", "sm:inline"], [1, "flex-1", "overflow-y-auto", "px-3", "sm:px-4", "py-3", "sm:py-4", "space-y-2", "sm:space-y-3", "custom-scroll"], [1, "flex", "flex-col", "items-center", "justify-center", "h-full", "text-center"], [1, "flex", 3, "justify-end", "justify-start"], [1, "px-2", "sm:px-4", "py-2", "sm:py-3", "bg-white", "border-t", "border-gray-100", "shrink-0"], [1, "flex", "items-end", "gap-2", "bg-gray-50", "rounded-2xl", "px-3", "sm:px-4", "py-1.5", "sm:py-2", "border", "border-gray-200"], ["rows", "1", 1, "flex-1", "resize-none", "bg-transparent", "outline-none", "text-sm", "text-gray-800", "placeholder-gray-400", "max-h-28", "overflow-y-auto", "disabled:opacity-50", 3, "ngModelChange", "keydown", "ngModel", "placeholder", "disabled"], ["title", "Send", 1, "w-9", "h-9", "flex", "items-center", "justify-center", "rounded-xl", "bg-[var(--color-primary)]", "text-white", "disabled:opacity-40", "transition-all", "shrink-0", 3, "click", "disabled"], [1, "text-4xl", "text-gray-200", "mb-2"], [1, "flex"], [1, "max-w-[85%]", "sm:max-w-[75%]", "px-3", "sm:px-4", "py-2", "sm:py-2.5", "rounded-2xl", "text-sm", "leading-relaxed", "break-words", 3, "ngClass"], [1, "text-[10px]", "font-semibold", "mb-0.5", "opacity-60"], [1, "whitespace-pre-wrap"], [1, "text-[10px]", "mt-1", "opacity-50", "text-right"], [1, "flex-1", "min-h-0", "overflow-y-auto", "custom-scroll", "bg-white", "border", "border-gray-100", "rounded-2xl", "shadow-sm", "p-3", "sm:p-4", "font-mono", "text-[13px]", "leading-snug"], [1, "flex", "flex-col", "items-center", "justify-center", "h-full", "text-center", "text-gray-400"], [1, "text-5xl", "text-gray-200", "mb-2"], [1, "text-sm"], [1, "text-xs", "mt-1"], [1, "text-gray-400"], [1, "ml-1.5", "font-semibold", 3, "ngClass"], [1, "ml-1", "text-gray-800", "whitespace-pre-wrap", "break-words"], [1, "italic", "opacity-60"], [1, "ml-1", "text-gray-700", "whitespace-pre-wrap", "break-words"], [1, "flex-1", "flex", "flex-col", "items-center", "justify-center", "text-center", "px-6", "text-gray-400"], [1, "flex", "items-center", "justify-between", "px-4", "py-2", "bg-white", "border-b", "border-gray-100", "shrink-0"], [1, "flex", "items-center", "gap-2", "text-sm"], [1, "text-base", "text-gray-400"], [1, "font-semibold", "text-gray-700"], [1, "text-[11px]", "font-medium", 3, "ngClass"], ["placeholder", "Write your private notes here. Visible only to you. Auto-saves as you type.", 1, "flex-1", "resize-none", "bg-white", "text-sm", "text-gray-800", "placeholder-gray-400", "outline-none", "px-4", "py-3", "leading-relaxed", "custom-scroll", 3, "ngModelChange", "ngModel"], [1, "text-5xl", "text-gray-200", "mb-3"], [1, "text-sm", "font-semibold", "text-gray-500"], [1, "flex", "items-center", "gap-2", "px-4", "py-2", "bg-white", "border-b", "border-gray-100", "shrink-0", "text-sm"], [1, "text-base", "text-[var(--color-primary)]"], [1, "text-[11px]", "text-gray-400", "ml-1"], [1, "flex", "justify-start"], ["placeholder", "Ask the AI assistant\u2026", "rows", "1", 1, "flex-1", "resize-none", "bg-transparent", "outline-none", "text-sm", "text-gray-800", "placeholder-gray-400", "max-h-28", "overflow-y-auto", "disabled:opacity-50", 3, "ngModelChange", "keydown", "ngModel", "disabled"], [1, "text-sm", "leading-relaxed", "block", 3, "data"], [1, "bg-gray-100", "px-3", "py-2", "rounded-2xl", "text-xs", "text-gray-500", "flex", "items-center", "gap-2"], [1, "flex", "gap-1"], [1, "w-1", "h-1", "bg-gray-400", "rounded-full", "animate-bounce"], [1, "w-1", "h-1", "bg-gray-400", "rounded-full", "animate-bounce", "[animation-delay:0.2s]"], [1, "w-1", "h-1", "bg-gray-400", "rounded-full", "animate-bounce", "[animation-delay:0.4s]"], [3, "closed", "appointmentId"]], template: function SessionRoomComponent_Template(rf, ctx) {
+  }, standalone: false, decls: 4, vars: 1, consts: [["messagesContainer", ""], ["transcriptsContainer", ""], ["aiMessagesContainer", ""], [1, "flex", "flex-col", "h-full", "bg-gray-50", 3, "click"], [1, "flex-1", "flex", "items-center", "justify-center"], [1, "flex-1", "flex", "flex-col", "items-center", "justify-center", "gap-4", "text-center", "px-6"], ["diameter", "48"], [1, "text-6xl", "text-gray-300"], [1, "text-lg", "font-semibold", "text-gray-600"], [1, "text-sm", "text-gray-400"], [1, "mt-2", "px-5", "py-2", "bg-[var(--color-primary)]", "text-white", "rounded-xl", "text-sm", "font-medium", 3, "click"], [1, "flex", "items-center", "gap-2", "sm:gap-3", "px-2", "sm:px-4", "py-2", "sm:py-3", "bg-white", "border-b", "border-gray-100", "shadow-sm", "shrink-0"], ["title", "Back", 1, "w-9", "h-9", "flex", "items-center", "justify-center", "rounded-xl", "hover:bg-gray-100", "transition-colors", "shrink-0", 3, "click"], [1, "text-gray-500"], [1, "flex-1", "min-w-0"], [1, "flex", "items-center", "gap-1.5", "min-w-0"], [1, "w-1.5", "h-1.5", "rounded-full", "shrink-0", 3, "ngClass", "title"], [1, "font-semibold", "text-[var(--color-primary)]", "text-xs", "sm:text-sm", "truncate"], [1, "text-[10px]", "sm:text-xs", "text-gray-400", "truncate"], [1, "flex", "items-center", "gap-1.5", "px-2.5", "sm:px-3", "py-2", "text-xs", "sm:text-sm", "font-semibold", "rounded-xl", "transition-all", "shadow-sm", "shrink-0", 3, "click", "ngClass", "title"], [1, "text-base"], [1, "hidden", "sm:inline"], [1, "flex-1", "flex", "min-h-0", "relative"], [1, "flex", "flex-col", "min-w-0", "flex-1", "bg-gray-50"], [1, "flex", "items-center", "gap-0.5", "sm:gap-1", "px-2", "sm:px-3", "pt-1.5", "sm:pt-2", "bg-white", "border-b", "border-gray-100", "shrink-0", "overflow-x-auto", "custom-scroll"], [1, "flex", "items-center", "gap-1.5", "px-2.5", "sm:px-3", "py-2", "text-xs", "sm:text-sm", "font-medium", "rounded-t-lg", "transition-colors", "whitespace-nowrap", "border-b-2", 3, "ngClass"], [1, "flex-1", "flex", "flex-col", "min-h-0"], [1, "flex-1", "flex", "flex-col", "min-h-0", "bg-gray-50", "p-3", "sm:p-4", "gap-2"], [1, "absolute", "inset-0", "z-[20]", "sm:static", "sm:inset-auto", "sm:z-auto", "sm:w-[360px]", "md:w-[420px]", "lg:w-[460px]", "shrink-0", "min-h-0", "overflow-hidden", "sm:border-l", "border-gray-200", "bg-gray-900"], [1, "fixed", "z-50", "w-72", "bg-gray-900", "text-white", "rounded-xl", "shadow-2xl", "border", "border-gray-700", "p-2", 2, "transform", "translate(-50%, -100%)", 3, "left", "top"], [1, "flex", "items-center", "gap-1.5", "px-2.5", "sm:px-3", "py-2", "text-xs", "sm:text-sm", "font-medium", "rounded-t-lg", "transition-colors", "whitespace-nowrap", "border-b-2", 3, "click", "ngClass"], [1, "text-base", "shrink-0"], [1, "hidden", "xs:inline", "sm:inline"], [1, "flex-1", "overflow-y-auto", "px-3", "sm:px-4", "py-3", "sm:py-4", "space-y-2", "sm:space-y-3", "custom-scroll"], [1, "flex", "flex-col", "items-center", "justify-center", "h-full", "text-center"], [1, "flex", 3, "justify-end", "justify-start"], [1, "px-2", "sm:px-4", "py-2", "sm:py-3", "bg-white", "border-t", "border-gray-100", "shrink-0"], [1, "flex", "items-end", "gap-2", "bg-gray-50", "rounded-2xl", "px-3", "sm:px-4", "py-1.5", "sm:py-2", "border", "border-gray-200"], ["rows", "1", 1, "flex-1", "resize-none", "bg-transparent", "outline-none", "text-sm", "text-gray-800", "placeholder-gray-400", "max-h-28", "overflow-y-auto", "disabled:opacity-50", 3, "ngModelChange", "keydown", "ngModel", "placeholder", "disabled"], ["title", "Send", 1, "w-9", "h-9", "flex", "items-center", "justify-center", "rounded-xl", "bg-[var(--color-primary)]", "text-white", "disabled:opacity-40", "transition-all", "shrink-0", 3, "click", "disabled"], [1, "text-4xl", "text-gray-200", "mb-2"], [1, "flex"], [1, "max-w-[85%]", "sm:max-w-[75%]", "px-3", "sm:px-4", "py-2", "sm:py-2.5", "rounded-2xl", "text-sm", "leading-relaxed", "break-words", 3, "ngClass"], [1, "text-[10px]", "font-semibold", "mb-0.5", "opacity-60"], [1, "whitespace-pre-wrap"], [1, "text-[10px]", "mt-1", "opacity-50", "text-right"], [1, "relative", "flex", "items-center", "justify-between", "bg-white", "border", "border-gray-100", "rounded-xl", "px-3", "py-2", "shadow-sm", "shrink-0"], [1, "flex-1", "min-h-0", "overflow-y-auto", "custom-scroll", "bg-white", "border", "border-gray-100", "rounded-2xl", "shadow-sm", "p-3", "sm:p-4", "font-mono", "text-[13px]", "leading-snug", "select-text", 3, "mouseup"], [1, "flex", "flex-col", "items-center", "justify-center", "h-full", "text-center", "text-gray-400"], [1, "flex", "items-center", "gap-1.5", "text-xs", "text-gray-500"], [1, "text-base", "text-[var(--color-primary)]"], ["type", "button", 1, "flex", "items-center", "gap-1.5", "px-3", "py-1.5", "rounded-lg", "bg-[var(--color-primary)]", "text-white", "text-xs", "font-semibold", "hover:opacity-90", "disabled:opacity-50", "shrink-0", 3, "click", "disabled"], [1, "absolute", "right-2", "top-full", "mt-1", "z-30", "w-72", "bg-white", "border", "border-gray-200", "rounded-xl", "shadow-xl", "py-2"], ["diameter", "14", "mode", "indeterminate", 1, "!text-white"], [1, "absolute", "right-2", "top-full", "mt-1", "z-30", "w-72", "bg-white", "border", "border-gray-200", "rounded-xl", "shadow-xl", "py-2", 3, "click"], [1, "px-3", "py-1.5", "text-[10px]", "font-semibold", "uppercase", "tracking-wider", "text-gray-400"], [1, "px-2", "grid", "grid-cols-2", "gap-1"], ["type", "button", 1, "px-2", "py-1.5", "rounded-lg", "text-xs", "font-medium", "transition-colors", "text-left", 3, "ngClass"], [1, "mt-2", "px-3", "py-1.5", "text-[10px]", "font-semibold", "uppercase", "tracking-wider", "text-gray-400", "border-t", "border-gray-100"], ["type", "button", 1, "w-full", "flex", "items-start", "gap-2", "px-3", "py-2", "hover:bg-gray-50", "text-left", "transition-colors"], ["type", "button", 1, "px-2", "py-1.5", "rounded-lg", "text-xs", "font-medium", "transition-colors", "text-left", 3, "click", "ngClass"], ["type", "button", 1, "w-full", "flex", "items-start", "gap-2", "px-3", "py-2", "hover:bg-gray-50", "text-left", "transition-colors", 3, "click"], [1, "text-base", "text-[var(--color-primary)]", "mt-0.5"], [1, "min-w-0"], [1, "text-sm", "font-medium", "text-gray-800"], [1, "text-[11px]", "text-gray-400"], [1, "text-5xl", "text-gray-200", "mb-2"], [1, "text-sm"], [1, "text-xs", "mt-1"], [1, "text-gray-400"], [1, "ml-1.5", "font-semibold", 3, "ngClass"], [1, "ml-1", "text-gray-800", "whitespace-pre-wrap", "break-words"], [1, "italic", "opacity-60"], [1, "ml-1", "text-gray-700", "whitespace-pre-wrap", "break-words"], [1, "flex-1", "flex", "flex-col", "items-center", "justify-center", "text-center", "px-6", "text-gray-400"], [1, "flex", "items-center", "justify-between", "px-4", "py-2", "bg-white", "border-b", "border-gray-100", "shrink-0"], [1, "flex", "items-center", "gap-2", "text-sm"], [1, "text-base", "text-gray-400"], [1, "font-semibold", "text-gray-700"], [1, "text-[11px]", "font-medium", 3, "ngClass"], ["placeholder", "Write your private notes here. Visible only to you. Auto-saves as you type.", 1, "flex-1", "resize-none", "bg-white", "text-sm", "text-gray-800", "placeholder-gray-400", "outline-none", "px-4", "py-3", "leading-relaxed", "custom-scroll", 3, "ngModelChange", "ngModel"], [1, "text-5xl", "text-gray-200", "mb-3"], [1, "text-sm", "font-semibold", "text-gray-500"], [1, "flex", "items-center", "gap-2", "px-4", "py-2", "bg-white", "border-b", "border-gray-100", "shrink-0", "text-sm"], [1, "text-[11px]", "text-gray-400", "ml-1"], [1, "flex", "justify-start"], ["placeholder", "Ask the AI assistant\u2026", "rows", "1", 1, "flex-1", "resize-none", "bg-transparent", "outline-none", "text-sm", "text-gray-800", "placeholder-gray-400", "max-h-28", "overflow-y-auto", "disabled:opacity-50", 3, "ngModelChange", "keydown", "ngModel", "disabled"], [1, "text-sm", "leading-relaxed", "block", "prose-invert", 3, "data"], [1, "text-sm", "leading-relaxed", "block", 3, "data"], [1, "bg-gray-100", "px-3", "py-2", "rounded-2xl", "text-xs", "text-gray-500", "flex", "items-center", "gap-2"], [1, "flex", "gap-1"], [1, "w-1", "h-1", "bg-gray-400", "rounded-full", "animate-bounce"], [1, "w-1", "h-1", "bg-gray-400", "rounded-full", "animate-bounce", "[animation-delay:0.2s]"], [1, "w-1", "h-1", "bg-gray-400", "rounded-full", "animate-bounce", "[animation-delay:0.4s]"], [3, "closed", "appointmentId"], [1, "fixed", "z-50", "w-72", "bg-gray-900", "text-white", "rounded-xl", "shadow-2xl", "border", "border-gray-700", "p-2", 2, "transform", "translate(-50%, -100%)", 3, "click", "mousedown"], [1, "flex", "items-center", "justify-between", "px-1.5", "pb-1.5", "border-b", "border-gray-700", "mb-1"], [1, "flex", "items-center", "gap-1", "text-[11px]", "font-semibold", "text-gray-300"], ["type", "button", "title", "Close", 1, "w-5", "h-5", "flex", "items-center", "justify-center", "rounded", "hover:bg-gray-700", 3, "click"], [1, "grid", "grid-cols-2", "gap-1"], ["type", "button", 1, "flex", "flex-col", "items-start", "gap-0.5", "px-2", "py-1.5", "rounded-lg", "bg-gray-800", "hover:bg-gray-700", "disabled:opacity-50", "transition-colors", "text-left", 3, "disabled", "title"], ["type", "button", 1, "flex", "flex-col", "items-start", "gap-0.5", "px-2", "py-1.5", "rounded-lg", "bg-gray-800", "hover:bg-gray-700", "disabled:opacity-50", "transition-colors", "text-left", 3, "click", "disabled", "title"], [1, "flex", "items-center", "gap-1"], [1, "text-xs", "font-medium"], [1, "text-[10px]", "text-gray-400", "leading-tight"]], template: function SessionRoomComponent_Template(rf, ctx) {
     if (rf & 1) {
       \u0275\u0275elementStart(0, "div", 3);
-      \u0275\u0275template(1, SessionRoomComponent_Conditional_1_Template, 2, 0, "div", 4)(2, SessionRoomComponent_Conditional_2_Template, 9, 0, "div", 5)(3, SessionRoomComponent_Conditional_3_Template, 29, 17);
+      \u0275\u0275listener("click", function SessionRoomComponent_Template_div_click_0_listener() {
+        return ctx.closeAnalysisMenu();
+      });
+      \u0275\u0275template(1, SessionRoomComponent_Conditional_1_Template, 2, 0, "div", 4)(2, SessionRoomComponent_Conditional_2_Template, 9, 0, "div", 5)(3, SessionRoomComponent_Conditional_3_Template, 30, 18);
       \u0275\u0275elementEnd();
     }
     if (rf & 2) {
@@ -50919,7 +52462,7 @@ var SessionRoomComponent = class _SessionRoomComponent {
 (() => {
   (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(SessionRoomComponent, [{
     type: Component,
-    args: [{ selector: "app-session-room", standalone: false, template: `<div class="flex flex-col h-full bg-gray-50">
+    args: [{ selector: "app-session-room", standalone: false, template: `<div class="flex flex-col h-full bg-gray-50" (click)="closeAnalysisMenu()">
 
   <!-- Loading -->
   @if (isLoading()) {
@@ -51071,10 +52614,74 @@ var SessionRoomComponent = class _SessionRoomComponent {
           @else if (activeTab() === 'transcriptions') {
             @let finals = transcripts.finals();
             @let interims = transcripts.interims();
-            <div class="flex-1 flex flex-col min-h-0 bg-gray-50 p-3 sm:p-4">
+            <div class="flex-1 flex flex-col min-h-0 bg-gray-50 p-3 sm:p-4 gap-2">
+
+              @if (isPsychologist) {
+                <!-- Analyze toolbar -->
+                <div class="relative flex items-center justify-between bg-white border border-gray-100 rounded-xl px-3 py-2 shadow-sm shrink-0">
+                  <div class="flex items-center gap-1.5 text-xs text-gray-500">
+                    <mat-icon class="text-base text-[var(--color-primary)]">auto_awesome</mat-icon>
+                    <span>Select text in transcript for AI actions, or analyze a range:</span>
+                  </div>
+
+                  <button
+                    type="button"
+                    (click)="$event.stopPropagation(); toggleAnalysisMenu()"
+                    [disabled]="isAnalyzing()"
+                    class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[var(--color-primary)] text-white text-xs font-semibold hover:opacity-90 disabled:opacity-50 shrink-0"
+                  >
+                    @if (isAnalyzing()) {
+                      <mat-spinner diameter="14" mode="indeterminate" class="!text-white"></mat-spinner>
+                      <span>Analyzing\u2026</span>
+                    } @else {
+                      <mat-icon class="text-base">analytics</mat-icon>
+                      <span>Analyze</span>
+                      <mat-icon class="text-base">{{ isAnalysisMenuOpen() ? 'expand_less' : 'expand_more' }}</mat-icon>
+                    }
+                  </button>
+
+                  @if (isAnalysisMenuOpen()) {
+                    <div
+                      class="absolute right-2 top-full mt-1 z-30 w-72 bg-white border border-gray-200 rounded-xl shadow-xl py-2"
+                      (click)="$event.stopPropagation()"
+                    >
+                      <div class="px-3 py-1.5 text-[10px] font-semibold uppercase tracking-wider text-gray-400">Time range</div>
+                      <div class="px-2 grid grid-cols-2 gap-1">
+                        @for (range of timeRanges; track range.id) {
+                          <button
+                            type="button"
+                            (click)="selectRange(range.id)"
+                            class="px-2 py-1.5 rounded-lg text-xs font-medium transition-colors text-left"
+                            [ngClass]="selectedRangeId() === range.id
+                              ? 'bg-[var(--color-primary)] text-white'
+                              : 'bg-gray-50 text-gray-700 hover:bg-gray-100'"
+                          >{{ range.label }}</button>
+                        }
+                      </div>
+
+                      <div class="mt-2 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-wider text-gray-400 border-t border-gray-100">Action</div>
+                      @for (act of rangeAnalysisActions; track act.id) {
+                        <button
+                          type="button"
+                          (click)="runRangeAnalysis(act.id)"
+                          class="w-full flex items-start gap-2 px-3 py-2 hover:bg-gray-50 text-left transition-colors"
+                        >
+                          <mat-icon class="text-base text-[var(--color-primary)] mt-0.5">{{ act.icon }}</mat-icon>
+                          <div class="min-w-0">
+                            <div class="text-sm font-medium text-gray-800">{{ act.label }}</div>
+                            <div class="text-[11px] text-gray-400">{{ act.description }}</div>
+                          </div>
+                        </button>
+                      }
+                    </div>
+                  }
+                </div>
+              }
+
               <div
                 #transcriptsContainer
-                class="flex-1 min-h-0 overflow-y-auto custom-scroll bg-white border border-gray-100 rounded-2xl shadow-sm p-3 sm:p-4 font-mono text-[13px] leading-snug"
+                (mouseup)="onTranscriptMouseUp($event)"
+                class="flex-1 min-h-0 overflow-y-auto custom-scroll bg-white border border-gray-100 rounded-2xl shadow-sm p-3 sm:p-4 font-mono text-[13px] leading-snug select-text"
               >
                 @if (finals.length === 0 && (interims | keyvalue).length === 0) {
                   <div class="flex flex-col items-center justify-center h-full text-center text-gray-400">
@@ -51187,7 +52794,7 @@ var SessionRoomComponent = class _SessionRoomComponent {
                         : 'bg-white border border-gray-100 text-gray-800 rounded-bl-sm shadow-sm'"
                     >
                       @if (msg.isUser) {
-                        <p class="whitespace-pre-wrap">{{ msg.text }}</p>
+                        <markdown class="text-sm leading-relaxed block prose-invert" [data]="msg.text"></markdown>
                       } @else {
                         <markdown class="text-sm leading-relaxed block" [data]="msg.text"></markdown>
                       }
@@ -51198,7 +52805,7 @@ var SessionRoomComponent = class _SessionRoomComponent {
                   </div>
                 }
 
-                @if (aiLoading()) {
+                @if (aiLoading() || isAnalyzing()) {
                   <div class="flex justify-start">
                     <div class="bg-gray-100 px-3 py-2 rounded-2xl text-xs text-gray-500 flex items-center gap-2">
                       <div class="flex gap-1">
@@ -51206,7 +52813,7 @@ var SessionRoomComponent = class _SessionRoomComponent {
                         <span class="w-1 h-1 bg-gray-400 rounded-full animate-bounce [animation-delay:0.2s]"></span>
                         <span class="w-1 h-1 bg-gray-400 rounded-full animate-bounce [animation-delay:0.4s]"></span>
                       </div>
-                      AI thinking\u2026
+                      {{ isAnalyzing() ? 'Analyzing transcript\u2026' : 'AI thinking\u2026' }}
                     </div>
                   </div>
                 }
@@ -51240,7 +52847,7 @@ var SessionRoomComponent = class _SessionRoomComponent {
 
       <!-- RIGHT: video panel \u2014 fills remaining space on mobile, side panel on sm+ -->
       @if (isVideoOpen()) {
-        <div class="absolute inset-0 z-[20] sm:static sm:inset-auto sm:z-auto sm:w-[360px] md:w-[420px] lg:w-[460px] shrink-0 sm:border-l border-gray-200 bg-gray-900">
+        <div class="absolute inset-0 z-[20] sm:static sm:inset-auto sm:z-auto sm:w-[360px] md:w-[420px] lg:w-[460px] shrink-0 min-h-0 overflow-hidden sm:border-l border-gray-200 bg-gray-900">
           <app-session-video-panel
             [appointmentId]="appointmentId"
             (closed)="onVideoClosed()"
@@ -51249,6 +52856,50 @@ var SessionRoomComponent = class _SessionRoomComponent {
       }
 
     </div>
+
+    <!-- Selection tooltip for transcripts -->
+    @if (selectionTooltip().visible && activeTab() === 'transcriptions') {
+      <div
+        class="fixed z-50 w-72 bg-gray-900 text-white rounded-xl shadow-2xl border border-gray-700 p-2"
+        [style.left.px]="selectionTooltip().x"
+        [style.top.px]="selectionTooltip().y"
+        style="transform: translate(-50%, -100%);"
+        (click)="$event.stopPropagation()"
+        (mousedown)="$event.stopPropagation()"
+      >
+        <div class="flex items-center justify-between px-1.5 pb-1.5 border-b border-gray-700 mb-1">
+          <div class="flex items-center gap-1 text-[11px] font-semibold text-gray-300">
+            <mat-icon class="text-base text-[var(--color-primary)]">auto_awesome</mat-icon>
+            <span>AI on selection</span>
+          </div>
+          <button
+            type="button"
+            (click)="hideSelectionTooltip()"
+            class="w-5 h-5 flex items-center justify-center rounded hover:bg-gray-700"
+            title="Close"
+          >
+            <mat-icon class="text-sm text-gray-400">close</mat-icon>
+          </button>
+        </div>
+        <div class="grid grid-cols-2 gap-1">
+          @for (act of selectionActions; track act.id) {
+            <button
+              type="button"
+              (click)="runSelectionAnalysis(act.id)"
+              [disabled]="isAnalyzing()"
+              class="flex flex-col items-start gap-0.5 px-2 py-1.5 rounded-lg bg-gray-800 hover:bg-gray-700 disabled:opacity-50 transition-colors text-left"
+              [title]="act.description"
+            >
+              <div class="flex items-center gap-1">
+                <mat-icon class="text-base text-[var(--color-primary)]">{{ act.icon }}</mat-icon>
+                <span class="text-xs font-medium">{{ act.label }}</span>
+              </div>
+              <span class="text-[10px] text-gray-400 leading-tight">{{ act.description }}</span>
+            </button>
+          }
+        </div>
+      </div>
+    }
   }
 
 </div>
@@ -51265,7 +52916,970 @@ var SessionRoomComponent = class _SessionRoomComponent {
   }] });
 })();
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(SessionRoomComponent, { className: "SessionRoomComponent", filePath: "src/app/modules/session/pages/session-room/session-room.component.ts", lineNumber: 31 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(SessionRoomComponent, { className: "SessionRoomComponent", filePath: "src/app/modules/session/pages/session-room/session-room.component.ts", lineNumber: 57 });
+})();
+
+// src/app/modules/admin-tools/pages/user-category-applications-page/user-category-applications-page.component.ts
+var _c031 = (a0, a1) => ({ filtered: a0, total: a1 });
+var _c119 = (a0) => ({ index: a0 });
+var _forTrack021 = ($index, $item) => $item.id;
+function UserCategoryApplicationsPageComponent_ng_container_0_For_19_Case_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275text(0);
+  }
+  if (rf & 2) {
+    const t_r5 = \u0275\u0275nextContext(2).$implicit;
+    \u0275\u0275textInterpolate1(" ", t_r5("admin.all"), " ");
+  }
+}
+function UserCategoryApplicationsPageComponent_ng_container_0_For_19_Case_2_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275text(0);
+  }
+  if (rf & 2) {
+    const t_r5 = \u0275\u0275nextContext(2).$implicit;
+    \u0275\u0275textInterpolate1(" ", t_r5("category_application.admin.status_pending"), " ");
+  }
+}
+function UserCategoryApplicationsPageComponent_ng_container_0_For_19_Case_3_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275text(0);
+  }
+  if (rf & 2) {
+    const t_r5 = \u0275\u0275nextContext(2).$implicit;
+    \u0275\u0275textInterpolate1(" ", t_r5("category_application.admin.status_approved"), " ");
+  }
+}
+function UserCategoryApplicationsPageComponent_ng_container_0_For_19_Case_4_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275text(0);
+  }
+  if (rf & 2) {
+    const t_r5 = \u0275\u0275nextContext(2).$implicit;
+    \u0275\u0275textInterpolate1(" ", t_r5("category_application.admin.status_rejected"), " ");
+  }
+}
+function UserCategoryApplicationsPageComponent_ng_container_0_For_19_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r3 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "button", 18);
+    \u0275\u0275listener("click", function UserCategoryApplicationsPageComponent_ng_container_0_For_19_Template_button_click_0_listener() {
+      const status_r4 = \u0275\u0275restoreView(_r3).$implicit;
+      const ctx_r1 = \u0275\u0275nextContext(2);
+      return \u0275\u0275resetView(ctx_r1.setStatusFilter(status_r4));
+    });
+    \u0275\u0275template(1, UserCategoryApplicationsPageComponent_ng_container_0_For_19_Case_1_Template, 1, 1)(2, UserCategoryApplicationsPageComponent_ng_container_0_For_19_Case_2_Template, 1, 1)(3, UserCategoryApplicationsPageComponent_ng_container_0_For_19_Case_3_Template, 1, 1)(4, UserCategoryApplicationsPageComponent_ng_container_0_For_19_Case_4_Template, 1, 1);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    let tmp_13_0;
+    const status_r4 = ctx.$implicit;
+    const ctx_r1 = \u0275\u0275nextContext(2);
+    \u0275\u0275property("ngClass", ctx_r1.statusFilter === status_r4 ? "bg-[var(--color-primary)] text-white border-[var(--color-primary)] shadow-md shadow-gray-200" : "bg-white text-gray-600 border-gray-200 hover:bg-gray-50 hover:border-gray-300");
+    \u0275\u0275advance();
+    \u0275\u0275conditional((tmp_13_0 = status_r4) === "All" ? 1 : tmp_13_0 === "Pending" ? 2 : tmp_13_0 === "Approved" ? 3 : tmp_13_0 === "Rejected" ? 4 : -1);
+  }
+}
+function UserCategoryApplicationsPageComponent_ng_container_0_Conditional_20_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "div", 14);
+    \u0275\u0275element(1, "app-loading-spinner");
+    \u0275\u0275elementEnd();
+  }
+}
+function UserCategoryApplicationsPageComponent_ng_container_0_Conditional_21_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "div", 15)(1, "mat-icon", 19);
+    \u0275\u0275text(2, "inbox");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(3, "h3", 20);
+    \u0275\u0275text(4);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(5, "p", 21);
+    \u0275\u0275text(6);
+    \u0275\u0275elementEnd()();
+  }
+  if (rf & 2) {
+    const t_r5 = \u0275\u0275nextContext().$implicit;
+    \u0275\u0275advance(4);
+    \u0275\u0275textInterpolate1(" ", t_r5("category_application.admin.empty_title"), " ");
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate1(" ", t_r5("category_application.admin.empty_subtitle"), " ");
+  }
+}
+function UserCategoryApplicationsPageComponent_ng_container_0_Conditional_22_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "div", 15)(1, "mat-icon", 19);
+    \u0275\u0275text(2, "search_off");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(3, "h3", 20);
+    \u0275\u0275text(4);
+    \u0275\u0275elementEnd()();
+  }
+  if (rf & 2) {
+    const t_r5 = \u0275\u0275nextContext().$implicit;
+    \u0275\u0275advance(4);
+    \u0275\u0275textInterpolate1(" ", t_r5("category_application.admin.no_match"), " ");
+  }
+}
+function UserCategoryApplicationsPageComponent_ng_container_0_Conditional_23_For_19_Case_12_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "span", 37);
+    \u0275\u0275element(1, "span", 42);
+    \u0275\u0275text(2);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const t_r5 = \u0275\u0275nextContext(3).$implicit;
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate1(" ", t_r5("category_application.admin.status_pending"), " ");
+  }
+}
+function UserCategoryApplicationsPageComponent_ng_container_0_Conditional_23_For_19_Case_13_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "span", 38);
+    \u0275\u0275element(1, "span", 43);
+    \u0275\u0275text(2);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const t_r5 = \u0275\u0275nextContext(3).$implicit;
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate1(" ", t_r5("category_application.admin.status_approved"), " ");
+  }
+}
+function UserCategoryApplicationsPageComponent_ng_container_0_Conditional_23_For_19_Case_14_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "span", 39);
+    \u0275\u0275element(1, "span", 44);
+    \u0275\u0275text(2);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const t_r5 = \u0275\u0275nextContext(3).$implicit;
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate1(" ", t_r5("category_application.admin.status_rejected"), " ");
+  }
+}
+function UserCategoryApplicationsPageComponent_ng_container_0_Conditional_23_For_19_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r6 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "tr", 30)(1, "td", 31)(2, "div", 32);
+    \u0275\u0275text(3);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(4, "div", 33);
+    \u0275\u0275text(5);
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(6, "td", 34)(7, "span", 35);
+    \u0275\u0275text(8);
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(9, "td", 36);
+    \u0275\u0275text(10);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(11, "td", 34);
+    \u0275\u0275template(12, UserCategoryApplicationsPageComponent_ng_container_0_Conditional_23_For_19_Case_12_Template, 3, 1, "span", 37)(13, UserCategoryApplicationsPageComponent_ng_container_0_Conditional_23_For_19_Case_13_Template, 3, 1, "span", 38)(14, UserCategoryApplicationsPageComponent_ng_container_0_Conditional_23_For_19_Case_14_Template, 3, 1, "span", 39);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(15, "td", 40);
+    \u0275\u0275text(16);
+    \u0275\u0275pipe(17, "date");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(18, "td", 34)(19, "button", 41);
+    \u0275\u0275listener("click", function UserCategoryApplicationsPageComponent_ng_container_0_Conditional_23_For_19_Template_button_click_19_listener() {
+      const app_r7 = \u0275\u0275restoreView(_r6).$implicit;
+      const ctx_r1 = \u0275\u0275nextContext(3);
+      return \u0275\u0275resetView(ctx_r1.startReview(app_r7));
+    });
+    \u0275\u0275text(20);
+    \u0275\u0275elementEnd()()();
+  }
+  if (rf & 2) {
+    let tmp_19_0;
+    const app_r7 = ctx.$implicit;
+    const t_r5 = \u0275\u0275nextContext(2).$implicit;
+    \u0275\u0275advance(3);
+    \u0275\u0275textInterpolate2(" ", app_r7.firstName, " ", app_r7.lastName, " ");
+    \u0275\u0275advance();
+    \u0275\u0275property("title", app_r7.email);
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate1(" ", app_r7.email, " ");
+    \u0275\u0275advance(3);
+    \u0275\u0275textInterpolate1(" ", app_r7.requestedCategoryName, " ");
+    \u0275\u0275advance();
+    \u0275\u0275property("title", app_r7.comment);
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate1(" ", app_r7.comment || "\u2014", " ");
+    \u0275\u0275advance(2);
+    \u0275\u0275conditional((tmp_19_0 = app_r7.status) === "Pending" ? 12 : tmp_19_0 === "Approved" ? 13 : tmp_19_0 === "Rejected" ? 14 : -1);
+    \u0275\u0275advance(4);
+    \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind2(17, 10, app_r7.createdAt, "MMM d, yyyy"), " ");
+    \u0275\u0275advance(4);
+    \u0275\u0275textInterpolate1(" ", t_r5("category_application.admin.review"), " ");
+  }
+}
+function UserCategoryApplicationsPageComponent_ng_container_0_Conditional_23_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "div", 16)(1, "div", 22)(2, "table", 23)(3, "thead", 24)(4, "tr", 25)(5, "th", 26);
+    \u0275\u0275text(6);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(7, "th", 27);
+    \u0275\u0275text(8);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(9, "th", 26);
+    \u0275\u0275text(10);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(11, "th", 27);
+    \u0275\u0275text(12);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(13, "th", 28);
+    \u0275\u0275text(14);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(15, "th", 28);
+    \u0275\u0275text(16);
+    \u0275\u0275elementEnd()()();
+    \u0275\u0275elementStart(17, "tbody", 29);
+    \u0275\u0275repeaterCreate(18, UserCategoryApplicationsPageComponent_ng_container_0_Conditional_23_For_19_Template, 21, 13, "tr", 30, _forTrack021);
+    \u0275\u0275elementEnd()()()();
+  }
+  if (rf & 2) {
+    const t_r5 = \u0275\u0275nextContext().$implicit;
+    const ctx_r1 = \u0275\u0275nextContext();
+    \u0275\u0275advance(6);
+    \u0275\u0275textInterpolate1(" ", t_r5("category_application.admin.user"), " ");
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate1(" ", t_r5("category_application.admin.category"), " ");
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate1(" ", t_r5("category_application.admin.comment"), " ");
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate1(" ", t_r5("category_application.admin.status"), " ");
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate1(" ", t_r5("category_application.admin.date"), " ");
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate1(" ", t_r5("category_application.admin.actions"), " ");
+    \u0275\u0275advance(2);
+    \u0275\u0275repeater(ctx_r1.filtered);
+  }
+}
+function UserCategoryApplicationsPageComponent_ng_container_0_Conditional_24_Conditional_32_For_5_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "li")(1, "a", 61)(2, "mat-icon", 62);
+    \u0275\u0275text(3, "description");
+    \u0275\u0275elementEnd();
+    \u0275\u0275text(4);
+    \u0275\u0275elementEnd()();
+  }
+  if (rf & 2) {
+    const url_r9 = ctx.$implicit;
+    const \u0275$index_211_r10 = ctx.$index;
+    const t_r5 = \u0275\u0275nextContext(3).$implicit;
+    \u0275\u0275advance();
+    \u0275\u0275property("href", url_r9, \u0275\u0275sanitizeUrl);
+    \u0275\u0275advance(3);
+    \u0275\u0275textInterpolate1(" ", t_r5("category_application.admin.modal_document_label", \u0275\u0275pureFunction1(2, _c119, \u0275$index_211_r10 + 1)), " ");
+  }
+}
+function UserCategoryApplicationsPageComponent_ng_container_0_Conditional_24_Conditional_32_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "div")(1, "p", 58);
+    \u0275\u0275text(2);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(3, "ul", 60);
+    \u0275\u0275repeaterCreate(4, UserCategoryApplicationsPageComponent_ng_container_0_Conditional_24_Conditional_32_For_5_Template, 5, 4, "li", null, \u0275\u0275repeaterTrackByIdentity);
+    \u0275\u0275elementEnd()();
+  }
+  if (rf & 2) {
+    const t_r5 = \u0275\u0275nextContext(2).$implicit;
+    const ctx_r1 = \u0275\u0275nextContext();
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate1(" ", t_r5("category_application.admin.modal_documents"), " ");
+    \u0275\u0275advance(2);
+    \u0275\u0275repeater(ctx_r1.reviewing.documentUrls);
+  }
+}
+function UserCategoryApplicationsPageComponent_ng_container_0_Conditional_24_Conditional_33_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r11 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "div")(1, "label", 63);
+    \u0275\u0275text(2);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(3, "textarea", 64);
+    \u0275\u0275twoWayListener("ngModelChange", function UserCategoryApplicationsPageComponent_ng_container_0_Conditional_24_Conditional_33_Template_textarea_ngModelChange_3_listener($event) {
+      \u0275\u0275restoreView(_r11);
+      const ctx_r1 = \u0275\u0275nextContext(3);
+      \u0275\u0275twoWayBindingSet(ctx_r1.rejectionReason, $event) || (ctx_r1.rejectionReason = $event);
+      return \u0275\u0275resetView($event);
+    });
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(4, "div", 65)(5, "button", 66);
+    \u0275\u0275listener("click", function UserCategoryApplicationsPageComponent_ng_container_0_Conditional_24_Conditional_33_Template_button_click_5_listener() {
+      \u0275\u0275restoreView(_r11);
+      const ctx_r1 = \u0275\u0275nextContext(3);
+      return \u0275\u0275resetView(ctx_r1.reject());
+    });
+    \u0275\u0275text(6);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(7, "button", 67);
+    \u0275\u0275listener("click", function UserCategoryApplicationsPageComponent_ng_container_0_Conditional_24_Conditional_33_Template_button_click_7_listener() {
+      \u0275\u0275restoreView(_r11);
+      const ctx_r1 = \u0275\u0275nextContext(3);
+      return \u0275\u0275resetView(ctx_r1.approve());
+    });
+    \u0275\u0275text(8);
+    \u0275\u0275elementEnd()();
+  }
+  if (rf & 2) {
+    const t_r5 = \u0275\u0275nextContext(2).$implicit;
+    const ctx_r1 = \u0275\u0275nextContext();
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate1(" ", t_r5("category_application.admin.modal_rejection_label"), " ");
+    \u0275\u0275advance();
+    \u0275\u0275twoWayProperty("ngModel", ctx_r1.rejectionReason);
+    \u0275\u0275property("placeholder", t_r5("category_application.admin.modal_rejection_placeholder"));
+    \u0275\u0275advance(2);
+    \u0275\u0275property("disabled", ctx_r1.isSubmittingReview);
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate1(" ", t_r5("category_application.admin.modal_reject"), " ");
+    \u0275\u0275advance();
+    \u0275\u0275property("disabled", ctx_r1.isSubmittingReview);
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate1(" ", t_r5("category_application.admin.modal_approve"), " ");
+  }
+}
+function UserCategoryApplicationsPageComponent_ng_container_0_Conditional_24_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r8 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "div", 45);
+    \u0275\u0275listener("click", function UserCategoryApplicationsPageComponent_ng_container_0_Conditional_24_Template_div_click_0_listener() {
+      \u0275\u0275restoreView(_r8);
+      const ctx_r1 = \u0275\u0275nextContext(2);
+      return \u0275\u0275resetView(ctx_r1.cancelReview());
+    });
+    \u0275\u0275elementStart(1, "div", 46);
+    \u0275\u0275listener("click", function UserCategoryApplicationsPageComponent_ng_container_0_Conditional_24_Template_div_click_1_listener($event) {
+      \u0275\u0275restoreView(_r8);
+      return \u0275\u0275resetView($event.stopPropagation());
+    });
+    \u0275\u0275elementStart(2, "div", 47)(3, "div")(4, "h2", 48);
+    \u0275\u0275text(5);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(6, "p", 49);
+    \u0275\u0275text(7);
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(8, "button", 50);
+    \u0275\u0275listener("click", function UserCategoryApplicationsPageComponent_ng_container_0_Conditional_24_Template_button_click_8_listener() {
+      \u0275\u0275restoreView(_r8);
+      const ctx_r1 = \u0275\u0275nextContext(2);
+      return \u0275\u0275resetView(ctx_r1.cancelReview());
+    });
+    \u0275\u0275elementStart(9, "mat-icon", 51);
+    \u0275\u0275text(10, "close");
+    \u0275\u0275elementEnd()()();
+    \u0275\u0275elementStart(11, "button", 52);
+    \u0275\u0275listener("click", function UserCategoryApplicationsPageComponent_ng_container_0_Conditional_24_Template_button_click_11_listener() {
+      \u0275\u0275restoreView(_r8);
+      const ctx_r1 = \u0275\u0275nextContext(2);
+      return \u0275\u0275resetView(ctx_r1.openChatWithApplicant(ctx_r1.reviewing));
+    });
+    \u0275\u0275elementStart(12, "mat-icon", 51);
+    \u0275\u0275text(13, "chat");
+    \u0275\u0275elementEnd();
+    \u0275\u0275text(14);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(15, "div", 53)(16, "div", 54)(17, "span", 55);
+    \u0275\u0275text(18);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(19, "span", 56);
+    \u0275\u0275text(20);
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(21, "div", 54)(22, "span", 55);
+    \u0275\u0275text(23);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(24, "span", 57);
+    \u0275\u0275text(25);
+    \u0275\u0275pipe(26, "date");
+    \u0275\u0275elementEnd()()();
+    \u0275\u0275elementStart(27, "div")(28, "p", 58);
+    \u0275\u0275text(29);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(30, "p", 59);
+    \u0275\u0275text(31);
+    \u0275\u0275elementEnd()();
+    \u0275\u0275template(32, UserCategoryApplicationsPageComponent_ng_container_0_Conditional_24_Conditional_32_Template, 6, 1, "div")(33, UserCategoryApplicationsPageComponent_ng_container_0_Conditional_24_Conditional_33_Template, 9, 7);
+    \u0275\u0275elementEnd()();
+  }
+  if (rf & 2) {
+    const t_r5 = \u0275\u0275nextContext().$implicit;
+    const ctx_r1 = \u0275\u0275nextContext();
+    \u0275\u0275advance(5);
+    \u0275\u0275textInterpolate1(" ", t_r5("category_application.admin.modal_title"), " ");
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate3(" ", ctx_r1.reviewing.firstName, " ", ctx_r1.reviewing.lastName, " \xB7 ", ctx_r1.reviewing.email, " ");
+    \u0275\u0275advance(7);
+    \u0275\u0275textInterpolate1(" ", t_r5("category_application.admin.modal_open_chat"), " ");
+    \u0275\u0275advance(4);
+    \u0275\u0275textInterpolate(t_r5("category_application.admin.modal_category"));
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate(ctx_r1.reviewing.requestedCategoryName);
+    \u0275\u0275advance(3);
+    \u0275\u0275textInterpolate(t_r5("category_application.admin.modal_submitted_at"));
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate(\u0275\u0275pipeBind2(26, 13, ctx_r1.reviewing.createdAt, "MMM d, yyyy HH:mm"));
+    \u0275\u0275advance(4);
+    \u0275\u0275textInterpolate1(" ", t_r5("category_application.admin.modal_user_comment"), " ");
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate1(" ", ctx_r1.reviewing.comment || "\u2014", " ");
+    \u0275\u0275advance();
+    \u0275\u0275conditional(ctx_r1.reviewing.documentUrls.length ? 32 : -1);
+    \u0275\u0275advance();
+    \u0275\u0275conditional(ctx_r1.reviewing.status === "Pending" ? 33 : -1);
+  }
+}
+function UserCategoryApplicationsPageComponent_ng_container_0_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r1 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementContainerStart(0);
+    \u0275\u0275elementStart(1, "div", 1)(2, "div", 2)(3, "a", 3)(4, "mat-icon", 4);
+    \u0275\u0275text(5, "arrow_back");
+    \u0275\u0275elementEnd();
+    \u0275\u0275text(6);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(7, "div", 5)(8, "h1", 6);
+    \u0275\u0275text(9);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(10, "span", 7);
+    \u0275\u0275text(11);
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(12, "div", 8)(13, "div", 9)(14, "mat-icon", 10);
+    \u0275\u0275text(15, "search");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(16, "input", 11);
+    \u0275\u0275listener("input", function UserCategoryApplicationsPageComponent_ng_container_0_Template_input_input_16_listener($event) {
+      \u0275\u0275restoreView(_r1);
+      const ctx_r1 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r1.onSearch($event));
+    });
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(17, "div", 12);
+    \u0275\u0275repeaterCreate(18, UserCategoryApplicationsPageComponent_ng_container_0_For_19_Template, 5, 2, "button", 13, \u0275\u0275repeaterTrackByIdentity);
+    \u0275\u0275elementEnd()();
+    \u0275\u0275template(20, UserCategoryApplicationsPageComponent_ng_container_0_Conditional_20_Template, 2, 0, "div", 14)(21, UserCategoryApplicationsPageComponent_ng_container_0_Conditional_21_Template, 7, 2, "div", 15)(22, UserCategoryApplicationsPageComponent_ng_container_0_Conditional_22_Template, 5, 1, "div", 15)(23, UserCategoryApplicationsPageComponent_ng_container_0_Conditional_23_Template, 20, 6, "div", 16);
+    \u0275\u0275elementEnd()();
+    \u0275\u0275template(24, UserCategoryApplicationsPageComponent_ng_container_0_Conditional_24_Template, 34, 16, "div", 17);
+    \u0275\u0275elementContainerEnd();
+  }
+  if (rf & 2) {
+    const t_r5 = ctx.$implicit;
+    const ctx_r1 = \u0275\u0275nextContext();
+    \u0275\u0275advance(6);
+    \u0275\u0275textInterpolate1(" ", t_r5("category_application.admin.back"), " ");
+    \u0275\u0275advance(3);
+    \u0275\u0275textInterpolate1(" ", t_r5("category_application.admin.title"), " ");
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate1(" ", t_r5("category_application.admin.filtered_of", \u0275\u0275pureFunction2(6, _c031, ctx_r1.filtered.length, ctx_r1.applications.length)), " ");
+    \u0275\u0275advance(5);
+    \u0275\u0275property("placeholder", t_r5("category_application.admin.search_placeholder"));
+    \u0275\u0275advance(2);
+    \u0275\u0275repeater(ctx_r1.availableStatuses);
+    \u0275\u0275advance(2);
+    \u0275\u0275conditional(ctx_r1.isLoading ? 20 : ctx_r1.applications.length === 0 ? 21 : ctx_r1.filtered.length === 0 ? 22 : 23);
+    \u0275\u0275advance(4);
+    \u0275\u0275conditional(ctx_r1.reviewing ? 24 : -1);
+  }
+}
+var UserCategoryApplicationsPageComponent = class _UserCategoryApplicationsPageComponent {
+  service;
+  snackBar;
+  chatService;
+  presenceService;
+  router;
+  transloco;
+  applications = [];
+  filtered = [];
+  isLoading = true;
+  searchQuery = "";
+  statusFilter = "All";
+  availableStatuses = ["All", "Pending", "Approved", "Rejected"];
+  reviewing = null;
+  rejectionReason = "";
+  isSubmittingReview = false;
+  constructor(service2, snackBar, chatService, presenceService, router, transloco) {
+    this.service = service2;
+    this.snackBar = snackBar;
+    this.chatService = chatService;
+    this.presenceService = presenceService;
+    this.router = router;
+    this.transloco = transloco;
+  }
+  ngOnInit() {
+    this.load();
+  }
+  load() {
+    this.isLoading = true;
+    this.service.getAll().subscribe({
+      next: (res) => {
+        this.applications = res.data ?? [];
+        this.applyFilters();
+        this.isLoading = false;
+      },
+      error: () => {
+        this.isLoading = false;
+      }
+    });
+  }
+  onSearch(event) {
+    this.searchQuery = event.target.value;
+    this.applyFilters();
+  }
+  setStatusFilter(status) {
+    this.statusFilter = status;
+    this.applyFilters();
+  }
+  applyFilters() {
+    let temp = [...this.applications];
+    if (this.statusFilter !== "All") {
+      temp = temp.filter((a) => a.status === this.statusFilter);
+    }
+    if (this.searchQuery.trim()) {
+      const q = this.searchQuery.toLowerCase().trim();
+      temp = temp.filter((a) => a.firstName?.toLowerCase().includes(q) || a.lastName?.toLowerCase().includes(q) || a.email?.toLowerCase().includes(q) || a.requestedCategoryName?.toLowerCase().includes(q));
+    }
+    this.filtered = temp;
+  }
+  startReview(app) {
+    this.reviewing = app;
+    this.rejectionReason = "";
+  }
+  cancelReview() {
+    this.reviewing = null;
+    this.rejectionReason = "";
+  }
+  approve() {
+    if (!this.reviewing)
+      return;
+    this.submitReview(true);
+  }
+  reject() {
+    if (!this.reviewing)
+      return;
+    if (!this.rejectionReason.trim()) {
+      this.snackBar.open(this.transloco.translate("category_application.admin.rejection_required"), "OK", { duration: 3e3 });
+      return;
+    }
+    this.submitReview(false);
+  }
+  openChatWithApplicant(app) {
+    const presenceUser = this.presenceService.usersList().find((u) => u.id === app.userId);
+    const chatContact = presenceUser || {
+      id: app.userId,
+      userName: "",
+      name: app.firstName,
+      surname: app.lastName,
+      profileImage: app.profileImage
+    };
+    this.chatService.chatRightSidebarIsOpen.set(false);
+    this.chatService.currentOpenedChat.set(chatContact);
+    this.cancelReview();
+    this.router.navigate(["/chat"], { queryParams: { back: "category-applications" } }).then(() => {
+      if (this.chatService.isConnected()) {
+        this.chatService.loadMessages(1);
+      }
+    });
+  }
+  submitReview(isApproved) {
+    if (!this.reviewing)
+      return;
+    this.isSubmittingReview = true;
+    this.service.review(this.reviewing.id, {
+      isApproved,
+      rejectionReason: isApproved ? void 0 : this.rejectionReason.trim()
+    }).subscribe({
+      next: (res) => {
+        this.isSubmittingReview = false;
+        if (!res.isSuccess) {
+          this.snackBar.open(res.error || this.transloco.translate("category_application.admin.generic_error"), "OK", { duration: 3e3 });
+          return;
+        }
+        this.applications = this.applications.map((a) => a.id === res.data.id ? res.data : a);
+        this.applyFilters();
+        this.reviewing = null;
+        this.rejectionReason = "";
+        this.snackBar.open(this.transloco.translate(isApproved ? "category_application.admin.approved_toast" : "category_application.admin.rejected_toast"), "OK", { duration: 3e3 });
+      },
+      error: (err) => {
+        this.isSubmittingReview = false;
+        const msg = err?.error?.error || this.transloco.translate("category_application.admin.review_error");
+        this.snackBar.open(msg, "OK", { duration: 4e3 });
+      }
+    });
+  }
+  static \u0275fac = function UserCategoryApplicationsPageComponent_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || _UserCategoryApplicationsPageComponent)(\u0275\u0275directiveInject(UserCategoryApplicationService), \u0275\u0275directiveInject(MatSnackBar), \u0275\u0275directiveInject(ChatService), \u0275\u0275directiveInject(PresenceService), \u0275\u0275directiveInject(Router), \u0275\u0275directiveInject(TranslocoService));
+  };
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _UserCategoryApplicationsPageComponent, selectors: [["app-user-category-applications-page"]], standalone: false, decls: 1, vars: 0, consts: [[4, "transloco"], [1, "md:p-6", "bg-gray-50", "min-h-screen", "font-sans"], [1, "max-w-7xl", "mx-auto"], ["routerLink", "/admin", 1, "inline-flex", "items-center", "gap-1", "text-gray-500", "hover:text-[var(--color-primary)]", "p-3", "md:p-0", "transition-colors", "text-sm", "font-medium", "md:mb-6", "cursor-pointer", "w-fit"], [1, "scale-90"], [1, "flex", "flex-col", "sm:flex-row", "justify-between", "items-start", "sm:items-center", "gap-4", "px-3", "md:px-0", "mb-8"], [1, "text-3xl", "font-bold", "text-[var(--color-primary)]", "tracking-tight"], [1, "bg-[var(--color-mint)]", "text-[var(--color-success)]", "px-4", "py-1.5", "rounded-full", "text-sm", "font-semibold", "shadow-sm"], [1, "bg-white", "p-4", "md:rounded-2xl", "shadow-sm", "border", "border-gray-100", "md:mb-6", "flex", "flex-col", "md:flex-row", "gap-4", "items-center", "justify-between"], [1, "relative", "w-full", "md:max-w-md"], [1, "absolute", "left-3", "top-1/2", "-translate-y-1/2", "text-gray-400"], ["type", "text", 1, "w-full", "pl-10", "pr-4", "py-2.5", "bg-gray-50", "border", "border-gray-200", "rounded-xl", "focus:outline-none", "focus:ring-2", "focus:ring-[var(--color-mint)]", "focus:bg-white", "transition-all", "text-sm", 3, "input", "placeholder"], [1, "flex", "gap-2", "w-full", "md:w-auto", "overflow-x-auto", "pb-1", "md:pb-0", "custom-scroll"], [1, "px-4", "py-2", "rounded-xl", "text-sm", "font-medium", "transition-all", "shrink-0", "cursor-pointer", "border", 3, "ngClass"], [1, "flex", "justify-center", "items-center", "h-64"], [1, "bg-white", "md:rounded-2xl", "shadow-sm", "border", "border-gray-100", "p-12", "text-center"], [1, "bg-white", "md:rounded-2xl", "shadow-[0_8px_30px_rgb(0,0,0,0.04)]", "border", "border-gray-300", "overflow-hidden"], [1, "fixed", "inset-0", "z-50", "flex", "items-center", "justify-center", "bg-black/40", "p-4"], [1, "px-4", "py-2", "rounded-xl", "text-sm", "font-medium", "transition-all", "shrink-0", "cursor-pointer", "border", 3, "click", "ngClass"], [1, "text-gray-300", "text-6xl", "w-16", "h-16", "mb-4"], [1, "text-xl", "font-medium", "text-gray-600"], [1, "text-gray-400", "mt-2"], [1, "overflow-auto", "custom-scroll", "max-h-[600px]"], [1, "w-full", "text-left", "table-fixed", "min-w-[900px]"], [1, "z-10", "bg-gray-200", "shadow-sm"], [1, "border-b", "border-gray-300", "text-gray-500", "text-sm", "uppercase", "tracking-wider"], [1, "px-3", "py-2", "w-3/12"], [1, "px-3", "py-2", "w-2/12"], [1, "px-3", "py-2", "w-1/12"], [1, "divide-y", "divide-gray-100"], [1, "even:bg-gray-100", "odd:bg-gray-50/50", "hover:bg-gray-200", "border-b", "border-gray-300", "transition-colors"], [1, "px-3", "py-2", "overflow-hidden"], [1, "font-medium", "text-gray-800", "truncate"], [1, "text-sm", "text-gray-500", "truncate", 3, "title"], [1, "px-3", "py-2"], [1, "text-sm", "text-gray-800", "font-medium"], [1, "px-3", "py-2", "text-sm", "text-gray-700", "truncate", 3, "title"], [1, "inline-flex", "items-center", "gap-1.5", "px-3", "py-1", "rounded-full", "text-xs", "font-medium", "bg-amber-50", "text-amber-700", "border", "border-amber-200"], [1, "inline-flex", "items-center", "gap-1.5", "px-3", "py-1", "rounded-full", "text-xs", "font-medium", "bg-emerald-50", "text-emerald-700", "border", "border-emerald-200"], [1, "inline-flex", "items-center", "gap-1.5", "px-3", "py-1", "rounded-full", "text-xs", "font-medium", "bg-red-50", "text-red-700", "border", "border-red-200"], [1, "px-3", "py-2", "text-sm", "text-gray-500"], [1, "px-4", "py-2", "bg-white", "border", "border-gray-200", "text-gray-700", "rounded-lg", "text-sm", "font-medium", "hover:bg-gray-50", "hover:border-[var(--color-mint)]", "hover:text-[var(--color-success)]", "transition-all", "cursor-pointer", 3, "click"], [1, "w-1.5", "h-1.5", "rounded-full", "bg-amber-500"], [1, "w-1.5", "h-1.5", "rounded-full", "bg-emerald-500"], [1, "w-1.5", "h-1.5", "rounded-full", "bg-red-500"], [1, "fixed", "inset-0", "z-50", "flex", "items-center", "justify-center", "bg-black/40", "p-4", 3, "click"], [1, "bg-white", "rounded-2xl", "shadow-2xl", "max-w-lg", "w-full", "p-6", "sm:p-8", "space-y-4", 3, "click"], [1, "flex", "items-start", "justify-between"], [1, "text-lg", "font-bold", "text-gray-900"], [1, "text-sm", "text-gray-500", "mt-1"], ["type", "button", 1, "w-8", "h-8", "flex", "items-center", "justify-center", "rounded-full", "hover:bg-gray-100", "transition-colors", "cursor-pointer", 3, "click"], [1, "text-[18px]"], ["type", "button", 1, "w-full", "inline-flex", "items-center", "justify-center", "gap-2", "h-10", "px-4", "rounded-xl", "bg-[var(--color-mint)]/30", "hover:bg-[var(--color-mint)]/50", "text-[var(--color-success)]", "text-sm", "font-semibold", "transition-colors", "cursor-pointer", 3, "click"], [1, "bg-gray-50", "border", "border-gray-100", "rounded-xl", "p-4", "space-y-2"], [1, "flex", "justify-between", "text-sm"], [1, "text-gray-500"], [1, "font-semibold", "text-gray-900"], [1, "text-gray-800"], [1, "text-xs", "uppercase", "tracking-wider", "text-gray-400", "mb-1"], [1, "text-sm", "text-gray-800", "leading-relaxed", "whitespace-pre-line", "bg-gray-50", "border", "border-gray-100", "rounded-xl", "p-3"], [1, "space-y-1.5"], ["target", "_blank", "rel", "noopener", 1, "inline-flex", "items-center", "gap-2", "text-sm", "text-[var(--color-primary)]", "hover:underline", 3, "href"], [1, "text-[16px]"], [1, "block", "text-sm", "font-semibold", "text-gray-900", "mb-1"], ["rows", "3", 1, "w-full", "px-3", "py-2", "bg-gray-50", "border", "border-gray-200", "rounded-xl", "focus:outline-none", "focus:ring-2", "focus:ring-[var(--color-mint)]", "focus:bg-white", "transition-all", "text-sm", "resize-none", 3, "ngModelChange", "ngModel", "placeholder"], [1, "flex", "justify-end", "gap-2", "pt-2"], ["type", "button", 1, "inline-flex", "items-center", "justify-center", "h-10", "px-5", "rounded-full", "border", "border-rose-200", "text-rose-700", "bg-rose-50", "hover:bg-rose-100", "text-sm", "font-medium", "transition-colors", "cursor-pointer", "disabled:opacity-50", 3, "click", "disabled"], ["type", "button", 1, "inline-flex", "items-center", "justify-center", "h-10", "px-5", "rounded-full", "bg-gray-900", "hover:bg-black", "text-white", "text-sm", "font-medium", "transition-colors", "cursor-pointer", "disabled:opacity-50", 3, "click", "disabled"]], template: function UserCategoryApplicationsPageComponent_Template(rf, ctx) {
+    if (rf & 1) {
+      \u0275\u0275template(0, UserCategoryApplicationsPageComponent_ng_container_0_Template, 25, 9, "ng-container", 0);
+    }
+  }, dependencies: [NgClass, MatIcon, RouterLink, DefaultValueAccessor, NgControlStatus, NgModel, LoadingSpinnerComponent, TranslocoDirective, DatePipe], styles: ["\n\n[_nghost-%COMP%] {\n  display: block;\n}\n/*# sourceMappingURL=user-category-applications-page.component.css.map */"] });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(UserCategoryApplicationsPageComponent, [{
+    type: Component,
+    args: [{ selector: "app-user-category-applications-page", standalone: false, template: `<ng-container *transloco="let t">
+  <div class="md:p-6 bg-gray-50 min-h-screen font-sans">
+    <div class="max-w-7xl mx-auto">
+      <a
+        routerLink="/admin"
+        class="inline-flex items-center gap-1 text-gray-500 hover:text-[var(--color-primary)] p-3 md:p-0 transition-colors text-sm font-medium md:mb-6 cursor-pointer w-fit"
+      >
+        <mat-icon class="scale-90">arrow_back</mat-icon>
+        {{ t("category_application.admin.back") }}
+      </a>
+      <div
+        class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 px-3 md:px-0 mb-8"
+      >
+        <h1
+          class="text-3xl font-bold text-[var(--color-primary)] tracking-tight"
+        >
+          {{ t("category_application.admin.title") }}
+        </h1>
+        <span
+          class="bg-[var(--color-mint)] text-[var(--color-success)] px-4 py-1.5 rounded-full text-sm font-semibold shadow-sm"
+        >
+          {{
+            t("category_application.admin.filtered_of", {
+              filtered: filtered.length,
+              total: applications.length,
+            })
+          }}
+        </span>
+      </div>
+
+      <div
+        class="bg-white p-4 md:rounded-2xl shadow-sm border border-gray-100 md:mb-6 flex flex-col md:flex-row gap-4 items-center justify-between"
+      >
+        <div class="relative w-full md:max-w-md">
+          <mat-icon
+            class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+            >search</mat-icon
+          >
+          <input
+            type="text"
+            (input)="onSearch($event)"
+            [placeholder]="t('category_application.admin.search_placeholder')"
+            class="w-full pl-10 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-mint)] focus:bg-white transition-all text-sm"
+          />
+        </div>
+
+        <div
+          class="flex gap-2 w-full md:w-auto overflow-x-auto pb-1 md:pb-0 custom-scroll"
+        >
+          @for (status of availableStatuses; track status) {
+            <button
+              (click)="setStatusFilter(status)"
+              class="px-4 py-2 rounded-xl text-sm font-medium transition-all shrink-0 cursor-pointer border"
+              [ngClass]="
+                statusFilter === status
+                  ? 'bg-[var(--color-primary)] text-white border-[var(--color-primary)] shadow-md shadow-gray-200'
+                  : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50 hover:border-gray-300'
+              "
+            >
+              @switch (status) {
+                @case ('All') { {{ t("admin.all") }} }
+                @case ('Pending') { {{ t("category_application.admin.status_pending") }} }
+                @case ('Approved') { {{ t("category_application.admin.status_approved") }} }
+                @case ('Rejected') { {{ t("category_application.admin.status_rejected") }} }
+              }
+            </button>
+          }
+        </div>
+      </div>
+
+      @if (isLoading) {
+        <div class="flex justify-center items-center h-64">
+          <app-loading-spinner></app-loading-spinner>
+        </div>
+      } @else if (applications.length === 0) {
+        <div
+          class="bg-white md:rounded-2xl shadow-sm border border-gray-100 p-12 text-center"
+        >
+          <mat-icon class="text-gray-300 text-6xl w-16 h-16 mb-4"
+            >inbox</mat-icon
+          >
+          <h3 class="text-xl font-medium text-gray-600">
+            {{ t("category_application.admin.empty_title") }}
+          </h3>
+          <p class="text-gray-400 mt-2">
+            {{ t("category_application.admin.empty_subtitle") }}
+          </p>
+        </div>
+      } @else if (filtered.length === 0) {
+        <div
+          class="bg-white md:rounded-2xl shadow-sm border border-gray-100 p-12 text-center"
+        >
+          <mat-icon class="text-gray-300 text-6xl w-16 h-16 mb-4"
+            >search_off</mat-icon
+          >
+          <h3 class="text-xl font-medium text-gray-600">
+            {{ t("category_application.admin.no_match") }}
+          </h3>
+        </div>
+      } @else {
+        <div
+          class="bg-white md:rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-300 overflow-hidden"
+        >
+          <div class="overflow-auto custom-scroll max-h-[600px]">
+            <table class="w-full text-left table-fixed min-w-[900px]">
+              <thead class="z-10 bg-gray-200 shadow-sm">
+                <tr
+                  class="border-b border-gray-300 text-gray-500 text-sm uppercase tracking-wider"
+                >
+                  <th class="px-3 py-2 w-3/12">
+                    {{ t("category_application.admin.user") }}
+                  </th>
+                  <th class="px-3 py-2 w-2/12">
+                    {{ t("category_application.admin.category") }}
+                  </th>
+                  <th class="px-3 py-2 w-3/12">
+                    {{ t("category_application.admin.comment") }}
+                  </th>
+                  <th class="px-3 py-2 w-2/12">
+                    {{ t("category_application.admin.status") }}
+                  </th>
+                  <th class="px-3 py-2 w-1/12">
+                    {{ t("category_application.admin.date") }}
+                  </th>
+                  <th class="px-3 py-2 w-1/12">
+                    {{ t("category_application.admin.actions") }}
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-100">
+                @for (app of filtered; track app.id) {
+                  <tr
+                    class="even:bg-gray-100 odd:bg-gray-50/50 hover:bg-gray-200 border-b border-gray-300 transition-colors"
+                  >
+                    <td class="px-3 py-2 overflow-hidden">
+                      <div class="font-medium text-gray-800 truncate">
+                        {{ app.firstName }} {{ app.lastName }}
+                      </div>
+                      <div
+                        class="text-sm text-gray-500 truncate"
+                        [title]="app.email"
+                      >
+                        {{ app.email }}
+                      </div>
+                    </td>
+
+                    <td class="px-3 py-2">
+                      <span class="text-sm text-gray-800 font-medium">
+                        {{ app.requestedCategoryName }}
+                      </span>
+                    </td>
+
+                    <td
+                      class="px-3 py-2 text-sm text-gray-700 truncate"
+                      [title]="app.comment"
+                    >
+                      {{ app.comment || "\u2014" }}
+                    </td>
+
+                    <td class="px-3 py-2">
+                      @switch (app.status) {
+                        @case ("Pending") {
+                          <span
+                            class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-amber-50 text-amber-700 border border-amber-200"
+                          >
+                            <span
+                              class="w-1.5 h-1.5 rounded-full bg-amber-500"
+                            ></span>
+                            {{ t("category_application.admin.status_pending") }}
+                          </span>
+                        }
+                        @case ("Approved") {
+                          <span
+                            class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200"
+                          >
+                            <span
+                              class="w-1.5 h-1.5 rounded-full bg-emerald-500"
+                            ></span>
+                            {{ t("category_application.admin.status_approved") }}
+                          </span>
+                        }
+                        @case ("Rejected") {
+                          <span
+                            class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-red-50 text-red-700 border border-red-200"
+                          >
+                            <span
+                              class="w-1.5 h-1.5 rounded-full bg-red-500"
+                            ></span>
+                            {{ t("category_application.admin.status_rejected") }}
+                          </span>
+                        }
+                      }
+                    </td>
+
+                    <td class="px-3 py-2 text-sm text-gray-500">
+                      {{ app.createdAt | date: "MMM d, yyyy" }}
+                    </td>
+
+                    <td class="px-3 py-2">
+                      <button
+                        (click)="startReview(app)"
+                        class="px-4 py-2 bg-white border border-gray-200 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-50 hover:border-[var(--color-mint)] hover:text-[var(--color-success)] transition-all cursor-pointer"
+                      >
+                        {{ t("category_application.admin.review") }}
+                      </button>
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+
+  @if (reviewing) {
+    <div
+      class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4"
+      (click)="cancelReview()"
+    >
+      <div
+        (click)="$event.stopPropagation()"
+        class="bg-white rounded-2xl shadow-2xl max-w-lg w-full p-6 sm:p-8 space-y-4"
+      >
+        <div class="flex items-start justify-between">
+          <div>
+            <h2 class="text-lg font-bold text-gray-900">
+              {{ t("category_application.admin.modal_title") }}
+            </h2>
+            <p class="text-sm text-gray-500 mt-1">
+              {{ reviewing.firstName }} {{ reviewing.lastName }} \xB7
+              {{ reviewing.email }}
+            </p>
+          </div>
+          <button
+            type="button"
+            (click)="cancelReview()"
+            class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors cursor-pointer"
+          >
+            <mat-icon class="text-[18px]">close</mat-icon>
+          </button>
+        </div>
+
+        <button
+          type="button"
+          (click)="openChatWithApplicant(reviewing)"
+          class="w-full inline-flex items-center justify-center gap-2 h-10 px-4 rounded-xl bg-[var(--color-mint)]/30 hover:bg-[var(--color-mint)]/50 text-[var(--color-success)] text-sm font-semibold transition-colors cursor-pointer"
+        >
+          <mat-icon class="text-[18px]">chat</mat-icon>
+          {{ t("category_application.admin.modal_open_chat") }}
+        </button>
+
+        <div class="bg-gray-50 border border-gray-100 rounded-xl p-4 space-y-2">
+          <div class="flex justify-between text-sm">
+            <span class="text-gray-500">{{
+              t("category_application.admin.modal_category")
+            }}</span>
+            <span class="font-semibold text-gray-900">{{
+              reviewing.requestedCategoryName
+            }}</span>
+          </div>
+          <div class="flex justify-between text-sm">
+            <span class="text-gray-500">{{
+              t("category_application.admin.modal_submitted_at")
+            }}</span>
+            <span class="text-gray-800">{{
+              reviewing.createdAt | date: "MMM d, yyyy HH:mm"
+            }}</span>
+          </div>
+        </div>
+
+        <div>
+          <p class="text-xs uppercase tracking-wider text-gray-400 mb-1">
+            {{ t("category_application.admin.modal_user_comment") }}
+          </p>
+          <p
+            class="text-sm text-gray-800 leading-relaxed whitespace-pre-line bg-gray-50 border border-gray-100 rounded-xl p-3"
+          >
+            {{ reviewing.comment || "\u2014" }}
+          </p>
+        </div>
+
+        @if (reviewing.documentUrls.length) {
+          <div>
+            <p class="text-xs uppercase tracking-wider text-gray-400 mb-1">
+              {{ t("category_application.admin.modal_documents") }}
+            </p>
+            <ul class="space-y-1.5">
+              @for (
+                url of reviewing.documentUrls;
+                track url;
+                let i = $index
+              ) {
+                <li>
+                  <a
+                    [href]="url"
+                    target="_blank"
+                    rel="noopener"
+                    class="inline-flex items-center gap-2 text-sm text-[var(--color-primary)] hover:underline"
+                  >
+                    <mat-icon class="text-[16px]">description</mat-icon>
+                    {{
+                      t("category_application.admin.modal_document_label", {
+                        index: i + 1,
+                      })
+                    }}
+                  </a>
+                </li>
+              }
+            </ul>
+          </div>
+        }
+
+        @if (reviewing.status === 'Pending') {
+          <div>
+            <label class="block text-sm font-semibold text-gray-900 mb-1">
+              {{ t("category_application.admin.modal_rejection_label") }}
+            </label>
+            <textarea
+              rows="3"
+              [(ngModel)]="rejectionReason"
+              [placeholder]="
+                t('category_application.admin.modal_rejection_placeholder')
+              "
+              class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-mint)] focus:bg-white transition-all text-sm resize-none"
+            ></textarea>
+          </div>
+
+          <div class="flex justify-end gap-2 pt-2">
+            <button
+              type="button"
+              (click)="reject()"
+              [disabled]="isSubmittingReview"
+              class="inline-flex items-center justify-center h-10 px-5 rounded-full border border-rose-200 text-rose-700 bg-rose-50 hover:bg-rose-100 text-sm font-medium transition-colors cursor-pointer disabled:opacity-50"
+            >
+              {{ t("category_application.admin.modal_reject") }}
+            </button>
+            <button
+              type="button"
+              (click)="approve()"
+              [disabled]="isSubmittingReview"
+              class="inline-flex items-center justify-center h-10 px-5 rounded-full bg-gray-900 hover:bg-black text-white text-sm font-medium transition-colors cursor-pointer disabled:opacity-50"
+            >
+              {{ t("category_application.admin.modal_approve") }}
+            </button>
+          </div>
+        }
+      </div>
+    </div>
+  }
+</ng-container>
+`, styles: ["/* src/app/modules/admin-tools/pages/user-category-applications-page/user-category-applications-page.component.scss */\n:host {\n  display: block;\n}\n/*# sourceMappingURL=user-category-applications-page.component.css.map */\n"] }]
+  }], () => [{ type: UserCategoryApplicationService }, { type: MatSnackBar }, { type: ChatService }, { type: PresenceService }, { type: Router }, { type: TranslocoService }], null);
+})();
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(UserCategoryApplicationsPageComponent, { className: "UserCategoryApplicationsPageComponent", filePath: "src/app/modules/admin-tools/pages/user-category-applications-page/user-category-applications-page.component.ts", lineNumber: 17 });
 })();
 
 // src/app/app.routing.module.ts
@@ -51283,7 +53897,9 @@ var routes = [
       { path: "admin", canActivate: [AuthGuard], component: AdminDashboardComponent },
       { path: "ai-chat", canActivate: [AuthGuard], component: AiChatComponent },
       { path: "admin/applications", canActivate: [AuthGuard], component: ApplicationsPageComponent },
+      { path: "admin/category-applications", canActivate: [AuthGuard], component: UserCategoryApplicationsPageComponent },
       { path: "admin/specializations", canActivate: [AuthGuard], component: ManageSpecializationsComponent },
+      { path: "category-application", canActivate: [AuthGuard], component: UserCategoryApplicationComponent },
       { path: "", component: HomePageResolverComponent },
       {
         path: "register",
@@ -51484,7 +54100,9 @@ var AdminToolsModule = class _AdminToolsModule {
     MatIconModule,
     RouterModule,
     ReactiveFormsModule,
-    SharedModule
+    FormsModule,
+    SharedModule,
+    TranslocoModule
   ] });
 };
 (() => {
@@ -51497,7 +54115,8 @@ var AdminToolsModule = class _AdminToolsModule {
         ApplicationDetailsDialogComponent,
         ManageSpecializationsComponent,
         SpecializationDialogComponent,
-        UsersPageComponent
+        UsersPageComponent,
+        UserCategoryApplicationsPageComponent
       ],
       imports: [
         CommonModule,
@@ -51507,7 +54126,9 @@ var AdminToolsModule = class _AdminToolsModule {
         MatDialogContent,
         RouterModule,
         ReactiveFormsModule,
-        SharedModule
+        FormsModule,
+        SharedModule,
+        TranslocoModule
       ]
     }]
   }], null, null);

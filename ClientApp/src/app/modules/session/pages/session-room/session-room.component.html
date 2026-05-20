@@ -1,4 +1,4 @@
-<div class="flex flex-col h-full bg-gray-50">
+<div class="flex flex-col h-full bg-gray-50" (click)="closeAnalysisMenu()">
 
   <!-- Loading -->
   @if (isLoading()) {
@@ -150,10 +150,74 @@
           @else if (activeTab() === 'transcriptions') {
             @let finals = transcripts.finals();
             @let interims = transcripts.interims();
-            <div class="flex-1 flex flex-col min-h-0 bg-gray-50 p-3 sm:p-4">
+            <div class="flex-1 flex flex-col min-h-0 bg-gray-50 p-3 sm:p-4 gap-2">
+
+              @if (isPsychologist) {
+                <!-- Analyze toolbar -->
+                <div class="relative flex items-center justify-between bg-white border border-gray-100 rounded-xl px-3 py-2 shadow-sm shrink-0">
+                  <div class="flex items-center gap-1.5 text-xs text-gray-500">
+                    <mat-icon class="text-base text-[var(--color-primary)]">auto_awesome</mat-icon>
+                    <span>Select text in transcript for AI actions, or analyze a range:</span>
+                  </div>
+
+                  <button
+                    type="button"
+                    (click)="$event.stopPropagation(); toggleAnalysisMenu()"
+                    [disabled]="isAnalyzing()"
+                    class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[var(--color-primary)] text-white text-xs font-semibold hover:opacity-90 disabled:opacity-50 shrink-0"
+                  >
+                    @if (isAnalyzing()) {
+                      <mat-spinner diameter="14" mode="indeterminate" class="!text-white"></mat-spinner>
+                      <span>Analyzing…</span>
+                    } @else {
+                      <mat-icon class="text-base">analytics</mat-icon>
+                      <span>Analyze</span>
+                      <mat-icon class="text-base">{{ isAnalysisMenuOpen() ? 'expand_less' : 'expand_more' }}</mat-icon>
+                    }
+                  </button>
+
+                  @if (isAnalysisMenuOpen()) {
+                    <div
+                      class="absolute right-2 top-full mt-1 z-30 w-72 bg-white border border-gray-200 rounded-xl shadow-xl py-2"
+                      (click)="$event.stopPropagation()"
+                    >
+                      <div class="px-3 py-1.5 text-[10px] font-semibold uppercase tracking-wider text-gray-400">Time range</div>
+                      <div class="px-2 grid grid-cols-2 gap-1">
+                        @for (range of timeRanges; track range.id) {
+                          <button
+                            type="button"
+                            (click)="selectRange(range.id)"
+                            class="px-2 py-1.5 rounded-lg text-xs font-medium transition-colors text-left"
+                            [ngClass]="selectedRangeId() === range.id
+                              ? 'bg-[var(--color-primary)] text-white'
+                              : 'bg-gray-50 text-gray-700 hover:bg-gray-100'"
+                          >{{ range.label }}</button>
+                        }
+                      </div>
+
+                      <div class="mt-2 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-wider text-gray-400 border-t border-gray-100">Action</div>
+                      @for (act of rangeAnalysisActions; track act.id) {
+                        <button
+                          type="button"
+                          (click)="runRangeAnalysis(act.id)"
+                          class="w-full flex items-start gap-2 px-3 py-2 hover:bg-gray-50 text-left transition-colors"
+                        >
+                          <mat-icon class="text-base text-[var(--color-primary)] mt-0.5">{{ act.icon }}</mat-icon>
+                          <div class="min-w-0">
+                            <div class="text-sm font-medium text-gray-800">{{ act.label }}</div>
+                            <div class="text-[11px] text-gray-400">{{ act.description }}</div>
+                          </div>
+                        </button>
+                      }
+                    </div>
+                  }
+                </div>
+              }
+
               <div
                 #transcriptsContainer
-                class="flex-1 min-h-0 overflow-y-auto custom-scroll bg-white border border-gray-100 rounded-2xl shadow-sm p-3 sm:p-4 font-mono text-[13px] leading-snug"
+                (mouseup)="onTranscriptMouseUp($event)"
+                class="flex-1 min-h-0 overflow-y-auto custom-scroll bg-white border border-gray-100 rounded-2xl shadow-sm p-3 sm:p-4 font-mono text-[13px] leading-snug select-text"
               >
                 @if (finals.length === 0 && (interims | keyvalue).length === 0) {
                   <div class="flex flex-col items-center justify-center h-full text-center text-gray-400">
@@ -266,7 +330,7 @@
                         : 'bg-white border border-gray-100 text-gray-800 rounded-bl-sm shadow-sm'"
                     >
                       @if (msg.isUser) {
-                        <p class="whitespace-pre-wrap">{{ msg.text }}</p>
+                        <markdown class="text-sm leading-relaxed block prose-invert" [data]="msg.text"></markdown>
                       } @else {
                         <markdown class="text-sm leading-relaxed block" [data]="msg.text"></markdown>
                       }
@@ -277,7 +341,7 @@
                   </div>
                 }
 
-                @if (aiLoading()) {
+                @if (aiLoading() || isAnalyzing()) {
                   <div class="flex justify-start">
                     <div class="bg-gray-100 px-3 py-2 rounded-2xl text-xs text-gray-500 flex items-center gap-2">
                       <div class="flex gap-1">
@@ -285,7 +349,7 @@
                         <span class="w-1 h-1 bg-gray-400 rounded-full animate-bounce [animation-delay:0.2s]"></span>
                         <span class="w-1 h-1 bg-gray-400 rounded-full animate-bounce [animation-delay:0.4s]"></span>
                       </div>
-                      AI thinking…
+                      {{ isAnalyzing() ? 'Analyzing transcript…' : 'AI thinking…' }}
                     </div>
                   </div>
                 }
@@ -328,6 +392,50 @@
       }
 
     </div>
+
+    <!-- Selection tooltip for transcripts -->
+    @if (selectionTooltip().visible && activeTab() === 'transcriptions') {
+      <div
+        class="fixed z-50 w-72 bg-gray-900 text-white rounded-xl shadow-2xl border border-gray-700 p-2"
+        [style.left.px]="selectionTooltip().x"
+        [style.top.px]="selectionTooltip().y"
+        style="transform: translate(-50%, -100%);"
+        (click)="$event.stopPropagation()"
+        (mousedown)="$event.stopPropagation()"
+      >
+        <div class="flex items-center justify-between px-1.5 pb-1.5 border-b border-gray-700 mb-1">
+          <div class="flex items-center gap-1 text-[11px] font-semibold text-gray-300">
+            <mat-icon class="text-base text-[var(--color-primary)]">auto_awesome</mat-icon>
+            <span>AI on selection</span>
+          </div>
+          <button
+            type="button"
+            (click)="hideSelectionTooltip()"
+            class="w-5 h-5 flex items-center justify-center rounded hover:bg-gray-700"
+            title="Close"
+          >
+            <mat-icon class="text-sm text-gray-400">close</mat-icon>
+          </button>
+        </div>
+        <div class="grid grid-cols-2 gap-1">
+          @for (act of selectionActions; track act.id) {
+            <button
+              type="button"
+              (click)="runSelectionAnalysis(act.id)"
+              [disabled]="isAnalyzing()"
+              class="flex flex-col items-start gap-0.5 px-2 py-1.5 rounded-lg bg-gray-800 hover:bg-gray-700 disabled:opacity-50 transition-colors text-left"
+              [title]="act.description"
+            >
+              <div class="flex items-center gap-1">
+                <mat-icon class="text-base text-[var(--color-primary)]">{{ act.icon }}</mat-icon>
+                <span class="text-xs font-medium">{{ act.label }}</span>
+              </div>
+              <span class="text-[10px] text-gray-400 leading-tight">{{ act.description }}</span>
+            </button>
+          }
+        </div>
+      </div>
+    }
   }
 
 </div>

@@ -97,15 +97,38 @@
               aria-hidden="true"
             ></div>
 
+            @if (user.coverImage) {
+              <img
+                [src]="user.coverImage"
+                alt="Cover"
+                class="absolute inset-0 w-full h-full object-cover"
+              />
+              <div class="absolute inset-0 bg-black/15"></div>
+            }
+
             <!-- Cover controls -->
             <div class="absolute top-3 right-3 flex items-center gap-2 z-10">
               @if (isOwnProfile) {
-                <button
+                <label
                   class="w-9 h-9 flex items-center justify-center rounded-full bg-white/15 hover:bg-white/30 border border-white/20 text-white backdrop-blur-sm transition-all cursor-pointer hover:scale-105 text-[20px]"
                   [title]="t('profile.change_cover')"
+                  [class.opacity-60]="isUploadingCover"
+                  [class.pointer-events-none]="isUploadingCover"
                 >
-                  <mat-icon>photo_camera</mat-icon>
-                </button>
+                  @if (isUploadingCover) {
+                    <div
+                      class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"
+                    ></div>
+                  } @else {
+                    <mat-icon>photo_camera</mat-icon>
+                  }
+                  <input
+                    type="file"
+                    accept="image/*"
+                    class="hidden"
+                    (change)="onCoverImageSelected($event)"
+                  />
+                </label>
               }
               <div class="relative">
                 <button
@@ -180,6 +203,30 @@
                     </span>
                   }
                 </div>
+
+                @if (isOwnProfile) {
+                  <label
+                    class="absolute -bottom-1 -right-1 w-9 h-9 md:w-10 md:h-10 rounded-full bg-[var(--color-primary)] hover:bg-[#012900] border-2 border-white shadow-lg text-white flex items-center justify-center cursor-pointer transition-all hover:scale-105 z-20"
+                    [title]="t('profile.change_avatar')"
+                    [class.opacity-60]="isUploadingAvatar"
+                    [class.pointer-events-none]="isUploadingAvatar"
+                  >
+                    @if (isUploadingAvatar) {
+                      <div
+                        class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"
+                      ></div>
+                    } @else {
+                      <mat-icon class="text-[18px]">photo_camera</mat-icon>
+                    }
+                    <input
+                      type="file"
+                      accept="image/*"
+                      class="hidden"
+                      (change)="onProfileImageSelected($event)"
+                    />
+                  </label>
+                }
+
                 @if (isUserOnline) {
                   <div
                     class="absolute bottom-2 right-2 w-6 h-6 md:w-8 md:h-8 bg-[var(--color-success)] border-4 border-white rounded-full z-20"

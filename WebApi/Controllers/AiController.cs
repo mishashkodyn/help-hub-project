@@ -35,5 +35,23 @@ namespace API.Controllers
             }
 
         }
+
+        [Authorize]
+        [HttpPost("analyze-transcript")]
+        public async Task<IActionResult> AnalyzeTranscript([FromBody] TranscriptAnalysisRequestDto request)
+        {
+            if (request is null || (string.IsNullOrWhiteSpace(request.Transcript) && string.IsNullOrWhiteSpace(request.SelectedText)))
+                return BadRequest("Transcript cannot be empty");
+
+            try
+            {
+                var result = await _aiService.AnalyzeTranscriptAsync(request);
+                return Ok(Response<string>.Success(result, "Transcript analysis completed"));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, Response<string>.Failure($"AI Error: {ex.Message}"));
+            }
+        }
     }
 }

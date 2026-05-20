@@ -13,11 +13,12 @@
         public Guid? RelatedEntityId { get; set; }
     }
 
-    public enum NotificationType 
-    { 
+    public enum NotificationType
+    {
         System = 0,
         Application = 1,
         ChatMessage = 2,
-        Reminder = 3
+        Reminder = 3,
+        UserCategoryApplication = 4
     }
 }

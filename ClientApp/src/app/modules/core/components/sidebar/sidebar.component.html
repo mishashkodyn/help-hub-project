@@ -93,7 +93,15 @@
 
         <!-- Main menu items -->
         @for (item of menuItems(); track item.route) {
-          @if (!(item.label === "my_sessions" && authService.isPsychologist)) {
+          @if (
+            !(item.label === "my_sessions" && authService.isPsychologist) &&
+            !(
+              item.label === "category_application" &&
+              (authService.isAdmin ||
+                authService.isSuperAdmin ||
+                authService.isPsychologist)
+            )
+          ) {
             <a
               [routerLink]="item.route"
               routerLinkActive="selected-menu-item"
