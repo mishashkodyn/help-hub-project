@@ -281,7 +281,7 @@
       "title": "Admin Dashboard",
       "subtitle": "Manage users, applications, and platform settings.",
       "applications_title": "Applications",
-      "applications_desc": "Review and approve pending requests from psychologists to join the platform.",
+      "applications_desc": "Review psychologist applications and user category requests.",
       "applications_btn": "View Applications",
       "specializations_title": "Specializations",
       "specializations_desc": "Manage the list of expertises and topics (e.g., PTSD, Depression) used in the catalog.",
@@ -291,7 +291,13 @@
       "users_btn": "Manage Users",
       "analytics_title": "Analytics",
       "analytics_desc": "View platform statistics, user growth, and session metrics.",
-      "analytics_btn": "View Stats"
+      "analytics_btn": "View Stats",
+      "payments_title": "Payments &amp; Requisites",
+      "payments_desc": "Confirm client payments, release earnings to psychologists, and manage the platform's payment card.",
+      "payments_btn": "Open Payments",
+      "settings_title": "Settings",
+      "settings_desc": "Platform payment settings — manage the card number for receiving funds.",
+      "settings_btn": "Open Settings"
     }
   },
   "category_application": {

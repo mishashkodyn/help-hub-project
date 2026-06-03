@@ -5,6 +5,7 @@ import { environment } from '../../../environments/environment';
 import {
   ClientSessionDto,
   PastSessionDto,
+  PendingPaymentDto,
   SaveAiMessageDto,
   SessionAiMessageDto,
   SessionInfoDto,
@@ -61,5 +62,30 @@ export class AppointmentClientService {
 
   saveSessionAiMessages(id: string, messages: SaveAiMessageDto[]): Observable<SessionAiMessageDto[]> {
     return this.http.post<SessionAiMessageDto[]>(`${this.apiUrl}/${id}/ai-messages`, { messages });
+  }
+
+  cancelByClient(appointmentId: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/${appointmentId}/cancel`, {});
+  }
+
+  // ── Admin payment methods ─────────────────────────────────────────────────
+  getPendingPayments(): Observable<PendingPaymentDto[]> {
+    return this.http.get<PendingPaymentDto[]>(`${this.apiUrl}/pending-payments`);
+  }
+
+  confirmPayment(appointmentId: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/${appointmentId}/confirm-payment`, {});
+  }
+
+  rejectPayment(appointmentId: string, reason?: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/${appointmentId}/reject-payment`, { reason });
+  }
+
+  getCompletedUnpaidSessions(): Observable<PendingPaymentDto[]> {
+    return this.http.get<PendingPaymentDto[]>(`${this.apiUrl}/completed-unpaid`);
+  }
+
+  releasePayment(appointmentId: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/${appointmentId}/release-payment`, {});
   }
 }

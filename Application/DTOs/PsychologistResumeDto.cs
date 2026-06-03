@@ -17,6 +17,7 @@ namespace Application.DTOs
         public bool OffersFreeSessionsForMilitary { get; set; }
         public int DiscountForAffected { get; set; }
         public bool IsPublished { get; set; }
+        public string CardNumber { get; set; } = string.Empty;
         public List<SpecializationDto> Specializations { get; set; } = new();
     }
 
@@ -51,6 +52,9 @@ namespace Application.DTOs
         public int DiscountForAffected { get; set; }
 
         public bool IsPublished { get; set; }
+
+        [MaxLength(19)]
+        public string CardNumber { get; set; } = string.Empty;
 
         public List<Guid> SpecializationIds { get; set; } = new();
     }

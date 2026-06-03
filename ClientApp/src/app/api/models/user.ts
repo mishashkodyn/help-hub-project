@@ -16,6 +16,7 @@ export interface User {
     preferredAiProvider: string;
     roles: string[];
     gender: string;
+    cardNumber: string;
 }
 
 export interface UserProfileDto {

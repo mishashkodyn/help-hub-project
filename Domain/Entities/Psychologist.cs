@@ -17,6 +17,8 @@
         public bool HasTraumaTraining { get; set; }
         public bool OffersFreeSessionsForMilitary { get; set; }
         public int DiscountForAffected { get; set; }
+        public string CardNumber { get; set; } = string.Empty;
+        public decimal Balance { get; set; } = 0;
         public ICollection<Specialization> Specializations { get; set; } = new List<Specialization>();
         public ICollection<WorkingHour> WorkingHours { get; set; } = new List<WorkingHour>();
         public ICollection<Appointment> Appointments { get; set; } = new List<Appointment>();

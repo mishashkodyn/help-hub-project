@@ -88,6 +88,7 @@ export interface PsychologistResumeDto {
   offersFreeSessionsForMilitary: boolean;
   discountForAffected: number;
   isPublished: boolean;
+  cardNumber: string;
   specializations: SpecializationDto[];
 }
 
@@ -104,6 +105,7 @@ export interface UpdatePsychologistResumeDto {
   offersFreeSessionsForMilitary: boolean;
   discountForAffected: number;
   isPublished: boolean;
+  cardNumber: string;
   specializationIds: string[];
 }
 

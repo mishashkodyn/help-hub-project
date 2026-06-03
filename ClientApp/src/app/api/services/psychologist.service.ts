@@ -10,6 +10,7 @@ import {
   PsychologistResumeDto,
   UpdatePsychologistResumeDto,
 } from '../models/psychologist.model';
+import { BookingResultDto, PsychologistBalanceDto } from '../models/session.model';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -37,8 +38,12 @@ export class PsychologistService {
   }
 
 
-  createAppointment(payload: CreateAppointmentDto): Observable<any> {
-    return this.http.post(`${this.apiUrl}/book`, payload);
+  createAppointment(payload: CreateAppointmentDto): Observable<BookingResultDto> {
+    return this.http.post<BookingResultDto>(`${this.apiUrl}/book`, payload);
+  }
+
+  getMyBalance(): Observable<PsychologistBalanceDto> {
+    return this.http.get<PsychologistBalanceDto>(`${this.apiUrl}/balance`);
   }
 
   getPsychologistApplications(): Observable<AppointmentApplicationDto[]> {

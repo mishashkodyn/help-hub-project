@@ -100,9 +100,24 @@ namespace API.Controllers
 
             try
             {
-                await _appointmentService.CreateAppointmentAsync(clientId, dto);
+                var result = await _appointmentService.CreateAppointmentAsync(clientId, dto);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
+        }
 
-                return Ok(new { message = "Appointment request successfully created." });
+        [HttpGet("balance")]
+        [Authorize(Roles = "Psychologist")]
+        public async Task<IActionResult> GetMyBalance()
+        {
+            var userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+            try
+            {
+                var balance = await _appointmentService.GetPsychologistBalanceAsync(userId);
+                return Ok(balance);
             }
             catch (Exception ex)
             {

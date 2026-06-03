@@ -10,6 +10,7 @@ namespace Domain.Entities
         public string? CoverImage { get; set; }
         public Gender Gender { get; set; } = Gender.Male;
         public string PreferredAiProvider { get; set; } = "Groq";
+        public string CardNumber { get; set; } = string.Empty;
         public Guid? RefreshToken { get; set; }
         public DateTime RefreshTokenExpiryTime { get; set; }
         public UserCategory UserCategory { get; set; } = UserCategory.Civilian;

@@ -1,7 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { finalize } from 'rxjs';
 import { AvailableSlot, CreateAppointmentDto } from '../../../api/models/psychologist.model';
+import { BookingResultDto } from '../../../api/models/session.model';
 import { PsychologistService } from '../../../api/services/psychologist.service';
+import { AppointmentClientService } from '../../../api/services/appointment-client.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
+type ModalStep = 'booking' | 'payment' | 'free-confirmed';
 
 @Component({
   selector: 'app-book-session-modal',
@@ -15,6 +20,9 @@ export class BookSessionModalComponent implements OnInit {
   @Output() closeModal = new EventEmitter<void>();
   @Output() bookingSuccess = new EventEmitter<void>();
 
+  step: ModalStep = 'booking';
+  bookingResult: BookingResultDto | null = null;
+
   selectedDate: string = '';
   availableSlots: AvailableSlot[] = [];
   selectedSlot: AvailableSlot | null = null;
@@ -22,10 +30,15 @@ export class BookSessionModalComponent implements OnInit {
 
   isLoadingSlots: boolean = false;
   isSubmitting: boolean = false;
+  isCancelling: boolean = false;
 
   minDate: string;
 
-  constructor(private appointmentService: PsychologistService) {
+  constructor(
+    private appointmentService: PsychologistService,
+    private appointmentClientService: AppointmentClientService,
+    private snackBar: MatSnackBar,
+  ) {
     const today = new Date();
     this.minDate = this.formatDate(today);
     this.selectedDate = this.minDate;
@@ -38,10 +51,6 @@ export class BookSessionModalComponent implements OnInit {
 
   ngOnDestroy(): void {
     document.body.style.overflow = 'auto';
-  }
-
-  close(): void {
-    this.closeModal.emit();
   }
 
   onDateChange(event: Event): void {
@@ -92,12 +101,54 @@ export class BookSessionModalComponent implements OnInit {
     this.appointmentService.createAppointment(payload)
       .pipe(finalize(() => this.isSubmitting = false))
       .subscribe({
-        next: () => {
-          console.log('Booking successful!');
-          this.bookingSuccess.emit();
-          this.close();
+        next: (result: BookingResultDto) => {
+          this.bookingResult = result;
+          this.step = result.isFree ? 'free-confirmed' : 'payment';
+          // НЕ емітимо bookingSuccess тут — батько закриє модалку.
+          // Покажемо інструкції оплати, користувач сам закриє.
+        },
+        error: (err) => {
+          console.error('Booking failed:', err);
         }
       });
+  }
+
+  close(): void {
+    // Якщо вже пройшло бронювання — повідомляємо батька (щоб оновив дані),
+    // а потім закриваємо.
+    if (this.bookingResult) {
+      this.bookingSuccess.emit();
+    }
+    this.closeModal.emit();
+  }
+
+  cancelBooking(): void {
+    if (!this.bookingResult || this.isCancelling) return;
+
+    this.isCancelling = true;
+    this.appointmentClientService.cancelByClient(this.bookingResult.appointmentId)
+      .pipe(finalize(() => (this.isCancelling = false)))
+      .subscribe({
+        next: () => {
+          this.snackBar.open('Бронювання скасовано.', 'Закрити', { duration: 2500 });
+          this.bookingSuccess.emit();
+          this.closeModal.emit();
+        },
+        error: (err) => {
+          this.snackBar.open(err?.error?.error || 'Не вдалось скасувати.', 'Закрити', { duration: 3000 });
+        },
+      });
+  }
+
+  formatCardNumber(card: string): string {
+    if (!card) return '—';
+    return card.replace(/(.{4})/g, '$1 ').trim();
+  }
+
+  formatLocalDate(iso: string): string {
+    if (!iso) return '';
+    const d = new Date(iso);
+    return d.toLocaleDateString('uk-UA', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' });
   }
 
   private formatLocalTime(iso: string): string {

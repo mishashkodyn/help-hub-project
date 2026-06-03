@@ -16,5 +16,6 @@ namespace Application.DTOs
         public string Status { get; set; } = string.Empty;
         public decimal Price { get; set; }
         public string? ClientNotes { get; set; }
+        public string PaymentStatus { get; set; } = string.Empty;
     }
 }

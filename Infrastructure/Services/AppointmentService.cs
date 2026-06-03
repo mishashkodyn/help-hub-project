@@ -1,6 +1,7 @@
 ﻿using Application.DTOs;
 using Application.DTOs.Notifications;
 using Domain.Entities;
+using Microsoft.AspNetCore.Identity;
 using Infrastructure.Data;
 using Infrastructure.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -107,9 +108,10 @@ namespace Infrastructure.Services
             return availableSlots;
         }
 
-        public async Task CreateAppointmentAsync(Guid clientId, CreateAppointmentDto dto)
+        public async Task<BookingResultDto> CreateAppointmentAsync(Guid clientId, CreateAppointmentDto dto)
         {
             var psychologist = await _context.Psychologists
+                .Include(p => p.User)
                 .FirstOrDefaultAsync(p => p.Id == dto.PsychologistId);
 
             if (psychologist == null)
@@ -126,33 +128,95 @@ namespace Infrastructure.Services
             if (isOverlapping)
                 throw new Exception("This time slot has already been booked. Please choose another time.");
 
+            var client = await _context.Users.FirstOrDefaultAsync(u => u.Id == clientId);
+            var clientName = client == null || string.IsNullOrWhiteSpace(client.Name)
+                ? "A client"
+                : $"{client.Name} {client.Surname}".Trim();
+
+            // Військові та ветерани — безкоштовно, підтверджуємо одразу
+            bool isFree = client != null && (client.UserCategory == UserCategory.Military || client.UserCategory == UserCategory.Veteran);
+
             var appointment = new Appointment
             {
                 PsychologistId = psychologist.Id,
                 ClientId = clientId,
                 StartTime = startUtc,
                 EndTime = endUtc,
-                Status = AppointmentStatus.Pending,
-                Price = psychologist.PricePerSession,
+                Status = isFree ? AppointmentStatus.Confirmed : AppointmentStatus.Pending,
+                PaymentStatus = isFree ? PaymentStatus.Free : PaymentStatus.AwaitingPayment,
+                Price = isFree ? 0 : psychologist.PricePerSession,
                 ClientNotes = dto.ClientNotes
             };
 
             await _context.Appointments.AddAsync(appointment);
             await _context.SaveChangesAsync();
 
-            var client = await _context.Users.FirstOrDefaultAsync(u => u.Id == clientId);
-            var clientName = client == null || string.IsNullOrWhiteSpace(client.Name)
-                ? "A client"
-                : $"{client.Name} {client.Surname}".Trim();
-
-            await _notificationService.SendNotificationAsync(new CreateNotificationDto
+            if (isFree)
             {
-                UserId = psychologist.UserId,
-                Title = "New Session Request",
-                Message = $"{clientName} requested a session on {FormatLocal(appointment.StartTime)}.",
-                Type = NotificationType.Application,
-                RelatedEntityId = appointment.Id
-            });
+                // Військовий/ветеран — оплата не потрібна, заявка одразу йде психологу
+                await _notificationService.SendNotificationAsync(new CreateNotificationDto
+                {
+                    UserId = psychologist.UserId,
+                    Title = "New Free Session (Military/Veteran)",
+                    Message = $"{clientName} booked a free session on {FormatLocal(appointment.StartTime)}. Payment: Free (military/veteran status).",
+                    Type = NotificationType.Application,
+                    RelatedEntityId = appointment.Id
+                });
+            }
+            else
+            {
+                // Цивільний — заявка йде СПОЧАТКУ адміну (психолог не отримує сповіщення)
+                var adminUsers = await _context.UserRoles
+                    .Join(_context.Roles, ur => ur.RoleId, r => r.Id, (ur, r) => new { ur.UserId, r.Name })
+                    .Where(x => x.Name == ApplicationRole.ROLE_SUPERADMIN || x.Name == ApplicationRole.ROLE_ADMIN)
+                    .Select(x => x.UserId)
+                    .Distinct()
+                    .ToListAsync();
+
+                foreach (var adminId in adminUsers)
+                {
+                    await _notificationService.SendNotificationAsync(new CreateNotificationDto
+                    {
+                        UserId = adminId,
+                        Title = "Payment Expected",
+                        Message = $"{clientName} booked a session for {FormatLocal(appointment.StartTime)} (₴{appointment.Price}). Please confirm payment when received.",
+                        Type = NotificationType.Application,
+                        RelatedEntityId = appointment.Id
+                    });
+                }
+            }
+
+            // Отримуємо картку платформи (адмін)
+            var platformCardNumber = await GetPlatformCardNumberAsync();
+
+            var psychologistName = $"{psychologist.User?.Name} {psychologist.User?.Surname}".Trim();
+
+            return new BookingResultDto
+            {
+                AppointmentId = appointment.Id,
+                IsFree = isFree,
+                Amount = appointment.Price,
+                PlatformCardNumber = platformCardNumber,
+                PaymentStatus = appointment.PaymentStatus.ToString(),
+                AppointmentStatus = appointment.Status.ToString(),
+                StartTime = appointment.StartTime,
+                PsychologistName = psychologistName
+            };
+        }
+
+        private async Task<string> GetPlatformCardNumberAsync()
+        {
+            // Знаходимо першого суперадміна і беремо його картку
+            var adminUserId = await _context.UserRoles
+                .Join(_context.Roles, ur => ur.RoleId, r => r.Id, (ur, r) => new { ur.UserId, r.Name })
+                .Where(x => x.Name == ApplicationRole.ROLE_SUPERADMIN)
+                .Select(x => x.UserId)
+                .FirstOrDefaultAsync();
+
+            if (adminUserId == default) return string.Empty;
+
+            var admin = await _context.Users.FirstOrDefaultAsync(u => u.Id == adminUserId);
+            return admin?.CardNumber ?? string.Empty;
         }
 
         public async Task<List<AppointmentApplicationDto>> GetPsychologistApplicationsAsync(Guid userId)
@@ -165,7 +229,10 @@ namespace Infrastructure.Services
 
             var appointments = await _context.Appointments
                 .Include(a => a.Client)
-                .Where(a => a.PsychologistId == psychologist.Id)
+                .Where(a => a.PsychologistId == psychologist.Id
+                         // Психолог НЕ бачить заявки, які ще очікують підтвердження оплати від адміна.
+                         // Він бачить тільки після ConfirmPayment (Confirmed/Free/ReleasedToPsychologist).
+                         && a.PaymentStatus != PaymentStatus.AwaitingPayment)
                 .OrderByDescending(a => a.StartTime)
                 .ToListAsync();
 
@@ -178,7 +245,8 @@ namespace Infrastructure.Services
                 EndTime = a.EndTime,
                 Status = a.Status.ToString(),
                 Price = a.Price,
-                ClientNotes = a.ClientNotes
+                ClientNotes = a.ClientNotes,
+                PaymentStatus = a.PaymentStatus.ToString()
             }).ToList();
         }
 
@@ -253,7 +321,8 @@ namespace Infrastructure.Services
                     Status = a.Status.ToString(),
                     Price = a.Price,
                     ClientNotes = a.ClientNotes,
-                    IsAccessible = isAccessible
+                    IsAccessible = isAccessible,
+                    PaymentStatus = a.PaymentStatus.ToString()
                 };
             }).ToList();
         }
@@ -270,7 +339,9 @@ namespace Infrastructure.Services
 
             var appointments = await _context.Appointments
                 .Include(a => a.Client)
-                .Where(a => a.PsychologistId == psychologist.Id)
+                .Where(a => a.PsychologistId == psychologist.Id
+                         // Не показуємо психологу сесії, які ще не пройшли підтвердження оплати адміном
+                         && a.PaymentStatus != PaymentStatus.AwaitingPayment)
                 .OrderByDescending(a => a.StartTime)
                 .ToListAsync();
 
@@ -295,7 +366,8 @@ namespace Infrastructure.Services
                     Status = a.Status.ToString(),
                     Price = a.Price,
                     ClientNotes = a.ClientNotes,
-                    IsAccessible = isAccessible
+                    IsAccessible = isAccessible,
+                    PaymentStatus = a.PaymentStatus.ToString()
                 };
             }).ToList();
         }
@@ -548,6 +620,266 @@ namespace Infrastructure.Services
                 throw new UnauthorizedAccessException("You are not authorized to modify this appointment.");
 
             return appointment;
+        }
+
+        public async Task CancelByClientAsync(Guid clientId, Guid appointmentId)
+        {
+            var appointment = await _context.Appointments
+                .Include(a => a.Psychologist)
+                .Include(a => a.Client)
+                .FirstOrDefaultAsync(a => a.Id == appointmentId);
+
+            if (appointment == null)
+                throw new Exception("Appointment not found.");
+
+            if (appointment.ClientId != clientId)
+                throw new UnauthorizedAccessException("You can cancel only your own appointments.");
+
+            if (appointment.Status == AppointmentStatus.Cancelled)
+                throw new Exception("Appointment is already cancelled.");
+
+            if (appointment.Status == AppointmentStatus.Completed)
+                throw new Exception("Cannot cancel a completed session.");
+
+            appointment.Status = AppointmentStatus.Cancelled;
+            await _context.SaveChangesAsync();
+
+            var clientName = $"{appointment.Client?.Name} {appointment.Client?.Surname}".Trim();
+
+            // Якщо психолог уже бачив заявку (адмін підтвердив оплату або це безкоштовна сесія) —
+            // сповіщаємо психолога. Інакше — він і не знав про неї.
+            if (appointment.PaymentStatus != PaymentStatus.AwaitingPayment)
+            {
+                await _notificationService.SendNotificationAsync(new CreateNotificationDto
+                {
+                    UserId = appointment.Psychologist.UserId,
+                    Title = "Session Cancelled",
+                    Message = $"{clientName} cancelled the session scheduled for {FormatLocal(appointment.StartTime)}.",
+                    Type = NotificationType.Application,
+                    RelatedEntityId = appointment.Id
+                });
+            }
+
+            // Якщо оплата ще не пройшла — повідомляємо адміна, щоб прибрав із черги
+            if (appointment.PaymentStatus == PaymentStatus.AwaitingPayment)
+            {
+                var adminUsers = await _context.UserRoles
+                    .Join(_context.Roles, ur => ur.RoleId, r => r.Id, (ur, r) => new { ur.UserId, r.Name })
+                    .Where(x => x.Name == ApplicationRole.ROLE_SUPERADMIN || x.Name == ApplicationRole.ROLE_ADMIN)
+                    .Select(x => x.UserId)
+                    .Distinct()
+                    .ToListAsync();
+
+                foreach (var adminId in adminUsers)
+                {
+                    await _notificationService.SendNotificationAsync(new CreateNotificationDto
+                    {
+                        UserId = adminId,
+                        Title = "Booking Cancelled",
+                        Message = $"{clientName} cancelled the booking for {FormatLocal(appointment.StartTime)} before paying. You can remove it from the payment queue.",
+                        Type = NotificationType.Application,
+                        RelatedEntityId = appointment.Id
+                    });
+                }
+            }
+        }
+
+        // ── Payment flow ──────────────────────────────────────────────────────
+
+        public async Task<List<PendingPaymentDto>> GetPendingPaymentsAsync()
+        {
+            return await _context.Appointments
+                .Include(a => a.Client)
+                .Include(a => a.Psychologist).ThenInclude(p => p.User)
+                .Where(a => a.PaymentStatus == PaymentStatus.AwaitingPayment
+                         && a.Status != AppointmentStatus.Cancelled)
+                .OrderBy(a => a.StartTime)
+                .Select(a => new PendingPaymentDto
+                {
+                    AppointmentId = a.Id,
+                    ClientUserId = a.ClientId,
+                    ClientFirstName = a.Client.Name,
+                    ClientLastName = a.Client.Surname,
+                    ClientUserName = a.Client.UserName,
+                    ClientProfileImage = a.Client.ProfileImage,
+                    ClientName = (a.Client.Name + " " + a.Client.Surname).Trim(),
+                    ClientEmail = a.Client.Email ?? string.Empty,
+                    PsychologistName = (a.Psychologist.User.Name + " " + a.Psychologist.User.Surname).Trim(),
+                    Amount = a.Price,
+                    StartTime = a.StartTime,
+                    EndTime = a.EndTime,
+                    PaymentStatus = a.PaymentStatus.ToString(),
+                    AppointmentStatus = a.Status.ToString(),
+                    ClientNotes = a.ClientNotes
+                })
+                .ToListAsync();
+        }
+
+        public async Task ConfirmPaymentAsync(Guid appointmentId)
+        {
+            var appointment = await _context.Appointments
+                .Include(a => a.Psychologist)
+                .Include(a => a.Client)
+                .FirstOrDefaultAsync(a => a.Id == appointmentId);
+
+            if (appointment == null)
+                throw new Exception("Appointment not found.");
+
+            if (appointment.PaymentStatus != PaymentStatus.AwaitingPayment)
+                throw new Exception("This appointment is not awaiting payment confirmation.");
+
+            // Оплату підтверджено, але заявка залишається Pending —
+            // психолог сам її прийме/відхилить (звичайний потік).
+            appointment.PaymentStatus = PaymentStatus.Confirmed;
+
+            await _context.SaveChangesAsync();
+
+            var clientName = $"{appointment.Client?.Name} {appointment.Client?.Surname}".Trim();
+
+            // ТЕПЕР заявка йде психологу — він її розгляне у звичайному потоці
+            await _notificationService.SendNotificationAsync(new CreateNotificationDto
+            {
+                UserId = appointment.Psychologist.UserId,
+                Title = "New Session Request",
+                Message = $"{clientName} booked a session on {FormatLocal(appointment.StartTime)}. Payment confirmed by admin (₴{appointment.Price}). Please approve or decline.",
+                Type = NotificationType.Application,
+                RelatedEntityId = appointment.Id
+            });
+
+            // Клієнту — оплата прийнята, очікуємо рішення психолога
+            await _notificationService.SendNotificationAsync(new CreateNotificationDto
+            {
+                UserId = appointment.ClientId,
+                Title = "Payment Confirmed ✓",
+                Message = $"Your payment of ₴{appointment.Price} has been confirmed. The request was forwarded to the psychologist for approval.",
+                Type = NotificationType.Application,
+                RelatedEntityId = appointment.Id
+            });
+        }
+
+        public async Task RejectPaymentAsync(Guid appointmentId, string? reason)
+        {
+            var appointment = await _context.Appointments
+                .Include(a => a.Client)
+                .Include(a => a.Psychologist)
+                .FirstOrDefaultAsync(a => a.Id == appointmentId);
+
+            if (appointment == null)
+                throw new Exception("Appointment not found.");
+
+            if (appointment.PaymentStatus != PaymentStatus.AwaitingPayment)
+                throw new Exception("Only payments awaiting confirmation can be rejected.");
+
+            appointment.Status = AppointmentStatus.Cancelled;
+            await _context.SaveChangesAsync();
+
+            var reasonText = string.IsNullOrWhiteSpace(reason)
+                ? "Payment was not received."
+                : reason.Trim();
+
+            // Сповіщення клієнту
+            await _notificationService.SendNotificationAsync(new CreateNotificationDto
+            {
+                UserId = appointment.ClientId,
+                Title = "Booking Cancelled by Admin",
+                Message = $"Your booking on {FormatLocal(appointment.StartTime)} was cancelled. Reason: {reasonText}",
+                Type = NotificationType.Application,
+                RelatedEntityId = appointment.Id
+            });
+        }
+
+        public async Task<List<PendingPaymentDto>> GetCompletedUnpaidSessionsAsync()
+        {
+            return await _context.Appointments
+                .Include(a => a.Client)
+                .Include(a => a.Psychologist).ThenInclude(p => p.User)
+                .Where(a => a.Status == AppointmentStatus.Completed
+                         && a.PaymentStatus == PaymentStatus.Confirmed)
+                .OrderByDescending(a => a.EndTime)
+                .Select(a => new PendingPaymentDto
+                {
+                    AppointmentId = a.Id,
+                    ClientUserId = a.ClientId,
+                    ClientFirstName = a.Client.Name,
+                    ClientLastName = a.Client.Surname,
+                    ClientUserName = a.Client.UserName,
+                    ClientProfileImage = a.Client.ProfileImage,
+                    ClientName = (a.Client.Name + " " + a.Client.Surname).Trim(),
+                    ClientEmail = a.Client.Email ?? string.Empty,
+                    PsychologistName = (a.Psychologist.User.Name + " " + a.Psychologist.User.Surname).Trim(),
+                    Amount = a.Price,
+                    StartTime = a.StartTime,
+                    EndTime = a.EndTime,
+                    PaymentStatus = a.PaymentStatus.ToString(),
+                    AppointmentStatus = a.Status.ToString()
+                })
+                .ToListAsync();
+        }
+
+        public async Task ReleasePaymentToPsychologistAsync(Guid appointmentId)
+        {
+            var appointment = await _context.Appointments
+                .Include(a => a.Psychologist)
+                .Include(a => a.Client)
+                .FirstOrDefaultAsync(a => a.Id == appointmentId);
+
+            if (appointment == null)
+                throw new Exception("Appointment not found.");
+
+            if (appointment.Status != AppointmentStatus.Completed)
+                throw new Exception("Can only release payment for completed sessions.");
+
+            if (appointment.PaymentStatus != PaymentStatus.Confirmed)
+                throw new Exception("Payment must be confirmed before releasing to psychologist.");
+
+            appointment.PaymentStatus = PaymentStatus.ReleasedToPsychologist;
+            appointment.Psychologist.Balance += appointment.Price;
+
+            await _context.SaveChangesAsync();
+
+            // Сповіщення психологу
+            await _notificationService.SendNotificationAsync(new CreateNotificationDto
+            {
+                UserId = appointment.Psychologist.UserId,
+                Title = "Earnings Added 💰",
+                Message = $"₴{appointment.Price} for the session on {FormatLocal(appointment.StartTime)} has been added to your balance.",
+                Type = NotificationType.Application,
+                RelatedEntityId = appointment.Id
+            });
+        }
+
+        public async Task<PsychologistBalanceDto> GetPsychologistBalanceAsync(Guid psychologistUserId)
+        {
+            var psychologist = await _context.Psychologists
+                .FirstOrDefaultAsync(p => p.UserId == psychologistUserId);
+
+            if (psychologist == null)
+                throw new Exception("Psychologist profile not found.");
+
+            var recentEarnings = await _context.Appointments
+                .Include(a => a.Client)
+                .Where(a => a.PsychologistId == psychologist.Id
+                         && (a.PaymentStatus == PaymentStatus.Confirmed
+                          || a.PaymentStatus == PaymentStatus.ReleasedToPsychologist
+                          || a.PaymentStatus == PaymentStatus.Free)
+                         && a.Status == AppointmentStatus.Completed)
+                .OrderByDescending(a => a.EndTime)
+                .Take(20)
+                .Select(a => new EarningItemDto
+                {
+                    AppointmentId = a.Id,
+                    ClientName = (a.Client.Name + " " + a.Client.Surname).Trim(),
+                    Amount = a.Price,
+                    SessionDate = a.StartTime,
+                    PaymentStatus = a.PaymentStatus.ToString()
+                })
+                .ToListAsync();
+
+            return new PsychologistBalanceDto
+            {
+                Balance = psychologist.Balance,
+                RecentEarnings = recentEarnings
+            };
         }
     }
 
