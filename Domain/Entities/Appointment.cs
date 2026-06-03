@@ -17,6 +17,7 @@ namespace Domain.Entities
         public DateTime EndTime { get; set; }
 
         public AppointmentStatus Status { get; set; } = AppointmentStatus.Pending;
+        public PaymentStatus PaymentStatus { get; set; } = PaymentStatus.AwaitingPayment;
 
         public decimal Price { get; set; }
         public string? MeetingLink { get; set; }
@@ -30,5 +31,14 @@ namespace Domain.Entities
         Completed = 2,
         Cancelled = 3,
         NoShow = 4
+    }
+
+    public enum PaymentStatus
+    {
+        AwaitingPayment = 0,    // Клієнт ще не оплатив (цивільний)
+        PendingConfirmation = 1, // Клієнт каже що оплатив, адмін перевіряє
+        Confirmed = 2,           // Адмін підтвердив оплату
+        Free = 3,                // Безкоштовна сесія (військовий/ветеран)
+        ReleasedToPsychologist = 4 // Кошти перераховані на рахунок психолога
     }
 }

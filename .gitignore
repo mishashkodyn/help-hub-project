@@ -482,3 +482,6 @@ $RECYCLE.BIN/
 *.swp
 
 ClientApp/.angular/cache/
+
+# Claude Code local test credentials (never commit)
+.claude/*.local.md

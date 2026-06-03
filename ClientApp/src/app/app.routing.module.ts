@@ -31,7 +31,8 @@ import { PsychologistProfileEditorComponent } from './modules/psychologist-tools
 import { ClientSessionsComponent } from './modules/client-portal/pages/client-sessions/client-sessions.component';
 import { SessionRoomComponent } from './modules/session/pages/session-room/session-room.component';
 import { UserCategoryApplicationComponent } from './modules/core/pages/user-category-application/user-category-application.component';
-import { UserCategoryApplicationsPageComponent } from './modules/admin-tools/pages/user-category-applications-page/user-category-applications-page.component';
+import { AdminPaymentsComponent } from './modules/admin-tools/pages/admin-payments/admin-payments.component';
+import { PsychologistFinancesComponent } from './modules/psychologist-tools/pages/psychologist-finances/psychologist-finances.component';
 
 const routes: Routes = [
   {
@@ -47,7 +48,10 @@ const routes: Routes = [
       { path: 'admin', canActivate: [AuthGuard], component: AdminDashboardComponent },
       { path: 'ai-chat', canActivate: [AuthGuard], component: AiChatComponent},
       { path: 'admin/applications', canActivate: [AuthGuard], component: ApplicationsPageComponent },
-      { path: 'admin/category-applications', canActivate: [AuthGuard], component: UserCategoryApplicationsPageComponent },
+      { path: 'admin/category-applications', redirectTo: 'admin/applications', pathMatch: 'full' },
+      { path: 'admin/settings', redirectTo: 'admin/payments', pathMatch: 'full' },
+      { path: 'admin/payments', canActivate: [AuthGuard], component: AdminPaymentsComponent },
+      { path: 'psychologist/finances', canActivate: [AuthGuard], component: PsychologistFinancesComponent },
       { path: 'admin/specializations', canActivate: [AuthGuard], component: ManageSpecializationsComponent},
       { path: 'category-application', canActivate: [AuthGuard], component: UserCategoryApplicationComponent },
       { path: '', component: HomePageResolverComponent},

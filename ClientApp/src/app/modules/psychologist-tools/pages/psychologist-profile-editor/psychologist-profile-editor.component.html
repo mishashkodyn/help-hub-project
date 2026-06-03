@@ -258,6 +258,34 @@
 
           <hr class="border-gray-100" />
 
+          <!-- Payout card -->
+          <section class="space-y-5">
+            <header>
+              <h2 class="text-base font-semibold text-gray-900">Виплати</h2>
+              <p class="text-xs text-gray-500 mt-0.5">Номер картки, на яку будуть зараховуватись кошти за сесії.</p>
+            </header>
+
+            <div>
+              <label class="block text-xs font-medium text-gray-600 mb-1.5">
+                Номер картки
+                <span class="text-gray-400 font-normal">— необов'язково</span>
+              </label>
+              <input
+                formControlName="cardNumber"
+                placeholder="XXXX XXXX XXXX XXXX"
+                maxlength="19"
+                class="block w-full px-4 py-2.5 bg-white border rounded-xl text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900/10 focus:border-gray-900 transition-all font-mono tracking-widest"
+                [class.border-red-300]="form.get('cardNumber')?.invalid && form.get('cardNumber')?.touched"
+                [class.border-gray-200]="!(form.get('cardNumber')?.invalid && form.get('cardNumber')?.touched)"
+              />
+              @if (form.get('cardNumber')?.invalid && form.get('cardNumber')?.touched) {
+                <p class="text-[11px] text-red-500 mt-1">Введіть коректний номер картки (16 цифр).</p>
+              }
+            </div>
+          </section>
+
+          <hr class="border-gray-100" />
+
           <!-- Publish -->
           <section>
             <label

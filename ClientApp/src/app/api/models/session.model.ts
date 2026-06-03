@@ -8,6 +8,49 @@ export interface ClientSessionDto {
   price: number;
   clientNotes?: string;
   isAccessible: boolean;
+  paymentStatus: 'AwaitingPayment' | 'PendingConfirmation' | 'Confirmed' | 'Free' | 'ReleasedToPsychologist';
+}
+
+export interface BookingResultDto {
+  appointmentId: string;
+  isFree: boolean;
+  amount: number;
+  platformCardNumber: string;
+  paymentStatus: string;
+  appointmentStatus: string;
+  startTime: string;
+  psychologistName: string;
+}
+
+export interface PendingPaymentDto {
+  appointmentId: string;
+  clientUserId: string;
+  clientFirstName?: string;
+  clientLastName?: string;
+  clientUserName?: string;
+  clientProfileImage?: string;
+  clientName: string;
+  clientEmail: string;
+  psychologistName: string;
+  amount: number;
+  startTime: string;
+  endTime: string;
+  paymentStatus: string;
+  appointmentStatus: string;
+  clientNotes?: string;
+}
+
+export interface PsychologistBalanceDto {
+  balance: number;
+  recentEarnings: EarningItemDto[];
+}
+
+export interface EarningItemDto {
+  appointmentId: string;
+  clientName: string;
+  amount: number;
+  sessionDate: string;
+  paymentStatus: string;
 }
 
 export interface SessionInfoDto {

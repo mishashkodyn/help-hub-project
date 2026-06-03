@@ -47,6 +47,7 @@ namespace Infrastructure.Services
             psychologist.HasTraumaTraining = dto.HasTraumaTraining;
             psychologist.OffersFreeSessionsForMilitary = dto.OffersFreeSessionsForMilitary;
             psychologist.DiscountForAffected = dto.DiscountForAffected;
+            psychologist.CardNumber = dto.CardNumber?.Trim() ?? string.Empty;
 
             if (dto.IsPublished && !IsResumeComplete(psychologist, dto.SpecializationIds))
                 throw new Exception("Resume is incomplete. Fill in bio, education, contact phone, price and at least one specialization before publishing.");
@@ -197,6 +198,7 @@ namespace Infrastructure.Services
             OffersFreeSessionsForMilitary = p.OffersFreeSessionsForMilitary,
             DiscountForAffected = p.DiscountForAffected,
             IsPublished = p.IsPublished,
+            CardNumber = p.CardNumber,
             Specializations = p.Specializations
                 .OrderBy(s => s.Name)
                 .Select(s => new SpecializationDto { Id = s.Id, Name = s.Name })

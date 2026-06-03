@@ -13,8 +13,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { UsersPageComponent } from './pages/users-page/users-page.component';
 import { SharedModule } from '../shared/shared.module';
 import { FormsModule } from '@angular/forms';
-import { UserCategoryApplicationsPageComponent } from './pages/user-category-applications-page/user-category-applications-page.component';
+import { AdminPaymentsComponent } from './pages/admin-payments/admin-payments.component';
 import { TranslocoModule } from '@ngneat/transloco';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 
 
@@ -26,7 +27,7 @@ import { TranslocoModule } from '@ngneat/transloco';
     ManageSpecializationsComponent,
     SpecializationDialogComponent,
     UsersPageComponent,
-    UserCategoryApplicationsPageComponent
+    AdminPaymentsComponent
   ],
   imports: [
     CommonModule,
@@ -38,7 +39,8 @@ import { TranslocoModule } from '@ngneat/transloco';
     ReactiveFormsModule,
     FormsModule,
     SharedModule,
-    TranslocoModule
+    TranslocoModule,
+    MatProgressSpinnerModule
   ]
 })
 export class AdminToolsModule { }

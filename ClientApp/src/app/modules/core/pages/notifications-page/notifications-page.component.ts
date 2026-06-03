@@ -28,20 +28,21 @@ export class NotificationsPageComponent {
 
     const target = this.resolveTarget(notif);
     if (target) {
-      this.router.navigate([target]);
+      this.router.navigate(target.commands, { queryParams: target.queryParams });
     }
   }
 
-  private resolveTarget(notif: AppNotification): string | null {
+  private resolveTarget(notif: AppNotification): { commands: any[]; queryParams?: any } | null {
     if (this.isCategoryNotification(notif)) {
-      return this.authService.isAdmin || this.authService.isSuperAdmin
-        ? '/admin/category-applications'
-        : '/category-application';
+      if (this.authService.isAdmin || this.authService.isSuperAdmin) {
+        return { commands: ['/admin/applications'], queryParams: { tab: 'categories' } };
+      }
+      return { commands: ['/category-application'] };
     }
 
-    return this.authService.isPsychologist
-      ? '/psychologist/applications'
-      : '/my-sessions';
+    return {
+      commands: [this.authService.isPsychologist ? '/psychologist/applications' : '/my-sessions'],
+    };
   }
 
   private isCategoryNotification(notif: AppNotification): boolean {

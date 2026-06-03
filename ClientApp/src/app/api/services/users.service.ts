@@ -12,10 +12,19 @@ import { UserProfileDto } from '../models/user';
 })
 export class UsersService {
   private baseUrl = `${environment.apiBaseUrl}/users`;
+  private accountUrl = `${environment.apiBaseUrl}/account`;
 
   private http = inject(HttpClient);
 
   getUser(id: string): Observable<ApiResponse<UserProfileDto>>{
     return this.http.get<ApiResponse<UserProfileDto>>(`${this.baseUrl}/get-user/${id}`)
+  }
+
+  getMyCardNumber(): Observable<ApiResponse<string>> {
+    return this.http.get<ApiResponse<string>>(`${this.accountUrl}/card-number`);
+  }
+
+  updateMyCardNumber(cardNumber: string): Observable<ApiResponse<string>> {
+    return this.http.put<ApiResponse<string>>(`${this.accountUrl}/card-number`, { cardNumber });
   }
 }

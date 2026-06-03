@@ -1,0 +1,447 @@
+<div class="p-6 md:p-10 bg-gray-50 min-h-screen font-sans">
+  <div class="max-w-5xl mx-auto">
+
+    <a routerLink="/admin"
+      class="inline-flex items-center gap-1 text-gray-500 hover:text-[var(--color-primary)] transition-colors text-sm font-medium mb-6 cursor-pointer w-fit">
+      <mat-icon class="scale-90">arrow_back</mat-icon>
+      Назад до панелі
+    </a>
+
+    <div class="flex flex-col gap-2 mb-8 pb-6 border-b border-gray-200">
+      <h1 class="text-3xl font-bold text-[var(--color-primary)] tracking-tight">Платежі та реквізити</h1>
+      <p class="text-gray-500 text-sm">Підтвердження оплат, виплати психологам та платіжна картка платформи.</p>
+    </div>
+
+    <!-- Tabs -->
+    <div class="flex flex-wrap gap-1 p-1 bg-gray-100 rounded-xl mb-6 w-fit">
+      <button (click)="setTab('pending')"
+        class="px-4 py-2 rounded-lg text-sm font-semibold transition-all cursor-pointer"
+        [ngClass]="activeTab === 'pending' ? 'bg-white shadow text-gray-900' : 'text-gray-500 hover:text-gray-700'">
+        <span class="flex items-center gap-2">
+          <mat-icon style="font-size:16px;width:16px;height:16px">hourglass_top</mat-icon>
+          Очікують оплати
+          @if (pendingPayments.length > 0) {
+            <span class="w-5 h-5 rounded-full bg-amber-500 text-white text-[10px] font-bold flex items-center justify-center">
+              {{ pendingPayments.length }}
+            </span>
+          }
+        </span>
+      </button>
+      <button (click)="setTab('release')"
+        class="px-4 py-2 rounded-lg text-sm font-semibold transition-all cursor-pointer"
+        [ngClass]="activeTab === 'release' ? 'bg-white shadow text-gray-900' : 'text-gray-500 hover:text-gray-700'">
+        <span class="flex items-center gap-2">
+          <mat-icon style="font-size:16px;width:16px;height:16px">account_balance_wallet</mat-icon>
+          Виплати психологам
+          @if (completedSessions.length > 0) {
+            <span class="w-5 h-5 rounded-full bg-blue-500 text-white text-[10px] font-bold flex items-center justify-center">
+              {{ completedSessions.length }}
+            </span>
+          }
+        </span>
+      </button>
+      <button (click)="setTab('requisites')"
+        class="px-4 py-2 rounded-lg text-sm font-semibold transition-all cursor-pointer"
+        [ngClass]="activeTab === 'requisites' ? 'bg-white shadow text-gray-900' : 'text-gray-500 hover:text-gray-700'">
+        <span class="flex items-center gap-2">
+          <mat-icon style="font-size:16px;width:16px;height:16px">credit_card</mat-icon>
+          Реквізити
+        </span>
+      </button>
+    </div>
+
+    <!-- ── Tab 1: Pending payments ──────────────────────────────────────── -->
+    @if (activeTab === 'pending') {
+
+      <!-- Filter bar -->
+      <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 mb-4 flex flex-col gap-3">
+        <div class="flex flex-col md:flex-row gap-3 md:items-center">
+          <div class="relative w-full md:max-w-md">
+            <mat-icon class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">search</mat-icon>
+            <input type="text"
+              [value]="pendingSearch"
+              (input)="onPendingSearch($event)"
+              placeholder="Пошук: клієнт, email, психолог..."
+              class="w-full pl-10 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-mint)] focus:bg-white transition-all text-sm" />
+          </div>
+
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="text-[11px] font-semibold text-gray-500 uppercase tracking-wider">Дата сесії</span>
+            <input type="date" [value]="pendingDateFrom || ''"
+              (change)="setPendingDate('from', $any($event.target).value)"
+              class="px-3 py-1.5 bg-gray-50 border border-gray-200 rounded-lg text-xs text-gray-700 focus:outline-none focus:ring-2 focus:ring-[var(--color-mint)]" />
+            <span class="text-gray-400 text-xs">—</span>
+            <input type="date" [value]="pendingDateTo || ''"
+              (change)="setPendingDate('to', $any($event.target).value)"
+              class="px-3 py-1.5 bg-gray-50 border border-gray-200 rounded-lg text-xs text-gray-700 focus:outline-none focus:ring-2 focus:ring-[var(--color-mint)]" />
+          </div>
+
+          <div class="flex-grow"></div>
+
+          @if (pendingActiveCount > 0) {
+            <button (click)="resetPendingFilters()"
+              class="inline-flex items-center gap-1.5 px-3 h-9 rounded-lg border border-gray-200 hover:border-red-300 hover:text-red-600 text-xs font-semibold text-gray-600 transition-colors cursor-pointer">
+              <mat-icon style="font-size:14px;width:14px;height:14px">close</mat-icon>
+              Скинути ({{ pendingActiveCount }})
+            </button>
+          }
+          <span class="text-xs text-gray-500">
+            <strong>{{ filteredPending.length }}</strong> / {{ pendingPayments.length }}
+          </span>
+        </div>
+      </div>
+
+      @if (isLoadingPending) {
+        <div class="flex justify-center py-16"><mat-spinner diameter="36"></mat-spinner></div>
+      } @else if (pendingPayments.length === 0) {
+        <div class="bg-white rounded-2xl border border-gray-100 p-12 text-center">
+          <mat-icon class="text-5xl text-gray-300 mb-3">check_circle</mat-icon>
+          <p class="text-gray-500 font-medium">Немає очікуючих оплат</p>
+          <p class="text-xs text-gray-400 mt-1">Нові бронювання від цивільних клієнтів з'являться тут.</p>
+        </div>
+      } @else if (filteredPending.length === 0) {
+        <div class="bg-white rounded-2xl border border-gray-100 p-12 text-center">
+          <mat-icon class="text-5xl text-gray-300 mb-3">search_off</mat-icon>
+          <p class="text-gray-500 font-medium">Нічого не знайдено</p>
+          <button (click)="resetPendingFilters()"
+            class="mt-4 px-4 py-2 text-[var(--color-primary)] bg-[var(--color-sky)]/20 rounded-lg text-sm font-semibold hover:bg-[var(--color-sky)]/30 transition-colors">
+            Скинути фільтри
+          </button>
+        </div>
+      } @else {
+        <div class="space-y-3">
+          @for (item of filteredPending; track item.appointmentId) {
+            <div class="bg-white rounded-2xl border border-gray-100 p-5 flex flex-col gap-4">
+
+              <div class="flex items-start gap-4">
+                <div class="shrink-0">
+                  @if (item.clientProfileImage) {
+                    <img [src]="item.clientProfileImage" [alt]="item.clientName"
+                      class="w-12 h-12 rounded-2xl object-cover ring-1 ring-gray-100">
+                  } @else {
+                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center text-gray-500 font-bold ring-1 ring-gray-100">
+                      {{ initials(item) }}
+                    </div>
+                  }
+                </div>
+
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-center gap-2 mb-1">
+                    <span class="inline-flex items-center gap-1 px-2 h-5 rounded-full bg-amber-100 text-amber-700 text-[10px] font-semibold uppercase tracking-wide">
+                      <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+                      Очікує оплати
+                    </span>
+                  </div>
+                  <p class="font-semibold text-gray-900 truncate">{{ item.clientName || 'Без імені' }}</p>
+                  <p class="text-xs text-gray-500 truncate">{{ item.clientEmail }}</p>
+                  <div class="text-xs text-gray-400 mt-2 space-y-0.5">
+                    <p><mat-icon class="inline-block align-middle" style="font-size:13px;width:13px;height:13px">schedule</mat-icon>
+                      <span class="align-middle ml-1">Сесія: {{ formatDate(item.startTime) }}</span>
+                    </p>
+                    <p><mat-icon class="inline-block align-middle" style="font-size:13px;width:13px;height:13px">person</mat-icon>
+                      <span class="align-middle ml-1">Психолог: {{ item.psychologistName }}</span>
+                    </p>
+                  </div>
+                </div>
+
+                <div class="text-right shrink-0">
+                  <div class="text-2xl font-bold text-gray-900">{{ item.amount }} ₴</div>
+                  <div class="text-[10px] uppercase text-gray-400 tracking-wider mt-1">до сплати</div>
+                </div>
+              </div>
+
+              @if (item.clientNotes) {
+                <div class="bg-gray-50 rounded-xl p-3 text-xs text-gray-600 border border-gray-100">
+                  <span class="font-semibold text-gray-700">Нотатки клієнта: </span>{{ item.clientNotes }}
+                </div>
+              }
+
+              <div class="flex flex-wrap items-center gap-2 pt-3 border-t border-gray-50">
+                <button (click)="showDetails(item)"
+                  class="inline-flex items-center gap-1.5 h-9 px-3 rounded-lg border border-gray-200 hover:border-gray-300 text-sm text-gray-700 transition-colors cursor-pointer">
+                  <mat-icon style="font-size:16px;width:16px;height:16px">info</mat-icon>
+                  <span>Деталі</span>
+                </button>
+
+                <button (click)="openChatWithClient(item)"
+                  class="inline-flex items-center gap-1.5 h-9 px-3 rounded-lg border border-gray-200 hover:border-gray-300 text-sm text-gray-700 transition-colors cursor-pointer">
+                  <mat-icon style="font-size:16px;width:16px;height:16px">chat</mat-icon>
+                  <span>Чат з клієнтом</span>
+                </button>
+
+                <div class="flex-grow"></div>
+
+                <button (click)="openRejectModal(item)" [disabled]="rejectingId === item.appointmentId"
+                  class="inline-flex items-center gap-1.5 h-9 px-4 rounded-lg border border-red-200 text-red-600 hover:bg-red-50 text-sm font-semibold transition-colors disabled:opacity-50 cursor-pointer">
+                  <mat-icon style="font-size:16px;width:16px;height:16px">close</mat-icon>
+                  <span>Відхилити</span>
+                </button>
+
+                <button (click)="confirmPayment(item.appointmentId)" [disabled]="confirmingId === item.appointmentId"
+                  class="inline-flex items-center gap-1.5 h-9 px-4 rounded-lg bg-green-600 hover:bg-green-700 text-white text-sm font-semibold transition-colors disabled:opacity-50 cursor-pointer">
+                  @if (confirmingId === item.appointmentId) {
+                    <div class="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                    <span>...</span>
+                  } @else {
+                    <mat-icon style="font-size:16px;width:16px;height:16px">check</mat-icon>
+                    <span>Підтвердити оплату</span>
+                  }
+                </button>
+              </div>
+            </div>
+          }
+        </div>
+      }
+    }
+
+    <!-- ── Tab 2: Release payments ────────────────────────────────────────── -->
+    @if (activeTab === 'release') {
+
+      <!-- Filter bar -->
+      <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 mb-4 flex flex-col gap-3">
+        <div class="flex flex-col md:flex-row gap-3 md:items-center">
+          <div class="relative w-full md:max-w-md">
+            <mat-icon class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">search</mat-icon>
+            <input type="text"
+              [value]="releaseSearch"
+              (input)="onReleaseSearch($event)"
+              placeholder="Пошук: клієнт, email, психолог..."
+              class="w-full pl-10 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-mint)] focus:bg-white transition-all text-sm" />
+          </div>
+
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="text-[11px] font-semibold text-gray-500 uppercase tracking-wider">Дата сесії</span>
+            <input type="date" [value]="releaseDateFrom || ''"
+              (change)="setReleaseDate('from', $any($event.target).value)"
+              class="px-3 py-1.5 bg-gray-50 border border-gray-200 rounded-lg text-xs text-gray-700 focus:outline-none focus:ring-2 focus:ring-[var(--color-mint)]" />
+            <span class="text-gray-400 text-xs">—</span>
+            <input type="date" [value]="releaseDateTo || ''"
+              (change)="setReleaseDate('to', $any($event.target).value)"
+              class="px-3 py-1.5 bg-gray-50 border border-gray-200 rounded-lg text-xs text-gray-700 focus:outline-none focus:ring-2 focus:ring-[var(--color-mint)]" />
+          </div>
+
+          <div class="flex-grow"></div>
+
+          @if (releaseActiveCount > 0) {
+            <button (click)="resetReleaseFilters()"
+              class="inline-flex items-center gap-1.5 px-3 h-9 rounded-lg border border-gray-200 hover:border-red-300 hover:text-red-600 text-xs font-semibold text-gray-600 transition-colors cursor-pointer">
+              <mat-icon style="font-size:14px;width:14px;height:14px">close</mat-icon>
+              Скинути ({{ releaseActiveCount }})
+            </button>
+          }
+          <span class="text-xs text-gray-500">
+            <strong>{{ filteredCompleted.length }}</strong> / {{ completedSessions.length }}
+          </span>
+        </div>
+      </div>
+
+      @if (isLoadingCompleted) {
+        <div class="flex justify-center py-16"><mat-spinner diameter="36"></mat-spinner></div>
+      } @else if (completedSessions.length === 0) {
+        <div class="bg-white rounded-2xl border border-gray-100 p-12 text-center">
+          <mat-icon class="text-5xl text-gray-300 mb-3">account_balance_wallet</mat-icon>
+          <p class="text-gray-500 font-medium">Немає завершених сесій для виплати</p>
+          <p class="text-xs text-gray-400 mt-1">Тут з'являться завершені сесії, де кошти ще не перераховані психологу.</p>
+        </div>
+      } @else if (filteredCompleted.length === 0) {
+        <div class="bg-white rounded-2xl border border-gray-100 p-12 text-center">
+          <mat-icon class="text-5xl text-gray-300 mb-3">search_off</mat-icon>
+          <p class="text-gray-500 font-medium">Нічого не знайдено</p>
+          <button (click)="resetReleaseFilters()"
+            class="mt-4 px-4 py-2 text-[var(--color-primary)] bg-[var(--color-sky)]/20 rounded-lg text-sm font-semibold hover:bg-[var(--color-sky)]/30 transition-colors">
+            Скинути фільтри
+          </button>
+        </div>
+      } @else {
+        <div class="space-y-3">
+          @for (item of filteredCompleted; track item.appointmentId) {
+            <div class="bg-white rounded-2xl border border-gray-100 p-5 flex flex-col sm:flex-row sm:items-center gap-4">
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="inline-flex items-center gap-1 px-2 h-5 rounded-full bg-blue-100 text-blue-700 text-[10px] font-semibold uppercase tracking-wide">
+                    <span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
+                    Готово до виплати
+                  </span>
+                </div>
+                <p class="font-semibold text-gray-900 truncate">{{ item.clientName }}</p>
+                <p class="text-xs text-gray-500">{{ item.clientEmail }}</p>
+                <p class="text-xs text-gray-400 mt-1">Сесія: {{ formatDate(item.startTime) }}</p>
+                <p class="text-xs text-gray-500 mt-0.5">Психолог: <strong>{{ item.psychologistName }}</strong></p>
+              </div>
+              <div class="flex items-center gap-4 sm:flex-col sm:items-end sm:gap-2">
+                <span class="text-xl font-bold text-gray-900">{{ item.amount }} ₴</span>
+                <button (click)="releasePayment(item.appointmentId)" [disabled]="releasingId === item.appointmentId"
+                  class="inline-flex items-center gap-1.5 h-9 px-4 rounded-full bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer">
+                  @if (releasingId === item.appointmentId) {
+                    <div class="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                    <span>...</span>
+                  } @else {
+                    <mat-icon style="font-size:16px;width:16px;height:16px">send</mat-icon>
+                    <span>Перерахувати психологу</span>
+                  }
+                </button>
+              </div>
+            </div>
+          }
+        </div>
+      }
+    }
+
+    <!-- ── Tab 3: Requisites ──────────────────────────────────────────────── -->
+    @if (activeTab === 'requisites') {
+      @if (isLoadingRequisites) {
+        <div class="flex items-center justify-center py-20"><mat-spinner diameter="36"></mat-spinner></div>
+      } @else {
+        <form [formGroup]="requisitesForm" (ngSubmit)="saveRequisites()">
+          <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 md:p-8">
+            <div class="flex items-center gap-3 mb-6">
+              <div class="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center">
+                <mat-icon class="text-blue-600">credit_card</mat-icon>
+              </div>
+              <div>
+                <h2 class="text-base font-semibold text-gray-900">Платіжна картка</h2>
+                <p class="text-xs text-gray-500 mt-0.5">Номер картки, на яку зараховуватимуться кошти платформи.</p>
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-medium text-gray-600 mb-1.5">Номер картки</label>
+              <input formControlName="cardNumber" placeholder="XXXX XXXX XXXX XXXX" maxlength="19"
+                class="block w-full px-4 py-3 bg-white border rounded-xl text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900/10 focus:border-gray-900 transition-all font-mono tracking-widest text-lg"
+                [class.border-red-300]="requisitesForm.get('cardNumber')?.invalid && requisitesForm.get('cardNumber')?.touched"
+                [class.border-gray-200]="!(requisitesForm.get('cardNumber')?.invalid && requisitesForm.get('cardNumber')?.touched)" />
+              @if (requisitesForm.get('cardNumber')?.invalid && requisitesForm.get('cardNumber')?.touched) {
+                <p class="text-[11px] text-red-500 mt-1">Введіть коректний номер картки (16 цифр).</p>
+              }
+              <p class="text-xs text-gray-400 mt-2">Зберігається для майбутнього використання в системі оплат.</p>
+            </div>
+
+            <div class="flex justify-end mt-6">
+              <button type="submit" [disabled]="isSavingRequisites || requisitesForm.invalid"
+                class="inline-flex items-center gap-2 h-10 px-6 rounded-full bg-gray-900 hover:bg-black text-white text-sm font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer">
+                @if (isSavingRequisites) {
+                  <div class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                  <span>Збереження</span>
+                } @else {
+                  <mat-icon class="text-[16px]">save</mat-icon>
+                  <span>Зберегти</span>
+                }
+              </button>
+            </div>
+          </div>
+        </form>
+      }
+    }
+
+  </div>
+</div>
+
+<!-- ── Reject modal ─────────────────────────────────────────────────────── -->
+@if (rejectTarget) {
+  <div class="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
+    (click)="closeRejectModal()">
+    <div class="bg-white rounded-3xl shadow-2xl w-full max-w-md overflow-hidden" (click)="$event.stopPropagation()">
+      <div class="px-6 py-5 border-b border-gray-100 flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-red-100 text-red-600 flex items-center justify-center">
+          <mat-icon>cancel</mat-icon>
+        </div>
+        <div>
+          <h2 class="text-lg font-bold text-gray-900">Відхилити заявку?</h2>
+          <p class="text-xs text-gray-500 mt-0.5">{{ rejectTarget.clientName }} · {{ rejectTarget.amount }} ₴</p>
+        </div>
+      </div>
+      <div class="p-6 space-y-4">
+        <div class="bg-amber-50 border border-amber-100 rounded-xl p-3 text-xs text-amber-800">
+          <p>Заявка буде скасована, клієнт отримає сповіщення з причиною.</p>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-gray-700 mb-1.5">Причина (необов'язково)</label>
+          <textarea [(ngModel)]="rejectReason" rows="3"
+            placeholder="Наприклад: Кошти не надійшли на рахунок платформи."
+            class="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-red-400 focus:ring-2 focus:ring-red-100 outline-none text-sm text-gray-800 resize-none"></textarea>
+        </div>
+      </div>
+      <div class="px-6 py-4 border-t border-gray-100 bg-gray-50 flex justify-end gap-3">
+        <button (click)="closeRejectModal()" class="px-5 h-10 rounded-lg font-semibold text-gray-700 hover:bg-gray-200 transition-colors cursor-pointer">
+          Скасувати
+        </button>
+        <button (click)="submitReject()" [disabled]="rejectingId === rejectTarget.appointmentId"
+          class="px-5 h-10 rounded-lg font-semibold bg-red-600 hover:bg-red-700 text-white transition-colors disabled:opacity-50 cursor-pointer inline-flex items-center gap-2">
+          @if (rejectingId === rejectTarget.appointmentId) {
+            <div class="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+            <span>Відхилення…</span>
+          } @else {
+            <mat-icon class="scale-90">close</mat-icon>
+            <span>Відхилити</span>
+          }
+        </button>
+      </div>
+    </div>
+  </div>
+}
+
+<!-- ── Details modal ────────────────────────────────────────────────────── -->
+@if (detailsTarget) {
+  <div class="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
+    (click)="closeDetails()">
+    <div class="bg-white rounded-3xl shadow-2xl w-full max-w-lg overflow-hidden" (click)="$event.stopPropagation()">
+      <div class="px-6 py-5 border-b border-gray-100 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center">
+            <mat-icon>receipt_long</mat-icon>
+          </div>
+          <h2 class="text-lg font-bold text-gray-900">Деталі заявки</h2>
+        </div>
+        <button (click)="closeDetails()"
+          class="w-8 h-8 flex items-center justify-center rounded-full text-gray-400 hover:bg-gray-100 hover:text-gray-700 transition-colors">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+
+      <div class="p-6 space-y-5">
+        <div class="bg-gray-900 text-white rounded-2xl p-5 text-center">
+          <p class="text-xs text-gray-400 uppercase tracking-widest mb-1">До сплати клієнтом</p>
+          <p class="text-4xl font-bold tracking-tight">{{ detailsTarget.amount }} ₴</p>
+        </div>
+
+        <dl class="space-y-3">
+          <div class="flex justify-between gap-3 text-sm">
+            <dt class="text-gray-500">Клієнт</dt>
+            <dd class="text-gray-900 font-medium text-right">{{ detailsTarget.clientName }}</dd>
+          </div>
+          <div class="flex justify-between gap-3 text-sm">
+            <dt class="text-gray-500">Email</dt>
+            <dd class="text-gray-900 font-medium text-right">{{ detailsTarget.clientEmail }}</dd>
+          </div>
+          <div class="flex justify-between gap-3 text-sm border-t border-gray-100 pt-3">
+            <dt class="text-gray-500">Психолог</dt>
+            <dd class="text-gray-900 font-medium text-right">{{ detailsTarget.psychologistName }}</dd>
+          </div>
+          <div class="flex justify-between gap-3 text-sm">
+            <dt class="text-gray-500">Дата сесії</dt>
+            <dd class="text-gray-900 font-medium text-right">{{ formatDate(detailsTarget.startTime) }}</dd>
+          </div>
+        </dl>
+
+        @if (detailsTarget.clientNotes) {
+          <div class="border-t border-gray-100 pt-4">
+            <p class="text-xs font-semibold text-gray-700 mb-1.5">Нотатки клієнта</p>
+            <p class="text-sm text-gray-600 bg-gray-50 rounded-xl p-3 whitespace-pre-line">{{ detailsTarget.clientNotes }}</p>
+          </div>
+        }
+      </div>
+
+      <div class="px-6 py-4 border-t border-gray-100 bg-gray-50 flex justify-end gap-3">
+        <button (click)="openChatWithClient(detailsTarget); closeDetails()"
+          class="px-5 h-10 rounded-lg font-semibold text-gray-700 border border-gray-200 hover:bg-gray-100 transition-colors cursor-pointer inline-flex items-center gap-2">
+          <mat-icon class="scale-90">chat</mat-icon>
+          <span>Написати клієнту</span>
+        </button>
+        <button (click)="closeDetails()"
+          class="px-5 h-10 rounded-lg font-semibold bg-gray-900 hover:bg-black text-white transition-colors cursor-pointer">
+          Закрити
+        </button>
+      </div>
+    </div>
+  </div>
+}

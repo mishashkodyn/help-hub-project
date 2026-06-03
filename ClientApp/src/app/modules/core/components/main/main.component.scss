@@ -1,0 +1,41 @@
+:host {
+  display: block;
+}
+
+/* ===========================================================================
+   Motion — robust by design.
+   • Hero elements (.rise) animate purely on load via CSS keyframes with
+     animation-fill-mode: forwards — they always end visible, no scroll needed.
+   • Scroll reveals ([data-reveal]) are only hidden once the component arms
+     them (:host(.reveal-armed)). Without JS / with reduced motion they render
+     at full opacity, so content can never get stuck invisible.
+   All motion is gated behind prefers-reduced-motion.
+   ========================================================================= */
+@media (prefers-reduced-motion: no-preference) {
+  .rise {
+    opacity: 0;
+    transform: translateY(14px);
+    animation: rise-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  :host(.reveal-armed) [data-reveal] {
+    opacity: 0;
+    transform: translateY(22px);
+    transition:
+      opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: opacity, transform;
+  }
+
+  :host(.reveal-armed) [data-reveal].is-visible {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes rise-in {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}

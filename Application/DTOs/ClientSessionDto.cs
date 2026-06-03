@@ -11,5 +11,6 @@ namespace Application.DTOs
         public decimal Price { get; set; }
         public string? ClientNotes { get; set; }
         public bool IsAccessible { get; set; }
+        public string PaymentStatus { get; set; } = string.Empty;
     }
 }

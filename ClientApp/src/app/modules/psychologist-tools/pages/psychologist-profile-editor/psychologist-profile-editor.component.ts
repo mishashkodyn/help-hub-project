@@ -70,6 +70,7 @@ export class PsychologistProfileEditorComponent implements OnInit, OnDestroy {
       offersFreeSessionsForMilitary: [false],
       discountForAffected: [0, [Validators.min(0), Validators.max(100)]],
       isPublished: [false],
+      cardNumber: ['', [Validators.maxLength(19), Validators.pattern(/^\d{0,4}(\s?\d{4}){0,3}$/)]],
     });
   }
 
@@ -103,6 +104,7 @@ export class PsychologistProfileEditorComponent implements OnInit, OnDestroy {
             offersFreeSessionsForMilitary: !!resume.offersFreeSessionsForMilitary,
             discountForAffected: resume.discountForAffected ?? 0,
             isPublished: !!resume.isPublished,
+            cardNumber: resume.cardNumber ?? '',
           });
         },
         error: (err) => {
@@ -204,6 +206,7 @@ export class PsychologistProfileEditorComponent implements OnInit, OnDestroy {
       videoGreetingUrl: (this.form.value.videoGreetingUrl ?? '').trim(),
       education: (this.form.value.education ?? '').trim(),
       contactPhone: (this.form.value.contactPhone ?? '').trim(),
+      cardNumber: (this.form.value.cardNumber ?? '').replace(/\s/g, ''),
       specializationIds: Array.from(this.selectedSpecializationIds),
     };
 

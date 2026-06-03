@@ -1,0 +1,69 @@
+<div class="p-6 md:p-10 bg-gray-50 min-h-screen font-sans">
+  <div class="max-w-4xl mx-auto">
+
+    <a routerLink="/psychologist"
+      class="inline-flex items-center gap-1 text-gray-500 hover:text-[var(--color-primary)] transition-colors text-sm font-medium mb-6 cursor-pointer w-fit">
+      <mat-icon class="scale-90">arrow_back</mat-icon>
+      Назад
+    </a>
+
+    <div class="flex flex-col gap-1 mb-8 pb-6 border-b border-gray-200">
+      <h1 class="text-3xl font-bold text-[var(--color-primary)] tracking-tight">Фінанси</h1>
+      <p class="text-gray-500 text-sm">Ваш баланс та нарахування за сесії.</p>
+    </div>
+
+    @if (isLoading) {
+      <div class="flex justify-center py-20"><mat-spinner diameter="36"></mat-spinner></div>
+    } @else if (data) {
+
+      <!-- Balance card -->
+      <div class="bg-gradient-to-br from-gray-900 to-gray-700 text-white rounded-3xl p-8 mb-6 shadow-lg">
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <p class="text-sm text-gray-300 font-medium uppercase tracking-wider mb-1">Ваш баланс</p>
+            <p class="text-5xl font-bold tracking-tight">{{ data.balance | number:'1.2-2' }} <span class="text-2xl font-semibold text-gray-300">₴</span></p>
+          </div>
+          <div class="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center">
+            <mat-icon class="text-white text-3xl">account_balance_wallet</mat-icon>
+          </div>
+        </div>
+        <p class="text-xs text-gray-400 mt-4">Кошти за успішно проведені та підтверджені сесії.</p>
+      </div>
+
+      <!-- Earnings table -->
+      <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+        <div class="px-6 py-4 border-b border-gray-100">
+          <h2 class="text-base font-semibold text-gray-900">Нарахування</h2>
+          <p class="text-xs text-gray-500 mt-0.5">Останні 20 завершених сесій.</p>
+        </div>
+
+        @if (data.recentEarnings.length === 0) {
+          <div class="p-12 text-center">
+            <mat-icon class="text-5xl text-gray-200 mb-3">receipt_long</mat-icon>
+            <p class="text-gray-500 font-medium">Немає нарахувань</p>
+            <p class="text-xs text-gray-400 mt-1">Після завершення сесій та підтвердження оплати, нарахування з'являться тут.</p>
+          </div>
+        } @else {
+          <div class="divide-y divide-gray-50">
+            @for (earning of data.recentEarnings; track earning.appointmentId) {
+              <div class="px-6 py-4 flex items-center justify-between gap-4">
+                <div class="flex-1 min-w-0">
+                  <p class="font-medium text-gray-900 truncate">{{ earning.clientName }}</p>
+                  <p class="text-xs text-gray-500 mt-0.5">{{ formatDate(earning.sessionDate) }}</p>
+                </div>
+                <div class="flex items-center gap-3 shrink-0">
+                  <span class="px-2 h-5 inline-flex items-center rounded-full text-[10px] font-semibold"
+                    [ngClass]="paymentStatusClass(earning.paymentStatus)">
+                    {{ paymentStatusLabel(earning.paymentStatus) }}
+                  </span>
+                  <span class="text-base font-bold text-gray-900">{{ earning.amount }} ₴</span>
+                </div>
+              </div>
+            }
+          </div>
+        }
+      </div>
+
+    }
+  </div>
+</div>

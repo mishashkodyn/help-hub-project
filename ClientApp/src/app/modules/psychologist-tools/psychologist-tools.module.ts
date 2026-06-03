@@ -11,8 +11,10 @@ import { PsychologistSessionsComponent } from './pages/psychologist-sessions/psy
 import { PsychologistPastSessionsComponent } from './pages/psychologist-past-sessions/psychologist-past-sessions.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { PsychologistProfileEditorComponent } from './pages/psychologist-profile-editor/psychologist-profile-editor.component';
+import { PsychologistFinancesComponent } from './pages/psychologist-finances/psychologist-finances.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MarkdownModule } from 'ngx-markdown';
+import { DecimalPipe } from '@angular/common';
 
 
 
@@ -23,7 +25,8 @@ import { MarkdownModule } from 'ngx-markdown';
     PsychologistApplicationsComponent,
     PsychologistSessionsComponent,
     PsychologistPastSessionsComponent,
-    PsychologistProfileEditorComponent
+    PsychologistProfileEditorComponent,
+    PsychologistFinancesComponent
   ],
   imports: [
     CommonModule,
@@ -33,7 +36,8 @@ import { MarkdownModule } from 'ngx-markdown';
     FormsModule,
     ReactiveFormsModule,
     SharedModule,
-    MarkdownModule
+    MarkdownModule,
+    DecimalPipe
   ]
 })
 export class PsychologistToolsModule { }

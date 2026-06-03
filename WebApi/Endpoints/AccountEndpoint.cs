@@ -16,6 +16,8 @@ using System.Runtime.CompilerServices;
 
 namespace API.Endpoints
     {
+        public record UpdateCardNumberDto(string CardNumber);
+
         public static class AccountEndpoint
         {
             public static RouteGroupBuilder MapAccountEndpoint(this WebApplication app)
@@ -238,7 +240,8 @@ namespace API.Endpoints
                         CoverImage = user.CoverImage,
                         PreferredAiProvider = user.PreferredAiProvider,
                         Gender = user.Gender.ToString(),
-                        Roles = roles.ToArray()
+                        Roles = roles.ToArray(),
+                        CardNumber = user.CardNumber ?? string.Empty
                     }, "User fetched successfully."));
                 }).RequireAuthorization();
 
@@ -293,6 +296,28 @@ namespace API.Endpoints
 
                     return Results.Ok(Response<string>.Success(newUrl, "Cover image updated."));
                 }).DisableAntiforgery().RequireAuthorization();
+
+                group.MapGet("/card-number", async (HttpContext context, UserManager<ApplicationUser> userManager) =>
+                {
+                    var userId = context.User.GetUserId()!;
+                    var user = await userManager.FindByIdAsync(userId.ToString());
+                    if (user == null) return Results.NotFound();
+
+                    return Results.Ok(Response<string>.Success(user.CardNumber ?? string.Empty, "Card number fetched."));
+                }).RequireAuthorization();
+
+                group.MapPut("/card-number", async (HttpContext context, UserManager<ApplicationUser> userManager,
+                    [FromBody] UpdateCardNumberDto dto) =>
+                {
+                    var userId = context.User.GetUserId()!;
+                    var user = await userManager.FindByIdAsync(userId.ToString());
+                    if (user == null) return Results.NotFound();
+
+                    user.CardNumber = dto.CardNumber?.Trim() ?? string.Empty;
+                    await userManager.UpdateAsync(user);
+
+                    return Results.Ok(Response<string>.Success(user.CardNumber, "Card number updated."));
+                }).RequireAuthorization();
 
                 group.MapGet("/AIprovider", async (HttpContext context, UserManager<ApplicationUser> userManager) =>
                 {

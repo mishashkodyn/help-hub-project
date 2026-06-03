@@ -190,6 +190,104 @@ namespace API.Controllers
             }
         }
 
+        [HttpPost("{id}/cancel")]
+        public async Task<IActionResult> CancelByClient(Guid id)
+        {
+            try
+            {
+                var userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+                await _appointmentService.CancelByClientAsync(userId, id);
+                return Ok(new { message = "Booking cancelled." });
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return Forbid();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
+        }
+
+        // ── Admin payment endpoints ───────────────────────────────────────────
+
+        [HttpGet("pending-payments")]
+        [Authorize(Roles = "Superadmin,Admin")]
+        public async Task<IActionResult> GetPendingPayments()
+        {
+            try
+            {
+                var list = await _appointmentService.GetPendingPaymentsAsync();
+                return Ok(list);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
+        }
+
+        [HttpPost("{id}/confirm-payment")]
+        [Authorize(Roles = "Superadmin,Admin")]
+        public async Task<IActionResult> ConfirmPayment(Guid id)
+        {
+            try
+            {
+                await _appointmentService.ConfirmPaymentAsync(id);
+                return Ok(new { message = "Payment confirmed. Session is now active." });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
+        }
+
+        public record RejectPaymentDto(string? Reason);
+
+        [HttpPost("{id}/reject-payment")]
+        [Authorize(Roles = "Superadmin,Admin")]
+        public async Task<IActionResult> RejectPayment(Guid id, [FromBody] RejectPaymentDto? dto)
+        {
+            try
+            {
+                await _appointmentService.RejectPaymentAsync(id, dto?.Reason);
+                return Ok(new { message = "Payment rejected, booking cancelled." });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
+        }
+
+        [HttpGet("completed-unpaid")]
+        [Authorize(Roles = "Superadmin,Admin")]
+        public async Task<IActionResult> GetCompletedUnpaidSessions()
+        {
+            try
+            {
+                var list = await _appointmentService.GetCompletedUnpaidSessionsAsync();
+                return Ok(list);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
+        }
+
+        [HttpPost("{id}/release-payment")]
+        [Authorize(Roles = "Superadmin,Admin")]
+        public async Task<IActionResult> ReleasePayment(Guid id)
+        {
+            try
+            {
+                await _appointmentService.ReleasePaymentToPsychologistAsync(id);
+                return Ok(new { message = "Payment released to psychologist balance." });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
+        }
+
         [HttpGet("{id}/transcription-token")]
         public async Task<IActionResult> GetTranscriptionToken(Guid id)
         {
