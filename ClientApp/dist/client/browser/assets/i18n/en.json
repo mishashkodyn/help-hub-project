@@ -76,6 +76,105 @@
       "secShort": "s",
       "perSide": "per side"
     },
+    "478": {
+      "pattern": "4·7·8 count",
+      "getReady": "Get ready",
+      "readyHint": "Get comfortable, relax your shoulders, and press start when you're ready.",
+      "resume": "Resume",
+      "restart": "Start again",
+      "completeTitle": "Nicely done",
+      "completeText": "{{count}} cycles complete — notice how calm your body feels now.",
+      "cycleProgress": "Cycle {{current}} of {{total}}",
+      "sound": "Sound cue",
+      "patternTitle": "Pattern",
+      "patternHint": "Inhale · hold · exhale",
+      "secShort": "s"
+    },
+    "belly": {
+      "pattern": "Inhale 4 · exhale 6",
+      "getReady": "Get ready",
+      "readyHint": "Lie back or sit comfortably, rest a hand on your belly, and press start.",
+      "resume": "Resume",
+      "restart": "Start again",
+      "completeTitle": "Nicely done",
+      "completeText": "Notice how slow and easy your breath has become.",
+      "cyclesDone": "{{count}} breaths",
+      "sound": "Sound cue",
+      "duration": "Length",
+      "durationHint": "How long to breathe"
+    },
+    "grounding": {
+      "pattern": "5 · 4 · 3 · 2 · 1 senses",
+      "readyHint": "Find a comfortable spot. We'll move through your five senses, one at a time — there's nothing to get right, just notice.",
+      "begin": "Begin",
+      "senseStep": "Sense {{current}} of {{total}}",
+      "entryPlaceholder": "Something you notice…",
+      "skipHint": "Fill in as many as you like — or simply notice and move on.",
+      "prev": "Back",
+      "next": "Next sense",
+      "finish": "Finish",
+      "progress": "Senses noticed",
+      "completeTitle": "You're back in the moment",
+      "completeText": "Notice how your body and mind feel now — a little more settled, a little more here.",
+      "restart": "Start again",
+      "senses": {
+        "see": { "label": "See", "prompt": "Name five things you can see." },
+        "touch": { "label": "Touch", "prompt": "Name four things you can feel or touch." },
+        "hear": { "label": "Hear", "prompt": "Name three things you can hear." },
+        "smell": { "label": "Smell", "prompt": "Name two things you can smell." },
+        "taste": { "label": "Taste", "prompt": "Name one thing you can taste." }
+      }
+    },
+    "bodyScan": {
+      "pattern": "Feet to head",
+      "getReady": "Settle in",
+      "readyHint": "Lie down or sit comfortably, let your eyes close, and we'll move attention gently from your feet up to the crown.",
+      "begin": "Begin",
+      "resume": "Resume",
+      "restart": "Start again",
+      "regionStep": "Region {{current}} of {{total}}",
+      "timeLeft": "Time left",
+      "secShort": "s",
+      "length": "Length",
+      "lengthHint": "Whole scan",
+      "sound": "Sound cue",
+      "completeTitle": "Scan complete",
+      "completeText": "Take a moment to feel your whole body at once, resting and supported.",
+      "regions": {
+        "feet": {
+          "label": "Feet",
+          "prompt": "Bring your attention to your feet. Notice any warmth, tingling or contact with the floor, and let them soften."
+        },
+        "legs": {
+          "label": "Legs",
+          "prompt": "Move up through your calves and thighs. Let any heaviness sink down and release."
+        },
+        "hips": {
+          "label": "Hips & pelvis",
+          "prompt": "Rest your attention on your hips and pelvis. Allow them to feel supported and let go."
+        },
+        "belly": {
+          "label": "Belly & lower back",
+          "prompt": "Notice your belly rising and falling with each breath, and soften your lower back."
+        },
+        "chest": {
+          "label": "Chest & upper back",
+          "prompt": "Bring awareness to your chest and upper back. Feel them open gently with each breath."
+        },
+        "arms": {
+          "label": "Arms & hands",
+          "prompt": "Travel down your arms to your hands. Let the fingers uncurl and the arms grow heavy."
+        },
+        "shoulders": {
+          "label": "Shoulders & neck",
+          "prompt": "Notice your shoulders and neck. With an out-breath, let them drop away from your ears."
+        },
+        "head": {
+          "label": "Face & head",
+          "prompt": "Soften your jaw, eyes and forehead, and rest your attention at the crown of your head."
+        }
+      }
+    },
     "items": {
       "box-breathing": {
         "title": "Box breathing",

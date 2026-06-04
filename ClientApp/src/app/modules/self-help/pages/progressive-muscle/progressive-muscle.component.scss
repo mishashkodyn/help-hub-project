@@ -1,0 +1,92 @@
+:host {
+  display: block;
+
+  // Warm clay tone for the tension phase — distinct from the calm greens,
+  // but still muted enough to sit inside the palette.
+  --pmr-tense: #c2683d;
+}
+
+// The body outline — faint at rest, a touch warmer while a session runs.
+.silhouette {
+  fill: var(--color-mint);
+  fill-opacity: 0.32;
+  transition: fill-opacity 0.6s ease;
+
+  &--active {
+    fill-opacity: 0.42;
+  }
+}
+
+// A highlighted muscle group. Hidden until it becomes the focus, then it
+// either tightens (tense) or eases open (release). Scaling happens around each
+// shape's own centre so the group "squeezes" in place.
+.part {
+  fill: var(--color-success);
+  fill-opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  transition:
+    fill 0.5s ease,
+    fill-opacity 0.5s ease,
+    transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &--tense {
+    fill: var(--pmr-tense);
+    fill-opacity: 0.9;
+    transform: scale(1.12);
+  }
+
+  &--release {
+    fill: var(--color-success);
+    fill-opacity: 0.72;
+    transform: scale(1);
+  }
+}
+
+// While actively tensing, the lit group holds a faint tremor to convey effort.
+.is-tensing .part--tense {
+  animation: tense-tremor 0.55s ease-in-out infinite;
+}
+
+// The released group breathes softly as it rests.
+.part--release {
+  animation: release-breathe 3.2s ease-in-out infinite;
+}
+
+@keyframes tense-tremor {
+  0%,
+  100% {
+    transform: scale(1.12) translate(0, 0);
+  }
+  25% {
+    transform: scale(1.12) translate(-0.4px, 0.3px);
+  }
+  75% {
+    transform: scale(1.12) translate(0.4px, -0.3px);
+  }
+}
+
+@keyframes release-breathe {
+  0%,
+  100% {
+    fill-opacity: 0.6;
+  }
+  50% {
+    fill-opacity: 0.82;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .part {
+    transition:
+      fill 0.5s ease,
+      fill-opacity 0.5s ease;
+    animation: none !important;
+  }
+  .part--tense {
+    transform: scale(1.08);
+  }
+  .silhouette {
+    transition: none;
+  }
+}

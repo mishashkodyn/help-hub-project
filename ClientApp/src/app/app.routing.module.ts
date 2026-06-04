@@ -38,6 +38,9 @@ import { PracticeDetailComponent } from './modules/self-help/pages/practice-deta
 import { BoxBreathingComponent } from './modules/self-help/pages/box-breathing/box-breathing.component';
 import { Breathing478Component } from './modules/self-help/pages/breathing-478/breathing-478.component';
 import { BellyBreathingComponent } from './modules/self-help/pages/belly-breathing/belly-breathing.component';
+import { Grounding54321Component } from './modules/self-help/pages/grounding-54321/grounding-54321.component';
+import { BodyScanComponent } from './modules/self-help/pages/body-scan/body-scan.component';
+import { ProgressiveMuscleComponent } from './modules/self-help/pages/progressive-muscle/progressive-muscle.component';
 
 const routes: Routes = [
   {
@@ -143,6 +146,21 @@ const routes: Routes = [
       {
         path: 'practices/belly-breathing',
         component: BellyBreathingComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'practices/grounding-54321',
+        component: Grounding54321Component,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'practices/body-scan',
+        component: BodyScanComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'practices/progressive-muscle',
+        component: ProgressiveMuscleComponent,
         canActivate: [AuthGuard],
       },
       {
