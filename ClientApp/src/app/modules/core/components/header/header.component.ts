@@ -8,6 +8,7 @@ import { PresenceService } from '../../../../api/services/presence-service';
 import { NotificationService } from '../../../../api/services/notification.service';
 import { TranslocoService } from '@ngneat/transloco';
 import { ActiveSessionService } from '../../../../api/services/active-session.service';
+import { LanguageService } from '../../../../api/services/language.service';
 
 @Component({
   selector: 'app-header',
@@ -25,10 +26,14 @@ export class HeaderComponent implements OnInit {
     protected presenceService: PresenceService,
     protected notificationService: NotificationService,
     public translocoService: TranslocoService,
-    protected activeSessionService: ActiveSessionService
+    protected activeSessionService: ActiveSessionService,
+    private languageService: LanguageService
   ) {}
 
   ngOnInit(): void {
+    this.currentLanguage =
+      this.languages.find((l) => l.value === this.languageService.getActiveLang()) ??
+      this.currentLanguage;
     this.sidebarService.sideBarOpen.set(false);
     if (this.authService.isLoggedIn()) {
       this.activeSessionService.start();
@@ -115,7 +120,7 @@ export class HeaderComponent implements OnInit {
   }
 
   onLanguageChange(lang: string) {
-    this.translocoService.setActiveLang(lang);
+    this.languageService.setLang(lang as 'en' | 'ua');
     this.currentLanguage = this.languages.find((l) => l.value === lang) || this.currentLanguage;
   }
 

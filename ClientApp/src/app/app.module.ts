@@ -16,6 +16,7 @@ import { catchError, of } from 'rxjs';
 import { PsychologistToolsModule } from './modules/psychologist-tools/psychologist-tools.module';
 import { ClientPortalModule } from './modules/client-portal/client-portal.module';
 import { SessionModule } from './modules/session/session.module';
+import { SelfHelpModule } from './modules/self-help/self-help.module';
 import { TranslocoRootModule } from './transloco-root.module';
 
 export function initializeApp(authService: AuthService) {
@@ -47,6 +48,7 @@ export function initializeApp(authService: AuthService) {
     PsychologistToolsModule,
     ClientPortalModule,
     SessionModule,
+    SelfHelpModule,
     MarkdownModule.forRoot(),
     TranslocoRootModule,
   ],

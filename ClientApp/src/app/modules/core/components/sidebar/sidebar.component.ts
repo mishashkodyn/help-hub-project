@@ -28,69 +28,78 @@ export class SidebarComponent {
 
   sidebarCollapsed = signal(true);
 
-  menuItems = signal<MenuItem[]>([
+  /** Client journey — only a regular user (not psychologist/admin) sees these. */
+  clientItems = signal<MenuItem[]>([
     {
-      icon: 'people',
+      icon: 'travel_explore',
       label: 'find_psychologist',
-      route: '/catalog'
+      route: '/catalog',
     },
     {
       icon: 'event',
       label: 'sessions',
-      route: '/my-sessions'
+      route: '/my-sessions',
     },
     {
-      icon: 'chat',
-      label: 'chat',
-      route: 'chat',
-    },
-    {
-      icon: 'mail',
-      label: 'notifications',
-      route: 'notifications'
+      icon: 'self_improvement',
+      label: 'self_help',
+      route: '/practices',
     },
     {
       icon: 'verified_user',
       label: 'category_application',
-      route: 'category-application'
-    }
+      route: 'category-application',
+    },
   ]);
 
+  /** Shown to everyone regardless of role. */
+  commonItems = signal<MenuItem[]>([
+    {
+      icon: 'forum',
+      label: 'chat',
+      route: 'chat',
+    },
+    {
+      icon: 'notifications',
+      label: 'notifications',
+      route: 'notifications',
+    },
+  ]);
+
+  /**
+   * Staff entry points. The dashboards themselves already surface every
+   * sub-page (sessions, applications, finances, past sessions…) through their
+   * KPI cards and quick links, so we only keep the dashboard link here and
+   * avoid duplicating navigation.
+   */
   adminItems = signal<MenuItem[]>([
+    {
+      icon: 'dashboard',
+      label: 'dashboard',
+      route: 'admin',
+    },
     {
       icon: 'smart_toy',
       label: 'ai_assistant',
       route: 'ai-chat',
     },
-    {
-      icon: 'dashboard',
-      label: "dashboard",
-      route: 'admin',
-    }
   ]);
 
   psychologistItems = signal<MenuItem[]>([
     {
-      icon: 'psychology',
+      icon: 'space_dashboard',
       label: 'psychologist_dashboard',
       route: 'psychologist',
     },
-    {
-      icon: 'videocam',
-      label: 'sessions',
-      route: 'psychologist/sessions',
-    },
-    {
-      icon: 'assignment',
-      label: 'applications',
-      route: 'psychologist/applications',
-    },
-    {
-      icon: 'history',
-      label: 'past_sessions',
-      route: 'psychologist/past-sessions',
-    },
-  ])
+  ]);
+
+  /** A regular user has none of the staff roles. */
+  isClient = computed(
+    () =>
+      !this.authService.isPsychologist &&
+      !this.authService.isAdmin &&
+      !this.authService.isSuperAdmin,
+  );
 
   constructor(
     protected authService: AuthService,

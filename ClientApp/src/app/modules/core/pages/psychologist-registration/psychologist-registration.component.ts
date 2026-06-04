@@ -22,6 +22,19 @@ export class PsychologistRegistrationComponent implements OnInit {
 
   availableSpecializations: SpecializationDto[] = [];
 
+  readonly stepLabels = [
+    { index: 1, label: 'psych_reg.step1_label', desc: 'psych_reg.step1_desc' },
+    { index: 2, label: 'psych_reg.step2_label', desc: 'psych_reg.step2_desc' },
+    { index: 3, label: 'psych_reg.step3_label', desc: 'psych_reg.step3_desc' },
+  ];
+
+  fieldClass(name: string): string {
+    const control = this.applicationForm?.get(name);
+    return control?.invalid && control?.touched
+      ? 'border-red-400 focus:border-red-400 focus:ring-red-100'
+      : 'border-stone-200 focus:border-[var(--color-primary)] focus:ring-[var(--color-primary)]/10';
+  }
+
   constructor(
     private router: Router,
     private fb: FormBuilder,

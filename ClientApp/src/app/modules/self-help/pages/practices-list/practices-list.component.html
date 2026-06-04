@@ -1,0 +1,92 @@
+<ng-container *transloco="let t">
+  <div class="min-h-screen bg-[#FAF8F3] px-4 py-8 md:px-8">
+
+    <!-- Header -->
+    <div class="max-w-4xl mx-auto mb-8">
+      <div class="flex items-center gap-3 mb-7">
+        <button
+          (click)="goBack()"
+          class="w-10 h-10 flex items-center justify-center rounded-full text-stone-500 hover:bg-stone-200/60 hover:text-[var(--color-primary)] transition-colors"
+          [attr.aria-label]="t('common.back')"
+        >
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+        <div class="flex items-center gap-2">
+          <span class="h-px w-8 bg-[var(--color-success)]"></span>
+          <span class="text-[0.72rem] font-semibold uppercase tracking-[0.2em] text-[var(--color-success)]">
+            {{ t("selfHelp.subtitle") }}
+          </span>
+        </div>
+      </div>
+
+      <h1 class="text-[clamp(1.9rem,4.5vw,2.6rem)] font-semibold tracking-[-0.02em] leading-[1.1] text-[var(--color-primary)]">
+        {{ t("selfHelp.title") }}
+      </h1>
+    </div>
+
+    <!-- Intro banner -->
+    <div class="max-w-4xl mx-auto mb-9">
+      <div
+        class="flex items-start gap-3.5 rounded-2xl bg-[var(--color-mint)]/25 border border-[var(--color-mint)]/60 px-5 py-4"
+      >
+        <mat-icon class="text-[var(--color-success)] shrink-0">favorite</mat-icon>
+        <p class="text-[0.95rem] text-[var(--color-primary)]/90 leading-relaxed">
+          {{ t("selfHelp.banner") }}
+        </p>
+      </div>
+    </div>
+
+    <!-- Categories -->
+    <div class="max-w-4xl mx-auto space-y-10">
+      @for (group of groups; track group.category) {
+        <section>
+          <h2
+            class="text-[0.72rem] uppercase tracking-[0.2em] font-semibold text-[var(--color-success)] mb-4 px-1"
+          >
+            {{ t("selfHelp.category." + group.category) }}
+          </h2>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+            @for (practice of group.items; track practice.slug) {
+              <button
+                (click)="open(practice)"
+                class="group flex items-center gap-4 text-left bg-white rounded-2xl border border-stone-200 shadow-sm p-4 transition-all hover:-translate-y-0.5 hover:shadow-md hover:border-stone-300"
+              >
+                <div
+                  class="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0"
+                  [ngClass]="tint(group.category)"
+                >
+                  <mat-icon [ngClass]="iconColor(group.category)">{{
+                    practice.icon
+                  }}</mat-icon>
+                </div>
+
+                <div class="flex-1 min-w-0">
+                  <div
+                    class="font-semibold text-[var(--color-primary)] truncate"
+                  >
+                    {{ t("selfHelp.items." + practice.slug + ".title") }}
+                  </div>
+                  <p class="text-sm text-stone-600 line-clamp-2 mt-0.5 leading-snug">
+                    {{ t("selfHelp.items." + practice.slug + ".short") }}
+                  </p>
+                  <div
+                    class="flex items-center gap-1 text-xs text-stone-500 mt-2 font-medium"
+                  >
+                    <mat-icon class="!text-sm !w-4 !h-4 leading-none">schedule</mat-icon>
+                    {{ practice.minutes }} {{ t("selfHelp.minutes") }}
+                  </div>
+                </div>
+
+                <mat-icon
+                  class="text-stone-300 shrink-0 transition-all group-hover:text-[var(--color-success)] group-hover:translate-x-0.5"
+                  >chevron_right</mat-icon
+                >
+              </button>
+            }
+          </div>
+        </section>
+      }
+    </div>
+  </div>
+</ng-container>

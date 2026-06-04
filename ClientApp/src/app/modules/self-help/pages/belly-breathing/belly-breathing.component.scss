@@ -1,0 +1,37 @@
+:host {
+  display: block;
+}
+
+// The breathing orb. Position and size are driven per-frame from the
+// component, so no transition is needed for the breath itself.
+.orb {
+  fill: var(--color-success);
+  // Kept translucent so the dark countdown text in the centre stays legible
+  // over the orb at every scale.
+  fill-opacity: 0.3;
+}
+
+.orb-halo {
+  fill: var(--color-success);
+  opacity: 0.18;
+}
+
+.is-running .orb-halo {
+  animation: orb-glow 4s ease-in-out infinite;
+}
+
+@keyframes orb-glow {
+  0%,
+  100% {
+    opacity: 0.14;
+  }
+  50% {
+    opacity: 0.26;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orb-halo {
+    animation: none !important;
+  }
+}

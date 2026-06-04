@@ -8,6 +8,7 @@ import {
 import { MatSidenav } from '@angular/material/sidenav';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { SidebarService } from '../../../../api/services/sidebar.service';
+import { AuthService } from '../../../../api/services/auth.service';
 
 @Component({
   selector: 'app-layout',
@@ -19,8 +20,10 @@ export class LayoutComponent {
   hidden = false;
   lastScroll = 0;
 
-  constructor(protected sidebarService: SidebarService) {
-  }
+  constructor(
+    protected sidebarService: SidebarService,
+    protected authService: AuthService,
+  ) {}
 
   @HostListener('window:scroll', [])
   onWindowScroll() {

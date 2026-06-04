@@ -1,0 +1,130 @@
+<ng-container *transloco="let t">
+  @if (practice) {
+    @if (content$ | async; as content) {
+    <div class="min-h-screen bg-gray-50 px-4 py-6 md:px-8">
+
+      <!-- Header -->
+      <div class="max-w-3xl mx-auto mb-6">
+        <div class="flex items-center gap-3">
+          <button
+            (click)="goBack()"
+            class="w-9 h-9 flex items-center justify-center rounded-xl hover:bg-gray-100 transition-colors"
+          >
+            <mat-icon class="text-gray-500">arrow_back</mat-icon>
+          </button>
+          <div class="flex items-center gap-3">
+            <div
+              class="w-11 h-11 rounded-2xl bg-[var(--color-mint)]/25 flex items-center justify-center shrink-0"
+            >
+              <mat-icon class="text-[var(--color-success)]">{{
+                practice.icon
+              }}</mat-icon>
+            </div>
+            <div>
+              <h1 class="text-xl font-bold text-[var(--color-primary)]">
+                {{ content.title }}
+              </h1>
+              <p class="text-sm text-gray-400">
+                {{ t("selfHelp.category." + practice.category) }} ·
+                {{ practice.minutes }} {{ t("selfHelp.minutes") }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="max-w-3xl mx-auto space-y-5">
+
+        <!-- Intro -->
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
+          <p class="text-sm text-gray-600 leading-relaxed">{{ content.intro }}</p>
+        </div>
+
+        <!-- Breathing player -->
+        @if (isBreathingPractice) {
+          <div
+            class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 flex flex-col items-center"
+          >
+            <!-- Animated circle -->
+            <div
+              class="relative flex items-center justify-center my-2"
+              style="width: 240px; height: 240px"
+            >
+              <span
+                class="absolute inset-0 rounded-full bg-[var(--color-sky)]/10"
+              ></span>
+              <div
+                class="breath-circle rounded-full bg-gradient-to-br from-[var(--color-mint)] to-[var(--color-sky)] flex items-center justify-center"
+                [style.transform]="'scale(' + circleScale + ')'"
+                [style.transitionDuration]="transitionMs + 'ms'"
+              >
+                <div class="text-center text-white">
+                  <div class="text-lg font-semibold leading-tight">
+                    {{ t("selfHelp.phase." + phaseType) }}
+                  </div>
+                  @if (isBreathing) {
+                    <div class="text-4xl font-bold tabular-nums">
+                      {{ countdown }}
+                    </div>
+                  }
+                </div>
+              </div>
+            </div>
+
+            <!-- Cycle counter -->
+            <div class="text-xs text-gray-400 mt-3 mb-4">
+              {{ t("selfHelp.cycles") }}: <span class="font-semibold text-gray-600">{{ cycles }}</span>
+            </div>
+
+            <!-- Controls -->
+            <div class="flex items-center gap-3">
+              <button
+                (click)="toggleBreathing()"
+                class="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[var(--color-success)] text-white text-sm font-semibold shadow-sm hover:bg-[var(--color-success)]/90 transition-all"
+              >
+                <mat-icon class="text-lg">{{
+                  isBreathing ? "pause" : "play_arrow"
+                }}</mat-icon>
+                {{ isBreathing ? t("selfHelp.pause") : t("selfHelp.start") }}
+              </button>
+              <button
+                (click)="resetBreathing()"
+                class="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gray-100 text-gray-600 text-sm font-semibold hover:bg-gray-200 transition-all"
+              >
+                <mat-icon class="text-lg">restart_alt</mat-icon>
+                {{ t("selfHelp.reset") }}
+              </button>
+            </div>
+          </div>
+        }
+
+        <!-- Steps / guidance -->
+        @if (content.steps && content.steps.length) {
+          <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
+            <h2 class="text-sm font-bold text-[var(--color-primary)] mb-4">
+              {{ isBreathingPractice ? t("selfHelp.tips") : t("selfHelp.steps") }}
+            </h2>
+            <ol class="space-y-3">
+              @for (step of content.steps; track $index) {
+                <li class="flex gap-3">
+                  <span
+                    class="w-6 h-6 rounded-full bg-[var(--color-mint)]/30 text-[var(--color-success)] text-xs font-bold flex items-center justify-center shrink-0 mt-0.5"
+                  >
+                    {{ $index + 1 }}
+                  </span>
+                  <p class="text-sm text-gray-600 leading-relaxed">{{ step }}</p>
+                </li>
+              }
+            </ol>
+          </div>
+        }
+
+        <!-- Gentle reminder -->
+        <p class="text-center text-xs text-gray-400 px-6">
+          {{ t("selfHelp.disclaimer") }}
+        </p>
+      </div>
+    </div>
+    }
+  }
+</ng-container>

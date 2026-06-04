@@ -35,7 +35,160 @@
     "who_we_help": "Who we help",
     "for_psychologists": "For psychologists",
     "sessions": "Sessions",
-    "category_application": "Category application"
+    "self_help": "Self-help",
+    "category_application": "Category application",
+    "session_live": "Session in progress"
+  },
+  "selfHelp": {
+    "title": "Self-help practices",
+    "subtitle": "Simple techniques to calm down and feel grounded",
+    "banner": "These short exercises can help between sessions when anxiety, stress or restlessness creep in. Find a quiet spot, get comfortable, and take your time.",
+    "minutes": "min",
+    "cycles": "Cycles",
+    "start": "Start",
+    "pause": "Pause",
+    "reset": "Reset",
+    "steps": "How to do it",
+    "tips": "Tips",
+    "disclaimer": "These practices are supportive tools and don't replace professional care. If you feel worse or are in crisis, reach out to your psychologist or emergency services.",
+    "category": {
+      "breathing": "Breathing",
+      "grounding": "Grounding",
+      "relaxation": "Relaxation"
+    },
+    "phase": {
+      "inhale": "Inhale",
+      "hold": "Hold",
+      "exhale": "Exhale"
+    },
+    "box": {
+      "pattern": "{{n}}·{{n}}·{{n}}·{{n}} count",
+      "getReady": "Get ready",
+      "readyHint": "Sit tall, relax your shoulders, and press start when you're ready.",
+      "resume": "Resume",
+      "restart": "Start again",
+      "completeTitle": "Nicely done",
+      "completeText": "{{count}} cycles complete — notice how your body feels now.",
+      "cycleProgress": "Cycle {{current}} of {{total}}",
+      "sound": "Sound cue",
+      "pace": "Pace",
+      "paceHint": "Seconds per side",
+      "secShort": "s",
+      "perSide": "per side"
+    },
+    "478": {
+      "pattern": "4·7·8 count",
+      "getReady": "Get ready",
+      "readyHint": "Get comfortable, relax your shoulders, and press start when you're ready.",
+      "resume": "Resume",
+      "restart": "Start again",
+      "completeTitle": "Nicely done",
+      "completeText": "{{count}} cycles complete — notice how calm your body feels now.",
+      "cycleProgress": "Cycle {{current}} of {{total}}",
+      "sound": "Sound cue",
+      "patternTitle": "Pattern",
+      "patternHint": "Inhale · hold · exhale",
+      "secShort": "s"
+    },
+    "belly": {
+      "pattern": "Inhale 4 · exhale 6",
+      "getReady": "Get ready",
+      "readyHint": "Lie back or sit comfortably, rest a hand on your belly, and press start.",
+      "resume": "Resume",
+      "restart": "Start again",
+      "completeTitle": "Nicely done",
+      "completeText": "Notice how slow and easy your breath has become.",
+      "cyclesDone": "{{count}} breaths",
+      "sound": "Sound cue",
+      "duration": "Length",
+      "durationHint": "How long to breathe"
+    },
+    "items": {
+      "box-breathing": {
+        "title": "Box breathing",
+        "short": "Inhale, hold, exhale and hold for equal counts of four.",
+        "intro": "Box breathing balances your nervous system by keeping every phase the same length. It's a favourite of athletes and first responders for staying calm under pressure.",
+        "steps": [
+          "Sit upright with your shoulders relaxed and follow the circle.",
+          "Breathe in through your nose for four counts as the circle grows.",
+          "Hold your breath gently for four counts.",
+          "Breathe out through your mouth for four counts as the circle shrinks.",
+          "Hold again for four counts, then repeat for a few cycles."
+        ]
+      },
+      "breathing-478": {
+        "title": "4-7-8 breathing",
+        "short": "A longer exhale that helps you unwind and fall asleep.",
+        "intro": "The 4-7-8 pattern lengthens your exhale, which signals your body to relax. It's especially helpful before sleep or when you feel wound up.",
+        "steps": [
+          "Rest the tip of your tongue behind your upper front teeth.",
+          "Inhale quietly through your nose for four counts.",
+          "Hold your breath for seven counts.",
+          "Exhale fully through your mouth for eight counts.",
+          "Repeat for four cycles, building up slowly over time."
+        ]
+      },
+      "belly-breathing": {
+        "title": "Belly breathing",
+        "short": "Slow diaphragmatic breaths to ease tension in the body.",
+        "intro": "Belly (diaphragmatic) breathing draws air deep into your lungs so your belly rises instead of your chest. It lowers heart rate and quiets a racing mind.",
+        "steps": [
+          "Place one hand on your chest and the other on your belly.",
+          "Breathe in slowly through your nose so only your belly rises.",
+          "Exhale gently through your mouth, a little longer than the inhale.",
+          "Keep your chest as still as possible throughout.",
+          "Continue at a comfortable pace for a few minutes."
+        ]
+      },
+      "grounding-54321": {
+        "title": "5-4-3-2-1 grounding",
+        "short": "Use your five senses to come back to the present moment.",
+        "intro": "When thoughts spiral or panic rises, this sensory exercise anchors you in the here and now by gently shifting attention to what's around you.",
+        "steps": [
+          "Notice five things you can see around you.",
+          "Notice four things you can feel or touch.",
+          "Notice three things you can hear.",
+          "Notice two things you can smell.",
+          "Notice one thing you can taste, then take a slow breath."
+        ]
+      },
+      "body-scan": {
+        "title": "Body scan",
+        "short": "Move your attention through the body to release tension.",
+        "intro": "A body scan builds awareness of physical sensations and helps you notice and let go of tension you may be holding without realising it.",
+        "steps": [
+          "Lie down or sit comfortably and close your eyes.",
+          "Bring your attention to your feet and notice any sensations.",
+          "Slowly move your focus upward — legs, hips, belly, chest, arms.",
+          "Soften each area as you reach it, without forcing anything.",
+          "Finish at the top of your head and rest for a few breaths."
+        ]
+      },
+      "progressive-muscle": {
+        "title": "Progressive muscle relaxation",
+        "short": "Tense and release muscle groups to melt away stress.",
+        "intro": "By deliberately tensing then releasing each muscle group, you teach your body the difference between tension and relaxation — and how to let go.",
+        "steps": [
+          "Sit or lie down somewhere you won't be disturbed.",
+          "Tense your feet and calves for five seconds, then release.",
+          "Move upward — thighs, stomach, hands, arms, shoulders, face.",
+          "Tense each group on an inhale, release on a slow exhale.",
+          "Notice the warmth and heaviness left behind as you relax."
+        ]
+      },
+      "safe-place": {
+        "title": "Safe place visualisation",
+        "short": "Picture a calming place to feel safe and settled.",
+        "intro": "Imagining a place where you feel completely safe gives your mind a refuge it can return to whenever you feel overwhelmed.",
+        "steps": [
+          "Close your eyes and take a few slow breaths.",
+          "Picture a place — real or imagined — where you feel calm and safe.",
+          "Notice the colours, sounds and smells of this place.",
+          "Feel the temperature and the ground supporting you.",
+          "Stay here as long as you like, knowing you can return anytime."
+        ]
+      }
+    }
   },
   "auth": {
     "login": "Log in",
@@ -74,7 +227,31 @@
     "surname": "Surname",
     "register_as_psychologist": "Register as Psychologist",
     "login_here": "Log in here",
-    "register_as_client": "Register as a client"
+    "register_as_client": "Register as a client",
+    "gender": "Gender",
+    "profile_photo": "Profile photo",
+    "profile_photo_hint": "Optional · JPG or PNG"
+  },
+  "psych_reg": {
+    "application_title": "Specialist application",
+    "application_subtitle": "Join our network of verified psychologists and start supporting those who need it most.",
+    "step_counter": "Step {{current}} of {{total}}",
+    "step1_label": "Personal details",
+    "step1_desc": "Tell us who you are",
+    "step2_label": "Qualifications",
+    "step2_desc": "Education and experience",
+    "step3_label": "Areas of expertise",
+    "step3_desc": "Pick what you specialize in",
+    "university_degree": "University / Degree",
+    "years_experience": "Years of experience",
+    "documents": "Documents",
+    "upload_diplomas": "Upload diplomas",
+    "upload_hint": "PDF, JPG up to 10MB",
+    "select_expertise": "Select your areas of expertise",
+    "back": "Back",
+    "next_step": "Next step",
+    "submit": "Submit application",
+    "processing": "Processing…"
   },
   "landing": {
     "platform_name": "Psychological Support Platform",
@@ -253,7 +430,65 @@
     "years_experience": "Years of experience",
     "therapeutic_approaches": "Therapeutic approaches",
     "application_approved": "Application approved!",
-    "application_rejected": "Application rejected"
+    "application_rejected": "Application rejected",
+    "dashboard": {
+      "title": "Dashboard",
+      "greeting": "Welcome back, Dr. {{name}} — here's what needs your attention.",
+      "refresh": "Refresh",
+      "kpi": {
+        "today_label": "Sessions today",
+        "requests_label": "Requests to review",
+        "balance_label": "Available balance",
+        "completed_label": "Completed sessions",
+        "upcoming_total": "{{value}} upcoming in total",
+        "of_total": "of {{value}} total",
+        "entries": "{{value}} recent entries",
+        "this_month": "{{value}} this month"
+      },
+      "activity": {
+        "title": "Sessions activity",
+        "range": "Last 30 days",
+        "unit": "sessions",
+        "today": "Today",
+        "completed": "Completed",
+        "scheduled": "Scheduled",
+        "view_bars": "Bar view",
+        "view_line": "Line view"
+      },
+      "status": {
+        "title": "By status",
+        "subtitle": "All your sessions with clients",
+        "upcoming": "Upcoming",
+        "completed": "Completed",
+        "pending": "Pending",
+        "cancelled": "Cancelled",
+        "live": "Live"
+      },
+      "queue": {
+        "title": "Next sessions",
+        "view_all": "View all",
+        "empty": "No upcoming sessions — your schedule is clear."
+      },
+      "earnings": {
+        "title": "Recent earnings",
+        "view_all": "Finances",
+        "empty": "No earnings yet.",
+        "released": "Credited",
+        "free": "Free",
+        "pending": "Awaiting payout"
+      },
+      "nav": {
+        "schedule": "Schedule",
+        "sessions": "Sessions",
+        "clients": "Clients",
+        "profile": "Public profile",
+        "finances": "Finances",
+        "past": "Past sessions"
+      },
+      "quick": {
+        "label": "Go to"
+      }
+    }
   },
   "catalog": {
     "find_psychologist": "Find a psychologist",
@@ -277,6 +512,17 @@
     "rejected": "Rejected",
     "all": "All",
     "open_chat": "Open chat",
+    "back_to_dashboard": "Back to dashboard",
+    "users_page": {
+      "title": "Users",
+      "subtitle": "Registered clients and specialists across the platform.",
+      "badge": "In development",
+      "heading": "Roles and permissions are moving here",
+      "body": "A unified view of every account — with role assignment, status filters and access control — is being built. Until it lands, applicant accounts are handled where their requests come in.",
+      "related": "Meanwhile",
+      "related_applications": "Review applications",
+      "related_specializations": "Manage specializations"
+    },
     "dashboard": {
       "title": "Admin Dashboard",
       "subtitle": "Manage users, applications, and platform settings.",
@@ -297,7 +543,53 @@
       "payments_btn": "Open Payments",
       "settings_title": "Settings",
       "settings_desc": "Platform payment settings — manage the card number for receiving funds.",
-      "settings_btn": "Open Settings"
+      "settings_btn": "Open Settings",
+      "refresh": "Refresh",
+      "kpi": {
+        "psych_label": "Psychologist applications",
+        "category_label": "Category requests",
+        "payments_label": "Payments to confirm",
+        "release_label": "Earnings to release",
+        "of_total": "of {{value}} total",
+        "sum": "{{value}}"
+      },
+      "activity": {
+        "title": "Applications activity",
+        "range": "Last 30 days",
+        "unit": "new applications",
+        "today": "Today",
+        "psych": "Psychologists",
+        "category": "Categories",
+        "view_bars": "Bar view",
+        "view_line": "Line view"
+      },
+      "status": {
+        "title": "By status",
+        "subtitle": "All psychologist and category requests",
+        "pending": "Pending",
+        "approved": "Approved",
+        "rejected": "Rejected"
+      },
+      "queue": {
+        "title": "Needs review",
+        "view_all": "View all",
+        "type_psych": "Psychologist",
+        "type_category": "Category",
+        "type_payment": "Payment",
+        "today": "today",
+        "days_ago": "{{count}}d ago",
+        "empty": "Nothing awaiting review — all caught up."
+      },
+      "specs": {
+        "title": "Top specializations",
+        "empty": "No specializations yet."
+      },
+      "categories": {
+        "title": "Category requests"
+      },
+      "quick": {
+        "label": "Go to"
+      }
     }
   },
   "category_application": {
@@ -375,13 +667,17 @@
     "no_notifications": "No notifications",
     "mark_all_read": "Mark all as read"
   },
-
   "ai_assistant": {
     "title": "AI Assistant",
     "subtitle": "Always nearby",
     "demo_messages": {
       "user": "I dream about that day constantly. I can't sleep...",
       "ai": "I understand how difficult this is. Let's try the 5-4-3-2-1 grounding technique..."
+    },
+    "widget": {
+      "placeholder": "Type your message...",
+      "empty": "Hi! How can I help you today?",
+      "clear": "Clear conversation"
     }
   },
   "days": {
@@ -391,6 +687,6 @@
     "thursday": "Thursday",
     "friday": "Friday",
     "saturday": "Saturday",
-    "sunday": "Sunday" 
+    "sunday": "Sunday"
   }
 }

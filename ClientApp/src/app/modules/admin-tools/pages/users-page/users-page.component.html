@@ -1,65 +1,46 @@
-<div class="p-6 md:p-10 bg-gray-50 min-h-screen font-sans">
-  <div class="max-w-7xl mx-auto">
-    <a
-      routerLink="/admin"
-      class="inline-flex items-center gap-1 text-gray-500 hover:text-[var(--color-primary)] transition-colors text-sm font-medium mb-6 cursor-pointer w-fit"
-    >
-      <mat-icon class="scale-90">arrow_back</mat-icon>
-      Back to Dashboard
-    </a>
-    <div
-      class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-10 pb-6 border-b border-gray-200"
-    >
-      <div>
-        <h1
-          class="text-3xl font-bold text-[var(--color-primary)] tracking-tight"
-        >
-          Users
+<ng-container *transloco="let t">
+  <div class="bg-gray-50 min-h-screen font-sans">
+    <div class="max-w-6xl mx-auto px-5 sm:px-8 py-8 sm:py-10">
+
+      <a
+        routerLink="/admin"
+        class="inline-flex items-center gap-1 text-gray-500 hover:text-[var(--color-primary)] transition-colors text-sm font-medium mb-8 w-fit"
+      >
+        <mat-icon class="!w-4 !h-4 !text-base leading-4">arrow_back</mat-icon>
+        {{ t('admin.back_to_dashboard') }}
+      </a>
+
+      <header class="mb-10">
+        <h1 class="text-[28px] sm:text-3xl font-bold text-[var(--color-primary)] tracking-[-0.02em]">
+          {{ t('admin.users_page.title') }}
         </h1>
-      </div>
-    </div>
+        <p class="text-gray-500 mt-1.5 max-w-xl">{{ t('admin.users_page.subtitle') }}</p>
+      </header>
 
-    <div
-      class="bg-white rounded-3xl shadow-[0_10px_40px_rgba(0,0,0,0.03)] border border-gray-100 p-12 md:p-20 text-center animate-fade-in flex flex-col items-center"
-    >
-      <div class="w-32 h-32 mb-8 relative flex items-center justify-center">
-        <div
-          class="absolute inset-0 bg-gradient-to-br from-[var(--color-mint)] to-[var(--color-sky)] rounded-full mix-blend-multiply filter blur-2xl opacity-50 animate-blob"
-        ></div>
-
-        <div
-          class="relative w-24 h-24 bg-white rounded-full shadow-lg border border-gray-100 flex items-center justify-center"
-        >
-          <mat-icon
-            class="text-6xl text-[var(--color-success)] w-16 h-16 flex items-center justify-center"
-            >construction</mat-icon
-          >
+      <section class="border border-gray-200 rounded-xl bg-white max-w-2xl">
+        <div class="px-7 py-8 sm:px-9 sm:py-10">
+          <span class="text-[11px] font-semibold uppercase tracking-wider text-[var(--color-success)]">
+            {{ t('admin.users_page.badge') }}
+          </span>
+          <h2 class="text-xl font-bold text-[var(--color-primary)] mt-2 tracking-tight">
+            {{ t('admin.users_page.heading') }}
+          </h2>
+          <p class="text-gray-500 leading-relaxed mt-3 max-w-prose">
+            {{ t('admin.users_page.body') }}
+          </p>
         </div>
-      </div>
 
-      <h2
-        class="text-3xl font-bold text-[var(--color-primary)] mb-3 tracking-tight"
-      >
-        Under Construction
-      </h2>
-      <p class="text-gray-500 text-lg max-w-lg mx-auto leading-relaxed">
-        We are currently building this page to provide you with the best tools
-        to manage your sessions, patients, and schedule.
-      </p>
+        <div class="border-t border-gray-100 px-7 py-5 sm:px-9 flex flex-wrap items-center gap-x-6 gap-y-2">
+          <span class="text-xs uppercase tracking-wider text-gray-400">{{ t('admin.users_page.related') }}</span>
+          <a routerLink="/admin/applications" class="text-sm font-semibold text-[var(--color-primary)] hover:text-[var(--color-success)] transition-colors">
+            {{ t('admin.users_page.related_applications') }}
+          </a>
+          <a routerLink="/admin/specializations" class="text-sm font-semibold text-[var(--color-primary)] hover:text-[var(--color-success)] transition-colors">
+            {{ t('admin.users_page.related_specializations') }}
+          </a>
+        </div>
+      </section>
 
-      <div
-        class="w-full max-w-xs mt-10 p-1.5 bg-gray-100 rounded-full border border-gray-200"
-      >
-        <div
-          class="h-3 bg-gradient-to-r from-[var(--color-success)] to-[var(--color-mint)] rounded-full animate-pulse-fast"
-          style="width: 75%"
-        ></div>
-      </div>
-      <p
-        class="text-xs text-gray-400 mt-3 font-medium uppercase tracking-wider"
-      >
-        Coming very soon
-      </p>
     </div>
   </div>
-</div>
+</ng-container>

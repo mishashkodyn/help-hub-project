@@ -1,0 +1,11 @@
+:host {
+  display: block;
+}
+
+.breath-circle {
+  width: 150px;
+  height: 150px;
+  transition-property: transform;
+  transition-timing-function: ease-in-out;
+  will-change: transform;
+}

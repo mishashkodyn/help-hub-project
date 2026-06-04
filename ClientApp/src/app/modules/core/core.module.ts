@@ -40,6 +40,8 @@ import { ReviewsUserProfileComponent } from './components/reviews-user-profile/r
 import { SavedUserProfileComponent } from './components/saved-user-profile/saved-user-profile.component';
 import { TranslocoModule } from '@ngneat/transloco';
 import { UserCategoryApplicationComponent } from './pages/user-category-application/user-category-application.component';
+import { MarkdownModule } from 'ngx-markdown';
+import { AiAssistantWidgetComponent } from './components/ai-assistant-widget/ai-assistant-widget.component';
 
 @NgModule({
   declarations: [
@@ -63,6 +65,7 @@ import { UserCategoryApplicationComponent } from './pages/user-category-applicat
     ReviewsUserProfileComponent,
     SavedUserProfileComponent,
     UserCategoryApplicationComponent,
+    AiAssistantWidgetComponent,
   ],
   imports: [
     CommonModule,
@@ -82,7 +85,8 @@ import { UserCategoryApplicationComponent } from './pages/user-category-applicat
     BrowserAnimationsModule,
     ReactiveFormsModule,
     MatProgressSpinner,
-    TranslocoModule
+    TranslocoModule,
+    MarkdownModule,
   ],
 })
 export class CoreModule {}

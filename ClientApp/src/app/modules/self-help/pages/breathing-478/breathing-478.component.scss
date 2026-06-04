@@ -1,0 +1,55 @@
+:host {
+  display: block;
+}
+
+// The progress ring tracing the current phase.
+.ring-fill {
+  stroke: var(--color-success);
+  opacity: 0.85;
+  // The dash offset is updated every frame, so no transition here — the
+  // requestAnimationFrame loop already keeps the sweep smooth.
+}
+
+// The breathing orb. Scale is driven per-frame from the component; a short
+// transition only smooths the snap back to min size on reset/finish.
+.orb {
+  fill: var(--color-success);
+  // Kept translucent so the dark countdown text in the centre stays legible
+  // over the orb at every scale.
+  fill-opacity: 0.3;
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform 0.2s ease;
+}
+
+.orb-halo {
+  fill: var(--color-success);
+  opacity: 0.18;
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform 0.2s ease;
+}
+
+.is-running .orb-halo {
+  animation: orb-pulse 4s ease-in-out infinite;
+}
+
+@keyframes orb-pulse {
+  0%,
+  100% {
+    opacity: 0.14;
+  }
+  50% {
+    opacity: 0.26;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orb-halo {
+    animation: none !important;
+  }
+  .orb,
+  .orb-halo {
+    transition: none;
+  }
+}

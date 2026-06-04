@@ -33,6 +33,11 @@ import { SessionRoomComponent } from './modules/session/pages/session-room/sessi
 import { UserCategoryApplicationComponent } from './modules/core/pages/user-category-application/user-category-application.component';
 import { AdminPaymentsComponent } from './modules/admin-tools/pages/admin-payments/admin-payments.component';
 import { PsychologistFinancesComponent } from './modules/psychologist-tools/pages/psychologist-finances/psychologist-finances.component';
+import { PracticesListComponent } from './modules/self-help/pages/practices-list/practices-list.component';
+import { PracticeDetailComponent } from './modules/self-help/pages/practice-detail/practice-detail.component';
+import { BoxBreathingComponent } from './modules/self-help/pages/box-breathing/box-breathing.component';
+import { Breathing478Component } from './modules/self-help/pages/breathing-478/breathing-478.component';
+import { BellyBreathingComponent } from './modules/self-help/pages/belly-breathing/belly-breathing.component';
 
 const routes: Routes = [
   {
@@ -118,6 +123,31 @@ const routes: Routes = [
       {
         path: 'my-sessions',
         component: ClientSessionsComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'practices',
+        component: PracticesListComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'practices/box-breathing',
+        component: BoxBreathingComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'practices/breathing-478',
+        component: Breathing478Component,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'practices/belly-breathing',
+        component: BellyBreathingComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'practices/:slug',
+        component: PracticeDetailComponent,
         canActivate: [AuthGuard],
       },
       {
