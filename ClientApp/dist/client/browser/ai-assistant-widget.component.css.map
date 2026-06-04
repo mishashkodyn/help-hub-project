@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/modules/core/components/ai-assistant-widget/ai-assistant-widget.component.scss", "src/app/modules/core/components/ai-assistant-widget/ai-assistant-widget.component.scss"],
+  "sourcesContent": [":host {\n  display: contents;\n}\n", ":host {\n  display: contents;\n}\n/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJmaWxlOi8vL0M6L1VzZXJzL01pc2hhL3NvdXJjZS9yZXBvcy9odWxwLWh1Yi1wcm9qZWN0L0NsaWVudEFwcC9zcmMvYXBwL21vZHVsZXMvY29yZS9jb21wb25lbnRzL2FpLWFzc2lzdGFudC13aWRnZXQvYWktYXNzaXN0YW50LXdpZGdldC5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNFIiwic291cmNlc0NvbnRlbnQiOlsiOmhvc3Qge1xuICBkaXNwbGF5OiBjb250ZW50cztcbn1cbiJdfQ== */"],
+  "mappings": ";AAAA;AACE,WAAA;ACCF;",
+  "names": []
+}

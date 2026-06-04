@@ -15,6 +15,7 @@ import { PsychologistFinancesComponent } from './pages/psychologist-finances/psy
 import { ReactiveFormsModule } from '@angular/forms';
 import { MarkdownModule } from 'ngx-markdown';
 import { DecimalPipe } from '@angular/common';
+import { TranslocoModule } from '@ngneat/transloco';
 
 
 
@@ -37,7 +38,8 @@ import { DecimalPipe } from '@angular/common';
     ReactiveFormsModule,
     SharedModule,
     MarkdownModule,
-    DecimalPipe
+    DecimalPipe,
+    TranslocoModule
   ]
 })
 export class PsychologistToolsModule { }

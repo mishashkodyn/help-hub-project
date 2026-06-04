@@ -28,3 +28,8 @@
 <main class="h-[100dvh] pt-13 box-border">
   <router-outlet></router-outlet>
 </main>
+
+<!-- Floating AI assistant (logged-in users only) -->
+@if (authService.isLoggedIn()) {
+  <app-ai-assistant-widget></app-ai-assistant-widget>
+}

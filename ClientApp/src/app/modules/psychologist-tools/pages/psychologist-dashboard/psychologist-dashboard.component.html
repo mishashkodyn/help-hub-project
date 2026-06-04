@@ -1,45 +1,271 @@
-<div class="p-6 md:p-10 bg-gray-50 min-h-screen font-sans">
-  <div class="max-w-7xl mx-auto">
-    <div
-      class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-10 pb-6 border-b border-gray-200"
-    >
-      <div>
-        <h1
-          class="text-3xl font-bold text-[var(--color-primary)] tracking-tight"
-        >
-          Dashboard
-        </h1>
-        <p class="text-gray-500 mt-1.5 text-lg">
-          Welcome back, Dr. {{ authService.currentLoggedUser?.name }}!
-        </p>
-      </div>
-    </div>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-      @for (card of psychologistCards(); track card.route) {
-        <div
-          class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 flex flex-col hover:shadow-md hover:border-mint transition-all group"
-        >
-          <div
-            class="w-12 h-12 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform"
-            [ngClass]="[card.iconBgClass, card.iconTextClass]"
-          >
-            <mat-icon>{{ card.icon }}</mat-icon>
-          </div>
+<ng-container *transloco="let t">
+  <div class="bg-gray-50 min-h-screen font-sans">
+    <div class="w-full px-5 sm:px-8 lg:px-10 py-8">
 
-          <h3 class="text-lg font-bold text-gray-800 mb-2">{{ card.title }}</h3>
-
-          <p class="text-gray-500 text-sm mb-6 flex-grow">
-            {{ card.description }}
+      <!-- ── Header ─────────────────────────────────────────────────────────── -->
+      <header class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-6">
+        <div>
+          <h1 class="text-[28px] sm:text-3xl font-bold text-[var(--color-primary)] tracking-[-0.02em]">
+            {{ t('psychologist.dashboard.title') }}
+          </h1>
+          <p class="text-gray-500 mt-1.5">
+            {{ t('psychologist.dashboard.greeting', { name: authService.currentLoggedUser?.name }) }}
           </p>
-
+        </div>
+        <div class="flex items-center gap-4 text-sm shrink-0">
+          <span class="text-gray-400">{{ today | date: 'd MMMM yyyy' }}</span>
           <button
-            [routerLink]="card.route"
-            class="w-full py-2.5 bg-gray-50 text-[var(--color-primary)] font-semibold rounded-xl hover:bg-[var(--color-primary)] hover:text-white transition-colors"
+            (click)="loadAll()"
+            [disabled]="loading()"
+            class="inline-flex items-center gap-1.5 text-gray-500 hover:text-[var(--color-primary)] font-medium transition-colors disabled:opacity-40"
           >
-            {{ card.buttonText }}
+            <mat-icon class="!w-4 !h-4 !text-base leading-4" [class.animate-spin]="loading()">refresh</mat-icon>
+            {{ t('psychologist.dashboard.refresh') }}
           </button>
         </div>
+      </header>
+
+      @if (loading()) {
+        <div class="border border-gray-200 rounded-xl bg-white h-28 mb-6 animate-pulse"></div>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <div class="lg:col-span-8 border border-gray-200 rounded-xl bg-white h-96 animate-pulse"></div>
+          <div class="lg:col-span-4 border border-gray-200 rounded-xl bg-white h-96 animate-pulse"></div>
+        </div>
+      } @else {
+
+        <!-- ── Stat row (full width) ──────────────────────────────────────── -->
+        <div class="border border-gray-200 rounded-xl bg-white grid grid-cols-2 lg:grid-cols-4 divide-x divide-y lg:divide-y-0 divide-gray-200 overflow-hidden mb-6">
+          @for (kpi of kpis(); track kpi.key) {
+            <a
+              [routerLink]="kpi.route"
+              class="group px-5 py-5 sm:px-6 sm:py-6 hover:bg-gray-50/80 transition-colors"
+            >
+              <div class="flex items-center gap-1.5 mb-3">
+                @if (kpi.attention) {
+                  <span class="w-1.5 h-1.5 rounded-full bg-[var(--color-success)]"></span>
+                }
+                <span class="text-[11px] font-semibold uppercase tracking-wider text-gray-400">{{ t(kpi.labelKey) }}</span>
+              </div>
+              <div class="flex items-baseline gap-2">
+                <span
+                  class="text-4xl font-bold tabular-nums tracking-tight"
+                  [style.color]="kpi.attention ? 'var(--color-primary)' : '#cbd2cb'"
+                >{{ kpi.value }}</span>
+                <mat-icon class="text-gray-200 group-hover:text-gray-400 group-hover:translate-x-0.5 transition-all !text-lg ml-auto self-center">arrow_forward</mat-icon>
+              </div>
+              <div class="text-xs text-gray-400 mt-2">{{ t(kpi.captionKey, { value: kpi.captionValue }) }}</div>
+            </a>
+          }
+        </div>
+
+        <!-- ── Body: main column + side rail ──────────────────────────────── -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-6">
+
+          <!-- Main column -->
+          <div class="lg:col-span-8 flex flex-col gap-6">
+
+            <!-- Activity timeline -->
+            <section class="border border-gray-200 rounded-xl bg-white p-6">
+              <div class="flex items-start justify-between gap-4 mb-5">
+                <div>
+                  <h2 class="text-base font-bold text-[var(--color-primary)] tracking-tight">{{ t('psychologist.dashboard.activity.title') }}</h2>
+                  <p class="text-sm text-gray-400 mt-0.5">
+                    <span class="font-semibold text-gray-600 tabular-nums">{{ activityTotal() }}</span>
+                    {{ t('psychologist.dashboard.activity.unit') }} · {{ t('psychologist.dashboard.activity.range') }}
+                  </p>
+                </div>
+                <div class="inline-flex items-center gap-0.5 p-0.5 rounded-lg border border-gray-200 shrink-0">
+                  <button
+                    (click)="setActivityView('bars')"
+                    [attr.aria-label]="t('psychologist.dashboard.activity.view_bars')"
+                    [ngClass]="activityView() === 'bars' ? 'bg-gray-100 text-[var(--color-primary)]' : 'text-gray-400 hover:text-gray-600'"
+                    class="w-7 h-7 flex items-center justify-center rounded-md transition-colors"
+                  >
+                    <mat-icon class="!w-[18px] !h-[18px] !text-[18px] leading-[18px]">bar_chart</mat-icon>
+                  </button>
+                  <button
+                    (click)="setActivityView('line')"
+                    [attr.aria-label]="t('psychologist.dashboard.activity.view_line')"
+                    [ngClass]="activityView() === 'line' ? 'bg-gray-100 text-[var(--color-primary)]' : 'text-gray-400 hover:text-gray-600'"
+                    class="w-7 h-7 flex items-center justify-center rounded-md transition-colors"
+                  >
+                    <mat-icon class="!w-[18px] !h-[18px] !text-[18px] leading-[18px]">show_chart</mat-icon>
+                  </button>
+                </div>
+              </div>
+
+              @if (activityView() === 'bars') {
+                <div class="flex items-end gap-1 sm:gap-2 h-40 border-b border-gray-100">
+                  @for (bar of activity(); track $index) {
+                    <div class="group/bar relative flex-1 h-full flex flex-col justify-end items-stretch">
+                      <div class="opacity-0 group-hover/bar:opacity-100 transition-opacity absolute -top-1 left-1/2 -translate-x-1/2 z-10 px-2 py-1 rounded bg-[var(--color-primary)] text-white text-[10px] whitespace-nowrap pointer-events-none">
+                        {{ bar.full }} · {{ bar.total }}
+                      </div>
+                      @if (bar.total === 0) {
+                        <div class="h-px bg-gray-200"></div>
+                      } @else {
+                        <div [style.height.%]="bar.scheduledPct" style="background: var(--color-mint)"></div>
+                        <div [style.height.%]="bar.completedPct" style="background: var(--color-primary)"></div>
+                      }
+                    </div>
+                  }
+                </div>
+              } @else {
+                <div class="relative h-40 border-b border-gray-100">
+                  <svg [attr.viewBox]="lineSeries().viewBox" preserveAspectRatio="none" class="w-full h-full overflow-visible">
+                    <polyline
+                      [attr.points]="lineSeries().scheduled" fill="none"
+                      stroke="var(--color-mint)" stroke-width="2"
+                      stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"
+                    />
+                    <polyline
+                      [attr.points]="lineSeries().completed" fill="none"
+                      stroke="var(--color-primary)" stroke-width="2"
+                      stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"
+                    />
+                  </svg>
+                  <div class="absolute inset-0 flex">
+                    @for (bar of activity(); track $index) {
+                      <div class="group/pt relative flex-1">
+                        @if (bar.total > 0) {
+                          <div class="opacity-0 group-hover/pt:opacity-100 transition-opacity absolute top-0 left-1/2 -translate-x-1/2 z-10 px-2 py-1 rounded bg-[var(--color-primary)] text-white text-[10px] whitespace-nowrap pointer-events-none">
+                            {{ bar.full }} · {{ bar.total }}
+                          </div>
+                        }
+                      </div>
+                    }
+                  </div>
+                </div>
+              }
+
+              <div class="flex justify-between mt-2 text-[11px] text-gray-300 tabular-nums">
+                <span>{{ activity()[0]?.full }}</span>
+                <span>{{ t('psychologist.dashboard.activity.today') }}</span>
+              </div>
+
+              <div class="flex items-center gap-6 mt-5 text-xs text-gray-500">
+                <span class="flex items-center gap-2">
+                  <span class="w-3 h-1.5 rounded-sm" style="background: var(--color-primary)"></span>
+                  {{ t('psychologist.dashboard.activity.completed') }}
+                </span>
+                <span class="flex items-center gap-2">
+                  <span class="w-3 h-1.5 rounded-sm" style="background: var(--color-mint)"></span>
+                  {{ t('psychologist.dashboard.activity.scheduled') }}
+                </span>
+              </div>
+            </section>
+
+            <!-- Next sessions -->
+            <section class="border border-gray-200 rounded-xl bg-white flex-1">
+              <div class="flex items-center justify-between px-6 pt-6 pb-4">
+                <h2 class="text-base font-bold text-[var(--color-primary)] tracking-tight">{{ t('psychologist.dashboard.queue.title') }}</h2>
+                <a routerLink="/psychologist/sessions" class="text-xs font-semibold text-[var(--color-blue)] hover:underline">
+                  {{ t('psychologist.dashboard.queue.view_all') }}
+                </a>
+              </div>
+
+              @if (nextSessions().length === 0) {
+                <div class="px-6 pb-8 pt-2 text-sm text-gray-400">
+                  {{ t('psychologist.dashboard.queue.empty') }}
+                </div>
+              } @else {
+                <ul>
+                  @for (item of nextSessions(); track $index) {
+                    <li class="border-t border-gray-100">
+                      <a
+                        routerLink="/psychologist/sessions"
+                        class="flex items-center gap-4 px-6 py-3.5 hover:bg-gray-50/80 transition-colors"
+                      >
+                        <span class="text-[10px] font-bold uppercase tracking-wider w-20 shrink-0" [style.color]="item.color">
+                          {{ t(item.statusKey) }}
+                        </span>
+                        <div class="min-w-0 flex-1">
+                          <div class="text-sm font-semibold text-gray-800 truncate">{{ item.name }}</div>
+                          <div class="text-xs text-gray-400 truncate">{{ item.startTime | date: 'EEE, d MMM · HH:mm' }}</div>
+                        </div>
+                        <span class="text-sm font-semibold text-gray-700 tabular-nums shrink-0">{{ formatMoney(item.price) }}</span>
+                      </a>
+                    </li>
+                  }
+                </ul>
+              }
+            </section>
+          </div>
+
+          <!-- Side rail -->
+          <div class="lg:col-span-4 flex flex-col gap-6">
+
+            <!-- Status breakdown -->
+            <section class="border border-gray-200 rounded-xl bg-white p-6">
+              <div class="flex items-baseline justify-between mb-1">
+                <h2 class="text-base font-bold text-[var(--color-primary)] tracking-tight">{{ t('psychologist.dashboard.status.title') }}</h2>
+                <span class="text-xs text-gray-400 tabular-nums">{{ totalSessions() }}</span>
+              </div>
+              <p class="text-xs text-gray-400 mb-5">{{ t('psychologist.dashboard.status.subtitle') }}</p>
+
+              <div class="flex h-2.5 rounded-full overflow-hidden bg-gray-100 mb-5">
+                @for (seg of statusSegments(); track seg.labelKey) {
+                  @if (seg.value > 0) {
+                    <div [style.width.%]="seg.pct" [style.background]="seg.color"></div>
+                  }
+                }
+              </div>
+
+              <div class="space-y-3">
+                @for (seg of statusSegments(); track seg.labelKey) {
+                  <div class="flex items-center justify-between text-sm">
+                    <span class="flex items-center gap-2.5 text-gray-600">
+                      <span class="w-2 h-2 rounded-full" [style.background]="seg.color"></span>
+                      {{ t(seg.labelKey) }}
+                    </span>
+                    <span class="font-semibold text-gray-700 tabular-nums">{{ seg.value }}</span>
+                  </div>
+                }
+              </div>
+            </section>
+
+            <!-- Recent earnings -->
+            <section class="border border-gray-200 rounded-xl bg-white p-6 flex-1">
+              <div class="flex items-baseline justify-between mb-5">
+                <h2 class="text-base font-bold text-[var(--color-primary)] tracking-tight">{{ t('psychologist.dashboard.earnings.title') }}</h2>
+                <a routerLink="/psychologist/finances" class="text-xs font-semibold text-[var(--color-blue)] hover:underline">{{ t('psychologist.dashboard.earnings.view_all') }}</a>
+              </div>
+              @if (recentEarnings().length === 0) {
+                <p class="text-sm text-gray-400">{{ t('psychologist.dashboard.earnings.empty') }}</p>
+              } @else {
+                <ul class="space-y-3.5">
+                  @for (e of recentEarnings(); track $index) {
+                    <li class="flex items-center gap-3">
+                      <div class="min-w-0 flex-1">
+                        <div class="text-sm font-medium text-gray-700 truncate">{{ e.name }}</div>
+                        <div class="text-xs flex items-center gap-1.5 mt-0.5">
+                          <span class="w-1.5 h-1.5 rounded-full" [style.background]="e.color"></span>
+                          <span class="text-gray-400">{{ t(e.statusKey) }} · {{ e.date | date: 'd MMM' }}</span>
+                        </div>
+                      </div>
+                      <span class="text-sm font-semibold text-gray-700 tabular-nums shrink-0">{{ formatMoney(e.amount) }}</span>
+                    </li>
+                  }
+                </ul>
+              }
+            </section>
+          </div>
+        </div>
+
+        <!-- ── Quick links ────────────────────────────────────────────────── -->
+        <div class="flex flex-wrap items-center gap-x-2 gap-y-2 text-sm border-t border-gray-200 pt-5">
+          <span class="text-gray-400 mr-1">{{ t('psychologist.dashboard.quick.label') }}</span>
+          @for (link of navLinks; track link.route; let last = $last) {
+            <a [routerLink]="link.route" class="font-semibold text-[var(--color-primary)] hover:text-[var(--color-success)] transition-colors">
+              {{ t(link.labelKey) }}
+            </a>
+            @if (!last) {
+              <span class="text-gray-300">·</span>
+            }
+          }
+        </div>
+
       }
     </div>
   </div>
-</div>
+</ng-container>

@@ -10,7 +10,7 @@
         @if (icon != null) {
           <mat-icon class="scale-90 text-[var(--color-primary)]">{{ icon() }}</mat-icon>
         }
-        <span>{{ selected()?.label }}</span>
+        <span class="inline-block text-center min-w-[2rem]">{{ selected()?.label }}</span>
       </span>
     } @else {
       <span class="text-gray-500">{{ placeholder() }}</span>

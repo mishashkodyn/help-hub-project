@@ -61,139 +61,128 @@
     <div class="flex-1 overflow-y-auto custom-scroll px-3 py-3">
       <nav class="space-y-0.5" aria-label="Sidebar navigation">
         <!-- Active session banner -->
-        @if (activeSessionService.activeSession()) {
+        @if (activeSessionService.activeSession(); as session) {
           <button
             (click)="joinActiveSession()"
-            class="flex items-center gap-3 w-full h-auto px-3 py-2.5 rounded-xl bg-[var(--color-success)]/10 border border-[var(--color-success)]/30 hover:bg-[var(--color-success)]/20 transition-all mb-1"
+            class="flex items-center gap-3 w-full px-3 py-2.5 rounded-xl bg-[var(--color-success)]/10 hover:bg-[var(--color-success)]/15 ring-1 ring-inset ring-[var(--color-success)]/25 transition-colors mb-2 text-left"
           >
-            <div class="relative shrink-0">
-              <mat-icon class="text-[var(--color-success)] text-xl"
-                >video_call</mat-icon
-              >
+            <span class="relative flex h-2.5 w-2.5 shrink-0">
               <span
-                class="absolute -top-1 -right-1 w-2.5 h-2.5 bg-[var(--color-success)] rounded-full animate-pulse"
+                class="absolute inline-flex h-full w-full rounded-full bg-[var(--color-success)] opacity-60 animate-ping"
               ></span>
-            </div>
-            <div class="text-left min-w-0">
+              <span
+                class="relative inline-flex h-2.5 w-2.5 rounded-full bg-[var(--color-success)]"
+              ></span>
+            </span>
+            <div class="min-w-0 flex-1">
               <p
-                class="text-xs font-bold text-[var(--color-success)] leading-tight"
+                class="text-xs font-semibold text-[var(--color-success)] leading-tight"
               >
-                Session is live!
+                {{ t("nav.session_live") }}
               </p>
-              <p class="text-[10px] text-[var(--color-success)]/70 truncate">
-                {{ activeSessionService.activeSession()!.psychologistName }}
+              <p class="text-[11px] text-[var(--color-success)]/70 truncate">
+                {{ session.psychologistName }}
               </p>
             </div>
             <mat-icon
-              class="text-[var(--color-success)] text-base ml-auto shrink-0"
+              class="text-[var(--color-success)] !text-base ml-auto shrink-0"
               >arrow_forward</mat-icon
             >
           </button>
         }
 
-        <!-- Main menu items -->
-        @for (item of menuItems(); track item.route) {
-          @if (
-            !(item.label === "my_sessions" && authService.isPsychologist) &&
-            !(
-              item.label === "category_application" &&
-              (authService.isAdmin ||
-                authService.isSuperAdmin ||
-                authService.isPsychologist)
-            )
-          ) {
-            <a
-              [routerLink]="item.route"
-              routerLinkActive="selected-menu-item"
-              (click)="sidebarService.toggleSideBar()"
-              class="flex items-center justify-between h-[46px] px-3 rounded-xl sidebar-link hover:bg-[var(--color-mint)]/25 group"
-            >
-              <div class="flex items-center gap-3">
-                <mat-icon class="link-icon text-xl shrink-0">{{
-                  item.icon
-                }}</mat-icon>
-                <span class="link-text text-sm font-medium">{{
-                  t("nav." + item.label)
-                }}</span>
-              </div>
-              <div class="flex items-center gap-1.5 shrink-0">
-                @if (
-                  item.label === "chat" &&
-                  presenceService.totalUnreadCount() > 0
-                ) {
-                  <span
-                    class="bg-red-500 text-white text-[10px] font-bold min-w-[18px] h-[18px] px-1 flex items-center justify-center rounded-full shadow-sm"
-                  >
-                    {{
-                      presenceService.totalUnreadCount() > 99
-                        ? "99+"
-                        : presenceService.totalUnreadCount()
-                    }}
-                  </span>
-                }
-                @if (
-                  item.label === "my_sessions" &&
-                  activeSessionService.activeSession()
-                ) {
-                  <span
-                    class="w-2 h-2 bg-[var(--color-success)] rounded-full animate-pulse"
-                  ></span>
-                }
-              </div>
-            </a>
+        <!-- Client journey -->
+        @if (isClient()) {
+          @for (item of clientItems(); track item.route) {
+            <ng-container
+              *ngTemplateOutlet="link; context: { $implicit: item }"
+            ></ng-container>
           }
+        }
+
+        <!-- Common (everyone) -->
+        @for (item of commonItems(); track item.route) {
+          <ng-container
+            *ngTemplateOutlet="link; context: { $implicit: item }"
+          ></ng-container>
         }
 
         <!-- Admin section -->
         @if (authService.isAdmin || authService.isSuperAdmin) {
-          <div class="pt-5 pb-1.5 px-3">
-            <span
-              class="text-[10px] uppercase tracking-[0.18em] font-bold text-gray-400"
-              >{{ t("nav.admin_panel") }}</span
-            >
-          </div>
+          <ng-container
+            *ngTemplateOutlet="
+              sectionLabel;
+              context: { $implicit: t('nav.admin_panel') }
+            "
+          ></ng-container>
           @for (item of adminItems(); track item.route) {
-            <a
-              [routerLink]="item.route"
-              routerLinkActive="selected-menu-item"
-              (click)="sidebarService.toggleSideBar()"
-              class="flex items-center gap-3 h-[46px] px-3 rounded-xl sidebar-link hover:bg-[var(--color-mint)]/25"
-            >
-              <mat-icon class="link-icon text-xl shrink-0">{{
-                item.icon
-              }}</mat-icon>
-              <span class="link-text text-sm font-medium">{{
-                t("nav." + item.label)
-              }}</span>
-            </a>
+            <ng-container
+              *ngTemplateOutlet="link; context: { $implicit: item }"
+            ></ng-container>
           }
         }
 
         <!-- Psychologist section -->
         @if (authService.isPsychologist) {
-          <div class="pt-5 pb-1.5 px-3">
-            <span
-              class="text-[10px] uppercase tracking-[0.18em] font-bold text-gray-400"
-              >{{ t("nav.psychologist_panel") }}</span
-            >
-          </div>
+          <ng-container
+            *ngTemplateOutlet="
+              sectionLabel;
+              context: { $implicit: t('nav.psychologist_panel') }
+            "
+          ></ng-container>
           @for (item of psychologistItems(); track item.route) {
-            <a
-              [routerLink]="item.route"
-              routerLinkActive="selected-menu-item"
-              (click)="sidebarService.toggleSideBar()"
-              class="flex items-center gap-3 h-[46px] px-3 rounded-xl sidebar-link hover:bg-[var(--color-mint)]/25"
-            >
-              <mat-icon class="link-icon text-xl shrink-0">{{
-                item.icon
-              }}</mat-icon>
-              <span class="link-text text-sm font-medium">{{
-                t("nav." + item.label)
-              }}</span>
-            </a>
+            <ng-container
+              *ngTemplateOutlet="link; context: { $implicit: item }"
+            ></ng-container>
           }
         }
       </nav>
+
+      <!-- ── Reusable bits ── -->
+      <ng-template #sectionLabel let-text>
+        <div class="pt-5 pb-1.5 px-3">
+          <span
+            class="text-[10px] uppercase tracking-[0.18em] font-bold text-gray-400"
+            >{{ text }}</span
+          >
+        </div>
+      </ng-template>
+
+      <ng-template #link let-item>
+        <a
+          [routerLink]="item.route"
+          routerLinkActive="selected-menu-item"
+          (click)="sidebarService.toggleSideBar()"
+          class="flex items-center justify-between h-[46px] px-3 rounded-xl sidebar-link hover:bg-[var(--color-mint)]/25 group"
+        >
+          <div class="flex items-center gap-3">
+            <mat-icon class="link-icon text-xl shrink-0">{{
+              item.icon
+            }}</mat-icon>
+            <span class="link-text text-sm font-medium">{{
+              t("nav." + item.label)
+            }}</span>
+          </div>
+          @if (item.label === "chat" && presenceService.totalUnreadCount() > 0) {
+            <span
+              class="bg-red-500 text-white text-[10px] font-bold min-w-[18px] h-[18px] px-1 flex items-center justify-center rounded-full shrink-0"
+            >
+              {{
+                presenceService.totalUnreadCount() > 99
+                  ? "99+"
+                  : presenceService.totalUnreadCount()
+              }}
+            </span>
+          }
+          @if (
+            item.label === "sessions" && activeSessionService.activeSession()
+          ) {
+            <span
+              class="w-2 h-2 bg-[var(--color-success)] rounded-full animate-pulse shrink-0"
+            ></span>
+          }
+        </a>
+      </ng-template>
     </div>
 
     <!-- ── Footer actions ── -->

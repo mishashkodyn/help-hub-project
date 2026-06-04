@@ -1,0 +1,270 @@
+<ng-container *transloco="let t">
+  <div class="min-h-screen bg-[#FAF8F3] px-4 py-8 md:px-8">
+
+    <!-- Header -->
+    <div class="max-w-3xl mx-auto mb-7">
+      <div class="flex items-center gap-3">
+        <button
+          (click)="goBack()"
+          class="w-10 h-10 flex items-center justify-center rounded-full text-stone-500 hover:bg-stone-200/60 hover:text-[var(--color-primary)] transition-colors"
+          [attr.aria-label]="t('common.back')"
+        >
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+        <div class="flex items-center gap-3">
+          <div
+            class="w-12 h-12 rounded-2xl bg-[var(--color-sky)]/20 flex items-center justify-center shrink-0"
+          >
+            <mat-icon class="text-[var(--color-blue)]">crop_square</mat-icon>
+          </div>
+          <div>
+            <h1 class="text-2xl font-semibold tracking-[-0.01em] text-[var(--color-primary)]">
+              {{ t("selfHelp.items.box-breathing.title") }}
+            </h1>
+            <p class="text-sm font-medium text-stone-500">
+              {{ t("selfHelp.category.breathing") }} ·
+              {{ t("selfHelp.box.pattern", { n: pace }) }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="max-w-3xl mx-auto space-y-4">
+
+      <!-- Intro -->
+      <div class="bg-white rounded-2xl border border-stone-200 shadow-sm p-6">
+        <p class="text-[0.95rem] text-stone-700 leading-relaxed">
+          {{ t("selfHelp.items.box-breathing.intro") }}
+        </p>
+      </div>
+
+      <!-- Breathing guide -->
+      <div
+        class="bg-white rounded-2xl border border-stone-200 shadow-sm px-6 pt-8 pb-6 flex flex-col items-center"
+      >
+        <!-- Live region for screen readers -->
+        <p class="sr-only" aria-live="polite">
+          @if (state === 'prepare') {
+            {{ t("selfHelp.box.getReady") }} {{ prepareCountdown }}
+          } @else if (isActiveSession) {
+            {{ t("selfHelp.phase." + currentLabel) }} {{ countdown }}
+          } @else if (state === 'done') {
+            {{ t("selfHelp.box.completeTitle") }}
+          }
+        </p>
+
+        <!-- The square -->
+        <div
+          class="relative w-[min(78vw,320px)] aspect-square"
+          [class.is-running]="isActiveSession"
+        >
+          <!-- Side labels -->
+          <span
+            class="side-label left-0 top-1/2 -translate-x-full -translate-y-1/2 pr-3 text-right"
+            [class.side-label--active]="sideActive(0)"
+          >
+            {{ t("selfHelp.phase.inhale") }}
+          </span>
+          <span
+            class="side-label left-1/2 top-0 -translate-x-1/2 -translate-y-full pb-2"
+            [class.side-label--active]="sideActive(1)"
+          >
+            {{ t("selfHelp.phase.hold") }}
+          </span>
+          <span
+            class="side-label right-0 top-1/2 translate-x-full -translate-y-1/2 pl-3"
+            [class.side-label--active]="sideActive(2)"
+          >
+            {{ t("selfHelp.phase.exhale") }}
+          </span>
+          <span
+            class="side-label left-1/2 bottom-0 -translate-x-1/2 translate-y-full pt-2"
+            [class.side-label--active]="sideActive(3)"
+          >
+            {{ t("selfHelp.phase.hold") }}
+          </span>
+
+          <svg
+            class="w-full h-full overflow-visible"
+            viewBox="0 0 100 100"
+            aria-hidden="true"
+          >
+            <!-- Track -->
+            <rect
+              x="16" y="16" width="68" height="68" rx="8"
+              fill="none"
+              stroke="var(--color-mint)"
+              stroke-opacity="0.45"
+              stroke-width="2.5"
+            />
+            <!-- Active side -->
+            @if (isActiveSession) {
+              <line
+                [attr.x1]="16" [attr.y1]="84" [attr.x2]="16" [attr.y2]="16"
+                class="active-side" [class.shown]="phaseIndex === 0"
+              />
+              <line
+                [attr.x1]="16" [attr.y1]="16" [attr.x2]="84" [attr.y2]="16"
+                class="active-side" [class.shown]="phaseIndex === 1"
+              />
+              <line
+                [attr.x1]="84" [attr.y1]="16" [attr.x2]="84" [attr.y2]="84"
+                class="active-side" [class.shown]="phaseIndex === 2"
+              />
+              <line
+                [attr.x1]="84" [attr.y1]="84" [attr.x2]="16" [attr.y2]="84"
+                class="active-side" [class.shown]="phaseIndex === 3"
+              />
+            }
+            <!-- Travelling marker -->
+            @if (isActiveSession) {
+              <circle [attr.cx]="cx" [attr.cy]="cy" r="3.4" class="marker-halo" />
+              <circle [attr.cx]="cx" [attr.cy]="cy" r="2.2" class="marker" />
+            }
+          </svg>
+
+          <!-- Centre content -->
+          <div class="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none">
+            @if (state === 'prepare') {
+              <div class="text-xs uppercase tracking-[0.2em] text-stone-500 mb-1">
+                {{ t("selfHelp.box.getReady") }}
+              </div>
+              <div class="text-6xl font-semibold text-[var(--color-primary)] tabular-nums">
+                {{ prepareCountdown }}
+              </div>
+            } @else if (isActiveSession) {
+              <div class="text-base font-semibold text-[var(--color-primary)]">
+                {{ t("selfHelp.phase." + currentLabel) }}
+              </div>
+              <div class="text-6xl font-semibold text-[var(--color-primary)] tabular-nums leading-tight">
+                {{ countdown }}
+              </div>
+            } @else if (state === 'done') {
+              <mat-icon class="text-[var(--color-success)] !w-10 !h-10 !text-4xl mb-1">
+                check_circle
+              </mat-icon>
+              <div class="text-base font-semibold text-[var(--color-primary)]">
+                {{ t("selfHelp.box.completeTitle") }}
+              </div>
+            } @else {
+              <mat-icon class="text-[var(--color-blue)] !w-9 !h-9 !text-4xl mb-2">
+                crop_square
+              </mat-icon>
+              <div class="text-sm font-medium text-stone-600 px-6">
+                {{ t("selfHelp.box.readyHint") }}
+              </div>
+            }
+          </div>
+        </div>
+
+        <!-- Cycle progress -->
+        <div class="w-full max-w-[320px] mt-8">
+          <div class="flex items-center justify-between text-xs font-medium text-stone-500 mb-1.5">
+            <span>
+              @if (state === 'done') {
+                {{ t("selfHelp.box.completeText", { count: targetCycles }) }}
+              } @else {
+                {{ t("selfHelp.box.cycleProgress", { current: cycles, total: targetCycles }) }}
+              }
+            </span>
+            <span class="tabular-nums text-stone-600">{{ cycles }}/{{ targetCycles }}</span>
+          </div>
+          <div class="h-2 rounded-full bg-stone-200 overflow-hidden">
+            <div
+              class="h-full rounded-full bg-[var(--color-success)] transition-all duration-500"
+              [style.width.%]="(cycles / targetCycles) * 100"
+            ></div>
+          </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="flex items-center gap-3 mt-7">
+          <button
+            (click)="toggle()"
+            class="flex items-center gap-2 px-7 py-3 rounded-full bg-[var(--color-success)] text-white text-sm font-semibold shadow-sm hover:bg-[#2e6a04] transition-colors"
+          >
+            <mat-icon class="text-lg">{{ isRunning ? "pause" : "play_arrow" }}</mat-icon>
+            @if (state === 'paused') {
+              {{ t("selfHelp.box.resume") }}
+            } @else if (isRunning) {
+              {{ t("selfHelp.pause") }}
+            } @else if (state === 'done') {
+              {{ t("selfHelp.box.restart") }}
+            } @else {
+              {{ t("selfHelp.start") }}
+            }
+          </button>
+          <button
+            (click)="reset()"
+            [disabled]="state === 'idle'"
+            class="flex items-center gap-2 px-5 py-3 rounded-full bg-stone-100 text-stone-700 text-sm font-semibold hover:bg-stone-200 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+          >
+            <mat-icon class="text-lg">restart_alt</mat-icon>
+            {{ t("selfHelp.reset") }}
+          </button>
+          <button
+            (click)="toggleSound()"
+            [attr.aria-pressed]="soundOn"
+            [attr.aria-label]="t('selfHelp.box.sound')"
+            class="w-11 h-11 flex items-center justify-center rounded-full hover:bg-stone-100 transition-colors"
+            [ngClass]="soundOn ? 'text-[var(--color-blue)] bg-[var(--color-sky)]/15' : 'text-stone-500'"
+          >
+            <mat-icon class="text-lg">{{ soundOn ? "volume_up" : "volume_off" }}</mat-icon>
+          </button>
+        </div>
+      </div>
+
+      <!-- Pace selector -->
+      <div class="bg-white rounded-2xl border border-stone-200 shadow-sm p-6">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-base font-semibold text-[var(--color-primary)]">
+            {{ t("selfHelp.box.pace") }}
+          </h2>
+          <span class="text-xs font-medium text-stone-500">{{ t("selfHelp.box.paceHint") }}</span>
+        </div>
+        <div class="grid grid-cols-4 gap-2.5">
+          @for (p of paces; track p) {
+            <button
+              (click)="setPace(p)"
+              [disabled]="isActiveSession"
+              class="flex flex-col items-center py-3 rounded-xl border text-sm font-semibold transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+              [ngClass]="pace === p
+                ? 'border-[var(--color-success)] bg-[var(--color-mint)]/25 text-[var(--color-primary)]'
+                : 'border-transparent bg-stone-100 text-stone-600'"
+            >
+              <span class="tabular-nums text-base">{{ p }}{{ t("selfHelp.box.secShort") }}</span>
+              <span class="text-[11px] font-medium text-stone-500 mt-0.5">
+                {{ t("selfHelp.box.perSide") }}
+              </span>
+            </button>
+          }
+        </div>
+      </div>
+
+      <!-- How to -->
+      <div class="bg-white rounded-2xl border border-stone-200 shadow-sm p-6">
+        <h2 class="text-base font-semibold text-[var(--color-primary)] mb-4">
+          {{ t("selfHelp.steps") }}
+        </h2>
+        <ol class="space-y-3.5">
+          @for (step of t("selfHelp.items.box-breathing.steps"); track $index) {
+            <li class="flex gap-3.5">
+              <span
+                class="w-7 h-7 rounded-full bg-[var(--color-mint)]/40 text-[var(--color-success)] text-sm font-bold flex items-center justify-center shrink-0 mt-0.5"
+              >
+                {{ $index + 1 }}
+              </span>
+              <p class="text-[0.95rem] text-stone-700 leading-relaxed">{{ step }}</p>
+            </li>
+          }
+        </ol>
+      </div>
+
+      <!-- Gentle reminder -->
+      <p class="text-center text-xs text-stone-500 px-6 pt-1">
+        {{ t("selfHelp.disclaimer") }}
+      </p>
+    </div>
+  </div>
+</ng-container>

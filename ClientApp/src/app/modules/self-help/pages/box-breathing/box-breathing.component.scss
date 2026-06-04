@@ -1,0 +1,72 @@
+:host {
+  display: block;
+}
+
+// Side labels sit just outside each edge of the square.
+.side-label {
+  position: absolute;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  color: #57534e; // stone-600 — readable against the cream background
+  transition: color 0.3s ease, opacity 0.3s ease;
+  opacity: 0.85;
+
+  &--active {
+    color: var(--color-primary);
+    opacity: 1;
+  }
+}
+
+// The edge currently being breathed, drawn over the faint track.
+.active-side {
+  fill: none;
+  stroke: var(--color-success);
+  stroke-width: 2.6;
+  stroke-linecap: round;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+
+  &.shown {
+    opacity: 0.85;
+  }
+}
+
+// Travelling marker — a soft dot with a halo.
+.marker {
+  fill: var(--color-success);
+}
+
+.marker-halo {
+  fill: var(--color-success);
+  opacity: 0.25;
+}
+
+.is-running .marker-halo {
+  animation: marker-pulse 2s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+@keyframes marker-pulse {
+  0%,
+  100% {
+    opacity: 0.18;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.32;
+    transform: scale(1.25);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marker-halo {
+    animation: none !important;
+  }
+  .active-side,
+  .side-label {
+    transition: none;
+  }
+}
