@@ -17,6 +17,7 @@ export interface User {
     roles: string[];
     gender: string;
     cardNumber: string;
+    userCategory: string;
 }
 
 export interface UserProfileDto {

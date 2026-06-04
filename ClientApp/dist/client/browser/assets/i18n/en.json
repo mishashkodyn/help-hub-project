@@ -175,6 +175,68 @@
         }
       }
     },
+    "pmr": {
+      "pattern": "Tense · release",
+      "getReady": "Settle in",
+      "readyHint": "Sit or lie back somewhere you won't be disturbed. We'll tense each muscle group for a few seconds, then let it go — noticing the contrast between tension and ease.",
+      "begin": "Begin",
+      "resume": "Resume",
+      "restart": "Start again",
+      "groupStep": "Muscle group {{current}} of {{total}}",
+      "tense": "Tense",
+      "release": "Release",
+      "timeLeft": "Time left",
+      "secShort": "s",
+      "hold": "Hold the tension",
+      "holdHint": "Seconds to tense",
+      "sound": "Sound cue",
+      "prev": "Previous group",
+      "next": "Next group",
+      "completeTitle": "Fully released",
+      "completeText": "Your whole body is looser now. Rest here for a few breaths and feel the difference between tension and ease.",
+      "groups": {
+        "feet": {
+          "label": "Feet & calves",
+          "tense": "Curl your toes and tighten your calves — hold the tension.",
+          "release": "Let your feet fall loose and feel the warmth spread through them."
+        },
+        "legs": {
+          "label": "Thighs",
+          "tense": "Press your thighs together and tense the muscles firmly.",
+          "release": "Release and let your legs grow heavy and soft."
+        },
+        "hips": {
+          "label": "Hips & glutes",
+          "tense": "Squeeze your buttocks together and tighten your hips.",
+          "release": "Let go completely and sink into the support beneath you."
+        },
+        "stomach": {
+          "label": "Stomach",
+          "tense": "Pull your stomach in and tighten your abdominal muscles.",
+          "release": "Soften your belly and let your breath move freely again."
+        },
+        "hands": {
+          "label": "Hands",
+          "tense": "Clench both fists tightly and feel the tension in your hands.",
+          "release": "Open your hands and let your fingers rest, soft and still."
+        },
+        "arms": {
+          "label": "Arms",
+          "tense": "Bend your elbows and tense your arms, drawing them in close.",
+          "release": "Drop your arms and feel them grow loose and heavy."
+        },
+        "shoulders": {
+          "label": "Shoulders & neck",
+          "tense": "Lift your shoulders up toward your ears and hold them there.",
+          "release": "Let your shoulders drop and your neck lengthen."
+        },
+        "face": {
+          "label": "Face",
+          "tense": "Scrunch your face — eyes, jaw and forehead — all at once.",
+          "release": "Smooth out every muscle and let your face go calm."
+        }
+      }
+    },
     "items": {
       "box-breathing": {
         "title": "Box breathing",

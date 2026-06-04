@@ -16,5 +16,6 @@
         public string[] Roles { get; set; }
         public string? Gender { get; set; }
         public string CardNumber { get; set; } = string.Empty;
+        public string? UserCategory { get; set; }
     }
 }

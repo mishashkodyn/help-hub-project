@@ -6,5 +6,7 @@
         public string? UserName { get; set; }
         public string Provider { get; set; } = "Groq";
         public string? Context { get; set; }
+        public List<string> Roles { get; set; } = new List<string>();
+        public string? UserCategory { get; set; }
     }
 }
