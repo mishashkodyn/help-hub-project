@@ -1,0 +1,366 @@
+<ng-container *transloco="let t">
+  <div class="min-h-screen bg-[#FAF8F3] px-4 py-8 md:px-8">
+
+    <!-- Header -->
+    <div class="max-w-3xl mx-auto mb-7">
+      <div class="flex items-center gap-3">
+        <button
+          (click)="goBack()"
+          class="w-10 h-10 flex items-center justify-center rounded-full text-stone-500 hover:bg-stone-200/60 hover:text-[var(--color-primary)] transition-colors"
+          [attr.aria-label]="t('common.back')"
+        >
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+        <div class="flex items-center gap-3">
+          <div
+            class="w-12 h-12 rounded-2xl bg-[var(--color-primary)]/10 flex items-center justify-center shrink-0"
+          >
+            <mat-icon class="text-[var(--color-primary)]">self_improvement</mat-icon>
+          </div>
+          <div>
+            <h1 class="text-2xl font-semibold tracking-[-0.01em] text-[var(--color-primary)]">
+              {{ t("selfHelp.items.progressive-muscle.title") }}
+            </h1>
+            <p class="text-sm font-medium text-stone-500">
+              {{ t("selfHelp.category.relaxation") }} ·
+              {{ t("selfHelp.pmr.pattern") }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="max-w-3xl mx-auto space-y-4">
+
+      <!-- Intro -->
+      <div class="bg-white rounded-2xl border border-stone-200 shadow-sm p-6">
+        <p class="text-[0.95rem] text-stone-700 leading-relaxed">
+          {{ t("selfHelp.items.progressive-muscle.intro") }}
+        </p>
+      </div>
+
+      <!-- Guide -->
+      <div class="bg-white rounded-2xl border border-stone-200 shadow-sm px-6 pt-7 pb-6">
+
+        <!-- Live region for screen readers -->
+        <p class="sr-only" aria-live="polite">
+          @if (state === 'prepare') {
+            {{ t("selfHelp.pmr.getReady") }} {{ prepareCountdown }}
+          } @else if (isActiveSession) {
+            {{ t("selfHelp.pmr.groups." + current.key + ".label") }} —
+            {{ isTensing ? t("selfHelp.pmr.tense") : t("selfHelp.pmr.release") }}
+          } @else if (state === 'done') {
+            {{ t("selfHelp.pmr.completeTitle") }}
+          }
+        </p>
+
+        <div class="flex flex-col items-center">
+          <!-- Body silhouette with the active muscle group lit -->
+          <div
+            class="relative w-[min(46vw,168px)]"
+            [class.is-tensing]="state === 'tensing'"
+          >
+            <svg
+              class="w-full h-auto overflow-visible"
+              viewBox="0 0 100 200"
+              aria-hidden="true"
+            >
+              <!-- Faint full-body silhouette -->
+              <g class="silhouette" [class.silhouette--active]="isActiveSession">
+                <circle cx="50" cy="24" r="12" />
+                <rect x="45" y="34" width="10" height="10" rx="4" />
+                <rect x="33" y="42" width="34" height="74" rx="15" />
+                <rect x="20" y="48" width="11" height="62" rx="5.5" />
+                <rect x="69" y="48" width="11" height="62" rx="5.5" />
+                <rect x="37" y="110" width="11" height="80" rx="5.5" />
+                <rect x="52" y="110" width="11" height="80" rx="5.5" />
+                <ellipse cx="42.5" cy="192" rx="8" ry="4" />
+                <ellipse cx="57.5" cy="192" rx="8" ry="4" />
+              </g>
+
+              <!-- Highlighted muscle groups -->
+              @if (isActiveSession) {
+                <!-- feet -->
+                <g
+                  class="part"
+                  [class.part--tense]="current.key === 'feet' && isTensing"
+                  [class.part--release]="current.key === 'feet' && !isTensing"
+                >
+                  <ellipse cx="42.5" cy="192" rx="8" ry="4" />
+                  <ellipse cx="57.5" cy="192" rx="8" ry="4" />
+                </g>
+                <!-- legs -->
+                <g
+                  class="part"
+                  [class.part--tense]="current.key === 'legs' && isTensing"
+                  [class.part--release]="current.key === 'legs' && !isTensing"
+                >
+                  <rect x="37" y="110" width="11" height="78" rx="5.5" />
+                  <rect x="52" y="110" width="11" height="78" rx="5.5" />
+                </g>
+                <!-- hips -->
+                <g
+                  class="part"
+                  [class.part--tense]="current.key === 'hips' && isTensing"
+                  [class.part--release]="current.key === 'hips' && !isTensing"
+                >
+                  <rect x="34" y="98" width="32" height="20" rx="10" />
+                </g>
+                <!-- stomach -->
+                <g
+                  class="part"
+                  [class.part--tense]="current.key === 'stomach' && isTensing"
+                  [class.part--release]="current.key === 'stomach' && !isTensing"
+                >
+                  <rect x="35" y="78" width="30" height="24" rx="10" />
+                </g>
+                <!-- hands -->
+                <g
+                  class="part"
+                  [class.part--tense]="current.key === 'hands' && isTensing"
+                  [class.part--release]="current.key === 'hands' && !isTensing"
+                >
+                  <circle cx="25.5" cy="110" r="6.5" />
+                  <circle cx="74.5" cy="110" r="6.5" />
+                </g>
+                <!-- arms -->
+                <g
+                  class="part"
+                  [class.part--tense]="current.key === 'arms' && isTensing"
+                  [class.part--release]="current.key === 'arms' && !isTensing"
+                >
+                  <rect x="20" y="48" width="11" height="60" rx="5.5" />
+                  <rect x="69" y="48" width="11" height="60" rx="5.5" />
+                </g>
+                <!-- shoulders -->
+                <g
+                  class="part"
+                  [class.part--tense]="current.key === 'shoulders' && isTensing"
+                  [class.part--release]="current.key === 'shoulders' && !isTensing"
+                >
+                  <rect x="30" y="42" width="40" height="12" rx="9" />
+                </g>
+                <!-- face -->
+                <g
+                  class="part"
+                  [class.part--tense]="current.key === 'face' && isTensing"
+                  [class.part--release]="current.key === 'face' && !isTensing"
+                >
+                  <circle cx="50" cy="24" r="12" />
+                </g>
+              }
+            </svg>
+
+            <!-- Prepare overlay -->
+            @if (state === 'prepare') {
+              <div class="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none">
+                <div class="text-xs uppercase tracking-[0.2em] text-stone-500 mb-1">
+                  {{ t("selfHelp.pmr.getReady") }}
+                </div>
+                <div class="text-5xl font-semibold text-[var(--color-primary)] tabular-nums">
+                  {{ prepareCountdown }}
+                </div>
+              </div>
+            }
+          </div>
+
+          <!-- Phase / state copy -->
+          <div class="text-center mt-6 min-h-[124px] flex flex-col items-center justify-start">
+            @if (state === 'idle') {
+              <p class="text-[0.95rem] text-stone-600 leading-relaxed max-w-md">
+                {{ t("selfHelp.pmr.readyHint") }}
+              </p>
+            } @else if (state === 'done') {
+              <mat-icon class="text-[var(--color-success)] !w-10 !h-10 !text-4xl mb-1">
+                check_circle
+              </mat-icon>
+              <h2 class="text-lg font-semibold text-[var(--color-primary)] mb-1">
+                {{ t("selfHelp.pmr.completeTitle") }}
+              </h2>
+              <p class="text-[0.95rem] text-stone-600 leading-relaxed max-w-md">
+                {{ t("selfHelp.pmr.completeText") }}
+              </p>
+            } @else {
+              <div class="flex items-center gap-2 mb-2">
+                <span class="text-xs uppercase tracking-[0.2em] text-stone-500">
+                  {{ t("selfHelp.pmr.groupStep", { current: index + 1, total: groups.length }) }}
+                </span>
+                @if (state === 'tensing' || state === 'releasing') {
+                  <span
+                    class="text-xs font-semibold tabular-nums rounded-full px-2.5 py-0.5"
+                    [ngClass]="isTensing
+                      ? 'text-[var(--pmr-tense)] bg-[var(--pmr-tense)]/12'
+                      : 'text-[var(--color-success)] bg-[var(--color-mint)]/30'"
+                  >
+                    {{ isTensing ? t("selfHelp.pmr.tense") : t("selfHelp.pmr.release") }}
+                    · {{ countdown }}{{ t("selfHelp.pmr.secShort") }}
+                  </span>
+                }
+              </div>
+              <h2 class="text-lg font-semibold text-[var(--color-primary)] mb-1.5">
+                {{ t("selfHelp.pmr.groups." + current.key + ".label") }}
+              </h2>
+              <p class="text-[0.95rem] text-stone-600 leading-relaxed max-w-md px-2">
+                {{ isTensing
+                  ? t("selfHelp.pmr.groups." + current.key + ".tense")
+                  : t("selfHelp.pmr.groups." + current.key + ".release") }}
+              </p>
+            }
+          </div>
+        </div>
+
+        <!-- Group dots -->
+        @if (isActiveSession) {
+          <div class="flex items-center justify-center gap-2 mt-5">
+            @for (g of groups; track g.key; let i = $index) {
+              <button
+                (click)="goTo(i)"
+                [attr.aria-label]="t('selfHelp.pmr.groups.' + g.key + '.label')"
+                class="rounded-full transition-all"
+                [ngClass]="i === index
+                  ? 'w-2.5 h-2.5 bg-[var(--color-success)]'
+                  : i < index
+                    ? 'w-2 h-2 bg-[var(--color-mint)]'
+                    : 'w-2 h-2 bg-stone-200'"
+              ></button>
+            }
+          </div>
+        }
+
+        <!-- Progress -->
+        @if (isActiveSession || state === 'done') {
+          <div class="w-full max-w-[320px] mx-auto mt-6">
+            <div class="flex items-center justify-between text-xs font-medium text-stone-500 mb-1.5">
+              <span>
+                @if (state === 'done') {
+                  {{ t("selfHelp.pmr.completeText") }}
+                } @else {
+                  {{ t("selfHelp.pmr.timeLeft") }}
+                }
+              </span>
+              <span class="tabular-nums text-stone-600">
+                {{ state === 'done' ? '0:00' : timeRemaining }}
+              </span>
+            </div>
+            <div class="h-2 rounded-full bg-stone-200 overflow-hidden">
+              <div
+                class="h-full rounded-full bg-[var(--color-success)] transition-all duration-300"
+                [style.width.%]="(state === 'done' ? 1 : progress) * 100"
+              ></div>
+            </div>
+          </div>
+        }
+
+        <!-- Controls -->
+        <div class="flex items-center justify-center gap-3 mt-7">
+          @if (isActiveSession) {
+            <button
+              (click)="prev()"
+              [disabled]="isFirst"
+              class="w-11 h-11 flex items-center justify-center rounded-full bg-stone-100 text-stone-700 hover:bg-stone-200 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+              [attr.aria-label]="t('selfHelp.pmr.prev')"
+            >
+              <mat-icon class="text-lg">skip_previous</mat-icon>
+            </button>
+          }
+
+          <button
+            (click)="toggle()"
+            class="flex items-center gap-2 px-7 py-3 rounded-full bg-[var(--color-success)] text-white text-sm font-semibold shadow-sm hover:bg-[#2e6a04] transition-colors"
+          >
+            <mat-icon class="text-lg">{{ isRunning ? "pause" : "play_arrow" }}</mat-icon>
+            @if (state === 'paused') {
+              {{ t("selfHelp.pmr.resume") }}
+            } @else if (isRunning) {
+              {{ t("selfHelp.pause") }}
+            } @else if (state === 'done') {
+              {{ t("selfHelp.pmr.restart") }}
+            } @else {
+              {{ t("selfHelp.pmr.begin") }}
+            }
+          </button>
+
+          @if (isActiveSession) {
+            <button
+              (click)="next()"
+              class="w-11 h-11 flex items-center justify-center rounded-full bg-stone-100 text-stone-700 hover:bg-stone-200 transition-colors"
+              [attr.aria-label]="t('selfHelp.pmr.next')"
+            >
+              <mat-icon class="text-lg">skip_next</mat-icon>
+            </button>
+          } @else {
+            <button
+              (click)="reset()"
+              [disabled]="state === 'idle'"
+              class="flex items-center gap-2 px-5 py-3 rounded-full bg-stone-100 text-stone-700 text-sm font-semibold hover:bg-stone-200 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+            >
+              <mat-icon class="text-lg">restart_alt</mat-icon>
+              {{ t("selfHelp.reset") }}
+            </button>
+          }
+
+          <button
+            (click)="toggleSound()"
+            [attr.aria-pressed]="soundOn"
+            [attr.aria-label]="t('selfHelp.pmr.sound')"
+            class="w-11 h-11 flex items-center justify-center rounded-full hover:bg-stone-100 transition-colors"
+            [ngClass]="soundOn ? 'text-[var(--color-blue)] bg-[var(--color-sky)]/15' : 'text-stone-500'"
+          >
+            <mat-icon class="text-lg">{{ soundOn ? "volume_up" : "volume_off" }}</mat-icon>
+          </button>
+        </div>
+      </div>
+
+      <!-- Hold selector -->
+      <div class="bg-white rounded-2xl border border-stone-200 shadow-sm p-6">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-base font-semibold text-[var(--color-primary)]">
+            {{ t("selfHelp.pmr.hold") }}
+          </h2>
+          <span class="text-xs font-medium text-stone-500">{{ t("selfHelp.pmr.holdHint") }}</span>
+        </div>
+        <div class="grid grid-cols-3 gap-2.5">
+          @for (s of tenseOptions; track s) {
+            <button
+              (click)="setTense(s)"
+              [disabled]="isActiveSession"
+              class="flex flex-col items-center py-3 rounded-xl border text-sm font-semibold transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+              [ngClass]="tenseSeconds === s
+                ? 'border-[var(--color-success)] bg-[var(--color-mint)]/25 text-[var(--color-primary)]'
+                : 'border-transparent bg-stone-100 text-stone-600'"
+            >
+              <span class="tabular-nums text-base">{{ s }}{{ t("selfHelp.pmr.secShort") }}</span>
+              <span class="text-[11px] font-medium text-stone-500 mt-0.5">
+                {{ t("selfHelp.pmr.tense") }}
+              </span>
+            </button>
+          }
+        </div>
+      </div>
+
+      <!-- How to -->
+      <div class="bg-white rounded-2xl border border-stone-200 shadow-sm p-6">
+        <h2 class="text-base font-semibold text-[var(--color-primary)] mb-4">
+          {{ t("selfHelp.steps") }}
+        </h2>
+        <ol class="space-y-3.5">
+          @for (step of t("selfHelp.items.progressive-muscle.steps"); track $index) {
+            <li class="flex gap-3.5">
+              <span
+                class="w-7 h-7 rounded-full bg-[var(--color-mint)]/40 text-[var(--color-success)] text-sm font-bold flex items-center justify-center shrink-0 mt-0.5"
+              >
+                {{ $index + 1 }}
+              </span>
+              <p class="text-[0.95rem] text-stone-700 leading-relaxed">{{ step }}</p>
+            </li>
+          }
+        </ol>
+      </div>
+
+      <!-- Gentle reminder -->
+      <p class="text-center text-xs text-stone-500 px-6 pt-1">
+        {{ t("selfHelp.disclaimer") }}
+      </p>
+    </div>
+  </div>
+</ng-container>

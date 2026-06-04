@@ -1,0 +1,232 @@
+<ng-container *transloco="let t">
+  <div class="min-h-screen bg-[#FAF8F3] px-4 py-8 md:px-8">
+
+    <!-- Header -->
+    <div class="max-w-3xl mx-auto mb-7">
+      <div class="flex items-center gap-3">
+        <button
+          (click)="goBack()"
+          class="w-10 h-10 flex items-center justify-center rounded-full text-stone-500 hover:bg-stone-200/60 hover:text-[var(--color-primary)] transition-colors"
+          [attr.aria-label]="t('common.back')"
+        >
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+        <div class="flex items-center gap-3">
+          <div
+            class="w-12 h-12 rounded-2xl bg-[var(--color-mint)]/30 flex items-center justify-center shrink-0"
+          >
+            <mat-icon class="text-[var(--color-success)]">filter_5</mat-icon>
+          </div>
+          <div>
+            <h1 class="text-2xl font-semibold tracking-[-0.01em] text-[var(--color-primary)]">
+              {{ t("selfHelp.items.grounding-54321.title") }}
+            </h1>
+            <p class="text-sm font-medium text-stone-500">
+              {{ t("selfHelp.category.grounding") }} ·
+              {{ t("selfHelp.grounding.pattern") }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="max-w-3xl mx-auto space-y-4">
+
+      <!-- Intro -->
+      <div class="bg-white rounded-2xl border border-stone-200 shadow-sm p-6">
+        <p class="text-[0.95rem] text-stone-700 leading-relaxed">
+          {{ t("selfHelp.items.grounding-54321.intro") }}
+        </p>
+      </div>
+
+      <!-- Guide -->
+      <div class="bg-white rounded-2xl border border-stone-200 shadow-sm px-6 pt-7 pb-6">
+
+        <!-- Idle: ready screen -->
+        @if (state === 'idle') {
+          <div class="flex flex-col items-center text-center py-6">
+            <div
+              class="w-20 h-20 rounded-3xl bg-[var(--color-mint)]/25 flex items-center justify-center mb-5"
+            >
+              <mat-icon class="text-[var(--color-success)] !w-10 !h-10 !text-4xl">spa</mat-icon>
+            </div>
+            <p class="text-[0.95rem] text-stone-600 leading-relaxed max-w-md mb-7">
+              {{ t("selfHelp.grounding.readyHint") }}
+            </p>
+            <button
+              (click)="start()"
+              class="flex items-center gap-2 px-8 py-3 rounded-full bg-[var(--color-success)] text-white text-sm font-semibold shadow-sm hover:bg-[#2e6a04] transition-colors"
+            >
+              <mat-icon class="text-lg">play_arrow</mat-icon>
+              {{ t("selfHelp.grounding.begin") }}
+            </button>
+          </div>
+        }
+
+        <!-- Running: one sense at a time -->
+        @else if (state === 'running') {
+          <!-- Live region for screen readers -->
+          <p class="sr-only" aria-live="polite">
+            {{ t("selfHelp.grounding.senses." + current.key + ".prompt") }}
+          </p>
+
+          <!-- Step dots -->
+          <div class="flex items-center justify-center gap-2.5 mb-7">
+            @for (s of senses; track s.key; let i = $index) {
+              <button
+                (click)="goTo(i)"
+                [attr.aria-label]="t('selfHelp.grounding.senses.' + s.key + '.label')"
+                class="flex items-center justify-center rounded-full text-xs font-bold tabular-nums transition-all"
+                [ngClass]="i === index
+                  ? 'w-9 h-9 bg-[var(--color-success)] text-white shadow-sm'
+                  : isSenseComplete(i)
+                    ? 'w-7 h-7 bg-[var(--color-mint)]/50 text-[var(--color-success)]'
+                    : 'w-7 h-7 bg-stone-100 text-stone-400'"
+              >
+                @if (isSenseComplete(i) && i !== index) {
+                  <mat-icon class="!text-base !w-4 !h-4">check</mat-icon>
+                } @else {
+                  {{ s.count }}
+                }
+              </button>
+            }
+          </div>
+
+          <!-- Sense prompt -->
+          <div class="flex flex-col items-center text-center mb-6">
+            <div
+              class="w-16 h-16 rounded-2xl bg-[var(--color-sky)]/15 flex items-center justify-center mb-4"
+            >
+              <mat-icon class="text-[var(--color-blue)] !w-8 !h-8 !text-3xl">{{ current.icon }}</mat-icon>
+            </div>
+            <div class="text-xs uppercase tracking-[0.2em] text-stone-500 mb-1">
+              {{ t("selfHelp.grounding.senseStep", { current: index + 1, total: senses.length }) }}
+            </div>
+            <h2 class="text-lg font-semibold text-[var(--color-primary)] px-4">
+              {{ t("selfHelp.grounding.senses." + current.key + ".prompt") }}
+            </h2>
+          </div>
+
+          <!-- Noticing slots -->
+          <div class="space-y-2.5 max-w-md mx-auto">
+            @for (slot of entries[index]; track $index; let s = $index) {
+              <div class="flex items-center gap-3">
+                <span
+                  class="w-7 h-7 rounded-full flex items-center justify-center shrink-0 transition-colors"
+                  [ngClass]="entries[index][s].trim()
+                    ? 'bg-[var(--color-success)] text-white'
+                    : 'bg-stone-100 text-stone-400'"
+                >
+                  @if (entries[index][s].trim()) {
+                    <mat-icon class="!text-base !w-4 !h-4">check</mat-icon>
+                  } @else {
+                    <span class="text-xs font-bold">{{ s + 1 }}</span>
+                  }
+                </span>
+                <input
+                  type="text"
+                  [(ngModel)]="entries[index][s]"
+                  [placeholder]="t('selfHelp.grounding.entryPlaceholder')"
+                  class="flex-1 px-4 py-2.5 rounded-xl border bg-[#FAF8F3] text-sm text-stone-700 placeholder:text-stone-400 outline-none transition-colors focus:bg-white"
+                  [ngClass]="entries[index][s].trim()
+                    ? 'border-[var(--color-mint)]'
+                    : 'border-stone-200 focus:border-[var(--color-sky)]'"
+                />
+              </div>
+            }
+          </div>
+
+          <p class="text-center text-xs text-stone-400 mt-5">
+            {{ t("selfHelp.grounding.skipHint") }}
+          </p>
+
+          <!-- Controls -->
+          <div class="flex items-center justify-center gap-3 mt-7">
+            <button
+              (click)="prev()"
+              [disabled]="isFirst"
+              class="flex items-center gap-2 px-5 py-3 rounded-full bg-stone-100 text-stone-700 text-sm font-semibold hover:bg-stone-200 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+            >
+              <mat-icon class="text-lg">arrow_back</mat-icon>
+              {{ t("selfHelp.grounding.prev") }}
+            </button>
+            <button
+              (click)="next()"
+              class="flex items-center gap-2 px-7 py-3 rounded-full bg-[var(--color-success)] text-white text-sm font-semibold shadow-sm hover:bg-[#2e6a04] transition-colors"
+            >
+              @if (isLast) {
+                {{ t("selfHelp.grounding.finish") }}
+                <mat-icon class="text-lg">check</mat-icon>
+              } @else {
+                {{ t("selfHelp.grounding.next") }}
+                <mat-icon class="text-lg">arrow_forward</mat-icon>
+              }
+            </button>
+          </div>
+        }
+
+        <!-- Done -->
+        @else {
+          <div class="flex flex-col items-center text-center py-6">
+            <mat-icon class="text-[var(--color-success)] !w-12 !h-12 !text-5xl mb-3">
+              check_circle
+            </mat-icon>
+            <h2 class="text-lg font-semibold text-[var(--color-primary)] mb-1.5">
+              {{ t("selfHelp.grounding.completeTitle") }}
+            </h2>
+            <p class="text-[0.95rem] text-stone-600 leading-relaxed max-w-md mb-7">
+              {{ t("selfHelp.grounding.completeText") }}
+            </p>
+            <button
+              (click)="reset()"
+              class="flex items-center gap-2 px-7 py-3 rounded-full bg-[var(--color-success)] text-white text-sm font-semibold shadow-sm hover:bg-[#2e6a04] transition-colors"
+            >
+              <mat-icon class="text-lg">restart_alt</mat-icon>
+              {{ t("selfHelp.grounding.restart") }}
+            </button>
+          </div>
+        }
+      </div>
+
+      <!-- Progress (while active) -->
+      @if (state === 'running') {
+        <div class="bg-white rounded-2xl border border-stone-200 shadow-sm p-6">
+          <div class="flex items-center justify-between text-xs font-medium text-stone-500 mb-1.5">
+            <span>{{ t("selfHelp.grounding.progress") }}</span>
+            <span class="tabular-nums text-stone-600">{{ completedSenses }}/{{ senses.length }}</span>
+          </div>
+          <div class="h-2 rounded-full bg-stone-200 overflow-hidden">
+            <div
+              class="h-full rounded-full bg-[var(--color-success)] transition-all duration-500"
+              [style.width.%]="(completedSenses / senses.length) * 100"
+            ></div>
+          </div>
+        </div>
+      }
+
+      <!-- How to -->
+      <div class="bg-white rounded-2xl border border-stone-200 shadow-sm p-6">
+        <h2 class="text-base font-semibold text-[var(--color-primary)] mb-4">
+          {{ t("selfHelp.steps") }}
+        </h2>
+        <ol class="space-y-3.5">
+          @for (step of t("selfHelp.items.grounding-54321.steps"); track $index) {
+            <li class="flex gap-3.5">
+              <span
+                class="w-7 h-7 rounded-full bg-[var(--color-mint)]/40 text-[var(--color-success)] text-sm font-bold flex items-center justify-center shrink-0 mt-0.5"
+              >
+                {{ $index + 1 }}
+              </span>
+              <p class="text-[0.95rem] text-stone-700 leading-relaxed">{{ step }}</p>
+            </li>
+          }
+        </ol>
+      </div>
+
+      <!-- Gentle reminder -->
+      <p class="text-center text-xs text-stone-500 px-6 pt-1">
+        {{ t("selfHelp.disclaimer") }}
+      </p>
+    </div>
+  </div>
+</ng-container>
