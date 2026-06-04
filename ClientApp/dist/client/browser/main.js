@@ -18612,7 +18612,7 @@ function RegisterComponent_ng_container_0_Conditional_38_Template(rf, ctx) {
     \u0275\u0275elementEnd();
   }
 }
-function RegisterComponent_ng_container_0_Conditional_79_Template(rf, ctx) {
+function RegisterComponent_ng_container_0_Conditional_80_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275namespaceSVG();
     \u0275\u0275elementStart(0, "svg", 47);
@@ -18620,7 +18620,7 @@ function RegisterComponent_ng_container_0_Conditional_79_Template(rf, ctx) {
     \u0275\u0275elementEnd();
   }
 }
-function RegisterComponent_ng_container_0_Conditional_80_Template(rf, ctx) {
+function RegisterComponent_ng_container_0_Conditional_81_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275namespaceSVG();
     \u0275\u0275elementStart(0, "svg", 47);
@@ -18628,12 +18628,12 @@ function RegisterComponent_ng_container_0_Conditional_80_Template(rf, ctx) {
     \u0275\u0275elementEnd();
   }
 }
-function RegisterComponent_ng_container_0_Conditional_82_Template(rf, ctx) {
+function RegisterComponent_ng_container_0_Conditional_83_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275element(0, "span", 49);
   }
 }
-function RegisterComponent_ng_container_0_Conditional_103_Template(rf, ctx) {
+function RegisterComponent_ng_container_0_Conditional_104_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "a", 65);
     \u0275\u0275text(1);
@@ -18648,7 +18648,7 @@ function RegisterComponent_ng_container_0_Conditional_103_Template(rf, ctx) {
     \u0275\u0275textInterpolate1(" ", t_r2("landing.become_psychologist"), " ");
   }
 }
-function RegisterComponent_ng_container_0_Conditional_104_Template(rf, ctx) {
+function RegisterComponent_ng_container_0_Conditional_105_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "p", 66);
     \u0275\u0275text(1);
@@ -18704,150 +18704,150 @@ function RegisterComponent_ng_container_0_Template(rf, ctx) {
     \u0275\u0275elementStart(34, "div", 22)(35, "div", 23);
     \u0275\u0275listener("click", function RegisterComponent_ng_container_0_Template_div_click_35_listener() {
       \u0275\u0275restoreView(_r1);
-      const fileInput_r4 = \u0275\u0275reference(48);
+      const fileInput_r4 = \u0275\u0275reference(49);
       return \u0275\u0275resetView(fileInput_r4.click());
     });
     \u0275\u0275elementStart(36, "div", 24);
     \u0275\u0275template(37, RegisterComponent_ng_container_0_Conditional_37_Template, 1, 1, "img", 25)(38, RegisterComponent_ng_container_0_Conditional_38_Template, 2, 0, ":svg:svg", 26);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(39, "div", 27)(40, "mat-icon", 28);
-    \u0275\u0275text(41, "photo_camera");
-    \u0275\u0275elementEnd()()();
-    \u0275\u0275elementStart(42, "div", 29)(43, "p", 30);
-    \u0275\u0275text(44);
+    \u0275\u0275elementStart(39, "div", 27)(40, "span")(41, "mat-icon", 28);
+    \u0275\u0275text(42, "photo_camera");
+    \u0275\u0275elementEnd()()()();
+    \u0275\u0275elementStart(43, "div", 29)(44, "p", 30);
+    \u0275\u0275text(45);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(45, "p", 31);
-    \u0275\u0275text(46);
+    \u0275\u0275elementStart(46, "p", 31);
+    \u0275\u0275text(47);
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(47, "input", 32, 1);
-    \u0275\u0275listener("change", function RegisterComponent_ng_container_0_Template_input_change_47_listener($event) {
+    \u0275\u0275elementStart(48, "input", 32, 1);
+    \u0275\u0275listener("change", function RegisterComponent_ng_container_0_Template_input_change_48_listener($event) {
       \u0275\u0275restoreView(_r1);
       const ctx_r2 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r2.onFileSelected($event));
     });
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(49, "div", 33)(50, "div")(51, "label", 34);
-    \u0275\u0275text(52);
+    \u0275\u0275elementStart(50, "div", 33)(51, "div")(52, "label", 34);
+    \u0275\u0275text(53);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(53, "input", 35);
-    \u0275\u0275listener("keydown.enter", function RegisterComponent_ng_container_0_Template_input_keydown_enter_53_listener() {
+    \u0275\u0275elementStart(54, "input", 35);
+    \u0275\u0275listener("keydown.enter", function RegisterComponent_ng_container_0_Template_input_keydown_enter_54_listener() {
       \u0275\u0275restoreView(_r1);
-      const surnameInput_r5 = \u0275\u0275reference(58);
+      const surnameInput_r5 = \u0275\u0275reference(59);
       return \u0275\u0275resetView(surnameInput_r5.focus());
     });
-    \u0275\u0275twoWayListener("ngModelChange", function RegisterComponent_ng_container_0_Template_input_ngModelChange_53_listener($event) {
+    \u0275\u0275twoWayListener("ngModelChange", function RegisterComponent_ng_container_0_Template_input_ngModelChange_54_listener($event) {
       \u0275\u0275restoreView(_r1);
       const ctx_r2 = \u0275\u0275nextContext();
       \u0275\u0275twoWayBindingSet(ctx_r2.name, $event) || (ctx_r2.name = $event);
       return \u0275\u0275resetView($event);
     });
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(54, "div")(55, "label", 36);
-    \u0275\u0275text(56);
+    \u0275\u0275elementStart(55, "div")(56, "label", 36);
+    \u0275\u0275text(57);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(57, "input", 37, 2);
-    \u0275\u0275listener("keydown.enter", function RegisterComponent_ng_container_0_Template_input_keydown_enter_57_listener() {
+    \u0275\u0275elementStart(58, "input", 37, 2);
+    \u0275\u0275listener("keydown.enter", function RegisterComponent_ng_container_0_Template_input_keydown_enter_58_listener() {
       \u0275\u0275restoreView(_r1);
-      const emailInput_r6 = \u0275\u0275reference(71);
+      const emailInput_r6 = \u0275\u0275reference(72);
       return \u0275\u0275resetView(emailInput_r6.focus());
     });
-    \u0275\u0275twoWayListener("ngModelChange", function RegisterComponent_ng_container_0_Template_input_ngModelChange_57_listener($event) {
+    \u0275\u0275twoWayListener("ngModelChange", function RegisterComponent_ng_container_0_Template_input_ngModelChange_58_listener($event) {
       \u0275\u0275restoreView(_r1);
       const ctx_r2 = \u0275\u0275nextContext();
       \u0275\u0275twoWayBindingSet(ctx_r2.surname, $event) || (ctx_r2.surname = $event);
       return \u0275\u0275resetView($event);
     });
     \u0275\u0275elementEnd()()();
-    \u0275\u0275elementStart(59, "div")(60, "span", 38);
-    \u0275\u0275text(61);
+    \u0275\u0275elementStart(60, "div")(61, "span", 38);
+    \u0275\u0275text(62);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(62, "div", 39)(63, "button", 40);
-    \u0275\u0275listener("click", function RegisterComponent_ng_container_0_Template_button_click_63_listener() {
+    \u0275\u0275elementStart(63, "div", 39)(64, "button", 40);
+    \u0275\u0275listener("click", function RegisterComponent_ng_container_0_Template_button_click_64_listener() {
       \u0275\u0275restoreView(_r1);
       const ctx_r2 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r2.gender = "female");
     });
-    \u0275\u0275text(64);
+    \u0275\u0275text(65);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(65, "button", 40);
-    \u0275\u0275listener("click", function RegisterComponent_ng_container_0_Template_button_click_65_listener() {
+    \u0275\u0275elementStart(66, "button", 40);
+    \u0275\u0275listener("click", function RegisterComponent_ng_container_0_Template_button_click_66_listener() {
       \u0275\u0275restoreView(_r1);
       const ctx_r2 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r2.gender = "male");
     });
-    \u0275\u0275text(66);
+    \u0275\u0275text(67);
     \u0275\u0275elementEnd()()();
-    \u0275\u0275elementStart(67, "div")(68, "label", 41);
-    \u0275\u0275text(69);
+    \u0275\u0275elementStart(68, "div")(69, "label", 41);
+    \u0275\u0275text(70);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(70, "input", 42, 3);
-    \u0275\u0275listener("keydown.enter", function RegisterComponent_ng_container_0_Template_input_keydown_enter_70_listener() {
+    \u0275\u0275elementStart(71, "input", 42, 3);
+    \u0275\u0275listener("keydown.enter", function RegisterComponent_ng_container_0_Template_input_keydown_enter_71_listener() {
       \u0275\u0275restoreView(_r1);
-      const passwordInput_r7 = \u0275\u0275reference(77);
+      const passwordInput_r7 = \u0275\u0275reference(78);
       return \u0275\u0275resetView(passwordInput_r7.focus());
     });
-    \u0275\u0275twoWayListener("ngModelChange", function RegisterComponent_ng_container_0_Template_input_ngModelChange_70_listener($event) {
+    \u0275\u0275twoWayListener("ngModelChange", function RegisterComponent_ng_container_0_Template_input_ngModelChange_71_listener($event) {
       \u0275\u0275restoreView(_r1);
       const ctx_r2 = \u0275\u0275nextContext();
       \u0275\u0275twoWayBindingSet(ctx_r2.email, $event) || (ctx_r2.email = $event);
       return \u0275\u0275resetView($event);
     });
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(72, "div")(73, "label", 43);
-    \u0275\u0275text(74);
+    \u0275\u0275elementStart(73, "div")(74, "label", 43);
+    \u0275\u0275text(75);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(75, "div", 44)(76, "input", 45, 4);
-    \u0275\u0275listener("keydown.enter", function RegisterComponent_ng_container_0_Template_input_keydown_enter_76_listener() {
+    \u0275\u0275elementStart(76, "div", 44)(77, "input", 45, 4);
+    \u0275\u0275listener("keydown.enter", function RegisterComponent_ng_container_0_Template_input_keydown_enter_77_listener() {
       \u0275\u0275restoreView(_r1);
       const ctx_r2 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r2.register());
     });
-    \u0275\u0275twoWayListener("ngModelChange", function RegisterComponent_ng_container_0_Template_input_ngModelChange_76_listener($event) {
+    \u0275\u0275twoWayListener("ngModelChange", function RegisterComponent_ng_container_0_Template_input_ngModelChange_77_listener($event) {
       \u0275\u0275restoreView(_r1);
       const ctx_r2 = \u0275\u0275nextContext();
       \u0275\u0275twoWayBindingSet(ctx_r2.password, $event) || (ctx_r2.password = $event);
       return \u0275\u0275resetView($event);
     });
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(78, "button", 46);
-    \u0275\u0275listener("click", function RegisterComponent_ng_container_0_Template_button_click_78_listener() {
+    \u0275\u0275elementStart(79, "button", 46);
+    \u0275\u0275listener("click", function RegisterComponent_ng_container_0_Template_button_click_79_listener() {
       \u0275\u0275restoreView(_r1);
       const ctx_r2 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r2.hide = !ctx_r2.hide);
     });
-    \u0275\u0275template(79, RegisterComponent_ng_container_0_Conditional_79_Template, 3, 0, ":svg:svg", 47)(80, RegisterComponent_ng_container_0_Conditional_80_Template, 2, 0, ":svg:svg", 47);
+    \u0275\u0275template(80, RegisterComponent_ng_container_0_Conditional_80_Template, 3, 0, ":svg:svg", 47)(81, RegisterComponent_ng_container_0_Conditional_81_Template, 2, 0, ":svg:svg", 47);
     \u0275\u0275elementEnd()()();
-    \u0275\u0275elementStart(81, "button", 48);
-    \u0275\u0275template(82, RegisterComponent_ng_container_0_Conditional_82_Template, 1, 0, "span", 49);
-    \u0275\u0275text(83);
+    \u0275\u0275elementStart(82, "button", 48);
+    \u0275\u0275template(83, RegisterComponent_ng_container_0_Conditional_83_Template, 1, 0, "span", 49);
+    \u0275\u0275text(84);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(84, "div", 50)(85, "div", 51);
-    \u0275\u0275element(86, "div", 52);
+    \u0275\u0275elementStart(85, "div", 50)(86, "div", 51);
+    \u0275\u0275element(87, "div", 52);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(87, "div", 53)(88, "span", 54);
-    \u0275\u0275text(89);
+    \u0275\u0275elementStart(88, "div", 53)(89, "span", 54);
+    \u0275\u0275text(90);
     \u0275\u0275elementEnd()()();
-    \u0275\u0275elementStart(90, "button", 55);
-    \u0275\u0275listener("click", function RegisterComponent_ng_container_0_Template_button_click_90_listener() {
+    \u0275\u0275elementStart(91, "button", 55);
+    \u0275\u0275listener("click", function RegisterComponent_ng_container_0_Template_button_click_91_listener() {
       \u0275\u0275restoreView(_r1);
       const ctx_r2 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r2.continueWithGoogle());
     });
     \u0275\u0275namespaceSVG();
-    \u0275\u0275elementStart(91, "svg", 56);
-    \u0275\u0275element(92, "path", 57)(93, "path", 58)(94, "path", 59)(95, "path", 60);
+    \u0275\u0275elementStart(92, "svg", 56);
+    \u0275\u0275element(93, "path", 57)(94, "path", 58)(95, "path", 59)(96, "path", 60);
     \u0275\u0275elementEnd();
     \u0275\u0275namespaceHTML();
-    \u0275\u0275elementStart(96, "span", 61);
-    \u0275\u0275text(97, "Google");
+    \u0275\u0275elementStart(97, "span", 61);
+    \u0275\u0275text(98, "Google");
     \u0275\u0275elementEnd()()();
-    \u0275\u0275elementStart(98, "p", 62);
-    \u0275\u0275text(99);
-    \u0275\u0275elementStart(100, "a", 63);
-    \u0275\u0275text(101);
+    \u0275\u0275elementStart(99, "p", 62);
+    \u0275\u0275text(100);
+    \u0275\u0275elementStart(101, "a", 63);
+    \u0275\u0275text(102);
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(102, "div", 64);
-    \u0275\u0275template(103, RegisterComponent_ng_container_0_Conditional_103_Template, 4, 3, "a", 65)(104, RegisterComponent_ng_container_0_Conditional_104_Template, 4, 2, "p", 66);
+    \u0275\u0275elementStart(103, "div", 64);
+    \u0275\u0275template(104, RegisterComponent_ng_container_0_Conditional_104_Template, 4, 3, "a", 65)(105, RegisterComponent_ng_container_0_Conditional_105_Template, 4, 2, "p", 66);
     \u0275\u0275elementEnd()()()()();
     \u0275\u0275elementContainerEnd();
   }
@@ -18871,7 +18871,7 @@ function RegisterComponent_ng_container_0_Template(rf, ctx) {
     \u0275\u0275textInterpolate1(" ", t_r2("auth.create_account"), " ");
     \u0275\u0275advance(6);
     \u0275\u0275conditional(ctx_r2.profileImage ? 37 : 38);
-    \u0275\u0275advance(7);
+    \u0275\u0275advance(8);
     \u0275\u0275textInterpolate(t_r2("auth.profile_photo"));
     \u0275\u0275advance(2);
     \u0275\u0275textInterpolate(t_r2("auth.profile_photo_hint"));
@@ -18903,11 +18903,11 @@ function RegisterComponent_ng_container_0_Template(rf, ctx) {
     \u0275\u0275property("type", ctx_r2.hide ? "password" : "text");
     \u0275\u0275twoWayProperty("ngModel", ctx_r2.password);
     \u0275\u0275advance(3);
-    \u0275\u0275conditional(!ctx_r2.hide ? 79 : 80);
+    \u0275\u0275conditional(!ctx_r2.hide ? 80 : 81);
     \u0275\u0275advance(2);
     \u0275\u0275property("disabled", !registerForm_r8.valid || ctx_r2.authService.isLoading());
     \u0275\u0275advance();
-    \u0275\u0275conditional(ctx_r2.authService.isLoading() ? 82 : -1);
+    \u0275\u0275conditional(ctx_r2.authService.isLoading() ? 83 : -1);
     \u0275\u0275advance();
     \u0275\u0275textInterpolate1(" ", ctx_r2.isPsychologistRegistration() ? t_r2("auth.register_as_psychologist") : t_r2("auth.sign_up"), " ");
     \u0275\u0275advance(6);
@@ -18917,7 +18917,7 @@ function RegisterComponent_ng_container_0_Template(rf, ctx) {
     \u0275\u0275advance(2);
     \u0275\u0275textInterpolate1(" ", t_r2("auth.login_here"), " ");
     \u0275\u0275advance(2);
-    \u0275\u0275conditional(!ctx_r2.isPsychologistRegistration() ? 103 : 104);
+    \u0275\u0275conditional(!ctx_r2.isPsychologistRegistration() ? 104 : 105);
   }
 }
 var RegisterComponent = class _RegisterComponent {
@@ -19004,7 +19004,7 @@ var RegisterComponent = class _RegisterComponent {
   };
   static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _RegisterComponent, selectors: [["app-register"]], standalone: false, decls: 1, vars: 0, consts: [["registerForm", "ngForm"], ["fileInput", ""], ["surnameInput", ""], ["emailInput", ""], ["passwordInput", ""], [4, "transloco"], [1, "min-h-full", "w-full", "flex", "bg-[#FAF8F3]", "text-stone-800", "font-sans", "antialiased"], [1, "hidden", "lg:flex", "w-[44%]", "xl:w-1/2", "flex-col", "justify-center", "gap-12", "bg-[#F3F0E8]", "border-r", "border-stone-200/80", "px-12", "xl:px-16", "py-14"], [1, "max-w-md"], [1, "text-[0.72rem]", "font-semibold", "uppercase", "tracking-[0.22em]", "text-[var(--color-success)]"], [1, "mt-5", "text-[clamp(2.2rem,3.4vw,3.2rem)]", "font-semibold", "tracking-[-0.02em]", "leading-[1.08]", "text-[var(--color-primary)]"], [1, "mt-5", "text-stone-600", "leading-relaxed"], [1, "border-t", "border-stone-300/70"], [1, "flex", "items-center", "gap-3", "py-3.5", "border-b", "border-stone-300/50", "text-sm", "text-stone-600"], [1, "!text-base", "!w-5", "!h-5", "text-[var(--color-success)]", "shrink-0"], [1, "flex", "items-center", "gap-3", "py-3.5", "text-sm", "text-stone-600"], [1, "flex-1", "flex", "flex-col", "min-h-full", "overflow-y-auto", "custom-scroll"], [1, "flex-1", "flex", "items-center", "justify-center", "px-6", "py-10", "sm:px-10"], [1, "rise", "w-full", "max-w-[420px]"], [1, "mb-7"], [1, "text-[1.9rem]", "font-semibold", "tracking-[-0.02em]", "text-[var(--color-primary)]"], [1, "flex", "flex-col", "gap-5", 3, "ngSubmit"], [1, "flex", "items-center", "gap-4"], [1, "relative", "group", "cursor-pointer", "w-16", "h-16", "shrink-0", 3, "click"], [1, "w-full", "h-full", "rounded-full", "overflow-hidden", "ring-1", "ring-stone-200", "bg-stone-100", "flex", "items-center", "justify-center", "group-hover:ring-[var(--color-success)]", "transition"], ["alt", "Avatar Preview", 1, "w-full", "h-full", "object-cover", 3, "src"], ["fill", "currentColor", "viewBox", "0 0 24 24", 1, "w-7", "h-7", "text-stone-300"], [1, "absolute", "-bottom-0.5", "-right-0.5", "w-6", "h-6", "rounded-full", "bg-[var(--color-primary)]", "text-[var(--color-mint)]", "flex", "items-center", "justify-center", "ring-2", "ring-[#FAF8F3]"], [1, "!text-sm", "!w-3.5", "!h-3.5"], [1, "leading-tight"], [1, "text-sm", "font-medium", "text-stone-700"], [1, "text-xs", "text-stone-400"], ["type", "file", "hidden", "", "accept", "image/*", 3, "change"], [1, "grid", "grid-cols-2", "gap-4"], ["for", "name", 1, "block", "text-[0.78rem]", "font-medium", "text-stone-500", "mb-1.5"], ["id", "name", "required", "", "type", "text", "name", "name", "autocomplete", "given-name", 1, "w-full", "px-4", "py-3", "bg-white", "border", "border-stone-200", "rounded-xl", "text-stone-800", "placeholder-stone-400", "focus:outline-none", "focus:border-[var(--color-primary)]", "focus:ring-2", "focus:ring-[var(--color-primary)]/10", "transition-all", "duration-200", 3, "keydown.enter", "ngModelChange", "ngModel"], ["for", "surname", 1, "block", "text-[0.78rem]", "font-medium", "text-stone-500", "mb-1.5"], ["id", "surname", "required", "", "type", "text", "name", "surname", "autocomplete", "family-name", 1, "w-full", "px-4", "py-3", "bg-white", "border", "border-stone-200", "rounded-xl", "text-stone-800", "placeholder-stone-400", "focus:outline-none", "focus:border-[var(--color-primary)]", "focus:ring-2", "focus:ring-[var(--color-primary)]/10", "transition-all", "duration-200", 3, "keydown.enter", "ngModelChange", "ngModel"], [1, "block", "text-[0.78rem]", "font-medium", "text-stone-500", "mb-1.5"], [1, "grid", "grid-cols-2", "gap-3"], ["type", "button", 3, "click"], ["for", "email", 1, "block", "text-[0.78rem]", "font-medium", "text-stone-500", "mb-1.5"], ["id", "email", "required", "", "email", "", "type", "email", "name", "email", "autocomplete", "email", "placeholder", "you@example.com", 1, "w-full", "px-4", "py-3", "bg-white", "border", "border-stone-200", "rounded-xl", "text-stone-800", "placeholder-stone-400", "focus:outline-none", "focus:border-[var(--color-primary)]", "focus:ring-2", "focus:ring-[var(--color-primary)]/10", "transition-all", "duration-200", 3, "keydown.enter", "ngModelChange", "ngModel"], ["for", "password", 1, "block", "text-[0.78rem]", "font-medium", "text-stone-500", "mb-1.5"], [1, "relative"], ["id", "password", "required", "", "name", "password", "autocomplete", "new-password", "placeholder", "\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022", 1, "w-full", "px-4", "py-3", "pr-12", "bg-white", "border", "border-stone-200", "rounded-xl", "text-stone-800", "placeholder-stone-400", "focus:outline-none", "focus:border-[var(--color-primary)]", "focus:ring-2", "focus:ring-[var(--color-primary)]/10", "transition-all", "duration-200", 3, "keydown.enter", "ngModelChange", "type", "ngModel"], ["type", "button", 1, "absolute", "inset-y-0", "right-0", "pr-4", "flex", "items-center", "text-stone-400", "hover:text-[var(--color-primary)]", "cursor-pointer", "focus:outline-none", 3, "click"], ["fill", "none", "viewBox", "0 0 24 24", "stroke", "currentColor", 1, "h-5", "w-5"], ["type", "submit", 1, "mt-1", "w-full", "inline-flex", "items-center", "justify-center", "gap-2", "px-6", "py-3.5", "rounded-full", "bg-[var(--color-primary)]", "text-[var(--color-mint)]", "font-semibold", "hover:bg-[#013401]", "transition-colors", "duration-300", "disabled:opacity-40", "disabled:cursor-not-allowed", "cursor-pointer", 3, "disabled"], [1, "w-4", "h-4", "border-2", "border-[var(--color-mint)]", "border-t-transparent", "rounded-full", "animate-spin"], [1, "relative", "my-1"], [1, "absolute", "inset-0", "flex", "items-center"], [1, "w-full", "border-t", "border-stone-200"], [1, "relative", "flex", "justify-center"], [1, "bg-[#FAF8F3]", "px-3", "text-xs", "text-stone-400"], ["type", "button", 1, "w-full", "flex", "items-center", "justify-center", "gap-3", "bg-white", "hover:border-stone-400", "border", "border-stone-300", "text-stone-700", "font-medium", "py-3", "rounded-full", "transition-colors", "cursor-pointer", 3, "click"], ["viewBox", "0 0 24 24", 1, "w-5", "h-5"], ["d", "M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z", "fill", "#4285F4"], ["d", "M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z", "fill", "#34A853"], ["d", "M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z", "fill", "#FBBC05"], ["d", "M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z", "fill", "#EA4335"], [1, "text-sm"], [1, "mt-8", "text-center", "text-sm", "text-stone-500"], ["routerLink", "/login", 1, "font-semibold", "text-[var(--color-success)]", "hover:text-[var(--color-primary)]", "transition-colors"], [1, "mt-6", "pt-6", "border-t", "border-stone-200", "text-center"], ["routerLink", "/register", 1, "inline-flex", "items-center", "gap-1.5", "text-sm", "font-medium", "text-stone-600", "hover:text-[var(--color-primary)]", "transition-colors", "group", 3, "queryParams"], [1, "text-sm", "text-stone-500"], ["d", "M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z"], ["stroke-linecap", "round", "stroke-linejoin", "round", "stroke-width", "1.7", "d", "M15 12a3 3 0 11-6 0 3 3 0 016 0z"], ["stroke-linecap", "round", "stroke-linejoin", "round", "stroke-width", "1.7", "d", "M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"], ["stroke-linecap", "round", "stroke-linejoin", "round", "stroke-width", "1.7", "d", "M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.542-7a10.059 10.059 0 013.999-5.125m3.124-1.637a9.969 9.969 0 014.225-.236c4.478 0 8.268 2.943 9.542 7a10.05 10.05 0 01-2.002 4.072m-2.126 2.126L4 4m16 16l-4.326-4.326"], [1, "!text-base", "!w-4", "!h-4", "group-hover:translate-x-0.5", "transition-transform"], ["routerLink", "/register", 1, "font-semibold", "text-[var(--color-success)]", "hover:text-[var(--color-primary)]", "transition-colors"]], template: function RegisterComponent_Template(rf, ctx) {
     if (rf & 1) {
-      \u0275\u0275template(0, RegisterComponent_ng_container_0_Template, 105, 34, "ng-container", 5);
+      \u0275\u0275template(0, RegisterComponent_ng_container_0_Template, 106, 34, "ng-container", 5);
     }
   }, dependencies: [RouterLink, MatIcon, \u0275NgNoValidate, DefaultValueAccessor, NgControlStatus, NgControlStatusGroup, RequiredValidator, EmailValidator, NgModel, NgForm, TranslocoDirective], styles: ["\n\n[_nghost-%COMP%] {\n  display: block;\n  height: 100%;\n}\n@media (prefers-reduced-motion: no-preference) {\n  .rise[_ngcontent-%COMP%] {\n    opacity: 0;\n    transform: translateY(14px);\n    animation: _ngcontent-%COMP%_rise-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;\n  }\n}\n@keyframes _ngcontent-%COMP%_rise-in {\n  to {\n    opacity: 1;\n    transform: none;\n  }\n}\n/*# sourceMappingURL=register.component.css.map */"] });
 };
@@ -19094,7 +19094,7 @@ var RegisterComponent = class _RegisterComponent {
                 <div
                   class="absolute -bottom-0.5 -right-0.5 w-6 h-6 rounded-full bg-[var(--color-primary)] text-[var(--color-mint)] flex items-center justify-center ring-2 ring-[#FAF8F3]"
                 >
-                  <mat-icon class="!text-sm !w-3.5 !h-3.5">photo_camera</mat-icon>
+                  <span><mat-icon class="!text-sm !w-3.5 !h-3.5">photo_camera</mat-icon></span>
                 </div>
               </div>
               <div class="leading-tight">
@@ -27077,6 +27077,7 @@ var MarkdownModule = class _MarkdownModule {
 // src/app/modules/core/components/ai-assistant-widget/ai-assistant-widget.component.ts
 var _c016 = ["scrollContainer"];
 var _c17 = (a0, a1) => ({ "bg-blue-600 text-white rounded-l-2xl rounded-tr-2xl": a0, "bg-white text-gray-800 border border-gray-200 rounded-r-2xl rounded-tl-2xl": a1 });
+var _forTrack05 = ($index, $item) => $item.route;
 function AiAssistantWidgetComponent_Conditional_13_Template(rf, ctx) {
   if (rf & 1) {
     const _r2 = \u0275\u0275getCurrentView();
@@ -27116,39 +27117,122 @@ function AiAssistantWidgetComponent_For_22_Conditional_3_Template(rf, ctx) {
     \u0275\u0275property("data", msg_r4.text);
   }
 }
+function AiAssistantWidgetComponent_For_22_Conditional_7_Conditional_0_For_2_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r5 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "button", 31);
+    \u0275\u0275listener("click", function AiAssistantWidgetComponent_For_22_Conditional_7_Conditional_0_For_2_Template_button_click_0_listener() {
+      const action_r6 = \u0275\u0275restoreView(_r5).$implicit;
+      const ctx_r2 = \u0275\u0275nextContext(4);
+      return \u0275\u0275resetView(ctx_r2.runAction(action_r6));
+    });
+    \u0275\u0275elementStart(1, "mat-icon", 32);
+    \u0275\u0275text(2);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(3, "span");
+    \u0275\u0275text(4);
+    \u0275\u0275elementEnd()();
+  }
+  if (rf & 2) {
+    const action_r6 = ctx.$implicit;
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate(action_r6.icon);
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate(action_r6.label);
+  }
+}
+function AiAssistantWidgetComponent_For_22_Conditional_7_Conditional_0_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "div", 29);
+    \u0275\u0275repeaterCreate(1, AiAssistantWidgetComponent_For_22_Conditional_7_Conditional_0_For_2_Template, 5, 2, "button", 30, _forTrack05);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const msg_r4 = \u0275\u0275nextContext(2).$implicit;
+    \u0275\u0275advance();
+    \u0275\u0275repeater(msg_r4.actions);
+  }
+}
+function AiAssistantWidgetComponent_For_22_Conditional_7_Conditional_1_For_2_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r7 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "button", 34);
+    \u0275\u0275listener("click", function AiAssistantWidgetComponent_For_22_Conditional_7_Conditional_1_For_2_Template_button_click_0_listener() {
+      const suggestion_r8 = \u0275\u0275restoreView(_r7).$implicit;
+      const ctx_r2 = \u0275\u0275nextContext(4);
+      return \u0275\u0275resetView(ctx_r2.sendSuggestion(suggestion_r8));
+    });
+    \u0275\u0275text(1);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const suggestion_r8 = ctx.$implicit;
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate1(" ", suggestion_r8, " ");
+  }
+}
+function AiAssistantWidgetComponent_For_22_Conditional_7_Conditional_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "div", 29);
+    \u0275\u0275repeaterCreate(1, AiAssistantWidgetComponent_For_22_Conditional_7_Conditional_1_For_2_Template, 2, 1, "button", 33, \u0275\u0275repeaterTrackByIdentity);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const msg_r4 = \u0275\u0275nextContext(2).$implicit;
+    \u0275\u0275advance();
+    \u0275\u0275repeater(msg_r4.suggestions);
+  }
+}
+function AiAssistantWidgetComponent_For_22_Conditional_7_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275template(0, AiAssistantWidgetComponent_For_22_Conditional_7_Conditional_0_Template, 3, 0, "div", 29)(1, AiAssistantWidgetComponent_For_22_Conditional_7_Conditional_1_Template, 3, 0, "div", 29);
+  }
+  if (rf & 2) {
+    const msg_r4 = \u0275\u0275nextContext().$implicit;
+    \u0275\u0275conditional(msg_r4.actions && msg_r4.actions.length > 0 ? 0 : -1);
+    \u0275\u0275advance();
+    \u0275\u0275conditional(msg_r4.suggestions && msg_r4.suggestions.length > 0 ? 1 : -1);
+  }
+}
 function AiAssistantWidgetComponent_For_22_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 14)(1, "div", 25);
+    \u0275\u0275elementStart(0, "div", 24)(1, "div", 25);
     \u0275\u0275template(2, AiAssistantWidgetComponent_For_22_Conditional_2_Template, 2, 1, "p", 26)(3, AiAssistantWidgetComponent_For_22_Conditional_3_Template, 1, 1, "markdown", 27);
     \u0275\u0275elementStart(4, "span", 28);
     \u0275\u0275text(5);
     \u0275\u0275pipe(6, "date");
     \u0275\u0275elementEnd()()();
+    \u0275\u0275template(7, AiAssistantWidgetComponent_For_22_Conditional_7_Template, 2, 2);
   }
   if (rf & 2) {
     const msg_r4 = ctx.$implicit;
+    const \u0275$index_39_r9 = ctx.$index;
+    const \u0275$count_39_r10 = ctx.$count;
+    const ctx_r2 = \u0275\u0275nextContext();
     \u0275\u0275property("ngClass", msg_r4.isUser ? "justify-end" : "justify-start");
     \u0275\u0275advance();
-    \u0275\u0275property("ngClass", \u0275\u0275pureFunction2(7, _c17, msg_r4.isUser, !msg_r4.isUser));
+    \u0275\u0275property("ngClass", \u0275\u0275pureFunction2(8, _c17, msg_r4.isUser, !msg_r4.isUser));
     \u0275\u0275advance();
     \u0275\u0275conditional(msg_r4.isUser ? 2 : 3);
     \u0275\u0275advance(3);
-    \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind2(6, 4, msg_r4.timestamp, "HH:mm"), " ");
+    \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind2(6, 5, msg_r4.timestamp, "HH:mm"), " ");
+    \u0275\u0275advance(2);
+    \u0275\u0275conditional(\u0275$index_39_r9 === \u0275$count_39_r10 - 1 && !msg_r4.isUser && !ctx_r2.isLoading ? 7 : -1);
   }
 }
 function AiAssistantWidgetComponent_Conditional_23_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 15)(1, "div", 29);
-    \u0275\u0275element(2, "span", 30)(3, "span", 31)(4, "span", 32);
+    \u0275\u0275elementStart(0, "div", 14)(1, "div", 35);
+    \u0275\u0275element(2, "span", 36)(3, "span", 37)(4, "span", 38);
     \u0275\u0275elementEnd()();
   }
 }
 function AiAssistantWidgetComponent_Conditional_24_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 16)(1, "mat-icon", 33);
+    \u0275\u0275elementStart(0, "div", 15)(1, "mat-icon", 39);
     \u0275\u0275text(2, "auto_awesome");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(3, "p", 34);
+    \u0275\u0275elementStart(3, "p", 40);
     \u0275\u0275text(4);
     \u0275\u0275pipe(5, "transloco");
     \u0275\u0275elementEnd()();
@@ -27161,22 +27245,82 @@ function AiAssistantWidgetComponent_Conditional_24_Template(rf, ctx) {
 var AiAssistantWidgetComponent = class _AiAssistantWidgetComponent {
   service;
   authService;
+  router;
   scrollContainer;
   isOpen = false;
   message = "";
   messages = [];
   isLoading = false;
   userName = "";
-  // GROQ is the default provider for the floating assistant.
-  provider = "Groq";
-  constructor(service2, authService) {
+  roles = [];
+  userCategory = "";
+  // "Auto" lets the backend route between Groq (cheap default) and OpenAI (heavier asks).
+  provider = "Auto";
+  // Whitelist mapping the feature keys the model may return to real in-app routes.
+  // The model can only navigate where we explicitly allow — unknown keys are dropped.
+  featureRoutes = {
+    "find-psychologist": { route: "/catalog", icon: "search" },
+    "my-sessions": { route: "/my-sessions", icon: "event" },
+    "self-help": { route: "/practices", icon: "spa" },
+    breathing: { route: "/practices/box-breathing", icon: "air" },
+    grounding: { route: "/practices/grounding-54321", icon: "self_improvement" },
+    pmr: { route: "/practices/progressive-muscle", icon: "accessibility_new" },
+    chat: { route: "/chat", icon: "forum" },
+    "ai-chat": { route: "/ai-chat", icon: "smart_toy" },
+    "category-application": { route: "/category-application", icon: "verified_user" },
+    notifications: { route: "/notifications", icon: "notifications" },
+    settings: { route: "/settings", icon: "settings" },
+    "psychologist-dashboard": { route: "/psychologist", icon: "dashboard" },
+    "psychologist-calendar": { route: "/psychologist/calendar", icon: "calendar_month" },
+    "psychologist-sessions": { route: "/psychologist/sessions", icon: "groups" },
+    "psychologist-finances": { route: "/psychologist/finances", icon: "payments" },
+    "admin-dashboard": { route: "/admin", icon: "shield" },
+    "admin-applications": { route: "/admin/applications", icon: "inbox" },
+    "admin-payments": { route: "/admin/payments", icon: "payments" }
+  };
+  // Forgiving aliases for near-miss keys the model may emit instead of the canonical ones.
+  featureAliases = {
+    "book-session": "find-psychologist",
+    "book-a-session": "find-psychologist",
+    "find-a-psychologist": "find-psychologist",
+    psychologist: "find-psychologist",
+    psychologists: "find-psychologist",
+    catalog: "find-psychologist",
+    sessions: "my-sessions",
+    "my-session": "my-sessions",
+    practices: "self-help",
+    "self-help-practices": "self-help",
+    techniques: "self-help",
+    "box-breathing": "breathing",
+    "breathing-exercise": "breathing",
+    "breathing-exercises": "breathing",
+    "grounding-54321": "grounding",
+    "grounding-technique": "grounding",
+    relaxation: "pmr",
+    "progressive-muscle": "pmr",
+    "progressive-muscle-relaxation": "pmr",
+    "category": "category-application",
+    "status-application": "category-application",
+    messages: "chat",
+    "ai-assistant": "ai-chat",
+    "psychologist-schedule": "psychologist-calendar",
+    schedule: "psychologist-calendar",
+    finances: "psychologist-finances",
+    admin: "admin-dashboard",
+    applications: "admin-applications",
+    payments: "admin-payments"
+  };
+  constructor(service2, authService, router) {
     this.service = service2;
     this.authService = authService;
+    this.router = router;
   }
   ngOnInit() {
     this.authService.getUserAIProveder().subscribe({
       next: (res) => {
         this.userName = `${res.data.name} ${res.data.surname}`.trim();
+        this.roles = res.data.roles ?? [];
+        this.userCategory = res.data.userCategory ?? "";
       },
       error: () => {
         this.userName = "Anonymous user";
@@ -27210,14 +27354,20 @@ var AiAssistantWidgetComponent = class _AiAssistantWidgetComponent {
     const payload = {
       userName: this.userName,
       provider: this.provider,
-      messages: conversationHistory
+      context: "Companion",
+      messages: conversationHistory,
+      roles: this.roles,
+      userCategory: this.userCategory
     };
     this.service.chatAsync(payload).subscribe({
       next: (response) => {
+        const parsed = this.parseReply(response.data);
         this.messages.push({
-          text: response.data,
+          text: parsed.reply,
           isUser: false,
-          timestamp: /* @__PURE__ */ new Date()
+          timestamp: /* @__PURE__ */ new Date(),
+          suggestions: parsed.suggestions,
+          actions: parsed.actions
         });
         this.isLoading = false;
         this.scrollToBottom();
@@ -27233,6 +27383,57 @@ var AiAssistantWidgetComponent = class _AiAssistantWidgetComponent {
       }
     });
   }
+  /** A tapped quick-reply is sent as the user's next message. */
+  sendSuggestion(text) {
+    if (this.isLoading)
+      return;
+    this.message = text;
+    this.sendMessage();
+  }
+  /** A tapped feature button navigates into the app and closes the widget. */
+  runAction(action) {
+    this.router.navigateByUrl(action.route);
+    this.close();
+  }
+  /**
+   * Companion mode returns a strict JSON object. Parse it defensively and fall back to
+   * treating the raw payload as plain markdown if anything is off.
+   */
+  parseReply(raw) {
+    const fallback = { reply: raw ?? "", suggestions: [], actions: [] };
+    if (!raw)
+      return fallback;
+    let text = raw.trim();
+    const fenced = text.match(/^```(?:json)?\s*([\s\S]*?)\s*```$/i);
+    if (fenced)
+      text = fenced[1].trim();
+    if (!text.startsWith("{"))
+      return fallback;
+    try {
+      const parsed = JSON.parse(text);
+      const reply = typeof parsed.reply === "string" ? parsed.reply : raw;
+      const suggestions = Array.isArray(parsed.suggestions) ? parsed.suggestions.filter((s) => typeof s === "string" && s.trim().length > 0).map((s) => s.trim()).slice(0, 4) : [];
+      const actions = Array.isArray(parsed.actions) ? parsed.actions.map((a) => this.resolveAction(a)).filter((a) => a !== null).slice(0, 3) : [];
+      return { reply, suggestions, actions };
+    } catch {
+      return fallback;
+    }
+  }
+  resolveAction(raw) {
+    if (!raw || typeof raw !== "object")
+      return null;
+    const feature = raw.feature;
+    if (typeof feature !== "string")
+      return null;
+    const key = feature.trim().toLowerCase().replace(/_/g, "-");
+    const canonical = this.featureRoutes[key] ? key : this.featureAliases[key];
+    const meta = canonical ? this.featureRoutes[canonical] : void 0;
+    if (!meta)
+      return null;
+    const rawLabel = raw.label;
+    const label = typeof rawLabel === "string" && rawLabel.trim().length > 0 ? rawLabel.trim() : feature;
+    return { label, route: meta.route, icon: meta.icon };
+  }
   scrollToBottom() {
     setTimeout(() => {
       try {
@@ -27244,7 +27445,7 @@ var AiAssistantWidgetComponent = class _AiAssistantWidgetComponent {
     });
   }
   static \u0275fac = function AiAssistantWidgetComponent_Factory(__ngFactoryType__) {
-    return new (__ngFactoryType__ || _AiAssistantWidgetComponent)(\u0275\u0275directiveInject(AiService), \u0275\u0275directiveInject(AuthService));
+    return new (__ngFactoryType__ || _AiAssistantWidgetComponent)(\u0275\u0275directiveInject(AiService), \u0275\u0275directiveInject(AuthService), \u0275\u0275directiveInject(Router));
   };
   static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _AiAssistantWidgetComponent, selectors: [["app-ai-assistant-widget"]], viewQuery: function AiAssistantWidgetComponent_Query(rf, ctx) {
     if (rf & 1) {
@@ -27254,7 +27455,7 @@ var AiAssistantWidgetComponent = class _AiAssistantWidgetComponent {
       let _t;
       \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.scrollContainer = _t.first);
     }
-  }, standalone: false, decls: 38, vars: 27, consts: [["scrollContainer", ""], [1, "fixed", "bottom-24", "right-5", "z-[60]", "w-[calc(100vw-2.5rem)]", "max-w-[380px]", "origin-bottom-right", "transition-all", "duration-200", "ease-out", 3, "ngClass"], [1, "flex", "flex-col", "h-[70dvh]", "max-h-[640px]", "bg-white", "rounded-3xl", "shadow-2xl", "shadow-blue-900/15", "border", "border-gray-100", "overflow-hidden"], [1, "shrink-0", "flex", "items-center", "gap-3", "px-4", "py-3", "bg-gradient-to-r", "from-blue-600", "to-indigo-600", "text-white"], [1, "flex", "items-center", "justify-center", "w-9", "h-9", "rounded-full", "bg-white/20", "backdrop-blur-sm"], [1, "text-[20px]", "leading-none"], [1, "flex-grow", "min-w-0"], [1, "text-sm", "font-semibold", "leading-tight", "truncate"], [1, "text-[11px]", "text-white/70", "leading-tight"], [1, "shrink-0", "flex", "items-center", "justify-center", "w-8", "h-8", "rounded-full", "hover:bg-white/15", "transition-colors", 3, "matTooltip"], [1, "shrink-0", "flex", "items-center", "justify-center", "w-8", "h-8", "rounded-full", "hover:bg-white/15", "transition-colors", 3, "click", "matTooltip"], [1, "text-[18px]", "leading-none"], [1, "flex-grow", "overflow-y-auto", "p-4", "bg-gray-50"], [1, "flex", "flex-col", "space-y-3"], [1, "flex", "w-full", 3, "ngClass"], [1, "flex", "justify-start", "w-full"], [1, "flex", "flex-col", "items-center", "justify-center", "text-center", "text-gray-400", "gap-2", "py-10"], [1, "shrink-0", "bg-white", "border-t", "border-gray-100", "p-3"], [1, "flex", "items-end", "gap-2"], [1, "flex-grow", "flex", "items-center", "bg-gray-50", "border", "border-gray-200", "rounded-2xl", "px-3.5", "transition-all", "duration-200", "focus-within:border-blue-500", "focus-within:ring-4", "focus-within:ring-blue-500/10", "focus-within:bg-white"], ["type", "text", 1, "flex-grow", "bg-transparent", "border-none", "outline-none", "text-sm", "text-gray-900", "py-2.5", "placeholder:text-gray-400", 3, "ngModelChange", "keydown.enter", "ngModel", "placeholder"], [1, "shrink-0", "flex", "items-center", "justify-center", "w-10", "h-10", "rounded-xl", "cursor-pointer", "bg-blue-600", "hover:bg-blue-700", "disabled:bg-gray-300", "disabled:cursor-not-allowed", "transition-all", "duration-200", "text-white", 3, "click", "disabled"], [1, "text-[20px]", "leading-none", "transform", "translate-x-0.5"], ["matTooltipPosition", "left", 1, "fixed", "bottom-5", "right-5", "z-[60]", "flex", "items-center", "justify-center", "w-14", "h-14", "rounded-full", "bg-gradient-to-br", "from-blue-600", "to-indigo-600", "text-white", "shadow-lg", "shadow-blue-600/40", "hover:shadow-xl", "hover:shadow-blue-600/50", "hover:scale-105", "active:scale-95", "transition-all", "duration-200", 3, "click", "matTooltip"], [1, "text-[26px]", "leading-none", "transition-transform", "duration-300"], [1, "max-w-[85%]", "px-3.5", "py-2.5", "shadow-sm", "break-words", 3, "ngClass"], [1, "text-sm", "whitespace-pre-wrap", "leading-relaxed"], [1, "text-sm", "leading-relaxed", "block", "prose-sm", 3, "data"], [1, "text-[10px]", "opacity-60", "block", "mt-1", "text-right"], [1, "bg-white", "border", "border-gray-200", "px-3.5", "py-3", "rounded-r-2xl", "rounded-tl-2xl", "shadow-sm", "flex", "items-center", "gap-1"], [1, "w-1.5", "h-1.5", "bg-gray-400", "rounded-full", "animate-bounce"], [1, "w-1.5", "h-1.5", "bg-gray-400", "rounded-full", "animate-bounce", "[animation-delay:0.2s]"], [1, "w-1.5", "h-1.5", "bg-gray-400", "rounded-full", "animate-bounce", "[animation-delay:0.4s]"], [1, "scale-150", "text-blue-300"], [1, "text-sm", "px-6"]], template: function AiAssistantWidgetComponent_Template(rf, ctx) {
+  }, standalone: false, decls: 38, vars: 27, consts: [["scrollContainer", ""], [1, "fixed", "bottom-24", "right-5", "z-[60]", "w-[calc(100vw-2.5rem)]", "max-w-[380px]", "origin-bottom-right", "transition-all", "duration-200", "ease-out", 3, "ngClass"], [1, "flex", "flex-col", "h-[70dvh]", "max-h-[640px]", "bg-white", "rounded-3xl", "shadow-2xl", "shadow-blue-900/15", "border", "border-gray-100", "overflow-hidden"], [1, "shrink-0", "flex", "items-center", "gap-3", "px-4", "py-3", "bg-gradient-to-r", "from-blue-600", "to-indigo-600", "text-white"], [1, "flex", "items-center", "justify-center", "w-9", "h-9", "rounded-full", "bg-white/20", "backdrop-blur-sm"], [1, "text-[20px]", "leading-none"], [1, "flex-grow", "min-w-0"], [1, "text-sm", "font-semibold", "leading-tight", "truncate"], [1, "text-[11px]", "text-white/70", "leading-tight"], [1, "shrink-0", "flex", "items-center", "justify-center", "w-8", "h-8", "rounded-full", "hover:bg-white/15", "transition-colors", 3, "matTooltip"], [1, "shrink-0", "flex", "items-center", "justify-center", "w-8", "h-8", "rounded-full", "hover:bg-white/15", "transition-colors", 3, "click", "matTooltip"], [1, "text-[18px]", "leading-none"], [1, "flex-grow", "overflow-y-auto", "p-4", "bg-gray-50"], [1, "flex", "flex-col", "space-y-3"], [1, "flex", "justify-start", "w-full"], [1, "flex", "flex-col", "items-center", "justify-center", "text-center", "text-gray-400", "gap-2", "py-10"], [1, "shrink-0", "bg-white", "border-t", "border-gray-100", "p-3"], [1, "flex", "items-end", "gap-2"], [1, "flex-grow", "flex", "items-center", "bg-gray-50", "border", "border-gray-200", "rounded-2xl", "px-3.5", "transition-all", "duration-200", "focus-within:border-blue-500", "focus-within:ring-4", "focus-within:ring-blue-500/10", "focus-within:bg-white"], ["type", "text", 1, "flex-grow", "bg-transparent", "border-none", "outline-none", "text-sm", "text-gray-900", "py-2.5", "placeholder:text-gray-400", 3, "ngModelChange", "keydown.enter", "ngModel", "placeholder"], [1, "shrink-0", "flex", "items-center", "justify-center", "w-10", "h-10", "rounded-xl", "cursor-pointer", "bg-blue-600", "hover:bg-blue-700", "disabled:bg-gray-300", "disabled:cursor-not-allowed", "transition-all", "duration-200", "text-white", 3, "click", "disabled"], [1, "text-[20px]", "leading-none", "transform", "translate-x-0.5"], ["matTooltipPosition", "left", 1, "fixed", "bottom-5", "right-5", "z-[60]", "flex", "items-center", "justify-center", "w-14", "h-14", "rounded-full", "bg-gradient-to-br", "from-blue-600", "to-indigo-600", "text-white", "shadow-lg", "shadow-blue-600/40", "hover:shadow-xl", "hover:shadow-blue-600/50", "hover:scale-105", "active:scale-95", "transition-all", "duration-200", 3, "click", "matTooltip"], [1, "text-[26px]", "leading-none", "transition-transform", "duration-300"], [1, "flex", "w-full", 3, "ngClass"], [1, "max-w-[85%]", "px-3.5", "py-2.5", "shadow-sm", "break-words", 3, "ngClass"], [1, "text-sm", "whitespace-pre-wrap", "leading-relaxed"], [1, "text-sm", "leading-relaxed", "block", "prose-sm", 3, "data"], [1, "text-[10px]", "opacity-60", "block", "mt-1", "text-right"], [1, "flex", "flex-wrap", "gap-1.5", "mt-0.5"], [1, "inline-flex", "items-center", "gap-1.5", "px-3", "py-1.5", "rounded-full", "bg-blue-50", "text-blue-700", "border", "border-blue-100", "text-xs", "font-medium", "hover:bg-blue-100", "hover:border-blue-200", "active:scale-95", "transition-all", "duration-150"], [1, "inline-flex", "items-center", "gap-1.5", "px-3", "py-1.5", "rounded-full", "bg-blue-50", "text-blue-700", "border", "border-blue-100", "text-xs", "font-medium", "hover:bg-blue-100", "hover:border-blue-200", "active:scale-95", "transition-all", "duration-150", 3, "click"], [1, "text-[15px]", "leading-none", "w-[15px]", "h-[15px]"], [1, "px-3", "py-1.5", "rounded-full", "bg-white", "text-gray-600", "border", "border-gray-200", "text-xs", "hover:border-blue-300", "hover:text-blue-700", "hover:bg-blue-50/50", "active:scale-95", "transition-all", "duration-150"], [1, "px-3", "py-1.5", "rounded-full", "bg-white", "text-gray-600", "border", "border-gray-200", "text-xs", "hover:border-blue-300", "hover:text-blue-700", "hover:bg-blue-50/50", "active:scale-95", "transition-all", "duration-150", 3, "click"], [1, "bg-white", "border", "border-gray-200", "px-3.5", "py-3", "rounded-r-2xl", "rounded-tl-2xl", "shadow-sm", "flex", "items-center", "gap-1"], [1, "w-1.5", "h-1.5", "bg-gray-400", "rounded-full", "animate-bounce"], [1, "w-1.5", "h-1.5", "bg-gray-400", "rounded-full", "animate-bounce", "[animation-delay:0.2s]"], [1, "w-1.5", "h-1.5", "bg-gray-400", "rounded-full", "animate-bounce", "[animation-delay:0.4s]"], [1, "scale-150", "text-blue-300"], [1, "text-sm", "px-6"]], template: function AiAssistantWidgetComponent_Template(rf, ctx) {
     if (rf & 1) {
       const _r1 = \u0275\u0275getCurrentView();
       \u0275\u0275elementStart(0, "div", 1)(1, "div", 2)(2, "div", 3)(3, "div", 4)(4, "mat-icon", 5);
@@ -27279,10 +27480,10 @@ var AiAssistantWidgetComponent = class _AiAssistantWidgetComponent {
       \u0275\u0275text(17, "close");
       \u0275\u0275elementEnd()()();
       \u0275\u0275elementStart(18, "div", 12, 0)(20, "div", 13);
-      \u0275\u0275repeaterCreate(21, AiAssistantWidgetComponent_For_22_Template, 7, 10, "div", 14, \u0275\u0275repeaterTrackByIndex);
-      \u0275\u0275template(23, AiAssistantWidgetComponent_Conditional_23_Template, 5, 0, "div", 15)(24, AiAssistantWidgetComponent_Conditional_24_Template, 6, 3, "div", 16);
+      \u0275\u0275repeaterCreate(21, AiAssistantWidgetComponent_For_22_Template, 8, 11, null, null, \u0275\u0275repeaterTrackByIndex);
+      \u0275\u0275template(23, AiAssistantWidgetComponent_Conditional_23_Template, 5, 0, "div", 14)(24, AiAssistantWidgetComponent_Conditional_24_Template, 6, 3, "div", 15);
       \u0275\u0275elementEnd()();
-      \u0275\u0275elementStart(25, "div", 17)(26, "div", 18)(27, "div", 19)(28, "input", 20);
+      \u0275\u0275elementStart(25, "div", 16)(26, "div", 17)(27, "div", 18)(28, "input", 19);
       \u0275\u0275pipe(29, "transloco");
       \u0275\u0275twoWayListener("ngModelChange", function AiAssistantWidgetComponent_Template_input_ngModelChange_28_listener($event) {
         \u0275\u0275restoreView(_r1);
@@ -27294,22 +27495,22 @@ var AiAssistantWidgetComponent = class _AiAssistantWidgetComponent {
         return \u0275\u0275resetView(ctx.sendMessage());
       });
       \u0275\u0275elementEnd()();
-      \u0275\u0275elementStart(30, "button", 21);
+      \u0275\u0275elementStart(30, "button", 20);
       \u0275\u0275listener("click", function AiAssistantWidgetComponent_Template_button_click_30_listener() {
         \u0275\u0275restoreView(_r1);
         return \u0275\u0275resetView(ctx.sendMessage());
       });
-      \u0275\u0275elementStart(31, "mat-icon", 22);
+      \u0275\u0275elementStart(31, "mat-icon", 21);
       \u0275\u0275text(32, "send");
       \u0275\u0275elementEnd()()()()()();
-      \u0275\u0275elementStart(33, "button", 23);
+      \u0275\u0275elementStart(33, "button", 22);
       \u0275\u0275pipe(34, "transloco");
       \u0275\u0275pipe(35, "transloco");
       \u0275\u0275listener("click", function AiAssistantWidgetComponent_Template_button_click_33_listener() {
         \u0275\u0275restoreView(_r1);
         return \u0275\u0275resetView(ctx.toggle());
       });
-      \u0275\u0275elementStart(36, "mat-icon", 24);
+      \u0275\u0275elementStart(36, "mat-icon", 23);
       \u0275\u0275text(37);
       \u0275\u0275elementEnd()();
     }
@@ -27426,6 +27627,35 @@ var AiAssistantWidgetComponent = class _AiAssistantWidgetComponent {
               </span>
             </div>
           </div>
+
+          @if ($last && !msg.isUser && !isLoading) {
+            @if (msg.actions && msg.actions.length > 0) {
+              <div class="flex flex-wrap gap-1.5 mt-0.5">
+                @for (action of msg.actions; track action.route) {
+                  <button
+                    (click)="runAction(action)"
+                    class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-blue-50 text-blue-700 border border-blue-100 text-xs font-medium hover:bg-blue-100 hover:border-blue-200 active:scale-95 transition-all duration-150"
+                  >
+                    <mat-icon class="text-[15px] leading-none w-[15px] h-[15px]">{{ action.icon }}</mat-icon>
+                    <span>{{ action.label }}</span>
+                  </button>
+                }
+              </div>
+            }
+
+            @if (msg.suggestions && msg.suggestions.length > 0) {
+              <div class="flex flex-wrap gap-1.5 mt-0.5">
+                @for (suggestion of msg.suggestions; track suggestion) {
+                  <button
+                    (click)="sendSuggestion(suggestion)"
+                    class="px-3 py-1.5 rounded-full bg-white text-gray-600 border border-gray-200 text-xs hover:border-blue-300 hover:text-blue-700 hover:bg-blue-50/50 active:scale-95 transition-all duration-150"
+                  >
+                    {{ suggestion }}
+                  </button>
+                }
+              </div>
+            }
+          }
         }
 
         @if (isLoading) {
@@ -27496,13 +27726,13 @@ var AiAssistantWidgetComponent = class _AiAssistantWidgetComponent {
   </mat-icon>
 </button>
 `, styles: ["/* src/app/modules/core/components/ai-assistant-widget/ai-assistant-widget.component.scss */\n:host {\n  display: contents;\n}\n/*# sourceMappingURL=ai-assistant-widget.component.css.map */\n"] }]
-  }], () => [{ type: AiService }, { type: AuthService }], { scrollContainer: [{
+  }], () => [{ type: AiService }, { type: AuthService }, { type: Router }], { scrollContainer: [{
     type: ViewChild,
     args: ["scrollContainer"]
   }] });
 })();
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(AiAssistantWidgetComponent, { className: "AiAssistantWidgetComponent", filePath: "src/app/modules/core/components/ai-assistant-widget/ai-assistant-widget.component.ts", lineNumber: 18 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(AiAssistantWidgetComponent, { className: "AiAssistantWidgetComponent", filePath: "src/app/modules/core/components/ai-assistant-widget/ai-assistant-widget.component.ts", lineNumber: 28 });
 })();
 
 // src/app/modules/core/layouts/layout/layout.component.ts
@@ -32245,7 +32475,7 @@ var UsersService = class _UsersService {
 
 // src/app/modules/core/components/about-user-profile/about-user-profile.component.ts
 var _c020 = (a0, a1) => ({ "bg-gray-50/30": a0, "opacity-60": a1 });
-var _forTrack05 = ($index, $item) => $item.id;
+var _forTrack06 = ($index, $item) => $item.id;
 function AboutUserProfileComponent_ng_container_0_Conditional_17_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "div", 11)(1, "div", 13)(2, "mat-icon");
@@ -32338,7 +32568,7 @@ function AboutUserProfileComponent_ng_container_0_Conditional_18_Template(rf, ct
     \u0275\u0275text(3);
     \u0275\u0275elementEnd()();
     \u0275\u0275elementStart(4, "div", 17)(5, "div", 8);
-    \u0275\u0275repeaterCreate(6, AboutUserProfileComponent_ng_container_0_Conditional_18_For_7_Template, 8, 8, "div", 18, _forTrack05);
+    \u0275\u0275repeaterCreate(6, AboutUserProfileComponent_ng_container_0_Conditional_18_For_7_Template, 8, 8, "div", 18, _forTrack06);
     \u0275\u0275elementEnd()()();
   }
   if (rf & 2) {
@@ -32586,7 +32816,7 @@ var PostsService = class _PostsService {
 })();
 
 // src/app/modules/core/components/posts-user-profile/posts-user-profile.component.ts
-var _forTrack06 = ($index, $item) => $item.id;
+var _forTrack07 = ($index, $item) => $item.id;
 function PostsUserProfileComponent_ng_container_0_Conditional_2_Conditional_3_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275element(0, "img", 9);
@@ -33034,7 +33264,7 @@ function PostsUserProfileComponent_ng_container_0_Conditional_5_For_2_Conditiona
 function PostsUserProfileComponent_ng_container_0_Conditional_5_For_2_Conditional_26_Conditional_11_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "div", 64);
-    \u0275\u0275repeaterCreate(1, PostsUserProfileComponent_ng_container_0_Conditional_5_For_2_Conditional_26_Conditional_11_For_2_Template, 13, 7, "div", 65, _forTrack06, false, PostsUserProfileComponent_ng_container_0_Conditional_5_For_2_Conditional_26_Conditional_11_ForEmpty_3_Template, 2, 1, "p", 66);
+    \u0275\u0275repeaterCreate(1, PostsUserProfileComponent_ng_container_0_Conditional_5_For_2_Conditional_26_Conditional_11_For_2_Template, 13, 7, "div", 65, _forTrack07, false, PostsUserProfileComponent_ng_container_0_Conditional_5_For_2_Conditional_26_Conditional_11_ForEmpty_3_Template, 2, 1, "p", 66);
     \u0275\u0275elementEnd();
     \u0275\u0275template(4, PostsUserProfileComponent_ng_container_0_Conditional_5_For_2_Conditional_26_Conditional_11_Conditional_4_Template, 2, 2, "button", 67);
   }
@@ -33221,7 +33451,7 @@ function PostsUserProfileComponent_ng_container_0_Conditional_5_Conditional_3_Te
 function PostsUserProfileComponent_ng_container_0_Conditional_5_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "div", 6);
-    \u0275\u0275repeaterCreate(1, PostsUserProfileComponent_ng_container_0_Conditional_5_For_2_Template, 27, 15, "article", 31, _forTrack06);
+    \u0275\u0275repeaterCreate(1, PostsUserProfileComponent_ng_container_0_Conditional_5_For_2_Template, 27, 15, "article", 31, _forTrack07);
     \u0275\u0275template(3, PostsUserProfileComponent_ng_container_0_Conditional_5_Conditional_3_Template, 3, 2, "button", 32);
     \u0275\u0275elementEnd();
   }
@@ -40162,7 +40392,7 @@ var SpecializationService = class _SpecializationService {
 
 // src/app/modules/core/pages/psychologist-registration/psychologist-registration.component.ts
 var _c022 = (a0, a1) => ({ current: a0, total: a1 });
-var _forTrack07 = ($index, $item) => $item.index;
+var _forTrack08 = ($index, $item) => $item.index;
 var _forTrack1 = ($index, $item) => $item.file.name;
 var _forTrack2 = ($index, $item) => $item.id;
 function PsychologistRegistrationComponent_ng_container_0_For_12_Conditional_2_Template(rf, ctx) {
@@ -40483,7 +40713,7 @@ function PsychologistRegistrationComponent_ng_container_0_Template(rf, ctx) {
     \u0275\u0275text(9);
     \u0275\u0275elementEnd();
     \u0275\u0275elementStart(10, "ol", 8);
-    \u0275\u0275repeaterCreate(11, PsychologistRegistrationComponent_ng_container_0_For_12_Template, 9, 8, "li", 9, _forTrack07);
+    \u0275\u0275repeaterCreate(11, PsychologistRegistrationComponent_ng_container_0_For_12_Template, 9, 8, "li", 9, _forTrack08);
     \u0275\u0275elementEnd()();
     \u0275\u0275elementStart(13, "p", 10);
     \u0275\u0275text(14);
@@ -41110,7 +41340,7 @@ var HomePageResolverComponent = class _HomePageResolverComponent {
 // src/app/modules/core/pages/notifications-page/notifications-page.component.ts
 var _c023 = (a0) => ({ "bg-[var(--color-sky)]/5": a0 });
 var _c112 = (a0, a1, a2, a3) => ({ "bg-mint/20 text-success": a0, "bg-[var(--color-sky)]/20 text-[var(--color-primary)]": a1, "bg-red-100 text-red-500": a2, "bg-yellow-100 text-yellow-600": a3 });
-var _forTrack08 = ($index, $item) => $item.id;
+var _forTrack09 = ($index, $item) => $item.id;
 function NotificationsPageComponent_Conditional_8_Template(rf, ctx) {
   if (rf & 1) {
     const _r1 = \u0275\u0275getCurrentView();
@@ -41186,7 +41416,7 @@ function NotificationsPageComponent_Conditional_10_Conditional_0_For_2_Template(
 function NotificationsPageComponent_Conditional_10_Conditional_0_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "div", 8);
-    \u0275\u0275repeaterCreate(1, NotificationsPageComponent_Conditional_10_Conditional_0_For_2_Template, 14, 19, "div", 10, _forTrack08);
+    \u0275\u0275repeaterCreate(1, NotificationsPageComponent_Conditional_10_Conditional_0_For_2_Template, 14, 19, "div", 10, _forTrack09);
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
@@ -41476,7 +41706,7 @@ var UserCategoryApplicationService = class _UserCategoryApplicationService {
 })();
 
 // src/app/modules/core/pages/user-category-application/user-category-application.component.ts
-var _forTrack09 = ($index, $item) => $item.value;
+var _forTrack010 = ($index, $item) => $item.value;
 var _forTrack12 = ($index, $item) => $item.name;
 function UserCategoryApplicationComponent_ng_container_0_Conditional_12_Template(rf, ctx) {
   if (rf & 1) {
@@ -41706,7 +41936,7 @@ function UserCategoryApplicationComponent_ng_container_0_Conditional_13_Template
     \u0275\u0275text(5);
     \u0275\u0275elementEnd();
     \u0275\u0275elementStart(6, "div", 13);
-    \u0275\u0275repeaterCreate(7, UserCategoryApplicationComponent_ng_container_0_Conditional_13_For_8_Template, 7, 5, "button", 14, _forTrack09);
+    \u0275\u0275repeaterCreate(7, UserCategoryApplicationComponent_ng_container_0_Conditional_13_For_8_Template, 7, 5, "button", 14, _forTrack010);
     \u0275\u0275elementEnd()();
     \u0275\u0275elementStart(9, "section")(10, "label", 15);
     \u0275\u0275text(11);
@@ -42761,7 +42991,7 @@ var ApplicationsService = class _ApplicationsService {
 // src/app/modules/admin-tools/pages/admin-dashboard/admin-dashboard.component.ts
 var _c025 = (a0) => ({ value: a0 });
 var _c114 = (a0) => ({ count: a0 });
-var _forTrack010 = ($index, $item) => $item.key;
+var _forTrack011 = ($index, $item) => $item.key;
 var _forTrack13 = ($index, $item) => $item.labelKey;
 var _forTrack22 = ($index, $item) => $item.route;
 var _forTrack3 = ($index, $item) => $item.label;
@@ -43159,7 +43389,7 @@ function AdminDashboardComponent_ng_container_0_Conditional_18_Template(rf, ctx)
   if (rf & 1) {
     const _r3 = \u0275\u0275getCurrentView();
     \u0275\u0275elementStart(0, "div", 14);
-    \u0275\u0275repeaterCreate(1, AdminDashboardComponent_ng_container_0_Conditional_18_For_2_Template, 12, 10, "a", 15, _forTrack010);
+    \u0275\u0275repeaterCreate(1, AdminDashboardComponent_ng_container_0_Conditional_18_For_2_Template, 12, 10, "a", 15, _forTrack011);
     \u0275\u0275elementEnd();
     \u0275\u0275elementStart(3, "div", 16)(4, "div", 17)(5, "section", 18)(6, "div", 19)(7, "div")(8, "h2", 20);
     \u0275\u0275text(9);
@@ -44222,7 +44452,7 @@ var ApplicationDetailsDialogComponent = class _ApplicationDetailsDialogComponent
 
 // src/app/modules/admin-tools/pages/applications-page/applications-page.component.ts
 var _c026 = (a0) => ({ index: a0 });
-var _forTrack011 = ($index, $item) => $item.id;
+var _forTrack012 = ($index, $item) => $item.id;
 function ApplicationsPageComponent_ng_container_0_Conditional_28_For_8_Conditional_1_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "mat-icon", 32);
@@ -44418,7 +44648,7 @@ function ApplicationsPageComponent_ng_container_0_Conditional_28_Conditional_28_
     \u0275\u0275text(16, "\u0414\u0456\u0457");
     \u0275\u0275elementEnd()()();
     \u0275\u0275elementStart(17, "tbody", 45);
-    \u0275\u0275repeaterCreate(18, ApplicationsPageComponent_ng_container_0_Conditional_28_Conditional_28_For_19_Template, 24, 13, "tr", 46, _forTrack011);
+    \u0275\u0275repeaterCreate(18, ApplicationsPageComponent_ng_container_0_Conditional_28_Conditional_28_For_19_Template, 24, 13, "tr", 46, _forTrack012);
     \u0275\u0275elementEnd()()()();
   }
   if (rf & 2) {
@@ -44757,7 +44987,7 @@ function ApplicationsPageComponent_ng_container_0_Conditional_29_Conditional_29_
     \u0275\u0275text(16);
     \u0275\u0275elementEnd()()();
     \u0275\u0275elementStart(17, "tbody", 45);
-    \u0275\u0275repeaterCreate(18, ApplicationsPageComponent_ng_container_0_Conditional_29_Conditional_29_For_19_Template, 21, 13, "tr", 71, _forTrack011);
+    \u0275\u0275repeaterCreate(18, ApplicationsPageComponent_ng_container_0_Conditional_29_Conditional_29_For_19_Template, 21, 13, "tr", 71, _forTrack012);
     \u0275\u0275elementEnd()()()();
   }
   if (rf & 2) {
@@ -45841,7 +46071,7 @@ var ApplicationsPageComponent = class _ApplicationsPageComponent {
 var _c027 = () => [0, 1, 3, 5];
 var _c115 = () => [1, 2, 3];
 var _c29 = (a0) => ["/account", a0];
-var _forTrack012 = ($index, $item) => $item.value;
+var _forTrack013 = ($index, $item) => $item.value;
 var _forTrack14 = ($index, $item) => $item.id;
 function PsychologistListComponent_Conditional_5_Template(rf, ctx) {
   if (rf & 1) {
@@ -45916,7 +46146,7 @@ function PsychologistListComponent_Conditional_27_For_2_Template(rf, ctx) {
 function PsychologistListComponent_Conditional_27_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "div", 20);
-    \u0275\u0275repeaterCreate(1, PsychologistListComponent_Conditional_27_For_2_Template, 4, 8, "button", 46, _forTrack012);
+    \u0275\u0275repeaterCreate(1, PsychologistListComponent_Conditional_27_For_2_Template, 4, 8, "button", 46, _forTrack013);
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
@@ -47733,7 +47963,7 @@ function resolveDisplayStatus(session) {
 // src/app/modules/psychologist-tools/pages/psychologist-dashboard/psychologist-dashboard.component.ts
 var _c028 = (a0) => ({ name: a0 });
 var _c116 = (a0) => ({ value: a0 });
-var _forTrack013 = ($index, $item) => $item.key;
+var _forTrack014 = ($index, $item) => $item.key;
 var _forTrack15 = ($index, $item) => $item.labelKey;
 var _forTrack23 = ($index, $item) => $item.route;
 function PsychologistDashboardComponent_ng_container_0_Conditional_17_Template(rf, ctx) {
@@ -48052,7 +48282,7 @@ function PsychologistDashboardComponent_ng_container_0_Conditional_18_Template(r
   if (rf & 1) {
     const _r3 = \u0275\u0275getCurrentView();
     \u0275\u0275elementStart(0, "div", 14);
-    \u0275\u0275repeaterCreate(1, PsychologistDashboardComponent_ng_container_0_Conditional_18_For_2_Template, 12, 9, "a", 15, _forTrack013);
+    \u0275\u0275repeaterCreate(1, PsychologistDashboardComponent_ng_container_0_Conditional_18_For_2_Template, 12, 9, "a", 15, _forTrack014);
     \u0275\u0275elementEnd();
     \u0275\u0275elementStart(3, "div", 16)(4, "div", 17)(5, "section", 18)(6, "div", 19)(7, "div")(8, "h2", 20);
     \u0275\u0275text(9);
@@ -48869,7 +49099,7 @@ var SpecializationDialogComponent = class _SpecializationDialogComponent {
 })();
 
 // src/app/modules/admin-tools/pages/manage-specializations/manage-specializations.component.ts
-var _forTrack014 = ($index, $item) => $item.id;
+var _forTrack015 = ($index, $item) => $item.id;
 function ManageSpecializationsComponent_Conditional_24_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "div", 15);
@@ -48971,7 +49201,7 @@ function ManageSpecializationsComponent_Conditional_27_Template(rf, ctx) {
     \u0275\u0275text(12, "Actions");
     \u0275\u0275elementEnd()()();
     \u0275\u0275elementStart(13, "tbody", 33);
-    \u0275\u0275repeaterCreate(14, ManageSpecializationsComponent_Conditional_27_For_15_Template, 18, 4, "tr", 34, _forTrack014);
+    \u0275\u0275repeaterCreate(14, ManageSpecializationsComponent_Conditional_27_For_15_Template, 18, 4, "tr", 34, _forTrack015);
     \u0275\u0275elementEnd()()()();
   }
   if (rf & 2) {
@@ -49993,7 +50223,7 @@ var PsychologistCalendarPageComponent = class _PsychologistCalendarPageComponent
 // src/app/modules/psychologist-tools/pages/psychologist-applications/psychologist-applications.component.ts
 var _c030 = (a0, a1) => ({ "border-[var(--color-primary)]/30 shadow-md shadow-blue-100": a0, "border-gray-100 shadow-sm opacity-80": a1 });
 var _c117 = (a0, a1, a2, a3) => ({ "bg-amber-50 text-amber-600 border-amber-200": a0, "bg-green-50 text-green-600 border-green-200": a1, "bg-gray-50 text-gray-600 border-gray-200": a2, "bg-red-50 text-red-600 border-red-200": a3 });
-var _forTrack015 = ($index, $item) => $item.value;
+var _forTrack016 = ($index, $item) => $item.value;
 var _forTrack16 = ($index, $item) => $item.id;
 function PsychologistApplicationsComponent_span_11_Template(rf, ctx) {
   if (rf & 1) {
@@ -50456,7 +50686,7 @@ var PsychologistApplicationsComponent = class _PsychologistApplicationsComponent
       \u0275\u0275template(22, PsychologistApplicationsComponent_Conditional_22_Template, 14, 6);
       \u0275\u0275elementEnd()();
       \u0275\u0275elementStart(23, "div", 15)(24, "div", 16);
-      \u0275\u0275repeaterCreate(25, PsychologistApplicationsComponent_For_26_Template, 6, 6, "button", 17, _forTrack015);
+      \u0275\u0275repeaterCreate(25, PsychologistApplicationsComponent_For_26_Template, 6, 6, "button", 17, _forTrack016);
       \u0275\u0275elementEnd()();
       \u0275\u0275template(27, PsychologistApplicationsComponent_Conditional_27_Template, 5, 0, "div", 18)(28, PsychologistApplicationsComponent_Conditional_28_Template, 8, 0, "div", 19)(29, PsychologistApplicationsComponent_Conditional_29_Template, 10, 1, "div", 19)(30, PsychologistApplicationsComponent_Conditional_30_Template, 3, 0, "div", 20);
       \u0275\u0275elementEnd()();
@@ -50847,7 +51077,7 @@ var PsychologistApplicationsComponent = class _PsychologistApplicationsComponent
 })();
 
 // src/app/modules/psychologist-tools/pages/psychologist-sessions/psychologist-sessions.component.ts
-var _forTrack016 = ($index, $item) => $item.value;
+var _forTrack017 = ($index, $item) => $item.value;
 var _forTrack17 = ($index, $item) => $item.id;
 function PsychologistSessionsComponent_For_14_Template(rf, ctx) {
   if (rf & 1) {
@@ -51124,7 +51354,7 @@ var PsychologistSessionsComponent = class _PsychologistSessionsComponent {
       \u0275\u0275text(10, "Your confirmed and past sessions with clients");
       \u0275\u0275elementEnd()()();
       \u0275\u0275elementStart(11, "div", 6)(12, "div", 7);
-      \u0275\u0275repeaterCreate(13, PsychologistSessionsComponent_For_14_Template, 6, 4, "button", 8, _forTrack016);
+      \u0275\u0275repeaterCreate(13, PsychologistSessionsComponent_For_14_Template, 6, 4, "button", 8, _forTrack017);
       \u0275\u0275elementEnd()();
       \u0275\u0275elementStart(15, "div", 9);
       \u0275\u0275template(16, PsychologistSessionsComponent_Conditional_16_Template, 2, 0, "div", 10)(17, PsychologistSessionsComponent_Conditional_17_Template, 5, 0, "div", 11)(18, PsychologistSessionsComponent_Conditional_18_Template, 3, 0, "div", 12);
@@ -51251,7 +51481,7 @@ var PsychologistSessionsComponent = class _PsychologistSessionsComponent {
 // src/app/modules/psychologist-tools/pages/psychologist-past-sessions/psychologist-past-sessions.component.ts
 var _c031 = (a0, a1, a2, a3) => ({ "text-gray-400": a0, "text-yellow-600": a1, "text-[var(--color-success)]": a2, "text-red-500": a3 });
 var _c118 = (a0, a1, a2) => ({ "bg-blue-100 text-blue-700": a0, "bg-green-100 text-green-700": a1, "bg-red-100 text-red-700": a2 });
-var _forTrack017 = ($index, $item) => $item.id;
+var _forTrack018 = ($index, $item) => $item.id;
 function PsychologistPastSessionsComponent_Conditional_12_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "div", 7);
@@ -51376,7 +51606,7 @@ function PsychologistPastSessionsComponent_Conditional_14_Conditional_0_Conditio
   if (rf & 1) {
     \u0275\u0275elementStart(0, "div", 39);
     \u0275\u0275template(1, PsychologistPastSessionsComponent_Conditional_14_Conditional_0_Conditional_49_Conditional_1_Template, 2, 0, "p", 45);
-    \u0275\u0275repeaterCreate(2, PsychologistPastSessionsComponent_Conditional_14_Conditional_0_Conditional_49_For_3_Template, 9, 11, "div", 46, _forTrack017);
+    \u0275\u0275repeaterCreate(2, PsychologistPastSessionsComponent_Conditional_14_Conditional_0_Conditional_49_For_3_Template, 9, 11, "div", 46, _forTrack018);
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
@@ -51418,7 +51648,7 @@ function PsychologistPastSessionsComponent_Conditional_14_Conditional_0_Conditio
   if (rf & 1) {
     \u0275\u0275elementStart(0, "div", 39);
     \u0275\u0275template(1, PsychologistPastSessionsComponent_Conditional_14_Conditional_0_Conditional_61_Conditional_1_Template, 2, 0, "p", 45);
-    \u0275\u0275repeaterCreate(2, PsychologistPastSessionsComponent_Conditional_14_Conditional_0_Conditional_61_For_3_Template, 6, 10, "div", 46, _forTrack017);
+    \u0275\u0275repeaterCreate(2, PsychologistPastSessionsComponent_Conditional_14_Conditional_0_Conditional_61_For_3_Template, 6, 10, "div", 46, _forTrack018);
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
@@ -51466,7 +51696,7 @@ function PsychologistPastSessionsComponent_Conditional_14_Conditional_0_Conditio
   if (rf & 1) {
     \u0275\u0275elementStart(0, "div", 41);
     \u0275\u0275template(1, PsychologistPastSessionsComponent_Conditional_14_Conditional_0_Conditional_73_Conditional_1_Template, 2, 0, "p", 53);
-    \u0275\u0275repeaterCreate(2, PsychologistPastSessionsComponent_Conditional_14_Conditional_0_Conditional_73_For_3_Template, 8, 7, "div", 54, _forTrack017);
+    \u0275\u0275repeaterCreate(2, PsychologistPastSessionsComponent_Conditional_14_Conditional_0_Conditional_73_For_3_Template, 8, 7, "div", 54, _forTrack018);
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
@@ -51684,7 +51914,7 @@ function PsychologistPastSessionsComponent_Conditional_14_Conditional_1_Conditio
 function PsychologistPastSessionsComponent_Conditional_14_Conditional_1_Conditional_5_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "div", 61);
-    \u0275\u0275repeaterCreate(1, PsychologistPastSessionsComponent_Conditional_14_Conditional_1_Conditional_5_For_2_Template, 18, 18, "button", 62, _forTrack017);
+    \u0275\u0275repeaterCreate(1, PsychologistPastSessionsComponent_Conditional_14_Conditional_1_Conditional_5_For_2_Template, 18, 18, "button", 62, _forTrack018);
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
@@ -52159,7 +52389,7 @@ var PsychologistPastSessionsComponent = class _PsychologistPastSessionsComponent
 })();
 
 // src/app/modules/psychologist-tools/pages/psychologist-profile-editor/psychologist-profile-editor.component.ts
-var _forTrack018 = ($index, $item) => $item.id;
+var _forTrack019 = ($index, $item) => $item.id;
 function PsychologistProfileEditorComponent_Conditional_12_Conditional_1_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275text(0, " Visible in the catalog ");
@@ -52237,7 +52467,7 @@ function PsychologistProfileEditorComponent_Conditional_15_Conditional_47_For_2_
 function PsychologistProfileEditorComponent_Conditional_15_Conditional_47_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "div", 35);
-    \u0275\u0275repeaterCreate(1, PsychologistProfileEditorComponent_Conditional_15_Conditional_47_For_2_Template, 2, 2, "button", 85, _forTrack018);
+    \u0275\u0275repeaterCreate(1, PsychologistProfileEditorComponent_Conditional_15_Conditional_47_For_2_Template, 2, 2, "button", 85, _forTrack019);
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
@@ -52403,7 +52633,7 @@ function PsychologistProfileEditorComponent_Conditional_15_Conditional_154_Condi
 function PsychologistProfileEditorComponent_Conditional_15_Conditional_154_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "div", 80);
-    \u0275\u0275repeaterCreate(1, PsychologistProfileEditorComponent_Conditional_15_Conditional_154_For_2_Template, 2, 1, "span", 88, _forTrack018);
+    \u0275\u0275repeaterCreate(1, PsychologistProfileEditorComponent_Conditional_15_Conditional_154_For_2_Template, 2, 1, "span", 88, _forTrack019);
     \u0275\u0275template(3, PsychologistProfileEditorComponent_Conditional_15_Conditional_154_Conditional_3_Template, 2, 1, "span", 89)(4, PsychologistProfileEditorComponent_Conditional_15_Conditional_154_Conditional_4_Template, 3, 0, "span", 90)(5, PsychologistProfileEditorComponent_Conditional_15_Conditional_154_Conditional_5_Template, 3, 0, "span", 91)(6, PsychologistProfileEditorComponent_Conditional_15_Conditional_154_Conditional_6_Template, 3, 0, "span", 92)(7, PsychologistProfileEditorComponent_Conditional_15_Conditional_154_Conditional_7_Template, 2, 1, "span", 93);
     \u0275\u0275elementEnd();
   }
@@ -53371,7 +53601,7 @@ var PsychologistProfileEditorComponent = class _PsychologistProfileEditorCompone
 })();
 
 // src/app/modules/client-portal/pages/client-sessions/client-sessions.component.ts
-var _forTrack019 = ($index, $item) => $item.value;
+var _forTrack020 = ($index, $item) => $item.value;
 var _forTrack18 = ($index, $item) => $item.id;
 function ClientSessionsComponent_For_14_Template(rf, ctx) {
   if (rf & 1) {
@@ -53646,7 +53876,7 @@ var ClientSessionsComponent = class _ClientSessionsComponent {
       \u0275\u0275text(10, "Your scheduled and past therapy sessions");
       \u0275\u0275elementEnd()()()();
       \u0275\u0275elementStart(11, "div", 7)(12, "div", 8);
-      \u0275\u0275repeaterCreate(13, ClientSessionsComponent_For_14_Template, 6, 4, "button", 9, _forTrack019);
+      \u0275\u0275repeaterCreate(13, ClientSessionsComponent_For_14_Template, 6, 4, "button", 9, _forTrack020);
       \u0275\u0275elementEnd()();
       \u0275\u0275elementStart(15, "div", 10);
       \u0275\u0275template(16, ClientSessionsComponent_Conditional_16_Template, 2, 0, "div", 11)(17, ClientSessionsComponent_Conditional_17_Template, 5, 0, "div", 12)(18, ClientSessionsComponent_Conditional_18_Template, 3, 0, "div", 13);
@@ -54891,7 +55121,7 @@ var _c033 = ["messagesContainer"];
 var _c120 = ["aiMessagesContainer"];
 var _c211 = ["transcriptsContainer"];
 var _c38 = (a0, a1, a2, a3) => ({ "text-gray-400": a0, "text-yellow-600": a1, "text-[var(--color-success)]": a2, "text-red-500": a3 });
-var _forTrack020 = ($index, $item) => $item.id;
+var _forTrack021 = ($index, $item) => $item.id;
 var _forTrack19 = ($index, $item) => $item.key;
 function SessionRoomComponent_Conditional_1_Template(rf, ctx) {
   if (rf & 1) {
@@ -55001,7 +55231,7 @@ function SessionRoomComponent_Conditional_3_Conditional_24_Template(rf, ctx) {
     const _r6 = \u0275\u0275getCurrentView();
     \u0275\u0275elementStart(0, "div", 33, 0);
     \u0275\u0275template(2, SessionRoomComponent_Conditional_3_Conditional_24_Conditional_2_Template, 5, 0, "div", 34);
-    \u0275\u0275repeaterCreate(3, SessionRoomComponent_Conditional_3_Conditional_24_For_4_Template, 8, 11, "div", 35, _forTrack020);
+    \u0275\u0275repeaterCreate(3, SessionRoomComponent_Conditional_3_Conditional_24_For_4_Template, 8, 11, "div", 35, _forTrack021);
     \u0275\u0275elementEnd();
     \u0275\u0275elementStart(5, "div", 36)(6, "div", 37)(7, "textarea", 38);
     \u0275\u0275twoWayListener("ngModelChange", function SessionRoomComponent_Conditional_3_Conditional_24_Template_textarea_ngModelChange_7_listener($event) {
@@ -55126,12 +55356,12 @@ function SessionRoomComponent_Conditional_3_Conditional_25_Conditional_3_Conditi
     \u0275\u0275text(2, "Time range");
     \u0275\u0275elementEnd();
     \u0275\u0275elementStart(3, "div", 56);
-    \u0275\u0275repeaterCreate(4, SessionRoomComponent_Conditional_3_Conditional_25_Conditional_3_Conditional_9_For_5_Template, 2, 2, "button", 57, _forTrack020);
+    \u0275\u0275repeaterCreate(4, SessionRoomComponent_Conditional_3_Conditional_25_Conditional_3_Conditional_9_For_5_Template, 2, 2, "button", 57, _forTrack021);
     \u0275\u0275elementEnd();
     \u0275\u0275elementStart(6, "div", 58);
     \u0275\u0275text(7, "Action");
     \u0275\u0275elementEnd();
-    \u0275\u0275repeaterCreate(8, SessionRoomComponent_Conditional_3_Conditional_25_Conditional_3_Conditional_9_For_9_Template, 8, 3, "button", 59, _forTrack020);
+    \u0275\u0275repeaterCreate(8, SessionRoomComponent_Conditional_3_Conditional_25_Conditional_3_Conditional_9_For_9_Template, 8, 3, "button", 59, _forTrack021);
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
@@ -55258,7 +55488,7 @@ function SessionRoomComponent_Conditional_3_Conditional_25_Template(rf, ctx) {
     });
     \u0275\u0275template(6, SessionRoomComponent_Conditional_3_Conditional_25_Conditional_6_Template, 7, 0, "div", 48);
     \u0275\u0275pipe(7, "keyvalue");
-    \u0275\u0275repeaterCreate(8, SessionRoomComponent_Conditional_3_Conditional_25_For_9_Template, 8, 7, "div", null, _forTrack020);
+    \u0275\u0275repeaterCreate(8, SessionRoomComponent_Conditional_3_Conditional_25_For_9_Template, 8, 7, "div", null, _forTrack021);
     \u0275\u0275repeaterCreate(10, SessionRoomComponent_Conditional_3_Conditional_25_For_11_Template, 1, 1, null, null, _forTrack19);
     \u0275\u0275pipe(12, "keyvalue");
     \u0275\u0275elementEnd()();
@@ -55554,7 +55784,7 @@ function SessionRoomComponent_Conditional_3_Conditional_29_Template(rf, ctx) {
     \u0275\u0275text(9, "close");
     \u0275\u0275elementEnd()()();
     \u0275\u0275elementStart(10, "div", 99);
-    \u0275\u0275repeaterCreate(11, SessionRoomComponent_Conditional_3_Conditional_29_For_12_Template, 8, 5, "button", 100, _forTrack020);
+    \u0275\u0275repeaterCreate(11, SessionRoomComponent_Conditional_3_Conditional_29_For_12_Template, 8, 5, "button", 100, _forTrack021);
     \u0275\u0275elementEnd()();
   }
   if (rf & 2) {
@@ -55599,7 +55829,7 @@ function SessionRoomComponent_Conditional_3_Template(rf, ctx) {
     \u0275\u0275text(17);
     \u0275\u0275elementEnd()()();
     \u0275\u0275elementStart(18, "div", 22)(19, "div", 23)(20, "div", 24);
-    \u0275\u0275repeaterCreate(21, SessionRoomComponent_Conditional_3_For_22_Template, 5, 3, "button", 25, _forTrack020);
+    \u0275\u0275repeaterCreate(21, SessionRoomComponent_Conditional_3_For_22_Template, 5, 3, "button", 25, _forTrack021);
     \u0275\u0275elementEnd();
     \u0275\u0275elementStart(23, "div", 26);
     \u0275\u0275template(24, SessionRoomComponent_Conditional_3_Conditional_24_Template, 11, 5)(25, SessionRoomComponent_Conditional_3_Conditional_25_Template, 13, 6, "div", 27)(26, SessionRoomComponent_Conditional_3_Conditional_26_Template, 2, 1)(27, SessionRoomComponent_Conditional_3_Conditional_27_Template, 20, 5, "div", 26);
@@ -56620,7 +56850,7 @@ var SessionRoomComponent = class _SessionRoomComponent {
 })();
 
 // src/app/modules/admin-tools/pages/admin-payments/admin-payments.component.ts
-var _forTrack021 = ($index, $item) => $item.appointmentId;
+var _forTrack022 = ($index, $item) => $item.appointmentId;
 function AdminPaymentsComponent_Conditional_17_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "span", 11);
@@ -56868,7 +57098,7 @@ function AdminPaymentsComponent_Conditional_29_Conditional_22_For_2_Template(rf,
 function AdminPaymentsComponent_Conditional_29_Conditional_22_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "div", 28);
-    \u0275\u0275repeaterCreate(1, AdminPaymentsComponent_Conditional_29_Conditional_22_For_2_Template, 51, 10, "div", 36, _forTrack021);
+    \u0275\u0275repeaterCreate(1, AdminPaymentsComponent_Conditional_29_Conditional_22_For_2_Template, 51, 10, "div", 36, _forTrack022);
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
@@ -57070,7 +57300,7 @@ function AdminPaymentsComponent_Conditional_30_Conditional_22_For_2_Template(rf,
 function AdminPaymentsComponent_Conditional_30_Conditional_22_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "div", 28);
-    \u0275\u0275repeaterCreate(1, AdminPaymentsComponent_Conditional_30_Conditional_22_For_2_Template, 22, 7, "div", 60, _forTrack021);
+    \u0275\u0275repeaterCreate(1, AdminPaymentsComponent_Conditional_30_Conditional_22_For_2_Template, 22, 7, "div", 60, _forTrack022);
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
@@ -58226,7 +58456,7 @@ var AdminPaymentsComponent = class _AdminPaymentsComponent {
 })();
 
 // src/app/modules/psychologist-tools/pages/psychologist-finances/psychologist-finances.component.ts
-var _forTrack022 = ($index, $item) => $item.appointmentId;
+var _forTrack023 = ($index, $item) => $item.appointmentId;
 function PsychologistFinancesComponent_Conditional_11_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "div", 7);
@@ -58280,7 +58510,7 @@ function PsychologistFinancesComponent_Conditional_12_Conditional_22_For_2_Templ
 function PsychologistFinancesComponent_Conditional_12_Conditional_22_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "div", 22);
-    \u0275\u0275repeaterCreate(1, PsychologistFinancesComponent_Conditional_12_Conditional_22_For_2_Template, 11, 5, "div", 26, _forTrack022);
+    \u0275\u0275repeaterCreate(1, PsychologistFinancesComponent_Conditional_12_Conditional_22_For_2_Template, 11, 5, "div", 26, _forTrack023);
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
@@ -58552,7 +58782,7 @@ function findPractice(slug) {
 }
 
 // src/app/modules/self-help/pages/practices-list/practices-list.component.ts
-var _forTrack023 = ($index, $item) => $item.category;
+var _forTrack024 = ($index, $item) => $item.category;
 var _forTrack110 = ($index, $item) => $item.slug;
 function PracticesListComponent_ng_container_0_For_21_For_5_Template(rf, ctx) {
   if (rf & 1) {
@@ -58646,7 +58876,7 @@ function PracticesListComponent_ng_container_0_Template(rf, ctx) {
     \u0275\u0275text(18);
     \u0275\u0275elementEnd()()();
     \u0275\u0275elementStart(19, "div", 13);
-    \u0275\u0275repeaterCreate(20, PracticesListComponent_ng_container_0_For_21_Template, 6, 1, "section", null, _forTrack023);
+    \u0275\u0275repeaterCreate(20, PracticesListComponent_ng_container_0_For_21_Template, 6, 1, "section", null, _forTrack024);
     \u0275\u0275elementEnd()();
     \u0275\u0275elementContainerEnd();
   }
@@ -60164,7 +60394,7 @@ var BoxBreathingComponent = class _BoxBreathingComponent {
 // src/app/modules/self-help/pages/breathing-478/breathing-478.component.ts
 var _c035 = (a0) => ({ count: a0 });
 var _c122 = (a0, a1) => ({ current: a0, total: a1 });
-var _forTrack024 = ($index, $item) => $item.type;
+var _forTrack025 = ($index, $item) => $item.type;
 function Breathing478Component_ng_container_0_Conditional_22_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275text(0);
@@ -60462,7 +60692,7 @@ function Breathing478Component_ng_container_0_Template(rf, ctx) {
     \u0275\u0275text(64);
     \u0275\u0275elementEnd()();
     \u0275\u0275elementStart(65, "div", 32);
-    \u0275\u0275repeaterCreate(66, Breathing478Component_ng_container_0_For_67_Template, 5, 4, "div", 33, _forTrack024);
+    \u0275\u0275repeaterCreate(66, Breathing478Component_ng_container_0_For_67_Template, 5, 4, "div", 33, _forTrack025);
     \u0275\u0275elementEnd()();
     \u0275\u0275elementStart(68, "div", 10)(69, "h2", 34);
     \u0275\u0275text(70);
@@ -61819,7 +62049,7 @@ var BellyBreathingComponent = class _BellyBreathingComponent {
 
 // src/app/modules/self-help/pages/grounding-54321/grounding-54321.component.ts
 var _c037 = (a0, a1) => ({ current: a0, total: a1 });
-var _forTrack025 = ($index, $item) => $item.key;
+var _forTrack026 = ($index, $item) => $item.key;
 function Grounding54321Component_ng_container_0_Conditional_21_Template(rf, ctx) {
   if (rf & 1) {
     const _r3 = \u0275\u0275getCurrentView();
@@ -61966,7 +62196,7 @@ function Grounding54321Component_ng_container_0_Conditional_22_Template(rf, ctx)
     \u0275\u0275text(1);
     \u0275\u0275elementEnd();
     \u0275\u0275elementStart(2, "div", 24);
-    \u0275\u0275repeaterCreate(3, Grounding54321Component_ng_container_0_Conditional_22_For_4_Template, 3, 3, "button", 25, _forTrack025);
+    \u0275\u0275repeaterCreate(3, Grounding54321Component_ng_container_0_Conditional_22_For_4_Template, 3, 3, "button", 25, _forTrack026);
     \u0275\u0275elementEnd();
     \u0275\u0275elementStart(5, "div", 26)(6, "div", 27)(7, "mat-icon", 28);
     \u0275\u0275text(8);
@@ -62495,7 +62725,7 @@ var Grounding54321Component = class _Grounding54321Component {
 
 // src/app/modules/self-help/pages/body-scan/body-scan.component.ts
 var _c038 = (a0, a1) => ({ current: a0, total: a1 });
-var _forTrack026 = ($index, $item) => $item.key;
+var _forTrack027 = ($index, $item) => $item.key;
 function BodyScanComponent_ng_container_0_Conditional_22_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275text(0);
@@ -62650,7 +62880,7 @@ function BodyScanComponent_ng_container_0_Conditional_49_For_2_Template(rf, ctx)
 function BodyScanComponent_ng_container_0_Conditional_49_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "div", 35);
-    \u0275\u0275repeaterCreate(1, BodyScanComponent_ng_container_0_Conditional_49_For_2_Template, 1, 2, "button", 64, _forTrack026);
+    \u0275\u0275repeaterCreate(1, BodyScanComponent_ng_container_0_Conditional_49_For_2_Template, 1, 2, "button", 64, _forTrack027);
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
@@ -63525,6 +63755,1152 @@ var BodyScanComponent = class _BodyScanComponent {
   (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(BodyScanComponent, { className: "BodyScanComponent", filePath: "src/app/modules/self-help/pages/body-scan/body-scan.component.ts", lineNumber: 40 });
 })();
 
+// src/app/modules/self-help/pages/progressive-muscle/progressive-muscle.component.ts
+var _c039 = (a0, a1) => ({ current: a0, total: a1 });
+var _forTrack028 = ($index, $item) => $item.key;
+function ProgressiveMuscleComponent_ng_container_0_Conditional_22_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275text(0);
+  }
+  if (rf & 2) {
+    const t_r3 = \u0275\u0275nextContext().$implicit;
+    const ctx_r1 = \u0275\u0275nextContext();
+    \u0275\u0275textInterpolate2(" ", t_r3("selfHelp.pmr.getReady"), " ", ctx_r1.prepareCountdown, " ");
+  }
+}
+function ProgressiveMuscleComponent_ng_container_0_Conditional_23_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275text(0);
+  }
+  if (rf & 2) {
+    const t_r3 = \u0275\u0275nextContext().$implicit;
+    const ctx_r1 = \u0275\u0275nextContext();
+    \u0275\u0275textInterpolate2(" ", t_r3("selfHelp.pmr.groups." + ctx_r1.current.key + ".label"), " \u2014 ", ctx_r1.isTensing ? t_r3("selfHelp.pmr.tense") : t_r3("selfHelp.pmr.release"), " ");
+  }
+}
+function ProgressiveMuscleComponent_ng_container_0_Conditional_24_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275text(0);
+  }
+  if (rf & 2) {
+    const t_r3 = \u0275\u0275nextContext().$implicit;
+    \u0275\u0275textInterpolate1(" ", t_r3("selfHelp.pmr.completeTitle"), " ");
+  }
+}
+function ProgressiveMuscleComponent_ng_container_0_Conditional_38_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275namespaceSVG();
+    \u0275\u0275elementStart(0, "g", 48);
+    \u0275\u0275element(1, "ellipse", 25)(2, "ellipse", 26);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(3, "g", 48);
+    \u0275\u0275element(4, "rect", 49)(5, "rect", 50);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(6, "g", 48);
+    \u0275\u0275element(7, "rect", 51);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(8, "g", 48);
+    \u0275\u0275element(9, "rect", 52);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(10, "g", 48);
+    \u0275\u0275element(11, "circle", 53)(12, "circle", 54);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(13, "g", 48);
+    \u0275\u0275element(14, "rect", 55)(15, "rect", 56);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(16, "g", 48);
+    \u0275\u0275element(17, "rect", 57);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(18, "g", 48);
+    \u0275\u0275element(19, "circle", 18);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const ctx_r1 = \u0275\u0275nextContext(2);
+    \u0275\u0275classProp("part--tense", ctx_r1.current.key === "feet" && ctx_r1.isTensing)("part--release", ctx_r1.current.key === "feet" && !ctx_r1.isTensing);
+    \u0275\u0275advance(3);
+    \u0275\u0275classProp("part--tense", ctx_r1.current.key === "legs" && ctx_r1.isTensing)("part--release", ctx_r1.current.key === "legs" && !ctx_r1.isTensing);
+    \u0275\u0275advance(3);
+    \u0275\u0275classProp("part--tense", ctx_r1.current.key === "hips" && ctx_r1.isTensing)("part--release", ctx_r1.current.key === "hips" && !ctx_r1.isTensing);
+    \u0275\u0275advance(2);
+    \u0275\u0275classProp("part--tense", ctx_r1.current.key === "stomach" && ctx_r1.isTensing)("part--release", ctx_r1.current.key === "stomach" && !ctx_r1.isTensing);
+    \u0275\u0275advance(2);
+    \u0275\u0275classProp("part--tense", ctx_r1.current.key === "hands" && ctx_r1.isTensing)("part--release", ctx_r1.current.key === "hands" && !ctx_r1.isTensing);
+    \u0275\u0275advance(3);
+    \u0275\u0275classProp("part--tense", ctx_r1.current.key === "arms" && ctx_r1.isTensing)("part--release", ctx_r1.current.key === "arms" && !ctx_r1.isTensing);
+    \u0275\u0275advance(3);
+    \u0275\u0275classProp("part--tense", ctx_r1.current.key === "shoulders" && ctx_r1.isTensing)("part--release", ctx_r1.current.key === "shoulders" && !ctx_r1.isTensing);
+    \u0275\u0275advance(2);
+    \u0275\u0275classProp("part--tense", ctx_r1.current.key === "face" && ctx_r1.isTensing)("part--release", ctx_r1.current.key === "face" && !ctx_r1.isTensing);
+  }
+}
+function ProgressiveMuscleComponent_ng_container_0_Conditional_39_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "div", 27)(1, "div", 58);
+    \u0275\u0275text(2);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(3, "div", 59);
+    \u0275\u0275text(4);
+    \u0275\u0275elementEnd()();
+  }
+  if (rf & 2) {
+    const t_r3 = \u0275\u0275nextContext().$implicit;
+    const ctx_r1 = \u0275\u0275nextContext();
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate1(" ", t_r3("selfHelp.pmr.getReady"), " ");
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate1(" ", ctx_r1.prepareCountdown, " ");
+  }
+}
+function ProgressiveMuscleComponent_ng_container_0_Conditional_41_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "p", 29);
+    \u0275\u0275text(1);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const t_r3 = \u0275\u0275nextContext().$implicit;
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate1(" ", t_r3("selfHelp.pmr.readyHint"), " ");
+  }
+}
+function ProgressiveMuscleComponent_ng_container_0_Conditional_42_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "mat-icon", 60);
+    \u0275\u0275text(1, " check_circle ");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(2, "h2", 61);
+    \u0275\u0275text(3);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(4, "p", 29);
+    \u0275\u0275text(5);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const t_r3 = \u0275\u0275nextContext().$implicit;
+    \u0275\u0275advance(3);
+    \u0275\u0275textInterpolate1(" ", t_r3("selfHelp.pmr.completeTitle"), " ");
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate1(" ", t_r3("selfHelp.pmr.completeText"), " ");
+  }
+}
+function ProgressiveMuscleComponent_ng_container_0_Conditional_43_Conditional_3_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "span", 64);
+    \u0275\u0275text(1);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const t_r3 = \u0275\u0275nextContext(2).$implicit;
+    const ctx_r1 = \u0275\u0275nextContext();
+    \u0275\u0275property("ngClass", ctx_r1.isTensing ? "text-[var(--pmr-tense)] bg-[var(--pmr-tense)]/12" : "text-[var(--color-success)] bg-[var(--color-mint)]/30");
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate3(" ", ctx_r1.isTensing ? t_r3("selfHelp.pmr.tense") : t_r3("selfHelp.pmr.release"), " \xB7 ", ctx_r1.countdown, "", t_r3("selfHelp.pmr.secShort"), " ");
+  }
+}
+function ProgressiveMuscleComponent_ng_container_0_Conditional_43_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "div", 62)(1, "span", 63);
+    \u0275\u0275text(2);
+    \u0275\u0275elementEnd();
+    \u0275\u0275template(3, ProgressiveMuscleComponent_ng_container_0_Conditional_43_Conditional_3_Template, 2, 4, "span", 64);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(4, "h2", 65);
+    \u0275\u0275text(5);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(6, "p", 66);
+    \u0275\u0275text(7);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const t_r3 = \u0275\u0275nextContext().$implicit;
+    const ctx_r1 = \u0275\u0275nextContext();
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate1(" ", t_r3("selfHelp.pmr.groupStep", \u0275\u0275pureFunction2(4, _c039, ctx_r1.index + 1, ctx_r1.groups.length)), " ");
+    \u0275\u0275advance();
+    \u0275\u0275conditional(ctx_r1.state === "tensing" || ctx_r1.state === "releasing" ? 3 : -1);
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate1(" ", t_r3("selfHelp.pmr.groups." + ctx_r1.current.key + ".label"), " ");
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate1(" ", ctx_r1.isTensing ? t_r3("selfHelp.pmr.groups." + ctx_r1.current.key + ".tense") : t_r3("selfHelp.pmr.groups." + ctx_r1.current.key + ".release"), " ");
+  }
+}
+function ProgressiveMuscleComponent_ng_container_0_Conditional_44_For_2_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r4 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "button", 68);
+    \u0275\u0275listener("click", function ProgressiveMuscleComponent_ng_container_0_Conditional_44_For_2_Template_button_click_0_listener() {
+      const \u0275$index_159_r5 = \u0275\u0275restoreView(_r4).$index;
+      const ctx_r1 = \u0275\u0275nextContext(3);
+      return \u0275\u0275resetView(ctx_r1.goTo(\u0275$index_159_r5));
+    });
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const g_r6 = ctx.$implicit;
+    const \u0275$index_159_r5 = ctx.$index;
+    const t_r3 = \u0275\u0275nextContext(2).$implicit;
+    const ctx_r1 = \u0275\u0275nextContext();
+    \u0275\u0275property("ngClass", \u0275$index_159_r5 === ctx_r1.index ? "w-2.5 h-2.5 bg-[var(--color-success)]" : \u0275$index_159_r5 < ctx_r1.index ? "w-2 h-2 bg-[var(--color-mint)]" : "w-2 h-2 bg-stone-200");
+    \u0275\u0275attribute("aria-label", t_r3("selfHelp.pmr.groups." + g_r6.key + ".label"));
+  }
+}
+function ProgressiveMuscleComponent_ng_container_0_Conditional_44_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "div", 30);
+    \u0275\u0275repeaterCreate(1, ProgressiveMuscleComponent_ng_container_0_Conditional_44_For_2_Template, 1, 2, "button", 67, _forTrack028);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const ctx_r1 = \u0275\u0275nextContext(2);
+    \u0275\u0275advance();
+    \u0275\u0275repeater(ctx_r1.groups);
+  }
+}
+function ProgressiveMuscleComponent_ng_container_0_Conditional_45_Conditional_3_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275text(0);
+  }
+  if (rf & 2) {
+    const t_r3 = \u0275\u0275nextContext(2).$implicit;
+    \u0275\u0275textInterpolate1(" ", t_r3("selfHelp.pmr.completeText"), " ");
+  }
+}
+function ProgressiveMuscleComponent_ng_container_0_Conditional_45_Conditional_4_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275text(0);
+  }
+  if (rf & 2) {
+    const t_r3 = \u0275\u0275nextContext(2).$implicit;
+    \u0275\u0275textInterpolate1(" ", t_r3("selfHelp.pmr.timeLeft"), " ");
+  }
+}
+function ProgressiveMuscleComponent_ng_container_0_Conditional_45_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "div", 31)(1, "div", 69)(2, "span");
+    \u0275\u0275template(3, ProgressiveMuscleComponent_ng_container_0_Conditional_45_Conditional_3_Template, 1, 1)(4, ProgressiveMuscleComponent_ng_container_0_Conditional_45_Conditional_4_Template, 1, 1);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(5, "span", 70);
+    \u0275\u0275text(6);
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(7, "div", 71);
+    \u0275\u0275element(8, "div", 72);
+    \u0275\u0275elementEnd()();
+  }
+  if (rf & 2) {
+    const ctx_r1 = \u0275\u0275nextContext(2);
+    \u0275\u0275advance(3);
+    \u0275\u0275conditional(ctx_r1.state === "done" ? 3 : 4);
+    \u0275\u0275advance(3);
+    \u0275\u0275textInterpolate1(" ", ctx_r1.state === "done" ? "0:00" : ctx_r1.timeRemaining, " ");
+    \u0275\u0275advance(2);
+    \u0275\u0275styleProp("width", (ctx_r1.state === "done" ? 1 : ctx_r1.progress) * 100, "%");
+  }
+}
+function ProgressiveMuscleComponent_ng_container_0_Conditional_47_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r7 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "button", 73);
+    \u0275\u0275listener("click", function ProgressiveMuscleComponent_ng_container_0_Conditional_47_Template_button_click_0_listener() {
+      \u0275\u0275restoreView(_r7);
+      const ctx_r1 = \u0275\u0275nextContext(2);
+      return \u0275\u0275resetView(ctx_r1.prev());
+    });
+    \u0275\u0275elementStart(1, "mat-icon", 35);
+    \u0275\u0275text(2, "skip_previous");
+    \u0275\u0275elementEnd()();
+  }
+  if (rf & 2) {
+    const t_r3 = \u0275\u0275nextContext().$implicit;
+    const ctx_r1 = \u0275\u0275nextContext();
+    \u0275\u0275property("disabled", ctx_r1.isFirst);
+    \u0275\u0275attribute("aria-label", t_r3("selfHelp.pmr.prev"));
+  }
+}
+function ProgressiveMuscleComponent_ng_container_0_Conditional_51_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275text(0);
+  }
+  if (rf & 2) {
+    const t_r3 = \u0275\u0275nextContext().$implicit;
+    \u0275\u0275textInterpolate1(" ", t_r3("selfHelp.pmr.resume"), " ");
+  }
+}
+function ProgressiveMuscleComponent_ng_container_0_Conditional_52_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275text(0);
+  }
+  if (rf & 2) {
+    const t_r3 = \u0275\u0275nextContext().$implicit;
+    \u0275\u0275textInterpolate1(" ", t_r3("selfHelp.pause"), " ");
+  }
+}
+function ProgressiveMuscleComponent_ng_container_0_Conditional_53_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275text(0);
+  }
+  if (rf & 2) {
+    const t_r3 = \u0275\u0275nextContext().$implicit;
+    \u0275\u0275textInterpolate1(" ", t_r3("selfHelp.pmr.restart"), " ");
+  }
+}
+function ProgressiveMuscleComponent_ng_container_0_Conditional_54_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275text(0);
+  }
+  if (rf & 2) {
+    const t_r3 = \u0275\u0275nextContext().$implicit;
+    \u0275\u0275textInterpolate1(" ", t_r3("selfHelp.pmr.begin"), " ");
+  }
+}
+function ProgressiveMuscleComponent_ng_container_0_Conditional_55_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r8 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "button", 74);
+    \u0275\u0275listener("click", function ProgressiveMuscleComponent_ng_container_0_Conditional_55_Template_button_click_0_listener() {
+      \u0275\u0275restoreView(_r8);
+      const ctx_r1 = \u0275\u0275nextContext(2);
+      return \u0275\u0275resetView(ctx_r1.next());
+    });
+    \u0275\u0275elementStart(1, "mat-icon", 35);
+    \u0275\u0275text(2, "skip_next");
+    \u0275\u0275elementEnd()();
+  }
+  if (rf & 2) {
+    const t_r3 = \u0275\u0275nextContext().$implicit;
+    \u0275\u0275attribute("aria-label", t_r3("selfHelp.pmr.next"));
+  }
+}
+function ProgressiveMuscleComponent_ng_container_0_Conditional_56_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r9 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "button", 75);
+    \u0275\u0275listener("click", function ProgressiveMuscleComponent_ng_container_0_Conditional_56_Template_button_click_0_listener() {
+      \u0275\u0275restoreView(_r9);
+      const ctx_r1 = \u0275\u0275nextContext(2);
+      return \u0275\u0275resetView(ctx_r1.reset());
+    });
+    \u0275\u0275elementStart(1, "mat-icon", 35);
+    \u0275\u0275text(2, "restart_alt");
+    \u0275\u0275elementEnd();
+    \u0275\u0275text(3);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const t_r3 = \u0275\u0275nextContext().$implicit;
+    const ctx_r1 = \u0275\u0275nextContext();
+    \u0275\u0275property("disabled", ctx_r1.state === "idle");
+    \u0275\u0275advance(3);
+    \u0275\u0275textInterpolate1(" ", t_r3("selfHelp.reset"), " ");
+  }
+}
+function ProgressiveMuscleComponent_ng_container_0_For_68_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r10 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "button", 76);
+    \u0275\u0275listener("click", function ProgressiveMuscleComponent_ng_container_0_For_68_Template_button_click_0_listener() {
+      const s_r11 = \u0275\u0275restoreView(_r10).$implicit;
+      const ctx_r1 = \u0275\u0275nextContext(2);
+      return \u0275\u0275resetView(ctx_r1.setTense(s_r11));
+    });
+    \u0275\u0275elementStart(1, "span", 77);
+    \u0275\u0275text(2);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(3, "span", 78);
+    \u0275\u0275text(4);
+    \u0275\u0275elementEnd()();
+  }
+  if (rf & 2) {
+    const s_r11 = ctx.$implicit;
+    const t_r3 = \u0275\u0275nextContext().$implicit;
+    const ctx_r1 = \u0275\u0275nextContext();
+    \u0275\u0275property("disabled", ctx_r1.isActiveSession)("ngClass", ctx_r1.tenseSeconds === s_r11 ? "border-[var(--color-success)] bg-[var(--color-mint)]/25 text-[var(--color-primary)]" : "border-transparent bg-stone-100 text-stone-600");
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate2("", s_r11, "", t_r3("selfHelp.pmr.secShort"), "");
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate1(" ", t_r3("selfHelp.pmr.tense"), " ");
+  }
+}
+function ProgressiveMuscleComponent_ng_container_0_For_74_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "li", 46)(1, "span", 79);
+    \u0275\u0275text(2);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(3, "p", 11);
+    \u0275\u0275text(4);
+    \u0275\u0275elementEnd()();
+  }
+  if (rf & 2) {
+    const step_r12 = ctx.$implicit;
+    const $index_r13 = ctx.$index;
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate1(" ", $index_r13 + 1, " ");
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate(step_r12);
+  }
+}
+function ProgressiveMuscleComponent_ng_container_0_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r1 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementContainerStart(0);
+    \u0275\u0275elementStart(1, "div", 1)(2, "div", 2)(3, "div", 3)(4, "button", 4);
+    \u0275\u0275listener("click", function ProgressiveMuscleComponent_ng_container_0_Template_button_click_4_listener() {
+      \u0275\u0275restoreView(_r1);
+      const ctx_r1 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r1.goBack());
+    });
+    \u0275\u0275elementStart(5, "mat-icon");
+    \u0275\u0275text(6, "arrow_back");
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(7, "div", 3)(8, "div", 5)(9, "mat-icon", 6);
+    \u0275\u0275text(10, "self_improvement");
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(11, "div")(12, "h1", 7);
+    \u0275\u0275text(13);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(14, "p", 8);
+    \u0275\u0275text(15);
+    \u0275\u0275elementEnd()()()()();
+    \u0275\u0275elementStart(16, "div", 9)(17, "div", 10)(18, "p", 11);
+    \u0275\u0275text(19);
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(20, "div", 12)(21, "p", 13);
+    \u0275\u0275template(22, ProgressiveMuscleComponent_ng_container_0_Conditional_22_Template, 1, 2)(23, ProgressiveMuscleComponent_ng_container_0_Conditional_23_Template, 1, 2)(24, ProgressiveMuscleComponent_ng_container_0_Conditional_24_Template, 1, 1);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(25, "div", 14)(26, "div", 15);
+    \u0275\u0275namespaceSVG();
+    \u0275\u0275elementStart(27, "svg", 16)(28, "g", 17);
+    \u0275\u0275element(29, "circle", 18)(30, "rect", 19)(31, "rect", 20)(32, "rect", 21)(33, "rect", 22)(34, "rect", 23)(35, "rect", 24)(36, "ellipse", 25)(37, "ellipse", 26);
+    \u0275\u0275elementEnd();
+    \u0275\u0275template(38, ProgressiveMuscleComponent_ng_container_0_Conditional_38_Template, 20, 32);
+    \u0275\u0275elementEnd();
+    \u0275\u0275template(39, ProgressiveMuscleComponent_ng_container_0_Conditional_39_Template, 5, 2, "div", 27);
+    \u0275\u0275elementEnd();
+    \u0275\u0275namespaceHTML();
+    \u0275\u0275elementStart(40, "div", 28);
+    \u0275\u0275template(41, ProgressiveMuscleComponent_ng_container_0_Conditional_41_Template, 2, 1, "p", 29)(42, ProgressiveMuscleComponent_ng_container_0_Conditional_42_Template, 6, 2)(43, ProgressiveMuscleComponent_ng_container_0_Conditional_43_Template, 8, 7);
+    \u0275\u0275elementEnd()();
+    \u0275\u0275template(44, ProgressiveMuscleComponent_ng_container_0_Conditional_44_Template, 3, 0, "div", 30)(45, ProgressiveMuscleComponent_ng_container_0_Conditional_45_Template, 9, 4, "div", 31);
+    \u0275\u0275elementStart(46, "div", 32);
+    \u0275\u0275template(47, ProgressiveMuscleComponent_ng_container_0_Conditional_47_Template, 3, 2, "button", 33);
+    \u0275\u0275elementStart(48, "button", 34);
+    \u0275\u0275listener("click", function ProgressiveMuscleComponent_ng_container_0_Template_button_click_48_listener() {
+      \u0275\u0275restoreView(_r1);
+      const ctx_r1 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r1.toggle());
+    });
+    \u0275\u0275elementStart(49, "mat-icon", 35);
+    \u0275\u0275text(50);
+    \u0275\u0275elementEnd();
+    \u0275\u0275template(51, ProgressiveMuscleComponent_ng_container_0_Conditional_51_Template, 1, 1)(52, ProgressiveMuscleComponent_ng_container_0_Conditional_52_Template, 1, 1)(53, ProgressiveMuscleComponent_ng_container_0_Conditional_53_Template, 1, 1)(54, ProgressiveMuscleComponent_ng_container_0_Conditional_54_Template, 1, 1);
+    \u0275\u0275elementEnd();
+    \u0275\u0275template(55, ProgressiveMuscleComponent_ng_container_0_Conditional_55_Template, 3, 1, "button", 36)(56, ProgressiveMuscleComponent_ng_container_0_Conditional_56_Template, 4, 2, "button", 37);
+    \u0275\u0275elementStart(57, "button", 38);
+    \u0275\u0275listener("click", function ProgressiveMuscleComponent_ng_container_0_Template_button_click_57_listener() {
+      \u0275\u0275restoreView(_r1);
+      const ctx_r1 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r1.toggleSound());
+    });
+    \u0275\u0275elementStart(58, "mat-icon", 35);
+    \u0275\u0275text(59);
+    \u0275\u0275elementEnd()()()();
+    \u0275\u0275elementStart(60, "div", 10)(61, "div", 39)(62, "h2", 40);
+    \u0275\u0275text(63);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(64, "span", 41);
+    \u0275\u0275text(65);
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(66, "div", 42);
+    \u0275\u0275repeaterCreate(67, ProgressiveMuscleComponent_ng_container_0_For_68_Template, 5, 5, "button", 43, \u0275\u0275repeaterTrackByIdentity);
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(69, "div", 10)(70, "h2", 44);
+    \u0275\u0275text(71);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(72, "ol", 45);
+    \u0275\u0275repeaterCreate(73, ProgressiveMuscleComponent_ng_container_0_For_74_Template, 5, 2, "li", 46, \u0275\u0275repeaterTrackByIndex);
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(75, "p", 47);
+    \u0275\u0275text(76);
+    \u0275\u0275elementEnd()()();
+    \u0275\u0275elementContainerEnd();
+  }
+  if (rf & 2) {
+    const t_r3 = ctx.$implicit;
+    const ctx_r1 = \u0275\u0275nextContext();
+    \u0275\u0275advance(4);
+    \u0275\u0275attribute("aria-label", t_r3("common.back"));
+    \u0275\u0275advance(9);
+    \u0275\u0275textInterpolate1(" ", t_r3("selfHelp.items.progressive-muscle.title"), " ");
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate2(" ", t_r3("selfHelp.category.relaxation"), " \xB7 ", t_r3("selfHelp.pmr.pattern"), " ");
+    \u0275\u0275advance(4);
+    \u0275\u0275textInterpolate1(" ", t_r3("selfHelp.items.progressive-muscle.intro"), " ");
+    \u0275\u0275advance(3);
+    \u0275\u0275conditional(ctx_r1.state === "prepare" ? 22 : ctx_r1.isActiveSession ? 23 : ctx_r1.state === "done" ? 24 : -1);
+    \u0275\u0275advance(4);
+    \u0275\u0275classProp("is-tensing", ctx_r1.state === "tensing");
+    \u0275\u0275advance(2);
+    \u0275\u0275classProp("silhouette--active", ctx_r1.isActiveSession);
+    \u0275\u0275advance(10);
+    \u0275\u0275conditional(ctx_r1.isActiveSession ? 38 : -1);
+    \u0275\u0275advance();
+    \u0275\u0275conditional(ctx_r1.state === "prepare" ? 39 : -1);
+    \u0275\u0275advance(2);
+    \u0275\u0275conditional(ctx_r1.state === "idle" ? 41 : ctx_r1.state === "done" ? 42 : 43);
+    \u0275\u0275advance(3);
+    \u0275\u0275conditional(ctx_r1.isActiveSession ? 44 : -1);
+    \u0275\u0275advance();
+    \u0275\u0275conditional(ctx_r1.isActiveSession || ctx_r1.state === "done" ? 45 : -1);
+    \u0275\u0275advance(2);
+    \u0275\u0275conditional(ctx_r1.isActiveSession ? 47 : -1);
+    \u0275\u0275advance(3);
+    \u0275\u0275textInterpolate(ctx_r1.isRunning ? "pause" : "play_arrow");
+    \u0275\u0275advance();
+    \u0275\u0275conditional(ctx_r1.state === "paused" ? 51 : ctx_r1.isRunning ? 52 : ctx_r1.state === "done" ? 53 : 54);
+    \u0275\u0275advance(4);
+    \u0275\u0275conditional(ctx_r1.isActiveSession ? 55 : 56);
+    \u0275\u0275advance(2);
+    \u0275\u0275property("ngClass", ctx_r1.soundOn ? "text-[var(--color-blue)] bg-[var(--color-sky)]/15" : "text-stone-500");
+    \u0275\u0275attribute("aria-pressed", ctx_r1.soundOn)("aria-label", t_r3("selfHelp.pmr.sound"));
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate(ctx_r1.soundOn ? "volume_up" : "volume_off");
+    \u0275\u0275advance(4);
+    \u0275\u0275textInterpolate1(" ", t_r3("selfHelp.pmr.hold"), " ");
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate(t_r3("selfHelp.pmr.holdHint"));
+    \u0275\u0275advance(2);
+    \u0275\u0275repeater(ctx_r1.tenseOptions);
+    \u0275\u0275advance(4);
+    \u0275\u0275textInterpolate1(" ", t_r3("selfHelp.steps"), " ");
+    \u0275\u0275advance(2);
+    \u0275\u0275repeater(t_r3("selfHelp.items.progressive-muscle.steps"));
+    \u0275\u0275advance(3);
+    \u0275\u0275textInterpolate1(" ", t_r3("selfHelp.disclaimer"), " ");
+  }
+}
+var ProgressiveMuscleComponent = class _ProgressiveMuscleComponent {
+  router;
+  groups = [
+    { key: "feet" },
+    { key: "legs" },
+    { key: "hips" },
+    { key: "stomach" },
+    { key: "hands" },
+    { key: "arms" },
+    { key: "shoulders" },
+    { key: "face" }
+  ];
+  /** How long to hold the tension, in seconds — the user can pick. */
+  tenseOptions = [4, 5, 7];
+  tenseSeconds = 5;
+  /** Resting/release time is fixed and longer than the tension. */
+  releaseSeconds = 12;
+  /** Seconds of settle-in before the first group. */
+  prepareSeconds = 3;
+  state = "idle";
+  /** Index into `groups` of the muscle group in focus. */
+  index = 0;
+  phase = "tense";
+  /** Whole-second countdown left in the current phase. */
+  countdown = 0;
+  prepareCountdown = this.prepareSeconds;
+  soundOn = false;
+  rafId = 0;
+  phaseStart = 0;
+  prepareStart = 0;
+  /** Seconds elapsed in the current phase — drives the ring + progress bar. */
+  phaseElapsed = 0;
+  pausedPhaseElapsed = 0;
+  audioCtx;
+  constructor(router) {
+    this.router = router;
+  }
+  // ── Derived view state ──────────────────────────────────────────────────
+  get current() {
+    return this.groups[this.index];
+  }
+  get isRunning() {
+    return this.state === "tensing" || this.state === "releasing";
+  }
+  get isActiveSession() {
+    return this.isRunning || this.state === "paused";
+  }
+  get isTensing() {
+    return this.phase === "tense";
+  }
+  get isFirst() {
+    return this.index === 0;
+  }
+  get isLast() {
+    return this.index === this.groups.length - 1;
+  }
+  /** Length of the phase currently running. */
+  get phaseSeconds() {
+    return this.phase === "tense" ? this.tenseSeconds : this.releaseSeconds;
+  }
+  get groupSeconds() {
+    return this.tenseSeconds + this.releaseSeconds;
+  }
+  get totalSeconds() {
+    return this.groups.length * this.groupSeconds;
+  }
+  /** Seconds elapsed across the whole session. */
+  get elapsedTotal() {
+    const before = this.index * this.groupSeconds;
+    const within = (this.phase === "release" ? this.tenseSeconds : 0) + this.phaseElapsed;
+    return before + within;
+  }
+  /** 0..1 fraction of the current phase completed — drives the timer ring. */
+  get phaseProgress() {
+    return Math.min(this.phaseElapsed / this.phaseSeconds, 1);
+  }
+  /** 0..1 fraction of the whole session completed. */
+  get progress() {
+    return Math.min(this.elapsedTotal / this.totalSeconds, 1);
+  }
+  /** Time left across the whole session as m:ss. */
+  get timeRemaining() {
+    const left = Math.max(this.totalSeconds - this.elapsedTotal, 0);
+    const whole = Math.ceil(left);
+    const m = Math.floor(whole / 60);
+    const s = whole % 60;
+    return `${m}:${s.toString().padStart(2, "0")}`;
+  }
+  // ── Controls ────────────────────────────────────────────────────────────
+  toggle() {
+    switch (this.state) {
+      case "tensing":
+      case "releasing":
+        this.pause();
+        break;
+      case "paused":
+        this.resume();
+        break;
+      default:
+        this.startPrepare();
+    }
+  }
+  reset() {
+    cancelAnimationFrame(this.rafId);
+    this.state = "idle";
+    this.index = 0;
+    this.phase = "tense";
+    this.countdown = 0;
+    this.phaseElapsed = 0;
+    this.prepareCountdown = this.prepareSeconds;
+  }
+  /** Hold length can only change between sessions, to keep the pacing steady. */
+  setTense(seconds) {
+    if (this.isActiveSession || this.tenseSeconds === seconds)
+      return;
+    this.tenseSeconds = seconds;
+  }
+  /** Skip to the next group's tension phase by hand; keeps the session going. */
+  next() {
+    if (this.isLast) {
+      this.finish();
+      return;
+    }
+    this.jumpTo(this.index + 1);
+  }
+  prev() {
+    if (this.isFirst)
+      return;
+    this.jumpTo(this.index - 1);
+  }
+  goTo(i) {
+    if (!this.isActiveSession)
+      return;
+    this.jumpTo(i);
+  }
+  toggleSound() {
+    this.soundOn = !this.soundOn;
+    if (this.soundOn && !this.audioCtx) {
+      const Ctx = window.AudioContext || window.webkitAudioContext;
+      if (Ctx)
+        this.audioCtx = new Ctx();
+    }
+    this.audioCtx?.resume();
+  }
+  goBack() {
+    this.router.navigate(["/practices"]);
+  }
+  // ── Engine ──────────────────────────────────────────────────────────────
+  startPrepare() {
+    this.state = "prepare";
+    this.index = 0;
+    this.phase = "tense";
+    this.phaseElapsed = 0;
+    this.prepareCountdown = this.prepareSeconds;
+    this.prepareStart = performance.now();
+    this.loopPrepare();
+  }
+  loopPrepare = () => {
+    const elapsed = (performance.now() - this.prepareStart) / 1e3;
+    this.prepareCountdown = Math.max(Math.ceil(this.prepareSeconds - elapsed), 1);
+    if (elapsed >= this.prepareSeconds) {
+      this.enterPhase(0, "tense");
+      this.loop();
+      return;
+    }
+    this.rafId = requestAnimationFrame(this.loopPrepare);
+  };
+  /** Restart the engine on group `i`, beginning with the tension phase. */
+  jumpTo(i) {
+    cancelAnimationFrame(this.rafId);
+    this.enterPhase(i, "tense");
+    this.loop();
+  }
+  enterPhase(i, phase) {
+    this.index = i;
+    this.phase = phase;
+    this.state = phase === "tense" ? "tensing" : "releasing";
+    this.phaseStart = performance.now();
+    this.phaseElapsed = 0;
+    this.countdown = this.phaseSeconds;
+    this.playCue(phase);
+  }
+  loop = () => {
+    this.phaseElapsed = (performance.now() - this.phaseStart) / 1e3;
+    this.countdown = Math.max(Math.ceil(this.phaseSeconds - this.phaseElapsed), 1);
+    if (this.phaseElapsed >= this.phaseSeconds) {
+      if (this.phase === "tense") {
+        this.enterPhase(this.index, "release");
+      } else if (this.index + 1 < this.groups.length) {
+        this.enterPhase(this.index + 1, "tense");
+      } else {
+        this.finish();
+        return;
+      }
+    }
+    this.rafId = requestAnimationFrame(this.loop);
+  };
+  pause() {
+    this.pausedPhaseElapsed = (performance.now() - this.phaseStart) / 1e3;
+    cancelAnimationFrame(this.rafId);
+    this.state = "paused";
+  }
+  resume() {
+    this.state = this.phase === "tense" ? "tensing" : "releasing";
+    this.phaseStart = performance.now() - this.pausedPhaseElapsed * 1e3;
+    this.loop();
+  }
+  finish() {
+    cancelAnimationFrame(this.rafId);
+    this.state = "done";
+    this.index = this.groups.length - 1;
+    this.phase = "release";
+    this.phaseElapsed = this.releaseSeconds;
+  }
+  /**
+   * Soft sine cue marking a phase change — a brighter note as the muscles
+   * tense, a lower, gentler one as they release.
+   */
+  playCue(phase) {
+    const ctx = this.audioCtx;
+    if (!this.soundOn || !ctx)
+      return;
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = "sine";
+    osc.frequency.value = phase === "tense" ? 528 : 396;
+    const now = ctx.currentTime;
+    gain.gain.setValueAtTime(0, now);
+    gain.gain.linearRampToValueAtTime(0.1, now + 0.05);
+    gain.gain.exponentialRampToValueAtTime(1e-4, now + 0.9);
+    osc.connect(gain).connect(ctx.destination);
+    osc.start(now);
+    osc.stop(now + 0.92);
+  }
+  ngOnDestroy() {
+    cancelAnimationFrame(this.rafId);
+    this.audioCtx?.close();
+  }
+  static \u0275fac = function ProgressiveMuscleComponent_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || _ProgressiveMuscleComponent)(\u0275\u0275directiveInject(Router));
+  };
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _ProgressiveMuscleComponent, selectors: [["app-progressive-muscle"]], standalone: false, decls: 1, vars: 0, consts: [[4, "transloco"], [1, "min-h-screen", "bg-[#FAF8F3]", "px-4", "py-8", "md:px-8"], [1, "max-w-3xl", "mx-auto", "mb-7"], [1, "flex", "items-center", "gap-3"], [1, "w-10", "h-10", "flex", "items-center", "justify-center", "rounded-full", "text-stone-500", "hover:bg-stone-200/60", "hover:text-[var(--color-primary)]", "transition-colors", 3, "click"], [1, "w-12", "h-12", "rounded-2xl", "bg-[var(--color-primary)]/10", "flex", "items-center", "justify-center", "shrink-0"], [1, "text-[var(--color-primary)]"], [1, "text-2xl", "font-semibold", "tracking-[-0.01em]", "text-[var(--color-primary)]"], [1, "text-sm", "font-medium", "text-stone-500"], [1, "max-w-3xl", "mx-auto", "space-y-4"], [1, "bg-white", "rounded-2xl", "border", "border-stone-200", "shadow-sm", "p-6"], [1, "text-[0.95rem]", "text-stone-700", "leading-relaxed"], [1, "bg-white", "rounded-2xl", "border", "border-stone-200", "shadow-sm", "px-6", "pt-7", "pb-6"], ["aria-live", "polite", 1, "sr-only"], [1, "flex", "flex-col", "items-center"], [1, "relative", "w-[min(46vw,168px)]"], ["viewBox", "0 0 100 200", "aria-hidden", "true", 1, "w-full", "h-auto", "overflow-visible"], [1, "silhouette"], ["cx", "50", "cy", "24", "r", "12"], ["x", "45", "y", "34", "width", "10", "height", "10", "rx", "4"], ["x", "33", "y", "42", "width", "34", "height", "74", "rx", "15"], ["x", "20", "y", "48", "width", "11", "height", "62", "rx", "5.5"], ["x", "69", "y", "48", "width", "11", "height", "62", "rx", "5.5"], ["x", "37", "y", "110", "width", "11", "height", "80", "rx", "5.5"], ["x", "52", "y", "110", "width", "11", "height", "80", "rx", "5.5"], ["cx", "42.5", "cy", "192", "rx", "8", "ry", "4"], ["cx", "57.5", "cy", "192", "rx", "8", "ry", "4"], [1, "absolute", "inset-0", "flex", "flex-col", "items-center", "justify-center", "text-center", "pointer-events-none"], [1, "text-center", "mt-6", "min-h-[124px]", "flex", "flex-col", "items-center", "justify-start"], [1, "text-[0.95rem]", "text-stone-600", "leading-relaxed", "max-w-md"], [1, "flex", "items-center", "justify-center", "gap-2", "mt-5"], [1, "w-full", "max-w-[320px]", "mx-auto", "mt-6"], [1, "flex", "items-center", "justify-center", "gap-3", "mt-7"], [1, "w-11", "h-11", "flex", "items-center", "justify-center", "rounded-full", "bg-stone-100", "text-stone-700", "hover:bg-stone-200", "transition-colors", "disabled:opacity-40", "disabled:cursor-not-allowed", 3, "disabled"], [1, "flex", "items-center", "gap-2", "px-7", "py-3", "rounded-full", "bg-[var(--color-success)]", "text-white", "text-sm", "font-semibold", "shadow-sm", "hover:bg-[#2e6a04]", "transition-colors", 3, "click"], [1, "text-lg"], [1, "w-11", "h-11", "flex", "items-center", "justify-center", "rounded-full", "bg-stone-100", "text-stone-700", "hover:bg-stone-200", "transition-colors"], [1, "flex", "items-center", "gap-2", "px-5", "py-3", "rounded-full", "bg-stone-100", "text-stone-700", "text-sm", "font-semibold", "hover:bg-stone-200", "transition-colors", "disabled:opacity-40", "disabled:cursor-not-allowed", 3, "disabled"], [1, "w-11", "h-11", "flex", "items-center", "justify-center", "rounded-full", "hover:bg-stone-100", "transition-colors", 3, "click", "ngClass"], [1, "flex", "items-center", "justify-between", "mb-4"], [1, "text-base", "font-semibold", "text-[var(--color-primary)]"], [1, "text-xs", "font-medium", "text-stone-500"], [1, "grid", "grid-cols-3", "gap-2.5"], [1, "flex", "flex-col", "items-center", "py-3", "rounded-xl", "border", "text-sm", "font-semibold", "transition-all", "disabled:opacity-40", "disabled:cursor-not-allowed", 3, "disabled", "ngClass"], [1, "text-base", "font-semibold", "text-[var(--color-primary)]", "mb-4"], [1, "space-y-3.5"], [1, "flex", "gap-3.5"], [1, "text-center", "text-xs", "text-stone-500", "px-6", "pt-1"], [1, "part"], ["x", "37", "y", "110", "width", "11", "height", "78", "rx", "5.5"], ["x", "52", "y", "110", "width", "11", "height", "78", "rx", "5.5"], ["x", "34", "y", "98", "width", "32", "height", "20", "rx", "10"], ["x", "35", "y", "78", "width", "30", "height", "24", "rx", "10"], ["cx", "25.5", "cy", "110", "r", "6.5"], ["cx", "74.5", "cy", "110", "r", "6.5"], ["x", "20", "y", "48", "width", "11", "height", "60", "rx", "5.5"], ["x", "69", "y", "48", "width", "11", "height", "60", "rx", "5.5"], ["x", "30", "y", "42", "width", "40", "height", "12", "rx", "9"], [1, "text-xs", "uppercase", "tracking-[0.2em]", "text-stone-500", "mb-1"], [1, "text-5xl", "font-semibold", "text-[var(--color-primary)]", "tabular-nums"], [1, "text-[var(--color-success)]", "!w-10", "!h-10", "!text-4xl", "mb-1"], [1, "text-lg", "font-semibold", "text-[var(--color-primary)]", "mb-1"], [1, "flex", "items-center", "gap-2", "mb-2"], [1, "text-xs", "uppercase", "tracking-[0.2em]", "text-stone-500"], [1, "text-xs", "font-semibold", "tabular-nums", "rounded-full", "px-2.5", "py-0.5", 3, "ngClass"], [1, "text-lg", "font-semibold", "text-[var(--color-primary)]", "mb-1.5"], [1, "text-[0.95rem]", "text-stone-600", "leading-relaxed", "max-w-md", "px-2"], [1, "rounded-full", "transition-all", 3, "ngClass"], [1, "rounded-full", "transition-all", 3, "click", "ngClass"], [1, "flex", "items-center", "justify-between", "text-xs", "font-medium", "text-stone-500", "mb-1.5"], [1, "tabular-nums", "text-stone-600"], [1, "h-2", "rounded-full", "bg-stone-200", "overflow-hidden"], [1, "h-full", "rounded-full", "bg-[var(--color-success)]", "transition-all", "duration-300"], [1, "w-11", "h-11", "flex", "items-center", "justify-center", "rounded-full", "bg-stone-100", "text-stone-700", "hover:bg-stone-200", "transition-colors", "disabled:opacity-40", "disabled:cursor-not-allowed", 3, "click", "disabled"], [1, "w-11", "h-11", "flex", "items-center", "justify-center", "rounded-full", "bg-stone-100", "text-stone-700", "hover:bg-stone-200", "transition-colors", 3, "click"], [1, "flex", "items-center", "gap-2", "px-5", "py-3", "rounded-full", "bg-stone-100", "text-stone-700", "text-sm", "font-semibold", "hover:bg-stone-200", "transition-colors", "disabled:opacity-40", "disabled:cursor-not-allowed", 3, "click", "disabled"], [1, "flex", "flex-col", "items-center", "py-3", "rounded-xl", "border", "text-sm", "font-semibold", "transition-all", "disabled:opacity-40", "disabled:cursor-not-allowed", 3, "click", "disabled", "ngClass"], [1, "tabular-nums", "text-base"], [1, "text-[11px]", "font-medium", "text-stone-500", "mt-0.5"], [1, "w-7", "h-7", "rounded-full", "bg-[var(--color-mint)]/40", "text-[var(--color-success)]", "text-sm", "font-bold", "flex", "items-center", "justify-center", "shrink-0", "mt-0.5"]], template: function ProgressiveMuscleComponent_Template(rf, ctx) {
+    if (rf & 1) {
+      \u0275\u0275template(0, ProgressiveMuscleComponent_ng_container_0_Template, 77, 27, "ng-container", 0);
+    }
+  }, dependencies: [NgClass, MatIcon, TranslocoDirective], styles: ["\n\n[_nghost-%COMP%] {\n  display: block;\n  --pmr-tense: #c2683d;\n}\n.silhouette[_ngcontent-%COMP%] {\n  fill: var(--color-mint);\n  fill-opacity: 0.32;\n  transition: fill-opacity 0.6s ease;\n}\n.silhouette--active[_ngcontent-%COMP%] {\n  fill-opacity: 0.42;\n}\n.part[_ngcontent-%COMP%] {\n  fill: var(--color-success);\n  fill-opacity: 0;\n  transform-box: fill-box;\n  transform-origin: center;\n  transition:\n    fill 0.5s ease,\n    fill-opacity 0.5s ease,\n    transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);\n}\n.part--tense[_ngcontent-%COMP%] {\n  fill: var(--pmr-tense);\n  fill-opacity: 0.9;\n  transform: scale(1.12);\n}\n.part--release[_ngcontent-%COMP%] {\n  fill: var(--color-success);\n  fill-opacity: 0.72;\n  transform: scale(1);\n}\n.is-tensing[_ngcontent-%COMP%]   .part--tense[_ngcontent-%COMP%] {\n  animation: _ngcontent-%COMP%_tense-tremor 0.55s ease-in-out infinite;\n}\n.part--release[_ngcontent-%COMP%] {\n  animation: _ngcontent-%COMP%_release-breathe 3.2s ease-in-out infinite;\n}\n@keyframes _ngcontent-%COMP%_tense-tremor {\n  0%, 100% {\n    transform: scale(1.12) translate(0, 0);\n  }\n  25% {\n    transform: scale(1.12) translate(-0.4px, 0.3px);\n  }\n  75% {\n    transform: scale(1.12) translate(0.4px, -0.3px);\n  }\n}\n@keyframes _ngcontent-%COMP%_release-breathe {\n  0%, 100% {\n    fill-opacity: 0.6;\n  }\n  50% {\n    fill-opacity: 0.82;\n  }\n}\n@media (prefers-reduced-motion: reduce) {\n  .part[_ngcontent-%COMP%] {\n    transition: fill 0.5s ease, fill-opacity 0.5s ease;\n    animation: none !important;\n  }\n  .part--tense[_ngcontent-%COMP%] {\n    transform: scale(1.08);\n  }\n  .silhouette[_ngcontent-%COMP%] {\n    transition: none;\n  }\n}\n/*# sourceMappingURL=progressive-muscle.component.css.map */"] });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(ProgressiveMuscleComponent, [{
+    type: Component,
+    args: [{ selector: "app-progressive-muscle", standalone: false, template: `<ng-container *transloco="let t">
+  <div class="min-h-screen bg-[#FAF8F3] px-4 py-8 md:px-8">
+
+    <!-- Header -->
+    <div class="max-w-3xl mx-auto mb-7">
+      <div class="flex items-center gap-3">
+        <button
+          (click)="goBack()"
+          class="w-10 h-10 flex items-center justify-center rounded-full text-stone-500 hover:bg-stone-200/60 hover:text-[var(--color-primary)] transition-colors"
+          [attr.aria-label]="t('common.back')"
+        >
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+        <div class="flex items-center gap-3">
+          <div
+            class="w-12 h-12 rounded-2xl bg-[var(--color-primary)]/10 flex items-center justify-center shrink-0"
+          >
+            <mat-icon class="text-[var(--color-primary)]">self_improvement</mat-icon>
+          </div>
+          <div>
+            <h1 class="text-2xl font-semibold tracking-[-0.01em] text-[var(--color-primary)]">
+              {{ t("selfHelp.items.progressive-muscle.title") }}
+            </h1>
+            <p class="text-sm font-medium text-stone-500">
+              {{ t("selfHelp.category.relaxation") }} \xB7
+              {{ t("selfHelp.pmr.pattern") }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="max-w-3xl mx-auto space-y-4">
+
+      <!-- Intro -->
+      <div class="bg-white rounded-2xl border border-stone-200 shadow-sm p-6">
+        <p class="text-[0.95rem] text-stone-700 leading-relaxed">
+          {{ t("selfHelp.items.progressive-muscle.intro") }}
+        </p>
+      </div>
+
+      <!-- Guide -->
+      <div class="bg-white rounded-2xl border border-stone-200 shadow-sm px-6 pt-7 pb-6">
+
+        <!-- Live region for screen readers -->
+        <p class="sr-only" aria-live="polite">
+          @if (state === 'prepare') {
+            {{ t("selfHelp.pmr.getReady") }} {{ prepareCountdown }}
+          } @else if (isActiveSession) {
+            {{ t("selfHelp.pmr.groups." + current.key + ".label") }} \u2014
+            {{ isTensing ? t("selfHelp.pmr.tense") : t("selfHelp.pmr.release") }}
+          } @else if (state === 'done') {
+            {{ t("selfHelp.pmr.completeTitle") }}
+          }
+        </p>
+
+        <div class="flex flex-col items-center">
+          <!-- Body silhouette with the active muscle group lit -->
+          <div
+            class="relative w-[min(46vw,168px)]"
+            [class.is-tensing]="state === 'tensing'"
+          >
+            <svg
+              class="w-full h-auto overflow-visible"
+              viewBox="0 0 100 200"
+              aria-hidden="true"
+            >
+              <!-- Faint full-body silhouette -->
+              <g class="silhouette" [class.silhouette--active]="isActiveSession">
+                <circle cx="50" cy="24" r="12" />
+                <rect x="45" y="34" width="10" height="10" rx="4" />
+                <rect x="33" y="42" width="34" height="74" rx="15" />
+                <rect x="20" y="48" width="11" height="62" rx="5.5" />
+                <rect x="69" y="48" width="11" height="62" rx="5.5" />
+                <rect x="37" y="110" width="11" height="80" rx="5.5" />
+                <rect x="52" y="110" width="11" height="80" rx="5.5" />
+                <ellipse cx="42.5" cy="192" rx="8" ry="4" />
+                <ellipse cx="57.5" cy="192" rx="8" ry="4" />
+              </g>
+
+              <!-- Highlighted muscle groups -->
+              @if (isActiveSession) {
+                <!-- feet -->
+                <g
+                  class="part"
+                  [class.part--tense]="current.key === 'feet' && isTensing"
+                  [class.part--release]="current.key === 'feet' && !isTensing"
+                >
+                  <ellipse cx="42.5" cy="192" rx="8" ry="4" />
+                  <ellipse cx="57.5" cy="192" rx="8" ry="4" />
+                </g>
+                <!-- legs -->
+                <g
+                  class="part"
+                  [class.part--tense]="current.key === 'legs' && isTensing"
+                  [class.part--release]="current.key === 'legs' && !isTensing"
+                >
+                  <rect x="37" y="110" width="11" height="78" rx="5.5" />
+                  <rect x="52" y="110" width="11" height="78" rx="5.5" />
+                </g>
+                <!-- hips -->
+                <g
+                  class="part"
+                  [class.part--tense]="current.key === 'hips' && isTensing"
+                  [class.part--release]="current.key === 'hips' && !isTensing"
+                >
+                  <rect x="34" y="98" width="32" height="20" rx="10" />
+                </g>
+                <!-- stomach -->
+                <g
+                  class="part"
+                  [class.part--tense]="current.key === 'stomach' && isTensing"
+                  [class.part--release]="current.key === 'stomach' && !isTensing"
+                >
+                  <rect x="35" y="78" width="30" height="24" rx="10" />
+                </g>
+                <!-- hands -->
+                <g
+                  class="part"
+                  [class.part--tense]="current.key === 'hands' && isTensing"
+                  [class.part--release]="current.key === 'hands' && !isTensing"
+                >
+                  <circle cx="25.5" cy="110" r="6.5" />
+                  <circle cx="74.5" cy="110" r="6.5" />
+                </g>
+                <!-- arms -->
+                <g
+                  class="part"
+                  [class.part--tense]="current.key === 'arms' && isTensing"
+                  [class.part--release]="current.key === 'arms' && !isTensing"
+                >
+                  <rect x="20" y="48" width="11" height="60" rx="5.5" />
+                  <rect x="69" y="48" width="11" height="60" rx="5.5" />
+                </g>
+                <!-- shoulders -->
+                <g
+                  class="part"
+                  [class.part--tense]="current.key === 'shoulders' && isTensing"
+                  [class.part--release]="current.key === 'shoulders' && !isTensing"
+                >
+                  <rect x="30" y="42" width="40" height="12" rx="9" />
+                </g>
+                <!-- face -->
+                <g
+                  class="part"
+                  [class.part--tense]="current.key === 'face' && isTensing"
+                  [class.part--release]="current.key === 'face' && !isTensing"
+                >
+                  <circle cx="50" cy="24" r="12" />
+                </g>
+              }
+            </svg>
+
+            <!-- Prepare overlay -->
+            @if (state === 'prepare') {
+              <div class="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none">
+                <div class="text-xs uppercase tracking-[0.2em] text-stone-500 mb-1">
+                  {{ t("selfHelp.pmr.getReady") }}
+                </div>
+                <div class="text-5xl font-semibold text-[var(--color-primary)] tabular-nums">
+                  {{ prepareCountdown }}
+                </div>
+              </div>
+            }
+          </div>
+
+          <!-- Phase / state copy -->
+          <div class="text-center mt-6 min-h-[124px] flex flex-col items-center justify-start">
+            @if (state === 'idle') {
+              <p class="text-[0.95rem] text-stone-600 leading-relaxed max-w-md">
+                {{ t("selfHelp.pmr.readyHint") }}
+              </p>
+            } @else if (state === 'done') {
+              <mat-icon class="text-[var(--color-success)] !w-10 !h-10 !text-4xl mb-1">
+                check_circle
+              </mat-icon>
+              <h2 class="text-lg font-semibold text-[var(--color-primary)] mb-1">
+                {{ t("selfHelp.pmr.completeTitle") }}
+              </h2>
+              <p class="text-[0.95rem] text-stone-600 leading-relaxed max-w-md">
+                {{ t("selfHelp.pmr.completeText") }}
+              </p>
+            } @else {
+              <div class="flex items-center gap-2 mb-2">
+                <span class="text-xs uppercase tracking-[0.2em] text-stone-500">
+                  {{ t("selfHelp.pmr.groupStep", { current: index + 1, total: groups.length }) }}
+                </span>
+                @if (state === 'tensing' || state === 'releasing') {
+                  <span
+                    class="text-xs font-semibold tabular-nums rounded-full px-2.5 py-0.5"
+                    [ngClass]="isTensing
+                      ? 'text-[var(--pmr-tense)] bg-[var(--pmr-tense)]/12'
+                      : 'text-[var(--color-success)] bg-[var(--color-mint)]/30'"
+                  >
+                    {{ isTensing ? t("selfHelp.pmr.tense") : t("selfHelp.pmr.release") }}
+                    \xB7 {{ countdown }}{{ t("selfHelp.pmr.secShort") }}
+                  </span>
+                }
+              </div>
+              <h2 class="text-lg font-semibold text-[var(--color-primary)] mb-1.5">
+                {{ t("selfHelp.pmr.groups." + current.key + ".label") }}
+              </h2>
+              <p class="text-[0.95rem] text-stone-600 leading-relaxed max-w-md px-2">
+                {{ isTensing
+                  ? t("selfHelp.pmr.groups." + current.key + ".tense")
+                  : t("selfHelp.pmr.groups." + current.key + ".release") }}
+              </p>
+            }
+          </div>
+        </div>
+
+        <!-- Group dots -->
+        @if (isActiveSession) {
+          <div class="flex items-center justify-center gap-2 mt-5">
+            @for (g of groups; track g.key; let i = $index) {
+              <button
+                (click)="goTo(i)"
+                [attr.aria-label]="t('selfHelp.pmr.groups.' + g.key + '.label')"
+                class="rounded-full transition-all"
+                [ngClass]="i === index
+                  ? 'w-2.5 h-2.5 bg-[var(--color-success)]'
+                  : i < index
+                    ? 'w-2 h-2 bg-[var(--color-mint)]'
+                    : 'w-2 h-2 bg-stone-200'"
+              ></button>
+            }
+          </div>
+        }
+
+        <!-- Progress -->
+        @if (isActiveSession || state === 'done') {
+          <div class="w-full max-w-[320px] mx-auto mt-6">
+            <div class="flex items-center justify-between text-xs font-medium text-stone-500 mb-1.5">
+              <span>
+                @if (state === 'done') {
+                  {{ t("selfHelp.pmr.completeText") }}
+                } @else {
+                  {{ t("selfHelp.pmr.timeLeft") }}
+                }
+              </span>
+              <span class="tabular-nums text-stone-600">
+                {{ state === 'done' ? '0:00' : timeRemaining }}
+              </span>
+            </div>
+            <div class="h-2 rounded-full bg-stone-200 overflow-hidden">
+              <div
+                class="h-full rounded-full bg-[var(--color-success)] transition-all duration-300"
+                [style.width.%]="(state === 'done' ? 1 : progress) * 100"
+              ></div>
+            </div>
+          </div>
+        }
+
+        <!-- Controls -->
+        <div class="flex items-center justify-center gap-3 mt-7">
+          @if (isActiveSession) {
+            <button
+              (click)="prev()"
+              [disabled]="isFirst"
+              class="w-11 h-11 flex items-center justify-center rounded-full bg-stone-100 text-stone-700 hover:bg-stone-200 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+              [attr.aria-label]="t('selfHelp.pmr.prev')"
+            >
+              <mat-icon class="text-lg">skip_previous</mat-icon>
+            </button>
+          }
+
+          <button
+            (click)="toggle()"
+            class="flex items-center gap-2 px-7 py-3 rounded-full bg-[var(--color-success)] text-white text-sm font-semibold shadow-sm hover:bg-[#2e6a04] transition-colors"
+          >
+            <mat-icon class="text-lg">{{ isRunning ? "pause" : "play_arrow" }}</mat-icon>
+            @if (state === 'paused') {
+              {{ t("selfHelp.pmr.resume") }}
+            } @else if (isRunning) {
+              {{ t("selfHelp.pause") }}
+            } @else if (state === 'done') {
+              {{ t("selfHelp.pmr.restart") }}
+            } @else {
+              {{ t("selfHelp.pmr.begin") }}
+            }
+          </button>
+
+          @if (isActiveSession) {
+            <button
+              (click)="next()"
+              class="w-11 h-11 flex items-center justify-center rounded-full bg-stone-100 text-stone-700 hover:bg-stone-200 transition-colors"
+              [attr.aria-label]="t('selfHelp.pmr.next')"
+            >
+              <mat-icon class="text-lg">skip_next</mat-icon>
+            </button>
+          } @else {
+            <button
+              (click)="reset()"
+              [disabled]="state === 'idle'"
+              class="flex items-center gap-2 px-5 py-3 rounded-full bg-stone-100 text-stone-700 text-sm font-semibold hover:bg-stone-200 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+            >
+              <mat-icon class="text-lg">restart_alt</mat-icon>
+              {{ t("selfHelp.reset") }}
+            </button>
+          }
+
+          <button
+            (click)="toggleSound()"
+            [attr.aria-pressed]="soundOn"
+            [attr.aria-label]="t('selfHelp.pmr.sound')"
+            class="w-11 h-11 flex items-center justify-center rounded-full hover:bg-stone-100 transition-colors"
+            [ngClass]="soundOn ? 'text-[var(--color-blue)] bg-[var(--color-sky)]/15' : 'text-stone-500'"
+          >
+            <mat-icon class="text-lg">{{ soundOn ? "volume_up" : "volume_off" }}</mat-icon>
+          </button>
+        </div>
+      </div>
+
+      <!-- Hold selector -->
+      <div class="bg-white rounded-2xl border border-stone-200 shadow-sm p-6">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-base font-semibold text-[var(--color-primary)]">
+            {{ t("selfHelp.pmr.hold") }}
+          </h2>
+          <span class="text-xs font-medium text-stone-500">{{ t("selfHelp.pmr.holdHint") }}</span>
+        </div>
+        <div class="grid grid-cols-3 gap-2.5">
+          @for (s of tenseOptions; track s) {
+            <button
+              (click)="setTense(s)"
+              [disabled]="isActiveSession"
+              class="flex flex-col items-center py-3 rounded-xl border text-sm font-semibold transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+              [ngClass]="tenseSeconds === s
+                ? 'border-[var(--color-success)] bg-[var(--color-mint)]/25 text-[var(--color-primary)]'
+                : 'border-transparent bg-stone-100 text-stone-600'"
+            >
+              <span class="tabular-nums text-base">{{ s }}{{ t("selfHelp.pmr.secShort") }}</span>
+              <span class="text-[11px] font-medium text-stone-500 mt-0.5">
+                {{ t("selfHelp.pmr.tense") }}
+              </span>
+            </button>
+          }
+        </div>
+      </div>
+
+      <!-- How to -->
+      <div class="bg-white rounded-2xl border border-stone-200 shadow-sm p-6">
+        <h2 class="text-base font-semibold text-[var(--color-primary)] mb-4">
+          {{ t("selfHelp.steps") }}
+        </h2>
+        <ol class="space-y-3.5">
+          @for (step of t("selfHelp.items.progressive-muscle.steps"); track $index) {
+            <li class="flex gap-3.5">
+              <span
+                class="w-7 h-7 rounded-full bg-[var(--color-mint)]/40 text-[var(--color-success)] text-sm font-bold flex items-center justify-center shrink-0 mt-0.5"
+              >
+                {{ $index + 1 }}
+              </span>
+              <p class="text-[0.95rem] text-stone-700 leading-relaxed">{{ step }}</p>
+            </li>
+          }
+        </ol>
+      </div>
+
+      <!-- Gentle reminder -->
+      <p class="text-center text-xs text-stone-500 px-6 pt-1">
+        {{ t("selfHelp.disclaimer") }}
+      </p>
+    </div>
+  </div>
+</ng-container>
+`, styles: ["/* src/app/modules/self-help/pages/progressive-muscle/progressive-muscle.component.scss */\n:host {\n  display: block;\n  --pmr-tense: #c2683d;\n}\n.silhouette {\n  fill: var(--color-mint);\n  fill-opacity: 0.32;\n  transition: fill-opacity 0.6s ease;\n}\n.silhouette--active {\n  fill-opacity: 0.42;\n}\n.part {\n  fill: var(--color-success);\n  fill-opacity: 0;\n  transform-box: fill-box;\n  transform-origin: center;\n  transition:\n    fill 0.5s ease,\n    fill-opacity 0.5s ease,\n    transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);\n}\n.part--tense {\n  fill: var(--pmr-tense);\n  fill-opacity: 0.9;\n  transform: scale(1.12);\n}\n.part--release {\n  fill: var(--color-success);\n  fill-opacity: 0.72;\n  transform: scale(1);\n}\n.is-tensing .part--tense {\n  animation: tense-tremor 0.55s ease-in-out infinite;\n}\n.part--release {\n  animation: release-breathe 3.2s ease-in-out infinite;\n}\n@keyframes tense-tremor {\n  0%, 100% {\n    transform: scale(1.12) translate(0, 0);\n  }\n  25% {\n    transform: scale(1.12) translate(-0.4px, 0.3px);\n  }\n  75% {\n    transform: scale(1.12) translate(0.4px, -0.3px);\n  }\n}\n@keyframes release-breathe {\n  0%, 100% {\n    fill-opacity: 0.6;\n  }\n  50% {\n    fill-opacity: 0.82;\n  }\n}\n@media (prefers-reduced-motion: reduce) {\n  .part {\n    transition: fill 0.5s ease, fill-opacity 0.5s ease;\n    animation: none !important;\n  }\n  .part--tense {\n    transform: scale(1.08);\n  }\n  .silhouette {\n    transition: none;\n  }\n}\n/*# sourceMappingURL=progressive-muscle.component.css.map */\n"] }]
+  }], () => [{ type: Router }], null);
+})();
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(ProgressiveMuscleComponent, { className: "ProgressiveMuscleComponent", filePath: "src/app/modules/self-help/pages/progressive-muscle/progressive-muscle.component.ts", lineNumber: 48 });
+})();
+
 // src/app/app.routing.module.ts
 var routes = [
   {
@@ -63640,6 +65016,11 @@ var routes = [
       {
         path: "practices/body-scan",
         component: BodyScanComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: "practices/progressive-muscle",
+        component: ProgressiveMuscleComponent,
         canActivate: [AuthGuard]
       },
       {
@@ -63948,7 +65329,8 @@ var SelfHelpModule = class _SelfHelpModule {
         Breathing478Component,
         BellyBreathingComponent,
         Grounding54321Component,
-        BodyScanComponent
+        BodyScanComponent,
+        ProgressiveMuscleComponent
       ],
       imports: [CommonModule, FormsModule, MatIconModule, TranslocoModule]
     }]

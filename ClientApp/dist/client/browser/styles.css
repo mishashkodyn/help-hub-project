@@ -2346,6 +2346,9 @@ body[data-aos-easing=ease-in-out-quart] [data-aos] {
   .h-\[13px\] {
     height: 13px;
   }
+  .h-\[15px\] {
+    height: 15px;
+  }
   .h-\[18px\] {
     height: 18px;
   }
@@ -2414,6 +2417,9 @@ body[data-aos-easing=ease-in-out-quart] [data-aos] {
   }
   .min-h-\[112px\] {
     min-height: 112px;
+  }
+  .min-h-\[124px\] {
+    min-height: 124px;
   }
   .min-h-\[350px\] {
     min-height: 350px;
@@ -2579,6 +2585,9 @@ body[data-aos-easing=ease-in-out-quart] [data-aos] {
   }
   .w-\[5px\] {
     width: 5px;
+  }
+  .w-\[15px\] {
+    width: 15px;
   }
   .w-\[18px\] {
     width: 18px;
@@ -3735,6 +3744,12 @@ body[data-aos-easing=ease-in-out-quart] [data-aos] {
       background-color: color-mix(in oklab, var(--color-success) 22%, transparent);
     }
   }
+  .bg-\[var\(--pmr-tense\)\]\/12 {
+    background-color: var(--pmr-tense);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--pmr-tense) 12%, transparent);
+    }
+  }
   .bg-amber-50 {
     background-color: var(--color-amber-50);
   }
@@ -4853,6 +4868,9 @@ body[data-aos-easing=ease-in-out-quart] [data-aos] {
     @supports (color: color-mix(in lab, red, red)) {
       color: color-mix(in oklab, var(--color-success) 70%, transparent);
     }
+  }
+  .text-\[var\(--pmr-tense\)\] {
+    color: var(--pmr-tense);
   }
   .text-amber-300 {
     color: var(--color-amber-300);
@@ -6216,6 +6234,13 @@ body[data-aos-easing=ease-in-out-quart] [data-aos] {
       }
     }
   }
+  .hover\:border-blue-300 {
+    &:hover {
+      @media (hover: hover) {
+        border-color: var(--color-blue-300);
+      }
+    }
+  }
   .hover\:border-gray-200 {
     &:hover {
       @media (hover: hover) {
@@ -6519,6 +6544,16 @@ body[data-aos-easing=ease-in-out-quart] [data-aos] {
       }
     }
   }
+  .hover\:bg-blue-50\/50 {
+    &:hover {
+      @media (hover: hover) {
+        background-color: color-mix(in srgb, oklch(97% 0.014 254.604) 50%, transparent);
+        @supports (color: color-mix(in lab, red, red)) {
+          background-color: color-mix(in oklab, var(--color-blue-50) 50%, transparent);
+        }
+      }
+    }
+  }
   .hover\:bg-blue-100 {
     &:hover {
       @media (hover: hover) {
@@ -6767,6 +6802,13 @@ body[data-aos-easing=ease-in-out-quart] [data-aos] {
     &:hover {
       @media (hover: hover) {
         color: var(--color-success);
+      }
+    }
+  }
+  .hover\:text-blue-700 {
+    &:hover {
+      @media (hover: hover) {
+        color: var(--color-blue-700);
       }
     }
   }

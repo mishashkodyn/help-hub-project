@@ -77,6 +77,35 @@
               </span>
             </div>
           </div>
+
+          @if ($last && !msg.isUser && !isLoading) {
+            @if (msg.actions && msg.actions.length > 0) {
+              <div class="flex flex-wrap gap-1.5 mt-0.5">
+                @for (action of msg.actions; track action.route) {
+                  <button
+                    (click)="runAction(action)"
+                    class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-blue-50 text-blue-700 border border-blue-100 text-xs font-medium hover:bg-blue-100 hover:border-blue-200 active:scale-95 transition-all duration-150"
+                  >
+                    <mat-icon class="text-[15px] leading-none w-[15px] h-[15px]">{{ action.icon }}</mat-icon>
+                    <span>{{ action.label }}</span>
+                  </button>
+                }
+              </div>
+            }
+
+            @if (msg.suggestions && msg.suggestions.length > 0) {
+              <div class="flex flex-wrap gap-1.5 mt-0.5">
+                @for (suggestion of msg.suggestions; track suggestion) {
+                  <button
+                    (click)="sendSuggestion(suggestion)"
+                    class="px-3 py-1.5 rounded-full bg-white text-gray-600 border border-gray-200 text-xs hover:border-blue-300 hover:text-blue-700 hover:bg-blue-50/50 active:scale-95 transition-all duration-150"
+                  >
+                    {{ suggestion }}
+                  </button>
+                }
+              </div>
+            }
+          }
         }
 
         @if (isLoading) {

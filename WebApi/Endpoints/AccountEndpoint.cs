@@ -325,11 +325,15 @@ namespace API.Endpoints
 
                     var currentLoggedInUser = await userManager.Users.SingleOrDefaultAsync(x => x.Id == currentLoggedInUserId);
 
+                    var roles = await userManager.GetRolesAsync(currentLoggedInUser!);
+
                     var response = new UserDto
                     {
                         Name = currentLoggedInUser!.Name,
                         Surname = currentLoggedInUser.Surname,
-                        PreferredAiProvider = currentLoggedInUser.PreferredAiProvider
+                        PreferredAiProvider = currentLoggedInUser.PreferredAiProvider,
+                        Roles = roles.ToArray(),
+                        UserCategory = currentLoggedInUser.UserCategory.ToString()
                     };
 
                     return Results.Ok(Response<UserDto>.Success(response!, "User fetched successfully."));

@@ -3,6 +3,8 @@ export interface AiChatRequest{
     provider: string;
     messages: AiMessage[];
     context?: string;
+    roles?: string[];
+    userCategory?: string;
 }
 
 export interface AiMessage {
