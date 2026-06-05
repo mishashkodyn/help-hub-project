@@ -1,0 +1,22 @@
+Total code blocks: 5
+
+paras 381-411 | lines=31 nonempty=29
+  caption_before: 
+  caption_after : 
+
+paras 415-469 | lines=55 nonempty=54
+  caption_before: 
+  caption_after : 
+
+paras 476-501 | lines=26 nonempty=21
+  caption_before: 
+  caption_after : 
+
+paras 506-532 | lines=27 nonempty=26
+  caption_before: 
+  caption_after : 
+
+paras 538-559 | lines=22 nonempty=21
+  caption_before: 
+  caption_after : 
+

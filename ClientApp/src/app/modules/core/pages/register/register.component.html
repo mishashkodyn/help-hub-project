@@ -2,7 +2,6 @@
   <div
     class="min-h-full w-full flex bg-[#FAF8F3] text-stone-800 font-sans antialiased"
   >
-    <!-- ===================== EDITORIAL PANEL ===================== -->
     <aside
       class="hidden lg:flex w-[44%] xl:w-1/2 flex-col justify-center gap-12 bg-[#F3F0E8] border-r border-stone-200/80 px-12 xl:px-16 py-14"
     >
@@ -11,262 +10,496 @@
           class="text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-[var(--color-success)]"
         >
           @if (isPsychologistRegistration()) {
-            {{ t('landing.for_psychologists_tag') }}
+            {{ t("landing.for_psychologists_tag") }}
           } @else {
-            {{ t('landing.platform_name') }}
+            {{ t("landing.platform_name") }}
           }
         </span>
         <h1
           class="mt-5 text-[clamp(2.2rem,3.4vw,3.2rem)] font-semibold tracking-[-0.02em] leading-[1.08] text-[var(--color-primary)]"
         >
           @if (isPsychologistRegistration()) {
-            {{ t('auth.join_as_specialist') }}
+            {{ t("auth.join_as_specialist") }}
           } @else {
-            {{ t('auth.join_the_squad') }}
+            {{ t("auth.join_the_squad") }}
           }
         </h1>
         <p class="mt-5 text-stone-600 leading-relaxed">
           @if (isPsychologistRegistration()) {
-            {{ t('auth.become_a_part') }} {{ t('auth.provide') }}
+            {{ t("auth.become_a_part") }} {{ t("auth.provide") }}
           } @else {
-            {{ t('auth.crete_a_profile') }} {{ t('auth.and_join') }}
+            {{ t("auth.crete_a_profile") }} {{ t("auth.and_join") }}
           }
         </p>
       </div>
 
       <ul class="border-t border-stone-300/70">
-        <li class="flex items-center gap-3 py-3.5 border-b border-stone-300/50 text-sm text-stone-600">
-          <mat-icon class="!text-base !w-5 !h-5 text-[var(--color-success)] shrink-0">verified_user</mat-icon>
-          {{ t('landing.anonymous') }}
+        <li
+          class="flex items-center gap-3 py-3.5 border-b border-stone-300/50 text-sm text-stone-600"
+        >
+          <mat-icon
+            class="!text-base !w-5 !h-5 text-[var(--color-success)] shrink-0"
+            >verified_user</mat-icon
+          >
+          {{ t("landing.anonymous") }}
         </li>
-        <li class="flex items-center gap-3 py-3.5 border-b border-stone-300/50 text-sm text-stone-600">
-          <mat-icon class="!text-base !w-5 !h-5 text-[var(--color-success)] shrink-0">groups</mat-icon>
-          {{ t('landing.verified_specialists') }}
+        <li
+          class="flex items-center gap-3 py-3.5 border-b border-stone-300/50 text-sm text-stone-600"
+        >
+          <mat-icon
+            class="!text-base !w-5 !h-5 text-[var(--color-success)] shrink-0"
+            >groups</mat-icon
+          >
+          {{ t("landing.verified_specialists") }}
         </li>
         <li class="flex items-center gap-3 py-3.5 text-sm text-stone-600">
-          <mat-icon class="!text-base !w-5 !h-5 text-[var(--color-success)] shrink-0">schedule</mat-icon>
-          {{ t('landing.support_24_7') }}
+          <mat-icon
+            class="!text-base !w-5 !h-5 text-[var(--color-success)] shrink-0"
+            >schedule</mat-icon
+          >
+          {{ t("landing.support_24_7") }}
         </li>
       </ul>
     </aside>
 
-    <!-- ===================== FORM ===================== -->
     <main class="flex-1 flex flex-col min-h-full overflow-y-auto custom-scroll">
       <div class="flex-1 flex items-center justify-center px-6 py-10 sm:px-10">
         <div class="rise w-full max-w-[420px]">
-          <div class="mb-7">
-            <h2 class="text-[1.9rem] font-semibold tracking-[-0.02em] text-[var(--color-primary)]">
-              {{ t('auth.create_account') }}
-            </h2>
-          </div>
-
-          <form #registerForm="ngForm" (ngSubmit)="register()" class="flex flex-col gap-5">
-            <!-- Avatar -->
-            <div class="flex items-center gap-4">
+          @if (anonymousLogin) {
+            <div class="text-center">
               <div
-                class="relative group cursor-pointer w-16 h-16 shrink-0"
-                (click)="fileInput.click()"
+                class="w-20 h-20 mx-auto rounded-full overflow-hidden ring-1 ring-stone-200 bg-white"
               >
-                <div
-                  class="w-full h-full rounded-full overflow-hidden ring-1 ring-stone-200 bg-stone-100 flex items-center justify-center group-hover:ring-[var(--color-success)] transition"
-                >
-                  @if (profileImage) {
-                    <img [src]="profilePicture" class="w-full h-full object-cover" alt="Avatar Preview" />
-                  } @else {
-                    <svg class="w-7 h-7 text-stone-300" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
-                    </svg>
-                  }
-                </div>
-                <div
-                  class="absolute -bottom-0.5 -right-0.5 w-6 h-6 rounded-full bg-[var(--color-primary)] text-[var(--color-mint)] flex items-center justify-center ring-2 ring-[#FAF8F3]"
-                >
-                  <span><mat-icon class="!text-sm !w-3.5 !h-3.5">photo_camera</mat-icon></span>
-                </div>
-              </div>
-              <div class="leading-tight">
-                <p class="text-sm font-medium text-stone-700">{{ t('auth.profile_photo') }}</p>
-                <p class="text-xs text-stone-400">{{ t('auth.profile_photo_hint') }}</p>
-              </div>
-              <input #fileInput type="file" hidden (change)="onFileSelected($event)" accept="image/*" />
-            </div>
-
-            <!-- Name / Surname -->
-            <div class="grid grid-cols-2 gap-4">
-              <div>
-                <label for="name" class="block text-[0.78rem] font-medium text-stone-500 mb-1.5">{{ t('auth.name') }}</label>
-                <input
-                  id="name"
-                  required
-                  type="text"
-                  name="name"
-                  (keydown.enter)="surnameInput.focus()"
-                  [(ngModel)]="name"
-                  autocomplete="given-name"
-                  class="w-full px-4 py-3 bg-white border border-stone-200 rounded-xl text-stone-800 placeholder-stone-400 focus:outline-none focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/10 transition-all duration-200"
+                <img
+                  src="/anonymous-avatar.svg"
+                  class="w-full h-full object-cover"
+                  alt="Anonymous avatar"
                 />
               </div>
-              <div>
-                <label for="surname" class="block text-[0.78rem] font-medium text-stone-500 mb-1.5">{{ t('auth.surname') }}</label>
-                <input
-                  id="surname"
-                  required
-                  type="text"
-                  name="surname"
-                  #surnameInput
-                  (keydown.enter)="emailInput.focus()"
-                  [(ngModel)]="surname"
-                  autocomplete="family-name"
-                  class="w-full px-4 py-3 bg-white border border-stone-200 rounded-xl text-stone-800 placeholder-stone-400 focus:outline-none focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/10 transition-all duration-200"
-                />
-              </div>
-            </div>
-
-            <!-- Gender -->
-            <div>
-              <span class="block text-[0.78rem] font-medium text-stone-500 mb-1.5">{{ t('auth.gender') }}</span>
-              <div class="grid grid-cols-2 gap-3">
-                <button
-                  type="button"
-                  (click)="gender = 'female'"
-                  [class]="
-                    'flex items-center justify-center gap-2 px-4 py-3 rounded-xl border text-sm font-medium transition-all duration-200 cursor-pointer ' +
-                    (gender === 'female'
-                      ? 'border-[var(--color-primary)] bg-[var(--color-primary)] text-[var(--color-mint)]'
-                      : 'border-stone-200 bg-white text-stone-500 hover:border-stone-300')
-                  "
-                >
-                  {{ t('auth.female') }}
-                </button>
-                <button
-                  type="button"
-                  (click)="gender = 'male'"
-                  [class]="
-                    'flex items-center justify-center gap-2 px-4 py-3 rounded-xl border text-sm font-medium transition-all duration-200 cursor-pointer ' +
-                    (gender === 'male'
-                      ? 'border-[var(--color-primary)] bg-[var(--color-primary)] text-[var(--color-mint)]'
-                      : 'border-stone-200 bg-white text-stone-500 hover:border-stone-300')
-                  "
-                >
-                  {{ t('auth.male') }}
-                </button>
-              </div>
-            </div>
-
-            <!-- Email -->
-            <div>
-              <label for="email" class="block text-[0.78rem] font-medium text-stone-500 mb-1.5">{{ t('auth.email_address') }}</label>
-              <input
-                id="email"
-                required
-                email
-                type="email"
-                name="email"
-                #emailInput
-                (keydown.enter)="passwordInput.focus()"
-                [(ngModel)]="email"
-                autocomplete="email"
-                placeholder="you@example.com"
-                class="w-full px-4 py-3 bg-white border border-stone-200 rounded-xl text-stone-800 placeholder-stone-400 focus:outline-none focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/10 transition-all duration-200"
-              />
-            </div>
-
-            <!-- Password -->
-            <div>
-              <label for="password" class="block text-[0.78rem] font-medium text-stone-500 mb-1.5">{{ t('auth.password') }}</label>
-              <div class="relative">
-                <input
-                  id="password"
-                  required
-                  [type]="hide ? 'password' : 'text'"
-                  name="password"
-                  #passwordInput
-                  (keydown.enter)="register()"
-                  [(ngModel)]="password"
-                  autocomplete="new-password"
-                  placeholder="••••••••"
-                  class="w-full px-4 py-3 pr-12 bg-white border border-stone-200 rounded-xl text-stone-800 placeholder-stone-400 focus:outline-none focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/10 transition-all duration-200"
-                />
-                <button
-                  type="button"
-                  (click)="hide = !hide"
-                  class="absolute inset-y-0 right-0 pr-4 flex items-center text-stone-400 hover:text-[var(--color-primary)] cursor-pointer focus:outline-none"
-                >
-                  @if (!hide) {
-                    <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                    </svg>
-                  } @else {
-                    <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.542-7a10.059 10.059 0 013.999-5.125m3.124-1.637a9.969 9.969 0 014.225-.236c4.478 0 8.268 2.943 9.542 7a10.05 10.05 0 01-2.002 4.072m-2.126 2.126L4 4m16 16l-4.326-4.326" />
-                    </svg>
-                  }
-                </button>
-              </div>
-            </div>
-
-            <button
-              type="submit"
-              [disabled]="!registerForm.valid || authService.isLoading()"
-              class="mt-1 w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full bg-[var(--color-primary)] text-[var(--color-mint)] font-semibold hover:bg-[#013401] transition-colors duration-300 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
-            >
-              @if (authService.isLoading()) {
-                <span class="w-4 h-4 border-2 border-[var(--color-mint)] border-t-transparent rounded-full animate-spin"></span>
-              }
-              {{ isPsychologistRegistration() ? t('auth.register_as_psychologist') : t('auth.sign_up') }}
-            </button>
-
-            <div class="relative my-1">
-              <div class="absolute inset-0 flex items-center">
-                <div class="w-full border-t border-stone-200"></div>
-              </div>
-              <div class="relative flex justify-center">
-                <span class="bg-[#FAF8F3] px-3 text-xs text-stone-400">{{ t('auth.or_countinue_with') }}</span>
-              </div>
-            </div>
-
-            <button
-              (click)="continueWithGoogle()"
-              type="button"
-              class="w-full flex items-center justify-center gap-3 bg-white hover:border-stone-400 border border-stone-300 text-stone-700 font-medium py-3 rounded-full transition-colors cursor-pointer"
-            >
-              <svg class="w-5 h-5" viewBox="0 0 24 24">
-                <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4" />
-                <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853" />
-                <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05" />
-                <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335" />
-              </svg>
-              <span class="text-sm">Google</span>
-            </button>
-          </form>
-
-          <p class="mt-8 text-center text-sm text-stone-500">
-            {{ t('auth.already_have_account') }}
-            <a routerLink="/login" class="font-semibold text-[var(--color-success)] hover:text-[var(--color-primary)] transition-colors">
-              {{ t('auth.login_here') }}
-            </a>
-          </p>
-
-          <div class="mt-6 pt-6 border-t border-stone-200 text-center">
-            @if (!isPsychologistRegistration()) {
-              <a
-                routerLink="/register"
-                [queryParams]="{ returnUrl: '/psychologist-registration' }"
-                class="inline-flex items-center gap-1.5 text-sm font-medium text-stone-600 hover:text-[var(--color-primary)] transition-colors group"
+              <h2
+                class="mt-5 text-[1.7rem] font-semibold tracking-[-0.02em] text-[var(--color-primary)]"
               >
-                {{ t('landing.become_psychologist') }}
-                <mat-icon class="!text-base !w-4 !h-4 group-hover:translate-x-0.5 transition-transform">arrow_forward</mat-icon>
-              </a>
-            } @else {
-              <p class="text-sm text-stone-500">
-                {{ t('auth.register_as_client') }}?
-                <a routerLink="/register" class="font-semibold text-[var(--color-success)] hover:text-[var(--color-primary)] transition-colors">
-                  {{ t('auth.register_now') }}
-                </a>
+                {{ t("auth.anonymous_done_title") }}
+              </h2>
+              <p class="mt-2 text-sm text-stone-500">
+                {{ t("auth.anonymous_save_login") }}
               </p>
+            </div>
+
+            <div class="mt-6">
+              <span
+                class="block text-[0.78rem] font-medium text-stone-500 mb-1.5"
+                >{{ t("auth.anonymous_login_label") }}</span
+              >
+              <div class="flex items-center gap-2">
+                <div
+                  class="flex-1 px-4 py-3 bg-white border border-stone-200 rounded-xl font-mono text-lg tracking-wide text-stone-800 select-all"
+                >
+                  {{ anonymousLogin }}
+                </div>
+                <button
+                  type="button"
+                  (click)="copyLogin()"
+                  class="shrink-0 inline-flex items-center gap-1.5 px-4 py-3 rounded-xl border border-stone-200 bg-white text-sm font-medium text-stone-600 hover:border-[var(--color-primary)] hover:text-[var(--color-primary)] transition-colors cursor-pointer"
+                >
+                  <mat-icon class="!text-base !w-4 !h-4">{{
+                    loginCopied ? "check" : "content_copy"
+                  }}</mat-icon>
+                  {{ loginCopied ? t("auth.copied") : t("auth.copy") }}
+                </button>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              (click)="continueAfterAnonymous()"
+              class="mt-7 w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full bg-[var(--color-primary)] text-[var(--color-mint)] font-semibold hover:bg-[#013401] transition-colors duration-300 cursor-pointer"
+            >
+              {{ t("auth.continue") }}
+            </button>
+          } @else {
+            <div class="mb-7">
+              <h2
+                class="text-[1.9rem] font-semibold tracking-[-0.02em] text-[var(--color-primary)]"
+              >
+                {{ t("auth.create_account") }}
+              </h2>
+            </div>
+
+            @if (!isPsychologistRegistration()) {
+              <div
+                class="mb-6 grid grid-cols-2 gap-1 p-1 rounded-full bg-stone-100 border border-stone-200"
+              >
+                <button
+                  type="button"
+                  (click)="anonymous = false"
+                  [class]="
+                    'px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 cursor-pointer ' +
+                    (!anonymous
+                      ? 'bg-white text-[var(--color-primary)] shadow-sm'
+                      : 'text-stone-500 hover:text-stone-700')
+                  "
+                >
+                  {{ t("auth.full_registration") }}
+                </button>
+                <button
+                  type="button"
+                  (click)="anonymous = true"
+                  [class]="
+                    'inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 cursor-pointer ' +
+                    (anonymous
+                      ? 'bg-white text-[var(--color-primary)] shadow-sm'
+                      : 'text-stone-500 hover:text-stone-700')
+                  "
+                >
+                  <span
+                    ><mat-icon class="!text-base !w-4 !h-4"
+                      >visibility_off</mat-icon
+                    ></span
+                  >
+                  {{ t("auth.anonymous") }}
+                </button>
+              </div>
             }
-          </div>
+
+            <form
+              #registerForm="ngForm"
+              (ngSubmit)="register()"
+              class="flex flex-col gap-5"
+            >
+              @if (anonymous) {
+                <!-- Anonymous notice -->
+                <div
+                  class="flex items-start gap-3 p-4 rounded-xl bg-[#F3F0E8] border border-stone-200"
+                >
+                  <div
+                    class="w-12 h-12 shrink-0 rounded-full overflow-hidden ring-1 ring-stone-200 bg-white"
+                  >
+                    <img
+                      src="/anonymous-avatar.svg"
+                      class="w-full h-full object-cover"
+                      alt="Anonymous avatar"
+                    />
+                  </div>
+                  <div class="leading-snug">
+                    <p class="text-sm font-medium text-stone-700">
+                      {{ t("auth.anonymous_title") }}
+                    </p>
+                    <p class="text-xs text-stone-500 mt-0.5">
+                      {{ t("auth.anonymous_hint") }}
+                    </p>
+                  </div>
+                </div>
+              }
+
+              @if (!anonymous) {
+                <!-- Avatar -->
+                <div class="flex items-center gap-4">
+                  <div
+                    class="relative group cursor-pointer w-16 h-16 shrink-0"
+                    (click)="fileInput.click()"
+                  >
+                    <div
+                      class="w-full h-full rounded-full overflow-hidden ring-1 ring-stone-200 bg-stone-100 flex items-center justify-center group-hover:ring-[var(--color-success)] transition"
+                    >
+                      @if (profileImage) {
+                        <img
+                          [src]="profilePicture"
+                          class="w-full h-full object-cover"
+                          alt="Avatar Preview"
+                        />
+                      } @else {
+                        <svg
+                          class="w-7 h-7 text-stone-300"
+                          fill="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z"
+                          />
+                        </svg>
+                      }
+                    </div>
+                    <div
+                      class="absolute -bottom-0.5 -right-0.5 w-6 h-6 rounded-full bg-[var(--color-primary)] text-[var(--color-mint)] flex items-center justify-center ring-2 ring-[#FAF8F3]"
+                    >
+                      <span
+                        ><mat-icon class="!text-sm !w-3.5 !h-3.5"
+                          >photo_camera</mat-icon
+                        ></span
+                      >
+                    </div>
+                  </div>
+                  <div class="leading-tight">
+                    <p class="text-sm font-medium text-stone-700">
+                      {{ t("auth.profile_photo") }}
+                    </p>
+                    <p class="text-xs text-stone-400">
+                      {{ t("auth.profile_photo_hint") }}
+                    </p>
+                  </div>
+                  <input
+                    #fileInput
+                    type="file"
+                    hidden
+                    (change)="onFileSelected($event)"
+                    accept="image/*"
+                  />
+                </div>
+
+                <!-- Name / Surname -->
+                <div class="grid grid-cols-2 gap-4">
+                  <div>
+                    <label
+                      for="name"
+                      class="block text-[0.78rem] font-medium text-stone-500 mb-1.5"
+                      >{{ t("auth.name") }}</label
+                    >
+                    <input
+                      id="name"
+                      required
+                      type="text"
+                      name="name"
+                      (keydown.enter)="surnameInput.focus()"
+                      [(ngModel)]="name"
+                      autocomplete="given-name"
+                      class="w-full px-4 py-3 bg-white border border-stone-200 rounded-xl text-stone-800 placeholder-stone-400 focus:outline-none focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/10 transition-all duration-200"
+                    />
+                  </div>
+                  <div>
+                    <label
+                      for="surname"
+                      class="block text-[0.78rem] font-medium text-stone-500 mb-1.5"
+                      >{{ t("auth.surname") }}</label
+                    >
+                    <input
+                      id="surname"
+                      required
+                      type="text"
+                      name="surname"
+                      #surnameInput
+                      (keydown.enter)="emailInput.focus()"
+                      [(ngModel)]="surname"
+                      autocomplete="family-name"
+                      class="w-full px-4 py-3 bg-white border border-stone-200 rounded-xl text-stone-800 placeholder-stone-400 focus:outline-none focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/10 transition-all duration-200"
+                    />
+                  </div>
+                </div>
+
+                <!-- Gender -->
+                <div>
+                  <span
+                    class="block text-[0.78rem] font-medium text-stone-500 mb-1.5"
+                    >{{ t("auth.gender") }}</span
+                  >
+                  <div class="grid grid-cols-2 gap-3">
+                    <button
+                      type="button"
+                      (click)="gender = 'female'"
+                      [class]="
+                        'flex items-center justify-center gap-2 px-4 py-3 rounded-xl border text-sm font-medium transition-all duration-200 cursor-pointer ' +
+                        (gender === 'female'
+                          ? 'border-[var(--color-primary)] bg-[var(--color-primary)] text-[var(--color-mint)]'
+                          : 'border-stone-200 bg-white text-stone-500 hover:border-stone-300')
+                      "
+                    >
+                      {{ t("auth.female") }}
+                    </button>
+                    <button
+                      type="button"
+                      (click)="gender = 'male'"
+                      [class]="
+                        'flex items-center justify-center gap-2 px-4 py-3 rounded-xl border text-sm font-medium transition-all duration-200 cursor-pointer ' +
+                        (gender === 'male'
+                          ? 'border-[var(--color-primary)] bg-[var(--color-primary)] text-[var(--color-mint)]'
+                          : 'border-stone-200 bg-white text-stone-500 hover:border-stone-300')
+                      "
+                    >
+                      {{ t("auth.male") }}
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Email -->
+                <div>
+                  <label
+                    for="email"
+                    class="block text-[0.78rem] font-medium text-stone-500 mb-1.5"
+                    >{{ t("auth.email_address") }}</label
+                  >
+                  <input
+                    id="email"
+                    required
+                    email
+                    type="email"
+                    name="email"
+                    #emailInput
+                    (keydown.enter)="passwordInput.focus()"
+                    [(ngModel)]="email"
+                    autocomplete="email"
+                    placeholder="you@example.com"
+                    class="w-full px-4 py-3 bg-white border border-stone-200 rounded-xl text-stone-800 placeholder-stone-400 focus:outline-none focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/10 transition-all duration-200"
+                  />
+                </div>
+              }
+
+              <!-- Password -->
+              <div>
+                <label
+                  for="password"
+                  class="block text-[0.78rem] font-medium text-stone-500 mb-1.5"
+                  >{{ t("auth.password") }}</label
+                >
+                <div class="relative">
+                  <input
+                    id="password"
+                    required
+                    [type]="hide ? 'password' : 'text'"
+                    name="password"
+                    #passwordInput
+                    (keydown.enter)="register()"
+                    [(ngModel)]="password"
+                    autocomplete="new-password"
+                    placeholder="••••••••"
+                    class="w-full px-4 py-3 pr-12 bg-white border border-stone-200 rounded-xl text-stone-800 placeholder-stone-400 focus:outline-none focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/10 transition-all duration-200"
+                  />
+                  <button
+                    type="button"
+                    (click)="hide = !hide"
+                    class="absolute inset-y-0 right-0 pr-4 flex items-center text-stone-400 hover:text-[var(--color-primary)] cursor-pointer focus:outline-none"
+                  >
+                    @if (!hide) {
+                      <svg
+                        class="h-5 w-5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="1.7"
+                          d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                        />
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="1.7"
+                          d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                        />
+                      </svg>
+                    } @else {
+                      <svg
+                        class="h-5 w-5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="1.7"
+                          d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.542-7a10.059 10.059 0 013.999-5.125m3.124-1.637a9.969 9.969 0 014.225-.236c4.478 0 8.268 2.943 9.542 7a10.05 10.05 0 01-2.002 4.072m-2.126 2.126L4 4m16 16l-4.326-4.326"
+                        />
+                      </svg>
+                    }
+                  </button>
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                [disabled]="!registerForm.valid || authService.isLoading()"
+                class="mt-1 w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full bg-[var(--color-primary)] text-[var(--color-mint)] font-semibold hover:bg-[#013401] transition-colors duration-300 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+              >
+                @if (authService.isLoading()) {
+                  <span
+                    class="w-4 h-4 border-2 border-[var(--color-mint)] border-t-transparent rounded-full animate-spin"
+                  ></span>
+                }
+                @if (isPsychologistRegistration()) {
+                  {{ t("auth.register_as_psychologist") }}
+                } @else if (anonymous) {
+                  {{ t("auth.register_anonymously") }}
+                } @else {
+                  {{ t("auth.sign_up") }}
+                }
+              </button>
+
+              <div class="relative my-1">
+                <div class="absolute inset-0 flex items-center">
+                  <div class="w-full border-t border-stone-200"></div>
+                </div>
+                <div class="relative flex justify-center">
+                  <span class="bg-[#FAF8F3] px-3 text-xs text-stone-400">{{
+                    t("auth.or_countinue_with")
+                  }}</span>
+                </div>
+              </div>
+
+              <button
+                (click)="continueWithGoogle()"
+                type="button"
+                class="w-full flex items-center justify-center gap-3 bg-white hover:border-stone-400 border border-stone-300 text-stone-700 font-medium py-3 rounded-full transition-colors cursor-pointer"
+              >
+                <svg class="w-5 h-5" viewBox="0 0 24 24">
+                  <path
+                    d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+                    fill="#4285F4"
+                  />
+                  <path
+                    d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+                    fill="#34A853"
+                  />
+                  <path
+                    d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
+                    fill="#FBBC05"
+                  />
+                  <path
+                    d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+                    fill="#EA4335"
+                  />
+                </svg>
+                <span class="text-sm">Google</span>
+              </button>
+            </form>
+
+            <p class="mt-8 text-center text-sm text-stone-500">
+              {{ t("auth.already_have_account") }}
+              <a
+                routerLink="/login"
+                class="font-semibold text-[var(--color-success)] hover:text-[var(--color-primary)] transition-colors"
+              >
+                {{ t("auth.login_here") }}
+              </a>
+            </p>
+
+            <div class="mt-6 pt-6 border-t border-stone-200 text-center">
+              @if (!isPsychologistRegistration()) {
+                <a
+                  routerLink="/register"
+                  [queryParams]="{ returnUrl: '/psychologist-registration' }"
+                  class="inline-flex items-center gap-1.5 text-sm font-medium text-stone-600 hover:text-[var(--color-primary)] transition-colors group"
+                >
+                  {{ t("landing.become_psychologist") }}
+                  <mat-icon
+                    class="!text-base !w-4 !h-4 group-hover:translate-x-0.5 transition-transform"
+                    >arrow_forward</mat-icon
+                  >
+                </a>
+              } @else {
+                <p class="text-sm text-stone-500">
+                  {{ t("auth.register_as_client") }}?
+                  <a
+                    routerLink="/register"
+                    class="font-semibold text-[var(--color-success)] hover:text-[var(--color-primary)] transition-colors"
+                  >
+                    {{ t("auth.register_now") }}
+                  </a>
+                </p>
+              }
+            </div>
+          }
         </div>
       </div>
     </main>

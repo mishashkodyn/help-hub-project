@@ -27266,7 +27266,6 @@ var AiAssistantWidgetComponent = class _AiAssistantWidgetComponent {
     grounding: { route: "/practices/grounding-54321", icon: "self_improvement" },
     pmr: { route: "/practices/progressive-muscle", icon: "accessibility_new" },
     chat: { route: "/chat", icon: "forum" },
-    "ai-chat": { route: "/ai-chat", icon: "smart_toy" },
     "category-application": { route: "/category-application", icon: "verified_user" },
     notifications: { route: "/notifications", icon: "notifications" },
     settings: { route: "/settings", icon: "settings" },
@@ -27302,7 +27301,6 @@ var AiAssistantWidgetComponent = class _AiAssistantWidgetComponent {
     "category": "category-application",
     "status-application": "category-application",
     messages: "chat",
-    "ai-assistant": "ai-chat",
     "psychologist-schedule": "psychologist-calendar",
     schedule: "psychologist-calendar",
     finances: "psychologist-finances",
@@ -27455,7 +27453,7 @@ var AiAssistantWidgetComponent = class _AiAssistantWidgetComponent {
       let _t;
       \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.scrollContainer = _t.first);
     }
-  }, standalone: false, decls: 38, vars: 27, consts: [["scrollContainer", ""], [1, "fixed", "bottom-24", "right-5", "z-[60]", "w-[calc(100vw-2.5rem)]", "max-w-[380px]", "origin-bottom-right", "transition-all", "duration-200", "ease-out", 3, "ngClass"], [1, "flex", "flex-col", "h-[70dvh]", "max-h-[640px]", "bg-white", "rounded-3xl", "shadow-2xl", "shadow-blue-900/15", "border", "border-gray-100", "overflow-hidden"], [1, "shrink-0", "flex", "items-center", "gap-3", "px-4", "py-3", "bg-gradient-to-r", "from-blue-600", "to-indigo-600", "text-white"], [1, "flex", "items-center", "justify-center", "w-9", "h-9", "rounded-full", "bg-white/20", "backdrop-blur-sm"], [1, "text-[20px]", "leading-none"], [1, "flex-grow", "min-w-0"], [1, "text-sm", "font-semibold", "leading-tight", "truncate"], [1, "text-[11px]", "text-white/70", "leading-tight"], [1, "shrink-0", "flex", "items-center", "justify-center", "w-8", "h-8", "rounded-full", "hover:bg-white/15", "transition-colors", 3, "matTooltip"], [1, "shrink-0", "flex", "items-center", "justify-center", "w-8", "h-8", "rounded-full", "hover:bg-white/15", "transition-colors", 3, "click", "matTooltip"], [1, "text-[18px]", "leading-none"], [1, "flex-grow", "overflow-y-auto", "p-4", "bg-gray-50"], [1, "flex", "flex-col", "space-y-3"], [1, "flex", "justify-start", "w-full"], [1, "flex", "flex-col", "items-center", "justify-center", "text-center", "text-gray-400", "gap-2", "py-10"], [1, "shrink-0", "bg-white", "border-t", "border-gray-100", "p-3"], [1, "flex", "items-end", "gap-2"], [1, "flex-grow", "flex", "items-center", "bg-gray-50", "border", "border-gray-200", "rounded-2xl", "px-3.5", "transition-all", "duration-200", "focus-within:border-blue-500", "focus-within:ring-4", "focus-within:ring-blue-500/10", "focus-within:bg-white"], ["type", "text", 1, "flex-grow", "bg-transparent", "border-none", "outline-none", "text-sm", "text-gray-900", "py-2.5", "placeholder:text-gray-400", 3, "ngModelChange", "keydown.enter", "ngModel", "placeholder"], [1, "shrink-0", "flex", "items-center", "justify-center", "w-10", "h-10", "rounded-xl", "cursor-pointer", "bg-blue-600", "hover:bg-blue-700", "disabled:bg-gray-300", "disabled:cursor-not-allowed", "transition-all", "duration-200", "text-white", 3, "click", "disabled"], [1, "text-[20px]", "leading-none", "transform", "translate-x-0.5"], ["matTooltipPosition", "left", 1, "fixed", "bottom-5", "right-5", "z-[60]", "flex", "items-center", "justify-center", "w-14", "h-14", "rounded-full", "bg-gradient-to-br", "from-blue-600", "to-indigo-600", "text-white", "shadow-lg", "shadow-blue-600/40", "hover:shadow-xl", "hover:shadow-blue-600/50", "hover:scale-105", "active:scale-95", "transition-all", "duration-200", 3, "click", "matTooltip"], [1, "text-[26px]", "leading-none", "transition-transform", "duration-300"], [1, "flex", "w-full", 3, "ngClass"], [1, "max-w-[85%]", "px-3.5", "py-2.5", "shadow-sm", "break-words", 3, "ngClass"], [1, "text-sm", "whitespace-pre-wrap", "leading-relaxed"], [1, "text-sm", "leading-relaxed", "block", "prose-sm", 3, "data"], [1, "text-[10px]", "opacity-60", "block", "mt-1", "text-right"], [1, "flex", "flex-wrap", "gap-1.5", "mt-0.5"], [1, "inline-flex", "items-center", "gap-1.5", "px-3", "py-1.5", "rounded-full", "bg-blue-50", "text-blue-700", "border", "border-blue-100", "text-xs", "font-medium", "hover:bg-blue-100", "hover:border-blue-200", "active:scale-95", "transition-all", "duration-150"], [1, "inline-flex", "items-center", "gap-1.5", "px-3", "py-1.5", "rounded-full", "bg-blue-50", "text-blue-700", "border", "border-blue-100", "text-xs", "font-medium", "hover:bg-blue-100", "hover:border-blue-200", "active:scale-95", "transition-all", "duration-150", 3, "click"], [1, "text-[15px]", "leading-none", "w-[15px]", "h-[15px]"], [1, "px-3", "py-1.5", "rounded-full", "bg-white", "text-gray-600", "border", "border-gray-200", "text-xs", "hover:border-blue-300", "hover:text-blue-700", "hover:bg-blue-50/50", "active:scale-95", "transition-all", "duration-150"], [1, "px-3", "py-1.5", "rounded-full", "bg-white", "text-gray-600", "border", "border-gray-200", "text-xs", "hover:border-blue-300", "hover:text-blue-700", "hover:bg-blue-50/50", "active:scale-95", "transition-all", "duration-150", 3, "click"], [1, "bg-white", "border", "border-gray-200", "px-3.5", "py-3", "rounded-r-2xl", "rounded-tl-2xl", "shadow-sm", "flex", "items-center", "gap-1"], [1, "w-1.5", "h-1.5", "bg-gray-400", "rounded-full", "animate-bounce"], [1, "w-1.5", "h-1.5", "bg-gray-400", "rounded-full", "animate-bounce", "[animation-delay:0.2s]"], [1, "w-1.5", "h-1.5", "bg-gray-400", "rounded-full", "animate-bounce", "[animation-delay:0.4s]"], [1, "scale-150", "text-blue-300"], [1, "text-sm", "px-6"]], template: function AiAssistantWidgetComponent_Template(rf, ctx) {
+  }, standalone: false, decls: 38, vars: 27, consts: [["scrollContainer", ""], [1, "fixed", "z-[60]", "inset-x-2", "bottom-2", "top-2", "sm:inset-auto", "sm:bottom-24", "sm:right-5", "sm:top-auto", "sm:w-[calc(100vw-2.5rem)]", "sm:max-w-[380px]", "origin-bottom-right", "transition-all", "duration-200", "ease-out", 3, "ngClass"], [1, "flex", "flex-col", "h-full", "sm:h-[70dvh]", "sm:max-h-[640px]", "bg-white", "rounded-2xl", "sm:rounded-3xl", "shadow-2xl", "shadow-blue-900/15", "border", "border-gray-100", "overflow-hidden"], [1, "shrink-0", "flex", "items-center", "gap-3", "px-4", "py-3", "bg-gradient-to-r", "from-blue-600", "to-indigo-600", "text-white"], [1, "flex", "items-center", "justify-center", "w-9", "h-9", "rounded-full", "bg-white/20", "backdrop-blur-sm"], [1, "text-[20px]", "leading-none"], [1, "flex-grow", "min-w-0"], [1, "text-sm", "font-semibold", "leading-tight", "truncate"], [1, "text-[11px]", "text-white/70", "leading-tight"], [1, "shrink-0", "flex", "items-center", "justify-center", "w-8", "h-8", "rounded-full", "hover:bg-white/15", "transition-colors", 3, "matTooltip"], [1, "shrink-0", "flex", "items-center", "justify-center", "w-8", "h-8", "rounded-full", "hover:bg-white/15", "transition-colors", 3, "click", "matTooltip"], [1, "text-[18px]", "leading-none"], [1, "flex-grow", "overflow-y-auto", "p-4", "bg-gray-50"], [1, "flex", "flex-col", "space-y-3"], [1, "flex", "justify-start", "w-full"], [1, "flex", "flex-col", "items-center", "justify-center", "text-center", "text-gray-400", "gap-2", "py-10"], [1, "shrink-0", "bg-white", "border-t", "border-gray-100", "p-3"], [1, "flex", "items-end", "gap-2"], [1, "flex-grow", "flex", "items-center", "bg-gray-50", "border", "border-gray-200", "rounded-2xl", "px-3.5", "transition-all", "duration-200", "focus-within:border-blue-500", "focus-within:ring-4", "focus-within:ring-blue-500/10", "focus-within:bg-white"], ["type", "text", 1, "flex-grow", "bg-transparent", "border-none", "outline-none", "text-base", "sm:text-sm", "text-gray-900", "py-2.5", "placeholder:text-gray-400", 3, "ngModelChange", "keydown.enter", "ngModel", "placeholder"], [1, "shrink-0", "flex", "items-center", "justify-center", "w-10", "h-10", "rounded-xl", "cursor-pointer", "bg-blue-600", "hover:bg-blue-700", "disabled:bg-gray-300", "disabled:cursor-not-allowed", "transition-all", "duration-200", "text-white", 3, "click", "disabled"], [1, "text-[20px]", "leading-none", "transform", "translate-x-0.5"], ["matTooltipPosition", "left", 1, "fixed", "bottom-5", "right-5", "z-[60]", "flex", "items-center", "justify-center", "w-14", "h-14", "rounded-full", "bg-gradient-to-br", "from-blue-600", "to-indigo-600", "text-white", "shadow-lg", "shadow-blue-600/40", "hover:shadow-xl", "hover:shadow-blue-600/50", "hover:scale-105", "active:scale-95", "transition-all", "duration-200", 3, "click", "matTooltip"], [1, "text-[26px]", "leading-none", "transition-transform", "duration-300"], [1, "flex", "w-full", 3, "ngClass"], [1, "max-w-[85%]", "px-3.5", "py-2.5", "shadow-sm", "break-words", 3, "ngClass"], [1, "text-sm", "whitespace-pre-wrap", "leading-relaxed"], [1, "text-sm", "leading-relaxed", "block", "prose-sm", 3, "data"], [1, "text-[10px]", "opacity-60", "block", "mt-1", "text-right"], [1, "flex", "flex-wrap", "gap-1.5", "mt-0.5"], [1, "inline-flex", "items-center", "gap-1.5", "px-3", "py-1.5", "rounded-full", "bg-blue-50", "text-blue-700", "border", "border-blue-100", "text-xs", "font-medium", "hover:bg-blue-100", "hover:border-blue-200", "active:scale-95", "transition-all", "duration-150"], [1, "inline-flex", "items-center", "gap-1.5", "px-3", "py-1.5", "rounded-full", "bg-blue-50", "text-blue-700", "border", "border-blue-100", "text-xs", "font-medium", "hover:bg-blue-100", "hover:border-blue-200", "active:scale-95", "transition-all", "duration-150", 3, "click"], [1, "text-[15px]", "leading-none", "w-[15px]", "h-[15px]"], [1, "px-3", "py-1.5", "rounded-full", "bg-white", "text-gray-600", "border", "border-gray-200", "text-xs", "hover:border-blue-300", "hover:text-blue-700", "hover:bg-blue-50/50", "active:scale-95", "transition-all", "duration-150"], [1, "px-3", "py-1.5", "rounded-full", "bg-white", "text-gray-600", "border", "border-gray-200", "text-xs", "hover:border-blue-300", "hover:text-blue-700", "hover:bg-blue-50/50", "active:scale-95", "transition-all", "duration-150", 3, "click"], [1, "bg-white", "border", "border-gray-200", "px-3.5", "py-3", "rounded-r-2xl", "rounded-tl-2xl", "shadow-sm", "flex", "items-center", "gap-1"], [1, "w-1.5", "h-1.5", "bg-gray-400", "rounded-full", "animate-bounce"], [1, "w-1.5", "h-1.5", "bg-gray-400", "rounded-full", "animate-bounce", "[animation-delay:0.2s]"], [1, "w-1.5", "h-1.5", "bg-gray-400", "rounded-full", "animate-bounce", "[animation-delay:0.4s]"], [1, "scale-150", "text-blue-300"], [1, "text-sm", "px-6"]], template: function AiAssistantWidgetComponent_Template(rf, ctx) {
     if (rf & 1) {
       const _r1 = \u0275\u0275getCurrentView();
       \u0275\u0275elementStart(0, "div", 1)(1, "div", 2)(2, "div", 3)(3, "div", 4)(4, "mat-icon", 5);
@@ -27550,7 +27548,7 @@ var AiAssistantWidgetComponent = class _AiAssistantWidgetComponent {
     type: Component,
     args: [{ selector: "app-ai-assistant-widget", standalone: false, template: `<!-- Chat panel -->
 <div
-  class="fixed bottom-24 right-5 z-[60] w-[calc(100vw-2.5rem)] max-w-[380px] origin-bottom-right transition-all duration-200 ease-out"
+  class="fixed z-[60] inset-x-2 bottom-2 top-2 sm:inset-auto sm:bottom-24 sm:right-5 sm:top-auto sm:w-[calc(100vw-2.5rem)] sm:max-w-[380px] origin-bottom-right transition-all duration-200 ease-out"
   [ngClass]="
     isOpen
       ? 'opacity-100 scale-100 translate-y-0 pointer-events-auto'
@@ -27558,7 +27556,7 @@ var AiAssistantWidgetComponent = class _AiAssistantWidgetComponent {
   "
 >
   <div
-    class="flex flex-col h-[70dvh] max-h-[640px] bg-white rounded-3xl shadow-2xl shadow-blue-900/15 border border-gray-100 overflow-hidden"
+    class="flex flex-col h-full sm:h-[70dvh] sm:max-h-[640px] bg-white rounded-2xl sm:rounded-3xl shadow-2xl shadow-blue-900/15 border border-gray-100 overflow-hidden"
   >
     <!-- Header -->
     <div
@@ -27698,7 +27696,7 @@ var AiAssistantWidgetComponent = class _AiAssistantWidgetComponent {
             [(ngModel)]="message"
             (keydown.enter)="sendMessage()"
             [placeholder]="'ai_assistant.widget.placeholder' | transloco"
-            class="flex-grow bg-transparent border-none outline-none text-sm text-gray-900 py-2.5 placeholder:text-gray-400"
+            class="flex-grow bg-transparent border-none outline-none text-base sm:text-sm text-gray-900 py-2.5 placeholder:text-gray-400"
           />
         </div>
         <button
@@ -60105,11 +60103,11 @@ var BoxBreathingComponent = class _BoxBreathingComponent {
   static \u0275fac = function BoxBreathingComponent_Factory(__ngFactoryType__) {
     return new (__ngFactoryType__ || _BoxBreathingComponent)(\u0275\u0275directiveInject(Router));
   };
-  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _BoxBreathingComponent, selectors: [["app-box-breathing"]], standalone: false, decls: 1, vars: 0, consts: [[4, "transloco"], [1, "min-h-screen", "bg-[#FAF8F3]", "px-4", "py-8", "md:px-8"], [1, "max-w-3xl", "mx-auto", "mb-7"], [1, "flex", "items-center", "gap-3"], [1, "w-10", "h-10", "flex", "items-center", "justify-center", "rounded-full", "text-stone-500", "hover:bg-stone-200/60", "hover:text-[var(--color-primary)]", "transition-colors", 3, "click"], [1, "w-12", "h-12", "rounded-2xl", "bg-[var(--color-sky)]/20", "flex", "items-center", "justify-center", "shrink-0"], [1, "text-[var(--color-blue)]"], [1, "text-2xl", "font-semibold", "tracking-[-0.01em]", "text-[var(--color-primary)]"], [1, "text-sm", "font-medium", "text-stone-500"], [1, "max-w-3xl", "mx-auto", "space-y-4"], [1, "bg-white", "rounded-2xl", "border", "border-stone-200", "shadow-sm", "p-6"], [1, "text-[0.95rem]", "text-stone-700", "leading-relaxed"], [1, "bg-white", "rounded-2xl", "border", "border-stone-200", "shadow-sm", "px-6", "pt-8", "pb-6", "flex", "flex-col", "items-center"], ["aria-live", "polite", 1, "sr-only"], [1, "relative", "w-[min(78vw,320px)]", "aspect-square"], [1, "side-label", "left-0", "top-1/2", "-translate-x-full", "-translate-y-1/2", "pr-3", "text-right"], [1, "side-label", "left-1/2", "top-0", "-translate-x-1/2", "-translate-y-full", "pb-2"], [1, "side-label", "right-0", "top-1/2", "translate-x-full", "-translate-y-1/2", "pl-3"], [1, "side-label", "left-1/2", "bottom-0", "-translate-x-1/2", "translate-y-full", "pt-2"], ["viewBox", "0 0 100 100", "aria-hidden", "true", 1, "w-full", "h-full", "overflow-visible"], ["x", "16", "y", "16", "width", "68", "height", "68", "rx", "8", "fill", "none", "stroke", "var(--color-mint)", "stroke-opacity", "0.45", "stroke-width", "2.5"], [1, "absolute", "inset-0", "flex", "flex-col", "items-center", "justify-center", "text-center", "pointer-events-none"], [1, "w-full", "max-w-[320px]", "mt-8"], [1, "flex", "items-center", "justify-between", "text-xs", "font-medium", "text-stone-500", "mb-1.5"], [1, "tabular-nums", "text-stone-600"], [1, "h-2", "rounded-full", "bg-stone-200", "overflow-hidden"], [1, "h-full", "rounded-full", "bg-[var(--color-success)]", "transition-all", "duration-500"], [1, "flex", "items-center", "gap-3", "mt-7"], [1, "flex", "items-center", "gap-2", "px-7", "py-3", "rounded-full", "bg-[var(--color-success)]", "text-white", "text-sm", "font-semibold", "shadow-sm", "hover:bg-[#2e6a04]", "transition-colors", 3, "click"], [1, "text-lg"], [1, "flex", "items-center", "gap-2", "px-5", "py-3", "rounded-full", "bg-stone-100", "text-stone-700", "text-sm", "font-semibold", "hover:bg-stone-200", "transition-colors", "disabled:opacity-40", "disabled:cursor-not-allowed", 3, "click", "disabled"], [1, "w-11", "h-11", "flex", "items-center", "justify-center", "rounded-full", "hover:bg-stone-100", "transition-colors", 3, "click", "ngClass"], [1, "flex", "items-center", "justify-between", "mb-4"], [1, "text-base", "font-semibold", "text-[var(--color-primary)]"], [1, "text-xs", "font-medium", "text-stone-500"], [1, "grid", "grid-cols-4", "gap-2.5"], [1, "flex", "flex-col", "items-center", "py-3", "rounded-xl", "border", "text-sm", "font-semibold", "transition-all", "disabled:opacity-40", "disabled:cursor-not-allowed", 3, "disabled", "ngClass"], [1, "text-base", "font-semibold", "text-[var(--color-primary)]", "mb-4"], [1, "space-y-3.5"], [1, "flex", "gap-3.5"], [1, "text-center", "text-xs", "text-stone-500", "px-6", "pt-1"], [1, "active-side"], ["r", "3.4", 1, "marker-halo"], ["r", "2.2", 1, "marker"], [1, "text-xs", "uppercase", "tracking-[0.2em]", "text-stone-500", "mb-1"], [1, "text-6xl", "font-semibold", "text-[var(--color-primary)]", "tabular-nums"], [1, "text-6xl", "font-semibold", "text-[var(--color-primary)]", "tabular-nums", "leading-tight"], [1, "text-[var(--color-success)]", "!w-10", "!h-10", "!text-4xl", "mb-1"], [1, "text-[var(--color-blue)]", "!w-9", "!h-9", "!text-4xl", "mb-2"], [1, "text-sm", "font-medium", "text-stone-600", "px-6"], [1, "flex", "flex-col", "items-center", "py-3", "rounded-xl", "border", "text-sm", "font-semibold", "transition-all", "disabled:opacity-40", "disabled:cursor-not-allowed", 3, "click", "disabled", "ngClass"], [1, "tabular-nums", "text-base"], [1, "text-[11px]", "font-medium", "text-stone-500", "mt-0.5"], [1, "w-7", "h-7", "rounded-full", "bg-[var(--color-mint)]/40", "text-[var(--color-success)]", "text-sm", "font-bold", "flex", "items-center", "justify-center", "shrink-0", "mt-0.5"]], template: function BoxBreathingComponent_Template(rf, ctx) {
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _BoxBreathingComponent, selectors: [["app-box-breathing"]], standalone: false, decls: 1, vars: 0, consts: [[4, "transloco"], [1, "min-h-screen", "bg-[#FAF8F3]", "px-4", "py-8", "md:px-8"], [1, "max-w-3xl", "mx-auto", "mb-7"], [1, "flex", "items-center", "gap-3"], [1, "w-10", "h-10", "flex", "items-center", "justify-center", "rounded-full", "text-stone-500", "hover:bg-stone-200/60", "hover:text-[var(--color-primary)]", "transition-colors", 3, "click"], [1, "w-12", "h-12", "rounded-2xl", "bg-[var(--color-sky)]/20", "flex", "items-center", "justify-center", "shrink-0"], [1, "text-[var(--color-blue)]"], [1, "text-2xl", "font-semibold", "tracking-[-0.01em]", "text-[var(--color-primary)]"], [1, "text-sm", "font-medium", "text-stone-500"], [1, "max-w-3xl", "mx-auto", "space-y-4"], [1, "bg-white", "rounded-2xl", "border", "border-stone-200", "shadow-sm", "p-6"], [1, "text-[0.95rem]", "text-stone-700", "leading-relaxed"], [1, "bg-white", "rounded-2xl", "border", "border-stone-200", "shadow-sm", "px-4", "sm:px-6", "pt-8", "pb-6", "flex", "flex-col", "items-center"], ["aria-live", "polite", 1, "sr-only"], [1, "relative", "w-[min(58vw,320px)]", "sm:w-[min(78vw,320px)]", "aspect-square"], [1, "side-label", "left-0", "top-1/2", "-translate-x-full", "-translate-y-1/2", "pr-2", "sm:pr-3", "text-right"], [1, "side-label", "left-1/2", "top-0", "-translate-x-1/2", "-translate-y-full", "pb-2"], [1, "side-label", "right-0", "top-1/2", "translate-x-full", "-translate-y-1/2", "pl-2", "sm:pl-3"], [1, "side-label", "left-1/2", "bottom-0", "-translate-x-1/2", "translate-y-full", "pt-2"], ["viewBox", "0 0 100 100", "aria-hidden", "true", 1, "w-full", "h-full", "overflow-visible"], ["x", "16", "y", "16", "width", "68", "height", "68", "rx", "8", "fill", "none", "stroke", "var(--color-mint)", "stroke-opacity", "0.45", "stroke-width", "2.5"], [1, "absolute", "inset-0", "flex", "flex-col", "items-center", "justify-center", "text-center", "pointer-events-none"], [1, "w-full", "max-w-[320px]", "mt-8"], [1, "flex", "items-center", "justify-between", "text-xs", "font-medium", "text-stone-500", "mb-1.5"], [1, "tabular-nums", "text-stone-600"], [1, "h-2", "rounded-full", "bg-stone-200", "overflow-hidden"], [1, "h-full", "rounded-full", "bg-[var(--color-success)]", "transition-all", "duration-500"], [1, "flex", "flex-wrap", "items-center", "justify-center", "gap-3", "mt-7"], [1, "flex", "items-center", "gap-2", "px-7", "py-3", "rounded-full", "bg-[var(--color-success)]", "text-white", "text-sm", "font-semibold", "shadow-sm", "hover:bg-[#2e6a04]", "transition-colors", 3, "click"], [1, "text-lg"], [1, "flex", "items-center", "gap-2", "px-5", "py-3", "rounded-full", "bg-stone-100", "text-stone-700", "text-sm", "font-semibold", "hover:bg-stone-200", "transition-colors", "disabled:opacity-40", "disabled:cursor-not-allowed", 3, "click", "disabled"], [1, "w-11", "h-11", "flex", "items-center", "justify-center", "rounded-full", "hover:bg-stone-100", "transition-colors", 3, "click", "ngClass"], [1, "flex", "items-center", "justify-between", "mb-4"], [1, "text-base", "font-semibold", "text-[var(--color-primary)]"], [1, "text-xs", "font-medium", "text-stone-500"], [1, "grid", "grid-cols-4", "gap-2.5"], [1, "flex", "flex-col", "items-center", "py-3", "rounded-xl", "border", "text-sm", "font-semibold", "transition-all", "disabled:opacity-40", "disabled:cursor-not-allowed", 3, "disabled", "ngClass"], [1, "text-base", "font-semibold", "text-[var(--color-primary)]", "mb-4"], [1, "space-y-3.5"], [1, "flex", "gap-3.5"], [1, "text-center", "text-xs", "text-stone-500", "px-6", "pt-1"], [1, "active-side"], ["r", "3.4", 1, "marker-halo"], ["r", "2.2", 1, "marker"], [1, "text-xs", "uppercase", "tracking-[0.2em]", "text-stone-500", "mb-1"], [1, "text-6xl", "font-semibold", "text-[var(--color-primary)]", "tabular-nums"], [1, "text-6xl", "font-semibold", "text-[var(--color-primary)]", "tabular-nums", "leading-tight"], [1, "text-[var(--color-success)]", "!w-10", "!h-10", "!text-4xl", "mb-1"], [1, "text-[var(--color-blue)]", "!w-9", "!h-9", "!text-4xl", "mb-2"], [1, "text-sm", "font-medium", "text-stone-600", "px-6"], [1, "flex", "flex-col", "items-center", "py-3", "rounded-xl", "border", "text-sm", "font-semibold", "transition-all", "disabled:opacity-40", "disabled:cursor-not-allowed", 3, "click", "disabled", "ngClass"], [1, "tabular-nums", "text-base"], [1, "text-[11px]", "font-medium", "text-stone-500", "mt-0.5"], [1, "w-7", "h-7", "rounded-full", "bg-[var(--color-mint)]/40", "text-[var(--color-success)]", "text-sm", "font-bold", "flex", "items-center", "justify-center", "shrink-0", "mt-0.5"]], template: function BoxBreathingComponent_Template(rf, ctx) {
     if (rf & 1) {
       \u0275\u0275template(0, BoxBreathingComponent_ng_container_0_Template, 84, 42, "ng-container", 0);
     }
-  }, dependencies: [NgClass, MatIcon, TranslocoDirective], styles: ["\n\n[_nghost-%COMP%] {\n  display: block;\n}\n.side-label[_ngcontent-%COMP%] {\n  position: absolute;\n  font-size: 0.7rem;\n  font-weight: 600;\n  letter-spacing: 0.04em;\n  white-space: nowrap;\n  color: #57534e;\n  transition: color 0.3s ease, opacity 0.3s ease;\n  opacity: 0.85;\n}\n.side-label--active[_ngcontent-%COMP%] {\n  color: var(--color-primary);\n  opacity: 1;\n}\n.active-side[_ngcontent-%COMP%] {\n  fill: none;\n  stroke: var(--color-success);\n  stroke-width: 2.6;\n  stroke-linecap: round;\n  opacity: 0;\n  transition: opacity 0.35s ease;\n}\n.active-side.shown[_ngcontent-%COMP%] {\n  opacity: 0.85;\n}\n.marker[_ngcontent-%COMP%] {\n  fill: var(--color-success);\n}\n.marker-halo[_ngcontent-%COMP%] {\n  fill: var(--color-success);\n  opacity: 0.25;\n}\n.is-running[_ngcontent-%COMP%]   .marker-halo[_ngcontent-%COMP%] {\n  animation: _ngcontent-%COMP%_marker-pulse 2s ease-in-out infinite;\n  transform-box: fill-box;\n  transform-origin: center;\n}\n@keyframes _ngcontent-%COMP%_marker-pulse {\n  0%, 100% {\n    opacity: 0.18;\n    transform: scale(1);\n  }\n  50% {\n    opacity: 0.32;\n    transform: scale(1.25);\n  }\n}\n@media (prefers-reduced-motion: reduce) {\n  .marker-halo[_ngcontent-%COMP%] {\n    animation: none !important;\n  }\n  .active-side[_ngcontent-%COMP%], \n   .side-label[_ngcontent-%COMP%] {\n    transition: none;\n  }\n}\n/*# sourceMappingURL=box-breathing.component.css.map */"] });
+  }, dependencies: [NgClass, MatIcon, TranslocoDirective], styles: ["\n\n[_nghost-%COMP%] {\n  display: block;\n}\n.side-label[_ngcontent-%COMP%] {\n  position: absolute;\n  font-size: 0.7rem;\n  font-weight: 600;\n  letter-spacing: 0.04em;\n  white-space: nowrap;\n  color: #57534e;\n  transition: color 0.3s ease, opacity 0.3s ease;\n  opacity: 0.85;\n}\n.side-label--active[_ngcontent-%COMP%] {\n  color: var(--color-primary);\n  opacity: 1;\n}\n@media (max-width: 480px) {\n  .side-label[_ngcontent-%COMP%] {\n    font-size: 0.625rem;\n    letter-spacing: 0.02em;\n  }\n}\n.active-side[_ngcontent-%COMP%] {\n  fill: none;\n  stroke: var(--color-success);\n  stroke-width: 2.6;\n  stroke-linecap: round;\n  opacity: 0;\n  transition: opacity 0.35s ease;\n}\n.active-side.shown[_ngcontent-%COMP%] {\n  opacity: 0.85;\n}\n.marker[_ngcontent-%COMP%] {\n  fill: var(--color-success);\n}\n.marker-halo[_ngcontent-%COMP%] {\n  fill: var(--color-success);\n  opacity: 0.25;\n}\n.is-running[_ngcontent-%COMP%]   .marker-halo[_ngcontent-%COMP%] {\n  animation: _ngcontent-%COMP%_marker-pulse 2s ease-in-out infinite;\n  transform-box: fill-box;\n  transform-origin: center;\n}\n@keyframes _ngcontent-%COMP%_marker-pulse {\n  0%, 100% {\n    opacity: 0.18;\n    transform: scale(1);\n  }\n  50% {\n    opacity: 0.32;\n    transform: scale(1.25);\n  }\n}\n@media (prefers-reduced-motion: reduce) {\n  .marker-halo[_ngcontent-%COMP%] {\n    animation: none !important;\n  }\n  .active-side[_ngcontent-%COMP%], \n   .side-label[_ngcontent-%COMP%] {\n    transition: none;\n  }\n}\n/*# sourceMappingURL=box-breathing.component.css.map */"] });
 };
 (() => {
   (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(BoxBreathingComponent, [{
@@ -60157,7 +60155,7 @@ var BoxBreathingComponent = class _BoxBreathingComponent {
 
       <!-- Breathing guide -->
       <div
-        class="bg-white rounded-2xl border border-stone-200 shadow-sm px-6 pt-8 pb-6 flex flex-col items-center"
+        class="bg-white rounded-2xl border border-stone-200 shadow-sm px-4 sm:px-6 pt-8 pb-6 flex flex-col items-center"
       >
         <!-- Live region for screen readers -->
         <p class="sr-only" aria-live="polite">
@@ -60172,12 +60170,12 @@ var BoxBreathingComponent = class _BoxBreathingComponent {
 
         <!-- The square -->
         <div
-          class="relative w-[min(78vw,320px)] aspect-square"
+          class="relative w-[min(58vw,320px)] sm:w-[min(78vw,320px)] aspect-square"
           [class.is-running]="isActiveSession"
         >
           <!-- Side labels -->
           <span
-            class="side-label left-0 top-1/2 -translate-x-full -translate-y-1/2 pr-3 text-right"
+            class="side-label left-0 top-1/2 -translate-x-full -translate-y-1/2 pr-2 sm:pr-3 text-right"
             [class.side-label--active]="sideActive(0)"
           >
             {{ t("selfHelp.phase.inhale") }}
@@ -60189,7 +60187,7 @@ var BoxBreathingComponent = class _BoxBreathingComponent {
             {{ t("selfHelp.phase.hold") }}
           </span>
           <span
-            class="side-label right-0 top-1/2 translate-x-full -translate-y-1/2 pl-3"
+            class="side-label right-0 top-1/2 translate-x-full -translate-y-1/2 pl-2 sm:pl-3"
             [class.side-label--active]="sideActive(2)"
           >
             {{ t("selfHelp.phase.exhale") }}
@@ -60295,7 +60293,7 @@ var BoxBreathingComponent = class _BoxBreathingComponent {
         </div>
 
         <!-- Controls -->
-        <div class="flex items-center gap-3 mt-7">
+        <div class="flex flex-wrap items-center justify-center gap-3 mt-7">
           <button
             (click)="toggle()"
             class="flex items-center gap-2 px-7 py-3 rounded-full bg-[var(--color-success)] text-white text-sm font-semibold shadow-sm hover:bg-[#2e6a04] transition-colors"
@@ -60384,7 +60382,7 @@ var BoxBreathingComponent = class _BoxBreathingComponent {
     </div>
   </div>
 </ng-container>
-`, styles: ["/* src/app/modules/self-help/pages/box-breathing/box-breathing.component.scss */\n:host {\n  display: block;\n}\n.side-label {\n  position: absolute;\n  font-size: 0.7rem;\n  font-weight: 600;\n  letter-spacing: 0.04em;\n  white-space: nowrap;\n  color: #57534e;\n  transition: color 0.3s ease, opacity 0.3s ease;\n  opacity: 0.85;\n}\n.side-label--active {\n  color: var(--color-primary);\n  opacity: 1;\n}\n.active-side {\n  fill: none;\n  stroke: var(--color-success);\n  stroke-width: 2.6;\n  stroke-linecap: round;\n  opacity: 0;\n  transition: opacity 0.35s ease;\n}\n.active-side.shown {\n  opacity: 0.85;\n}\n.marker {\n  fill: var(--color-success);\n}\n.marker-halo {\n  fill: var(--color-success);\n  opacity: 0.25;\n}\n.is-running .marker-halo {\n  animation: marker-pulse 2s ease-in-out infinite;\n  transform-box: fill-box;\n  transform-origin: center;\n}\n@keyframes marker-pulse {\n  0%, 100% {\n    opacity: 0.18;\n    transform: scale(1);\n  }\n  50% {\n    opacity: 0.32;\n    transform: scale(1.25);\n  }\n}\n@media (prefers-reduced-motion: reduce) {\n  .marker-halo {\n    animation: none !important;\n  }\n  .active-side,\n  .side-label {\n    transition: none;\n  }\n}\n/*# sourceMappingURL=box-breathing.component.css.map */\n"] }]
+`, styles: ["/* src/app/modules/self-help/pages/box-breathing/box-breathing.component.scss */\n:host {\n  display: block;\n}\n.side-label {\n  position: absolute;\n  font-size: 0.7rem;\n  font-weight: 600;\n  letter-spacing: 0.04em;\n  white-space: nowrap;\n  color: #57534e;\n  transition: color 0.3s ease, opacity 0.3s ease;\n  opacity: 0.85;\n}\n.side-label--active {\n  color: var(--color-primary);\n  opacity: 1;\n}\n@media (max-width: 480px) {\n  .side-label {\n    font-size: 0.625rem;\n    letter-spacing: 0.02em;\n  }\n}\n.active-side {\n  fill: none;\n  stroke: var(--color-success);\n  stroke-width: 2.6;\n  stroke-linecap: round;\n  opacity: 0;\n  transition: opacity 0.35s ease;\n}\n.active-side.shown {\n  opacity: 0.85;\n}\n.marker {\n  fill: var(--color-success);\n}\n.marker-halo {\n  fill: var(--color-success);\n  opacity: 0.25;\n}\n.is-running .marker-halo {\n  animation: marker-pulse 2s ease-in-out infinite;\n  transform-box: fill-box;\n  transform-origin: center;\n}\n@keyframes marker-pulse {\n  0%, 100% {\n    opacity: 0.18;\n    transform: scale(1);\n  }\n  50% {\n    opacity: 0.32;\n    transform: scale(1.25);\n  }\n}\n@media (prefers-reduced-motion: reduce) {\n  .marker-halo {\n    animation: none !important;\n  }\n  .active-side,\n  .side-label {\n    transition: none;\n  }\n}\n/*# sourceMappingURL=box-breathing.component.css.map */\n"] }]
   }], () => [{ type: Router }], null);
 })();
 (() => {
@@ -64901,6 +64899,1103 @@ var ProgressiveMuscleComponent = class _ProgressiveMuscleComponent {
   (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(ProgressiveMuscleComponent, { className: "ProgressiveMuscleComponent", filePath: "src/app/modules/self-help/pages/progressive-muscle/progressive-muscle.component.ts", lineNumber: 48 });
 })();
 
+// src/app/modules/self-help/pages/safe-place/safe-place.component.ts
+var _c040 = (a0, a1) => ({ current: a0, total: a1 });
+var _forTrack029 = ($index, $item) => $item.key;
+function SafePlaceComponent_ng_container_0_Conditional_22_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275text(0);
+  }
+  if (rf & 2) {
+    const t_r3 = \u0275\u0275nextContext().$implicit;
+    const ctx_r1 = \u0275\u0275nextContext();
+    \u0275\u0275textInterpolate2(" ", t_r3("selfHelp.safePlace.getReady"), " ", ctx_r1.prepareCountdown, " ");
+  }
+}
+function SafePlaceComponent_ng_container_0_Conditional_23_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275text(0);
+  }
+  if (rf & 2) {
+    const t_r3 = \u0275\u0275nextContext().$implicit;
+    const ctx_r1 = \u0275\u0275nextContext();
+    \u0275\u0275textInterpolate1(" ", t_r3("selfHelp.safePlace.anchors." + ctx_r1.current.key + ".prompt"), " ");
+  }
+}
+function SafePlaceComponent_ng_container_0_Conditional_24_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275text(0);
+  }
+  if (rf & 2) {
+    const t_r3 = \u0275\u0275nextContext().$implicit;
+    \u0275\u0275textInterpolate1(" ", t_r3("selfHelp.safePlace.completeTitle"), " ");
+  }
+}
+function SafePlaceComponent_ng_container_0_Conditional_57_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "div", 45)(1, "div", 68)(2, "mat-icon", 69);
+    \u0275\u0275text(3);
+    \u0275\u0275elementEnd()()();
+  }
+  if (rf & 2) {
+    const ctx_r1 = \u0275\u0275nextContext(2);
+    \u0275\u0275advance(3);
+    \u0275\u0275textInterpolate1(" ", ctx_r1.current.icon, " ");
+  }
+}
+function SafePlaceComponent_ng_container_0_Conditional_58_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "div", 46)(1, "div", 70);
+    \u0275\u0275text(2);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(3, "div", 71);
+    \u0275\u0275text(4);
+    \u0275\u0275elementEnd()();
+  }
+  if (rf & 2) {
+    const t_r3 = \u0275\u0275nextContext().$implicit;
+    const ctx_r1 = \u0275\u0275nextContext();
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate1(" ", t_r3("selfHelp.safePlace.getReady"), " ");
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate1(" ", ctx_r1.prepareCountdown, " ");
+  }
+}
+function SafePlaceComponent_ng_container_0_Conditional_59_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "div", 47)(1, "div", 72)(2, "mat-icon", 73);
+    \u0275\u0275text(3, "check");
+    \u0275\u0275elementEnd()()();
+  }
+}
+function SafePlaceComponent_ng_container_0_Conditional_61_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "p", 49);
+    \u0275\u0275text(1);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const t_r3 = \u0275\u0275nextContext().$implicit;
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate1(" ", t_r3("selfHelp.safePlace.readyHint"), " ");
+  }
+}
+function SafePlaceComponent_ng_container_0_Conditional_62_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "mat-icon", 74);
+    \u0275\u0275text(1, " check_circle ");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(2, "h2", 75);
+    \u0275\u0275text(3);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(4, "p", 49);
+    \u0275\u0275text(5);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const t_r3 = \u0275\u0275nextContext().$implicit;
+    \u0275\u0275advance(3);
+    \u0275\u0275textInterpolate1(" ", t_r3("selfHelp.safePlace.completeTitle"), " ");
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate1(" ", t_r3("selfHelp.safePlace.completeText"), " ");
+  }
+}
+function SafePlaceComponent_ng_container_0_Conditional_63_Conditional_3_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "span", 78);
+    \u0275\u0275text(1);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const t_r3 = \u0275\u0275nextContext(2).$implicit;
+    const ctx_r1 = \u0275\u0275nextContext();
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate2(" ", ctx_r1.countdown, "", t_r3("selfHelp.safePlace.secShort"), " ");
+  }
+}
+function SafePlaceComponent_ng_container_0_Conditional_63_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "div", 76)(1, "span", 77);
+    \u0275\u0275text(2);
+    \u0275\u0275elementEnd();
+    \u0275\u0275template(3, SafePlaceComponent_ng_container_0_Conditional_63_Conditional_3_Template, 2, 2, "span", 78);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(4, "h2", 79);
+    \u0275\u0275text(5);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(6, "p", 80);
+    \u0275\u0275text(7);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const t_r3 = \u0275\u0275nextContext().$implicit;
+    const ctx_r1 = \u0275\u0275nextContext();
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate1(" ", t_r3("selfHelp.safePlace.anchorStep", \u0275\u0275pureFunction2(4, _c040, ctx_r1.index + 1, ctx_r1.anchors.length)), " ");
+    \u0275\u0275advance();
+    \u0275\u0275conditional(ctx_r1.state === "running" ? 3 : -1);
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate1(" ", t_r3("selfHelp.safePlace.anchors." + ctx_r1.current.key + ".label"), " ");
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate1(" ", t_r3("selfHelp.safePlace.anchors." + ctx_r1.current.key + ".prompt"), " ");
+  }
+}
+function SafePlaceComponent_ng_container_0_Conditional_64_For_2_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r4 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "button", 82);
+    \u0275\u0275listener("click", function SafePlaceComponent_ng_container_0_Conditional_64_For_2_Template_button_click_0_listener() {
+      const \u0275$index_172_r5 = \u0275\u0275restoreView(_r4).$index;
+      const ctx_r1 = \u0275\u0275nextContext(3);
+      return \u0275\u0275resetView(ctx_r1.goTo(\u0275$index_172_r5));
+    });
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const a_r6 = ctx.$implicit;
+    const \u0275$index_172_r5 = ctx.$index;
+    const t_r3 = \u0275\u0275nextContext(2).$implicit;
+    const ctx_r1 = \u0275\u0275nextContext();
+    \u0275\u0275property("ngClass", \u0275$index_172_r5 === ctx_r1.index ? "w-2.5 h-2.5 bg-[var(--color-primary)]" : \u0275$index_172_r5 < ctx_r1.index ? "w-2 h-2 bg-[var(--color-primary)]/40" : "w-2 h-2 bg-stone-200");
+    \u0275\u0275attribute("aria-label", t_r3("selfHelp.safePlace.anchors." + a_r6.key + ".label"));
+  }
+}
+function SafePlaceComponent_ng_container_0_Conditional_64_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "div", 50);
+    \u0275\u0275repeaterCreate(1, SafePlaceComponent_ng_container_0_Conditional_64_For_2_Template, 1, 2, "button", 81, _forTrack029);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const ctx_r1 = \u0275\u0275nextContext(2);
+    \u0275\u0275advance();
+    \u0275\u0275repeater(ctx_r1.anchors);
+  }
+}
+function SafePlaceComponent_ng_container_0_Conditional_65_Conditional_3_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275text(0);
+  }
+  if (rf & 2) {
+    const t_r3 = \u0275\u0275nextContext(2).$implicit;
+    \u0275\u0275textInterpolate1(" ", t_r3("selfHelp.safePlace.completeText"), " ");
+  }
+}
+function SafePlaceComponent_ng_container_0_Conditional_65_Conditional_4_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275text(0);
+  }
+  if (rf & 2) {
+    const t_r3 = \u0275\u0275nextContext(2).$implicit;
+    \u0275\u0275textInterpolate1(" ", t_r3("selfHelp.safePlace.timeLeft"), " ");
+  }
+}
+function SafePlaceComponent_ng_container_0_Conditional_65_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "div", 51)(1, "div", 83)(2, "span");
+    \u0275\u0275template(3, SafePlaceComponent_ng_container_0_Conditional_65_Conditional_3_Template, 1, 1)(4, SafePlaceComponent_ng_container_0_Conditional_65_Conditional_4_Template, 1, 1);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(5, "span", 84);
+    \u0275\u0275text(6);
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(7, "div", 85);
+    \u0275\u0275element(8, "div", 86);
+    \u0275\u0275elementEnd()();
+  }
+  if (rf & 2) {
+    const ctx_r1 = \u0275\u0275nextContext(2);
+    \u0275\u0275advance(3);
+    \u0275\u0275conditional(ctx_r1.state === "done" ? 3 : 4);
+    \u0275\u0275advance(3);
+    \u0275\u0275textInterpolate1(" ", ctx_r1.state === "done" ? "0:00" : ctx_r1.timeRemaining, " ");
+    \u0275\u0275advance(2);
+    \u0275\u0275styleProp("width", (ctx_r1.state === "done" ? 1 : ctx_r1.progress) * 100, "%");
+  }
+}
+function SafePlaceComponent_ng_container_0_Conditional_67_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r7 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "button", 87);
+    \u0275\u0275listener("click", function SafePlaceComponent_ng_container_0_Conditional_67_Template_button_click_0_listener() {
+      \u0275\u0275restoreView(_r7);
+      const ctx_r1 = \u0275\u0275nextContext(2);
+      return \u0275\u0275resetView(ctx_r1.prev());
+    });
+    \u0275\u0275elementStart(1, "mat-icon", 55);
+    \u0275\u0275text(2, "skip_previous");
+    \u0275\u0275elementEnd()();
+  }
+  if (rf & 2) {
+    const t_r3 = \u0275\u0275nextContext().$implicit;
+    const ctx_r1 = \u0275\u0275nextContext();
+    \u0275\u0275property("disabled", ctx_r1.isFirst);
+    \u0275\u0275attribute("aria-label", t_r3("selfHelp.safePlace.prev"));
+  }
+}
+function SafePlaceComponent_ng_container_0_Conditional_71_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275text(0);
+  }
+  if (rf & 2) {
+    const t_r3 = \u0275\u0275nextContext().$implicit;
+    \u0275\u0275textInterpolate1(" ", t_r3("selfHelp.safePlace.resume"), " ");
+  }
+}
+function SafePlaceComponent_ng_container_0_Conditional_72_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275text(0);
+  }
+  if (rf & 2) {
+    const t_r3 = \u0275\u0275nextContext().$implicit;
+    \u0275\u0275textInterpolate1(" ", t_r3("selfHelp.pause"), " ");
+  }
+}
+function SafePlaceComponent_ng_container_0_Conditional_73_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275text(0);
+  }
+  if (rf & 2) {
+    const t_r3 = \u0275\u0275nextContext().$implicit;
+    \u0275\u0275textInterpolate1(" ", t_r3("selfHelp.safePlace.restart"), " ");
+  }
+}
+function SafePlaceComponent_ng_container_0_Conditional_74_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275text(0);
+  }
+  if (rf & 2) {
+    const t_r3 = \u0275\u0275nextContext().$implicit;
+    \u0275\u0275textInterpolate1(" ", t_r3("selfHelp.safePlace.begin"), " ");
+  }
+}
+function SafePlaceComponent_ng_container_0_Conditional_75_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r8 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "button", 88);
+    \u0275\u0275listener("click", function SafePlaceComponent_ng_container_0_Conditional_75_Template_button_click_0_listener() {
+      \u0275\u0275restoreView(_r8);
+      const ctx_r1 = \u0275\u0275nextContext(2);
+      return \u0275\u0275resetView(ctx_r1.next());
+    });
+    \u0275\u0275elementStart(1, "mat-icon", 55);
+    \u0275\u0275text(2, "skip_next");
+    \u0275\u0275elementEnd()();
+  }
+  if (rf & 2) {
+    const t_r3 = \u0275\u0275nextContext().$implicit;
+    \u0275\u0275attribute("aria-label", t_r3("selfHelp.safePlace.next"));
+  }
+}
+function SafePlaceComponent_ng_container_0_Conditional_76_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r9 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "button", 89);
+    \u0275\u0275listener("click", function SafePlaceComponent_ng_container_0_Conditional_76_Template_button_click_0_listener() {
+      \u0275\u0275restoreView(_r9);
+      const ctx_r1 = \u0275\u0275nextContext(2);
+      return \u0275\u0275resetView(ctx_r1.reset());
+    });
+    \u0275\u0275elementStart(1, "mat-icon", 55);
+    \u0275\u0275text(2, "restart_alt");
+    \u0275\u0275elementEnd();
+    \u0275\u0275text(3);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const t_r3 = \u0275\u0275nextContext().$implicit;
+    const ctx_r1 = \u0275\u0275nextContext();
+    \u0275\u0275property("disabled", ctx_r1.state === "idle");
+    \u0275\u0275advance(3);
+    \u0275\u0275textInterpolate1(" ", t_r3("selfHelp.reset"), " ");
+  }
+}
+function SafePlaceComponent_ng_container_0_For_88_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r10 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "button", 90);
+    \u0275\u0275listener("click", function SafePlaceComponent_ng_container_0_For_88_Template_button_click_0_listener() {
+      const d_r11 = \u0275\u0275restoreView(_r10).$implicit;
+      const ctx_r1 = \u0275\u0275nextContext(2);
+      return \u0275\u0275resetView(ctx_r1.setDuration(d_r11));
+    });
+    \u0275\u0275elementStart(1, "span", 91);
+    \u0275\u0275text(2);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(3, "span", 92);
+    \u0275\u0275text(4);
+    \u0275\u0275elementEnd()();
+  }
+  if (rf & 2) {
+    const d_r11 = ctx.$implicit;
+    const t_r3 = \u0275\u0275nextContext().$implicit;
+    const ctx_r1 = \u0275\u0275nextContext();
+    \u0275\u0275property("disabled", ctx_r1.isActiveSession)("ngClass", ctx_r1.durationMinutes === d_r11 ? "border-[var(--color-primary)] bg-[var(--color-primary)]/8 text-[var(--color-primary)]" : "border-transparent bg-stone-100 text-stone-600");
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate(d_r11);
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate1(" ", t_r3("selfHelp.minutes"), " ");
+  }
+}
+function SafePlaceComponent_ng_container_0_For_94_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "li", 66)(1, "span", 93);
+    \u0275\u0275text(2);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(3, "p", 11);
+    \u0275\u0275text(4);
+    \u0275\u0275elementEnd()();
+  }
+  if (rf & 2) {
+    const step_r12 = ctx.$implicit;
+    const $index_r13 = ctx.$index;
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate1(" ", $index_r13 + 1, " ");
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate(step_r12);
+  }
+}
+function SafePlaceComponent_ng_container_0_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r1 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementContainerStart(0);
+    \u0275\u0275elementStart(1, "div", 1)(2, "div", 2)(3, "div", 3)(4, "button", 4);
+    \u0275\u0275listener("click", function SafePlaceComponent_ng_container_0_Template_button_click_4_listener() {
+      \u0275\u0275restoreView(_r1);
+      const ctx_r1 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r1.goBack());
+    });
+    \u0275\u0275elementStart(5, "mat-icon");
+    \u0275\u0275text(6, "arrow_back");
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(7, "div", 3)(8, "div", 5)(9, "mat-icon", 6);
+    \u0275\u0275text(10, "cottage");
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(11, "div")(12, "h1", 7);
+    \u0275\u0275text(13);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(14, "p", 8);
+    \u0275\u0275text(15);
+    \u0275\u0275elementEnd()()()()();
+    \u0275\u0275elementStart(16, "div", 9)(17, "div", 10)(18, "p", 11);
+    \u0275\u0275text(19);
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(20, "div", 12)(21, "p", 13);
+    \u0275\u0275template(22, SafePlaceComponent_ng_container_0_Conditional_22_Template, 1, 2)(23, SafePlaceComponent_ng_container_0_Conditional_23_Template, 1, 1)(24, SafePlaceComponent_ng_container_0_Conditional_24_Template, 1, 1);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(25, "div", 14)(26, "div", 15);
+    \u0275\u0275namespaceSVG();
+    \u0275\u0275elementStart(27, "svg", 16)(28, "defs")(29, "linearGradient", 17);
+    \u0275\u0275element(30, "stop", 18)(31, "stop", 19)(32, "stop", 20);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(33, "radialGradient", 21);
+    \u0275\u0275element(34, "stop", 22)(35, "stop", 23)(36, "stop", 24);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(37, "linearGradient", 25);
+    \u0275\u0275element(38, "stop", 26)(39, "stop", 27);
+    \u0275\u0275elementEnd()();
+    \u0275\u0275element(40, "rect", 28);
+    \u0275\u0275elementStart(41, "g", 29);
+    \u0275\u0275element(42, "circle", 30)(43, "circle", 31);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(44, "g", 32);
+    \u0275\u0275element(45, "circle", 33)(46, "circle", 34)(47, "circle", 35)(48, "circle", 36)(49, "circle", 37);
+    \u0275\u0275elementEnd();
+    \u0275\u0275element(50, "path", 38)(51, "path", 39)(52, "rect", 40);
+    \u0275\u0275elementStart(53, "g", 41);
+    \u0275\u0275element(54, "line", 42)(55, "line", 43)(56, "line", 44);
+    \u0275\u0275elementEnd()();
+    \u0275\u0275template(57, SafePlaceComponent_ng_container_0_Conditional_57_Template, 4, 1, "div", 45)(58, SafePlaceComponent_ng_container_0_Conditional_58_Template, 5, 2, "div", 46)(59, SafePlaceComponent_ng_container_0_Conditional_59_Template, 4, 0, "div", 47);
+    \u0275\u0275elementEnd();
+    \u0275\u0275namespaceHTML();
+    \u0275\u0275elementStart(60, "div", 48);
+    \u0275\u0275template(61, SafePlaceComponent_ng_container_0_Conditional_61_Template, 2, 1, "p", 49)(62, SafePlaceComponent_ng_container_0_Conditional_62_Template, 6, 2)(63, SafePlaceComponent_ng_container_0_Conditional_63_Template, 8, 7);
+    \u0275\u0275elementEnd()();
+    \u0275\u0275template(64, SafePlaceComponent_ng_container_0_Conditional_64_Template, 3, 0, "div", 50)(65, SafePlaceComponent_ng_container_0_Conditional_65_Template, 9, 4, "div", 51);
+    \u0275\u0275elementStart(66, "div", 52);
+    \u0275\u0275template(67, SafePlaceComponent_ng_container_0_Conditional_67_Template, 3, 2, "button", 53);
+    \u0275\u0275elementStart(68, "button", 54);
+    \u0275\u0275listener("click", function SafePlaceComponent_ng_container_0_Template_button_click_68_listener() {
+      \u0275\u0275restoreView(_r1);
+      const ctx_r1 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r1.toggle());
+    });
+    \u0275\u0275elementStart(69, "mat-icon", 55);
+    \u0275\u0275text(70);
+    \u0275\u0275elementEnd();
+    \u0275\u0275template(71, SafePlaceComponent_ng_container_0_Conditional_71_Template, 1, 1)(72, SafePlaceComponent_ng_container_0_Conditional_72_Template, 1, 1)(73, SafePlaceComponent_ng_container_0_Conditional_73_Template, 1, 1)(74, SafePlaceComponent_ng_container_0_Conditional_74_Template, 1, 1);
+    \u0275\u0275elementEnd();
+    \u0275\u0275template(75, SafePlaceComponent_ng_container_0_Conditional_75_Template, 3, 1, "button", 56)(76, SafePlaceComponent_ng_container_0_Conditional_76_Template, 4, 2, "button", 57);
+    \u0275\u0275elementStart(77, "button", 58);
+    \u0275\u0275listener("click", function SafePlaceComponent_ng_container_0_Template_button_click_77_listener() {
+      \u0275\u0275restoreView(_r1);
+      const ctx_r1 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r1.toggleSound());
+    });
+    \u0275\u0275elementStart(78, "mat-icon", 55);
+    \u0275\u0275text(79);
+    \u0275\u0275elementEnd()()()();
+    \u0275\u0275elementStart(80, "div", 10)(81, "div", 59)(82, "h2", 60);
+    \u0275\u0275text(83);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(84, "span", 61);
+    \u0275\u0275text(85);
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(86, "div", 62);
+    \u0275\u0275repeaterCreate(87, SafePlaceComponent_ng_container_0_For_88_Template, 5, 4, "button", 63, \u0275\u0275repeaterTrackByIdentity);
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(89, "div", 10)(90, "h2", 64);
+    \u0275\u0275text(91);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(92, "ol", 65);
+    \u0275\u0275repeaterCreate(93, SafePlaceComponent_ng_container_0_For_94_Template, 5, 2, "li", 66, \u0275\u0275repeaterTrackByIndex);
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(95, "p", 67);
+    \u0275\u0275text(96);
+    \u0275\u0275elementEnd()()();
+    \u0275\u0275elementContainerEnd();
+  }
+  if (rf & 2) {
+    const t_r3 = ctx.$implicit;
+    const ctx_r1 = \u0275\u0275nextContext();
+    \u0275\u0275advance(4);
+    \u0275\u0275attribute("aria-label", t_r3("common.back"));
+    \u0275\u0275advance(9);
+    \u0275\u0275textInterpolate1(" ", t_r3("selfHelp.items.safe-place.title"), " ");
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate2(" ", t_r3("selfHelp.category.relaxation"), " \xB7 ", t_r3("selfHelp.safePlace.pattern"), " ");
+    \u0275\u0275advance(4);
+    \u0275\u0275textInterpolate1(" ", t_r3("selfHelp.items.safe-place.intro"), " ");
+    \u0275\u0275advance(3);
+    \u0275\u0275conditional(ctx_r1.state === "prepare" ? 22 : ctx_r1.isActiveSession ? 23 : ctx_r1.state === "done" ? 24 : -1);
+    \u0275\u0275advance(4);
+    \u0275\u0275styleProp("--warmth", ctx_r1.sceneWarmth);
+    \u0275\u0275classProp("scene--active", ctx_r1.isActiveSession || ctx_r1.state === "done");
+    \u0275\u0275advance(31);
+    \u0275\u0275conditional(ctx_r1.isActiveSession ? 57 : -1);
+    \u0275\u0275advance();
+    \u0275\u0275conditional(ctx_r1.state === "prepare" ? 58 : -1);
+    \u0275\u0275advance();
+    \u0275\u0275conditional(ctx_r1.state === "done" ? 59 : -1);
+    \u0275\u0275advance(2);
+    \u0275\u0275conditional(ctx_r1.state === "idle" ? 61 : ctx_r1.state === "done" ? 62 : 63);
+    \u0275\u0275advance(3);
+    \u0275\u0275conditional(ctx_r1.isActiveSession ? 64 : -1);
+    \u0275\u0275advance();
+    \u0275\u0275conditional(ctx_r1.isActiveSession || ctx_r1.state === "done" ? 65 : -1);
+    \u0275\u0275advance(2);
+    \u0275\u0275conditional(ctx_r1.isActiveSession ? 67 : -1);
+    \u0275\u0275advance(3);
+    \u0275\u0275textInterpolate(ctx_r1.isRunning ? "pause" : "play_arrow");
+    \u0275\u0275advance();
+    \u0275\u0275conditional(ctx_r1.state === "paused" ? 71 : ctx_r1.isRunning ? 72 : ctx_r1.state === "done" ? 73 : 74);
+    \u0275\u0275advance(4);
+    \u0275\u0275conditional(ctx_r1.isActiveSession ? 75 : 76);
+    \u0275\u0275advance(2);
+    \u0275\u0275property("ngClass", ctx_r1.soundOn ? "text-[var(--color-blue)] bg-[var(--color-sky)]/15" : "text-stone-500");
+    \u0275\u0275attribute("aria-pressed", ctx_r1.soundOn)("aria-label", t_r3("selfHelp.safePlace.sound"));
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate(ctx_r1.soundOn ? "volume_up" : "volume_off");
+    \u0275\u0275advance(4);
+    \u0275\u0275textInterpolate1(" ", t_r3("selfHelp.safePlace.length"), " ");
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate(t_r3("selfHelp.safePlace.lengthHint"));
+    \u0275\u0275advance(2);
+    \u0275\u0275repeater(ctx_r1.durations);
+    \u0275\u0275advance(4);
+    \u0275\u0275textInterpolate1(" ", t_r3("selfHelp.steps"), " ");
+    \u0275\u0275advance(2);
+    \u0275\u0275repeater(t_r3("selfHelp.items.safe-place.steps"));
+    \u0275\u0275advance(3);
+    \u0275\u0275textInterpolate1(" ", t_r3("selfHelp.disclaimer"), " ");
+  }
+}
+var SafePlaceComponent = class _SafePlaceComponent {
+  router;
+  anchors = [
+    { key: "arrive", icon: "cottage" },
+    { key: "look", icon: "visibility" },
+    { key: "listen", icon: "hearing" },
+    { key: "scent", icon: "air" },
+    { key: "touch", icon: "back_hand" },
+    { key: "safe", icon: "favorite" }
+  ];
+  /** Session lengths (minutes) the user can pick from. */
+  durations = [4, 6, 9];
+  durationMinutes = 6;
+  /** Seconds of settle-in before the visualisation begins. */
+  prepareSeconds = 3;
+  state = "idle";
+  /** Index into `anchors` of the sense currently in focus. */
+  index = 0;
+  /** Whole-second countdown left in the current anchor. */
+  countdown = 0;
+  prepareCountdown = this.prepareSeconds;
+  soundOn = false;
+  rafId = 0;
+  anchorStart = 0;
+  prepareStart = 0;
+  /** Seconds elapsed in the current anchor — drives the progress bar. */
+  anchorElapsed = 0;
+  pausedAnchorElapsed = 0;
+  audioCtx;
+  constructor(router) {
+    this.router = router;
+  }
+  // ── Derived view state ──────────────────────────────────────────────────
+  get current() {
+    return this.anchors[this.index];
+  }
+  get isRunning() {
+    return this.state === "running";
+  }
+  get isActiveSession() {
+    return this.state === "running" || this.state === "paused";
+  }
+  get isFirst() {
+    return this.index === 0;
+  }
+  get isLast() {
+    return this.index === this.anchors.length - 1;
+  }
+  get targetSeconds() {
+    return this.durationMinutes * 60;
+  }
+  /** Equal share of the session given to each anchor. */
+  get anchorSeconds() {
+    return this.targetSeconds / this.anchors.length;
+  }
+  /**
+   * 0..1 warmth of the scene — it brightens as the journey unfolds, stays full
+   * once finished, and rests calm before it begins.
+   */
+  get sceneWarmth() {
+    if (this.state === "done")
+      return 1;
+    if (!this.isActiveSession)
+      return 0;
+    return this.progress;
+  }
+  /** 0..1 fraction of the whole visualisation completed. */
+  get progress() {
+    const within = Math.min(this.anchorElapsed / this.anchorSeconds, 1);
+    return (this.index + within) / this.anchors.length;
+  }
+  /** Time left across the whole session as m:ss. */
+  get timeRemaining() {
+    const anchorsLeft = this.anchors.length - 1 - this.index;
+    const left = anchorsLeft * this.anchorSeconds + Math.max(this.anchorSeconds - this.anchorElapsed, 0);
+    const whole = Math.max(Math.ceil(left), 0);
+    const m = Math.floor(whole / 60);
+    const s = whole % 60;
+    return `${m}:${s.toString().padStart(2, "0")}`;
+  }
+  // ── Controls ────────────────────────────────────────────────────────────
+  toggle() {
+    switch (this.state) {
+      case "running":
+        this.pause();
+        break;
+      case "paused":
+        this.resume();
+        break;
+      default:
+        this.startPrepare();
+    }
+  }
+  reset() {
+    cancelAnimationFrame(this.rafId);
+    this.state = "idle";
+    this.index = 0;
+    this.countdown = 0;
+    this.anchorElapsed = 0;
+    this.prepareCountdown = this.prepareSeconds;
+  }
+  /** Length can only change while not mid-session, to keep the pacing steady. */
+  setDuration(minutes) {
+    if (this.isActiveSession || this.durationMinutes === minutes)
+      return;
+    this.durationMinutes = minutes;
+  }
+  /** Step to a neighbouring anchor by hand; keeps the journey running. */
+  next() {
+    if (this.isLast) {
+      this.finish();
+      return;
+    }
+    this.jumpTo(this.index + 1);
+  }
+  prev() {
+    if (this.isFirst)
+      return;
+    this.jumpTo(this.index - 1);
+  }
+  goTo(i) {
+    if (!this.isActiveSession)
+      return;
+    this.jumpTo(i);
+  }
+  toggleSound() {
+    this.soundOn = !this.soundOn;
+    if (this.soundOn && !this.audioCtx) {
+      const Ctx = window.AudioContext || window.webkitAudioContext;
+      if (Ctx)
+        this.audioCtx = new Ctx();
+    }
+    this.audioCtx?.resume();
+  }
+  goBack() {
+    this.router.navigate(["/practices"]);
+  }
+  // ── Engine ──────────────────────────────────────────────────────────────
+  startPrepare() {
+    this.state = "prepare";
+    this.index = 0;
+    this.anchorElapsed = 0;
+    this.prepareCountdown = this.prepareSeconds;
+    this.prepareStart = performance.now();
+    this.loopPrepare();
+  }
+  loopPrepare = () => {
+    const elapsed = (performance.now() - this.prepareStart) / 1e3;
+    this.prepareCountdown = Math.max(Math.ceil(this.prepareSeconds - elapsed), 1);
+    if (elapsed >= this.prepareSeconds) {
+      this.state = "running";
+      this.enterAnchor(0);
+      this.loop();
+      return;
+    }
+    this.rafId = requestAnimationFrame(this.loopPrepare);
+  };
+  /** Restart the engine focused on anchor `i` while keeping it running. */
+  jumpTo(i) {
+    cancelAnimationFrame(this.rafId);
+    this.state = "running";
+    this.enterAnchor(i);
+    this.loop();
+  }
+  enterAnchor(i) {
+    this.index = i;
+    this.anchorStart = performance.now();
+    this.anchorElapsed = 0;
+    this.countdown = Math.ceil(this.anchorSeconds);
+    this.playCue();
+  }
+  loop = () => {
+    this.anchorElapsed = (performance.now() - this.anchorStart) / 1e3;
+    this.countdown = Math.max(Math.ceil(this.anchorSeconds - this.anchorElapsed), 1);
+    if (this.anchorElapsed >= this.anchorSeconds) {
+      const next = this.index + 1;
+      if (next >= this.anchors.length) {
+        this.finish();
+        return;
+      }
+      this.enterAnchor(next);
+    }
+    this.rafId = requestAnimationFrame(this.loop);
+  };
+  pause() {
+    this.pausedAnchorElapsed = (performance.now() - this.anchorStart) / 1e3;
+    cancelAnimationFrame(this.rafId);
+    this.state = "paused";
+  }
+  resume() {
+    this.state = "running";
+    this.anchorStart = performance.now() - this.pausedAnchorElapsed * 1e3;
+    this.loop();
+  }
+  finish() {
+    cancelAnimationFrame(this.rafId);
+    this.state = "done";
+    this.index = this.anchors.length - 1;
+    this.anchorElapsed = this.anchorSeconds;
+  }
+  /** Soft, low sine cue as the attention settles into a new anchor. */
+  playCue() {
+    const ctx = this.audioCtx;
+    if (!this.soundOn || !ctx)
+      return;
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = "sine";
+    osc.frequency.value = 396;
+    const now = ctx.currentTime;
+    gain.gain.setValueAtTime(0, now);
+    gain.gain.linearRampToValueAtTime(0.1, now + 0.05);
+    gain.gain.exponentialRampToValueAtTime(1e-4, now + 1.1);
+    osc.connect(gain).connect(ctx.destination);
+    osc.start(now);
+    osc.stop(now + 1.12);
+  }
+  ngOnDestroy() {
+    cancelAnimationFrame(this.rafId);
+    this.audioCtx?.close();
+  }
+  static \u0275fac = function SafePlaceComponent_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || _SafePlaceComponent)(\u0275\u0275directiveInject(Router));
+  };
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _SafePlaceComponent, selectors: [["app-safe-place"]], standalone: false, decls: 1, vars: 0, consts: [[4, "transloco"], [1, "min-h-screen", "bg-[#FAF8F3]", "px-4", "py-8", "md:px-8"], [1, "max-w-3xl", "mx-auto", "mb-7"], [1, "flex", "items-center", "gap-3"], [1, "w-10", "h-10", "flex", "items-center", "justify-center", "rounded-full", "text-stone-500", "hover:bg-stone-200/60", "hover:text-[var(--color-primary)]", "transition-colors", 3, "click"], [1, "w-12", "h-12", "rounded-2xl", "bg-[var(--color-primary)]/10", "flex", "items-center", "justify-center", "shrink-0"], [1, "text-[var(--color-primary)]"], [1, "text-2xl", "font-semibold", "tracking-[-0.01em]", "text-[var(--color-primary)]"], [1, "text-sm", "font-medium", "text-stone-500"], [1, "max-w-3xl", "mx-auto", "space-y-4"], [1, "bg-white", "rounded-2xl", "border", "border-stone-200", "shadow-sm", "p-6"], [1, "text-[0.95rem]", "text-stone-700", "leading-relaxed"], [1, "bg-white", "rounded-2xl", "border", "border-stone-200", "shadow-sm", "px-6", "pt-7", "pb-6"], ["aria-live", "polite", 1, "sr-only"], [1, "flex", "flex-col", "items-center"], [1, "scene", "relative", "w-full", "max-w-[420px]", "rounded-2xl", "overflow-hidden"], ["viewBox", "0 0 200 130", "aria-hidden", "true", 1, "w-full", "h-auto", "block"], ["id", "spSky", "x1", "0", "y1", "0", "x2", "0", "y2", "1"], ["offset", "0%", "stop-color", "#cfe2f3"], ["offset", "55%", "stop-color", "#e7f0f7"], ["offset", "100%", "stop-color", "#fbf3e6"], ["id", "spSun", "cx", "50%", "cy", "50%", "r", "50%"], ["offset", "0%", "stop-color", "#fff7e3"], ["offset", "55%", "stop-color", "#ffe2a8"], ["offset", "100%", "stop-color", "#ffe2a8", "stop-opacity", "0"], ["id", "spWater", "x1", "0", "y1", "0", "x2", "0", "y2", "1"], ["offset", "0%", "stop-color", "var(--color-sky)", "stop-opacity", "0.55"], ["offset", "100%", "stop-color", "var(--color-blue)", "stop-opacity", "0.65"], ["x", "0", "y", "0", "width", "200", "height", "130", "fill", "url(#spSky)"], [1, "scene-sun"], ["cx", "143", "cy", "46", "r", "30", "fill", "url(#spSun)"], ["cx", "143", "cy", "46", "r", "11", "fill", "#ffd57a"], [1, "scene-motes"], ["cx", "40", "cy", "40", "r", "1.6"], ["cx", "72", "cy", "28", "r", "1.1"], ["cx", "104", "cy", "52", "r", "1.4"], ["cx", "58", "cy", "64", "r", "1"], ["cx", "120", "cy", "34", "r", "1.2"], ["d", "M0 92 Q50 70 100 86 T200 84 V130 H0 Z", 1, "scene-hill-far"], ["d", "M0 104 Q60 88 110 100 T200 98 V130 H0 Z", 1, "scene-hill-near"], ["x", "0", "y", "112", "width", "200", "height", "18", "fill", "url(#spWater)"], [1, "scene-ripples"], ["x1", "18", "y1", "118", "x2", "46", "y2", "118"], ["x1", "120", "y1", "121", "x2", "160", "y2", "121"], ["x1", "64", "y1", "124", "x2", "96", "y2", "124"], [1, "absolute", "inset-x-0", "bottom-3", "flex", "justify-center", "pointer-events-none"], [1, "absolute", "inset-0", "flex", "flex-col", "items-center", "justify-center", "text-center", "pointer-events-none", "bg-white/30", "backdrop-blur-[1px]"], [1, "absolute", "inset-0", "flex", "items-center", "justify-center", "pointer-events-none"], [1, "text-center", "mt-6", "min-h-[112px]", "flex", "flex-col", "items-center", "justify-start"], [1, "text-[0.95rem]", "text-stone-600", "leading-relaxed", "max-w-md"], [1, "flex", "items-center", "justify-center", "gap-2", "mt-5"], [1, "w-full", "max-w-[320px]", "mx-auto", "mt-6"], [1, "flex", "items-center", "justify-center", "gap-3", "mt-7"], [1, "w-11", "h-11", "flex", "items-center", "justify-center", "rounded-full", "bg-stone-100", "text-stone-700", "hover:bg-stone-200", "transition-colors", "disabled:opacity-40", "disabled:cursor-not-allowed", 3, "disabled"], [1, "flex", "items-center", "gap-2", "px-7", "py-3", "rounded-full", "bg-[var(--color-primary)]", "text-white", "text-sm", "font-semibold", "shadow-sm", "hover:bg-[#003a00]", "transition-colors", 3, "click"], [1, "text-lg"], [1, "w-11", "h-11", "flex", "items-center", "justify-center", "rounded-full", "bg-stone-100", "text-stone-700", "hover:bg-stone-200", "transition-colors"], [1, "flex", "items-center", "gap-2", "px-5", "py-3", "rounded-full", "bg-stone-100", "text-stone-700", "text-sm", "font-semibold", "hover:bg-stone-200", "transition-colors", "disabled:opacity-40", "disabled:cursor-not-allowed", 3, "disabled"], [1, "w-11", "h-11", "flex", "items-center", "justify-center", "rounded-full", "hover:bg-stone-100", "transition-colors", 3, "click", "ngClass"], [1, "flex", "items-center", "justify-between", "mb-4"], [1, "text-base", "font-semibold", "text-[var(--color-primary)]"], [1, "text-xs", "font-medium", "text-stone-500"], [1, "grid", "grid-cols-3", "gap-2.5"], [1, "flex", "flex-col", "items-center", "py-3", "rounded-xl", "border", "text-sm", "font-semibold", "transition-all", "disabled:opacity-40", "disabled:cursor-not-allowed", 3, "disabled", "ngClass"], [1, "text-base", "font-semibold", "text-[var(--color-primary)]", "mb-4"], [1, "space-y-3.5"], [1, "flex", "gap-3.5"], [1, "text-center", "text-xs", "text-stone-500", "px-6", "pt-1"], [1, "focus-ring", "flex", "items-center", "justify-center", "w-14", "h-14", "rounded-full", "bg-white/85", "backdrop-blur-sm", "shadow-md"], [1, "text-[var(--color-primary)]", "!text-[26px]"], [1, "text-xs", "uppercase", "tracking-[0.2em]", "text-stone-600", "mb-1"], [1, "text-5xl", "font-semibold", "text-[var(--color-primary)]", "tabular-nums"], [1, "flex", "items-center", "justify-center", "w-14", "h-14", "rounded-full", "bg-white/85", "backdrop-blur-sm", "shadow-md"], [1, "text-[var(--color-success)]", "!text-[28px]"], [1, "text-[var(--color-success)]", "!w-10", "!h-10", "!text-4xl", "mb-1"], [1, "text-lg", "font-semibold", "text-[var(--color-primary)]", "mb-1"], [1, "flex", "items-center", "gap-2", "mb-1.5"], [1, "text-xs", "uppercase", "tracking-[0.2em]", "text-stone-500"], [1, "text-xs", "font-semibold", "text-[var(--color-primary)]", "tabular-nums", "bg-[var(--color-primary)]/8", "rounded-full", "px-2", "py-0.5"], [1, "text-lg", "font-semibold", "text-[var(--color-primary)]", "mb-1.5"], [1, "text-[0.95rem]", "text-stone-600", "leading-relaxed", "max-w-md", "px-2"], [1, "rounded-full", "transition-all", 3, "ngClass"], [1, "rounded-full", "transition-all", 3, "click", "ngClass"], [1, "flex", "items-center", "justify-between", "text-xs", "font-medium", "text-stone-500", "mb-1.5"], [1, "tabular-nums", "text-stone-600"], [1, "h-2", "rounded-full", "bg-stone-200", "overflow-hidden"], [1, "h-full", "rounded-full", "bg-[var(--color-primary)]", "transition-all", "duration-300"], [1, "w-11", "h-11", "flex", "items-center", "justify-center", "rounded-full", "bg-stone-100", "text-stone-700", "hover:bg-stone-200", "transition-colors", "disabled:opacity-40", "disabled:cursor-not-allowed", 3, "click", "disabled"], [1, "w-11", "h-11", "flex", "items-center", "justify-center", "rounded-full", "bg-stone-100", "text-stone-700", "hover:bg-stone-200", "transition-colors", 3, "click"], [1, "flex", "items-center", "gap-2", "px-5", "py-3", "rounded-full", "bg-stone-100", "text-stone-700", "text-sm", "font-semibold", "hover:bg-stone-200", "transition-colors", "disabled:opacity-40", "disabled:cursor-not-allowed", 3, "click", "disabled"], [1, "flex", "flex-col", "items-center", "py-3", "rounded-xl", "border", "text-sm", "font-semibold", "transition-all", "disabled:opacity-40", "disabled:cursor-not-allowed", 3, "click", "disabled", "ngClass"], [1, "tabular-nums", "text-base"], [1, "text-[11px]", "font-medium", "text-stone-500", "mt-0.5"], [1, "w-7", "h-7", "rounded-full", "bg-[var(--color-primary)]/10", "text-[var(--color-primary)]", "text-sm", "font-bold", "flex", "items-center", "justify-center", "shrink-0", "mt-0.5"]], template: function SafePlaceComponent_Template(rf, ctx) {
+    if (rf & 1) {
+      \u0275\u0275template(0, SafePlaceComponent_ng_container_0_Template, 97, 28, "ng-container", 0);
+    }
+  }, dependencies: [NgClass, MatIcon, TranslocoDirective], styles: ["\n\n[_nghost-%COMP%] {\n  display: block;\n}\n.scene[_ngcontent-%COMP%] {\n  --warmth: 0;\n  border: 1px solid rgba(0, 35, 0, 0.06);\n  filter: saturate(calc(0.55 + 0.45 * var(--warmth))) brightness(calc(0.97 + 0.05 * var(--warmth)));\n  transition: filter 1.2s ease;\n}\n.scene-hill-far[_ngcontent-%COMP%] {\n  fill: var(--color-mint);\n  fill-opacity: calc(0.5 + 0.35 * var(--warmth));\n  transition: fill-opacity 1.2s ease;\n}\n.scene-hill-near[_ngcontent-%COMP%] {\n  fill: var(--color-success);\n  fill-opacity: calc(0.4 + 0.4 * var(--warmth));\n  transition: fill-opacity 1.2s ease;\n}\n.scene-sun[_ngcontent-%COMP%] {\n  transform-box: view-box;\n  transform-origin: 143px 46px;\n  opacity: calc(0.55 + 0.45 * var(--warmth));\n  transition: opacity 1.2s ease;\n}\n.scene--active[_ngcontent-%COMP%]   .scene-sun[_ngcontent-%COMP%] {\n  animation: _ngcontent-%COMP%_sun-breathe 7s ease-in-out infinite;\n}\n.scene-motes[_ngcontent-%COMP%]   circle[_ngcontent-%COMP%] {\n  fill: #ffffff;\n  opacity: calc(0.25 + 0.45 * var(--warmth));\n}\n.scene--active[_ngcontent-%COMP%]   .scene-motes[_ngcontent-%COMP%]   circle[_ngcontent-%COMP%] {\n  animation: _ngcontent-%COMP%_mote-drift 9s ease-in-out infinite;\n}\n.scene-motes[_ngcontent-%COMP%]   circle[_ngcontent-%COMP%]:nth-child(2) {\n  animation-delay: -2s;\n}\n.scene-motes[_ngcontent-%COMP%]   circle[_ngcontent-%COMP%]:nth-child(3) {\n  animation-delay: -4s;\n}\n.scene-motes[_ngcontent-%COMP%]   circle[_ngcontent-%COMP%]:nth-child(4) {\n  animation-delay: -1s;\n}\n.scene-motes[_ngcontent-%COMP%]   circle[_ngcontent-%COMP%]:nth-child(5) {\n  animation-delay: -5.5s;\n}\n.scene-ripples[_ngcontent-%COMP%]   line[_ngcontent-%COMP%] {\n  stroke: #ffffff;\n  stroke-width: 1.1;\n  stroke-linecap: round;\n  opacity: calc(0.3 + 0.4 * var(--warmth));\n}\n.scene--active[_ngcontent-%COMP%]   .scene-ripples[_ngcontent-%COMP%]   line[_ngcontent-%COMP%] {\n  animation: _ngcontent-%COMP%_ripple 4.5s ease-in-out infinite;\n}\n.scene-ripples[_ngcontent-%COMP%]   line[_ngcontent-%COMP%]:nth-child(2) {\n  animation-delay: -1.5s;\n}\n.scene-ripples[_ngcontent-%COMP%]   line[_ngcontent-%COMP%]:nth-child(3) {\n  animation-delay: -3s;\n}\n.focus-ring[_ngcontent-%COMP%] {\n  animation: _ngcontent-%COMP%_ring-in 0.5s ease both, _ngcontent-%COMP%_ring-pulse 4s ease-in-out 0.5s infinite;\n}\n@keyframes _ngcontent-%COMP%_sun-breathe {\n  0%, 100% {\n    transform: scale(1);\n  }\n  50% {\n    transform: scale(1.06);\n  }\n}\n@keyframes _ngcontent-%COMP%_mote-drift {\n  0% {\n    transform: translateY(2px);\n  }\n  50% {\n    transform: translateY(-3px);\n  }\n  100% {\n    transform: translateY(2px);\n  }\n}\n@keyframes _ngcontent-%COMP%_ripple {\n  0%, 100% {\n    opacity: 0.3;\n    transform: translateX(0);\n  }\n  50% {\n    opacity: 0.7;\n    transform: translateX(3px);\n  }\n}\n@keyframes _ngcontent-%COMP%_ring-in {\n  from {\n    opacity: 0;\n    transform: translateY(6px) scale(0.92);\n  }\n  to {\n    opacity: 1;\n    transform: translateY(0) scale(1);\n  }\n}\n@keyframes _ngcontent-%COMP%_ring-pulse {\n  0%, 100% {\n    box-shadow: 0 4px 10px rgba(0, 35, 0, 0.12);\n  }\n  50% {\n    box-shadow: 0 6px 18px rgba(0, 35, 0, 0.2);\n  }\n}\n@media (prefers-reduced-motion: reduce) {\n  .scene[_ngcontent-%COMP%], \n   .scene-hill-far[_ngcontent-%COMP%], \n   .scene-hill-near[_ngcontent-%COMP%], \n   .scene-sun[_ngcontent-%COMP%] {\n    transition: none;\n  }\n  .scene-sun[_ngcontent-%COMP%], \n   .scene-motes[_ngcontent-%COMP%]   circle[_ngcontent-%COMP%], \n   .scene-ripples[_ngcontent-%COMP%]   line[_ngcontent-%COMP%], \n   .focus-ring[_ngcontent-%COMP%] {\n    animation: none !important;\n  }\n}\n/*# sourceMappingURL=safe-place.component.css.map */"] });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(SafePlaceComponent, [{
+    type: Component,
+    args: [{ selector: "app-safe-place", standalone: false, template: `<ng-container *transloco="let t">
+  <div class="min-h-screen bg-[#FAF8F3] px-4 py-8 md:px-8">
+
+    <!-- Header -->
+    <div class="max-w-3xl mx-auto mb-7">
+      <div class="flex items-center gap-3">
+        <button
+          (click)="goBack()"
+          class="w-10 h-10 flex items-center justify-center rounded-full text-stone-500 hover:bg-stone-200/60 hover:text-[var(--color-primary)] transition-colors"
+          [attr.aria-label]="t('common.back')"
+        >
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+        <div class="flex items-center gap-3">
+          <div
+            class="w-12 h-12 rounded-2xl bg-[var(--color-primary)]/10 flex items-center justify-center shrink-0"
+          >
+            <mat-icon class="text-[var(--color-primary)]">cottage</mat-icon>
+          </div>
+          <div>
+            <h1 class="text-2xl font-semibold tracking-[-0.01em] text-[var(--color-primary)]">
+              {{ t("selfHelp.items.safe-place.title") }}
+            </h1>
+            <p class="text-sm font-medium text-stone-500">
+              {{ t("selfHelp.category.relaxation") }} \xB7
+              {{ t("selfHelp.safePlace.pattern") }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="max-w-3xl mx-auto space-y-4">
+
+      <!-- Intro -->
+      <div class="bg-white rounded-2xl border border-stone-200 shadow-sm p-6">
+        <p class="text-[0.95rem] text-stone-700 leading-relaxed">
+          {{ t("selfHelp.items.safe-place.intro") }}
+        </p>
+      </div>
+
+      <!-- Guide -->
+      <div class="bg-white rounded-2xl border border-stone-200 shadow-sm px-6 pt-7 pb-6">
+
+        <!-- Live region for screen readers -->
+        <p class="sr-only" aria-live="polite">
+          @if (state === 'prepare') {
+            {{ t("selfHelp.safePlace.getReady") }} {{ prepareCountdown }}
+          } @else if (isActiveSession) {
+            {{ t("selfHelp.safePlace.anchors." + current.key + ".prompt") }}
+          } @else if (state === 'done') {
+            {{ t("selfHelp.safePlace.completeTitle") }}
+          }
+        </p>
+
+        <div class="flex flex-col items-center">
+          <!-- Calm landscape scene -->
+          <div
+            class="scene relative w-full max-w-[420px] rounded-2xl overflow-hidden"
+            [class.scene--active]="isActiveSession || state === 'done'"
+            [style.--warmth]="sceneWarmth"
+          >
+            <svg
+              class="w-full h-auto block"
+              viewBox="0 0 200 130"
+              aria-hidden="true"
+            >
+              <defs>
+                <linearGradient id="spSky" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#cfe2f3" />
+                  <stop offset="55%" stop-color="#e7f0f7" />
+                  <stop offset="100%" stop-color="#fbf3e6" />
+                </linearGradient>
+                <radialGradient id="spSun" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="#fff7e3" />
+                  <stop offset="55%" stop-color="#ffe2a8" />
+                  <stop offset="100%" stop-color="#ffe2a8" stop-opacity="0" />
+                </radialGradient>
+                <linearGradient id="spWater" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="var(--color-sky)" stop-opacity="0.55" />
+                  <stop offset="100%" stop-color="var(--color-blue)" stop-opacity="0.65" />
+                </linearGradient>
+              </defs>
+
+              <!-- Sky -->
+              <rect x="0" y="0" width="200" height="130" fill="url(#spSky)" />
+
+              <!-- Sun & its glow -->
+              <g class="scene-sun">
+                <circle cx="143" cy="46" r="30" fill="url(#spSun)" />
+                <circle cx="143" cy="46" r="11" fill="#ffd57a" />
+              </g>
+
+              <!-- Drifting motes (air / scent) -->
+              <g class="scene-motes">
+                <circle cx="40" cy="40" r="1.6" />
+                <circle cx="72" cy="28" r="1.1" />
+                <circle cx="104" cy="52" r="1.4" />
+                <circle cx="58" cy="64" r="1" />
+                <circle cx="120" cy="34" r="1.2" />
+              </g>
+
+              <!-- Far hill -->
+              <path
+                class="scene-hill-far"
+                d="M0 92 Q50 70 100 86 T200 84 V130 H0 Z"
+              />
+              <!-- Near hill -->
+              <path
+                class="scene-hill-near"
+                d="M0 104 Q60 88 110 100 T200 98 V130 H0 Z"
+              />
+
+              <!-- Water -->
+              <rect x="0" y="112" width="200" height="18" fill="url(#spWater)" />
+              <g class="scene-ripples">
+                <line x1="18" y1="118" x2="46" y2="118" />
+                <line x1="120" y1="121" x2="160" y2="121" />
+                <line x1="64" y1="124" x2="96" y2="124" />
+              </g>
+            </svg>
+
+            <!-- Focus ring with the current sense -->
+            @if (isActiveSession) {
+              <div class="absolute inset-x-0 bottom-3 flex justify-center pointer-events-none">
+                <div class="focus-ring flex items-center justify-center w-14 h-14 rounded-full bg-white/85 backdrop-blur-sm shadow-md">
+                  <mat-icon class="text-[var(--color-primary)] !text-[26px]">
+                    {{ current.icon }}
+                  </mat-icon>
+                </div>
+              </div>
+            }
+
+            <!-- Prepare overlay -->
+            @if (state === 'prepare') {
+              <div class="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none bg-white/30 backdrop-blur-[1px]">
+                <div class="text-xs uppercase tracking-[0.2em] text-stone-600 mb-1">
+                  {{ t("selfHelp.safePlace.getReady") }}
+                </div>
+                <div class="text-5xl font-semibold text-[var(--color-primary)] tabular-nums">
+                  {{ prepareCountdown }}
+                </div>
+              </div>
+            }
+
+            <!-- Done overlay -->
+            @if (state === 'done') {
+              <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                <div class="flex items-center justify-center w-14 h-14 rounded-full bg-white/85 backdrop-blur-sm shadow-md">
+                  <mat-icon class="text-[var(--color-success)] !text-[28px]">check</mat-icon>
+                </div>
+              </div>
+            }
+          </div>
+
+          <!-- Anchor / state copy -->
+          <div class="text-center mt-6 min-h-[112px] flex flex-col items-center justify-start">
+            @if (state === 'idle') {
+              <p class="text-[0.95rem] text-stone-600 leading-relaxed max-w-md">
+                {{ t("selfHelp.safePlace.readyHint") }}
+              </p>
+            } @else if (state === 'done') {
+              <mat-icon class="text-[var(--color-success)] !w-10 !h-10 !text-4xl mb-1">
+                check_circle
+              </mat-icon>
+              <h2 class="text-lg font-semibold text-[var(--color-primary)] mb-1">
+                {{ t("selfHelp.safePlace.completeTitle") }}
+              </h2>
+              <p class="text-[0.95rem] text-stone-600 leading-relaxed max-w-md">
+                {{ t("selfHelp.safePlace.completeText") }}
+              </p>
+            } @else {
+              <div class="flex items-center gap-2 mb-1.5">
+                <span class="text-xs uppercase tracking-[0.2em] text-stone-500">
+                  {{ t("selfHelp.safePlace.anchorStep", { current: index + 1, total: anchors.length }) }}
+                </span>
+                @if (state === 'running') {
+                  <span class="text-xs font-semibold text-[var(--color-primary)] tabular-nums bg-[var(--color-primary)]/8 rounded-full px-2 py-0.5">
+                    {{ countdown }}{{ t("selfHelp.safePlace.secShort") }}
+                  </span>
+                }
+              </div>
+              <h2 class="text-lg font-semibold text-[var(--color-primary)] mb-1.5">
+                {{ t("selfHelp.safePlace.anchors." + current.key + ".label") }}
+              </h2>
+              <p class="text-[0.95rem] text-stone-600 leading-relaxed max-w-md px-2">
+                {{ t("selfHelp.safePlace.anchors." + current.key + ".prompt") }}
+              </p>
+            }
+          </div>
+        </div>
+
+        <!-- Anchor dots -->
+        @if (isActiveSession) {
+          <div class="flex items-center justify-center gap-2 mt-5">
+            @for (a of anchors; track a.key; let i = $index) {
+              <button
+                (click)="goTo(i)"
+                [attr.aria-label]="t('selfHelp.safePlace.anchors.' + a.key + '.label')"
+                class="rounded-full transition-all"
+                [ngClass]="i === index
+                  ? 'w-2.5 h-2.5 bg-[var(--color-primary)]'
+                  : i < index
+                    ? 'w-2 h-2 bg-[var(--color-primary)]/40'
+                    : 'w-2 h-2 bg-stone-200'"
+              ></button>
+            }
+          </div>
+        }
+
+        <!-- Progress -->
+        @if (isActiveSession || state === 'done') {
+          <div class="w-full max-w-[320px] mx-auto mt-6">
+            <div class="flex items-center justify-between text-xs font-medium text-stone-500 mb-1.5">
+              <span>
+                @if (state === 'done') {
+                  {{ t("selfHelp.safePlace.completeText") }}
+                } @else {
+                  {{ t("selfHelp.safePlace.timeLeft") }}
+                }
+              </span>
+              <span class="tabular-nums text-stone-600">
+                {{ state === 'done' ? '0:00' : timeRemaining }}
+              </span>
+            </div>
+            <div class="h-2 rounded-full bg-stone-200 overflow-hidden">
+              <div
+                class="h-full rounded-full bg-[var(--color-primary)] transition-all duration-300"
+                [style.width.%]="(state === 'done' ? 1 : progress) * 100"
+              ></div>
+            </div>
+          </div>
+        }
+
+        <!-- Controls -->
+        <div class="flex items-center justify-center gap-3 mt-7">
+          @if (isActiveSession) {
+            <button
+              (click)="prev()"
+              [disabled]="isFirst"
+              class="w-11 h-11 flex items-center justify-center rounded-full bg-stone-100 text-stone-700 hover:bg-stone-200 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+              [attr.aria-label]="t('selfHelp.safePlace.prev')"
+            >
+              <mat-icon class="text-lg">skip_previous</mat-icon>
+            </button>
+          }
+
+          <button
+            (click)="toggle()"
+            class="flex items-center gap-2 px-7 py-3 rounded-full bg-[var(--color-primary)] text-white text-sm font-semibold shadow-sm hover:bg-[#003a00] transition-colors"
+          >
+            <mat-icon class="text-lg">{{ isRunning ? "pause" : "play_arrow" }}</mat-icon>
+            @if (state === 'paused') {
+              {{ t("selfHelp.safePlace.resume") }}
+            } @else if (isRunning) {
+              {{ t("selfHelp.pause") }}
+            } @else if (state === 'done') {
+              {{ t("selfHelp.safePlace.restart") }}
+            } @else {
+              {{ t("selfHelp.safePlace.begin") }}
+            }
+          </button>
+
+          @if (isActiveSession) {
+            <button
+              (click)="next()"
+              class="w-11 h-11 flex items-center justify-center rounded-full bg-stone-100 text-stone-700 hover:bg-stone-200 transition-colors"
+              [attr.aria-label]="t('selfHelp.safePlace.next')"
+            >
+              <mat-icon class="text-lg">skip_next</mat-icon>
+            </button>
+          } @else {
+            <button
+              (click)="reset()"
+              [disabled]="state === 'idle'"
+              class="flex items-center gap-2 px-5 py-3 rounded-full bg-stone-100 text-stone-700 text-sm font-semibold hover:bg-stone-200 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+            >
+              <mat-icon class="text-lg">restart_alt</mat-icon>
+              {{ t("selfHelp.reset") }}
+            </button>
+          }
+
+          <button
+            (click)="toggleSound()"
+            [attr.aria-pressed]="soundOn"
+            [attr.aria-label]="t('selfHelp.safePlace.sound')"
+            class="w-11 h-11 flex items-center justify-center rounded-full hover:bg-stone-100 transition-colors"
+            [ngClass]="soundOn ? 'text-[var(--color-blue)] bg-[var(--color-sky)]/15' : 'text-stone-500'"
+          >
+            <mat-icon class="text-lg">{{ soundOn ? "volume_up" : "volume_off" }}</mat-icon>
+          </button>
+        </div>
+      </div>
+
+      <!-- Length selector -->
+      <div class="bg-white rounded-2xl border border-stone-200 shadow-sm p-6">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-base font-semibold text-[var(--color-primary)]">
+            {{ t("selfHelp.safePlace.length") }}
+          </h2>
+          <span class="text-xs font-medium text-stone-500">{{ t("selfHelp.safePlace.lengthHint") }}</span>
+        </div>
+        <div class="grid grid-cols-3 gap-2.5">
+          @for (d of durations; track d) {
+            <button
+              (click)="setDuration(d)"
+              [disabled]="isActiveSession"
+              class="flex flex-col items-center py-3 rounded-xl border text-sm font-semibold transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+              [ngClass]="durationMinutes === d
+                ? 'border-[var(--color-primary)] bg-[var(--color-primary)]/8 text-[var(--color-primary)]'
+                : 'border-transparent bg-stone-100 text-stone-600'"
+            >
+              <span class="tabular-nums text-base">{{ d }}</span>
+              <span class="text-[11px] font-medium text-stone-500 mt-0.5">
+                {{ t("selfHelp.minutes") }}
+              </span>
+            </button>
+          }
+        </div>
+      </div>
+
+      <!-- How to -->
+      <div class="bg-white rounded-2xl border border-stone-200 shadow-sm p-6">
+        <h2 class="text-base font-semibold text-[var(--color-primary)] mb-4">
+          {{ t("selfHelp.steps") }}
+        </h2>
+        <ol class="space-y-3.5">
+          @for (step of t("selfHelp.items.safe-place.steps"); track $index) {
+            <li class="flex gap-3.5">
+              <span
+                class="w-7 h-7 rounded-full bg-[var(--color-primary)]/10 text-[var(--color-primary)] text-sm font-bold flex items-center justify-center shrink-0 mt-0.5"
+              >
+                {{ $index + 1 }}
+              </span>
+              <p class="text-[0.95rem] text-stone-700 leading-relaxed">{{ step }}</p>
+            </li>
+          }
+        </ol>
+      </div>
+
+      <!-- Gentle reminder -->
+      <p class="text-center text-xs text-stone-500 px-6 pt-1">
+        {{ t("selfHelp.disclaimer") }}
+      </p>
+    </div>
+  </div>
+</ng-container>
+`, styles: ["/* src/app/modules/self-help/pages/safe-place/safe-place.component.scss */\n:host {\n  display: block;\n}\n.scene {\n  --warmth: 0;\n  border: 1px solid rgba(0, 35, 0, 0.06);\n  filter: saturate(calc(0.55 + 0.45 * var(--warmth))) brightness(calc(0.97 + 0.05 * var(--warmth)));\n  transition: filter 1.2s ease;\n}\n.scene-hill-far {\n  fill: var(--color-mint);\n  fill-opacity: calc(0.5 + 0.35 * var(--warmth));\n  transition: fill-opacity 1.2s ease;\n}\n.scene-hill-near {\n  fill: var(--color-success);\n  fill-opacity: calc(0.4 + 0.4 * var(--warmth));\n  transition: fill-opacity 1.2s ease;\n}\n.scene-sun {\n  transform-box: view-box;\n  transform-origin: 143px 46px;\n  opacity: calc(0.55 + 0.45 * var(--warmth));\n  transition: opacity 1.2s ease;\n}\n.scene--active .scene-sun {\n  animation: sun-breathe 7s ease-in-out infinite;\n}\n.scene-motes circle {\n  fill: #ffffff;\n  opacity: calc(0.25 + 0.45 * var(--warmth));\n}\n.scene--active .scene-motes circle {\n  animation: mote-drift 9s ease-in-out infinite;\n}\n.scene-motes circle:nth-child(2) {\n  animation-delay: -2s;\n}\n.scene-motes circle:nth-child(3) {\n  animation-delay: -4s;\n}\n.scene-motes circle:nth-child(4) {\n  animation-delay: -1s;\n}\n.scene-motes circle:nth-child(5) {\n  animation-delay: -5.5s;\n}\n.scene-ripples line {\n  stroke: #ffffff;\n  stroke-width: 1.1;\n  stroke-linecap: round;\n  opacity: calc(0.3 + 0.4 * var(--warmth));\n}\n.scene--active .scene-ripples line {\n  animation: ripple 4.5s ease-in-out infinite;\n}\n.scene-ripples line:nth-child(2) {\n  animation-delay: -1.5s;\n}\n.scene-ripples line:nth-child(3) {\n  animation-delay: -3s;\n}\n.focus-ring {\n  animation: ring-in 0.5s ease both, ring-pulse 4s ease-in-out 0.5s infinite;\n}\n@keyframes sun-breathe {\n  0%, 100% {\n    transform: scale(1);\n  }\n  50% {\n    transform: scale(1.06);\n  }\n}\n@keyframes mote-drift {\n  0% {\n    transform: translateY(2px);\n  }\n  50% {\n    transform: translateY(-3px);\n  }\n  100% {\n    transform: translateY(2px);\n  }\n}\n@keyframes ripple {\n  0%, 100% {\n    opacity: 0.3;\n    transform: translateX(0);\n  }\n  50% {\n    opacity: 0.7;\n    transform: translateX(3px);\n  }\n}\n@keyframes ring-in {\n  from {\n    opacity: 0;\n    transform: translateY(6px) scale(0.92);\n  }\n  to {\n    opacity: 1;\n    transform: translateY(0) scale(1);\n  }\n}\n@keyframes ring-pulse {\n  0%, 100% {\n    box-shadow: 0 4px 10px rgba(0, 35, 0, 0.12);\n  }\n  50% {\n    box-shadow: 0 6px 18px rgba(0, 35, 0, 0.2);\n  }\n}\n@media (prefers-reduced-motion: reduce) {\n  .scene,\n  .scene-hill-far,\n  .scene-hill-near,\n  .scene-sun {\n    transition: none;\n  }\n  .scene-sun,\n  .scene-motes circle,\n  .scene-ripples line,\n  .focus-ring {\n    animation: none !important;\n  }\n}\n/*# sourceMappingURL=safe-place.component.css.map */\n"] }]
+  }], () => [{ type: Router }], null);
+})();
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(SafePlaceComponent, { className: "SafePlaceComponent", filePath: "src/app/modules/self-help/pages/safe-place/safe-place.component.ts", lineNumber: 34 });
+})();
+
 // src/app/app.routing.module.ts
 var routes = [
   {
@@ -65021,6 +66116,11 @@ var routes = [
       {
         path: "practices/progressive-muscle",
         component: ProgressiveMuscleComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: "practices/safe-place",
+        component: SafePlaceComponent,
         canActivate: [AuthGuard]
       },
       {
@@ -65330,7 +66430,8 @@ var SelfHelpModule = class _SelfHelpModule {
         BellyBreathingComponent,
         Grounding54321Component,
         BodyScanComponent,
-        ProgressiveMuscleComponent
+        ProgressiveMuscleComponent,
+        SafePlaceComponent
       ],
       imports: [CommonModule, FormsModule, MatIconModule, TranslocoModule]
     }]

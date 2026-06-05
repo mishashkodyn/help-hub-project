@@ -1,0 +1,113 @@
+:host {
+  display: block;
+}
+
+// The whole scene rests muted and a touch desaturated, then gently warms and
+// comes into colour as the visualisation unfolds. `--warmth` runs 0..1.
+.scene {
+  --warmth: 0;
+  border: 1px solid rgba(0, 35, 0, 0.06);
+  filter: saturate(calc(0.55 + 0.45 * var(--warmth)))
+    brightness(calc(0.97 + 0.05 * var(--warmth)));
+  transition: filter 1.2s ease;
+}
+
+// Hills — far hill paler, near hill a deeper green; both lift in opacity as the
+// scene warms.
+.scene-hill-far {
+  fill: var(--color-mint);
+  fill-opacity: calc(0.5 + 0.35 * var(--warmth));
+  transition: fill-opacity 1.2s ease;
+}
+
+.scene-hill-near {
+  fill: var(--color-success);
+  fill-opacity: calc(0.4 + 0.4 * var(--warmth));
+  transition: fill-opacity 1.2s ease;
+}
+
+// The sun breathes slowly once the session is under way.
+.scene-sun {
+  transform-box: view-box;
+  transform-origin: 143px 46px;
+  opacity: calc(0.55 + 0.45 * var(--warmth));
+  transition: opacity 1.2s ease;
+}
+
+.scene--active .scene-sun {
+  animation: sun-breathe 7s ease-in-out infinite;
+}
+
+// Soft air particles drift upward — only really visible once warmed.
+.scene-motes circle {
+  fill: #ffffff;
+  opacity: calc(0.25 + 0.45 * var(--warmth));
+}
+
+.scene--active .scene-motes circle {
+  animation: mote-drift 9s ease-in-out infinite;
+}
+.scene-motes circle:nth-child(2) { animation-delay: -2s; }
+.scene-motes circle:nth-child(3) { animation-delay: -4s; }
+.scene-motes circle:nth-child(4) { animation-delay: -1s; }
+.scene-motes circle:nth-child(5) { animation-delay: -5.5s; }
+
+// Water ripples shimmer gently.
+.scene-ripples line {
+  stroke: #ffffff;
+  stroke-width: 1.1;
+  stroke-linecap: round;
+  opacity: calc(0.3 + 0.4 * var(--warmth));
+}
+
+.scene--active .scene-ripples line {
+  animation: ripple 4.5s ease-in-out infinite;
+}
+.scene-ripples line:nth-child(2) { animation-delay: -1.5s; }
+.scene-ripples line:nth-child(3) { animation-delay: -3s; }
+
+// The focus ring settles in with a soft pulse.
+.focus-ring {
+  animation: ring-in 0.5s ease both, ring-pulse 4s ease-in-out 0.5s infinite;
+}
+
+@keyframes sun-breathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.06); }
+}
+
+@keyframes mote-drift {
+  0% { transform: translateY(2px); }
+  50% { transform: translateY(-3px); }
+  100% { transform: translateY(2px); }
+}
+
+@keyframes ripple {
+  0%, 100% { opacity: 0.3; transform: translateX(0); }
+  50% { opacity: 0.7; transform: translateX(3px); }
+}
+
+@keyframes ring-in {
+  from { opacity: 0; transform: translateY(6px) scale(0.92); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes ring-pulse {
+  0%, 100% { box-shadow: 0 4px 10px rgba(0, 35, 0, 0.12); }
+  50% { box-shadow: 0 6px 18px rgba(0, 35, 0, 0.2); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scene,
+  .scene-hill-far,
+  .scene-hill-near,
+  .scene-sun {
+    transition: none;
+  }
+  .scene-sun,
+  .scene-motes circle,
+  .scene-ripples line,
+  .focus-ring {
+    animation: none !important;
+  }
+}

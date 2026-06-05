@@ -1,0 +1,347 @@
+<ng-container *transloco="let t">
+  <div class="min-h-screen bg-[#FAF8F3] px-4 py-8 md:px-8">
+
+    <!-- Header -->
+    <div class="max-w-3xl mx-auto mb-7">
+      <div class="flex items-center gap-3">
+        <button
+          (click)="goBack()"
+          class="w-10 h-10 flex items-center justify-center rounded-full text-stone-500 hover:bg-stone-200/60 hover:text-[var(--color-primary)] transition-colors"
+          [attr.aria-label]="t('common.back')"
+        >
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+        <div class="flex items-center gap-3">
+          <div
+            class="w-12 h-12 rounded-2xl bg-[var(--color-primary)]/10 flex items-center justify-center shrink-0"
+          >
+            <mat-icon class="text-[var(--color-primary)]">cottage</mat-icon>
+          </div>
+          <div>
+            <h1 class="text-2xl font-semibold tracking-[-0.01em] text-[var(--color-primary)]">
+              {{ t("selfHelp.items.safe-place.title") }}
+            </h1>
+            <p class="text-sm font-medium text-stone-500">
+              {{ t("selfHelp.category.relaxation") }} ·
+              {{ t("selfHelp.safePlace.pattern") }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="max-w-3xl mx-auto space-y-4">
+
+      <!-- Intro -->
+      <div class="bg-white rounded-2xl border border-stone-200 shadow-sm p-6">
+        <p class="text-[0.95rem] text-stone-700 leading-relaxed">
+          {{ t("selfHelp.items.safe-place.intro") }}
+        </p>
+      </div>
+
+      <!-- Guide -->
+      <div class="bg-white rounded-2xl border border-stone-200 shadow-sm px-6 pt-7 pb-6">
+
+        <!-- Live region for screen readers -->
+        <p class="sr-only" aria-live="polite">
+          @if (state === 'prepare') {
+            {{ t("selfHelp.safePlace.getReady") }} {{ prepareCountdown }}
+          } @else if (isActiveSession) {
+            {{ t("selfHelp.safePlace.anchors." + current.key + ".prompt") }}
+          } @else if (state === 'done') {
+            {{ t("selfHelp.safePlace.completeTitle") }}
+          }
+        </p>
+
+        <div class="flex flex-col items-center">
+          <!-- Calm landscape scene -->
+          <div
+            class="scene relative w-full max-w-[420px] rounded-2xl overflow-hidden"
+            [class.scene--active]="isActiveSession || state === 'done'"
+            [style.--warmth]="sceneWarmth"
+          >
+            <svg
+              class="w-full h-auto block"
+              viewBox="0 0 200 130"
+              aria-hidden="true"
+            >
+              <defs>
+                <linearGradient id="spSky" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#cfe2f3" />
+                  <stop offset="55%" stop-color="#e7f0f7" />
+                  <stop offset="100%" stop-color="#fbf3e6" />
+                </linearGradient>
+                <radialGradient id="spSun" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="#fff7e3" />
+                  <stop offset="55%" stop-color="#ffe2a8" />
+                  <stop offset="100%" stop-color="#ffe2a8" stop-opacity="0" />
+                </radialGradient>
+                <linearGradient id="spWater" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="var(--color-sky)" stop-opacity="0.55" />
+                  <stop offset="100%" stop-color="var(--color-blue)" stop-opacity="0.65" />
+                </linearGradient>
+              </defs>
+
+              <!-- Sky -->
+              <rect x="0" y="0" width="200" height="130" fill="url(#spSky)" />
+
+              <!-- Sun & its glow -->
+              <g class="scene-sun">
+                <circle cx="143" cy="46" r="30" fill="url(#spSun)" />
+                <circle cx="143" cy="46" r="11" fill="#ffd57a" />
+              </g>
+
+              <!-- Drifting motes (air / scent) -->
+              <g class="scene-motes">
+                <circle cx="40" cy="40" r="1.6" />
+                <circle cx="72" cy="28" r="1.1" />
+                <circle cx="104" cy="52" r="1.4" />
+                <circle cx="58" cy="64" r="1" />
+                <circle cx="120" cy="34" r="1.2" />
+              </g>
+
+              <!-- Far hill -->
+              <path
+                class="scene-hill-far"
+                d="M0 92 Q50 70 100 86 T200 84 V130 H0 Z"
+              />
+              <!-- Near hill -->
+              <path
+                class="scene-hill-near"
+                d="M0 104 Q60 88 110 100 T200 98 V130 H0 Z"
+              />
+
+              <!-- Water -->
+              <rect x="0" y="112" width="200" height="18" fill="url(#spWater)" />
+              <g class="scene-ripples">
+                <line x1="18" y1="118" x2="46" y2="118" />
+                <line x1="120" y1="121" x2="160" y2="121" />
+                <line x1="64" y1="124" x2="96" y2="124" />
+              </g>
+            </svg>
+
+            <!-- Focus ring with the current sense -->
+            @if (isActiveSession) {
+              <div class="absolute inset-x-0 bottom-3 flex justify-center pointer-events-none">
+                <div class="focus-ring flex items-center justify-center w-14 h-14 rounded-full bg-white/85 backdrop-blur-sm shadow-md">
+                  <mat-icon class="text-[var(--color-primary)] !text-[26px]">
+                    {{ current.icon }}
+                  </mat-icon>
+                </div>
+              </div>
+            }
+
+            <!-- Prepare overlay -->
+            @if (state === 'prepare') {
+              <div class="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none bg-white/30 backdrop-blur-[1px]">
+                <div class="text-xs uppercase tracking-[0.2em] text-stone-600 mb-1">
+                  {{ t("selfHelp.safePlace.getReady") }}
+                </div>
+                <div class="text-5xl font-semibold text-[var(--color-primary)] tabular-nums">
+                  {{ prepareCountdown }}
+                </div>
+              </div>
+            }
+
+            <!-- Done overlay -->
+            @if (state === 'done') {
+              <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                <div class="flex items-center justify-center w-14 h-14 rounded-full bg-white/85 backdrop-blur-sm shadow-md">
+                  <mat-icon class="text-[var(--color-success)] !text-[28px]">check</mat-icon>
+                </div>
+              </div>
+            }
+          </div>
+
+          <!-- Anchor / state copy -->
+          <div class="text-center mt-6 min-h-[112px] flex flex-col items-center justify-start">
+            @if (state === 'idle') {
+              <p class="text-[0.95rem] text-stone-600 leading-relaxed max-w-md">
+                {{ t("selfHelp.safePlace.readyHint") }}
+              </p>
+            } @else if (state === 'done') {
+              <mat-icon class="text-[var(--color-success)] !w-10 !h-10 !text-4xl mb-1">
+                check_circle
+              </mat-icon>
+              <h2 class="text-lg font-semibold text-[var(--color-primary)] mb-1">
+                {{ t("selfHelp.safePlace.completeTitle") }}
+              </h2>
+              <p class="text-[0.95rem] text-stone-600 leading-relaxed max-w-md">
+                {{ t("selfHelp.safePlace.completeText") }}
+              </p>
+            } @else {
+              <div class="flex items-center gap-2 mb-1.5">
+                <span class="text-xs uppercase tracking-[0.2em] text-stone-500">
+                  {{ t("selfHelp.safePlace.anchorStep", { current: index + 1, total: anchors.length }) }}
+                </span>
+                @if (state === 'running') {
+                  <span class="text-xs font-semibold text-[var(--color-primary)] tabular-nums bg-[var(--color-primary)]/8 rounded-full px-2 py-0.5">
+                    {{ countdown }}{{ t("selfHelp.safePlace.secShort") }}
+                  </span>
+                }
+              </div>
+              <h2 class="text-lg font-semibold text-[var(--color-primary)] mb-1.5">
+                {{ t("selfHelp.safePlace.anchors." + current.key + ".label") }}
+              </h2>
+              <p class="text-[0.95rem] text-stone-600 leading-relaxed max-w-md px-2">
+                {{ t("selfHelp.safePlace.anchors." + current.key + ".prompt") }}
+              </p>
+            }
+          </div>
+        </div>
+
+        <!-- Anchor dots -->
+        @if (isActiveSession) {
+          <div class="flex items-center justify-center gap-2 mt-5">
+            @for (a of anchors; track a.key; let i = $index) {
+              <button
+                (click)="goTo(i)"
+                [attr.aria-label]="t('selfHelp.safePlace.anchors.' + a.key + '.label')"
+                class="rounded-full transition-all"
+                [ngClass]="i === index
+                  ? 'w-2.5 h-2.5 bg-[var(--color-primary)]'
+                  : i < index
+                    ? 'w-2 h-2 bg-[var(--color-primary)]/40'
+                    : 'w-2 h-2 bg-stone-200'"
+              ></button>
+            }
+          </div>
+        }
+
+        <!-- Progress -->
+        @if (isActiveSession || state === 'done') {
+          <div class="w-full max-w-[320px] mx-auto mt-6">
+            <div class="flex items-center justify-between text-xs font-medium text-stone-500 mb-1.5">
+              <span>
+                @if (state === 'done') {
+                  {{ t("selfHelp.safePlace.completeText") }}
+                } @else {
+                  {{ t("selfHelp.safePlace.timeLeft") }}
+                }
+              </span>
+              <span class="tabular-nums text-stone-600">
+                {{ state === 'done' ? '0:00' : timeRemaining }}
+              </span>
+            </div>
+            <div class="h-2 rounded-full bg-stone-200 overflow-hidden">
+              <div
+                class="h-full rounded-full bg-[var(--color-primary)] transition-all duration-300"
+                [style.width.%]="(state === 'done' ? 1 : progress) * 100"
+              ></div>
+            </div>
+          </div>
+        }
+
+        <!-- Controls -->
+        <div class="flex items-center justify-center gap-3 mt-7">
+          @if (isActiveSession) {
+            <button
+              (click)="prev()"
+              [disabled]="isFirst"
+              class="w-11 h-11 flex items-center justify-center rounded-full bg-stone-100 text-stone-700 hover:bg-stone-200 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+              [attr.aria-label]="t('selfHelp.safePlace.prev')"
+            >
+              <mat-icon class="text-lg">skip_previous</mat-icon>
+            </button>
+          }
+
+          <button
+            (click)="toggle()"
+            class="flex items-center gap-2 px-7 py-3 rounded-full bg-[var(--color-primary)] text-white text-sm font-semibold shadow-sm hover:bg-[#003a00] transition-colors"
+          >
+            <mat-icon class="text-lg">{{ isRunning ? "pause" : "play_arrow" }}</mat-icon>
+            @if (state === 'paused') {
+              {{ t("selfHelp.safePlace.resume") }}
+            } @else if (isRunning) {
+              {{ t("selfHelp.pause") }}
+            } @else if (state === 'done') {
+              {{ t("selfHelp.safePlace.restart") }}
+            } @else {
+              {{ t("selfHelp.safePlace.begin") }}
+            }
+          </button>
+
+          @if (isActiveSession) {
+            <button
+              (click)="next()"
+              class="w-11 h-11 flex items-center justify-center rounded-full bg-stone-100 text-stone-700 hover:bg-stone-200 transition-colors"
+              [attr.aria-label]="t('selfHelp.safePlace.next')"
+            >
+              <mat-icon class="text-lg">skip_next</mat-icon>
+            </button>
+          } @else {
+            <button
+              (click)="reset()"
+              [disabled]="state === 'idle'"
+              class="flex items-center gap-2 px-5 py-3 rounded-full bg-stone-100 text-stone-700 text-sm font-semibold hover:bg-stone-200 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+            >
+              <mat-icon class="text-lg">restart_alt</mat-icon>
+              {{ t("selfHelp.reset") }}
+            </button>
+          }
+
+          <button
+            (click)="toggleSound()"
+            [attr.aria-pressed]="soundOn"
+            [attr.aria-label]="t('selfHelp.safePlace.sound')"
+            class="w-11 h-11 flex items-center justify-center rounded-full hover:bg-stone-100 transition-colors"
+            [ngClass]="soundOn ? 'text-[var(--color-blue)] bg-[var(--color-sky)]/15' : 'text-stone-500'"
+          >
+            <mat-icon class="text-lg">{{ soundOn ? "volume_up" : "volume_off" }}</mat-icon>
+          </button>
+        </div>
+      </div>
+
+      <!-- Length selector -->
+      <div class="bg-white rounded-2xl border border-stone-200 shadow-sm p-6">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-base font-semibold text-[var(--color-primary)]">
+            {{ t("selfHelp.safePlace.length") }}
+          </h2>
+          <span class="text-xs font-medium text-stone-500">{{ t("selfHelp.safePlace.lengthHint") }}</span>
+        </div>
+        <div class="grid grid-cols-3 gap-2.5">
+          @for (d of durations; track d) {
+            <button
+              (click)="setDuration(d)"
+              [disabled]="isActiveSession"
+              class="flex flex-col items-center py-3 rounded-xl border text-sm font-semibold transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+              [ngClass]="durationMinutes === d
+                ? 'border-[var(--color-primary)] bg-[var(--color-primary)]/8 text-[var(--color-primary)]'
+                : 'border-transparent bg-stone-100 text-stone-600'"
+            >
+              <span class="tabular-nums text-base">{{ d }}</span>
+              <span class="text-[11px] font-medium text-stone-500 mt-0.5">
+                {{ t("selfHelp.minutes") }}
+              </span>
+            </button>
+          }
+        </div>
+      </div>
+
+      <!-- How to -->
+      <div class="bg-white rounded-2xl border border-stone-200 shadow-sm p-6">
+        <h2 class="text-base font-semibold text-[var(--color-primary)] mb-4">
+          {{ t("selfHelp.steps") }}
+        </h2>
+        <ol class="space-y-3.5">
+          @for (step of t("selfHelp.items.safe-place.steps"); track $index) {
+            <li class="flex gap-3.5">
+              <span
+                class="w-7 h-7 rounded-full bg-[var(--color-primary)]/10 text-[var(--color-primary)] text-sm font-bold flex items-center justify-center shrink-0 mt-0.5"
+              >
+                {{ $index + 1 }}
+              </span>
+              <p class="text-[0.95rem] text-stone-700 leading-relaxed">{{ step }}</p>
+            </li>
+          }
+        </ol>
+      </div>
+
+      <!-- Gentle reminder -->
+      <p class="text-center text-xs text-stone-500 px-6 pt-1">
+        {{ t("selfHelp.disclaimer") }}
+      </p>
+    </div>
+  </div>
+</ng-container>
