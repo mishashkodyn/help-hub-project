@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" role="img" aria-label="Anonymous user">
+  <defs>
+    <clipPath id="circle">
+      <circle cx="64" cy="64" r="64" />
+    </clipPath>
+  </defs>
+  <g clip-path="url(#circle)">
+    <rect width="128" height="128" fill="#E8EDE6" />
+    <!-- shoulders -->
+    <path d="M16 128c0-26.5 21.5-44 48-44s48 17.5 48 44z" fill="#01421f" opacity="0.92" />
+    <!-- head -->
+    <circle cx="64" cy="54" r="26" fill="#01421f" opacity="0.92" />
+    <!-- hat brim -->
+    <rect x="30" y="44" width="68" height="7" rx="3.5" fill="#022b16" />
+    <!-- hat top -->
+    <path d="M44 44c0-13 9-21 20-21s20 8 20 21z" fill="#022b16" />
+    <!-- glasses -->
+    <g fill="#E8EDE6">
+      <rect x="42" y="56" width="16" height="11" rx="5.5" />
+      <rect x="70" y="56" width="16" height="11" rx="5.5" />
+      <rect x="57" y="60" width="14" height="3" />
+    </g>
+  </g>
+</svg>

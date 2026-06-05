@@ -11,6 +11,7 @@ import { BellyBreathingComponent } from './pages/belly-breathing/belly-breathing
 import { Grounding54321Component } from './pages/grounding-54321/grounding-54321.component';
 import { BodyScanComponent } from './pages/body-scan/body-scan.component';
 import { ProgressiveMuscleComponent } from './pages/progressive-muscle/progressive-muscle.component';
+import { SafePlaceComponent } from './pages/safe-place/safe-place.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { ProgressiveMuscleComponent } from './pages/progressive-muscle/progressi
     Grounding54321Component,
     BodyScanComponent,
     ProgressiveMuscleComponent,
+    SafePlaceComponent,
   ],
   imports: [CommonModule, FormsModule, MatIconModule, TranslocoModule],
 })

@@ -55,18 +55,18 @@
                 for="email"
                 class="block text-[0.78rem] font-medium text-stone-500 mb-1.5"
               >
-                {{ t('auth.email_address') }}
+                {{ t('auth.email_or_login') }}
               </label>
               <input
                 id="email"
                 required
-                type="email"
+                type="text"
                 name="email"
                 [(ngModel)]="email"
                 (keydown.enter)="passwordInput.focus()"
                 #emailModel="ngModel"
-                autocomplete="email"
-                placeholder="you@example.com"
+                autocomplete="username"
+                [placeholder]="t('auth.email_or_login_hint')"
                 class="w-full px-4 py-3 bg-white border border-stone-200 rounded-xl text-stone-800 placeholder-stone-400 focus:outline-none focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/10 transition-all duration-200"
               />
             </div>

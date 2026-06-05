@@ -237,6 +237,50 @@
         }
       }
     },
+    "safePlace": {
+      "pattern": "A place of your own",
+      "getReady": "Settle in",
+      "readyHint": "Sit or lie back somewhere quiet and let your eyes close. We'll picture a place where you feel completely safe, and settle into it one sense at a time.",
+      "begin": "Begin",
+      "resume": "Resume",
+      "restart": "Start again",
+      "anchorStep": "Step {{current}} of {{total}}",
+      "timeLeft": "Time left",
+      "secShort": "s",
+      "length": "Length",
+      "lengthHint": "Whole visualisation",
+      "sound": "Sound cue",
+      "prev": "Previous",
+      "next": "Next",
+      "completeTitle": "You're settled and safe",
+      "completeText": "This place is always yours. You can close your eyes and return here whenever you need to.",
+      "anchors": {
+        "arrive": {
+          "label": "Arrive",
+          "prompt": "Picture a place — real or imagined — where you feel completely safe. Let it take shape around you."
+        },
+        "look": {
+          "label": "Look around",
+          "prompt": "Look slowly around your place. Notice the colours, the light, the shapes near and far."
+        },
+        "listen": {
+          "label": "Listen",
+          "prompt": "Tune into the sounds here — gentle, distant or close. Let them tell you that all is calm."
+        },
+        "scent": {
+          "label": "Breathe it in",
+          "prompt": "Take a slow breath and notice the air — its freshness, its warmth, any scent it carries."
+        },
+        "touch": {
+          "label": "Feel it",
+          "prompt": "Feel the temperature on your skin and the ground holding you up, steady and sure."
+        },
+        "safe": {
+          "label": "Rest here",
+          "prompt": "Let the feeling of safety fill you. You belong here, and nothing can reach you. Simply rest."
+        }
+      }
+    },
     "items": {
       "box-breathing": {
         "title": "Box breathing",

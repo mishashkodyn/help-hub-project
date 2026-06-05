@@ -41,6 +41,7 @@ import { BellyBreathingComponent } from './modules/self-help/pages/belly-breathi
 import { Grounding54321Component } from './modules/self-help/pages/grounding-54321/grounding-54321.component';
 import { BodyScanComponent } from './modules/self-help/pages/body-scan/body-scan.component';
 import { ProgressiveMuscleComponent } from './modules/self-help/pages/progressive-muscle/progressive-muscle.component';
+import { SafePlaceComponent } from './modules/self-help/pages/safe-place/safe-place.component';
 
 const routes: Routes = [
   {
@@ -161,6 +162,11 @@ const routes: Routes = [
       {
         path: 'practices/progressive-muscle',
         component: ProgressiveMuscleComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'practices/safe-place',
+        component: SafePlaceComponent,
         canActivate: [AuthGuard],
       },
       {

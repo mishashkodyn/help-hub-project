@@ -485,3 +485,10 @@ ClientApp/.angular/cache/
 
 # Claude Code local test credentials (never commit)
 .claude/*.local.md
+
+# Дипломна робота: резервна копія й тимчасові дампи (журнал diploma-changes/ — лишається в git)
+diploma.backup.docx
+_dump.txt
+_rev.txt
+_old.txt
+_new.txt

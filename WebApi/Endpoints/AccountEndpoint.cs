@@ -18,6 +18,8 @@ namespace API.Endpoints
     {
         public record UpdateCardNumberDto(string CardNumber);
 
+        public record AnonymousRegisterDto(string Password);
+
         public static class AccountEndpoint
         {
             public static RouteGroupBuilder MapAccountEndpoint(this WebApplication app)
@@ -82,7 +84,73 @@ namespace API.Endpoints
                     return Results.Ok(Response<string>.Success(token, "User create successfully."));
                 }).DisableAntiforgery();
 
-                group.MapPost("/psychologist-register", async ([FromForm] CreatePsychologistApplicationDto dto, 
+                group.MapPost("/anonymous-register", async (HttpContext context, TokenService tokenService,
+                 IConfiguration _config, UserManager<ApplicationUser> userManager, [FromBody] AnonymousRegisterDto dto) =>
+                {
+                    if (dto is null || string.IsNullOrWhiteSpace(dto.Password))
+                    {
+                        return Results.BadRequest(Response<string>.Failure("Password is required."));
+                    }
+
+                    const string anonymousAvatarUrl = "/anonymous-avatar.svg";
+
+                    // Generate a unique anonymous identity: login "User" + random digits.
+                    var random = new Random();
+                    string number;
+                    string userName;
+                    string email;
+                    var attempts = 0;
+                    do
+                    {
+                        number = random.Next(1000, 1000000).ToString();
+                        userName = $"User{number}";
+                        email = $"user{number}@anonymous.hulphub";
+                        attempts++;
+                    }
+                    while ((await userManager.FindByNameAsync(userName) is not null
+                            || await userManager.FindByEmailAsync(email) is not null) && attempts < 20);
+
+                    if (await userManager.FindByNameAsync(userName) is not null
+                        || await userManager.FindByEmailAsync(email) is not null)
+                    {
+                        return Results.BadRequest(Response<string>.Failure("Could not generate an anonymous account, please try again."));
+                    }
+
+                    var user = new ApplicationUser
+                    {
+                        Name = "User",
+                        Surname = number,
+                        Email = email,
+                        UserName = userName,
+                        ProfileImage = anonymousAvatarUrl,
+                        Gender = Gender.Male
+                    };
+
+                    var result = await userManager.CreateAsync(user, dto.Password);
+
+                    if (!result.Succeeded)
+                    {
+                        return Results.BadRequest(Response<string>.Failure(result.Errors
+                            .Select(x => x.Description).FirstOrDefault()!));
+                    }
+
+                    await userManager.AddToRoleAsync(user, ApplicationRole.ROLE_USER);
+
+                    var roles = new List<string> { ApplicationRole.ROLE_USER };
+                    var token = tokenService.GenerateToken(user.Id, user.UserName!, roles);
+                    var refreshToken = tokenService.GenerateRefreshToken();
+
+                    var refreshTokenExpirationDays = _config.GetValue<int>("JwtSettings:RefreshTokenExpirationDays");
+                    user.RefreshToken = refreshToken;
+                    user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(refreshTokenExpirationDays);
+                    await userManager.UpdateAsync(user);
+
+                    SetRefreshTokenCookie(context, refreshToken, refreshTokenExpirationDays);
+
+                    return Results.Ok(Response<string>.Success(token, "Anonymous user created successfully."));
+                }).DisableAntiforgery();
+
+                group.MapPost("/psychologist-register", async ([FromForm] CreatePsychologistApplicationDto dto,
                     IMapper mapper, ApplicationDbContext dbContext, HttpContext context, 
                     UserManager<ApplicationUser> userManager, IStorageService blobService) =>
                 {
@@ -153,7 +221,9 @@ namespace API.Endpoints
                         return Results.BadRequest(Response<string>.Failure("Invalid login details."));
                     }
 
-                    var user = await userManager.FindByEmailAsync(dto.Email);
+                    // Allow signing in with either an email or a username (e.g. anonymous "User1234").
+                    var user = await userManager.FindByEmailAsync(dto.Email)
+                               ?? await userManager.FindByNameAsync(dto.Email);
 
                     if (user is null)
                     {

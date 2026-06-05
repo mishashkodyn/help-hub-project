@@ -19,6 +19,14 @@
   }
 }
 
+// On phones the square shrinks, so trim the labels to keep them inside the card.
+@media (max-width: 480px) {
+  .side-label {
+    font-size: 0.625rem;
+    letter-spacing: 0.02em;
+  }
+}
+
 // The edge currently being breathed, drawn over the faint track.
 .active-side {
   fill: none;

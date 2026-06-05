@@ -80,6 +80,22 @@ export class AuthService {
       );
   }
 
+  anonymousRegister(password: string): Observable<ApiResponse<string>> {
+    return this.httpClient
+      .post<ApiResponse<string>>(
+        `${this.baseUrl}/anonymous-register`,
+        { password },
+        { withCredentials: true },
+      )
+      .pipe(
+        tap((res) => {
+          if (res.isSuccess && res.data) {
+            localStorage.setItem(this.token, res.data);
+          }
+        }),
+      );
+  }
+
   login(email: string, password: string): Observable<ApiResponse<string>> {
     return this.httpClient
       .post<

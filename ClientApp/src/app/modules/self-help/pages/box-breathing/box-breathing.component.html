@@ -41,7 +41,7 @@
 
       <!-- Breathing guide -->
       <div
-        class="bg-white rounded-2xl border border-stone-200 shadow-sm px-6 pt-8 pb-6 flex flex-col items-center"
+        class="bg-white rounded-2xl border border-stone-200 shadow-sm px-4 sm:px-6 pt-8 pb-6 flex flex-col items-center"
       >
         <!-- Live region for screen readers -->
         <p class="sr-only" aria-live="polite">
@@ -56,12 +56,12 @@
 
         <!-- The square -->
         <div
-          class="relative w-[min(78vw,320px)] aspect-square"
+          class="relative w-[min(58vw,320px)] sm:w-[min(78vw,320px)] aspect-square"
           [class.is-running]="isActiveSession"
         >
           <!-- Side labels -->
           <span
-            class="side-label left-0 top-1/2 -translate-x-full -translate-y-1/2 pr-3 text-right"
+            class="side-label left-0 top-1/2 -translate-x-full -translate-y-1/2 pr-2 sm:pr-3 text-right"
             [class.side-label--active]="sideActive(0)"
           >
             {{ t("selfHelp.phase.inhale") }}
@@ -73,7 +73,7 @@
             {{ t("selfHelp.phase.hold") }}
           </span>
           <span
-            class="side-label right-0 top-1/2 translate-x-full -translate-y-1/2 pl-3"
+            class="side-label right-0 top-1/2 translate-x-full -translate-y-1/2 pl-2 sm:pl-3"
             [class.side-label--active]="sideActive(2)"
           >
             {{ t("selfHelp.phase.exhale") }}
@@ -179,7 +179,7 @@
         </div>
 
         <!-- Controls -->
-        <div class="flex items-center gap-3 mt-7">
+        <div class="flex flex-wrap items-center justify-center gap-3 mt-7">
           <button
             (click)="toggle()"
             class="flex items-center gap-2 px-7 py-3 rounded-full bg-[var(--color-success)] text-white text-sm font-semibold shadow-sm hover:bg-[#2e6a04] transition-colors"
