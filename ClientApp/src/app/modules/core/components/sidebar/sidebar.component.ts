@@ -16,6 +16,7 @@ import { MenuItem } from '../../../../api/models/menu-item';
 import { SidebarService } from '../../../../api/services/sidebar.service';
 import { PresenceService } from '../../../../api/services/presence-service';
 import { ActiveSessionService } from '../../../../api/services/active-session.service';
+import { FeaturesService } from '../../../../api/services/features.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -52,19 +53,19 @@ export class SidebarComponent {
     },
   ]);
 
+  cameraWallEnabled = signal(false);
+
   /** Shown to everyone regardless of role. */
-  commonItems = signal<MenuItem[]>([
-    {
-      icon: 'forum',
-      label: 'chat',
-      route: 'chat',
-    },
-    {
-      icon: 'notifications',
-      label: 'notifications',
-      route: 'notifications',
-    },
-  ]);
+  commonItems = computed<MenuItem[]>(() => {
+    const items: MenuItem[] = [
+      { icon: 'forum', label: 'chat', route: 'chat' },
+      { icon: 'notifications', label: 'notifications', route: 'notifications' },
+    ];
+    if (this.cameraWallEnabled()) {
+      items.push({ icon: 'videocam', label: 'cameras', route: 'cameras' });
+    }
+    return items;
+  });
 
   /**
    * Staff entry points. The dashboards themselves already surface every
@@ -107,8 +108,11 @@ export class SidebarComponent {
     private router: Router,
     private dialog: MatDialog,
     protected presenceService: PresenceService,
-    protected activeSessionService: ActiveSessionService
-  ) {}
+    protected activeSessionService: ActiveSessionService,
+    featuresService: FeaturesService,
+  ) {
+    featuresService.getFeatures().subscribe(f => this.cameraWallEnabled.set(f.cameraWall));
+  }
 
   logout() {
     const dialogRef = this.dialog.open(LogoutConfirmModalComponent, {

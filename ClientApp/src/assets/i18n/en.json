@@ -37,7 +37,16 @@
     "sessions": "Sessions",
     "self_help": "Self-help",
     "category_application": "Category application",
-    "session_live": "Session in progress"
+    "session_live": "Session in progress",
+    "cameras": "Camera Wall"
+  },
+  "cameras": {
+    "title": "Camera Wall",
+    "subtitle": "Live feeds from security cameras",
+    "offline": "Offline",
+    "no_signal": "No signal",
+    "last_frame": "Last frame",
+    "no_data": "No data yet"
   },
   "selfHelp": {
     "title": "Self-help practices",

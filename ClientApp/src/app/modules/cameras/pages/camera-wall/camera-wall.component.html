@@ -1,0 +1,60 @@
+<ng-container *transloco="let t">
+  <div class="p-4 md:p-6">
+    <div class="mb-5">
+      <h1 class="text-xl font-bold text-[var(--color-primary)]">{{ t('cameras.title') }}</h1>
+      <p class="text-sm text-gray-500 mt-0.5">{{ t('cameras.subtitle') }}</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      @for (cam of cameras; track cam.cameraId) {
+        <div class="rounded-2xl border border-gray-100 bg-white shadow-sm overflow-hidden">
+          <!-- Camera header -->
+          <div class="flex items-center justify-between px-4 py-2.5 border-b border-gray-100">
+            <div class="flex items-center gap-2">
+              <mat-icon class="text-gray-400 text-base">videocam</mat-icon>
+              <span class="text-sm font-semibold text-[var(--color-primary)]">{{ cam.cameraId }}</span>
+            </div>
+            @if (isLive(cam)) {
+              <div class="flex items-center gap-1.5">
+                <span class="relative flex h-2 w-2">
+                  <span class="absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75 animate-ping"></span>
+                  <span class="relative inline-flex h-2 w-2 rounded-full bg-green-500"></span>
+                </span>
+                <span class="text-[11px] font-semibold text-green-600 uppercase tracking-wide">live</span>
+              </div>
+            } @else {
+              <span class="text-[11px] text-gray-400">{{ t('cameras.offline') }}</span>
+            }
+          </div>
+
+          <!-- Image area -->
+          <div class="relative bg-gray-900 aspect-video flex items-center justify-center">
+            @if (!cam.error) {
+              <img
+                [src]="imageUrl(cam)"
+                class="w-full h-full object-cover"
+                alt="{{ cam.cameraId }}"
+                (error)="onImageError(cam)"
+                (load)="onImageLoad(cam)"
+              />
+            } @else {
+              <div class="flex flex-col items-center gap-2 text-gray-500">
+                <mat-icon class="text-4xl opacity-40">videocam_off</mat-icon>
+                <span class="text-xs">{{ t('cameras.no_signal') }}</span>
+              </div>
+            }
+          </div>
+
+          <!-- Footer -->
+          <div class="px-4 py-2 text-[11px] text-gray-400">
+            @if (cam.lastSeenUtc) {
+              {{ t('cameras.last_frame') }}: {{ cam.lastSeenUtc | date:'HH:mm:ss' }}
+            } @else {
+              {{ t('cameras.no_data') }}
+            }
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</ng-container>

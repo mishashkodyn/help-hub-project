@@ -17,6 +17,7 @@ import { PsychologistToolsModule } from './modules/psychologist-tools/psychologi
 import { ClientPortalModule } from './modules/client-portal/client-portal.module';
 import { SessionModule } from './modules/session/session.module';
 import { SelfHelpModule } from './modules/self-help/self-help.module';
+import { CamerasModule } from './modules/cameras/cameras.module';
 import { TranslocoRootModule } from './transloco-root.module';
 
 export function initializeApp(authService: AuthService) {
@@ -49,6 +50,7 @@ export function initializeApp(authService: AuthService) {
     ClientPortalModule,
     SessionModule,
     SelfHelpModule,
+    CamerasModule,
     MarkdownModule.forRoot(),
     TranslocoRootModule,
   ],
