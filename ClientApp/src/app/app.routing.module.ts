@@ -43,7 +43,6 @@ import { BodyScanComponent } from './modules/self-help/pages/body-scan/body-scan
 import { ProgressiveMuscleComponent } from './modules/self-help/pages/progressive-muscle/progressive-muscle.component';
 import { SafePlaceComponent } from './modules/self-help/pages/safe-place/safe-place.component';
 import { CameraWallComponent } from './modules/cameras/pages/camera-wall/camera-wall.component';
-import { cameraWallGuard } from './guards/camera-wall.guard';
 
 const routes: Routes = [
   {
@@ -181,12 +180,11 @@ const routes: Routes = [
         component: SessionRoomComponent,
         canActivate: [AuthGuard],
       },
-      {
-        path: 'cameras',
-        component: CameraWallComponent,
-        canActivate: [AuthGuard, cameraWallGuard],
-      },
     ],
+  },
+  {
+    path: 'cameras',
+    component: CameraWallComponent,
   },
   {
     path: '**',
