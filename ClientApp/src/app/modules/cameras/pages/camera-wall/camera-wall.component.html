@@ -29,13 +29,11 @@
 
           <!-- Image area -->
           <div class="relative bg-gray-900 aspect-video flex items-center justify-center">
-            @if (!cam.error) {
+            @if (cam.displayedSrc) {
               <img
-                [src]="imageUrl(cam)"
+                [src]="cam.displayedSrc"
                 class="w-full h-full object-cover"
                 alt="{{ cam.cameraId }}"
-                (error)="onImageError(cam)"
-                (load)="onImageLoad(cam)"
               />
             } @else {
               <div class="flex flex-col items-center gap-2 text-gray-500">

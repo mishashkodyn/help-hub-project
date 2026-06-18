@@ -86,13 +86,31 @@ namespace API.Controllers
 
             if (!AllowedCameras.Contains(cameraId)) return NotFound();
             var path = Path.Combine(GetFramesRoot(), cameraId, "latest.jpg");
-            if (!System.IO.File.Exists(path)) return NotFound("Ще немає кадру");
-            Response.Headers["Cache-Control"] = "no-store";
-            using var fs = new FileStream(path, FileMode.Open, FileAccess.Read,
-                FileShare.ReadWrite | FileShare.Delete);
-            var bytes = new byte[fs.Length];
-            _ = await fs.ReadAsync(bytes);
-            return File(bytes, "image/jpeg");
+
+            for (int attempt = 0; attempt < 3; attempt++)
+            {
+                if (attempt > 0)
+                    await Task.Delay(30);
+
+                if (!System.IO.File.Exists(path))
+                    continue;
+
+                try
+                {
+                    using var fs = new FileStream(path, FileMode.Open, FileAccess.Read,
+                        FileShare.ReadWrite | FileShare.Delete);
+                    var bytes = new byte[fs.Length];
+                    _ = await fs.ReadAsync(bytes);
+                    Response.Headers["Cache-Control"] = "no-store";
+                    return File(bytes, "image/jpeg");
+                }
+                catch (IOException)
+                {
+                    // file briefly unavailable during atomic replace, retry
+                }
+            }
+
+            return NotFound("Ще немає кадру");
         }
     }
 

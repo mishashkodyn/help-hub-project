@@ -1,11 +1,18 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-interface CameraFrame {
+interface CameraInfo {
   cameraId: string;
   lastSeenUtc: string | null;
   imageUrl: string;
-  error?: boolean;
+}
+
+interface CameraState {
+  cameraId: string;
+  lastSeenUtc: string | null;
+  imageUrl: string;
+  displayedSrc: string | null;
+  fetching: boolean;
 }
 
 @Component({
@@ -15,53 +22,77 @@ interface CameraFrame {
   styleUrl: './camera-wall.component.scss',
 })
 export class CameraWallComponent implements OnInit, OnDestroy {
-  cameras: CameraFrame[] = [];
+  cameras: CameraState[] = [];
   private intervalId: ReturnType<typeof setInterval> | null = null;
 
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
-    this.load();
-    this.intervalId = setInterval(() => this.load(), 1000);
+    this.tick();
+    this.intervalId = setInterval(() => this.tick(), 1000);
   }
 
   ngOnDestroy(): void {
     if (this.intervalId !== null) clearInterval(this.intervalId);
   }
 
-  isLive(cam: CameraFrame): boolean {
+  isLive(cam: CameraState): boolean {
     if (!cam.lastSeenUtc) return false;
     return (Date.now() - new Date(cam.lastSeenUtc).getTime()) < 5000;
   }
 
-  imageUrl(cam: CameraFrame): string {
-    return `${cam.imageUrl}?t=${Date.now()}`;
-  }
-
-  private load(): void {
-    this.http.get<CameraFrame[]>('/api/frames/latest').subscribe({
+  private tick(): void {
+    this.http.get<CameraInfo[]>('/api/frames/latest').subscribe({
       next: frames => {
-        this.cameras = frames.map(f => ({ ...f, error: false }));
+        // merge metadata without replacing objects (keeps displayedSrc stable)
+        if (this.cameras.length === 0) {
+          this.cameras = frames.map(f => ({
+            cameraId: f.cameraId,
+            lastSeenUtc: f.lastSeenUtc,
+            imageUrl: f.imageUrl,
+            displayedSrc: null,
+            fetching: false,
+          }));
+        } else {
+          for (const f of frames) {
+            const existing = this.cameras.find(c => c.cameraId === f.cameraId);
+            if (existing) {
+              existing.lastSeenUtc = f.lastSeenUtc;
+              existing.imageUrl = f.imageUrl;
+            }
+          }
+        }
+        this.refreshImages();
       },
       error: () => {
-        // keep previous data if any, mark all as error only on first load
         if (this.cameras.length === 0) {
           this.cameras = ['cam-01', 'cam-02', 'cam-03', 'cam-04'].map(id => ({
             cameraId: id,
             lastSeenUtc: null,
             imageUrl: `/api/frames/${id}/image`,
-            error: true,
+            displayedSrc: null,
+            fetching: false,
           }));
         }
       }
     });
   }
 
-  onImageError(cam: CameraFrame): void {
-    cam.error = true;
-  }
-
-  onImageLoad(cam: CameraFrame): void {
-    cam.error = false;
+  private refreshImages(): void {
+    for (const cam of this.cameras) {
+      if (cam.fetching) continue; // skip if previous request still in flight
+      cam.fetching = true;
+      const url = `${cam.imageUrl}?t=${Date.now()}`;
+      const img = new Image();
+      img.onload = () => {
+        cam.displayedSrc = url;
+        cam.fetching = false;
+      };
+      img.onerror = () => {
+        // keep displayedSrc unchanged — show last good frame
+        cam.fetching = false;
+      };
+      img.src = url;
+    }
   }
 }
