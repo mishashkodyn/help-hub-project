@@ -66,7 +66,7 @@ export class CameraWallComponent implements OnInit, OnDestroy {
       },
       error: () => {
         if (this.cameras.length === 0) {
-          this.cameras = ['cam-01', 'cam-02', 'cam-03', 'cam-04'].map(id => ({
+          this.cameras = ['cam-01-01', 'cam-01-02', 'cam-01-03', 'cam-01-04', 'cam-01-05'].map(id => ({
             cameraId: id,
             lastSeenUtc: null,
             imageUrl: `/api/frames/${id}/image`,

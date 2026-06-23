@@ -8,7 +8,7 @@ namespace API.Controllers
     {
         private static readonly HashSet<string> AllowedCameras = new(StringComparer.OrdinalIgnoreCase)
         {
-            "cam-01", "cam-02", "cam-03", "cam-04"
+            "cam-01-01", "cam-01-02", "cam-01-03", "cam-01-04", "cam-01-05"
         };
 
         private readonly IConfiguration _configuration;
