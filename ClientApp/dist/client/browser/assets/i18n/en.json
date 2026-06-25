@@ -37,7 +37,21 @@
     "sessions": "Sessions",
     "self_help": "Self-help",
     "category_application": "Category application",
-    "session_live": "Session in progress"
+    "session_live": "Session in progress",
+    "cameras": "Camera Wall"
+  },
+  "cameras": {
+    "title": "Camera Wall",
+    "subtitle": "Live feeds from security cameras",
+    "offline": "Offline",
+    "no_signal": "No signal",
+    "last_frame": "Last frame",
+    "no_data": "No data yet",
+    "loading": "Loading…",
+    "no_archive": "No archive yet",
+    "no_frames": "No frames for this day",
+    "no_pcs": "No computers yet",
+    "refresh": "Refresh"
   },
   "selfHelp": {
     "title": "Self-help practices",
@@ -408,7 +422,20 @@
     "register_as_client": "Register as a client",
     "gender": "Gender",
     "profile_photo": "Profile photo",
-    "profile_photo_hint": "Optional · JPG or PNG"
+    "profile_photo_hint": "Optional · JPG or PNG",
+    "anonymous": "Anonymous",
+    "full_registration": "Full",
+    "anonymous_title": "Register anonymously",
+    "anonymous_hint": "We'll pick a login like “User1234” and an anonymity avatar for you. Just set a password.",
+    "register_anonymously": "Register anonymously",
+    "anonymous_done_title": "Your account is ready",
+    "anonymous_login_label": "Your login",
+    "anonymous_save_login": "Save this login — you'll need it together with your password to sign in again.",
+    "copy": "Copy",
+    "copied": "Copied",
+    "continue": "Continue",
+    "email_or_login": "Email or login",
+    "email_or_login_hint": "you@example.com or User1234"
   },
   "psych_reg": {
     "application_title": "Specialist application",

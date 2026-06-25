@@ -1,5 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+
+interface PcInfo {
+  pc: string;
+  cameras: number;
+}
 
 interface CameraInfo {
   cameraId: string;
@@ -12,7 +17,17 @@ interface CameraState {
   lastSeenUtc: string | null;
   imageUrl: string;
   displayedSrc: string | null;
-  fetching: boolean;
+}
+
+interface ArchiveDay {
+  day: string;
+  count: number;
+}
+
+interface ArchiveFrame {
+  file: string;
+  timeUtc: string | null;
+  imageUrl: string;
 }
 
 @Component({
@@ -21,78 +36,122 @@ interface CameraState {
   templateUrl: './camera-wall.component.html',
   styleUrl: './camera-wall.component.scss',
 })
-export class CameraWallComponent implements OnInit, OnDestroy {
+export class CameraWallComponent implements OnInit {
+  pcs: PcInfo[] = [];
+  selectedPc: string | null = null;
   cameras: CameraState[] = [];
-  private intervalId: ReturnType<typeof setInterval> | null = null;
+  loadingPcs = false;
+  loadingCameras = false;
+
+  // archive viewer state
+  viewerCamera: string | null = null;
+  days: ArchiveDay[] = [];
+  selectedDay: string | null = null;
+  frames: ArchiveFrame[] = [];
+  frameIndex = 0;
+  loadingDays = false;
+  loadingFrames = false;
 
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
-    this.tick();
-    this.intervalId = setInterval(() => this.tick(), 1000);
+    this.loadPcs();
   }
 
-  ngOnDestroy(): void {
-    if (this.intervalId !== null) clearInterval(this.intervalId);
-  }
+  // ── PCs + wall (loaded once, no auto-refresh) ─────────────────────
 
-  isLive(cam: CameraState): boolean {
-    if (!cam.lastSeenUtc) return false;
-    return (Date.now() - new Date(cam.lastSeenUtc).getTime()) < 5000;
-  }
-
-  private tick(): void {
-    this.http.get<CameraInfo[]>('/api/frames/latest').subscribe({
-      next: frames => {
-        // merge metadata without replacing objects (keeps displayedSrc stable)
-        if (this.cameras.length === 0) {
-          this.cameras = frames.map(f => ({
-            cameraId: f.cameraId,
-            lastSeenUtc: f.lastSeenUtc,
-            imageUrl: f.imageUrl,
-            displayedSrc: null,
-            fetching: false,
-          }));
-        } else {
-          for (const f of frames) {
-            const existing = this.cameras.find(c => c.cameraId === f.cameraId);
-            if (existing) {
-              existing.lastSeenUtc = f.lastSeenUtc;
-              existing.imageUrl = f.imageUrl;
-            }
-          }
+  loadPcs(): void {
+    this.loadingPcs = true;
+    this.http.get<PcInfo[]>('/api/frames/pcs').subscribe({
+      next: pcs => {
+        this.pcs = pcs;
+        this.loadingPcs = false;
+        if (pcs.length > 0) {
+          // default to PC1 if present, otherwise the first folder
+          const preferred = pcs.find(p => p.pc.toLowerCase() === 'pc1') ?? pcs[0];
+          this.selectPc(preferred.pc);
         }
-        this.refreshImages();
       },
-      error: () => {
-        if (this.cameras.length === 0) {
-          this.cameras = ['cam-01-01', 'cam-01-02', 'cam-01-03', 'cam-01-04', 'cam-01-05'].map(id => ({
-            cameraId: id,
-            lastSeenUtc: null,
-            imageUrl: `/api/frames/${id}/image`,
-            displayedSrc: null,
-            fetching: false,
-          }));
-        }
-      }
+      error: () => { this.loadingPcs = false; },
     });
   }
 
-  private refreshImages(): void {
-    for (const cam of this.cameras) {
-      if (cam.fetching) continue; // skip if previous request still in flight
-      cam.fetching = true;
-      const url = `${cam.imageUrl}?t=${Date.now()}`;
-      const img = new Image();
-      img.onload = () => {
-        cam.displayedSrc = url;
-        cam.fetching = false;
-      };
-      img.onerror = () => {
-        // keep displayedSrc unchanged — show last good frame
-        cam.fetching = false;
-      };
-      img.src = url;
-    }
+  selectPc(pc: string): void {
+    this.selectedPc = pc;
+    this.cameras = [];
+    this.loadingCameras = true;
+    this.http.get<CameraInfo[]>(`/api/frames/${pc}/cameras`).subscribe({
+      next: cams => {
+        this.cameras = cams.map(c => ({
+          cameraId: c.cameraId,
+          lastSeenUtc: c.lastSeenUtc,
+          imageUrl: c.imageUrl,
+          displayedSrc: `${c.imageUrl}?t=${Date.now()}`, // load the last frame once
+        }));
+        this.loadingCameras = false;
+      },
+      error: () => { this.loadingCameras = false; },
+    });
+  }
+
+  // ── archive viewer ────────────────────────────────────────────────
+
+  openViewer(cam: CameraState): void {
+    if (!this.selectedPc) return;
+    this.viewerCamera = cam.cameraId;
+    this.days = [];
+    this.frames = [];
+    this.selectedDay = null;
+    this.frameIndex = 0;
+    this.loadingDays = true;
+    this.http.get<ArchiveDay[]>(`/api/frames/${this.selectedPc}/${cam.cameraId}/days`).subscribe({
+      next: days => {
+        this.days = days;
+        this.loadingDays = false;
+        if (days.length > 0) this.selectDay(days[0].day); // newest day first
+      },
+      error: () => { this.loadingDays = false; },
+    });
+  }
+
+  closeViewer(): void {
+    this.viewerCamera = null;
+    this.days = [];
+    this.frames = [];
+    this.selectedDay = null;
+    this.frameIndex = 0;
+  }
+
+  selectDay(day: string): void {
+    if (!this.selectedPc || !this.viewerCamera) return;
+    this.selectedDay = day;
+    this.frames = [];
+    this.frameIndex = 0;
+    this.loadingFrames = true;
+    this.http.get<ArchiveFrame[]>(`/api/frames/${this.selectedPc}/${this.viewerCamera}/days/${day}`).subscribe({
+      next: frames => {
+        this.frames = frames;
+        this.frameIndex = frames.length > 0 ? frames.length - 1 : 0; // jump to latest frame of the day
+        this.loadingFrames = false;
+      },
+      error: () => { this.loadingFrames = false; },
+    });
+  }
+
+  get currentFrame(): ArchiveFrame | null {
+    return this.frames[this.frameIndex] ?? null;
+  }
+
+  prevFrame(): void {
+    if (this.frameIndex > 0) this.frameIndex--;
+  }
+
+  nextFrame(): void {
+    if (this.frameIndex < this.frames.length - 1) this.frameIndex++;
+  }
+
+  onScrub(event: Event): void {
+    const value = +(event.target as HTMLInputElement).value;
+    if (!Number.isNaN(value)) this.frameIndex = value;
   }
 }

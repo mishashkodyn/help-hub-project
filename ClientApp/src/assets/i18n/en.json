@@ -46,7 +46,12 @@
     "offline": "Offline",
     "no_signal": "No signal",
     "last_frame": "Last frame",
-    "no_data": "No data yet"
+    "no_data": "No data yet",
+    "loading": "Loading…",
+    "no_archive": "No archive yet",
+    "no_frames": "No frames for this day",
+    "no_pcs": "No computers yet",
+    "refresh": "Refresh"
   },
   "selfHelp": {
     "title": "Self-help practices",

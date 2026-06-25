@@ -1,19 +1,120 @@
-<div class="camera-wall">
-  @for (cam of cameras; track cam.cameraId) {
-    <div class="camera-cell">
-      @if (cam.displayedSrc) {
-        <img [src]="cam.displayedSrc" [alt]="cam.cameraId" />
-      } @else {
-        <div class="no-signal">
-          <mat-icon>videocam_off</mat-icon>
+<div class="camera-page">
+  <div class="pc-bar">
+    <span class="pc-bar-label"><mat-icon>desktop_windows</mat-icon></span>
+    @if (loadingPcs) {
+      <span class="pc-muted">{{ 'cameras.loading' | transloco }}</span>
+    } @else if (pcs.length === 0) {
+      <span class="pc-muted">{{ 'cameras.no_pcs' | transloco }}</span>
+    } @else {
+      @for (p of pcs; track p.pc) {
+        <button
+          type="button"
+          class="pc-chip"
+          [class.active]="p.pc === selectedPc"
+          (click)="selectPc(p.pc)">
+          {{ p.pc }} <span class="pc-chip-count">{{ p.cameras }}</span>
+        </button>
+      }
+    }
+    @if (selectedPc) {
+      <button type="button" class="pc-refresh" (click)="selectPc(selectedPc)" [title]="'cameras.refresh' | transloco">
+        <mat-icon>refresh</mat-icon>
+      </button>
+    }
+  </div>
+
+  <div class="camera-wall">
+    @if (loadingCameras) {
+      <div class="wall-empty">{{ 'cameras.loading' | transloco }}</div>
+    } @else if (cameras.length === 0) {
+      <div class="wall-empty">{{ 'cameras.no_data' | transloco }}</div>
+    } @else {
+      @for (cam of cameras; track cam.cameraId) {
+        <div class="camera-cell" (click)="openViewer(cam)">
+          @if (cam.displayedSrc) {
+            <img [src]="cam.displayedSrc" [alt]="cam.cameraId" />
+          } @else {
+            <div class="no-signal">
+              <mat-icon>videocam_off</mat-icon>
+            </div>
+          }
+          <div class="cam-label">
+            <span class="cam-name">{{ cam.cameraId }}</span>
+            @if (cam.lastSeenUtc) {
+              <span class="cam-time">{{ cam.lastSeenUtc | date: 'dd.MM HH:mm:ss' }}</span>
+            } @else {
+              <span class="cam-time">{{ 'cameras.no_data' | transloco }}</span>
+            }
+          </div>
+          <div class="cam-history-hint">
+            <mat-icon>history</mat-icon>
+          </div>
         </div>
       }
-      <div class="cam-label">
-        <span>{{ cam.cameraId }}</span>
-        @if (isLive(cam)) {
-          <span class="live-dot"></span>
+    }
+  </div>
+</div>
+
+@if (viewerCamera) {
+  <div class="archive-overlay" (click)="closeViewer()">
+    <div class="archive-panel" (click)="$event.stopPropagation()">
+      <div class="archive-header">
+        <span class="archive-title">{{ selectedPc }} · {{ viewerCamera }}</span>
+        <button class="archive-close" type="button" (click)="closeViewer()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+
+      <div class="archive-days">
+        @if (loadingDays) {
+          <span class="archive-muted">{{ 'cameras.loading' | transloco }}</span>
+        } @else if (days.length === 0) {
+          <span class="archive-muted">{{ 'cameras.no_archive' | transloco }}</span>
+        } @else {
+          @for (d of days; track d.day) {
+            <button
+              type="button"
+              class="archive-day-chip"
+              [class.active]="d.day === selectedDay"
+              (click)="selectDay(d.day)">
+              {{ d.day }} <span class="archive-day-count">{{ d.count }}</span>
+            </button>
+          }
         }
       </div>
+
+      <div class="archive-stage">
+        @if (loadingFrames) {
+          <span class="archive-muted">{{ 'cameras.loading' | transloco }}</span>
+        } @else if (currentFrame) {
+          <img [src]="currentFrame.imageUrl" [alt]="viewerCamera" />
+        } @else if (selectedDay) {
+          <span class="archive-muted">{{ 'cameras.no_frames' | transloco }}</span>
+        }
+      </div>
+
+      @if (frames.length > 0) {
+        <div class="archive-controls">
+          <button type="button" (click)="prevFrame()" [disabled]="frameIndex === 0">
+            <mat-icon>chevron_left</mat-icon>
+          </button>
+          <input
+            type="range"
+            min="0"
+            [max]="frames.length - 1"
+            [value]="frameIndex"
+            (input)="onScrub($event)" />
+          <button type="button" (click)="nextFrame()" [disabled]="frameIndex >= frames.length - 1">
+            <mat-icon>chevron_right</mat-icon>
+          </button>
+        </div>
+        <div class="archive-meta">
+          <span>{{ frameIndex + 1 }} / {{ frames.length }}</span>
+          @if (currentFrame?.timeUtc) {
+            <span class="archive-stamp">{{ currentFrame!.timeUtc | date: 'dd.MM.yyyy HH:mm:ss' }}</span>
+          }
+        </div>
+      }
     </div>
-  }
-</div>
+  </div>
+}
