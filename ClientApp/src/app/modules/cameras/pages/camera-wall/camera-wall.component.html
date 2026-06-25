@@ -1,27 +1,41 @@
 <div class="camera-page">
-  <div class="pc-bar">
-    <span class="pc-bar-label"><mat-icon>desktop_windows</mat-icon></span>
-    @if (loadingPcs) {
-      <span class="pc-muted">{{ 'cameras.loading' | transloco }}</span>
-    } @else if (pcs.length === 0) {
-      <span class="pc-muted">{{ 'cameras.no_pcs' | transloco }}</span>
-    } @else {
-      @for (p of pcs; track p.pc) {
-        <button
-          type="button"
-          class="pc-chip"
-          [class.active]="p.pc === selectedPc"
-          (click)="selectPc(p.pc)">
-          {{ p.pc }} <span class="pc-chip-count">{{ p.cameras }}</span>
+  <header class="cam-header">
+    <div class="cam-brand">
+      <span class="cam-brand-icon"><mat-icon>videocam</mat-icon></span>
+      <div class="cam-brand-text">
+        <span class="cam-title">{{ 'cameras.title' | transloco }}</span>
+        <span class="cam-subtitle">{{ 'cameras.subtitle' | transloco }}</span>
+      </div>
+    </div>
+
+    <div class="pc-bar">
+      <span class="pc-bar-label"><mat-icon>desktop_windows</mat-icon></span>
+      @if (loadingPcs) {
+        <span class="pc-muted">{{ 'cameras.loading' | transloco }}</span>
+      } @else if (pcs.length === 0) {
+        <span class="pc-muted">{{ 'cameras.no_pcs' | transloco }}</span>
+      } @else {
+        @for (p of pcs; track p.pc) {
+          <button
+            type="button"
+            class="pc-chip"
+            [class.active]="p.pc === selectedPc"
+            (click)="selectPc(p.pc)">
+            {{ p.pc }} <span class="pc-chip-count">{{ p.cameras }}</span>
+          </button>
+        }
+      }
+    </div>
+
+    <div class="cam-header-right">
+      <span class="cam-clock"><mat-icon>schedule</mat-icon>{{ clock }}</span>
+      @if (selectedPc) {
+        <button type="button" class="pc-refresh" (click)="selectPc(selectedPc)" [title]="'cameras.refresh' | transloco">
+          <mat-icon>refresh</mat-icon>
         </button>
       }
-    }
-    @if (selectedPc) {
-      <button type="button" class="pc-refresh" (click)="selectPc(selectedPc)" [title]="'cameras.refresh' | transloco">
-        <mat-icon>refresh</mat-icon>
-      </button>
-    }
-  </div>
+    </div>
+  </header>
 
   <div class="camera-wall">
     @if (loadingCameras) {
@@ -30,14 +44,28 @@
       <div class="wall-empty">{{ 'cameras.no_data' | transloco }}</div>
     } @else {
       @for (cam of cameras; track cam.cameraId) {
-        <div class="camera-cell" (click)="openViewer(cam)">
-          @if (cam.displayedSrc) {
-            <img [src]="cam.displayedSrc" [alt]="cam.cameraId" />
-          } @else {
-            <div class="no-signal">
-              <mat-icon>videocam_off</mat-icon>
-            </div>
+        <div class="camera-cell" [class.is-live]="isLive(cam)" (click)="openViewer(cam)">
+          <div class="cam-media">
+            @if (cam.displayedSrc) {
+              <img [src]="cam.displayedSrc" [alt]="cam.cameraId" />
+            } @else {
+              <div class="no-signal">
+                <mat-icon>videocam_off</mat-icon>
+                <span>{{ 'cameras.no_signal' | transloco }}</span>
+              </div>
+            }
+          </div>
+
+          <div class="cam-scrim"></div>
+
+          @if (isLive(cam)) {
+            <span class="cam-live"><span class="cam-live-dot"></span>{{ 'cameras.live' | transloco }}</span>
           }
+
+          <button type="button" class="cam-history-hint" [title]="'cameras.no_archive' | transloco">
+            <mat-icon>history</mat-icon>
+          </button>
+
           <div class="cam-label">
             <span class="cam-name">{{ cam.cameraId }}</span>
             @if (cam.lastSeenUtc) {
@@ -45,9 +73,6 @@
             } @else {
               <span class="cam-time">{{ 'cameras.no_data' | transloco }}</span>
             }
-          </div>
-          <div class="cam-history-hint">
-            <mat-icon>history</mat-icon>
           </div>
         </div>
       }
@@ -59,7 +84,10 @@
   <div class="archive-overlay" (click)="closeViewer()">
     <div class="archive-panel" (click)="$event.stopPropagation()">
       <div class="archive-header">
-        <span class="archive-title">{{ selectedPc }} · {{ viewerCamera }}</span>
+        <span class="archive-title">
+          <mat-icon>history</mat-icon>
+          {{ selectedPc }} <span class="archive-sep">·</span> {{ viewerCamera }}
+        </span>
         <button class="archive-close" type="button" (click)="closeViewer()">
           <mat-icon>close</mat-icon>
         </button>
@@ -94,25 +122,27 @@
       </div>
 
       @if (frames.length > 0) {
-        <div class="archive-controls">
-          <button type="button" (click)="prevFrame()" [disabled]="frameIndex === 0">
-            <mat-icon>chevron_left</mat-icon>
-          </button>
-          <input
-            type="range"
-            min="0"
-            [max]="frames.length - 1"
-            [value]="frameIndex"
-            (input)="onScrub($event)" />
-          <button type="button" (click)="nextFrame()" [disabled]="frameIndex >= frames.length - 1">
-            <mat-icon>chevron_right</mat-icon>
-          </button>
-        </div>
-        <div class="archive-meta">
-          <span>{{ frameIndex + 1 }} / {{ frames.length }}</span>
-          @if (currentFrame?.timeUtc) {
-            <span class="archive-stamp">{{ currentFrame!.timeUtc | date: 'dd.MM.yyyy HH:mm:ss' }}</span>
-          }
+        <div class="archive-footer">
+          <div class="archive-controls">
+            <button type="button" (click)="prevFrame()" [disabled]="frameIndex === 0">
+              <mat-icon>chevron_left</mat-icon>
+            </button>
+            <input
+              type="range"
+              min="0"
+              [max]="frames.length - 1"
+              [value]="frameIndex"
+              (input)="onScrub($event)" />
+            <button type="button" (click)="nextFrame()" [disabled]="frameIndex >= frames.length - 1">
+              <mat-icon>chevron_right</mat-icon>
+            </button>
+          </div>
+          <div class="archive-meta">
+            <span class="archive-count">{{ frameIndex + 1 }} / {{ frames.length }}</span>
+            @if (currentFrame?.timeUtc) {
+              <span class="archive-stamp">{{ currentFrame!.timeUtc | date: 'dd.MM.yyyy HH:mm:ss' }}</span>
+            }
+          </div>
         </div>
       }
     </div>

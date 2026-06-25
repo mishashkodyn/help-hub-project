@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 interface PcInfo {
@@ -36,12 +36,17 @@ interface ArchiveFrame {
   templateUrl: './camera-wall.component.html',
   styleUrl: './camera-wall.component.scss',
 })
-export class CameraWallComponent implements OnInit {
+export class CameraWallComponent implements OnInit, OnDestroy {
   pcs: PcInfo[] = [];
   selectedPc: string | null = null;
   cameras: CameraState[] = [];
   loadingPcs = false;
   loadingCameras = false;
+
+  // wall clock (header) + snapshot time used to decide LIVE badges
+  clock = '';
+  private wallLoadedMs = Date.now();
+  private clockTimer?: ReturnType<typeof setInterval>;
 
   // archive viewer state
   viewerCamera: string | null = null;
@@ -56,6 +61,27 @@ export class CameraWallComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadPcs();
+    this.tickClock();
+    this.clockTimer = setInterval(() => this.tickClock(), 1000);
+  }
+
+  ngOnDestroy(): void {
+    if (this.clockTimer) clearInterval(this.clockTimer);
+  }
+
+  private tickClock(): void {
+    this.clock = new Date().toLocaleTimeString([], {
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+    });
+  }
+
+  // A camera counts as LIVE if its last frame was fresh when the wall loaded.
+  // The wall loads once (no polling), so this is a snapshot, not a ticking state.
+  isLive(cam: CameraState): boolean {
+    if (!cam.lastSeenUtc) return false;
+    return this.wallLoadedMs - Date.parse(cam.lastSeenUtc) < 30_000;
   }
 
   // ── PCs + wall (loaded once, no auto-refresh) ─────────────────────
@@ -82,6 +108,7 @@ export class CameraWallComponent implements OnInit {
     this.loadingCameras = true;
     this.http.get<CameraInfo[]>(`/api/frames/${pc}/cameras`).subscribe({
       next: cams => {
+        this.wallLoadedMs = Date.now();
         this.cameras = cams.map(c => ({
           cameraId: c.cameraId,
           lastSeenUtc: c.lastSeenUtc,

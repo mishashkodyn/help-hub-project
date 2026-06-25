@@ -1,4 +1,5 @@
 using System.Text.RegularExpressions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -7,11 +8,8 @@ namespace API.Controllers
     [ApiController]
     public class FrameController : ControllerBase
     {
-        // pc / camera names: a safe slug, no path-traversal characters.
         private static readonly Regex SlugPattern = new(@"^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$", RegexOptions.Compiled);
-        // yyyy-MM-dd
         private static readonly Regex DayPattern = new(@"^\d{4}-\d{2}-\d{2}$", RegexOptions.Compiled);
-        // archive file name, e.g. 142530-1234567.jpg
         private static readonly Regex FilePattern = new(@"^[0-9A-Za-z_-]+\.jpg$", RegexOptions.Compiled);
 
         private const string ArchiveDir = "archive";
@@ -38,8 +36,13 @@ namespace API.Controllers
         private string GetUploadToken() =>
             _configuration["CameraWall:UploadToken"] ?? string.Empty;
 
+        private long GetMaxArchiveBytes()
+        {
+            var gb = _configuration.GetValue<double?>("CameraWall:MaxArchiveGB") ?? 30d;
+            return gb <= 0 ? 0 : (long)(gb * 1024 * 1024 * 1024);
+        }
+
         // POST /api/frames/{pc}/{cameraId}
-        // pc — the computer the cameras belong to (e.g. "PC1"); appended, not overwritten.
         [HttpPost("{pc}/{cameraId}")]
         public async Task<IActionResult> Upload(string pc, string cameraId)
         {
@@ -60,7 +63,6 @@ namespace API.Controllers
             var camFolder = Path.Combine(GetFramesRoot(), pc, cameraId);
             Directory.CreateDirectory(camFolder);
 
-            // 1) live frame — atomically replace latest.jpg
             var latestPath = Path.Combine(camFolder, LatestFile);
             var tempPath = latestPath + ".tmp";
             await using (var dest = new FileStream(tempPath, FileMode.Create, FileAccess.Write,
@@ -70,7 +72,6 @@ namespace API.Controllers
             }
             System.IO.File.Move(tempPath, latestPath, overwrite: true);
 
-            // 2) archive frame — append a per-day copy so the history is preserved
             var day = now.ToString("yyyy-MM-dd");
             var dayFolder = Path.Combine(camFolder, ArchiveDir, day);
             Directory.CreateDirectory(dayFolder);
@@ -81,6 +82,8 @@ namespace API.Controllers
             {
                 await dest.WriteAsync(bytes);
             }
+
+            MaybeEnforceQuota();
 
             return Ok(new { pc, cameraId, size = bytes.Length, at = now });
         }
@@ -199,6 +202,63 @@ namespace API.Controllers
             return await ServeImage(path, "Кадр не знайдено");
         }
 
+        // GET /api/frames/storage → disk usage of the archive + retention estimate (admin dashboard).
+        [Authorize(Roles = "Superadmin,Admin")]
+        [HttpGet("storage")]
+        public IActionResult Storage()
+        {
+            if (!IsEnabled()) return NotFound();
+
+            var maxBytes = GetMaxArchiveBytes();
+            var root = GetFramesRoot();
+
+            long usedBytes = 0;
+            long frameCount = 0;
+            DateTime? oldestUtc = null;
+            DateTime? newestUtc = null;
+
+            if (Directory.Exists(root))
+            {
+                foreach (var f in new DirectoryInfo(root)
+                    .EnumerateFiles("*.jpg", SearchOption.AllDirectories)
+                    .Where(f => string.Equals(f.Directory?.Parent?.Name, ArchiveDir, StringComparison.Ordinal)))
+                {
+                    usedBytes += f.Length;
+                    frameCount++;
+                    var w = f.LastWriteTimeUtc;
+                    if (oldestUtc is null || w < oldestUtc) oldestUtc = w;
+                    if (newestUtc is null || w > newestUtc) newestUtc = w;
+                }
+            }
+
+            // Середній розмір кадру з наявних даних; запасний варіант — 275 КБ.
+            double avgBytes = frameCount > 0 ? (double)usedBytes / frameCount : 275d * 1024;
+
+            // Темп зйомки за вікном архіву → скільки часу протримається ліміт при поточній швидкості.
+            double? retentionHours = null;
+            if (frameCount > 1 && oldestUtc is not null && newestUtc is not null
+                && newestUtc > oldestUtc && maxBytes > 0 && avgBytes > 0)
+            {
+                var spanHours = (newestUtc.Value - oldestUtc.Value).TotalHours;
+                var framesPerHour = frameCount / spanHours;
+                if (framesPerHour > 0)
+                    retentionHours = (maxBytes / avgBytes) / framesPerHour;
+            }
+
+            return Ok(new
+            {
+                enabled = true,
+                maxBytes,
+                usedBytes,
+                usedPct = maxBytes > 0 ? Math.Round(usedBytes * 100.0 / maxBytes, 1) : 0,
+                frameCount,
+                avgFrameBytes = (long)avgBytes,
+                oldestUtc,
+                newestUtc,
+                retentionHours = retentionHours.HasValue ? Math.Round(retentionHours.Value, 1) : (double?)null,
+            });
+        }
+
         // camera folders under a pc that actually hold a frame (latest.jpg or an archive).
         private List<string> CameraFolders(string pc)
         {
@@ -248,6 +308,80 @@ namespace API.Controllers
             }
 
             return NotFound(notFoundMessage);
+        }
+
+        // --- Дисковий бюджет: тримаємо архів у межах CameraWall:MaxArchiveGB ---
+        // Throttle: повна перевірка не частіше ніж раз на хвилину, у фоні, без блокування відповіді.
+        private static long _lastQuotaCheckTicks = long.MinValue;
+        private static int _quotaRunning; // 0 = вільно, 1 = вже виконується
+
+        private void MaybeEnforceQuota()
+        {
+            var maxBytes = GetMaxArchiveBytes();
+            if (maxBytes <= 0) return; // 0 або менше — ліміт вимкнено
+
+            var now = Environment.TickCount64;
+            if (now - Interlocked.Read(ref _lastQuotaCheckTicks) < 60_000) return;
+
+            // не запускати другу чистку, якщо попередня ще працює
+            if (Interlocked.CompareExchange(ref _quotaRunning, 1, 0) != 0) return;
+            Interlocked.Exchange(ref _lastQuotaCheckTicks, now);
+
+            var root = GetFramesRoot();
+            _ = Task.Run(() =>
+            {
+                try { EnforceQuota(root, maxBytes); }
+                catch { /* очищення best-effort: не валимо застосунок */ }
+                finally { Interlocked.Exchange(ref _quotaRunning, 0); }
+            });
+        }
+
+        // Рахуємо сумарний розмір архівних кадрів і, якщо перевищено ліміт,
+        // видаляємо найстаріші, доки не опустимось нижче 95% ліміту (гістерезис).
+        private static void EnforceQuota(string root, long maxBytes)
+        {
+            if (!Directory.Exists(root)) return;
+
+            var files = new DirectoryInfo(root)
+                .EnumerateFiles("*.jpg", SearchOption.AllDirectories)
+                .Where(f => string.Equals(f.Directory?.Parent?.Name, ArchiveDir, StringComparison.Ordinal))
+                .ToList();
+
+            long total = files.Sum(f => f.Length);
+            if (total <= maxBytes) return;
+
+            var target = (long)(maxBytes * 0.95);
+            foreach (var f in files.OrderBy(f => f.LastWriteTimeUtc))
+            {
+                try
+                {
+                    var len = f.Length;
+                    f.Delete();
+                    total -= len;
+                }
+                catch { /* файл міг зникнути/бути зайнятим — пропускаємо */ }
+
+                if (total <= target) break;
+            }
+
+            PruneEmptyDayFolders(root);
+        }
+
+        // Прибираємо порожні папки днів archive/{день}, що лишились після видалення кадрів.
+        private static void PruneEmptyDayFolders(string root)
+        {
+            foreach (var archiveDir in Directory.EnumerateDirectories(root, ArchiveDir, SearchOption.AllDirectories))
+            {
+                foreach (var dayDir in Directory.EnumerateDirectories(archiveDir))
+                {
+                    try
+                    {
+                        if (!Directory.EnumerateFileSystemEntries(dayDir).Any())
+                            Directory.Delete(dayDir);
+                    }
+                    catch { /* гонитва з паралельним записом — ігноруємо */ }
+                }
+            }
         }
 
         // file name is HHmmss-fffffff.jpg in UTC; combine with the day folder.

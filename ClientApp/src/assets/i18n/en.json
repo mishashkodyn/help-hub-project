@@ -51,7 +51,8 @@
     "no_archive": "No archive yet",
     "no_frames": "No frames for this day",
     "no_pcs": "No computers yet",
-    "refresh": "Refresh"
+    "refresh": "Refresh",
+    "live": "LIVE"
   },
   "selfHelp": {
     "title": "Self-help practices",
@@ -132,11 +133,26 @@
       "completeText": "Notice how your body and mind feel now — a little more settled, a little more here.",
       "restart": "Start again",
       "senses": {
-        "see": { "label": "See", "prompt": "Name five things you can see." },
-        "touch": { "label": "Touch", "prompt": "Name four things you can feel or touch." },
-        "hear": { "label": "Hear", "prompt": "Name three things you can hear." },
-        "smell": { "label": "Smell", "prompt": "Name two things you can smell." },
-        "taste": { "label": "Taste", "prompt": "Name one thing you can taste." }
+        "see": {
+          "label": "See",
+          "prompt": "Name five things you can see."
+        },
+        "touch": {
+          "label": "Touch",
+          "prompt": "Name four things you can feel or touch."
+        },
+        "hear": {
+          "label": "Hear",
+          "prompt": "Name three things you can hear."
+        },
+        "smell": {
+          "label": "Smell",
+          "prompt": "Name two things you can smell."
+        },
+        "taste": {
+          "label": "Taste",
+          "prompt": "Name one thing you can taste."
+        }
       }
     },
     "bodyScan": {
@@ -794,6 +810,19 @@
       },
       "quick": {
         "label": "Go to"
+      },
+      "storage": {
+        "title": "Camera storage",
+        "subtitle": "Camera wall frame archive",
+        "used": "Used",
+        "frames": "frames",
+        "retention": "Retention",
+        "retention_hint": "at the current capture rate",
+        "oldest": "Oldest frame",
+        "unit_hours": "h",
+        "unit_days": "days",
+        "cleanup": "Old frames are deleted automatically once the {limit} limit is reached",
+        "empty": "Archive is empty"
       }
     }
   },

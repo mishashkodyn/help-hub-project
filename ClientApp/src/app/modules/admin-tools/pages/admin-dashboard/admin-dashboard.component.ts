@@ -1,4 +1,5 @@
 import { Component, OnInit, computed, signal } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { forkJoin, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
@@ -68,6 +69,19 @@ export interface NavLink {
   route: string;
 }
 
+/** Camera-wall archive disk usage (GET /api/frames/storage). */
+interface StorageInfo {
+  enabled: boolean;
+  maxBytes: number;
+  usedBytes: number;
+  usedPct: number;
+  frameCount: number;
+  avgFrameBytes: number;
+  oldestUtc: string | null;
+  newestUtc: string | null;
+  retentionHours: number | null;
+}
+
 @Component({
   selector: 'app-admin-dashboard',
   templateUrl: './admin-dashboard.component.html',
@@ -82,6 +96,7 @@ export class AdminDashboardComponent implements OnInit {
   private pendingPayments = signal<PendingPaymentDto[]>([]);
   private releaseQueue = signal<PendingPaymentDto[]>([]);
   private specializations = signal<SpecializationAdminDto[]>([]);
+  storage = signal<StorageInfo | null>(null);
 
   readonly today = new Date();
 
@@ -90,6 +105,7 @@ export class AdminDashboardComponent implements OnInit {
     private categoryService: UserCategoryApplicationService,
     private appointmentService: AppointmentClientService,
     private specializationService: SpecializationService,
+    private http: HttpClient,
   ) {}
 
   ngOnInit(): void {
@@ -114,12 +130,16 @@ export class AdminDashboardComponent implements OnInit {
       specs: this.specializationService
         .getSpecializationsForAdmin()
         .pipe(catchError(() => of({ isSuccess: false, data: [] as SpecializationAdminDto[] } as any))),
+      storage: this.http
+        .get<StorageInfo>('/api/frames/storage')
+        .pipe(catchError(() => of(null))), // camera wall disabled / no access → hide the card
     }).subscribe((res) => {
       this.psychApps.set(res.psych?.data ?? []);
       this.catApps.set(res.cat?.data ?? []);
       this.pendingPayments.set(res.pending ?? []);
       this.releaseQueue.set(res.release ?? []);
       this.specializations.set(res.specs?.data ?? []);
+      this.storage.set(res.storage ?? null);
       this.loading.set(false);
     });
   }
@@ -359,4 +379,33 @@ export class AdminDashboardComponent implements OnInit {
     const diff = Date.now() - new Date(iso).getTime();
     return Math.max(0, Math.floor(diff / 86_400_000));
   }
+
+  // ─── Camera storage helpers ──────────────────────────────────────────────────
+  formatBytes(bytes: number): string {
+    if (!bytes || bytes <= 0) return '0 МБ';
+    const gb = bytes / 1024 ** 3;
+    if (gb >= 1) return `${gb.toFixed(1)} ГБ`;
+    const mb = bytes / 1024 ** 2;
+    return `${Math.max(1, Math.round(mb))} МБ`;
+  }
+
+  /** Bar fill never exceeds 100% even if the archive briefly overshoots the limit. */
+  storagePct = computed(() => Math.min(100, this.storage()?.usedPct ?? 0));
+
+  /** Green under 75%, amber under 90%, red above — mirrors how full the quota is. */
+  storageColor = computed(() => {
+    const pct = this.storage()?.usedPct ?? 0;
+    if (pct >= 90) return '#c2554f';
+    if (pct >= 75) return '#b07400';
+    return 'var(--color-success)';
+  });
+
+  /** Retention shown in days past 48h, otherwise hours; null when not estimable yet. */
+  retention = computed<{ value: string; unitKey: string } | null>(() => {
+    const h = this.storage()?.retentionHours;
+    if (h == null) return null;
+    return h >= 48
+      ? { value: (h / 24).toFixed(1), unitKey: 'admin.dashboard.storage.unit_days' }
+      : { value: h.toFixed(1), unitKey: 'admin.dashboard.storage.unit_hours' };
+  });
 }
