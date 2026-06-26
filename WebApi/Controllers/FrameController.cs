@@ -48,41 +48,111 @@ namespace API.Controllers
             return gb <= 0 ? 0 : (long)(gb * 1024 * 1024 * 1024);
         }
 
-        // POST /api/frames/{pc}/{cameraId}
+        // POST /api/frames  ← primary, fixed-path receiver.
         //   Body    : raw JPEG bytes (Content-Type: image/jpeg)
-        //   Headers : X-Upload-Token (required) + optional camera metadata, cached per camera:
-        //             X-Cam-Name   → friendly name shown on the card (e.g. "Box 1")
-        //             X-Cam-Model  → camera model (e.g. "Hikvision DS-2CD2347G3-LIS2UY/SL")
-        //             X-Cam-Ip     → camera IP (e.g. "192.168.1.101")
-        //             X-Cam-Serial → serial / hardware id (e.g. "HIK-CAM-001")
-        // Every frame is archived under archive/{day}; there is no single "latest" file anymore —
-        // the newest archived frame is what the wall shows.
-        [HttpPost("{pc}/{cameraId}")]
-        public async Task<IActionResult> Upload(string pc, string cameraId)
+        //   Headers : X-Upload-Token (required)
+        //             X-Cam-Ip (required) → the camera's IPv4 LAN address "A.B.C.D".
+        //             X-Cam-Model (optional) → device brand+model as the camera reports it
+        //                                      (e.g. "Hikvision DS-2CD2347G3-LIS2UY/SL"); cached
+        //                                      per camera, empty/absent never overwrites the
+        //                                      previously cached value, stored as-is.
+        // The IP is the ONLY identifier of a frame and maps to the storage location:
+        //   PC number  = third octet   (10.0.1.101 → PC1,  10.0.2.103 → PC2)
+        //   Box number = last octet−100 (10.0.1.101 → Box1, 10.0.1.105 → Box5)
+        // A missing/invalid IP is rejected — there is nothing else to identify the frame by.
+        // Every frame is archived under archive/{day}; the newest archived frame is what the wall shows.
+        [HttpPost]
+        public async Task<IActionResult> Upload()
         {
             if (!IsEnabled()) return NotFound();
+            if (!TokenOk()) return Unauthorized("Невірний токен");
 
-            if (!Request.Headers.TryGetValue("X-Upload-Token", out var token) || token != GetUploadToken())
-                return Unauthorized("Невірний токен");
+            var ip = Request.Headers["X-Cam-Ip"].ToString().Trim();
+            if (!TryMapIp(ip, out var pc, out var cameraId, out var box))
+                return BadRequest("Відсутній або невалідний X-Cam-Ip (очікується IPv4 з боксом ≥ 101)");
+
+            var bytes = await ReadBodyAsync();
+            if (bytes.Length == 0) return BadRequest("Порожнє тіло");
+
+            // The IP is the stable key; cache it (plus a friendly "Box N") for the card.
+            // X-Cam-Model is optional — stored verbatim; empty/absent keeps the cached value.
+            var meta = new CameraMeta($"Box {box}", CleanHeader(Request.Headers["X-Cam-Model"]), ip, null);
+            return await StoreFrameAsync(pc, cameraId, meta, bytes);
+        }
+
+        // POST /api/frames/{pc}/{cameraId}  ← DEPRECATED legacy receiver.
+        // Kept so cameras still on the old uploader keep working during the migration to the
+        // IP-based /api/frames endpoint above. Remove once every uploader sends X-Cam-Ip.
+        [HttpPost("{pc}/{cameraId}")]
+        [Obsolete("Use POST /api/frames with the X-Cam-Ip header; identification by IP only.")]
+        public async Task<IActionResult> UploadLegacy(string pc, string cameraId)
+        {
+            if (!IsEnabled()) return NotFound();
+            if (!TokenOk()) return Unauthorized("Невірний токен");
 
             if (!SlugPattern.IsMatch(pc) || !SlugPattern.IsMatch(cameraId))
                 return BadRequest("Невірний ідентифікатор ПК або камери");
 
-            using var ms = new MemoryStream();
-            await Request.Body.CopyToAsync(ms);
-            var bytes = ms.ToArray();
+            var bytes = await ReadBodyAsync();
             if (bytes.Length == 0) return BadRequest("Порожнє тіло");
 
+            // Legacy uploaders may still send the old metadata headers; honour them.
+            var meta = new CameraMeta(
+                CleanHeader(Request.Headers["X-Cam-Name"]),
+                CleanHeader(Request.Headers["X-Cam-Model"]),
+                CleanHeader(Request.Headers["X-Cam-Ip"]),
+                CleanHeader(Request.Headers["X-Cam-Serial"]));
+
+            Response.Headers["Deprecation"] = "true";
+            return await StoreFrameAsync(pc, cameraId, meta, bytes);
+        }
+
+        private bool TokenOk() =>
+            Request.Headers.TryGetValue("X-Upload-Token", out var token) && token == GetUploadToken();
+
+        private static async Task<byte[]> ReadBody(Stream body)
+        {
+            using var ms = new MemoryStream();
+            await body.CopyToAsync(ms);
+            return ms.ToArray();
+        }
+
+        private Task<byte[]> ReadBodyAsync() => ReadBody(Request.Body);
+
+        // Maps an IPv4 LAN address to its storage slot: PC{thirdOctet}/Box{lastOctet-100}.
+        // Returns false for a missing/malformed IP or a last octet that can't map to a box (< 101).
+        private static bool TryMapIp(string? raw, out string pc, out string cameraId, out int box)
+        {
+            pc = string.Empty;
+            cameraId = string.Empty;
+            box = 0;
+
+            if (string.IsNullOrWhiteSpace(raw)) return false;
+
+            var parts = raw.Trim().Split('.');
+            if (parts.Length != 4) return false;
+
+            var octets = new byte[4];
+            for (var i = 0; i < 4; i++)
+                if (!byte.TryParse(parts[i], out octets[i])) return false;
+
+            box = octets[3] - 100;
+            if (box < 1) return false; // last octet must be ≥ 101 to map to a real box
+
+            pc = $"PC{octets[2]}";
+            cameraId = $"Box{box}";
+            return true;
+        }
+
+        // Shared frame-write path: cache metadata, append to the archive, enforce the disk quota.
+        private async Task<IActionResult> StoreFrameAsync(string pc, string cameraId, CameraMeta meta, byte[] bytes)
+        {
             var now = DateTime.UtcNow;
             var camFolder = Path.Combine(GetFramesRoot(), pc, cameraId);
             Directory.CreateDirectory(camFolder);
 
             // Cache any metadata that came in with this frame (only non-empty fields overwrite).
-            WriteMeta(pc, cameraId, new CameraMeta(
-                CleanHeader(Request.Headers["X-Cam-Name"]),
-                CleanHeader(Request.Headers["X-Cam-Model"]),
-                CleanHeader(Request.Headers["X-Cam-Ip"]),
-                CleanHeader(Request.Headers["X-Cam-Serial"])));
+            WriteMeta(pc, cameraId, meta);
 
             var day = now.ToString("yyyy-MM-dd");
             var dayFolder = Path.Combine(camFolder, ArchiveDir, day);
