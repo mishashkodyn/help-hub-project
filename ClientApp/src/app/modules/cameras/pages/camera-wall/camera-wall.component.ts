@@ -33,17 +33,33 @@ interface StorageInfo {
   recentCleanups: CleanupEvent[];
 }
 
+interface CameraFrame {
+  imageUrl: string;
+  timeUtc: string | null;
+}
+
 interface CameraInfo {
   cameraId: string;
+  name: string | null;
+  model: string | null;
+  ip: string | null;
+  serial: string | null;
   lastSeenUtc: string | null;
-  imageUrl: string;
+  todayCount: number;
+  totalCount: number;
+  frames: CameraFrame[];
 }
 
 interface CameraState {
   cameraId: string;
+  name: string | null;
+  model: string | null;
+  ip: string | null;
+  serial: string | null;
   lastSeenUtc: string | null;
-  imageUrl: string;
-  displayedSrc: string | null;
+  todayCount: number;
+  totalCount: number;
+  frames: CameraFrame[];
 }
 
 interface ArchiveDay {
@@ -164,16 +180,55 @@ export class CameraWallComponent implements OnInit, OnDestroy {
     this.http.get<CameraInfo[]>(`/api/frames/${pc}/cameras`).subscribe({
       next: cams => {
         this.wallLoadedMs = Date.now();
-        this.cameras = cams.map(c => ({
-          cameraId: c.cameraId,
-          lastSeenUtc: c.lastSeenUtc,
-          imageUrl: c.imageUrl,
-          displayedSrc: `${c.imageUrl}?t=${Date.now()}`, // load the last frame once
-        }));
+        this.cameras = cams.map(c => this.toState(c));
         this.loadingCameras = false;
       },
       error: () => { this.loadingCameras = false; },
     });
+  }
+
+  private toState(c: CameraInfo): CameraState {
+    return {
+      cameraId: c.cameraId,
+      name: c.name,
+      model: c.model,
+      ip: c.ip,
+      serial: c.serial,
+      lastSeenUtc: c.lastSeenUtc,
+      todayCount: c.todayCount,
+      totalCount: c.totalCount,
+      frames: c.frames ?? [],
+    };
+  }
+
+  // ── card view helpers ──────────────────────────────────────────────
+
+  cameraTitle(cam: CameraState): string {
+    return cam.name || cam.cameraId;
+  }
+
+  /** Newest frame for the big preview, or null when the camera has no frames yet. */
+  mainFrame(cam: CameraState): CameraFrame | null {
+    return cam.frames[0] ?? null;
+  }
+
+  /** Older frames shown as a thumbnail strip beside the main preview. */
+  thumbFrames(cam: CameraState): CameraFrame[] {
+    return cam.frames.slice(1);
+  }
+
+  /** Compact "time since last frame" badge, e.g. "3m", "5h", "1d 21h". */
+  ageBadge(cam: CameraState): string {
+    if (!cam.lastSeenUtc) return '—';
+    const ms = Date.now() - Date.parse(cam.lastSeenUtc);
+    if (ms < 60_000) return 'now';
+    const mins = Math.floor(ms / 60_000);
+    if (mins < 60) return `${mins}m`;
+    const hours = Math.floor(mins / 60);
+    if (hours < 24) return `${hours}h`;
+    const days = Math.floor(hours / 24);
+    const remHours = hours % 24;
+    return remHours > 0 ? `${days}d ${remHours}h` : `${days}d`;
   }
 
   // ── live auto-refresh (in-place, keeps cell identity to avoid flicker) ──
@@ -206,16 +261,19 @@ export class CameraWallComponent implements OnInit, OnDestroy {
       next: cams => {
         this.wallLoadedMs = Date.now();
         const byId = new Map(this.cameras.map(c => [c.cameraId, c]));
+        // Frame URLs are immutable (unique archive file names), so reusing the same
+        // CameraState object lets the <img> swap only when a genuinely new frame lands.
         this.cameras = cams.map(c => {
-          const state: CameraState = byId.get(c.cameraId) ?? {
-            cameraId: c.cameraId,
-            lastSeenUtc: c.lastSeenUtc,
-            imageUrl: c.imageUrl,
-            displayedSrc: null,
-          };
+          const state = byId.get(c.cameraId);
+          if (!state) return this.toState(c);
+          state.name = c.name;
+          state.model = c.model;
+          state.ip = c.ip;
+          state.serial = c.serial;
           state.lastSeenUtc = c.lastSeenUtc;
-          state.imageUrl = c.imageUrl;
-          state.displayedSrc = `${c.imageUrl}?t=${Date.now()}`;
+          state.todayCount = c.todayCount;
+          state.totalCount = c.totalCount;
+          state.frames = c.frames ?? [];
           return state;
         });
       },

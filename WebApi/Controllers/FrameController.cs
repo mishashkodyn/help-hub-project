@@ -1,3 +1,4 @@
+using System.Text.Json;
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -13,7 +14,10 @@ namespace API.Controllers
         private static readonly Regex FilePattern = new(@"^[0-9A-Za-z_-]+\.jpg$", RegexOptions.Compiled);
 
         private const string ArchiveDir = "archive";
-        private const string LatestFile = "latest.jpg";
+        private const string MetaFile = "meta.json";
+
+        // How many recent frames a camera card shows (1 main + the rest as thumbnails).
+        private const int RecentFrameCount = 3;
 
         private readonly IConfiguration _configuration;
         private readonly ILogger<FrameController> _logger;
@@ -45,6 +49,14 @@ namespace API.Controllers
         }
 
         // POST /api/frames/{pc}/{cameraId}
+        //   Body    : raw JPEG bytes (Content-Type: image/jpeg)
+        //   Headers : X-Upload-Token (required) + optional camera metadata, cached per camera:
+        //             X-Cam-Name   → friendly name shown on the card (e.g. "Box 1")
+        //             X-Cam-Model  → camera model (e.g. "Hikvision DS-2CD2347G3-LIS2UY/SL")
+        //             X-Cam-Ip     → camera IP (e.g. "192.168.1.101")
+        //             X-Cam-Serial → serial / hardware id (e.g. "HIK-CAM-001")
+        // Every frame is archived under archive/{day}; there is no single "latest" file anymore —
+        // the newest archived frame is what the wall shows.
         [HttpPost("{pc}/{cameraId}")]
         public async Task<IActionResult> Upload(string pc, string cameraId)
         {
@@ -65,25 +77,25 @@ namespace API.Controllers
             var camFolder = Path.Combine(GetFramesRoot(), pc, cameraId);
             Directory.CreateDirectory(camFolder);
 
-            var latestPath = Path.Combine(camFolder, LatestFile);
-            var tempPath = latestPath + ".tmp";
-            await using (var dest = new FileStream(tempPath, FileMode.Create, FileAccess.Write,
-                FileShare.None, bufferSize: 4096, useAsync: true))
-            {
-                await dest.WriteAsync(bytes);
-            }
-            System.IO.File.Move(tempPath, latestPath, overwrite: true);
+            // Cache any metadata that came in with this frame (only non-empty fields overwrite).
+            WriteMeta(pc, cameraId, new CameraMeta(
+                CleanHeader(Request.Headers["X-Cam-Name"]),
+                CleanHeader(Request.Headers["X-Cam-Model"]),
+                CleanHeader(Request.Headers["X-Cam-Ip"]),
+                CleanHeader(Request.Headers["X-Cam-Serial"])));
 
             var day = now.ToString("yyyy-MM-dd");
             var dayFolder = Path.Combine(camFolder, ArchiveDir, day);
             Directory.CreateDirectory(dayFolder);
             var archiveName = now.ToString("HHmmss-fffffff") + ".jpg";
             var archivePath = Path.Combine(dayFolder, archiveName);
-            await using (var dest = new FileStream(archivePath, FileMode.Create, FileAccess.Write,
+            var tempPath = archivePath + ".tmp";
+            await using (var dest = new FileStream(tempPath, FileMode.Create, FileAccess.Write,
                 FileShare.None, bufferSize: 4096, useAsync: true))
             {
                 await dest.WriteAsync(bytes);
             }
+            System.IO.File.Move(tempPath, archivePath, overwrite: true);
 
             MaybeEnforceQuota();
 
@@ -113,7 +125,7 @@ namespace API.Controllers
             return Ok(pcs);
         }
 
-        // GET /api/frames/{pc}/cameras → cameras with their last frame + timestamp.
+        // GET /api/frames/{pc}/cameras → cameras with metadata, recent frames and counts.
         [HttpGet("{pc}/cameras")]
         public IActionResult Cameras(string pc)
         {
@@ -121,25 +133,45 @@ namespace API.Controllers
             if (!SlugPattern.IsMatch(pc)) return BadRequest("Невірний ідентифікатор ПК");
 
             var cameras = CameraFolders(pc)
-                .Select(cameraId => new {
-                    cameraId,
-                    lastSeenUtc = LatestWriteUtc(pc, cameraId),
-                    imageUrl = $"/api/frames/{pc}/{cameraId}/image"
+                .Select(cameraId =>
+                {
+                    var meta = ReadMeta(pc, cameraId);
+                    var recent = RecentFrameFiles(pc, cameraId, RecentFrameCount)
+                        .Select(r => new {
+                            imageUrl = FrameUrl(pc, cameraId, r.day, r.file),
+                            timeUtc = ParseFrameTime(r.day, r.file),
+                        })
+                        .ToList();
+
+                    return new {
+                        cameraId,
+                        name = meta.Name,
+                        model = meta.Model,
+                        ip = meta.Ip,
+                        serial = meta.Serial,
+                        lastSeenUtc = recent.Count > 0 ? recent[0].timeUtc : null,
+                        todayCount = TodayCount(pc, cameraId),
+                        totalCount = TotalCount(pc, cameraId),
+                        frames = recent,
+                    };
                 })
-                .OrderBy(x => x.cameraId, StringComparer.OrdinalIgnoreCase)
+                .OrderBy(x => x.name ?? x.cameraId, StringComparer.OrdinalIgnoreCase)
                 .ToList();
 
             return Ok(cameras);
         }
 
-        // GET /api/frames/{pc}/{cameraId}/image → latest live frame.
+        // GET /api/frames/{pc}/{cameraId}/image → newest archived frame (convenience/back-compat).
         [HttpGet("{pc}/{cameraId}/image")]
         public async Task<IActionResult> Image(string pc, string cameraId)
         {
             if (!IsEnabled()) return NotFound();
             if (!SlugPattern.IsMatch(pc) || !SlugPattern.IsMatch(cameraId)) return NotFound();
 
-            var path = Path.Combine(GetFramesRoot(), pc, cameraId, LatestFile);
+            var recent = RecentFrameFiles(pc, cameraId, 1);
+            if (recent.Count == 0) return NotFound("Ще немає кадру");
+
+            var path = Path.Combine(ArchiveRoot(pc, cameraId), recent[0].day, recent[0].file);
             return await ServeImage(path, "Ще немає кадру");
         }
 
@@ -313,27 +345,134 @@ namespace API.Controllers
             });
         }
 
-        // camera folders under a pc that actually hold a frame (latest.jpg or an archive).
+        // camera folders under a pc that actually hold an archive of frames.
         private List<string> CameraFolders(string pc)
         {
             var pcFolder = Path.Combine(GetFramesRoot(), pc);
             if (!Directory.Exists(pcFolder)) return new List<string>();
 
             return Directory.EnumerateDirectories(pcFolder)
-                .Where(dir =>
-                    System.IO.File.Exists(Path.Combine(dir, LatestFile)) ||
-                    Directory.Exists(Path.Combine(dir, ArchiveDir)))
+                .Where(dir => Directory.Exists(Path.Combine(dir, ArchiveDir)))
                 .Select(dir => Path.GetFileName(dir)!)
                 .Where(name => SlugPattern.IsMatch(name))
                 .ToList();
         }
 
-        private DateTime? LatestWriteUtc(string pc, string cameraId)
+        private string ArchiveRoot(string pc, string cameraId) =>
+            Path.Combine(GetFramesRoot(), pc, cameraId, ArchiveDir);
+
+        private static string FrameUrl(string pc, string cameraId, string day, string file) =>
+            $"/api/frames/{pc}/{cameraId}/archive/{day}/{file}";
+
+        // Up to `count` most-recent frames for a camera, newest first.
+        // Day folders (yyyy-MM-dd) and file names (HHmmss-fffffff) are both lexically sortable.
+        private List<(string day, string file)> RecentFrameFiles(string pc, string cameraId, int count)
         {
-            var path = Path.Combine(GetFramesRoot(), pc, cameraId, LatestFile);
-            return System.IO.File.Exists(path)
-                ? System.IO.File.GetLastWriteTimeUtc(path)
-                : null;
+            var result = new List<(string, string)>();
+            var archiveRoot = ArchiveRoot(pc, cameraId);
+            if (!Directory.Exists(archiveRoot)) return result;
+
+            var days = Directory.EnumerateDirectories(archiveRoot)
+                .Select(d => Path.GetFileName(d)!)
+                .Where(n => DayPattern.IsMatch(n))
+                .OrderByDescending(n => n, StringComparer.Ordinal);
+
+            foreach (var day in days)
+            {
+                var files = Directory.EnumerateFiles(Path.Combine(archiveRoot, day), "*.jpg")
+                    .Select(Path.GetFileName)
+                    .Where(n => n != null && FilePattern.IsMatch(n))
+                    .OrderByDescending(n => n, StringComparer.Ordinal);
+
+                foreach (var f in files)
+                {
+                    result.Add((day, f!));
+                    if (result.Count >= count) return result;
+                }
+            }
+
+            return result;
+        }
+
+        // Frames archived for the current UTC day.
+        private int TodayCount(string pc, string cameraId)
+        {
+            var folder = Path.Combine(ArchiveRoot(pc, cameraId), DateTime.UtcNow.ToString("yyyy-MM-dd"));
+            return Directory.Exists(folder)
+                ? Directory.EnumerateFiles(folder, "*.jpg").Count()
+                : 0;
+        }
+
+        // All frames the camera has in the archive.
+        private int TotalCount(string pc, string cameraId)
+        {
+            var archiveRoot = ArchiveRoot(pc, cameraId);
+            return Directory.Exists(archiveRoot)
+                ? Directory.EnumerateFiles(archiveRoot, "*.jpg", SearchOption.AllDirectories).Count()
+                : 0;
+        }
+
+        // ── Per-camera metadata (meta.json next to the archive) ───────────
+        public sealed record CameraMeta(string? Name, string? Model, string? Ip, string? Serial);
+
+        private static readonly JsonSerializerOptions MetaJson = new()
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            PropertyNameCaseInsensitive = true,
+        };
+        private static readonly object _metaLock = new();
+
+        private CameraMeta ReadMeta(string pc, string cameraId)
+        {
+            var path = Path.Combine(GetFramesRoot(), pc, cameraId, MetaFile);
+            if (!System.IO.File.Exists(path)) return new CameraMeta(null, null, null, null);
+            try
+            {
+                var json = System.IO.File.ReadAllText(path);
+                return JsonSerializer.Deserialize<CameraMeta>(json, MetaJson)
+                    ?? new CameraMeta(null, null, null, null);
+            }
+            catch
+            {
+                return new CameraMeta(null, null, null, null);
+            }
+        }
+
+        // Merge incoming metadata into the stored file; only non-empty fields overwrite.
+        private void WriteMeta(string pc, string cameraId, CameraMeta incoming)
+        {
+            if (incoming is { Name: null, Model: null, Ip: null, Serial: null }) return;
+
+            var camFolder = Path.Combine(GetFramesRoot(), pc, cameraId);
+            lock (_metaLock)
+            {
+                var existing = ReadMeta(pc, cameraId);
+                var merged = new CameraMeta(
+                    Pick(incoming.Name, existing.Name),
+                    Pick(incoming.Model, existing.Model),
+                    Pick(incoming.Ip, existing.Ip),
+                    Pick(incoming.Serial, existing.Serial));
+                if (merged == existing) return; // records compare by value → nothing changed
+
+                Directory.CreateDirectory(camFolder);
+                var path = Path.Combine(camFolder, MetaFile);
+                var tmp = path + ".tmp";
+                System.IO.File.WriteAllText(tmp, JsonSerializer.Serialize(merged, MetaJson));
+                System.IO.File.Move(tmp, path, overwrite: true);
+            }
+        }
+
+        private static string? Pick(string? incoming, string? existing) =>
+            string.IsNullOrWhiteSpace(incoming) ? existing : incoming;
+
+        // Trim header values, drop control chars, cap length so meta.json stays sane.
+        private static string? CleanHeader(string? value)
+        {
+            if (string.IsNullOrWhiteSpace(value)) return null;
+            var trimmed = value.Trim();
+            if (trimmed.Length > 120) trimmed = trimmed.Substring(0, 120);
+            var cleaned = new string(trimmed.Where(c => !char.IsControl(c)).ToArray());
+            return cleaned.Length == 0 ? null : cleaned;
         }
 
         private async Task<IActionResult> ServeImage(string path, string notFoundMessage)

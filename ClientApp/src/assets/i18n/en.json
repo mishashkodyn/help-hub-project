@@ -84,6 +84,11 @@
       "log_empty": "No cleanups yet",
       "trigger_auto": "Auto",
       "trigger_manual": "Manual"
+    },
+    "card": {
+      "today": "Today",
+      "total": "Total",
+      "last": "Last"
     }
   },
   "selfHelp": {

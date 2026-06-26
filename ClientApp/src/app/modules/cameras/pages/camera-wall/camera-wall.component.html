@@ -68,35 +68,74 @@
       <div class="wall-empty">{{ 'cameras.no_data' | transloco }}</div>
     } @else {
       @for (cam of cameras; track cam.cameraId) {
-        <div class="camera-cell" [class.is-live]="isLive(cam)" (click)="openViewer(cam)">
-          <div class="cam-media">
-            @if (cam.displayedSrc) {
-              <img [src]="cam.displayedSrc" [alt]="cam.cameraId" />
-            } @else {
-              <div class="no-signal">
-                <mat-icon>videocam_off</mat-icon>
-                <span>{{ 'cameras.no_signal' | transloco }}</span>
+        <div class="camera-card" [class.is-live]="isLive(cam)" (click)="openViewer(cam)">
+          <div class="card-head">
+            <span class="card-title">{{ cameraTitle(cam) }}</span>
+            <span class="card-age" [class.live]="isLive(cam)">{{ ageBadge(cam) }}</span>
+          </div>
+
+          <div class="card-media">
+            <div class="media-main">
+              @if (mainFrame(cam)) {
+                <img [src]="mainFrame(cam)!.imageUrl" [alt]="cameraTitle(cam)" />
+                @if (isLive(cam)) {
+                  <span class="media-live"><span class="media-live-dot"></span>{{ 'cameras.live' | transloco }}</span>
+                }
+                @if (mainFrame(cam)!.timeUtc) {
+                  <span class="media-stamp">{{ mainFrame(cam)!.timeUtc | date: 'HH:mm:ss' }}</span>
+                }
+              } @else {
+                <div class="no-signal">
+                  <mat-icon>videocam_off</mat-icon>
+                  <span>{{ 'cameras.no_signal' | transloco }}</span>
+                </div>
+              }
+            </div>
+
+            @if (thumbFrames(cam).length > 0) {
+              <div class="media-thumbs">
+                @for (f of thumbFrames(cam); track f.imageUrl) {
+                  <img [src]="f.imageUrl" [alt]="cameraTitle(cam)" />
+                }
               </div>
             }
           </div>
 
-          <div class="cam-scrim"></div>
-
-          @if (isLive(cam)) {
-            <span class="cam-live"><span class="cam-live-dot"></span>{{ 'cameras.live' | transloco }}</span>
+          @if (cam.model) {
+            <div class="card-model">{{ cam.model }}</div>
+          }
+          @if (cam.ip || cam.serial) {
+            <div class="card-ids">
+              @if (cam.ip) { <span class="id-ip">{{ cam.ip }}</span> }
+              @if (cam.serial) { <span class="id-serial">{{ cam.serial }}</span> }
+            </div>
           }
 
-          <button type="button" class="cam-history-hint" [title]="'cameras.open_archive' | transloco">
-            <mat-icon>history</mat-icon>
-          </button>
+          <div class="card-stats">
+            <div class="stat">
+              <span class="stat-val">{{ cam.todayCount }}</span>
+              <span class="stat-key">{{ 'cameras.card.today' | transloco }}</span>
+            </div>
+            <div class="stat">
+              <span class="stat-val">{{ cam.totalCount }}</span>
+              <span class="stat-key">{{ 'cameras.card.total' | transloco }}</span>
+            </div>
+            <div class="stat">
+              @if (cam.lastSeenUtc) {
+                <span class="stat-val accent">{{ cam.lastSeenUtc | date: 'HH:mm' }}</span>
+                <span class="stat-key">{{ cam.lastSeenUtc | date: 'dd MMM' }}</span>
+              } @else {
+                <span class="stat-val">—</span>
+                <span class="stat-key">{{ 'cameras.card.last' | transloco }}</span>
+              }
+            </div>
+          </div>
 
-          <div class="cam-label">
-            <span class="cam-name">{{ cam.cameraId }}</span>
-            @if (cam.lastSeenUtc) {
-              <span class="cam-time">{{ cam.lastSeenUtc | date: 'dd.MM HH:mm:ss' }}</span>
-            } @else {
-              <span class="cam-time">{{ 'cameras.no_data' | transloco }}</span>
-            }
+          <!-- reactions are visual placeholders for now -->
+          <div class="card-foot">
+            <span class="react"><mat-icon>sentiment_satisfied</mat-icon>0</span>
+            <span class="react"><mat-icon>chat_bubble_outline</mat-icon>0</span>
+            <span class="react"><mat-icon>person_outline</mat-icon>0</span>
           </div>
         </div>
       }

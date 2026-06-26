@@ -84,6 +84,11 @@
       "log_empty": "Очищень ще не було",
       "trigger_auto": "Авто",
       "trigger_manual": "Вручну"
+    },
+    "card": {
+      "today": "Сьогодні",
+      "total": "Усього",
+      "last": "Останній"
     }
   },
   "selfHelp": {
