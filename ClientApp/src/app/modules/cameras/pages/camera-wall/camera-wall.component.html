@@ -44,6 +44,23 @@
 
       <span class="cam-clock"><mat-icon>schedule</mat-icon>{{ clock }}</span>
 
+      <div class="view-toggle">
+        <button
+          type="button"
+          [class.active]="viewMode === 'cards'"
+          (click)="setViewMode('cards')"
+          [title]="'cameras.view.cards' | transloco">
+          <mat-icon>space_dashboard</mat-icon>
+        </button>
+        <button
+          type="button"
+          [class.active]="viewMode === 'live'"
+          (click)="setViewMode('live')"
+          [title]="'cameras.view.live' | transloco">
+          <mat-icon>grid_view</mat-icon>
+        </button>
+      </div>
+
       <button
         type="button"
         class="pc-toggle"
@@ -61,14 +78,46 @@
     </div>
   </header>
 
-  <div class="camera-wall">
+  <div class="camera-wall" [class.live-mode]="viewMode === 'live'">
     @if (loadingCameras) {
       <div class="wall-empty">{{ 'cameras.loading' | transloco }}</div>
+    } @else if (viewMode === 'live') {
+      @if (liveCameras.length === 0) {
+        <div class="wall-empty">{{ 'cameras.no_data' | transloco }}</div>
+      } @else {
+        @for (cam of liveCameras; track cam.cameraId) {
+          <div class="live-cell" [class.is-live]="isLive(cam)" (click)="openViewer(cam.cameraId)">
+            @if (cam.imageUrl) {
+              <img [src]="cam.imageUrl" [alt]="cam.name || cam.cameraId" />
+            } @else {
+              <div class="no-signal">
+                <mat-icon>videocam_off</mat-icon>
+                <span>{{ 'cameras.no_signal' | transloco }}</span>
+              </div>
+            }
+
+            <div class="cell-scrim"></div>
+
+            @if (isLive(cam)) {
+              <span class="media-live"><span class="media-live-dot"></span>{{ 'cameras.live' | transloco }}</span>
+            }
+
+            <div class="cell-label">
+              <span class="cell-name">{{ cam.name || cam.cameraId }}</span>
+              @if (cam.lastSeenUtc) {
+                <span class="cell-time">{{ cam.lastSeenUtc | date: 'dd.MM HH:mm:ss' }}</span>
+              } @else {
+                <span class="cell-time">{{ 'cameras.no_data' | transloco }}</span>
+              }
+            </div>
+          </div>
+        }
+      }
     } @else if (cameras.length === 0) {
       <div class="wall-empty">{{ 'cameras.no_data' | transloco }}</div>
     } @else {
       @for (cam of cameras; track cam.cameraId) {
-        <div class="camera-card" [class.is-live]="isLive(cam)" (click)="openViewer(cam)">
+        <div class="camera-card" [class.is-live]="isLive(cam)" (click)="openViewer(cam.cameraId)">
           <div class="card-head">
             <span class="card-title">{{ cameraTitle(cam) }}</span>
             <span class="card-age" [class.live]="isLive(cam)">{{ ageBadge(cam) }}</span>
@@ -102,12 +151,11 @@
           </div>
 
           @if (cam.model) {
-            <div class="card-model">{{ cam.model }}</div>
+            <div class="card-model" [title]="cam.model">{{ cam.model }}</div>
           }
-          @if (cam.ip || cam.serial) {
+          @if (cam.ip) {
             <div class="card-ids">
-              @if (cam.ip) { <span class="id-ip">{{ cam.ip }}</span> }
-              @if (cam.serial) { <span class="id-serial">{{ cam.serial }}</span> }
+              <span class="id-ip">{{ cam.ip }}</span>
             </div>
           }
 

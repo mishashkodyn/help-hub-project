@@ -89,6 +89,10 @@
       "today": "Today",
       "total": "Total",
       "last": "Last"
+    },
+    "view": {
+      "cards": "Card view",
+      "live": "Live grid"
     }
   },
   "selfHelp": {

@@ -13,6 +13,11 @@ namespace API.Controllers
         private static readonly Regex DayPattern = new(@"^\d{4}-\d{2}-\d{2}$", RegexOptions.Compiled);
         private static readonly Regex FilePattern = new(@"^[0-9A-Za-z_-]+\.jpg$", RegexOptions.Compiled);
 
+        // Canonical camera folder name in the IP-based scheme: Box{N}. Anything else (e.g. the old
+        // "cam-1" folders from the {pc}/{cameraId} scheme) is legacy and ignored on read.
+        private static readonly Regex CameraPattern = new(@"^Box\d+$", RegexOptions.Compiled);
+        private static readonly Regex NamePattern = new(@"^([A-Za-z]+)(\d+)$", RegexOptions.Compiled);
+
         private const string ArchiveDir = "archive";
         private const string MetaFile = "meta.json";
 
@@ -74,36 +79,9 @@ namespace API.Controllers
             var bytes = await ReadBodyAsync();
             if (bytes.Length == 0) return BadRequest("Порожнє тіло");
 
-            // The IP is the stable key; cache it (plus a friendly "Box N") for the card.
-            // X-Cam-Model is optional — stored verbatim; empty/absent keeps the cached value.
-            var meta = new CameraMeta($"Box {box}", CleanHeader(Request.Headers["X-Cam-Model"]), ip, null);
-            return await StoreFrameAsync(pc, cameraId, meta, bytes);
-        }
-
-        // POST /api/frames/{pc}/{cameraId}  ← DEPRECATED legacy receiver.
-        // Kept so cameras still on the old uploader keep working during the migration to the
-        // IP-based /api/frames endpoint above. Remove once every uploader sends X-Cam-Ip.
-        [HttpPost("{pc}/{cameraId}")]
-        [Obsolete("Use POST /api/frames with the X-Cam-Ip header; identification by IP only.")]
-        public async Task<IActionResult> UploadLegacy(string pc, string cameraId)
-        {
-            if (!IsEnabled()) return NotFound();
-            if (!TokenOk()) return Unauthorized("Невірний токен");
-
-            if (!SlugPattern.IsMatch(pc) || !SlugPattern.IsMatch(cameraId))
-                return BadRequest("Невірний ідентифікатор ПК або камери");
-
-            var bytes = await ReadBodyAsync();
-            if (bytes.Length == 0) return BadRequest("Порожнє тіло");
-
-            // Legacy uploaders may still send the old metadata headers; honour them.
-            var meta = new CameraMeta(
-                CleanHeader(Request.Headers["X-Cam-Name"]),
-                CleanHeader(Request.Headers["X-Cam-Model"]),
-                CleanHeader(Request.Headers["X-Cam-Ip"]),
-                CleanHeader(Request.Headers["X-Cam-Serial"]));
-
-            Response.Headers["Deprecation"] = "true";
+            // The IP is the stable key. We accept only the model alongside it; X-Cam-Model is
+            // optional and stored verbatim — empty/absent keeps the previously cached value.
+            var meta = new CameraMeta(CleanHeader(Request.Headers["X-Cam-Model"]), ip);
             return await StoreFrameAsync(pc, cameraId, meta, bytes);
         }
 
@@ -215,17 +193,51 @@ namespace API.Controllers
 
                     return new {
                         cameraId,
-                        name = meta.Name,
+                        name = DisplayName(cameraId),
                         model = meta.Model,
                         ip = meta.Ip,
-                        serial = meta.Serial,
                         lastSeenUtc = recent.Count > 0 ? recent[0].timeUtc : null,
                         todayCount = TodayCount(pc, cameraId),
                         totalCount = TotalCount(pc, cameraId),
                         frames = recent,
                     };
                 })
-                .OrderBy(x => x.name ?? x.cameraId, StringComparer.OrdinalIgnoreCase)
+                .OrderBy(x => x.cameraId, StringComparer.OrdinalIgnoreCase)
+                .ToList();
+
+            return Ok(cameras);
+        }
+
+        // GET /api/frames/{pc}/live → lightweight per-camera latest frame for the auto-refreshing
+        // "live grid" view. Deliberately kept SEPARATE from the /cameras card endpoint above so the
+        // two view modes can evolve (and be copied) independently — this one only carries what the
+        // live grid polls: the newest frame URL + when it was taken.
+        [HttpGet("{pc}/live")]
+        public IActionResult Live(string pc)
+        {
+            if (!IsEnabled()) return NotFound();
+            if (!SlugPattern.IsMatch(pc)) return BadRequest("Невірний ідентифікатор ПК");
+
+            var cameras = CameraFolders(pc)
+                .Select(cameraId =>
+                {
+                    var recent = RecentFrameFiles(pc, cameraId, 1);
+                    string? imageUrl = null;
+                    DateTime? lastSeenUtc = null;
+                    if (recent.Count > 0)
+                    {
+                        imageUrl = FrameUrl(pc, cameraId, recent[0].day, recent[0].file);
+                        lastSeenUtc = ParseFrameTime(recent[0].day, recent[0].file);
+                    }
+
+                    return new {
+                        cameraId,
+                        name = DisplayName(cameraId),
+                        imageUrl,
+                        lastSeenUtc,
+                    };
+                })
+                .OrderBy(x => x.cameraId, StringComparer.OrdinalIgnoreCase)
                 .ToList();
 
             return Ok(cameras);
@@ -415,6 +427,57 @@ namespace API.Controllers
             });
         }
 
+        // POST /api/frames/maintenance/prune-legacy → physically delete camera folders that don't
+        // follow the canonical Box{N} naming (the old "cam-1", "cam-2"… folders from the
+        // {pc}/{cameraId} scheme). Empty PC folders left behind are removed too. Admin only.
+        [Authorize(Roles = "Superadmin,Admin")]
+        [HttpPost("maintenance/prune-legacy")]
+        public IActionResult PruneLegacy()
+        {
+            if (!IsEnabled()) return NotFound();
+
+            var root = GetFramesRoot();
+            int removedFolders = 0, removedFrames = 0;
+            long freedBytes = 0;
+
+            if (Directory.Exists(root))
+            {
+                foreach (var pcDir in Directory.EnumerateDirectories(root))
+                {
+                    foreach (var camDir in Directory.EnumerateDirectories(pcDir))
+                    {
+                        if (CameraPattern.IsMatch(Path.GetFileName(camDir))) continue; // canonical — keep
+
+                        try
+                        {
+                            foreach (var f in Directory.EnumerateFiles(camDir, "*.jpg", SearchOption.AllDirectories))
+                            {
+                                try { freedBytes += new FileInfo(f).Length; removedFrames++; }
+                                catch { /* file vanished — ignore */ }
+                            }
+                            Directory.Delete(camDir, recursive: true);
+                            removedFolders++;
+                        }
+                        catch { /* locked/racing — skip */ }
+                    }
+
+                    // Drop the PC folder if nothing is left in it.
+                    try
+                    {
+                        if (!Directory.EnumerateFileSystemEntries(pcDir).Any())
+                            Directory.Delete(pcDir);
+                    }
+                    catch { /* not empty / racing — leave it */ }
+                }
+            }
+
+            _logger.LogInformation(
+                "CameraWall: prune-legacy — видалено {Folders} застарілих папок камер, {Frames} кадрів, звільнено {Mb:F1} МБ",
+                removedFolders, removedFrames, freedBytes / 1024d / 1024d);
+
+            return Ok(new { removedFolders, removedFrames, freedBytes });
+        }
+
         // camera folders under a pc that actually hold an archive of frames.
         private List<string> CameraFolders(string pc)
         {
@@ -424,8 +487,15 @@ namespace API.Controllers
             return Directory.EnumerateDirectories(pcFolder)
                 .Where(dir => Directory.Exists(Path.Combine(dir, ArchiveDir)))
                 .Select(dir => Path.GetFileName(dir)!)
-                .Where(name => SlugPattern.IsMatch(name))
+                .Where(name => CameraPattern.IsMatch(name)) // canonical Box{N} only; legacy cam-* hidden
                 .ToList();
+        }
+
+        // "Box1" → "Box 1" for the card title; anything unexpected is returned unchanged.
+        private static string DisplayName(string cameraId)
+        {
+            var m = NamePattern.Match(cameraId);
+            return m.Success ? $"{m.Groups[1].Value} {m.Groups[2].Value}" : cameraId;
         }
 
         private string ArchiveRoot(string pc, string cameraId) =>
@@ -483,7 +553,8 @@ namespace API.Controllers
         }
 
         // ── Per-camera metadata (meta.json next to the archive) ───────────
-        public sealed record CameraMeta(string? Name, string? Model, string? Ip, string? Serial);
+        // Only what the camera itself supplies: the device model and its IP (the identity key).
+        public sealed record CameraMeta(string? Model, string? Ip);
 
         private static readonly JsonSerializerOptions MetaJson = new()
         {
@@ -495,33 +566,31 @@ namespace API.Controllers
         private CameraMeta ReadMeta(string pc, string cameraId)
         {
             var path = Path.Combine(GetFramesRoot(), pc, cameraId, MetaFile);
-            if (!System.IO.File.Exists(path)) return new CameraMeta(null, null, null, null);
+            if (!System.IO.File.Exists(path)) return new CameraMeta(null, null);
             try
             {
                 var json = System.IO.File.ReadAllText(path);
                 return JsonSerializer.Deserialize<CameraMeta>(json, MetaJson)
-                    ?? new CameraMeta(null, null, null, null);
+                    ?? new CameraMeta(null, null);
             }
             catch
             {
-                return new CameraMeta(null, null, null, null);
+                return new CameraMeta(null, null);
             }
         }
 
         // Merge incoming metadata into the stored file; only non-empty fields overwrite.
         private void WriteMeta(string pc, string cameraId, CameraMeta incoming)
         {
-            if (incoming is { Name: null, Model: null, Ip: null, Serial: null }) return;
+            if (incoming is { Model: null, Ip: null }) return;
 
             var camFolder = Path.Combine(GetFramesRoot(), pc, cameraId);
             lock (_metaLock)
             {
                 var existing = ReadMeta(pc, cameraId);
                 var merged = new CameraMeta(
-                    Pick(incoming.Name, existing.Name),
                     Pick(incoming.Model, existing.Model),
-                    Pick(incoming.Ip, existing.Ip),
-                    Pick(incoming.Serial, existing.Serial));
+                    Pick(incoming.Ip, existing.Ip));
                 if (merged == existing) return; // records compare by value → nothing changed
 
                 Directory.CreateDirectory(camFolder);

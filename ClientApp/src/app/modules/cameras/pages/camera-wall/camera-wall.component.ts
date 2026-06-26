@@ -43,7 +43,6 @@ interface CameraInfo {
   name: string | null;
   model: string | null;
   ip: string | null;
-  serial: string | null;
   lastSeenUtc: string | null;
   todayCount: number;
   totalCount: number;
@@ -55,12 +54,28 @@ interface CameraState {
   name: string | null;
   model: string | null;
   ip: string | null;
-  serial: string | null;
   lastSeenUtc: string | null;
   todayCount: number;
   totalCount: number;
   frames: CameraFrame[];
 }
+
+/** Lightweight payload for the live grid (GET /api/frames/{pc}/live). */
+interface LiveInfo {
+  cameraId: string;
+  name: string | null;
+  imageUrl: string | null;
+  lastSeenUtc: string | null;
+}
+
+interface LiveCameraState {
+  cameraId: string;
+  name: string | null;
+  imageUrl: string | null;
+  lastSeenUtc: string | null;
+}
+
+type ViewMode = 'cards' | 'live';
 
 interface ArchiveDay {
   day: string;
@@ -85,6 +100,12 @@ export class CameraWallComponent implements OnInit, OnDestroy {
   cameras: CameraState[] = [];
   loadingPcs = false;
   loadingCameras = false;
+
+  // Two ways to look at the same cameras:
+  //   'cards' → the rich card view (metadata, recent frames, counts)
+  //   'live'  → a plain auto-refreshing grid of the latest frame per camera
+  viewMode: ViewMode = 'cards';
+  liveCameras: LiveCameraState[] = [];
 
   // wall clock (header) + snapshot time used to decide LIVE badges
   clock = '';
@@ -148,11 +169,16 @@ export class CameraWallComponent implements OnInit, OnDestroy {
     });
   }
 
-  // A camera counts as LIVE if its last frame was fresh when the wall loaded.
-  // The wall loads once (no polling), so this is a snapshot, not a ticking state.
-  isLive(cam: CameraState): boolean {
+  // A camera counts as LIVE if its last frame was fresh at the most recent wall load/refresh.
+  isLive(cam: { lastSeenUtc: string | null }): boolean {
     if (!cam.lastSeenUtc) return false;
     return this.wallLoadedMs - Date.parse(cam.lastSeenUtc) < 30_000;
+  }
+
+  setViewMode(mode: ViewMode): void {
+    if (this.viewMode === mode) return;
+    this.viewMode = mode;
+    this.loadWall();
   }
 
   // ── PCs + wall (loaded once, no auto-refresh) ─────────────────────
@@ -175,6 +201,17 @@ export class CameraWallComponent implements OnInit, OnDestroy {
 
   selectPc(pc: string): void {
     this.selectedPc = pc;
+    this.loadWall();
+  }
+
+  // Loads whichever view is active for the selected PC.
+  private loadWall(): void {
+    if (!this.selectedPc) return;
+    if (this.viewMode === 'cards') this.loadCards(this.selectedPc);
+    else this.loadLive(this.selectedPc);
+  }
+
+  private loadCards(pc: string): void {
     this.cameras = [];
     this.loadingCameras = true;
     this.http.get<CameraInfo[]>(`/api/frames/${pc}/cameras`).subscribe({
@@ -187,13 +224,25 @@ export class CameraWallComponent implements OnInit, OnDestroy {
     });
   }
 
+  private loadLive(pc: string): void {
+    this.liveCameras = [];
+    this.loadingCameras = true;
+    this.http.get<LiveInfo[]>(`/api/frames/${pc}/live`).subscribe({
+      next: cams => {
+        this.wallLoadedMs = Date.now();
+        this.liveCameras = cams.map(c => ({ ...c }));
+        this.loadingCameras = false;
+      },
+      error: () => { this.loadingCameras = false; },
+    });
+  }
+
   private toState(c: CameraInfo): CameraState {
     return {
       cameraId: c.cameraId,
       name: c.name,
       model: c.model,
       ip: c.ip,
-      serial: c.serial,
       lastSeenUtc: c.lastSeenUtc,
       todayCount: c.todayCount,
       totalCount: c.totalCount,
@@ -236,7 +285,7 @@ export class CameraWallComponent implements OnInit, OnDestroy {
   private startAutoRefresh(): void {
     this.stopAutoRefresh();
     if (!this.autoRefresh) return;
-    this.refreshTimer = setInterval(() => this.refreshFrames(), CameraWallComponent.REFRESH_MS);
+    this.refreshTimer = setInterval(() => this.refreshWall(), CameraWallComponent.REFRESH_MS);
   }
 
   private stopAutoRefresh(): void {
@@ -249,27 +298,30 @@ export class CameraWallComponent implements OnInit, OnDestroy {
   toggleAutoRefresh(): void {
     this.autoRefresh = !this.autoRefresh;
     this.startAutoRefresh();
-    if (this.autoRefresh) this.refreshFrames();
+    if (this.autoRefresh) this.refreshWall();
   }
 
-  // Re-pull latest frames for the selected PC, merging into existing cells so the
-  // <img> just swaps source instead of the whole grid re-rendering. Paused while
-  // the archive viewer is open.
-  private refreshFrames(): void {
+  // Re-pull the active view in place (paused while the archive viewer is open).
+  private refreshWall(): void {
     if (!this.selectedPc || this.viewerCamera) return;
+    if (this.viewMode === 'cards') this.refreshCards();
+    else this.refreshLive();
+  }
+
+  // Merge fresh card data into existing cells so the <img> just swaps source instead of
+  // the whole grid re-rendering. Frame URLs are immutable (unique archive file names), so
+  // reusing the same CameraState object swaps the image only when a genuinely new frame lands.
+  private refreshCards(): void {
     this.http.get<CameraInfo[]>(`/api/frames/${this.selectedPc}/cameras`).subscribe({
       next: cams => {
         this.wallLoadedMs = Date.now();
         const byId = new Map(this.cameras.map(c => [c.cameraId, c]));
-        // Frame URLs are immutable (unique archive file names), so reusing the same
-        // CameraState object lets the <img> swap only when a genuinely new frame lands.
         this.cameras = cams.map(c => {
           const state = byId.get(c.cameraId);
           if (!state) return this.toState(c);
           state.name = c.name;
           state.model = c.model;
           state.ip = c.ip;
-          state.serial = c.serial;
           state.lastSeenUtc = c.lastSeenUtc;
           state.todayCount = c.todayCount;
           state.totalCount = c.totalCount;
@@ -281,17 +333,36 @@ export class CameraWallComponent implements OnInit, OnDestroy {
     });
   }
 
+  // Same in-place merge for the live grid; lighter payload, just the newest frame per camera.
+  private refreshLive(): void {
+    this.http.get<LiveInfo[]>(`/api/frames/${this.selectedPc}/live`).subscribe({
+      next: cams => {
+        this.wallLoadedMs = Date.now();
+        const byId = new Map(this.liveCameras.map(c => [c.cameraId, c]));
+        this.liveCameras = cams.map(c => {
+          const state = byId.get(c.cameraId);
+          if (!state) return { ...c };
+          state.name = c.name;
+          state.imageUrl = c.imageUrl;
+          state.lastSeenUtc = c.lastSeenUtc;
+          return state;
+        });
+      },
+      error: () => { /* transient — keep showing the last good frames */ },
+    });
+  }
+
   // ── archive viewer ────────────────────────────────────────────────
 
-  openViewer(cam: CameraState): void {
+  openViewer(cameraId: string): void {
     if (!this.selectedPc) return;
-    this.viewerCamera = cam.cameraId;
+    this.viewerCamera = cameraId;
     this.days = [];
     this.frames = [];
     this.selectedDay = null;
     this.frameIndex = 0;
     this.loadingDays = true;
-    this.http.get<ArchiveDay[]>(`/api/frames/${this.selectedPc}/${cam.cameraId}/days`).subscribe({
+    this.http.get<ArchiveDay[]>(`/api/frames/${this.selectedPc}/${cameraId}/days`).subscribe({
       next: days => {
         this.days = days;
         this.loadingDays = false;
