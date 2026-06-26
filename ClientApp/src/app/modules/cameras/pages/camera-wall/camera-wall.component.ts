@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { TranslocoService } from '@ngneat/transloco';
 
 interface PcInfo {
   pc: string;
@@ -96,9 +97,15 @@ export class CameraWallComponent implements OnInit, OnDestroy {
   loadingDays = false;
   loadingFrames = false;
 
-  constructor(private http: HttpClient) {}
+  // The camera wall is operator-facing and always shown in English; the user's
+  // app-wide language is saved here and restored when leaving the page.
+  private prevLang: string | null = null;
+
+  constructor(private http: HttpClient, private transloco: TranslocoService) {}
 
   ngOnInit(): void {
+    this.prevLang = this.transloco.getActiveLang();
+    this.transloco.setActiveLang('en');
     this.loadPcs();
     this.tickClock();
     this.clockTimer = setInterval(() => this.tickClock(), 1000);
@@ -109,6 +116,11 @@ export class CameraWallComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     if (this.clockTimer) clearInterval(this.clockTimer);
     this.stopAutoRefresh();
+    // Restore the language the user had before opening the wall (not persisted,
+    // so their saved choice elsewhere in the app is untouched).
+    if (this.prevLang && this.prevLang !== this.transloco.getActiveLang()) {
+      this.transloco.setActiveLang(this.prevLang);
+    }
   }
 
   private tickClock(): void {
