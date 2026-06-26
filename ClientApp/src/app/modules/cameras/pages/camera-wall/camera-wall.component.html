@@ -86,7 +86,7 @@
         <div class="wall-empty">{{ 'cameras.no_data' | transloco }}</div>
       } @else {
         @for (cam of liveCameras; track cam.cameraId) {
-          <div class="live-cell" [class.is-live]="isLive(cam)" (click)="openViewer(cam.cameraId)">
+          <div class="live-cell" [class.is-live]="isLive(cam)">
             @if (cam.imageUrl) {
               <img [src]="cam.imageUrl" [alt]="cam.name || cam.cameraId" />
             } @else {
