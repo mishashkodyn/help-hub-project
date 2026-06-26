@@ -28,7 +28,31 @@
     </div>
 
     <div class="cam-header-right">
+      @if (storageAvailable && storage) {
+        <button
+          type="button"
+          class="cam-storage-chip"
+          [class.warn]="storage.usedPct >= 75 && storage.usedPct < 90"
+          [class.crit]="storage.usedPct >= 90"
+          (click)="openStorage()"
+          [title]="'cameras.storage.open' | transloco">
+          <mat-icon>storage</mat-icon>
+          <span class="cam-storage-pct">{{ storage.usedPct }}%</span>
+          <span class="cam-storage-bar"><i [style.width.%]="storagePct" [style.background]="storageColor"></i></span>
+        </button>
+      }
+
       <span class="cam-clock"><mat-icon>schedule</mat-icon>{{ clock }}</span>
+
+      <button
+        type="button"
+        class="pc-toggle"
+        [class.on]="autoRefresh"
+        (click)="toggleAutoRefresh()"
+        [title]="(autoRefresh ? 'cameras.live_on' : 'cameras.live_off') | transloco">
+        <mat-icon>{{ autoRefresh ? 'sensors' : 'sensors_off' }}</mat-icon>
+      </button>
+
       @if (selectedPc) {
         <button type="button" class="pc-refresh" (click)="selectPc(selectedPc)" [title]="'cameras.refresh' | transloco">
           <mat-icon>refresh</mat-icon>
@@ -62,7 +86,7 @@
             <span class="cam-live"><span class="cam-live-dot"></span>{{ 'cameras.live' | transloco }}</span>
           }
 
-          <button type="button" class="cam-history-hint" [title]="'cameras.no_archive' | transloco">
+          <button type="button" class="cam-history-hint" [title]="'cameras.open_archive' | transloco">
             <mat-icon>history</mat-icon>
           </button>
 
@@ -144,6 +168,160 @@
             }
           </div>
         </div>
+      }
+    </div>
+  </div>
+}
+
+@if (storageOpen) {
+  <div class="storage-overlay" (click)="closeStorage()">
+    <div class="storage-panel" (click)="$event.stopPropagation()">
+      <div class="storage-header">
+        <span class="storage-title">
+          <mat-icon>storage</mat-icon>
+          {{ 'cameras.storage.title' | transloco }}
+        </span>
+        <div class="storage-header-actions">
+          <button type="button" class="storage-icon-btn" (click)="loadStorage()" [title]="'cameras.refresh' | transloco">
+            <mat-icon>refresh</mat-icon>
+          </button>
+          <button type="button" class="storage-icon-btn" (click)="closeStorage()">
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+      </div>
+
+      @if (storage) {
+        <div class="storage-body">
+          <!-- gauge + capacity -->
+          <div class="storage-gauge-row">
+            <div class="storage-gauge">
+              <svg viewBox="0 0 120 120">
+                <circle class="gauge-track" cx="60" cy="60" r="52" />
+                <circle
+                  class="gauge-fill"
+                  cx="60" cy="60" r="52"
+                  [style.stroke]="storageColor"
+                  [style.stroke-dasharray]="gaugeCircumference"
+                  [style.stroke-dashoffset]="gaugeOffset" />
+              </svg>
+              <div class="gauge-center">
+                <span class="gauge-pct">{{ storage.usedPct }}<small>%</small></span>
+                <span class="gauge-cap">{{ 'cameras.storage.used' | transloco }}</span>
+              </div>
+            </div>
+
+            <div class="storage-legend">
+              <div class="legend-row used">
+                <span class="legend-dot" [style.background]="storageColor"></span>
+                <span class="legend-label">{{ 'cameras.storage.used' | transloco }}</span>
+                <span class="legend-val">{{ formatBytes(storage.usedBytes) }}</span>
+              </div>
+              <div class="legend-row free">
+                <span class="legend-dot"></span>
+                <span class="legend-label">{{ 'cameras.storage.free' | transloco }}</span>
+                <span class="legend-val">{{ formatBytes(storage.freeBytes) }}</span>
+              </div>
+              <div class="legend-row total">
+                <span class="legend-label">{{ 'cameras.storage.limit' | transloco }}</span>
+                <span class="legend-val">{{ formatBytes(storage.maxBytes) }}</span>
+              </div>
+              @if (storage.cleaning) {
+                <div class="storage-cleaning">
+                  <mat-icon>autorenew</mat-icon>{{ 'cameras.storage.cleaning' | transloco }}
+                </div>
+              }
+            </div>
+          </div>
+
+          <!-- stat tiles -->
+          <div class="storage-stats">
+            <div class="stat-tile">
+              <span class="stat-val">{{ storage.frameCount | number }}</span>
+              <span class="stat-key">{{ 'cameras.storage.frames' | transloco }}</span>
+            </div>
+            <div class="stat-tile">
+              <span class="stat-val">{{ formatBytes(storage.avgFrameBytes) }}</span>
+              <span class="stat-key">{{ 'cameras.storage.avg_frame' | transloco }}</span>
+            </div>
+            <div class="stat-tile">
+              @if (retention) {
+                <span class="stat-val">{{ retention.value }}
+                  <small>{{ (retention.unit === 'days' ? 'cameras.storage.unit_days' : 'cameras.storage.unit_hours') | transloco }}</small>
+                </span>
+              } @else {
+                <span class="stat-val">—</span>
+              }
+              <span class="stat-key">{{ 'cameras.storage.retention' | transloco }}</span>
+            </div>
+            <div class="stat-tile">
+              @if (storage.oldestUtc) {
+                <span class="stat-val small">{{ storage.oldestUtc | date: 'dd.MM HH:mm' }}</span>
+              } @else {
+                <span class="stat-val">—</span>
+              }
+              <span class="stat-key">{{ 'cameras.storage.oldest' | transloco }}</span>
+            </div>
+          </div>
+
+          <!-- manual cleanup -->
+          <div class="storage-action">
+            <div class="action-text">
+              <span class="action-title">{{ 'cameras.storage.cleanup_title' | transloco }}</span>
+              <span class="action-hint">{{ 'cameras.storage.cleanup_hint' | transloco }}</span>
+            </div>
+            <button
+              type="button"
+              class="cleanup-btn"
+              [disabled]="cleaning || !storage.quotaEnabled"
+              (click)="runCleanup()">
+              <mat-icon>{{ cleaning ? 'autorenew' : 'cleaning_services' }}</mat-icon>
+              {{ (cleaning ? 'cameras.storage.cleaning' : 'cameras.storage.clean_now') | transloco }}
+            </button>
+          </div>
+
+          @if (cleanupNote) {
+            <div class="cleanup-note"
+                 [class.ok]="cleanupNote === 'ok'"
+                 [class.err]="cleanupNote === 'error'">
+              @if (cleanupNote === 'ok') {
+                <mat-icon>check_circle</mat-icon>{{ 'cameras.storage.nothing_to_clean' | transloco }}
+              } @else if (cleanupNote === 'error') {
+                <mat-icon>error</mat-icon>{{ 'cameras.storage.clean_error' | transloco }}
+              } @else {
+                <mat-icon>check_circle</mat-icon>{{ 'cameras.storage.freed' | transloco }} {{ cleanupNote }}
+              }
+            </div>
+          }
+
+          <!-- cleanup log / notifications -->
+          <div class="storage-log">
+            <div class="log-head">
+              <mat-icon>notifications</mat-icon>
+              {{ 'cameras.storage.log_title' | transloco }}
+            </div>
+            @if (storage.recentCleanups.length === 0) {
+              <div class="log-empty">{{ 'cameras.storage.log_empty' | transloco }}</div>
+            } @else {
+              <ul class="log-list">
+                @for (e of storage.recentCleanups; track e.atUtc) {
+                  <li class="log-item">
+                    <span class="log-trigger" [class.manual]="e.trigger === 'manual'">
+                      {{ (e.trigger === 'manual' ? 'cameras.storage.trigger_manual' : 'cameras.storage.trigger_auto') | transloco }}
+                    </span>
+                    <span class="log-main">
+                      −{{ formatBytes(e.freedBytes) }}
+                      <span class="log-frames">· {{ e.deletedFrames | number }} {{ 'cameras.storage.frames' | transloco }}</span>
+                    </span>
+                    <span class="log-time">{{ e.atUtc | date: 'dd.MM HH:mm' }}</span>
+                  </li>
+                }
+              </ul>
+            }
+          </div>
+        </div>
+      } @else if (loadingStorage) {
+        <div class="storage-loading">{{ 'cameras.loading' | transloco }}</div>
       }
     </div>
   </div>

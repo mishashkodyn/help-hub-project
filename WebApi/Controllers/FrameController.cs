@@ -16,10 +16,12 @@ namespace API.Controllers
         private const string LatestFile = "latest.jpg";
 
         private readonly IConfiguration _configuration;
+        private readonly ILogger<FrameController> _logger;
 
-        public FrameController(IConfiguration configuration)
+        public FrameController(IConfiguration configuration, ILogger<FrameController> logger)
         {
             _configuration = configuration;
+            _logger = logger;
         }
 
         private bool IsEnabled() =>
@@ -248,14 +250,57 @@ namespace API.Controllers
             return Ok(new
             {
                 enabled = true,
+                quotaEnabled = maxBytes > 0,
                 maxBytes,
                 usedBytes,
+                freeBytes = maxBytes > 0 ? Math.Max(0, maxBytes - usedBytes) : 0,
                 usedPct = maxBytes > 0 ? Math.Round(usedBytes * 100.0 / maxBytes, 1) : 0,
                 frameCount,
                 avgFrameBytes = (long)avgBytes,
                 oldestUtc,
                 newestUtc,
                 retentionHours = retentionHours.HasValue ? Math.Round(retentionHours.Value, 1) : (double?)null,
+                cleaning = Interlocked.CompareExchange(ref _quotaRunning, 0, 0) == 1,
+                recentCleanups = RecentCleanups().Select(e => new
+                {
+                    atUtc = e.AtUtc,
+                    deletedFrames = e.DeletedFrames,
+                    freedBytes = e.FreedBytes,
+                    totalAfter = e.TotalAfter,
+                    trigger = e.Trigger,
+                }),
+            });
+        }
+
+        // POST /api/frames/storage/cleanup → ручне очищення архіву найстаріших кадрів
+        // до targetPct% від ліміту (за замовчуванням 80%). Лише для адміністраторів.
+        [Authorize(Roles = "Superadmin,Admin")]
+        [HttpPost("storage/cleanup")]
+        public IActionResult Cleanup([FromQuery] double? targetPct)
+        {
+            if (!IsEnabled()) return NotFound();
+
+            var maxBytes = GetMaxArchiveBytes();
+            if (maxBytes <= 0) return BadRequest("Ліміт архіву вимкнено");
+
+            // Адмін може задати, до якого відсотка ліміту обрізати (0–95%); типово — 80%.
+            var pct = targetPct is >= 0 and <= 95 ? targetPct.Value : 80d;
+            var targetBytes = (long)(maxBytes * pct / 100d);
+
+            var ev = TrimArchive(GetFramesRoot(), gateBytes: 0, targetBytes: targetBytes, maxBytes: maxBytes, trigger: "manual");
+            if (ev is not null)
+            {
+                RecordCleanup(ev);
+                _logger.LogInformation(
+                    "CameraWall: ручне очищення — видалено {Frames} кадрів, звільнено {Mb:F1} МБ",
+                    ev.DeletedFrames, ev.FreedBytes / 1024d / 1024d);
+            }
+
+            return Ok(new
+            {
+                deletedFrames = ev?.DeletedFrames ?? 0,
+                freedBytes = ev?.FreedBytes ?? 0,
+                targetPct = pct,
             });
         }
 
@@ -315,6 +360,29 @@ namespace API.Controllers
         private static long _lastQuotaCheckTicks = long.MinValue;
         private static int _quotaRunning; // 0 = вільно, 1 = вже виконується
 
+        // --- Журнал очищень: кільцевий буфер у пам'яті, найновіші спереду ---
+        public sealed record CleanupEvent(
+            DateTime AtUtc, int DeletedFrames, long FreedBytes, long TotalAfter, long MaxBytes, string Trigger);
+
+        private const int MaxCleanupEvents = 40;
+        private static readonly object _eventsLock = new();
+        private static readonly LinkedList<CleanupEvent> _cleanupEvents = new();
+
+        private static void RecordCleanup(CleanupEvent ev)
+        {
+            lock (_eventsLock)
+            {
+                _cleanupEvents.AddFirst(ev);
+                while (_cleanupEvents.Count > MaxCleanupEvents)
+                    _cleanupEvents.RemoveLast();
+            }
+        }
+
+        private static List<CleanupEvent> RecentCleanups()
+        {
+            lock (_eventsLock) return _cleanupEvents.ToList();
+        }
+
         private void MaybeEnforceQuota()
         {
             var maxBytes = GetMaxArchiveBytes();
@@ -328,19 +396,34 @@ namespace API.Controllers
             Interlocked.Exchange(ref _lastQuotaCheckTicks, now);
 
             var root = GetFramesRoot();
+            var logger = _logger; // ILogger безпечний для фону; контролер може бути вже звільнений
             _ = Task.Run(() =>
             {
-                try { EnforceQuota(root, maxBytes); }
+                try
+                {
+                    // Авточистка: спрацьовує лише при перевищенні ліміту, цілимось у 95% (гістерезис).
+                    var ev = TrimArchive(root, gateBytes: maxBytes, targetBytes: (long)(maxBytes * 0.95),
+                        maxBytes: maxBytes, trigger: "auto");
+                    if (ev is not null)
+                    {
+                        RecordCleanup(ev);
+                        logger.LogInformation(
+                            "CameraWall: авто-очищення архіву — видалено {Frames} кадрів, звільнено {Mb:F1} МБ (зайнято {Used:F1}/{Max:F1} ГБ)",
+                            ev.DeletedFrames, ev.FreedBytes / 1024d / 1024d,
+                            ev.TotalAfter / 1024d / 1024d / 1024d, maxBytes / 1024d / 1024d / 1024d);
+                    }
+                }
                 catch { /* очищення best-effort: не валимо застосунок */ }
                 finally { Interlocked.Exchange(ref _quotaRunning, 0); }
             });
         }
 
-        // Рахуємо сумарний розмір архівних кадрів і, якщо перевищено ліміт,
-        // видаляємо найстаріші, доки не опустимось нижче 95% ліміту (гістерезис).
-        private static void EnforceQuota(string root, long maxBytes)
+        // Видаляє найстаріші архівні кадри, доки сумарний розмір не впаде до targetBytes.
+        // Чистимо лише якщо розмір перевищує gateBytes (gateBytes <= 0 → чистити завжди).
+        // maxBytes зберігається в журналі для відображення ліміту. Повертає null, якщо нічого не видалено.
+        private static CleanupEvent? TrimArchive(string root, long gateBytes, long targetBytes, long maxBytes, string trigger)
         {
-            if (!Directory.Exists(root)) return;
+            if (!Directory.Exists(root)) return null;
 
             var files = new DirectoryInfo(root)
                 .EnumerateFiles("*.jpg", SearchOption.AllDirectories)
@@ -348,23 +431,29 @@ namespace API.Controllers
                 .ToList();
 
             long total = files.Sum(f => f.Length);
-            if (total <= maxBytes) return;
+            if (gateBytes > 0 && total <= gateBytes) return null; // ліміт не перевищено — нема що чистити
 
-            var target = (long)(maxBytes * 0.95);
+            int deleted = 0;
+            long freed = 0;
             foreach (var f in files.OrderBy(f => f.LastWriteTimeUtc))
             {
+                if (total <= targetBytes) break;
                 try
                 {
                     var len = f.Length;
                     f.Delete();
                     total -= len;
+                    freed += len;
+                    deleted++;
                 }
                 catch { /* файл міг зникнути/бути зайнятим — пропускаємо */ }
-
-                if (total <= target) break;
             }
 
             PruneEmptyDayFolders(root);
+
+            return deleted == 0
+                ? null
+                : new CleanupEvent(DateTime.UtcNow, deleted, freed, total, maxBytes, trigger);
         }
 
         // Прибираємо порожні папки днів archive/{день}, що лишились після видалення кадрів.

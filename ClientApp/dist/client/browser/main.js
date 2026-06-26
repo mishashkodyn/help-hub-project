@@ -44046,18 +44046,21 @@ var AdminDashboardComponent = class _AdminDashboardComponent {
   categoryService;
   appointmentService;
   specializationService;
+  http;
   loading = signal(true);
   psychApps = signal([]);
   catApps = signal([]);
   pendingPayments = signal([]);
   releaseQueue = signal([]);
   specializations = signal([]);
+  storage = signal(null);
   today = /* @__PURE__ */ new Date();
-  constructor(applicationsService, categoryService, appointmentService, specializationService) {
+  constructor(applicationsService, categoryService, appointmentService, specializationService, http) {
     this.applicationsService = applicationsService;
     this.categoryService = categoryService;
     this.appointmentService = appointmentService;
     this.specializationService = specializationService;
+    this.http = http;
   }
   ngOnInit() {
     this.loadAll();
@@ -44069,13 +44072,16 @@ var AdminDashboardComponent = class _AdminDashboardComponent {
       cat: this.categoryService.getAll().pipe(catchError(() => of({ isSuccess: false, data: [] }))),
       pending: this.appointmentService.getPendingPayments().pipe(catchError(() => of([]))),
       release: this.appointmentService.getCompletedUnpaidSessions().pipe(catchError(() => of([]))),
-      specs: this.specializationService.getSpecializationsForAdmin().pipe(catchError(() => of({ isSuccess: false, data: [] })))
+      specs: this.specializationService.getSpecializationsForAdmin().pipe(catchError(() => of({ isSuccess: false, data: [] }))),
+      storage: this.http.get("/api/frames/storage").pipe(catchError(() => of(null)))
+      // camera wall disabled / no access → hide the card
     }).subscribe((res) => {
       this.psychApps.set(res.psych?.data ?? []);
       this.catApps.set(res.cat?.data ?? []);
       this.pendingPayments.set(res.pending ?? []);
       this.releaseQueue.set(res.release ?? []);
       this.specializations.set(res.specs?.data ?? []);
+      this.storage.set(res.storage ?? null);
       this.loading.set(false);
     });
   }
@@ -44281,8 +44287,36 @@ var AdminDashboardComponent = class _AdminDashboardComponent {
     const diff = Date.now() - new Date(iso).getTime();
     return Math.max(0, Math.floor(diff / 864e5));
   }
+  // ─── Camera storage helpers ──────────────────────────────────────────────────
+  formatBytes(bytes) {
+    if (!bytes || bytes <= 0)
+      return "0 \u041C\u0411";
+    const gb = bytes / 1024 ** 3;
+    if (gb >= 1)
+      return `${gb.toFixed(1)} \u0413\u0411`;
+    const mb = bytes / 1024 ** 2;
+    return `${Math.max(1, Math.round(mb))} \u041C\u0411`;
+  }
+  /** Bar fill never exceeds 100% even if the archive briefly overshoots the limit. */
+  storagePct = computed(() => Math.min(100, this.storage()?.usedPct ?? 0));
+  /** Green under 75%, amber under 90%, red above — mirrors how full the quota is. */
+  storageColor = computed(() => {
+    const pct = this.storage()?.usedPct ?? 0;
+    if (pct >= 90)
+      return "#c2554f";
+    if (pct >= 75)
+      return "#b07400";
+    return "var(--color-success)";
+  });
+  /** Retention shown in days past 48h, otherwise hours; null when not estimable yet. */
+  retention = computed(() => {
+    const h = this.storage()?.retentionHours;
+    if (h == null)
+      return null;
+    return h >= 48 ? { value: (h / 24).toFixed(1), unitKey: "admin.dashboard.storage.unit_days" } : { value: h.toFixed(1), unitKey: "admin.dashboard.storage.unit_hours" };
+  });
   static \u0275fac = function AdminDashboardComponent_Factory(__ngFactoryType__) {
-    return new (__ngFactoryType__ || _AdminDashboardComponent)(\u0275\u0275directiveInject(ApplicationsService), \u0275\u0275directiveInject(UserCategoryApplicationService), \u0275\u0275directiveInject(AppointmentClientService), \u0275\u0275directiveInject(SpecializationService));
+    return new (__ngFactoryType__ || _AdminDashboardComponent)(\u0275\u0275directiveInject(ApplicationsService), \u0275\u0275directiveInject(UserCategoryApplicationService), \u0275\u0275directiveInject(AppointmentClientService), \u0275\u0275directiveInject(SpecializationService), \u0275\u0275directiveInject(HttpClient));
   };
   static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _AdminDashboardComponent, selectors: [["app-admin-dashboard"]], standalone: false, decls: 1, vars: 0, consts: [[4, "transloco"], [1, "bg-gray-50", "min-h-screen", "font-sans"], [1, "w-full", "px-5", "sm:px-8", "lg:px-10", "py-8"], [1, "flex", "flex-col", "sm:flex-row", "sm:items-end", "sm:justify-between", "gap-4", "mb-6"], [1, "text-[28px]", "sm:text-3xl", "font-bold", "text-[var(--color-primary)]", "tracking-[-0.02em]"], [1, "text-gray-500", "mt-1.5"], [1, "flex", "items-center", "gap-4", "text-sm", "shrink-0"], [1, "text-gray-400"], [1, "inline-flex", "items-center", "gap-1.5", "text-gray-500", "hover:text-[var(--color-primary)]", "font-medium", "transition-colors", "disabled:opacity-40", 3, "click", "disabled"], [1, "!w-4", "!h-4", "!text-base", "leading-4"], [1, "border", "border-gray-200", "rounded-xl", "bg-white", "h-28", "mb-6", "animate-pulse"], [1, "grid", "grid-cols-1", "lg:grid-cols-12", "gap-6"], [1, "lg:col-span-8", "border", "border-gray-200", "rounded-xl", "bg-white", "h-96", "animate-pulse"], [1, "lg:col-span-4", "border", "border-gray-200", "rounded-xl", "bg-white", "h-96", "animate-pulse"], [1, "border", "border-gray-200", "rounded-xl", "bg-white", "grid", "grid-cols-2", "lg:grid-cols-4", "divide-x", "divide-y", "lg:divide-y-0", "divide-gray-200", "overflow-hidden", "mb-6"], [1, "group", "px-5", "py-5", "sm:px-6", "sm:py-6", "hover:bg-gray-50/80", "transition-colors", 3, "routerLink", "queryParams"], [1, "grid", "grid-cols-1", "lg:grid-cols-12", "gap-6", "mb-6"], [1, "lg:col-span-8", "flex", "flex-col", "gap-6"], [1, "border", "border-gray-200", "rounded-xl", "bg-white", "p-6"], [1, "flex", "items-start", "justify-between", "gap-4", "mb-5"], [1, "text-base", "font-bold", "text-[var(--color-primary)]", "tracking-tight"], [1, "text-sm", "text-gray-400", "mt-0.5"], [1, "font-semibold", "text-gray-600", "tabular-nums"], [1, "inline-flex", "items-center", "gap-0.5", "p-0.5", "rounded-lg", "border", "border-gray-200", "shrink-0"], [1, "w-7", "h-7", "flex", "items-center", "justify-center", "rounded-md", "transition-colors", 3, "click", "ngClass"], [1, "!w-[18px]", "!h-[18px]", "!text-[18px]", "leading-[18px]"], [1, "flex", "items-end", "gap-1", "sm:gap-2", "h-40", "border-b", "border-gray-100"], [1, "relative", "h-40", "border-b", "border-gray-100"], [1, "flex", "justify-between", "mt-2", "text-[11px]", "text-gray-300", "tabular-nums"], [1, "flex", "items-center", "gap-6", "mt-5", "text-xs", "text-gray-500"], [1, "flex", "items-center", "gap-2"], [1, "w-3", "h-1.5", "rounded-sm", 2, "background", "var(--color-primary)"], [1, "w-3", "h-1.5", "rounded-sm", 2, "background", "var(--color-mint)"], [1, "border", "border-gray-200", "rounded-xl", "bg-white", "flex-1"], [1, "flex", "items-center", "justify-between", "px-6", "pt-6", "pb-4"], ["routerLink", "/admin/applications", 1, "text-xs", "font-semibold", "text-[var(--color-blue)]", "hover:underline"], [1, "px-6", "pb-8", "pt-2", "text-sm", "text-gray-400"], [1, "lg:col-span-4", "flex", "flex-col", "gap-6"], [1, "flex", "items-baseline", "justify-between", "mb-1"], [1, "text-xs", "text-gray-400", "tabular-nums"], [1, "text-xs", "text-gray-400", "mb-5"], [1, "flex", "h-2.5", "rounded-full", "overflow-hidden", "bg-gray-100", "mb-5"], [1, "space-y-3"], [1, "flex", "items-center", "justify-between", "text-sm"], [1, "border", "border-gray-200", "rounded-xl", "bg-white", "p-6", "flex-1"], [1, "flex", "items-baseline", "justify-between", "mb-5"], ["routerLink", "/admin/specializations", 1, "text-xs", "font-semibold", "text-[var(--color-blue)]", "hover:underline"], [1, "text-sm", "text-gray-400"], [1, "space-y-3.5"], [1, "pt-5", "mt-5", "border-t", "border-gray-100"], [1, "flex", "flex-wrap", "items-center", "gap-x-2", "gap-y-2", "text-sm", "border-t", "border-gray-200", "pt-5"], [1, "text-gray-400", "mr-1"], [1, "flex", "items-center", "gap-1.5", "mb-3"], [1, "w-1.5", "h-1.5", "rounded-full", "bg-[var(--color-success)]"], [1, "text-[11px]", "font-semibold", "uppercase", "tracking-wider", "text-gray-400"], [1, "flex", "items-baseline", "gap-2"], [1, "text-4xl", "font-bold", "tabular-nums", "tracking-tight"], [1, "text-gray-200", "group-hover:text-gray-400", "group-hover:translate-x-0.5", "transition-all", "!text-lg", "ml-auto", "self-center"], [1, "text-xs", "text-gray-400", "mt-2"], [1, "group/bar", "relative", "flex-1", "h-full", "flex", "flex-col", "justify-end", "items-stretch"], [1, "opacity-0", "group-hover/bar:opacity-100", "transition-opacity", "absolute", "-top-1", "left-1/2", "-translate-x-1/2", "z-10", "px-2", "py-1", "rounded", "bg-[var(--color-primary)]", "text-white", "text-[10px]", "whitespace-nowrap", "pointer-events-none"], [1, "h-px", "bg-gray-200"], [2, "background", "var(--color-mint)"], [2, "background", "var(--color-primary)"], ["preserveAspectRatio", "none", 1, "w-full", "h-full", "overflow-visible"], ["fill", "none", "stroke", "var(--color-mint)", "stroke-width", "2", "stroke-linejoin", "round", "stroke-linecap", "round", "vector-effect", "non-scaling-stroke"], ["fill", "none", "stroke", "var(--color-primary)", "stroke-width", "2", "stroke-linejoin", "round", "stroke-linecap", "round", "vector-effect", "non-scaling-stroke"], [1, "absolute", "inset-0", "flex"], [1, "group/pt", "relative", "flex-1"], [1, "opacity-0", "group-hover/pt:opacity-100", "transition-opacity", "absolute", "top-0", "left-1/2", "-translate-x-1/2", "z-10", "px-2", "py-1", "rounded", "bg-[var(--color-primary)]", "text-white", "text-[10px]", "whitespace-nowrap", "pointer-events-none"], [1, "border-t", "border-gray-100"], [1, "flex", "items-center", "gap-4", "px-6", "py-3.5", "hover:bg-gray-50/80", "transition-colors", 3, "routerLink", "queryParams"], [1, "text-[10px]", "font-bold", "uppercase", "tracking-wider", "w-24", "shrink-0"], [1, "min-w-0", "flex-1"], [1, "text-sm", "font-semibold", "text-gray-800", "truncate"], [1, "text-xs", "text-gray-400", "truncate"], [1, "text-sm", "font-semibold", "text-gray-700", "tabular-nums", "shrink-0"], [1, "text-xs", "text-gray-400", "tabular-nums", "shrink-0"], [3, "width", "background"], [1, "flex", "items-center", "gap-2.5", "text-gray-600"], [1, "w-2", "h-2", "rounded-full"], [1, "font-semibold", "text-gray-700", "tabular-nums"], [1, "flex", "items-center", "gap-3"], [1, "text-sm", "text-gray-600", "truncate", "flex-1", "min-w-0"], [1, "w-24", "h-1.5", "rounded-full", "bg-gray-100", "overflow-hidden", "shrink-0"], [1, "block", "h-full", "rounded-full", 2, "background", "var(--color-sky)"], [1, "text-xs", "font-semibold", "text-gray-500", "tabular-nums", "w-5", "text-right", "shrink-0"], [1, "text-sm", "font-semibold", "text-gray-700", "mb-4"], [1, "block", "h-full", "rounded-full", 2, "background", "var(--color-mint)"], [1, "font-semibold", "text-[var(--color-primary)]", "hover:text-[var(--color-success)]", "transition-colors", 3, "routerLink"], [1, "text-gray-300"]], template: function AdminDashboardComponent_Template(rf, ctx) {
     if (rf & 1) {
@@ -44589,10 +44623,10 @@ var AdminDashboardComponent = class _AdminDashboardComponent {
   </div>\r
 </ng-container>\r
 ` }]
-  }], () => [{ type: ApplicationsService }, { type: UserCategoryApplicationService }, { type: AppointmentClientService }, { type: SpecializationService }], null);
+  }], () => [{ type: ApplicationsService }, { type: UserCategoryApplicationService }, { type: AppointmentClientService }, { type: SpecializationService }, { type: HttpClient }], null);
 })();
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(AdminDashboardComponent, { className: "AdminDashboardComponent", filePath: "src/app/modules/admin-tools/pages/admin-dashboard/admin-dashboard.component.ts", lineNumber: 77 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(AdminDashboardComponent, { className: "AdminDashboardComponent", filePath: "src/app/modules/admin-tools/pages/admin-dashboard/admin-dashboard.component.ts", lineNumber: 91 });
 })();
 
 // src/app/modules/admin-tools/components/application-details-dialog/application-details-dialog.component.ts
@@ -66468,9 +66502,10 @@ var SafePlaceComponent = class _SafePlaceComponent {
 var _forTrack030 = ($index, $item) => $item.pc;
 var _forTrack111 = ($index, $item) => $item.cameraId;
 var _forTrack24 = ($index, $item) => $item.day;
-function CameraWallComponent_Conditional_5_Template(rf, ctx) {
+var _forTrack32 = ($index, $item) => $item.atUtc;
+function CameraWallComponent_Conditional_17_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "span", 3);
+    \u0275\u0275elementStart(0, "span", 9);
     \u0275\u0275text(1);
     \u0275\u0275pipe(2, "transloco");
     \u0275\u0275elementEnd();
@@ -66480,9 +66515,9 @@ function CameraWallComponent_Conditional_5_Template(rf, ctx) {
     \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(2, 1, "cameras.loading"));
   }
 }
-function CameraWallComponent_Conditional_6_Template(rf, ctx) {
+function CameraWallComponent_Conditional_18_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "span", 3);
+    \u0275\u0275elementStart(0, "span", 9);
     \u0275\u0275text(1);
     \u0275\u0275pipe(2, "transloco");
     \u0275\u0275elementEnd();
@@ -66492,17 +66527,17 @@ function CameraWallComponent_Conditional_6_Template(rf, ctx) {
     \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(2, 1, "cameras.no_pcs"));
   }
 }
-function CameraWallComponent_Conditional_7_For_1_Template(rf, ctx) {
+function CameraWallComponent_Conditional_19_For_1_Template(rf, ctx) {
   if (rf & 1) {
     const _r1 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "button", 9);
-    \u0275\u0275listener("click", function CameraWallComponent_Conditional_7_For_1_Template_button_click_0_listener() {
+    \u0275\u0275elementStart(0, "button", 20);
+    \u0275\u0275listener("click", function CameraWallComponent_Conditional_19_For_1_Template_button_click_0_listener() {
       const p_r2 = \u0275\u0275restoreView(_r1).$implicit;
       const ctx_r2 = \u0275\u0275nextContext(2);
       return \u0275\u0275resetView(ctx_r2.selectPc(p_r2.pc));
     });
     \u0275\u0275text(1);
-    \u0275\u0275elementStart(2, "span", 10);
+    \u0275\u0275elementStart(2, "span", 21);
     \u0275\u0275text(3);
     \u0275\u0275elementEnd()();
   }
@@ -66516,22 +66551,52 @@ function CameraWallComponent_Conditional_7_For_1_Template(rf, ctx) {
     \u0275\u0275textInterpolate(p_r2.cameras);
   }
 }
-function CameraWallComponent_Conditional_7_Template(rf, ctx) {
+function CameraWallComponent_Conditional_19_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275repeaterCreate(0, CameraWallComponent_Conditional_7_For_1_Template, 4, 4, "button", 8, _forTrack030);
+    \u0275\u0275repeaterCreate(0, CameraWallComponent_Conditional_19_For_1_Template, 4, 4, "button", 19, _forTrack030);
   }
   if (rf & 2) {
     const ctx_r2 = \u0275\u0275nextContext();
     \u0275\u0275repeater(ctx_r2.pcs);
   }
 }
-function CameraWallComponent_Conditional_8_Template(rf, ctx) {
+function CameraWallComponent_Conditional_21_Template(rf, ctx) {
   if (rf & 1) {
     const _r4 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "button", 11);
+    \u0275\u0275elementStart(0, "button", 22);
     \u0275\u0275pipe(1, "transloco");
-    \u0275\u0275listener("click", function CameraWallComponent_Conditional_8_Template_button_click_0_listener() {
+    \u0275\u0275listener("click", function CameraWallComponent_Conditional_21_Template_button_click_0_listener() {
       \u0275\u0275restoreView(_r4);
+      const ctx_r2 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r2.openStorage());
+    });
+    \u0275\u0275elementStart(2, "mat-icon");
+    \u0275\u0275text(3, "storage");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(4, "span", 23);
+    \u0275\u0275text(5);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(6, "span", 24);
+    \u0275\u0275element(7, "i");
+    \u0275\u0275elementEnd()();
+  }
+  if (rf & 2) {
+    const ctx_r2 = \u0275\u0275nextContext();
+    \u0275\u0275classProp("warn", ctx_r2.storage.usedPct >= 75 && ctx_r2.storage.usedPct < 90)("crit", ctx_r2.storage.usedPct >= 90);
+    \u0275\u0275property("title", \u0275\u0275pipeBind1(1, 10, "cameras.storage.open"));
+    \u0275\u0275advance(5);
+    \u0275\u0275textInterpolate1("", ctx_r2.storage.usedPct, "%");
+    \u0275\u0275advance(2);
+    \u0275\u0275styleProp("width", ctx_r2.storagePct, "%")("background", ctx_r2.storageColor);
+  }
+}
+function CameraWallComponent_Conditional_30_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r5 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "button", 25);
+    \u0275\u0275pipe(1, "transloco");
+    \u0275\u0275listener("click", function CameraWallComponent_Conditional_30_Template_button_click_0_listener() {
+      \u0275\u0275restoreView(_r5);
       const ctx_r2 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r2.selectPc(ctx_r2.selectedPc));
     });
@@ -66543,9 +66608,9 @@ function CameraWallComponent_Conditional_8_Template(rf, ctx) {
     \u0275\u0275property("title", \u0275\u0275pipeBind1(1, 1, "cameras.refresh"));
   }
 }
-function CameraWallComponent_Conditional_10_Template(rf, ctx) {
+function CameraWallComponent_Conditional_32_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 6);
+    \u0275\u0275elementStart(0, "div", 16);
     \u0275\u0275text(1);
     \u0275\u0275pipe(2, "transloco");
     \u0275\u0275elementEnd();
@@ -66555,9 +66620,9 @@ function CameraWallComponent_Conditional_10_Template(rf, ctx) {
     \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(2, 1, "cameras.loading"));
   }
 }
-function CameraWallComponent_Conditional_11_Template(rf, ctx) {
+function CameraWallComponent_Conditional_33_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 6);
+    \u0275\u0275elementStart(0, "div", 16);
     \u0275\u0275text(1);
     \u0275\u0275pipe(2, "transloco");
     \u0275\u0275elementEnd();
@@ -66567,38 +66632,59 @@ function CameraWallComponent_Conditional_11_Template(rf, ctx) {
     \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(2, 1, "cameras.no_data"));
   }
 }
-function CameraWallComponent_Conditional_12_For_1_Conditional_1_Template(rf, ctx) {
+function CameraWallComponent_Conditional_34_For_1_Conditional_2_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275element(0, "img", 14);
+    \u0275\u0275element(0, "img", 29);
   }
   if (rf & 2) {
-    const cam_r6 = \u0275\u0275nextContext().$implicit;
-    \u0275\u0275property("src", cam_r6.displayedSrc, \u0275\u0275sanitizeUrl)("alt", cam_r6.cameraId);
+    const cam_r7 = \u0275\u0275nextContext().$implicit;
+    \u0275\u0275property("src", cam_r7.displayedSrc, \u0275\u0275sanitizeUrl)("alt", cam_r7.cameraId);
   }
 }
-function CameraWallComponent_Conditional_12_For_1_Conditional_2_Template(rf, ctx) {
+function CameraWallComponent_Conditional_34_For_1_Conditional_3_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 15)(1, "mat-icon");
+    \u0275\u0275elementStart(0, "div", 30)(1, "mat-icon");
     \u0275\u0275text(2, "videocam_off");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(3, "span");
+    \u0275\u0275text(4);
+    \u0275\u0275pipe(5, "transloco");
     \u0275\u0275elementEnd()();
   }
+  if (rf & 2) {
+    \u0275\u0275advance(4);
+    \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(5, 1, "cameras.no_signal"));
+  }
 }
-function CameraWallComponent_Conditional_12_For_1_Conditional_6_Template(rf, ctx) {
+function CameraWallComponent_Conditional_34_For_1_Conditional_5_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "span", 18);
+    \u0275\u0275elementStart(0, "span", 32);
+    \u0275\u0275element(1, "span", 37);
+    \u0275\u0275text(2);
+    \u0275\u0275pipe(3, "transloco");
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(3, 1, "cameras.live"));
+  }
+}
+function CameraWallComponent_Conditional_34_For_1_Conditional_13_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "span", 36);
     \u0275\u0275text(1);
     \u0275\u0275pipe(2, "date");
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
-    const cam_r6 = \u0275\u0275nextContext().$implicit;
+    const cam_r7 = \u0275\u0275nextContext().$implicit;
     \u0275\u0275advance();
-    \u0275\u0275textInterpolate(\u0275\u0275pipeBind2(2, 1, cam_r6.lastSeenUtc, "dd.MM HH:mm:ss"));
+    \u0275\u0275textInterpolate(\u0275\u0275pipeBind2(2, 1, cam_r7.lastSeenUtc, "dd.MM HH:mm:ss"));
   }
 }
-function CameraWallComponent_Conditional_12_For_1_Conditional_7_Template(rf, ctx) {
+function CameraWallComponent_Conditional_34_For_1_Conditional_14_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "span", 18);
+    \u0275\u0275elementStart(0, "span", 36);
     \u0275\u0275text(1);
     \u0275\u0275pipe(2, "transloco");
     \u0275\u0275elementEnd();
@@ -66608,47 +66694,59 @@ function CameraWallComponent_Conditional_12_For_1_Conditional_7_Template(rf, ctx
     \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(2, 1, "cameras.no_data"));
   }
 }
-function CameraWallComponent_Conditional_12_For_1_Template(rf, ctx) {
+function CameraWallComponent_Conditional_34_For_1_Template(rf, ctx) {
   if (rf & 1) {
-    const _r5 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "div", 13);
-    \u0275\u0275listener("click", function CameraWallComponent_Conditional_12_For_1_Template_div_click_0_listener() {
-      const cam_r6 = \u0275\u0275restoreView(_r5).$implicit;
+    const _r6 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "div", 27);
+    \u0275\u0275listener("click", function CameraWallComponent_Conditional_34_For_1_Template_div_click_0_listener() {
+      const cam_r7 = \u0275\u0275restoreView(_r6).$implicit;
       const ctx_r2 = \u0275\u0275nextContext(2);
-      return \u0275\u0275resetView(ctx_r2.openViewer(cam_r6));
+      return \u0275\u0275resetView(ctx_r2.openViewer(cam_r7));
     });
-    \u0275\u0275template(1, CameraWallComponent_Conditional_12_For_1_Conditional_1_Template, 1, 2, "img", 14)(2, CameraWallComponent_Conditional_12_For_1_Conditional_2_Template, 3, 0, "div", 15);
-    \u0275\u0275elementStart(3, "div", 16)(4, "span", 17);
-    \u0275\u0275text(5);
+    \u0275\u0275elementStart(1, "div", 28);
+    \u0275\u0275template(2, CameraWallComponent_Conditional_34_For_1_Conditional_2_Template, 1, 2, "img", 29)(3, CameraWallComponent_Conditional_34_For_1_Conditional_3_Template, 6, 3, "div", 30);
     \u0275\u0275elementEnd();
-    \u0275\u0275template(6, CameraWallComponent_Conditional_12_For_1_Conditional_6_Template, 3, 4, "span", 18)(7, CameraWallComponent_Conditional_12_For_1_Conditional_7_Template, 3, 3, "span", 18);
+    \u0275\u0275element(4, "div", 31);
+    \u0275\u0275template(5, CameraWallComponent_Conditional_34_For_1_Conditional_5_Template, 4, 3, "span", 32);
+    \u0275\u0275elementStart(6, "button", 33);
+    \u0275\u0275pipe(7, "transloco");
+    \u0275\u0275elementStart(8, "mat-icon");
+    \u0275\u0275text(9, "history");
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(10, "div", 34)(11, "span", 35);
+    \u0275\u0275text(12);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(8, "div", 19)(9, "mat-icon");
-    \u0275\u0275text(10, "history");
-    \u0275\u0275elementEnd()()();
+    \u0275\u0275template(13, CameraWallComponent_Conditional_34_For_1_Conditional_13_Template, 3, 4, "span", 36)(14, CameraWallComponent_Conditional_34_For_1_Conditional_14_Template, 3, 3, "span", 36);
+    \u0275\u0275elementEnd()();
   }
   if (rf & 2) {
-    const cam_r6 = ctx.$implicit;
+    const cam_r7 = ctx.$implicit;
+    const ctx_r2 = \u0275\u0275nextContext(2);
+    \u0275\u0275classProp("is-live", ctx_r2.isLive(cam_r7));
+    \u0275\u0275advance(2);
+    \u0275\u0275conditional(cam_r7.displayedSrc ? 2 : 3);
+    \u0275\u0275advance(3);
+    \u0275\u0275conditional(ctx_r2.isLive(cam_r7) ? 5 : -1);
     \u0275\u0275advance();
-    \u0275\u0275conditional(cam_r6.displayedSrc ? 1 : 2);
-    \u0275\u0275advance(4);
-    \u0275\u0275textInterpolate(cam_r6.cameraId);
+    \u0275\u0275property("title", \u0275\u0275pipeBind1(7, 7, "cameras.open_archive"));
+    \u0275\u0275advance(6);
+    \u0275\u0275textInterpolate(cam_r7.cameraId);
     \u0275\u0275advance();
-    \u0275\u0275conditional(cam_r6.lastSeenUtc ? 6 : 7);
+    \u0275\u0275conditional(cam_r7.lastSeenUtc ? 13 : 14);
   }
 }
-function CameraWallComponent_Conditional_12_Template(rf, ctx) {
+function CameraWallComponent_Conditional_34_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275repeaterCreate(0, CameraWallComponent_Conditional_12_For_1_Template, 11, 3, "div", 12, _forTrack111);
+    \u0275\u0275repeaterCreate(0, CameraWallComponent_Conditional_34_For_1_Template, 15, 9, "div", 26, _forTrack111);
   }
   if (rf & 2) {
     const ctx_r2 = \u0275\u0275nextContext();
     \u0275\u0275repeater(ctx_r2.cameras);
   }
 }
-function CameraWallComponent_Conditional_13_Conditional_9_Template(rf, ctx) {
+function CameraWallComponent_Conditional_35_Conditional_14_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "span", 26);
+    \u0275\u0275elementStart(0, "span", 45);
     \u0275\u0275text(1);
     \u0275\u0275pipe(2, "transloco");
     \u0275\u0275elementEnd();
@@ -66658,9 +66756,9 @@ function CameraWallComponent_Conditional_13_Conditional_9_Template(rf, ctx) {
     \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(2, 1, "cameras.loading"));
   }
 }
-function CameraWallComponent_Conditional_13_Conditional_10_Template(rf, ctx) {
+function CameraWallComponent_Conditional_35_Conditional_15_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "span", 26);
+    \u0275\u0275elementStart(0, "span", 45);
     \u0275\u0275text(1);
     \u0275\u0275pipe(2, "transloco");
     \u0275\u0275elementEnd();
@@ -66670,42 +66768,42 @@ function CameraWallComponent_Conditional_13_Conditional_10_Template(rf, ctx) {
     \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(2, 1, "cameras.no_archive"));
   }
 }
-function CameraWallComponent_Conditional_13_Conditional_11_For_1_Template(rf, ctx) {
+function CameraWallComponent_Conditional_35_Conditional_16_For_1_Template(rf, ctx) {
   if (rf & 1) {
-    const _r8 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "button", 29);
-    \u0275\u0275listener("click", function CameraWallComponent_Conditional_13_Conditional_11_For_1_Template_button_click_0_listener() {
-      const d_r9 = \u0275\u0275restoreView(_r8).$implicit;
+    const _r9 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "button", 49);
+    \u0275\u0275listener("click", function CameraWallComponent_Conditional_35_Conditional_16_For_1_Template_button_click_0_listener() {
+      const d_r10 = \u0275\u0275restoreView(_r9).$implicit;
       const ctx_r2 = \u0275\u0275nextContext(3);
-      return \u0275\u0275resetView(ctx_r2.selectDay(d_r9.day));
+      return \u0275\u0275resetView(ctx_r2.selectDay(d_r10.day));
     });
     \u0275\u0275text(1);
-    \u0275\u0275elementStart(2, "span", 30);
+    \u0275\u0275elementStart(2, "span", 50);
     \u0275\u0275text(3);
     \u0275\u0275elementEnd()();
   }
   if (rf & 2) {
-    const d_r9 = ctx.$implicit;
+    const d_r10 = ctx.$implicit;
     const ctx_r2 = \u0275\u0275nextContext(3);
-    \u0275\u0275classProp("active", d_r9.day === ctx_r2.selectedDay);
+    \u0275\u0275classProp("active", d_r10.day === ctx_r2.selectedDay);
     \u0275\u0275advance();
-    \u0275\u0275textInterpolate1(" ", d_r9.day, " ");
+    \u0275\u0275textInterpolate1(" ", d_r10.day, " ");
     \u0275\u0275advance(2);
-    \u0275\u0275textInterpolate(d_r9.count);
+    \u0275\u0275textInterpolate(d_r10.count);
   }
 }
-function CameraWallComponent_Conditional_13_Conditional_11_Template(rf, ctx) {
+function CameraWallComponent_Conditional_35_Conditional_16_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275repeaterCreate(0, CameraWallComponent_Conditional_13_Conditional_11_For_1_Template, 4, 4, "button", 28, _forTrack24);
+    \u0275\u0275repeaterCreate(0, CameraWallComponent_Conditional_35_Conditional_16_For_1_Template, 4, 4, "button", 48, _forTrack24);
   }
   if (rf & 2) {
     const ctx_r2 = \u0275\u0275nextContext(2);
     \u0275\u0275repeater(ctx_r2.days);
   }
 }
-function CameraWallComponent_Conditional_13_Conditional_13_Template(rf, ctx) {
+function CameraWallComponent_Conditional_35_Conditional_18_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "span", 26);
+    \u0275\u0275elementStart(0, "span", 45);
     \u0275\u0275text(1);
     \u0275\u0275pipe(2, "transloco");
     \u0275\u0275elementEnd();
@@ -66715,18 +66813,18 @@ function CameraWallComponent_Conditional_13_Conditional_13_Template(rf, ctx) {
     \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(2, 1, "cameras.loading"));
   }
 }
-function CameraWallComponent_Conditional_13_Conditional_14_Template(rf, ctx) {
+function CameraWallComponent_Conditional_35_Conditional_19_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275element(0, "img", 14);
+    \u0275\u0275element(0, "img", 29);
   }
   if (rf & 2) {
     const ctx_r2 = \u0275\u0275nextContext(2);
     \u0275\u0275property("src", ctx_r2.currentFrame.imageUrl, \u0275\u0275sanitizeUrl)("alt", ctx_r2.viewerCamera);
   }
 }
-function CameraWallComponent_Conditional_13_Conditional_15_Template(rf, ctx) {
+function CameraWallComponent_Conditional_35_Conditional_20_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "span", 26);
+    \u0275\u0275elementStart(0, "span", 45);
     \u0275\u0275text(1);
     \u0275\u0275pipe(2, "transloco");
     \u0275\u0275elementEnd();
@@ -66736,9 +66834,9 @@ function CameraWallComponent_Conditional_13_Conditional_15_Template(rf, ctx) {
     \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(2, 1, "cameras.no_frames"));
   }
 }
-function CameraWallComponent_Conditional_13_Conditional_16_Conditional_11_Template(rf, ctx) {
+function CameraWallComponent_Conditional_35_Conditional_21_Conditional_12_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "span", 35);
+    \u0275\u0275elementStart(0, "span", 56);
     \u0275\u0275text(1);
     \u0275\u0275pipe(2, "date");
     \u0275\u0275elementEnd();
@@ -66749,43 +66847,43 @@ function CameraWallComponent_Conditional_13_Conditional_16_Conditional_11_Templa
     \u0275\u0275textInterpolate(\u0275\u0275pipeBind2(2, 1, ctx_r2.currentFrame.timeUtc, "dd.MM.yyyy HH:mm:ss"));
   }
 }
-function CameraWallComponent_Conditional_13_Conditional_16_Template(rf, ctx) {
+function CameraWallComponent_Conditional_35_Conditional_21_Template(rf, ctx) {
   if (rf & 1) {
-    const _r10 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "div", 31)(1, "button", 32);
-    \u0275\u0275listener("click", function CameraWallComponent_Conditional_13_Conditional_16_Template_button_click_1_listener() {
-      \u0275\u0275restoreView(_r10);
+    const _r11 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "div", 47)(1, "div", 51)(2, "button", 52);
+    \u0275\u0275listener("click", function CameraWallComponent_Conditional_35_Conditional_21_Template_button_click_2_listener() {
+      \u0275\u0275restoreView(_r11);
       const ctx_r2 = \u0275\u0275nextContext(2);
       return \u0275\u0275resetView(ctx_r2.prevFrame());
     });
-    \u0275\u0275elementStart(2, "mat-icon");
-    \u0275\u0275text(3, "chevron_left");
+    \u0275\u0275elementStart(3, "mat-icon");
+    \u0275\u0275text(4, "chevron_left");
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(4, "input", 33);
-    \u0275\u0275listener("input", function CameraWallComponent_Conditional_13_Conditional_16_Template_input_input_4_listener($event) {
-      \u0275\u0275restoreView(_r10);
+    \u0275\u0275elementStart(5, "input", 53);
+    \u0275\u0275listener("input", function CameraWallComponent_Conditional_35_Conditional_21_Template_input_input_5_listener($event) {
+      \u0275\u0275restoreView(_r11);
       const ctx_r2 = \u0275\u0275nextContext(2);
       return \u0275\u0275resetView(ctx_r2.onScrub($event));
     });
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(5, "button", 32);
-    \u0275\u0275listener("click", function CameraWallComponent_Conditional_13_Conditional_16_Template_button_click_5_listener() {
-      \u0275\u0275restoreView(_r10);
+    \u0275\u0275elementStart(6, "button", 52);
+    \u0275\u0275listener("click", function CameraWallComponent_Conditional_35_Conditional_21_Template_button_click_6_listener() {
+      \u0275\u0275restoreView(_r11);
       const ctx_r2 = \u0275\u0275nextContext(2);
       return \u0275\u0275resetView(ctx_r2.nextFrame());
     });
-    \u0275\u0275elementStart(6, "mat-icon");
-    \u0275\u0275text(7, "chevron_right");
+    \u0275\u0275elementStart(7, "mat-icon");
+    \u0275\u0275text(8, "chevron_right");
     \u0275\u0275elementEnd()()();
-    \u0275\u0275elementStart(8, "div", 34)(9, "span");
-    \u0275\u0275text(10);
+    \u0275\u0275elementStart(9, "div", 54)(10, "span", 55);
+    \u0275\u0275text(11);
     \u0275\u0275elementEnd();
-    \u0275\u0275template(11, CameraWallComponent_Conditional_13_Conditional_16_Conditional_11_Template, 3, 4, "span", 35);
-    \u0275\u0275elementEnd();
+    \u0275\u0275template(12, CameraWallComponent_Conditional_35_Conditional_21_Conditional_12_Template, 3, 4, "span", 56);
+    \u0275\u0275elementEnd()();
   }
   if (rf & 2) {
     const ctx_r2 = \u0275\u0275nextContext(2);
-    \u0275\u0275advance();
+    \u0275\u0275advance(2);
     \u0275\u0275property("disabled", ctx_r2.frameIndex === 0);
     \u0275\u0275advance(3);
     \u0275\u0275property("max", ctx_r2.frames.length - 1)("value", ctx_r2.frameIndex);
@@ -66794,54 +66892,454 @@ function CameraWallComponent_Conditional_13_Conditional_16_Template(rf, ctx) {
     \u0275\u0275advance(5);
     \u0275\u0275textInterpolate2("", ctx_r2.frameIndex + 1, " / ", ctx_r2.frames.length, "");
     \u0275\u0275advance();
-    \u0275\u0275conditional((ctx_r2.currentFrame == null ? null : ctx_r2.currentFrame.timeUtc) ? 11 : -1);
+    \u0275\u0275conditional((ctx_r2.currentFrame == null ? null : ctx_r2.currentFrame.timeUtc) ? 12 : -1);
   }
 }
-function CameraWallComponent_Conditional_13_Template(rf, ctx) {
+function CameraWallComponent_Conditional_35_Template(rf, ctx) {
   if (rf & 1) {
-    const _r7 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "div", 20);
-    \u0275\u0275listener("click", function CameraWallComponent_Conditional_13_Template_div_click_0_listener() {
-      \u0275\u0275restoreView(_r7);
+    const _r8 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "div", 38);
+    \u0275\u0275listener("click", function CameraWallComponent_Conditional_35_Template_div_click_0_listener() {
+      \u0275\u0275restoreView(_r8);
       const ctx_r2 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r2.closeViewer());
     });
-    \u0275\u0275elementStart(1, "div", 21);
-    \u0275\u0275listener("click", function CameraWallComponent_Conditional_13_Template_div_click_1_listener($event) {
-      \u0275\u0275restoreView(_r7);
+    \u0275\u0275elementStart(1, "div", 39);
+    \u0275\u0275listener("click", function CameraWallComponent_Conditional_35_Template_div_click_1_listener($event) {
+      \u0275\u0275restoreView(_r8);
       return \u0275\u0275resetView($event.stopPropagation());
     });
-    \u0275\u0275elementStart(2, "div", 22)(3, "span", 23);
-    \u0275\u0275text(4);
+    \u0275\u0275elementStart(2, "div", 40)(3, "span", 41)(4, "mat-icon");
+    \u0275\u0275text(5, "history");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(5, "button", 24);
-    \u0275\u0275listener("click", function CameraWallComponent_Conditional_13_Template_button_click_5_listener() {
-      \u0275\u0275restoreView(_r7);
+    \u0275\u0275text(6);
+    \u0275\u0275elementStart(7, "span", 42);
+    \u0275\u0275text(8, "\xB7");
+    \u0275\u0275elementEnd();
+    \u0275\u0275text(9);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(10, "button", 43);
+    \u0275\u0275listener("click", function CameraWallComponent_Conditional_35_Template_button_click_10_listener() {
+      \u0275\u0275restoreView(_r8);
       const ctx_r2 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r2.closeViewer());
     });
-    \u0275\u0275elementStart(6, "mat-icon");
-    \u0275\u0275text(7, "close");
+    \u0275\u0275elementStart(11, "mat-icon");
+    \u0275\u0275text(12, "close");
     \u0275\u0275elementEnd()()();
-    \u0275\u0275elementStart(8, "div", 25);
-    \u0275\u0275template(9, CameraWallComponent_Conditional_13_Conditional_9_Template, 3, 3, "span", 26)(10, CameraWallComponent_Conditional_13_Conditional_10_Template, 3, 3, "span", 26)(11, CameraWallComponent_Conditional_13_Conditional_11_Template, 2, 0);
+    \u0275\u0275elementStart(13, "div", 44);
+    \u0275\u0275template(14, CameraWallComponent_Conditional_35_Conditional_14_Template, 3, 3, "span", 45)(15, CameraWallComponent_Conditional_35_Conditional_15_Template, 3, 3, "span", 45)(16, CameraWallComponent_Conditional_35_Conditional_16_Template, 2, 0);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(12, "div", 27);
-    \u0275\u0275template(13, CameraWallComponent_Conditional_13_Conditional_13_Template, 3, 3, "span", 26)(14, CameraWallComponent_Conditional_13_Conditional_14_Template, 1, 2, "img", 14)(15, CameraWallComponent_Conditional_13_Conditional_15_Template, 3, 3, "span", 26);
+    \u0275\u0275elementStart(17, "div", 46);
+    \u0275\u0275template(18, CameraWallComponent_Conditional_35_Conditional_18_Template, 3, 3, "span", 45)(19, CameraWallComponent_Conditional_35_Conditional_19_Template, 1, 2, "img", 29)(20, CameraWallComponent_Conditional_35_Conditional_20_Template, 3, 3, "span", 45);
     \u0275\u0275elementEnd();
-    \u0275\u0275template(16, CameraWallComponent_Conditional_13_Conditional_16_Template, 12, 7);
+    \u0275\u0275template(21, CameraWallComponent_Conditional_35_Conditional_21_Template, 13, 7, "div", 47);
     \u0275\u0275elementEnd()();
   }
   if (rf & 2) {
     const ctx_r2 = \u0275\u0275nextContext();
-    \u0275\u0275advance(4);
-    \u0275\u0275textInterpolate2("", ctx_r2.selectedPc, " \xB7 ", ctx_r2.viewerCamera, "");
-    \u0275\u0275advance(5);
-    \u0275\u0275conditional(ctx_r2.loadingDays ? 9 : ctx_r2.days.length === 0 ? 10 : 11);
-    \u0275\u0275advance(4);
-    \u0275\u0275conditional(ctx_r2.loadingFrames ? 13 : ctx_r2.currentFrame ? 14 : ctx_r2.selectedDay ? 15 : -1);
+    \u0275\u0275advance(6);
+    \u0275\u0275textInterpolate1(" ", ctx_r2.selectedPc, " ");
     \u0275\u0275advance(3);
-    \u0275\u0275conditional(ctx_r2.frames.length > 0 ? 16 : -1);
+    \u0275\u0275textInterpolate1(" ", ctx_r2.viewerCamera, " ");
+    \u0275\u0275advance(5);
+    \u0275\u0275conditional(ctx_r2.loadingDays ? 14 : ctx_r2.days.length === 0 ? 15 : 16);
+    \u0275\u0275advance(4);
+    \u0275\u0275conditional(ctx_r2.loadingFrames ? 18 : ctx_r2.currentFrame ? 19 : ctx_r2.selectedDay ? 20 : -1);
+    \u0275\u0275advance(3);
+    \u0275\u0275conditional(ctx_r2.frames.length > 0 ? 21 : -1);
+  }
+}
+function CameraWallComponent_Conditional_36_Conditional_16_Conditional_35_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "div", 81)(1, "mat-icon");
+    \u0275\u0275text(2, "autorenew");
+    \u0275\u0275elementEnd();
+    \u0275\u0275text(3);
+    \u0275\u0275pipe(4, "transloco");
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    \u0275\u0275advance(3);
+    \u0275\u0275textInterpolate1("", \u0275\u0275pipeBind1(4, 1, "cameras.storage.cleaning"), " ");
+  }
+}
+function CameraWallComponent_Conditional_36_Conditional_16_Conditional_51_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "span", 84);
+    \u0275\u0275text(1);
+    \u0275\u0275elementStart(2, "small");
+    \u0275\u0275text(3);
+    \u0275\u0275pipe(4, "transloco");
+    \u0275\u0275elementEnd()();
+  }
+  if (rf & 2) {
+    const ctx_r2 = \u0275\u0275nextContext(3);
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate1("", ctx_r2.retention.value, " ");
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(4, 2, ctx_r2.retention.unit === "days" ? "cameras.storage.unit_days" : "cameras.storage.unit_hours"));
+  }
+}
+function CameraWallComponent_Conditional_36_Conditional_16_Conditional_52_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "span", 84);
+    \u0275\u0275text(1, "\u2014");
+    \u0275\u0275elementEnd();
+  }
+}
+function CameraWallComponent_Conditional_36_Conditional_16_Conditional_57_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "span", 86);
+    \u0275\u0275text(1);
+    \u0275\u0275pipe(2, "date");
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const ctx_r2 = \u0275\u0275nextContext(3);
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate(\u0275\u0275pipeBind2(2, 1, ctx_r2.storage.oldestUtc, "dd.MM HH:mm"));
+  }
+}
+function CameraWallComponent_Conditional_36_Conditional_16_Conditional_58_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "span", 84);
+    \u0275\u0275text(1, "\u2014");
+    \u0275\u0275elementEnd();
+  }
+}
+function CameraWallComponent_Conditional_36_Conditional_16_Conditional_75_Conditional_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "mat-icon");
+    \u0275\u0275text(1, "check_circle");
+    \u0275\u0275elementEnd();
+    \u0275\u0275text(2);
+    \u0275\u0275pipe(3, "transloco");
+  }
+  if (rf & 2) {
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate1("", \u0275\u0275pipeBind1(3, 1, "cameras.storage.nothing_to_clean"), " ");
+  }
+}
+function CameraWallComponent_Conditional_36_Conditional_16_Conditional_75_Conditional_2_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "mat-icon");
+    \u0275\u0275text(1, "error");
+    \u0275\u0275elementEnd();
+    \u0275\u0275text(2);
+    \u0275\u0275pipe(3, "transloco");
+  }
+  if (rf & 2) {
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate1("", \u0275\u0275pipeBind1(3, 1, "cameras.storage.clean_error"), " ");
+  }
+}
+function CameraWallComponent_Conditional_36_Conditional_16_Conditional_75_Conditional_3_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "mat-icon");
+    \u0275\u0275text(1, "check_circle");
+    \u0275\u0275elementEnd();
+    \u0275\u0275text(2);
+    \u0275\u0275pipe(3, "transloco");
+  }
+  if (rf & 2) {
+    const ctx_r2 = \u0275\u0275nextContext(4);
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate2("", \u0275\u0275pipeBind1(3, 2, "cameras.storage.freed"), " ", ctx_r2.cleanupNote, " ");
+  }
+}
+function CameraWallComponent_Conditional_36_Conditional_16_Conditional_75_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "div", 97);
+    \u0275\u0275template(1, CameraWallComponent_Conditional_36_Conditional_16_Conditional_75_Conditional_1_Template, 4, 3)(2, CameraWallComponent_Conditional_36_Conditional_16_Conditional_75_Conditional_2_Template, 4, 3)(3, CameraWallComponent_Conditional_36_Conditional_16_Conditional_75_Conditional_3_Template, 4, 4);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const ctx_r2 = \u0275\u0275nextContext(3);
+    \u0275\u0275classProp("ok", ctx_r2.cleanupNote === "ok")("err", ctx_r2.cleanupNote === "error");
+    \u0275\u0275advance();
+    \u0275\u0275conditional(ctx_r2.cleanupNote === "ok" ? 1 : ctx_r2.cleanupNote === "error" ? 2 : 3);
+  }
+}
+function CameraWallComponent_Conditional_36_Conditional_16_Conditional_82_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "div", 95);
+    \u0275\u0275text(1);
+    \u0275\u0275pipe(2, "transloco");
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(2, 1, "cameras.storage.log_empty"));
+  }
+}
+function CameraWallComponent_Conditional_36_Conditional_16_Conditional_83_For_2_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "li", 98)(1, "span", 99);
+    \u0275\u0275text(2);
+    \u0275\u0275pipe(3, "transloco");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(4, "span", 100);
+    \u0275\u0275text(5);
+    \u0275\u0275elementStart(6, "span", 101);
+    \u0275\u0275text(7);
+    \u0275\u0275pipe(8, "number");
+    \u0275\u0275pipe(9, "transloco");
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(10, "span", 102);
+    \u0275\u0275text(11);
+    \u0275\u0275pipe(12, "date");
+    \u0275\u0275elementEnd()();
+  }
+  if (rf & 2) {
+    const e_r14 = ctx.$implicit;
+    const ctx_r2 = \u0275\u0275nextContext(4);
+    \u0275\u0275advance();
+    \u0275\u0275classProp("manual", e_r14.trigger === "manual");
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(3, 7, e_r14.trigger === "manual" ? "cameras.storage.trigger_manual" : "cameras.storage.trigger_auto"), " ");
+    \u0275\u0275advance(3);
+    \u0275\u0275textInterpolate1(" \u2212", ctx_r2.formatBytes(e_r14.freedBytes), " ");
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate2("\xB7 ", \u0275\u0275pipeBind1(8, 9, e_r14.deletedFrames), " ", \u0275\u0275pipeBind1(9, 11, "cameras.storage.frames"), "");
+    \u0275\u0275advance(4);
+    \u0275\u0275textInterpolate(\u0275\u0275pipeBind2(12, 13, e_r14.atUtc, "dd.MM HH:mm"));
+  }
+}
+function CameraWallComponent_Conditional_36_Conditional_16_Conditional_83_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "ul", 96);
+    \u0275\u0275repeaterCreate(1, CameraWallComponent_Conditional_36_Conditional_16_Conditional_83_For_2_Template, 13, 16, "li", 98, _forTrack32);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const ctx_r2 = \u0275\u0275nextContext(3);
+    \u0275\u0275advance();
+    \u0275\u0275repeater(ctx_r2.storage.recentCleanups);
+  }
+}
+function CameraWallComponent_Conditional_36_Conditional_16_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r13 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "div", 64)(1, "div", 66)(2, "div", 67);
+    \u0275\u0275namespaceSVG();
+    \u0275\u0275elementStart(3, "svg", 68);
+    \u0275\u0275element(4, "circle", 69)(5, "circle", 70);
+    \u0275\u0275elementEnd();
+    \u0275\u0275namespaceHTML();
+    \u0275\u0275elementStart(6, "div", 71)(7, "span", 72);
+    \u0275\u0275text(8);
+    \u0275\u0275elementStart(9, "small");
+    \u0275\u0275text(10, "%");
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(11, "span", 73);
+    \u0275\u0275text(12);
+    \u0275\u0275pipe(13, "transloco");
+    \u0275\u0275elementEnd()()();
+    \u0275\u0275elementStart(14, "div", 74)(15, "div", 75);
+    \u0275\u0275element(16, "span", 76);
+    \u0275\u0275elementStart(17, "span", 77);
+    \u0275\u0275text(18);
+    \u0275\u0275pipe(19, "transloco");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(20, "span", 78);
+    \u0275\u0275text(21);
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(22, "div", 79);
+    \u0275\u0275element(23, "span", 76);
+    \u0275\u0275elementStart(24, "span", 77);
+    \u0275\u0275text(25);
+    \u0275\u0275pipe(26, "transloco");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(27, "span", 78);
+    \u0275\u0275text(28);
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(29, "div", 80)(30, "span", 77);
+    \u0275\u0275text(31);
+    \u0275\u0275pipe(32, "transloco");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(33, "span", 78);
+    \u0275\u0275text(34);
+    \u0275\u0275elementEnd()();
+    \u0275\u0275template(35, CameraWallComponent_Conditional_36_Conditional_16_Conditional_35_Template, 5, 3, "div", 81);
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(36, "div", 82)(37, "div", 83)(38, "span", 84);
+    \u0275\u0275text(39);
+    \u0275\u0275pipe(40, "number");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(41, "span", 85);
+    \u0275\u0275text(42);
+    \u0275\u0275pipe(43, "transloco");
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(44, "div", 83)(45, "span", 84);
+    \u0275\u0275text(46);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(47, "span", 85);
+    \u0275\u0275text(48);
+    \u0275\u0275pipe(49, "transloco");
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(50, "div", 83);
+    \u0275\u0275template(51, CameraWallComponent_Conditional_36_Conditional_16_Conditional_51_Template, 5, 4, "span", 84)(52, CameraWallComponent_Conditional_36_Conditional_16_Conditional_52_Template, 2, 0, "span", 84);
+    \u0275\u0275elementStart(53, "span", 85);
+    \u0275\u0275text(54);
+    \u0275\u0275pipe(55, "transloco");
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(56, "div", 83);
+    \u0275\u0275template(57, CameraWallComponent_Conditional_36_Conditional_16_Conditional_57_Template, 3, 4, "span", 86)(58, CameraWallComponent_Conditional_36_Conditional_16_Conditional_58_Template, 2, 0, "span", 84);
+    \u0275\u0275elementStart(59, "span", 85);
+    \u0275\u0275text(60);
+    \u0275\u0275pipe(61, "transloco");
+    \u0275\u0275elementEnd()()();
+    \u0275\u0275elementStart(62, "div", 87)(63, "div", 88)(64, "span", 89);
+    \u0275\u0275text(65);
+    \u0275\u0275pipe(66, "transloco");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(67, "span", 90);
+    \u0275\u0275text(68);
+    \u0275\u0275pipe(69, "transloco");
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(70, "button", 91);
+    \u0275\u0275listener("click", function CameraWallComponent_Conditional_36_Conditional_16_Template_button_click_70_listener() {
+      \u0275\u0275restoreView(_r13);
+      const ctx_r2 = \u0275\u0275nextContext(2);
+      return \u0275\u0275resetView(ctx_r2.runCleanup());
+    });
+    \u0275\u0275elementStart(71, "mat-icon");
+    \u0275\u0275text(72);
+    \u0275\u0275elementEnd();
+    \u0275\u0275text(73);
+    \u0275\u0275pipe(74, "transloco");
+    \u0275\u0275elementEnd()();
+    \u0275\u0275template(75, CameraWallComponent_Conditional_36_Conditional_16_Conditional_75_Template, 4, 5, "div", 92);
+    \u0275\u0275elementStart(76, "div", 93)(77, "div", 94)(78, "mat-icon");
+    \u0275\u0275text(79, "notifications");
+    \u0275\u0275elementEnd();
+    \u0275\u0275text(80);
+    \u0275\u0275pipe(81, "transloco");
+    \u0275\u0275elementEnd();
+    \u0275\u0275template(82, CameraWallComponent_Conditional_36_Conditional_16_Conditional_82_Template, 3, 3, "div", 95)(83, CameraWallComponent_Conditional_36_Conditional_16_Conditional_83_Template, 3, 0, "ul", 96);
+    \u0275\u0275elementEnd()();
+  }
+  if (rf & 2) {
+    const ctx_r2 = \u0275\u0275nextContext(2);
+    \u0275\u0275advance(5);
+    \u0275\u0275styleProp("stroke", ctx_r2.storageColor)("stroke-dasharray", ctx_r2.gaugeCircumference)("stroke-dashoffset", ctx_r2.gaugeOffset);
+    \u0275\u0275advance(3);
+    \u0275\u0275textInterpolate(ctx_r2.storage.usedPct);
+    \u0275\u0275advance(4);
+    \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(13, 33, "cameras.storage.used"));
+    \u0275\u0275advance(4);
+    \u0275\u0275styleProp("background", ctx_r2.storageColor);
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(19, 35, "cameras.storage.used"));
+    \u0275\u0275advance(3);
+    \u0275\u0275textInterpolate(ctx_r2.formatBytes(ctx_r2.storage.usedBytes));
+    \u0275\u0275advance(4);
+    \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(26, 37, "cameras.storage.free"));
+    \u0275\u0275advance(3);
+    \u0275\u0275textInterpolate(ctx_r2.formatBytes(ctx_r2.storage.freeBytes));
+    \u0275\u0275advance(3);
+    \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(32, 39, "cameras.storage.limit"));
+    \u0275\u0275advance(3);
+    \u0275\u0275textInterpolate(ctx_r2.formatBytes(ctx_r2.storage.maxBytes));
+    \u0275\u0275advance();
+    \u0275\u0275conditional(ctx_r2.storage.cleaning ? 35 : -1);
+    \u0275\u0275advance(4);
+    \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(40, 41, ctx_r2.storage.frameCount));
+    \u0275\u0275advance(3);
+    \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(43, 43, "cameras.storage.frames"));
+    \u0275\u0275advance(4);
+    \u0275\u0275textInterpolate(ctx_r2.formatBytes(ctx_r2.storage.avgFrameBytes));
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(49, 45, "cameras.storage.avg_frame"));
+    \u0275\u0275advance(3);
+    \u0275\u0275conditional(ctx_r2.retention ? 51 : 52);
+    \u0275\u0275advance(3);
+    \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(55, 47, "cameras.storage.retention"));
+    \u0275\u0275advance(3);
+    \u0275\u0275conditional(ctx_r2.storage.oldestUtc ? 57 : 58);
+    \u0275\u0275advance(3);
+    \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(61, 49, "cameras.storage.oldest"));
+    \u0275\u0275advance(5);
+    \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(66, 51, "cameras.storage.cleanup_title"));
+    \u0275\u0275advance(3);
+    \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(69, 53, "cameras.storage.cleanup_hint"));
+    \u0275\u0275advance(2);
+    \u0275\u0275property("disabled", ctx_r2.cleaning || !ctx_r2.storage.quotaEnabled);
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate(ctx_r2.cleaning ? "autorenew" : "cleaning_services");
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(74, 55, ctx_r2.cleaning ? "cameras.storage.cleaning" : "cameras.storage.clean_now"), " ");
+    \u0275\u0275advance(2);
+    \u0275\u0275conditional(ctx_r2.cleanupNote ? 75 : -1);
+    \u0275\u0275advance(5);
+    \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(81, 57, "cameras.storage.log_title"), " ");
+    \u0275\u0275advance(2);
+    \u0275\u0275conditional(ctx_r2.storage.recentCleanups.length === 0 ? 82 : 83);
+  }
+}
+function CameraWallComponent_Conditional_36_Conditional_17_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "div", 65);
+    \u0275\u0275text(1);
+    \u0275\u0275pipe(2, "transloco");
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(2, 1, "cameras.loading"));
+  }
+}
+function CameraWallComponent_Conditional_36_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r12 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "div", 57);
+    \u0275\u0275listener("click", function CameraWallComponent_Conditional_36_Template_div_click_0_listener() {
+      \u0275\u0275restoreView(_r12);
+      const ctx_r2 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r2.closeStorage());
+    });
+    \u0275\u0275elementStart(1, "div", 58);
+    \u0275\u0275listener("click", function CameraWallComponent_Conditional_36_Template_div_click_1_listener($event) {
+      \u0275\u0275restoreView(_r12);
+      return \u0275\u0275resetView($event.stopPropagation());
+    });
+    \u0275\u0275elementStart(2, "div", 59)(3, "span", 60)(4, "mat-icon");
+    \u0275\u0275text(5, "storage");
+    \u0275\u0275elementEnd();
+    \u0275\u0275text(6);
+    \u0275\u0275pipe(7, "transloco");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(8, "div", 61)(9, "button", 62);
+    \u0275\u0275pipe(10, "transloco");
+    \u0275\u0275listener("click", function CameraWallComponent_Conditional_36_Template_button_click_9_listener() {
+      \u0275\u0275restoreView(_r12);
+      const ctx_r2 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r2.loadStorage());
+    });
+    \u0275\u0275elementStart(11, "mat-icon");
+    \u0275\u0275text(12, "refresh");
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(13, "button", 63);
+    \u0275\u0275listener("click", function CameraWallComponent_Conditional_36_Template_button_click_13_listener() {
+      \u0275\u0275restoreView(_r12);
+      const ctx_r2 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r2.closeStorage());
+    });
+    \u0275\u0275elementStart(14, "mat-icon");
+    \u0275\u0275text(15, "close");
+    \u0275\u0275elementEnd()()()();
+    \u0275\u0275template(16, CameraWallComponent_Conditional_36_Conditional_16_Template, 84, 59, "div", 64)(17, CameraWallComponent_Conditional_36_Conditional_17_Template, 3, 3, "div", 65);
+    \u0275\u0275elementEnd()();
+  }
+  if (rf & 2) {
+    const ctx_r2 = \u0275\u0275nextContext();
+    \u0275\u0275advance(6);
+    \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(7, 3, "cameras.storage.title"), " ");
+    \u0275\u0275advance(3);
+    \u0275\u0275property("title", \u0275\u0275pipeBind1(10, 5, "cameras.refresh"));
+    \u0275\u0275advance(7);
+    \u0275\u0275conditional(ctx_r2.storage ? 16 : ctx_r2.loadingStorage ? 17 : -1);
   }
 }
 var CameraWallComponent = class _CameraWallComponent {
@@ -66851,6 +67349,21 @@ var CameraWallComponent = class _CameraWallComponent {
   cameras = [];
   loadingPcs = false;
   loadingCameras = false;
+  // wall clock (header) + snapshot time used to decide LIVE badges
+  clock = "";
+  wallLoadedMs = Date.now();
+  clockTimer;
+  // live wall auto-refresh (re-pulls latest frames in place, no flicker)
+  autoRefresh = true;
+  refreshTimer;
+  static REFRESH_MS = 1e4;
+  // admin storage panel (only enabled when GET /storage returns 200)
+  storageAvailable = false;
+  storageOpen = false;
+  storage = null;
+  loadingStorage = false;
+  cleaning = false;
+  cleanupNote = null;
   // archive viewer state
   viewerCamera = null;
   days = [];
@@ -66864,6 +67377,29 @@ var CameraWallComponent = class _CameraWallComponent {
   }
   ngOnInit() {
     this.loadPcs();
+    this.tickClock();
+    this.clockTimer = setInterval(() => this.tickClock(), 1e3);
+    this.startAutoRefresh();
+    this.probeStorage();
+  }
+  ngOnDestroy() {
+    if (this.clockTimer)
+      clearInterval(this.clockTimer);
+    this.stopAutoRefresh();
+  }
+  tickClock() {
+    this.clock = (/* @__PURE__ */ new Date()).toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit"
+    });
+  }
+  // A camera counts as LIVE if its last frame was fresh when the wall loaded.
+  // The wall loads once (no polling), so this is a snapshot, not a ticking state.
+  isLive(cam) {
+    if (!cam.lastSeenUtc)
+      return false;
+    return this.wallLoadedMs - Date.parse(cam.lastSeenUtc) < 3e4;
   }
   // ── PCs + wall (loaded once, no auto-refresh) ─────────────────────
   loadPcs() {
@@ -66888,6 +67424,7 @@ var CameraWallComponent = class _CameraWallComponent {
     this.loadingCameras = true;
     this.http.get(`/api/frames/${pc}/cameras`).subscribe({
       next: (cams) => {
+        this.wallLoadedMs = Date.now();
         this.cameras = cams.map((c) => ({
           cameraId: c.cameraId,
           lastSeenUtc: c.lastSeenUtc,
@@ -66899,6 +67436,52 @@ var CameraWallComponent = class _CameraWallComponent {
       },
       error: () => {
         this.loadingCameras = false;
+      }
+    });
+  }
+  // ── live auto-refresh (in-place, keeps cell identity to avoid flicker) ──
+  startAutoRefresh() {
+    this.stopAutoRefresh();
+    if (!this.autoRefresh)
+      return;
+    this.refreshTimer = setInterval(() => this.refreshFrames(), _CameraWallComponent.REFRESH_MS);
+  }
+  stopAutoRefresh() {
+    if (this.refreshTimer) {
+      clearInterval(this.refreshTimer);
+      this.refreshTimer = void 0;
+    }
+  }
+  toggleAutoRefresh() {
+    this.autoRefresh = !this.autoRefresh;
+    this.startAutoRefresh();
+    if (this.autoRefresh)
+      this.refreshFrames();
+  }
+  // Re-pull latest frames for the selected PC, merging into existing cells so the
+  // <img> just swaps source instead of the whole grid re-rendering. Paused while
+  // the archive viewer is open.
+  refreshFrames() {
+    if (!this.selectedPc || this.viewerCamera)
+      return;
+    this.http.get(`/api/frames/${this.selectedPc}/cameras`).subscribe({
+      next: (cams) => {
+        this.wallLoadedMs = Date.now();
+        const byId = new Map(this.cameras.map((c) => [c.cameraId, c]));
+        this.cameras = cams.map((c) => {
+          const state = byId.get(c.cameraId) ?? {
+            cameraId: c.cameraId,
+            lastSeenUtc: c.lastSeenUtc,
+            imageUrl: c.imageUrl,
+            displayedSrc: null
+          };
+          state.lastSeenUtc = c.lastSeenUtc;
+          state.imageUrl = c.imageUrl;
+          state.displayedSrc = `${c.imageUrl}?t=${Date.now()}`;
+          return state;
+        });
+      },
+      error: () => {
       }
     });
   }
@@ -66965,60 +67548,227 @@ var CameraWallComponent = class _CameraWallComponent {
     if (!Number.isNaN(value))
       this.frameIndex = value;
   }
+  // ── admin storage panel ───────────────────────────────────────────
+  // Probe once: a 200 means the caller is an admin → expose the storage button.
+  // 401/403 (regular users) silently leaves the panel hidden.
+  probeStorage() {
+    this.http.get("/api/frames/storage").subscribe({
+      next: (info) => {
+        this.storageAvailable = true;
+        this.storage = info;
+      },
+      error: () => {
+        this.storageAvailable = false;
+      }
+    });
+  }
+  openStorage() {
+    this.storageOpen = true;
+    this.cleanupNote = null;
+    this.loadStorage();
+  }
+  closeStorage() {
+    this.storageOpen = false;
+  }
+  loadStorage() {
+    this.loadingStorage = true;
+    this.http.get("/api/frames/storage").subscribe({
+      next: (info) => {
+        this.storage = info;
+        this.loadingStorage = false;
+      },
+      error: () => {
+        this.loadingStorage = false;
+      }
+    });
+  }
+  runCleanup() {
+    if (this.cleaning)
+      return;
+    this.cleaning = true;
+    this.cleanupNote = null;
+    this.http.post("/api/frames/storage/cleanup", {}).subscribe({
+      next: (res) => {
+        this.cleaning = false;
+        this.cleanupNote = res.deletedFrames > 0 ? `\u2212${this.formatBytes(res.freedBytes)} \xB7 ${res.deletedFrames}` : "ok";
+        this.loadStorage();
+      },
+      error: () => {
+        this.cleaning = false;
+        this.cleanupNote = "error";
+      }
+    });
+  }
+  // ── storage view helpers ──────────────────────────────────────────
+  /** Bar/gauge fill, clamped so a brief overshoot past the limit never exceeds 100%. */
+  get storagePct() {
+    return Math.min(100, this.storage?.usedPct ?? 0);
+  }
+  /** Green under 75%, amber under 90%, red above — mirrors how full the quota is. */
+  get storageColor() {
+    const pct = this.storage?.usedPct ?? 0;
+    if (pct >= 90)
+      return "#f0584f";
+    if (pct >= 75)
+      return "#e0a106";
+    return "var(--accent)";
+  }
+  /** SVG ring geometry (r=52). */
+  gaugeCircumference = 2 * Math.PI * 52;
+  get gaugeOffset() {
+    return this.gaugeCircumference * (1 - this.storagePct / 100);
+  }
+  /** Retention shown in days past 48h, otherwise hours; null when not estimable yet. */
+  get retention() {
+    const h = this.storage?.retentionHours;
+    if (h == null)
+      return null;
+    return h >= 48 ? { value: (h / 24).toFixed(1), unit: "days" } : { value: h.toFixed(1), unit: "hours" };
+  }
+  formatBytes(bytes) {
+    if (!bytes || bytes <= 0)
+      return "0 \u041C\u0411";
+    const gb = bytes / 1024 ** 3;
+    if (gb >= 1)
+      return `${gb.toFixed(1)} \u0413\u0411`;
+    const mb = bytes / 1024 ** 2;
+    return `${Math.max(1, Math.round(mb))} \u041C\u0411`;
+  }
   static \u0275fac = function CameraWallComponent_Factory(__ngFactoryType__) {
     return new (__ngFactoryType__ || _CameraWallComponent)(\u0275\u0275directiveInject(HttpClient));
   };
-  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _CameraWallComponent, selectors: [["app-camera-wall"]], standalone: false, decls: 14, vars: 4, consts: [[1, "camera-page"], [1, "pc-bar"], [1, "pc-bar-label"], [1, "pc-muted"], ["type", "button", 1, "pc-refresh", 3, "title"], [1, "camera-wall"], [1, "wall-empty"], [1, "archive-overlay"], ["type", "button", 1, "pc-chip", 3, "active"], ["type", "button", 1, "pc-chip", 3, "click"], [1, "pc-chip-count"], ["type", "button", 1, "pc-refresh", 3, "click", "title"], [1, "camera-cell"], [1, "camera-cell", 3, "click"], [3, "src", "alt"], [1, "no-signal"], [1, "cam-label"], [1, "cam-name"], [1, "cam-time"], [1, "cam-history-hint"], [1, "archive-overlay", 3, "click"], [1, "archive-panel", 3, "click"], [1, "archive-header"], [1, "archive-title"], ["type", "button", 1, "archive-close", 3, "click"], [1, "archive-days"], [1, "archive-muted"], [1, "archive-stage"], ["type", "button", 1, "archive-day-chip", 3, "active"], ["type", "button", 1, "archive-day-chip", 3, "click"], [1, "archive-day-count"], [1, "archive-controls"], ["type", "button", 3, "click", "disabled"], ["type", "range", "min", "0", 3, "input", "max", "value"], [1, "archive-meta"], [1, "archive-stamp"]], template: function CameraWallComponent_Template(rf, ctx) {
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _CameraWallComponent, selectors: [["app-camera-wall"]], standalone: false, decls: 37, vars: 19, consts: [[1, "camera-page"], [1, "cam-header"], [1, "cam-brand"], [1, "cam-brand-icon"], [1, "cam-brand-text"], [1, "cam-title"], [1, "cam-subtitle"], [1, "pc-bar"], [1, "pc-bar-label"], [1, "pc-muted"], [1, "cam-header-right"], ["type", "button", 1, "cam-storage-chip", 3, "warn", "crit", "title"], [1, "cam-clock"], ["type", "button", 1, "pc-toggle", 3, "click", "title"], ["type", "button", 1, "pc-refresh", 3, "title"], [1, "camera-wall"], [1, "wall-empty"], [1, "archive-overlay"], [1, "storage-overlay"], ["type", "button", 1, "pc-chip", 3, "active"], ["type", "button", 1, "pc-chip", 3, "click"], [1, "pc-chip-count"], ["type", "button", 1, "cam-storage-chip", 3, "click", "title"], [1, "cam-storage-pct"], [1, "cam-storage-bar"], ["type", "button", 1, "pc-refresh", 3, "click", "title"], [1, "camera-cell", 3, "is-live"], [1, "camera-cell", 3, "click"], [1, "cam-media"], [3, "src", "alt"], [1, "no-signal"], [1, "cam-scrim"], [1, "cam-live"], ["type", "button", 1, "cam-history-hint", 3, "title"], [1, "cam-label"], [1, "cam-name"], [1, "cam-time"], [1, "cam-live-dot"], [1, "archive-overlay", 3, "click"], [1, "archive-panel", 3, "click"], [1, "archive-header"], [1, "archive-title"], [1, "archive-sep"], ["type", "button", 1, "archive-close", 3, "click"], [1, "archive-days"], [1, "archive-muted"], [1, "archive-stage"], [1, "archive-footer"], ["type", "button", 1, "archive-day-chip", 3, "active"], ["type", "button", 1, "archive-day-chip", 3, "click"], [1, "archive-day-count"], [1, "archive-controls"], ["type", "button", 3, "click", "disabled"], ["type", "range", "min", "0", 3, "input", "max", "value"], [1, "archive-meta"], [1, "archive-count"], [1, "archive-stamp"], [1, "storage-overlay", 3, "click"], [1, "storage-panel", 3, "click"], [1, "storage-header"], [1, "storage-title"], [1, "storage-header-actions"], ["type", "button", 1, "storage-icon-btn", 3, "click", "title"], ["type", "button", 1, "storage-icon-btn", 3, "click"], [1, "storage-body"], [1, "storage-loading"], [1, "storage-gauge-row"], [1, "storage-gauge"], ["viewBox", "0 0 120 120"], ["cx", "60", "cy", "60", "r", "52", 1, "gauge-track"], ["cx", "60", "cy", "60", "r", "52", 1, "gauge-fill"], [1, "gauge-center"], [1, "gauge-pct"], [1, "gauge-cap"], [1, "storage-legend"], [1, "legend-row", "used"], [1, "legend-dot"], [1, "legend-label"], [1, "legend-val"], [1, "legend-row", "free"], [1, "legend-row", "total"], [1, "storage-cleaning"], [1, "storage-stats"], [1, "stat-tile"], [1, "stat-val"], [1, "stat-key"], [1, "stat-val", "small"], [1, "storage-action"], [1, "action-text"], [1, "action-title"], [1, "action-hint"], ["type", "button", 1, "cleanup-btn", 3, "click", "disabled"], [1, "cleanup-note", 3, "ok", "err"], [1, "storage-log"], [1, "log-head"], [1, "log-empty"], [1, "log-list"], [1, "cleanup-note"], [1, "log-item"], [1, "log-trigger"], [1, "log-main"], [1, "log-frames"], [1, "log-time"]], template: function CameraWallComponent_Template(rf, ctx) {
     if (rf & 1) {
-      \u0275\u0275elementStart(0, "div", 0)(1, "div", 1)(2, "span", 2)(3, "mat-icon");
-      \u0275\u0275text(4, "desktop_windows");
+      \u0275\u0275elementStart(0, "div", 0)(1, "header", 1)(2, "div", 2)(3, "span", 3)(4, "mat-icon");
+      \u0275\u0275text(5, "videocam");
       \u0275\u0275elementEnd()();
-      \u0275\u0275template(5, CameraWallComponent_Conditional_5_Template, 3, 3, "span", 3)(6, CameraWallComponent_Conditional_6_Template, 3, 3, "span", 3)(7, CameraWallComponent_Conditional_7_Template, 2, 0)(8, CameraWallComponent_Conditional_8_Template, 4, 3, "button", 4);
+      \u0275\u0275elementStart(6, "div", 4)(7, "span", 5);
+      \u0275\u0275text(8);
+      \u0275\u0275pipe(9, "transloco");
       \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(9, "div", 5);
-      \u0275\u0275template(10, CameraWallComponent_Conditional_10_Template, 3, 3, "div", 6)(11, CameraWallComponent_Conditional_11_Template, 3, 3, "div", 6)(12, CameraWallComponent_Conditional_12_Template, 2, 0);
+      \u0275\u0275elementStart(10, "span", 6);
+      \u0275\u0275text(11);
+      \u0275\u0275pipe(12, "transloco");
+      \u0275\u0275elementEnd()()();
+      \u0275\u0275elementStart(13, "div", 7)(14, "span", 8)(15, "mat-icon");
+      \u0275\u0275text(16, "desktop_windows");
       \u0275\u0275elementEnd()();
-      \u0275\u0275template(13, CameraWallComponent_Conditional_13_Template, 17, 5, "div", 7);
+      \u0275\u0275template(17, CameraWallComponent_Conditional_17_Template, 3, 3, "span", 9)(18, CameraWallComponent_Conditional_18_Template, 3, 3, "span", 9)(19, CameraWallComponent_Conditional_19_Template, 2, 0);
+      \u0275\u0275elementEnd();
+      \u0275\u0275elementStart(20, "div", 10);
+      \u0275\u0275template(21, CameraWallComponent_Conditional_21_Template, 8, 12, "button", 11);
+      \u0275\u0275elementStart(22, "span", 12)(23, "mat-icon");
+      \u0275\u0275text(24, "schedule");
+      \u0275\u0275elementEnd();
+      \u0275\u0275text(25);
+      \u0275\u0275elementEnd();
+      \u0275\u0275elementStart(26, "button", 13);
+      \u0275\u0275pipe(27, "transloco");
+      \u0275\u0275listener("click", function CameraWallComponent_Template_button_click_26_listener() {
+        return ctx.toggleAutoRefresh();
+      });
+      \u0275\u0275elementStart(28, "mat-icon");
+      \u0275\u0275text(29);
+      \u0275\u0275elementEnd()();
+      \u0275\u0275template(30, CameraWallComponent_Conditional_30_Template, 4, 3, "button", 14);
+      \u0275\u0275elementEnd()();
+      \u0275\u0275elementStart(31, "div", 15);
+      \u0275\u0275template(32, CameraWallComponent_Conditional_32_Template, 3, 3, "div", 16)(33, CameraWallComponent_Conditional_33_Template, 3, 3, "div", 16)(34, CameraWallComponent_Conditional_34_Template, 2, 0);
+      \u0275\u0275elementEnd()();
+      \u0275\u0275template(35, CameraWallComponent_Conditional_35_Template, 22, 5, "div", 17)(36, CameraWallComponent_Conditional_36_Template, 18, 7, "div", 18);
     }
     if (rf & 2) {
-      \u0275\u0275advance(5);
-      \u0275\u0275conditional(ctx.loadingPcs ? 5 : ctx.pcs.length === 0 ? 6 : 7);
+      \u0275\u0275advance(8);
+      \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(9, 13, "cameras.title"));
       \u0275\u0275advance(3);
-      \u0275\u0275conditional(ctx.selectedPc ? 8 : -1);
+      \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(12, 15, "cameras.subtitle"));
+      \u0275\u0275advance(6);
+      \u0275\u0275conditional(ctx.loadingPcs ? 17 : ctx.pcs.length === 0 ? 18 : 19);
+      \u0275\u0275advance(4);
+      \u0275\u0275conditional(ctx.storageAvailable && ctx.storage ? 21 : -1);
+      \u0275\u0275advance(4);
+      \u0275\u0275textInterpolate(ctx.clock);
+      \u0275\u0275advance();
+      \u0275\u0275classProp("on", ctx.autoRefresh);
+      \u0275\u0275property("title", \u0275\u0275pipeBind1(27, 17, ctx.autoRefresh ? "cameras.live_on" : "cameras.live_off"));
+      \u0275\u0275advance(3);
+      \u0275\u0275textInterpolate(ctx.autoRefresh ? "sensors" : "sensors_off");
+      \u0275\u0275advance();
+      \u0275\u0275conditional(ctx.selectedPc ? 30 : -1);
       \u0275\u0275advance(2);
-      \u0275\u0275conditional(ctx.loadingCameras ? 10 : ctx.cameras.length === 0 ? 11 : 12);
+      \u0275\u0275conditional(ctx.loadingCameras ? 32 : ctx.cameras.length === 0 ? 33 : 34);
       \u0275\u0275advance(3);
-      \u0275\u0275conditional(ctx.viewerCamera ? 13 : -1);
+      \u0275\u0275conditional(ctx.viewerCamera ? 35 : -1);
+      \u0275\u0275advance();
+      \u0275\u0275conditional(ctx.storageOpen ? 36 : -1);
     }
-  }, dependencies: [MatIcon, DatePipe, TranslocoPipe], styles: ['@charset "UTF-8";\n\n\n\n.camera-page[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  width: 100vw;\n  height: 100vh;\n  background: #000;\n  overflow: hidden;\n}\n.pc-bar[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  gap: 8px;\n  flex-wrap: wrap;\n  padding: 8px 14px;\n  background: #0c0c0c;\n  border-bottom: 1px solid rgba(255, 255, 255, 0.07);\n}\n.pc-bar-label[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  color: rgba(255, 255, 255, 0.45);\n}\n.pc-bar-label[_ngcontent-%COMP%]   mat-icon[_ngcontent-%COMP%] {\n  font-size: 18px;\n  width: 18px;\n  height: 18px;\n}\n.pc-muted[_ngcontent-%COMP%] {\n  color: rgba(255, 255, 255, 0.4);\n  font-size: 12px;\n}\n.pc-chip[_ngcontent-%COMP%] {\n  display: inline-flex;\n  align-items: center;\n  gap: 6px;\n  padding: 4px 12px;\n  font-size: 12px;\n  font-weight: 600;\n  letter-spacing: 0.03em;\n  color: rgba(255, 255, 255, 0.8);\n  background: rgba(255, 255, 255, 0.06);\n  border: 1px solid transparent;\n  border-radius: 999px;\n  cursor: pointer;\n  transition: background 0.15s ease;\n}\n.pc-chip[_ngcontent-%COMP%]:hover {\n  background: rgba(255, 255, 255, 0.12);\n}\n.pc-chip.active[_ngcontent-%COMP%] {\n  background: rgba(34, 197, 94, 0.18);\n  border-color: rgba(34, 197, 94, 0.55);\n  color: #fff;\n}\n.pc-chip-count[_ngcontent-%COMP%] {\n  font-size: 10px;\n  color: rgba(255, 255, 255, 0.5);\n}\n.pc-refresh[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  margin-left: auto;\n  background: none;\n  border: none;\n  color: rgba(255, 255, 255, 0.55);\n  cursor: pointer;\n}\n.pc-refresh[_ngcontent-%COMP%]:hover {\n  color: #fff;\n}\n.pc-refresh[_ngcontent-%COMP%]   mat-icon[_ngcontent-%COMP%] {\n  font-size: 20px;\n  width: 20px;\n  height: 20px;\n}\n.camera-wall[_ngcontent-%COMP%] {\n  flex: 1;\n  min-height: 0;\n  display: grid;\n  grid-template-columns: repeat(3, 1fr);\n  grid-auto-rows: 1fr;\n  gap: 2px;\n  background: #000;\n  overflow: hidden;\n}\n.wall-empty[_ngcontent-%COMP%] {\n  grid-column: 1/-1;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  color: rgba(255, 255, 255, 0.4);\n  font-size: 13px;\n}\n.camera-cell[_ngcontent-%COMP%] {\n  position: relative;\n  background: #111;\n  overflow: hidden;\n  cursor: pointer;\n}\n.camera-cell[_ngcontent-%COMP%]   img[_ngcontent-%COMP%] {\n  width: 100%;\n  height: 100%;\n  object-fit: cover;\n  display: block;\n}\n.camera-cell[_ngcontent-%COMP%]:hover   .cam-history-hint[_ngcontent-%COMP%] {\n  opacity: 1;\n}\n.cam-history-hint[_ngcontent-%COMP%] {\n  position: absolute;\n  top: 8px;\n  right: 8px;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  width: 28px;\n  height: 28px;\n  border-radius: 50%;\n  background: rgba(0, 0, 0, 0.55);\n  color: rgba(255, 255, 255, 0.9);\n  opacity: 0;\n  transition: opacity 0.15s ease;\n  pointer-events: none;\n}\n.cam-history-hint[_ngcontent-%COMP%]   mat-icon[_ngcontent-%COMP%] {\n  font-size: 18px;\n  width: 18px;\n  height: 18px;\n}\n.no-signal[_ngcontent-%COMP%] {\n  width: 100%;\n  height: 100%;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  color: #444;\n}\n.no-signal[_ngcontent-%COMP%]   mat-icon[_ngcontent-%COMP%] {\n  font-size: 48px;\n  width: 48px;\n  height: 48px;\n}\n.cam-label[_ngcontent-%COMP%] {\n  position: absolute;\n  bottom: 8px;\n  left: 10px;\n  right: 10px;\n  display: flex;\n  align-items: baseline;\n  justify-content: space-between;\n  gap: 8px;\n  color: rgba(255, 255, 255, 0.78);\n  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85);\n  pointer-events: none;\n}\n.cam-label[_ngcontent-%COMP%]   .cam-name[_ngcontent-%COMP%] {\n  font-size: 11px;\n  font-weight: 600;\n  letter-spacing: 0.05em;\n}\n.cam-label[_ngcontent-%COMP%]   .cam-time[_ngcontent-%COMP%] {\n  font-size: 11px;\n  font-variant-numeric: tabular-nums;\n  color: rgba(255, 255, 255, 0.62);\n}\n.archive-overlay[_ngcontent-%COMP%] {\n  position: fixed;\n  inset: 0;\n  z-index: 1000;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  background: rgba(0, 0, 0, 0.82);\n  backdrop-filter: blur(2px);\n}\n.archive-panel[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  width: min(92vw, 960px);\n  max-height: 92vh;\n  background: #141414;\n  border: 1px solid rgba(255, 255, 255, 0.08);\n  border-radius: 10px;\n  overflow: hidden;\n  color: #eaeaea;\n}\n.archive-header[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  padding: 12px 16px;\n  border-bottom: 1px solid rgba(255, 255, 255, 0.07);\n}\n.archive-header[_ngcontent-%COMP%]   .archive-title[_ngcontent-%COMP%] {\n  font-size: 14px;\n  font-weight: 600;\n  letter-spacing: 0.04em;\n}\n.archive-header[_ngcontent-%COMP%]   .archive-close[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  background: none;\n  border: none;\n  color: rgba(255, 255, 255, 0.6);\n  cursor: pointer;\n}\n.archive-header[_ngcontent-%COMP%]   .archive-close[_ngcontent-%COMP%]:hover {\n  color: #fff;\n}\n.archive-days[_ngcontent-%COMP%] {\n  display: flex;\n  flex-wrap: wrap;\n  gap: 6px;\n  padding: 12px 16px;\n  border-bottom: 1px solid rgba(255, 255, 255, 0.07);\n}\n.archive-day-chip[_ngcontent-%COMP%] {\n  display: inline-flex;\n  align-items: center;\n  gap: 6px;\n  padding: 4px 10px;\n  font-size: 12px;\n  color: rgba(255, 255, 255, 0.8);\n  background: rgba(255, 255, 255, 0.06);\n  border: 1px solid transparent;\n  border-radius: 999px;\n  cursor: pointer;\n  transition: background 0.15s ease;\n}\n.archive-day-chip[_ngcontent-%COMP%]:hover {\n  background: rgba(255, 255, 255, 0.12);\n}\n.archive-day-chip.active[_ngcontent-%COMP%] {\n  background: rgba(34, 197, 94, 0.18);\n  border-color: rgba(34, 197, 94, 0.55);\n  color: #fff;\n}\n.archive-day-count[_ngcontent-%COMP%] {\n  font-size: 10px;\n  color: rgba(255, 255, 255, 0.5);\n}\n.archive-stage[_ngcontent-%COMP%] {\n  flex: 1;\n  min-height: 0;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  background: #000;\n}\n.archive-stage[_ngcontent-%COMP%]   img[_ngcontent-%COMP%] {\n  max-width: 100%;\n  max-height: 64vh;\n  object-fit: contain;\n  display: block;\n}\n.archive-muted[_ngcontent-%COMP%] {\n  color: rgba(255, 255, 255, 0.45);\n  font-size: 13px;\n  padding: 32px;\n}\n.archive-controls[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  padding: 12px 16px 4px;\n}\n.archive-controls[_ngcontent-%COMP%]   button[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  background: rgba(255, 255, 255, 0.06);\n  border: none;\n  border-radius: 6px;\n  color: #eaeaea;\n  cursor: pointer;\n  padding: 4px;\n}\n.archive-controls[_ngcontent-%COMP%]   button[_ngcontent-%COMP%]:hover:not(:disabled) {\n  background: rgba(255, 255, 255, 0.14);\n}\n.archive-controls[_ngcontent-%COMP%]   button[_ngcontent-%COMP%]:disabled {\n  opacity: 0.3;\n  cursor: default;\n}\n.archive-controls[_ngcontent-%COMP%]   input[type=range][_ngcontent-%COMP%] {\n  flex: 1;\n  accent-color: #22c55e;\n  cursor: pointer;\n}\n.archive-meta[_ngcontent-%COMP%] {\n  display: flex;\n  justify-content: space-between;\n  padding: 4px 18px 14px;\n  font-size: 12px;\n  color: rgba(255, 255, 255, 0.55);\n  font-variant-numeric: tabular-nums;\n}\n/*# sourceMappingURL=camera-wall.component.css.map */'] });
+  }, dependencies: [MatIcon, DecimalPipe, DatePipe, TranslocoPipe], styles: ['@charset "UTF-8";\n\n\n\n[_nghost-%COMP%] {\n  --accent: #22c55e;\n  --accent-soft: rgba(34, 197, 94, 0.16);\n  --accent-ring: rgba(34, 197, 94, 0.55);\n  --bg: #0a0b0d;\n  --surface: #111317;\n  --surface-2: #15181d;\n  --hairline: rgba(255, 255, 255, 0.08);\n  --text: #eef1f5;\n  --text-dim: rgba(255, 255, 255, 0.55);\n  --text-faint: rgba(255, 255, 255, 0.38);\n}\n.camera-page[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  width: 100vw;\n  height: 100vh;\n  background:\n    radial-gradient(\n      1200px 600px at 80% -10%,\n      rgba(34, 197, 94, 0.06),\n      transparent 60%),\n    var(--bg);\n  color: var(--text);\n  overflow: hidden;\n}\n.cam-header[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  gap: 18px;\n  padding: 12px 20px;\n  background: rgba(17, 19, 23, 0.72);\n  border-bottom: 1px solid var(--hairline);\n  backdrop-filter: blur(12px);\n}\n.cam-brand[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  min-width: 0;\n}\n.cam-brand-icon[_ngcontent-%COMP%] {\n  display: grid;\n  place-items: center;\n  width: 38px;\n  height: 38px;\n  border-radius: 11px;\n  color: var(--accent);\n  background: var(--accent-soft);\n  box-shadow: inset 0 0 0 1px var(--accent-ring);\n}\n.cam-brand-icon[_ngcontent-%COMP%]   mat-icon[_ngcontent-%COMP%] {\n  font-size: 20px;\n  width: 20px;\n  height: 20px;\n}\n.cam-brand-text[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  line-height: 1.25;\n  min-width: 0;\n}\n.cam-title[_ngcontent-%COMP%] {\n  font-size: 15px;\n  font-weight: 700;\n  letter-spacing: 0.01em;\n}\n.cam-subtitle[_ngcontent-%COMP%] {\n  font-size: 11.5px;\n  color: var(--text-faint);\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n.cam-header-right[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  margin-left: auto;\n}\n.cam-clock[_ngcontent-%COMP%] {\n  display: inline-flex;\n  align-items: center;\n  gap: 6px;\n  padding: 6px 12px;\n  font-size: 13px;\n  font-weight: 600;\n  font-variant-numeric: tabular-nums;\n  color: var(--text);\n  background: rgba(255, 255, 255, 0.05);\n  border: 1px solid var(--hairline);\n  border-radius: 999px;\n}\n.cam-clock[_ngcontent-%COMP%]   mat-icon[_ngcontent-%COMP%] {\n  font-size: 16px;\n  width: 16px;\n  height: 16px;\n  color: var(--text-dim);\n}\n.pc-bar[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  gap: 8px;\n  flex-wrap: wrap;\n}\n.pc-bar-label[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  color: var(--text-faint);\n}\n.pc-bar-label[_ngcontent-%COMP%]   mat-icon[_ngcontent-%COMP%] {\n  font-size: 18px;\n  width: 18px;\n  height: 18px;\n}\n.pc-muted[_ngcontent-%COMP%] {\n  color: var(--text-faint);\n  font-size: 12px;\n}\n.pc-chip[_ngcontent-%COMP%] {\n  display: inline-flex;\n  align-items: center;\n  gap: 6px;\n  padding: 5px 13px;\n  font-size: 12px;\n  font-weight: 600;\n  letter-spacing: 0.03em;\n  color: rgba(255, 255, 255, 0.82);\n  background: rgba(255, 255, 255, 0.05);\n  border: 1px solid var(--hairline);\n  border-radius: 999px;\n  cursor: pointer;\n  transition:\n    background 0.15s ease,\n    border-color 0.15s ease,\n    transform 0.1s ease;\n}\n.pc-chip[_ngcontent-%COMP%]:hover {\n  background: rgba(255, 255, 255, 0.1);\n}\n.pc-chip[_ngcontent-%COMP%]:active {\n  transform: translateY(1px);\n}\n.pc-chip.active[_ngcontent-%COMP%] {\n  background: var(--accent-soft);\n  border-color: var(--accent-ring);\n  color: #fff;\n}\n.pc-chip-count[_ngcontent-%COMP%] {\n  font-size: 10px;\n  padding: 1px 6px;\n  border-radius: 999px;\n  background: rgba(255, 255, 255, 0.08);\n  color: rgba(255, 255, 255, 0.6);\n}\n.pc-refresh[_ngcontent-%COMP%] {\n  display: grid;\n  place-items: center;\n  width: 34px;\n  height: 34px;\n  background: rgba(255, 255, 255, 0.05);\n  border: 1px solid var(--hairline);\n  border-radius: 10px;\n  color: var(--text-dim);\n  cursor: pointer;\n  transition: color 0.15s ease, background 0.15s ease;\n}\n.pc-refresh[_ngcontent-%COMP%]:hover {\n  color: #fff;\n  background: rgba(255, 255, 255, 0.1);\n}\n.pc-refresh[_ngcontent-%COMP%]:active   mat-icon[_ngcontent-%COMP%] {\n  transform: rotate(180deg);\n}\n.pc-refresh[_ngcontent-%COMP%]   mat-icon[_ngcontent-%COMP%] {\n  font-size: 20px;\n  width: 20px;\n  height: 20px;\n  transition: transform 0.3s ease;\n}\n.camera-wall[_ngcontent-%COMP%] {\n  flex: 1;\n  min-height: 0;\n  display: grid;\n  grid-template-columns: repeat(3, 1fr);\n  grid-auto-rows: 1fr;\n  gap: 12px;\n  padding: 14px;\n  overflow: auto;\n}\n.wall-empty[_ngcontent-%COMP%] {\n  grid-column: 1/-1;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  color: var(--text-faint);\n  font-size: 13px;\n}\n.camera-cell[_ngcontent-%COMP%] {\n  position: relative;\n  border-radius: 14px;\n  background: var(--surface);\n  border: 1px solid var(--hairline);\n  overflow: hidden;\n  cursor: pointer;\n  transition:\n    transform 0.18s ease,\n    border-color 0.18s ease,\n    box-shadow 0.18s ease;\n}\n.camera-cell[_ngcontent-%COMP%]:hover {\n  transform: translateY(-2px);\n  border-color: rgba(255, 255, 255, 0.18);\n  box-shadow: 0 14px 34px -16px rgba(0, 0, 0, 0.8);\n}\n.camera-cell[_ngcontent-%COMP%]:hover   .cam-media[_ngcontent-%COMP%]   img[_ngcontent-%COMP%] {\n  transform: scale(1.04);\n}\n.camera-cell[_ngcontent-%COMP%]:hover   .cam-history-hint[_ngcontent-%COMP%] {\n  opacity: 1;\n  transform: translateY(0);\n}\n.camera-cell.is-live[_ngcontent-%COMP%] {\n  border-color: rgba(34, 197, 94, 0.32);\n}\n.cam-media[_ngcontent-%COMP%] {\n  position: absolute;\n  inset: 0;\n}\n.cam-media[_ngcontent-%COMP%]   img[_ngcontent-%COMP%] {\n  width: 100%;\n  height: 100%;\n  object-fit: cover;\n  display: block;\n  transition: transform 0.4s ease;\n}\n.cam-scrim[_ngcontent-%COMP%] {\n  position: absolute;\n  inset: 0;\n  background:\n    linear-gradient(\n      to top,\n      rgba(0, 0, 0, 0.6) 0%,\n      rgba(0, 0, 0, 0) 38%);\n  pointer-events: none;\n}\n.no-signal[_ngcontent-%COMP%] {\n  width: 100%;\n  height: 100%;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n  gap: 8px;\n  color: #3a3f47;\n  background:\n    repeating-linear-gradient(\n      45deg,\n      #0e1013,\n      #0e1013 12px,\n      #121519 12px,\n      #121519 24px);\n}\n.no-signal[_ngcontent-%COMP%]   mat-icon[_ngcontent-%COMP%] {\n  font-size: 40px;\n  width: 40px;\n  height: 40px;\n}\n.no-signal[_ngcontent-%COMP%]   span[_ngcontent-%COMP%] {\n  font-size: 11px;\n  letter-spacing: 0.05em;\n  text-transform: uppercase;\n}\n.cam-live[_ngcontent-%COMP%] {\n  position: absolute;\n  top: 10px;\n  left: 10px;\n  display: inline-flex;\n  align-items: center;\n  gap: 6px;\n  padding: 3px 9px 3px 8px;\n  font-size: 10px;\n  font-weight: 800;\n  letter-spacing: 0.08em;\n  color: #fff;\n  background: rgba(220, 38, 38, 0.92);\n  border-radius: 999px;\n  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);\n}\n.cam-live-dot[_ngcontent-%COMP%] {\n  width: 7px;\n  height: 7px;\n  border-radius: 50%;\n  background: #fff;\n  animation: _ngcontent-%COMP%_live-pulse 1.4s ease-in-out infinite;\n}\n@keyframes _ngcontent-%COMP%_live-pulse {\n  0%, 100% {\n    opacity: 1;\n    transform: scale(1);\n  }\n  50% {\n    opacity: 0.35;\n    transform: scale(0.7);\n  }\n}\n.cam-history-hint[_ngcontent-%COMP%] {\n  position: absolute;\n  top: 8px;\n  right: 8px;\n  display: grid;\n  place-items: center;\n  width: 30px;\n  height: 30px;\n  border: none;\n  border-radius: 9px;\n  background: rgba(10, 11, 13, 0.66);\n  color: rgba(255, 255, 255, 0.92);\n  cursor: pointer;\n  opacity: 0;\n  transform: translateY(-4px);\n  backdrop-filter: blur(4px);\n  transition:\n    opacity 0.18s ease,\n    transform 0.18s ease,\n    background 0.15s ease;\n}\n.cam-history-hint[_ngcontent-%COMP%]:hover {\n  background: rgba(34, 197, 94, 0.85);\n}\n.cam-history-hint[_ngcontent-%COMP%]   mat-icon[_ngcontent-%COMP%] {\n  font-size: 18px;\n  width: 18px;\n  height: 18px;\n}\n.cam-label[_ngcontent-%COMP%] {\n  position: absolute;\n  bottom: 10px;\n  left: 12px;\n  right: 12px;\n  display: flex;\n  align-items: baseline;\n  justify-content: space-between;\n  gap: 8px;\n  pointer-events: none;\n}\n.cam-label[_ngcontent-%COMP%]   .cam-name[_ngcontent-%COMP%] {\n  font-size: 12px;\n  font-weight: 700;\n  letter-spacing: 0.05em;\n  color: #fff;\n  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);\n}\n.cam-label[_ngcontent-%COMP%]   .cam-time[_ngcontent-%COMP%] {\n  font-size: 11px;\n  font-variant-numeric: tabular-nums;\n  color: rgba(255, 255, 255, 0.72);\n  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);\n}\n.archive-overlay[_ngcontent-%COMP%] {\n  position: fixed;\n  inset: 0;\n  z-index: 1000;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  padding: 24px;\n  background: rgba(4, 5, 7, 0.78);\n  backdrop-filter: blur(6px);\n  animation: _ngcontent-%COMP%_overlay-in 0.16s ease;\n}\n@keyframes _ngcontent-%COMP%_overlay-in {\n  from {\n    opacity: 0;\n  }\n  to {\n    opacity: 1;\n  }\n}\n.archive-panel[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  width: min(92vw, 980px);\n  max-height: 92vh;\n  background: var(--surface);\n  border: 1px solid var(--hairline);\n  border-radius: 16px;\n  overflow: hidden;\n  color: var(--text);\n  box-shadow: 0 30px 80px -24px rgba(0, 0, 0, 0.85);\n  animation: _ngcontent-%COMP%_panel-in 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);\n}\n@keyframes _ngcontent-%COMP%_panel-in {\n  from {\n    opacity: 0;\n    transform: translateY(10px) scale(0.985);\n  }\n  to {\n    opacity: 1;\n    transform: translateY(0) scale(1);\n  }\n}\n.archive-header[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  padding: 14px 18px;\n  border-bottom: 1px solid var(--hairline);\n}\n.archive-header[_ngcontent-%COMP%]   .archive-title[_ngcontent-%COMP%] {\n  display: inline-flex;\n  align-items: center;\n  gap: 9px;\n  font-size: 14px;\n  font-weight: 600;\n  letter-spacing: 0.03em;\n}\n.archive-header[_ngcontent-%COMP%]   .archive-title[_ngcontent-%COMP%]   mat-icon[_ngcontent-%COMP%] {\n  font-size: 18px;\n  width: 18px;\n  height: 18px;\n  color: var(--accent);\n}\n.archive-header[_ngcontent-%COMP%]   .archive-sep[_ngcontent-%COMP%] {\n  color: var(--text-faint);\n}\n.archive-header[_ngcontent-%COMP%]   .archive-close[_ngcontent-%COMP%] {\n  display: grid;\n  place-items: center;\n  width: 32px;\n  height: 32px;\n  background: rgba(255, 255, 255, 0.05);\n  border: 1px solid var(--hairline);\n  border-radius: 9px;\n  color: var(--text-dim);\n  cursor: pointer;\n  transition: color 0.15s ease, background 0.15s ease;\n}\n.archive-header[_ngcontent-%COMP%]   .archive-close[_ngcontent-%COMP%]:hover {\n  color: #fff;\n  background: rgba(255, 255, 255, 0.1);\n}\n.archive-days[_ngcontent-%COMP%] {\n  display: flex;\n  flex-wrap: wrap;\n  gap: 6px;\n  padding: 12px 18px;\n  border-bottom: 1px solid var(--hairline);\n  background: var(--surface-2);\n}\n.archive-day-chip[_ngcontent-%COMP%] {\n  display: inline-flex;\n  align-items: center;\n  gap: 6px;\n  padding: 5px 11px;\n  font-size: 12px;\n  color: rgba(255, 255, 255, 0.82);\n  background: rgba(255, 255, 255, 0.05);\n  border: 1px solid var(--hairline);\n  border-radius: 999px;\n  cursor: pointer;\n  transition: background 0.15s ease, border-color 0.15s ease;\n}\n.archive-day-chip[_ngcontent-%COMP%]:hover {\n  background: rgba(255, 255, 255, 0.1);\n}\n.archive-day-chip.active[_ngcontent-%COMP%] {\n  background: var(--accent-soft);\n  border-color: var(--accent-ring);\n  color: #fff;\n}\n.archive-day-count[_ngcontent-%COMP%] {\n  font-size: 10px;\n  padding: 1px 6px;\n  border-radius: 999px;\n  background: rgba(255, 255, 255, 0.08);\n  color: rgba(255, 255, 255, 0.6);\n}\n.archive-stage[_ngcontent-%COMP%] {\n  flex: 1;\n  min-height: 0;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  padding: 14px;\n  background:\n    radial-gradient(\n      60% 60% at 50% 40%,\n      rgba(255, 255, 255, 0.03),\n      transparent),\n    #000;\n}\n.archive-stage[_ngcontent-%COMP%]   img[_ngcontent-%COMP%] {\n  max-width: 100%;\n  max-height: 62vh;\n  object-fit: contain;\n  display: block;\n  border-radius: 8px;\n}\n.archive-muted[_ngcontent-%COMP%] {\n  color: var(--text-faint);\n  font-size: 13px;\n  padding: 32px;\n}\n.archive-footer[_ngcontent-%COMP%] {\n  border-top: 1px solid var(--hairline);\n  background: var(--surface-2);\n}\n.archive-controls[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  padding: 14px 18px 8px;\n}\n.archive-controls[_ngcontent-%COMP%]   button[_ngcontent-%COMP%] {\n  display: grid;\n  place-items: center;\n  width: 34px;\n  height: 34px;\n  background: rgba(255, 255, 255, 0.06);\n  border: 1px solid var(--hairline);\n  border-radius: 9px;\n  color: var(--text);\n  cursor: pointer;\n  transition: background 0.15s ease;\n}\n.archive-controls[_ngcontent-%COMP%]   button[_ngcontent-%COMP%]:hover:not(:disabled) {\n  background: rgba(255, 255, 255, 0.14);\n}\n.archive-controls[_ngcontent-%COMP%]   button[_ngcontent-%COMP%]:disabled {\n  opacity: 0.3;\n  cursor: default;\n}\n.archive-controls[_ngcontent-%COMP%]   input[type=range][_ngcontent-%COMP%] {\n  flex: 1;\n  height: 4px;\n  accent-color: var(--accent);\n  cursor: pointer;\n}\n.archive-meta[_ngcontent-%COMP%] {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  padding: 4px 20px 16px;\n  font-size: 12px;\n  color: var(--text-dim);\n  font-variant-numeric: tabular-nums;\n}\n.archive-meta[_ngcontent-%COMP%]   .archive-count[_ngcontent-%COMP%] {\n  padding: 2px 9px;\n  border-radius: 999px;\n  background: rgba(255, 255, 255, 0.06);\n}\n.archive-meta[_ngcontent-%COMP%]   .archive-stamp[_ngcontent-%COMP%] {\n  color: var(--text);\n  font-weight: 600;\n}\n.pc-toggle[_ngcontent-%COMP%] {\n  display: grid;\n  place-items: center;\n  width: 34px;\n  height: 34px;\n  background: rgba(255, 255, 255, 0.05);\n  border: 1px solid var(--hairline);\n  border-radius: 10px;\n  color: var(--text-faint);\n  cursor: pointer;\n  transition:\n    color 0.15s ease,\n    background 0.15s ease,\n    border-color 0.15s ease;\n}\n.pc-toggle[_ngcontent-%COMP%]:hover {\n  color: #fff;\n  background: rgba(255, 255, 255, 0.1);\n}\n.pc-toggle.on[_ngcontent-%COMP%] {\n  color: var(--accent);\n  border-color: var(--accent-ring);\n  background: var(--accent-soft);\n}\n.pc-toggle[_ngcontent-%COMP%]   mat-icon[_ngcontent-%COMP%] {\n  font-size: 20px;\n  width: 20px;\n  height: 20px;\n}\n.cam-storage-chip[_ngcontent-%COMP%] {\n  display: inline-flex;\n  align-items: center;\n  gap: 8px;\n  padding: 5px 12px;\n  background: rgba(255, 255, 255, 0.05);\n  border: 1px solid var(--hairline);\n  border-radius: 999px;\n  color: var(--text);\n  cursor: pointer;\n  transition: background 0.15s ease, border-color 0.15s ease;\n}\n.cam-storage-chip[_ngcontent-%COMP%]:hover {\n  background: rgba(255, 255, 255, 0.1);\n}\n.cam-storage-chip.warn[_ngcontent-%COMP%] {\n  border-color: rgba(224, 161, 6, 0.5);\n}\n.cam-storage-chip.crit[_ngcontent-%COMP%] {\n  border-color: rgba(240, 88, 79, 0.55);\n}\n.cam-storage-chip[_ngcontent-%COMP%]   mat-icon[_ngcontent-%COMP%] {\n  font-size: 17px;\n  width: 17px;\n  height: 17px;\n  color: var(--text-dim);\n}\n.cam-storage-pct[_ngcontent-%COMP%] {\n  font-size: 12px;\n  font-weight: 700;\n  font-variant-numeric: tabular-nums;\n}\n.cam-storage-bar[_ngcontent-%COMP%] {\n  position: relative;\n  width: 46px;\n  height: 5px;\n  border-radius: 999px;\n  background: rgba(255, 255, 255, 0.12);\n  overflow: hidden;\n}\n.cam-storage-bar[_ngcontent-%COMP%]   i[_ngcontent-%COMP%] {\n  position: absolute;\n  inset: 0 auto 0 0;\n  display: block;\n  border-radius: 999px;\n  transition: width 0.4s ease;\n}\n.storage-overlay[_ngcontent-%COMP%] {\n  position: fixed;\n  inset: 0;\n  z-index: 1000;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  padding: 24px;\n  background: rgba(4, 5, 7, 0.78);\n  backdrop-filter: blur(6px);\n  animation: _ngcontent-%COMP%_overlay-in 0.16s ease;\n}\n.storage-panel[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  width: min(94vw, 560px);\n  max-height: 92vh;\n  background: var(--surface);\n  border: 1px solid var(--hairline);\n  border-radius: 16px;\n  overflow: hidden;\n  color: var(--text);\n  box-shadow: 0 30px 80px -24px rgba(0, 0, 0, 0.85);\n  animation: _ngcontent-%COMP%_panel-in 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);\n}\n.storage-header[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  padding: 14px 18px;\n  border-bottom: 1px solid var(--hairline);\n}\n.storage-header[_ngcontent-%COMP%]   .storage-title[_ngcontent-%COMP%] {\n  display: inline-flex;\n  align-items: center;\n  gap: 9px;\n  font-size: 14px;\n  font-weight: 600;\n  letter-spacing: 0.03em;\n}\n.storage-header[_ngcontent-%COMP%]   .storage-title[_ngcontent-%COMP%]   mat-icon[_ngcontent-%COMP%] {\n  font-size: 18px;\n  width: 18px;\n  height: 18px;\n  color: var(--accent);\n}\n.storage-header-actions[_ngcontent-%COMP%] {\n  display: flex;\n  gap: 8px;\n}\n.storage-icon-btn[_ngcontent-%COMP%] {\n  display: grid;\n  place-items: center;\n  width: 32px;\n  height: 32px;\n  background: rgba(255, 255, 255, 0.05);\n  border: 1px solid var(--hairline);\n  border-radius: 9px;\n  color: var(--text-dim);\n  cursor: pointer;\n  transition: color 0.15s ease, background 0.15s ease;\n}\n.storage-icon-btn[_ngcontent-%COMP%]:hover {\n  color: #fff;\n  background: rgba(255, 255, 255, 0.1);\n}\n.storage-icon-btn[_ngcontent-%COMP%]   mat-icon[_ngcontent-%COMP%] {\n  font-size: 18px;\n  width: 18px;\n  height: 18px;\n}\n.storage-body[_ngcontent-%COMP%] {\n  padding: 18px;\n  overflow: auto;\n  display: flex;\n  flex-direction: column;\n  gap: 16px;\n}\n.storage-loading[_ngcontent-%COMP%] {\n  padding: 48px;\n  text-align: center;\n  color: var(--text-faint);\n  font-size: 13px;\n}\n.storage-gauge-row[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  gap: 22px;\n}\n.storage-gauge[_ngcontent-%COMP%] {\n  position: relative;\n  width: 124px;\n  height: 124px;\n  flex-shrink: 0;\n}\n.storage-gauge[_ngcontent-%COMP%]   svg[_ngcontent-%COMP%] {\n  width: 100%;\n  height: 100%;\n  transform: rotate(-90deg);\n}\n.storage-gauge[_ngcontent-%COMP%]   .gauge-track[_ngcontent-%COMP%] {\n  fill: none;\n  stroke: rgba(255, 255, 255, 0.08);\n  stroke-width: 10;\n}\n.storage-gauge[_ngcontent-%COMP%]   .gauge-fill[_ngcontent-%COMP%] {\n  fill: none;\n  stroke-width: 10;\n  stroke-linecap: round;\n  transition: stroke-dashoffset 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), stroke 0.3s ease;\n}\n.gauge-center[_ngcontent-%COMP%] {\n  position: absolute;\n  inset: 0;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n}\n.gauge-center[_ngcontent-%COMP%]   .gauge-pct[_ngcontent-%COMP%] {\n  font-size: 28px;\n  font-weight: 700;\n  font-variant-numeric: tabular-nums;\n  line-height: 1;\n}\n.gauge-center[_ngcontent-%COMP%]   .gauge-pct[_ngcontent-%COMP%]   small[_ngcontent-%COMP%] {\n  font-size: 14px;\n  font-weight: 600;\n  color: var(--text-dim);\n}\n.gauge-center[_ngcontent-%COMP%]   .gauge-cap[_ngcontent-%COMP%] {\n  margin-top: 3px;\n  font-size: 10px;\n  letter-spacing: 0.08em;\n  text-transform: uppercase;\n  color: var(--text-faint);\n}\n.storage-legend[_ngcontent-%COMP%] {\n  flex: 1;\n  min-width: 0;\n  display: flex;\n  flex-direction: column;\n  gap: 8px;\n}\n.legend-row[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  gap: 9px;\n  font-size: 13px;\n}\n.legend-row[_ngcontent-%COMP%]   .legend-dot[_ngcontent-%COMP%] {\n  width: 9px;\n  height: 9px;\n  border-radius: 3px;\n  background: rgba(255, 255, 255, 0.18);\n  flex-shrink: 0;\n}\n.legend-row[_ngcontent-%COMP%]   .legend-label[_ngcontent-%COMP%] {\n  color: var(--text-dim);\n}\n.legend-row[_ngcontent-%COMP%]   .legend-val[_ngcontent-%COMP%] {\n  margin-left: auto;\n  font-weight: 600;\n  font-variant-numeric: tabular-nums;\n}\n.legend-row.total[_ngcontent-%COMP%] {\n  padding-top: 8px;\n  border-top: 1px solid var(--hairline);\n}\n.legend-row.total[_ngcontent-%COMP%]   .legend-label[_ngcontent-%COMP%] {\n  color: var(--text-faint);\n}\n.storage-cleaning[_ngcontent-%COMP%] {\n  display: inline-flex;\n  align-items: center;\n  gap: 6px;\n  margin-top: 2px;\n  font-size: 11.5px;\n  color: var(--accent);\n}\n.storage-cleaning[_ngcontent-%COMP%]   mat-icon[_ngcontent-%COMP%] {\n  font-size: 15px;\n  width: 15px;\n  height: 15px;\n  animation: _ngcontent-%COMP%_spin 1.1s linear infinite;\n}\n@keyframes _ngcontent-%COMP%_spin {\n  to {\n    transform: rotate(360deg);\n  }\n}\n.storage-stats[_ngcontent-%COMP%] {\n  display: grid;\n  grid-template-columns: repeat(4, 1fr);\n  gap: 8px;\n}\n.stat-tile[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  gap: 3px;\n  padding: 11px 10px;\n  background: var(--surface-2);\n  border: 1px solid var(--hairline);\n  border-radius: 11px;\n  text-align: center;\n}\n.stat-tile[_ngcontent-%COMP%]   .stat-val[_ngcontent-%COMP%] {\n  font-size: 16px;\n  font-weight: 700;\n  font-variant-numeric: tabular-nums;\n}\n.stat-tile[_ngcontent-%COMP%]   .stat-val[_ngcontent-%COMP%]   small[_ngcontent-%COMP%] {\n  font-size: 11px;\n  font-weight: 600;\n  color: var(--text-dim);\n  margin-left: 1px;\n}\n.stat-tile[_ngcontent-%COMP%]   .stat-val.small[_ngcontent-%COMP%] {\n  font-size: 13px;\n}\n.stat-tile[_ngcontent-%COMP%]   .stat-key[_ngcontent-%COMP%] {\n  font-size: 10px;\n  letter-spacing: 0.04em;\n  text-transform: uppercase;\n  color: var(--text-faint);\n}\n.storage-action[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  gap: 14px;\n  padding: 14px;\n  background: var(--surface-2);\n  border: 1px solid var(--hairline);\n  border-radius: 12px;\n}\n.storage-action[_ngcontent-%COMP%]   .action-text[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  gap: 2px;\n  min-width: 0;\n}\n.storage-action[_ngcontent-%COMP%]   .action-title[_ngcontent-%COMP%] {\n  font-size: 13px;\n  font-weight: 600;\n}\n.storage-action[_ngcontent-%COMP%]   .action-hint[_ngcontent-%COMP%] {\n  font-size: 11.5px;\n  color: var(--text-faint);\n}\n.cleanup-btn[_ngcontent-%COMP%] {\n  display: inline-flex;\n  align-items: center;\n  gap: 7px;\n  margin-left: auto;\n  padding: 9px 15px;\n  font-size: 12.5px;\n  font-weight: 600;\n  white-space: nowrap;\n  color: #fff;\n  background: var(--accent);\n  border: none;\n  border-radius: 10px;\n  cursor: pointer;\n  transition: filter 0.15s ease, opacity 0.15s ease;\n}\n.cleanup-btn[_ngcontent-%COMP%]:hover:not(:disabled) {\n  filter: brightness(1.08);\n}\n.cleanup-btn[_ngcontent-%COMP%]:disabled {\n  opacity: 0.45;\n  cursor: default;\n}\n.cleanup-btn[_ngcontent-%COMP%]   mat-icon[_ngcontent-%COMP%] {\n  font-size: 17px;\n  width: 17px;\n  height: 17px;\n}\n.cleanup-note[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  gap: 8px;\n  margin-top: -6px;\n  padding: 9px 12px;\n  font-size: 12.5px;\n  border-radius: 10px;\n  background: var(--accent-soft);\n  color: var(--accent);\n}\n.cleanup-note[_ngcontent-%COMP%]   mat-icon[_ngcontent-%COMP%] {\n  font-size: 17px;\n  width: 17px;\n  height: 17px;\n}\n.cleanup-note.err[_ngcontent-%COMP%] {\n  background: rgba(240, 88, 79, 0.14);\n  color: #f0584f;\n}\n.storage-log[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  gap: 8px;\n}\n.log-head[_ngcontent-%COMP%] {\n  display: inline-flex;\n  align-items: center;\n  gap: 7px;\n  font-size: 12px;\n  font-weight: 600;\n  letter-spacing: 0.03em;\n  color: var(--text-dim);\n}\n.log-head[_ngcontent-%COMP%]   mat-icon[_ngcontent-%COMP%] {\n  font-size: 16px;\n  width: 16px;\n  height: 16px;\n}\n.log-empty[_ngcontent-%COMP%] {\n  padding: 16px;\n  text-align: center;\n  font-size: 12px;\n  color: var(--text-faint);\n  background: var(--surface-2);\n  border: 1px dashed var(--hairline);\n  border-radius: 10px;\n}\n.log-list[_ngcontent-%COMP%] {\n  list-style: none;\n  margin: 0;\n  padding: 0;\n  display: flex;\n  flex-direction: column;\n  max-height: 184px;\n  overflow: auto;\n  border: 1px solid var(--hairline);\n  border-radius: 10px;\n}\n.log-item[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  gap: 10px;\n  padding: 9px 12px;\n  font-size: 12.5px;\n}\n.log-item[_ngcontent-%COMP%]:not(:last-child) {\n  border-bottom: 1px solid var(--hairline);\n}\n.log-item[_ngcontent-%COMP%]   .log-trigger[_ngcontent-%COMP%] {\n  flex-shrink: 0;\n  padding: 2px 8px;\n  font-size: 10px;\n  font-weight: 700;\n  letter-spacing: 0.04em;\n  text-transform: uppercase;\n  border-radius: 999px;\n  color: var(--text-dim);\n  background: rgba(255, 255, 255, 0.07);\n}\n.log-item[_ngcontent-%COMP%]   .log-trigger.manual[_ngcontent-%COMP%] {\n  color: var(--accent);\n  background: var(--accent-soft);\n}\n.log-item[_ngcontent-%COMP%]   .log-main[_ngcontent-%COMP%] {\n  font-weight: 600;\n  font-variant-numeric: tabular-nums;\n}\n.log-item[_ngcontent-%COMP%]   .log-main[_ngcontent-%COMP%]   .log-frames[_ngcontent-%COMP%] {\n  font-weight: 400;\n  color: var(--text-faint);\n}\n.log-item[_ngcontent-%COMP%]   .log-time[_ngcontent-%COMP%] {\n  margin-left: auto;\n  flex-shrink: 0;\n  font-variant-numeric: tabular-nums;\n  color: var(--text-faint);\n}\n@media (max-width: 1100px) {\n  .camera-wall[_ngcontent-%COMP%] {\n    grid-template-columns: repeat(2, 1fr);\n  }\n}\n@media (max-width: 680px) {\n  .cam-header[_ngcontent-%COMP%] {\n    flex-wrap: wrap;\n    gap: 12px;\n  }\n  .cam-subtitle[_ngcontent-%COMP%] {\n    display: none;\n  }\n  .camera-wall[_ngcontent-%COMP%] {\n    grid-template-columns: 1fr;\n    gap: 10px;\n    padding: 10px;\n  }\n  .cam-storage-bar[_ngcontent-%COMP%] {\n    display: none;\n  }\n  .storage-stats[_ngcontent-%COMP%] {\n    grid-template-columns: repeat(2, 1fr);\n  }\n  .storage-action[_ngcontent-%COMP%] {\n    flex-direction: column;\n    align-items: stretch;\n  }\n  .cleanup-btn[_ngcontent-%COMP%] {\n    margin-left: 0;\n    justify-content: center;\n  }\n}\n/*# sourceMappingURL=camera-wall.component.css.map */'] });
 };
 (() => {
   (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(CameraWallComponent, [{
     type: Component,
     args: [{ selector: "app-camera-wall", standalone: false, template: `<div class="camera-page">
-  <div class="pc-bar">
-    <span class="pc-bar-label"><mat-icon>desktop_windows</mat-icon></span>
-    @if (loadingPcs) {
-      <span class="pc-muted">{{ 'cameras.loading' | transloco }}</span>
-    } @else if (pcs.length === 0) {
-      <span class="pc-muted">{{ 'cameras.no_pcs' | transloco }}</span>
-    } @else {
-      @for (p of pcs; track p.pc) {
+  <header class="cam-header">
+    <div class="cam-brand">
+      <span class="cam-brand-icon"><mat-icon>videocam</mat-icon></span>
+      <div class="cam-brand-text">
+        <span class="cam-title">{{ 'cameras.title' | transloco }}</span>
+        <span class="cam-subtitle">{{ 'cameras.subtitle' | transloco }}</span>
+      </div>
+    </div>
+
+    <div class="pc-bar">
+      <span class="pc-bar-label"><mat-icon>desktop_windows</mat-icon></span>
+      @if (loadingPcs) {
+        <span class="pc-muted">{{ 'cameras.loading' | transloco }}</span>
+      } @else if (pcs.length === 0) {
+        <span class="pc-muted">{{ 'cameras.no_pcs' | transloco }}</span>
+      } @else {
+        @for (p of pcs; track p.pc) {
+          <button
+            type="button"
+            class="pc-chip"
+            [class.active]="p.pc === selectedPc"
+            (click)="selectPc(p.pc)">
+            {{ p.pc }} <span class="pc-chip-count">{{ p.cameras }}</span>
+          </button>
+        }
+      }
+    </div>
+
+    <div class="cam-header-right">
+      @if (storageAvailable && storage) {
         <button
           type="button"
-          class="pc-chip"
-          [class.active]="p.pc === selectedPc"
-          (click)="selectPc(p.pc)">
-          {{ p.pc }} <span class="pc-chip-count">{{ p.cameras }}</span>
+          class="cam-storage-chip"
+          [class.warn]="storage.usedPct >= 75 && storage.usedPct < 90"
+          [class.crit]="storage.usedPct >= 90"
+          (click)="openStorage()"
+          [title]="'cameras.storage.open' | transloco">
+          <mat-icon>storage</mat-icon>
+          <span class="cam-storage-pct">{{ storage.usedPct }}%</span>
+          <span class="cam-storage-bar"><i [style.width.%]="storagePct" [style.background]="storageColor"></i></span>
         </button>
       }
-    }
-    @if (selectedPc) {
-      <button type="button" class="pc-refresh" (click)="selectPc(selectedPc)" [title]="'cameras.refresh' | transloco">
-        <mat-icon>refresh</mat-icon>
+
+      <span class="cam-clock"><mat-icon>schedule</mat-icon>{{ clock }}</span>
+
+      <button
+        type="button"
+        class="pc-toggle"
+        [class.on]="autoRefresh"
+        (click)="toggleAutoRefresh()"
+        [title]="(autoRefresh ? 'cameras.live_on' : 'cameras.live_off') | transloco">
+        <mat-icon>{{ autoRefresh ? 'sensors' : 'sensors_off' }}</mat-icon>
       </button>
-    }
-  </div>
+
+      @if (selectedPc) {
+        <button type="button" class="pc-refresh" (click)="selectPc(selectedPc)" [title]="'cameras.refresh' | transloco">
+          <mat-icon>refresh</mat-icon>
+        </button>
+      }
+    </div>
+  </header>
 
   <div class="camera-wall">
     @if (loadingCameras) {
@@ -67027,14 +67777,28 @@ var CameraWallComponent = class _CameraWallComponent {
       <div class="wall-empty">{{ 'cameras.no_data' | transloco }}</div>
     } @else {
       @for (cam of cameras; track cam.cameraId) {
-        <div class="camera-cell" (click)="openViewer(cam)">
-          @if (cam.displayedSrc) {
-            <img [src]="cam.displayedSrc" [alt]="cam.cameraId" />
-          } @else {
-            <div class="no-signal">
-              <mat-icon>videocam_off</mat-icon>
-            </div>
+        <div class="camera-cell" [class.is-live]="isLive(cam)" (click)="openViewer(cam)">
+          <div class="cam-media">
+            @if (cam.displayedSrc) {
+              <img [src]="cam.displayedSrc" [alt]="cam.cameraId" />
+            } @else {
+              <div class="no-signal">
+                <mat-icon>videocam_off</mat-icon>
+                <span>{{ 'cameras.no_signal' | transloco }}</span>
+              </div>
+            }
+          </div>
+
+          <div class="cam-scrim"></div>
+
+          @if (isLive(cam)) {
+            <span class="cam-live"><span class="cam-live-dot"></span>{{ 'cameras.live' | transloco }}</span>
           }
+
+          <button type="button" class="cam-history-hint" [title]="'cameras.open_archive' | transloco">
+            <mat-icon>history</mat-icon>
+          </button>
+
           <div class="cam-label">
             <span class="cam-name">{{ cam.cameraId }}</span>
             @if (cam.lastSeenUtc) {
@@ -67042,9 +67806,6 @@ var CameraWallComponent = class _CameraWallComponent {
             } @else {
               <span class="cam-time">{{ 'cameras.no_data' | transloco }}</span>
             }
-          </div>
-          <div class="cam-history-hint">
-            <mat-icon>history</mat-icon>
           </div>
         </div>
       }
@@ -67056,7 +67817,10 @@ var CameraWallComponent = class _CameraWallComponent {
   <div class="archive-overlay" (click)="closeViewer()">
     <div class="archive-panel" (click)="$event.stopPropagation()">
       <div class="archive-header">
-        <span class="archive-title">{{ selectedPc }} \xB7 {{ viewerCamera }}</span>
+        <span class="archive-title">
+          <mat-icon>history</mat-icon>
+          {{ selectedPc }} <span class="archive-sep">\xB7</span> {{ viewerCamera }}
+        </span>
         <button class="archive-close" type="button" (click)="closeViewer()">
           <mat-icon>close</mat-icon>
         </button>
@@ -67091,35 +67855,191 @@ var CameraWallComponent = class _CameraWallComponent {
       </div>
 
       @if (frames.length > 0) {
-        <div class="archive-controls">
-          <button type="button" (click)="prevFrame()" [disabled]="frameIndex === 0">
-            <mat-icon>chevron_left</mat-icon>
-          </button>
-          <input
-            type="range"
-            min="0"
-            [max]="frames.length - 1"
-            [value]="frameIndex"
-            (input)="onScrub($event)" />
-          <button type="button" (click)="nextFrame()" [disabled]="frameIndex >= frames.length - 1">
-            <mat-icon>chevron_right</mat-icon>
-          </button>
-        </div>
-        <div class="archive-meta">
-          <span>{{ frameIndex + 1 }} / {{ frames.length }}</span>
-          @if (currentFrame?.timeUtc) {
-            <span class="archive-stamp">{{ currentFrame!.timeUtc | date: 'dd.MM.yyyy HH:mm:ss' }}</span>
-          }
+        <div class="archive-footer">
+          <div class="archive-controls">
+            <button type="button" (click)="prevFrame()" [disabled]="frameIndex === 0">
+              <mat-icon>chevron_left</mat-icon>
+            </button>
+            <input
+              type="range"
+              min="0"
+              [max]="frames.length - 1"
+              [value]="frameIndex"
+              (input)="onScrub($event)" />
+            <button type="button" (click)="nextFrame()" [disabled]="frameIndex >= frames.length - 1">
+              <mat-icon>chevron_right</mat-icon>
+            </button>
+          </div>
+          <div class="archive-meta">
+            <span class="archive-count">{{ frameIndex + 1 }} / {{ frames.length }}</span>
+            @if (currentFrame?.timeUtc) {
+              <span class="archive-stamp">{{ currentFrame!.timeUtc | date: 'dd.MM.yyyy HH:mm:ss' }}</span>
+            }
+          </div>
         </div>
       }
     </div>
   </div>
 }
-`, styles: ['@charset "UTF-8";\n\n/* src/app/modules/cameras/pages/camera-wall/camera-wall.component.scss */\n.camera-page {\n  display: flex;\n  flex-direction: column;\n  width: 100vw;\n  height: 100vh;\n  background: #000;\n  overflow: hidden;\n}\n.pc-bar {\n  display: flex;\n  align-items: center;\n  gap: 8px;\n  flex-wrap: wrap;\n  padding: 8px 14px;\n  background: #0c0c0c;\n  border-bottom: 1px solid rgba(255, 255, 255, 0.07);\n}\n.pc-bar-label {\n  display: flex;\n  align-items: center;\n  color: rgba(255, 255, 255, 0.45);\n}\n.pc-bar-label mat-icon {\n  font-size: 18px;\n  width: 18px;\n  height: 18px;\n}\n.pc-muted {\n  color: rgba(255, 255, 255, 0.4);\n  font-size: 12px;\n}\n.pc-chip {\n  display: inline-flex;\n  align-items: center;\n  gap: 6px;\n  padding: 4px 12px;\n  font-size: 12px;\n  font-weight: 600;\n  letter-spacing: 0.03em;\n  color: rgba(255, 255, 255, 0.8);\n  background: rgba(255, 255, 255, 0.06);\n  border: 1px solid transparent;\n  border-radius: 999px;\n  cursor: pointer;\n  transition: background 0.15s ease;\n}\n.pc-chip:hover {\n  background: rgba(255, 255, 255, 0.12);\n}\n.pc-chip.active {\n  background: rgba(34, 197, 94, 0.18);\n  border-color: rgba(34, 197, 94, 0.55);\n  color: #fff;\n}\n.pc-chip-count {\n  font-size: 10px;\n  color: rgba(255, 255, 255, 0.5);\n}\n.pc-refresh {\n  display: flex;\n  align-items: center;\n  margin-left: auto;\n  background: none;\n  border: none;\n  color: rgba(255, 255, 255, 0.55);\n  cursor: pointer;\n}\n.pc-refresh:hover {\n  color: #fff;\n}\n.pc-refresh mat-icon {\n  font-size: 20px;\n  width: 20px;\n  height: 20px;\n}\n.camera-wall {\n  flex: 1;\n  min-height: 0;\n  display: grid;\n  grid-template-columns: repeat(3, 1fr);\n  grid-auto-rows: 1fr;\n  gap: 2px;\n  background: #000;\n  overflow: hidden;\n}\n.wall-empty {\n  grid-column: 1/-1;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  color: rgba(255, 255, 255, 0.4);\n  font-size: 13px;\n}\n.camera-cell {\n  position: relative;\n  background: #111;\n  overflow: hidden;\n  cursor: pointer;\n}\n.camera-cell img {\n  width: 100%;\n  height: 100%;\n  object-fit: cover;\n  display: block;\n}\n.camera-cell:hover .cam-history-hint {\n  opacity: 1;\n}\n.cam-history-hint {\n  position: absolute;\n  top: 8px;\n  right: 8px;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  width: 28px;\n  height: 28px;\n  border-radius: 50%;\n  background: rgba(0, 0, 0, 0.55);\n  color: rgba(255, 255, 255, 0.9);\n  opacity: 0;\n  transition: opacity 0.15s ease;\n  pointer-events: none;\n}\n.cam-history-hint mat-icon {\n  font-size: 18px;\n  width: 18px;\n  height: 18px;\n}\n.no-signal {\n  width: 100%;\n  height: 100%;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  color: #444;\n}\n.no-signal mat-icon {\n  font-size: 48px;\n  width: 48px;\n  height: 48px;\n}\n.cam-label {\n  position: absolute;\n  bottom: 8px;\n  left: 10px;\n  right: 10px;\n  display: flex;\n  align-items: baseline;\n  justify-content: space-between;\n  gap: 8px;\n  color: rgba(255, 255, 255, 0.78);\n  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85);\n  pointer-events: none;\n}\n.cam-label .cam-name {\n  font-size: 11px;\n  font-weight: 600;\n  letter-spacing: 0.05em;\n}\n.cam-label .cam-time {\n  font-size: 11px;\n  font-variant-numeric: tabular-nums;\n  color: rgba(255, 255, 255, 0.62);\n}\n.archive-overlay {\n  position: fixed;\n  inset: 0;\n  z-index: 1000;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  background: rgba(0, 0, 0, 0.82);\n  backdrop-filter: blur(2px);\n}\n.archive-panel {\n  display: flex;\n  flex-direction: column;\n  width: min(92vw, 960px);\n  max-height: 92vh;\n  background: #141414;\n  border: 1px solid rgba(255, 255, 255, 0.08);\n  border-radius: 10px;\n  overflow: hidden;\n  color: #eaeaea;\n}\n.archive-header {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  padding: 12px 16px;\n  border-bottom: 1px solid rgba(255, 255, 255, 0.07);\n}\n.archive-header .archive-title {\n  font-size: 14px;\n  font-weight: 600;\n  letter-spacing: 0.04em;\n}\n.archive-header .archive-close {\n  display: flex;\n  align-items: center;\n  background: none;\n  border: none;\n  color: rgba(255, 255, 255, 0.6);\n  cursor: pointer;\n}\n.archive-header .archive-close:hover {\n  color: #fff;\n}\n.archive-days {\n  display: flex;\n  flex-wrap: wrap;\n  gap: 6px;\n  padding: 12px 16px;\n  border-bottom: 1px solid rgba(255, 255, 255, 0.07);\n}\n.archive-day-chip {\n  display: inline-flex;\n  align-items: center;\n  gap: 6px;\n  padding: 4px 10px;\n  font-size: 12px;\n  color: rgba(255, 255, 255, 0.8);\n  background: rgba(255, 255, 255, 0.06);\n  border: 1px solid transparent;\n  border-radius: 999px;\n  cursor: pointer;\n  transition: background 0.15s ease;\n}\n.archive-day-chip:hover {\n  background: rgba(255, 255, 255, 0.12);\n}\n.archive-day-chip.active {\n  background: rgba(34, 197, 94, 0.18);\n  border-color: rgba(34, 197, 94, 0.55);\n  color: #fff;\n}\n.archive-day-count {\n  font-size: 10px;\n  color: rgba(255, 255, 255, 0.5);\n}\n.archive-stage {\n  flex: 1;\n  min-height: 0;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  background: #000;\n}\n.archive-stage img {\n  max-width: 100%;\n  max-height: 64vh;\n  object-fit: contain;\n  display: block;\n}\n.archive-muted {\n  color: rgba(255, 255, 255, 0.45);\n  font-size: 13px;\n  padding: 32px;\n}\n.archive-controls {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  padding: 12px 16px 4px;\n}\n.archive-controls button {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  background: rgba(255, 255, 255, 0.06);\n  border: none;\n  border-radius: 6px;\n  color: #eaeaea;\n  cursor: pointer;\n  padding: 4px;\n}\n.archive-controls button:hover:not(:disabled) {\n  background: rgba(255, 255, 255, 0.14);\n}\n.archive-controls button:disabled {\n  opacity: 0.3;\n  cursor: default;\n}\n.archive-controls input[type=range] {\n  flex: 1;\n  accent-color: #22c55e;\n  cursor: pointer;\n}\n.archive-meta {\n  display: flex;\n  justify-content: space-between;\n  padding: 4px 18px 14px;\n  font-size: 12px;\n  color: rgba(255, 255, 255, 0.55);\n  font-variant-numeric: tabular-nums;\n}\n/*# sourceMappingURL=camera-wall.component.css.map */\n'] }]
+
+@if (storageOpen) {
+  <div class="storage-overlay" (click)="closeStorage()">
+    <div class="storage-panel" (click)="$event.stopPropagation()">
+      <div class="storage-header">
+        <span class="storage-title">
+          <mat-icon>storage</mat-icon>
+          {{ 'cameras.storage.title' | transloco }}
+        </span>
+        <div class="storage-header-actions">
+          <button type="button" class="storage-icon-btn" (click)="loadStorage()" [title]="'cameras.refresh' | transloco">
+            <mat-icon>refresh</mat-icon>
+          </button>
+          <button type="button" class="storage-icon-btn" (click)="closeStorage()">
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+      </div>
+
+      @if (storage) {
+        <div class="storage-body">
+          <!-- gauge + capacity -->
+          <div class="storage-gauge-row">
+            <div class="storage-gauge">
+              <svg viewBox="0 0 120 120">
+                <circle class="gauge-track" cx="60" cy="60" r="52" />
+                <circle
+                  class="gauge-fill"
+                  cx="60" cy="60" r="52"
+                  [style.stroke]="storageColor"
+                  [style.stroke-dasharray]="gaugeCircumference"
+                  [style.stroke-dashoffset]="gaugeOffset" />
+              </svg>
+              <div class="gauge-center">
+                <span class="gauge-pct">{{ storage.usedPct }}<small>%</small></span>
+                <span class="gauge-cap">{{ 'cameras.storage.used' | transloco }}</span>
+              </div>
+            </div>
+
+            <div class="storage-legend">
+              <div class="legend-row used">
+                <span class="legend-dot" [style.background]="storageColor"></span>
+                <span class="legend-label">{{ 'cameras.storage.used' | transloco }}</span>
+                <span class="legend-val">{{ formatBytes(storage.usedBytes) }}</span>
+              </div>
+              <div class="legend-row free">
+                <span class="legend-dot"></span>
+                <span class="legend-label">{{ 'cameras.storage.free' | transloco }}</span>
+                <span class="legend-val">{{ formatBytes(storage.freeBytes) }}</span>
+              </div>
+              <div class="legend-row total">
+                <span class="legend-label">{{ 'cameras.storage.limit' | transloco }}</span>
+                <span class="legend-val">{{ formatBytes(storage.maxBytes) }}</span>
+              </div>
+              @if (storage.cleaning) {
+                <div class="storage-cleaning">
+                  <mat-icon>autorenew</mat-icon>{{ 'cameras.storage.cleaning' | transloco }}
+                </div>
+              }
+            </div>
+          </div>
+
+          <!-- stat tiles -->
+          <div class="storage-stats">
+            <div class="stat-tile">
+              <span class="stat-val">{{ storage.frameCount | number }}</span>
+              <span class="stat-key">{{ 'cameras.storage.frames' | transloco }}</span>
+            </div>
+            <div class="stat-tile">
+              <span class="stat-val">{{ formatBytes(storage.avgFrameBytes) }}</span>
+              <span class="stat-key">{{ 'cameras.storage.avg_frame' | transloco }}</span>
+            </div>
+            <div class="stat-tile">
+              @if (retention) {
+                <span class="stat-val">{{ retention.value }}
+                  <small>{{ (retention.unit === 'days' ? 'cameras.storage.unit_days' : 'cameras.storage.unit_hours') | transloco }}</small>
+                </span>
+              } @else {
+                <span class="stat-val">\u2014</span>
+              }
+              <span class="stat-key">{{ 'cameras.storage.retention' | transloco }}</span>
+            </div>
+            <div class="stat-tile">
+              @if (storage.oldestUtc) {
+                <span class="stat-val small">{{ storage.oldestUtc | date: 'dd.MM HH:mm' }}</span>
+              } @else {
+                <span class="stat-val">\u2014</span>
+              }
+              <span class="stat-key">{{ 'cameras.storage.oldest' | transloco }}</span>
+            </div>
+          </div>
+
+          <!-- manual cleanup -->
+          <div class="storage-action">
+            <div class="action-text">
+              <span class="action-title">{{ 'cameras.storage.cleanup_title' | transloco }}</span>
+              <span class="action-hint">{{ 'cameras.storage.cleanup_hint' | transloco }}</span>
+            </div>
+            <button
+              type="button"
+              class="cleanup-btn"
+              [disabled]="cleaning || !storage.quotaEnabled"
+              (click)="runCleanup()">
+              <mat-icon>{{ cleaning ? 'autorenew' : 'cleaning_services' }}</mat-icon>
+              {{ (cleaning ? 'cameras.storage.cleaning' : 'cameras.storage.clean_now') | transloco }}
+            </button>
+          </div>
+
+          @if (cleanupNote) {
+            <div class="cleanup-note"
+                 [class.ok]="cleanupNote === 'ok'"
+                 [class.err]="cleanupNote === 'error'">
+              @if (cleanupNote === 'ok') {
+                <mat-icon>check_circle</mat-icon>{{ 'cameras.storage.nothing_to_clean' | transloco }}
+              } @else if (cleanupNote === 'error') {
+                <mat-icon>error</mat-icon>{{ 'cameras.storage.clean_error' | transloco }}
+              } @else {
+                <mat-icon>check_circle</mat-icon>{{ 'cameras.storage.freed' | transloco }} {{ cleanupNote }}
+              }
+            </div>
+          }
+
+          <!-- cleanup log / notifications -->
+          <div class="storage-log">
+            <div class="log-head">
+              <mat-icon>notifications</mat-icon>
+              {{ 'cameras.storage.log_title' | transloco }}
+            </div>
+            @if (storage.recentCleanups.length === 0) {
+              <div class="log-empty">{{ 'cameras.storage.log_empty' | transloco }}</div>
+            } @else {
+              <ul class="log-list">
+                @for (e of storage.recentCleanups; track e.atUtc) {
+                  <li class="log-item">
+                    <span class="log-trigger" [class.manual]="e.trigger === 'manual'">
+                      {{ (e.trigger === 'manual' ? 'cameras.storage.trigger_manual' : 'cameras.storage.trigger_auto') | transloco }}
+                    </span>
+                    <span class="log-main">
+                      \u2212{{ formatBytes(e.freedBytes) }}
+                      <span class="log-frames">\xB7 {{ e.deletedFrames | number }} {{ 'cameras.storage.frames' | transloco }}</span>
+                    </span>
+                    <span class="log-time">{{ e.atUtc | date: 'dd.MM HH:mm' }}</span>
+                  </li>
+                }
+              </ul>
+            }
+          </div>
+        </div>
+      } @else if (loadingStorage) {
+        <div class="storage-loading">{{ 'cameras.loading' | transloco }}</div>
+      }
+    </div>
+  </div>
+}
+`, styles: ['@charset "UTF-8";\n\n/* src/app/modules/cameras/pages/camera-wall/camera-wall.component.scss */\n:host {\n  --accent: #22c55e;\n  --accent-soft: rgba(34, 197, 94, 0.16);\n  --accent-ring: rgba(34, 197, 94, 0.55);\n  --bg: #0a0b0d;\n  --surface: #111317;\n  --surface-2: #15181d;\n  --hairline: rgba(255, 255, 255, 0.08);\n  --text: #eef1f5;\n  --text-dim: rgba(255, 255, 255, 0.55);\n  --text-faint: rgba(255, 255, 255, 0.38);\n}\n.camera-page {\n  display: flex;\n  flex-direction: column;\n  width: 100vw;\n  height: 100vh;\n  background:\n    radial-gradient(\n      1200px 600px at 80% -10%,\n      rgba(34, 197, 94, 0.06),\n      transparent 60%),\n    var(--bg);\n  color: var(--text);\n  overflow: hidden;\n}\n.cam-header {\n  display: flex;\n  align-items: center;\n  gap: 18px;\n  padding: 12px 20px;\n  background: rgba(17, 19, 23, 0.72);\n  border-bottom: 1px solid var(--hairline);\n  backdrop-filter: blur(12px);\n}\n.cam-brand {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  min-width: 0;\n}\n.cam-brand-icon {\n  display: grid;\n  place-items: center;\n  width: 38px;\n  height: 38px;\n  border-radius: 11px;\n  color: var(--accent);\n  background: var(--accent-soft);\n  box-shadow: inset 0 0 0 1px var(--accent-ring);\n}\n.cam-brand-icon mat-icon {\n  font-size: 20px;\n  width: 20px;\n  height: 20px;\n}\n.cam-brand-text {\n  display: flex;\n  flex-direction: column;\n  line-height: 1.25;\n  min-width: 0;\n}\n.cam-title {\n  font-size: 15px;\n  font-weight: 700;\n  letter-spacing: 0.01em;\n}\n.cam-subtitle {\n  font-size: 11.5px;\n  color: var(--text-faint);\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n.cam-header-right {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  margin-left: auto;\n}\n.cam-clock {\n  display: inline-flex;\n  align-items: center;\n  gap: 6px;\n  padding: 6px 12px;\n  font-size: 13px;\n  font-weight: 600;\n  font-variant-numeric: tabular-nums;\n  color: var(--text);\n  background: rgba(255, 255, 255, 0.05);\n  border: 1px solid var(--hairline);\n  border-radius: 999px;\n}\n.cam-clock mat-icon {\n  font-size: 16px;\n  width: 16px;\n  height: 16px;\n  color: var(--text-dim);\n}\n.pc-bar {\n  display: flex;\n  align-items: center;\n  gap: 8px;\n  flex-wrap: wrap;\n}\n.pc-bar-label {\n  display: flex;\n  align-items: center;\n  color: var(--text-faint);\n}\n.pc-bar-label mat-icon {\n  font-size: 18px;\n  width: 18px;\n  height: 18px;\n}\n.pc-muted {\n  color: var(--text-faint);\n  font-size: 12px;\n}\n.pc-chip {\n  display: inline-flex;\n  align-items: center;\n  gap: 6px;\n  padding: 5px 13px;\n  font-size: 12px;\n  font-weight: 600;\n  letter-spacing: 0.03em;\n  color: rgba(255, 255, 255, 0.82);\n  background: rgba(255, 255, 255, 0.05);\n  border: 1px solid var(--hairline);\n  border-radius: 999px;\n  cursor: pointer;\n  transition:\n    background 0.15s ease,\n    border-color 0.15s ease,\n    transform 0.1s ease;\n}\n.pc-chip:hover {\n  background: rgba(255, 255, 255, 0.1);\n}\n.pc-chip:active {\n  transform: translateY(1px);\n}\n.pc-chip.active {\n  background: var(--accent-soft);\n  border-color: var(--accent-ring);\n  color: #fff;\n}\n.pc-chip-count {\n  font-size: 10px;\n  padding: 1px 6px;\n  border-radius: 999px;\n  background: rgba(255, 255, 255, 0.08);\n  color: rgba(255, 255, 255, 0.6);\n}\n.pc-refresh {\n  display: grid;\n  place-items: center;\n  width: 34px;\n  height: 34px;\n  background: rgba(255, 255, 255, 0.05);\n  border: 1px solid var(--hairline);\n  border-radius: 10px;\n  color: var(--text-dim);\n  cursor: pointer;\n  transition: color 0.15s ease, background 0.15s ease;\n}\n.pc-refresh:hover {\n  color: #fff;\n  background: rgba(255, 255, 255, 0.1);\n}\n.pc-refresh:active mat-icon {\n  transform: rotate(180deg);\n}\n.pc-refresh mat-icon {\n  font-size: 20px;\n  width: 20px;\n  height: 20px;\n  transition: transform 0.3s ease;\n}\n.camera-wall {\n  flex: 1;\n  min-height: 0;\n  display: grid;\n  grid-template-columns: repeat(3, 1fr);\n  grid-auto-rows: 1fr;\n  gap: 12px;\n  padding: 14px;\n  overflow: auto;\n}\n.wall-empty {\n  grid-column: 1/-1;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  color: var(--text-faint);\n  font-size: 13px;\n}\n.camera-cell {\n  position: relative;\n  border-radius: 14px;\n  background: var(--surface);\n  border: 1px solid var(--hairline);\n  overflow: hidden;\n  cursor: pointer;\n  transition:\n    transform 0.18s ease,\n    border-color 0.18s ease,\n    box-shadow 0.18s ease;\n}\n.camera-cell:hover {\n  transform: translateY(-2px);\n  border-color: rgba(255, 255, 255, 0.18);\n  box-shadow: 0 14px 34px -16px rgba(0, 0, 0, 0.8);\n}\n.camera-cell:hover .cam-media img {\n  transform: scale(1.04);\n}\n.camera-cell:hover .cam-history-hint {\n  opacity: 1;\n  transform: translateY(0);\n}\n.camera-cell.is-live {\n  border-color: rgba(34, 197, 94, 0.32);\n}\n.cam-media {\n  position: absolute;\n  inset: 0;\n}\n.cam-media img {\n  width: 100%;\n  height: 100%;\n  object-fit: cover;\n  display: block;\n  transition: transform 0.4s ease;\n}\n.cam-scrim {\n  position: absolute;\n  inset: 0;\n  background:\n    linear-gradient(\n      to top,\n      rgba(0, 0, 0, 0.6) 0%,\n      rgba(0, 0, 0, 0) 38%);\n  pointer-events: none;\n}\n.no-signal {\n  width: 100%;\n  height: 100%;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n  gap: 8px;\n  color: #3a3f47;\n  background:\n    repeating-linear-gradient(\n      45deg,\n      #0e1013,\n      #0e1013 12px,\n      #121519 12px,\n      #121519 24px);\n}\n.no-signal mat-icon {\n  font-size: 40px;\n  width: 40px;\n  height: 40px;\n}\n.no-signal span {\n  font-size: 11px;\n  letter-spacing: 0.05em;\n  text-transform: uppercase;\n}\n.cam-live {\n  position: absolute;\n  top: 10px;\n  left: 10px;\n  display: inline-flex;\n  align-items: center;\n  gap: 6px;\n  padding: 3px 9px 3px 8px;\n  font-size: 10px;\n  font-weight: 800;\n  letter-spacing: 0.08em;\n  color: #fff;\n  background: rgba(220, 38, 38, 0.92);\n  border-radius: 999px;\n  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);\n}\n.cam-live-dot {\n  width: 7px;\n  height: 7px;\n  border-radius: 50%;\n  background: #fff;\n  animation: live-pulse 1.4s ease-in-out infinite;\n}\n@keyframes live-pulse {\n  0%, 100% {\n    opacity: 1;\n    transform: scale(1);\n  }\n  50% {\n    opacity: 0.35;\n    transform: scale(0.7);\n  }\n}\n.cam-history-hint {\n  position: absolute;\n  top: 8px;\n  right: 8px;\n  display: grid;\n  place-items: center;\n  width: 30px;\n  height: 30px;\n  border: none;\n  border-radius: 9px;\n  background: rgba(10, 11, 13, 0.66);\n  color: rgba(255, 255, 255, 0.92);\n  cursor: pointer;\n  opacity: 0;\n  transform: translateY(-4px);\n  backdrop-filter: blur(4px);\n  transition:\n    opacity 0.18s ease,\n    transform 0.18s ease,\n    background 0.15s ease;\n}\n.cam-history-hint:hover {\n  background: rgba(34, 197, 94, 0.85);\n}\n.cam-history-hint mat-icon {\n  font-size: 18px;\n  width: 18px;\n  height: 18px;\n}\n.cam-label {\n  position: absolute;\n  bottom: 10px;\n  left: 12px;\n  right: 12px;\n  display: flex;\n  align-items: baseline;\n  justify-content: space-between;\n  gap: 8px;\n  pointer-events: none;\n}\n.cam-label .cam-name {\n  font-size: 12px;\n  font-weight: 700;\n  letter-spacing: 0.05em;\n  color: #fff;\n  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);\n}\n.cam-label .cam-time {\n  font-size: 11px;\n  font-variant-numeric: tabular-nums;\n  color: rgba(255, 255, 255, 0.72);\n  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);\n}\n.archive-overlay {\n  position: fixed;\n  inset: 0;\n  z-index: 1000;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  padding: 24px;\n  background: rgba(4, 5, 7, 0.78);\n  backdrop-filter: blur(6px);\n  animation: overlay-in 0.16s ease;\n}\n@keyframes overlay-in {\n  from {\n    opacity: 0;\n  }\n  to {\n    opacity: 1;\n  }\n}\n.archive-panel {\n  display: flex;\n  flex-direction: column;\n  width: min(92vw, 980px);\n  max-height: 92vh;\n  background: var(--surface);\n  border: 1px solid var(--hairline);\n  border-radius: 16px;\n  overflow: hidden;\n  color: var(--text);\n  box-shadow: 0 30px 80px -24px rgba(0, 0, 0, 0.85);\n  animation: panel-in 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);\n}\n@keyframes panel-in {\n  from {\n    opacity: 0;\n    transform: translateY(10px) scale(0.985);\n  }\n  to {\n    opacity: 1;\n    transform: translateY(0) scale(1);\n  }\n}\n.archive-header {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  padding: 14px 18px;\n  border-bottom: 1px solid var(--hairline);\n}\n.archive-header .archive-title {\n  display: inline-flex;\n  align-items: center;\n  gap: 9px;\n  font-size: 14px;\n  font-weight: 600;\n  letter-spacing: 0.03em;\n}\n.archive-header .archive-title mat-icon {\n  font-size: 18px;\n  width: 18px;\n  height: 18px;\n  color: var(--accent);\n}\n.archive-header .archive-sep {\n  color: var(--text-faint);\n}\n.archive-header .archive-close {\n  display: grid;\n  place-items: center;\n  width: 32px;\n  height: 32px;\n  background: rgba(255, 255, 255, 0.05);\n  border: 1px solid var(--hairline);\n  border-radius: 9px;\n  color: var(--text-dim);\n  cursor: pointer;\n  transition: color 0.15s ease, background 0.15s ease;\n}\n.archive-header .archive-close:hover {\n  color: #fff;\n  background: rgba(255, 255, 255, 0.1);\n}\n.archive-days {\n  display: flex;\n  flex-wrap: wrap;\n  gap: 6px;\n  padding: 12px 18px;\n  border-bottom: 1px solid var(--hairline);\n  background: var(--surface-2);\n}\n.archive-day-chip {\n  display: inline-flex;\n  align-items: center;\n  gap: 6px;\n  padding: 5px 11px;\n  font-size: 12px;\n  color: rgba(255, 255, 255, 0.82);\n  background: rgba(255, 255, 255, 0.05);\n  border: 1px solid var(--hairline);\n  border-radius: 999px;\n  cursor: pointer;\n  transition: background 0.15s ease, border-color 0.15s ease;\n}\n.archive-day-chip:hover {\n  background: rgba(255, 255, 255, 0.1);\n}\n.archive-day-chip.active {\n  background: var(--accent-soft);\n  border-color: var(--accent-ring);\n  color: #fff;\n}\n.archive-day-count {\n  font-size: 10px;\n  padding: 1px 6px;\n  border-radius: 999px;\n  background: rgba(255, 255, 255, 0.08);\n  color: rgba(255, 255, 255, 0.6);\n}\n.archive-stage {\n  flex: 1;\n  min-height: 0;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  padding: 14px;\n  background:\n    radial-gradient(\n      60% 60% at 50% 40%,\n      rgba(255, 255, 255, 0.03),\n      transparent),\n    #000;\n}\n.archive-stage img {\n  max-width: 100%;\n  max-height: 62vh;\n  object-fit: contain;\n  display: block;\n  border-radius: 8px;\n}\n.archive-muted {\n  color: var(--text-faint);\n  font-size: 13px;\n  padding: 32px;\n}\n.archive-footer {\n  border-top: 1px solid var(--hairline);\n  background: var(--surface-2);\n}\n.archive-controls {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  padding: 14px 18px 8px;\n}\n.archive-controls button {\n  display: grid;\n  place-items: center;\n  width: 34px;\n  height: 34px;\n  background: rgba(255, 255, 255, 0.06);\n  border: 1px solid var(--hairline);\n  border-radius: 9px;\n  color: var(--text);\n  cursor: pointer;\n  transition: background 0.15s ease;\n}\n.archive-controls button:hover:not(:disabled) {\n  background: rgba(255, 255, 255, 0.14);\n}\n.archive-controls button:disabled {\n  opacity: 0.3;\n  cursor: default;\n}\n.archive-controls input[type=range] {\n  flex: 1;\n  height: 4px;\n  accent-color: var(--accent);\n  cursor: pointer;\n}\n.archive-meta {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  padding: 4px 20px 16px;\n  font-size: 12px;\n  color: var(--text-dim);\n  font-variant-numeric: tabular-nums;\n}\n.archive-meta .archive-count {\n  padding: 2px 9px;\n  border-radius: 999px;\n  background: rgba(255, 255, 255, 0.06);\n}\n.archive-meta .archive-stamp {\n  color: var(--text);\n  font-weight: 600;\n}\n.pc-toggle {\n  display: grid;\n  place-items: center;\n  width: 34px;\n  height: 34px;\n  background: rgba(255, 255, 255, 0.05);\n  border: 1px solid var(--hairline);\n  border-radius: 10px;\n  color: var(--text-faint);\n  cursor: pointer;\n  transition:\n    color 0.15s ease,\n    background 0.15s ease,\n    border-color 0.15s ease;\n}\n.pc-toggle:hover {\n  color: #fff;\n  background: rgba(255, 255, 255, 0.1);\n}\n.pc-toggle.on {\n  color: var(--accent);\n  border-color: var(--accent-ring);\n  background: var(--accent-soft);\n}\n.pc-toggle mat-icon {\n  font-size: 20px;\n  width: 20px;\n  height: 20px;\n}\n.cam-storage-chip {\n  display: inline-flex;\n  align-items: center;\n  gap: 8px;\n  padding: 5px 12px;\n  background: rgba(255, 255, 255, 0.05);\n  border: 1px solid var(--hairline);\n  border-radius: 999px;\n  color: var(--text);\n  cursor: pointer;\n  transition: background 0.15s ease, border-color 0.15s ease;\n}\n.cam-storage-chip:hover {\n  background: rgba(255, 255, 255, 0.1);\n}\n.cam-storage-chip.warn {\n  border-color: rgba(224, 161, 6, 0.5);\n}\n.cam-storage-chip.crit {\n  border-color: rgba(240, 88, 79, 0.55);\n}\n.cam-storage-chip mat-icon {\n  font-size: 17px;\n  width: 17px;\n  height: 17px;\n  color: var(--text-dim);\n}\n.cam-storage-pct {\n  font-size: 12px;\n  font-weight: 700;\n  font-variant-numeric: tabular-nums;\n}\n.cam-storage-bar {\n  position: relative;\n  width: 46px;\n  height: 5px;\n  border-radius: 999px;\n  background: rgba(255, 255, 255, 0.12);\n  overflow: hidden;\n}\n.cam-storage-bar i {\n  position: absolute;\n  inset: 0 auto 0 0;\n  display: block;\n  border-radius: 999px;\n  transition: width 0.4s ease;\n}\n.storage-overlay {\n  position: fixed;\n  inset: 0;\n  z-index: 1000;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  padding: 24px;\n  background: rgba(4, 5, 7, 0.78);\n  backdrop-filter: blur(6px);\n  animation: overlay-in 0.16s ease;\n}\n.storage-panel {\n  display: flex;\n  flex-direction: column;\n  width: min(94vw, 560px);\n  max-height: 92vh;\n  background: var(--surface);\n  border: 1px solid var(--hairline);\n  border-radius: 16px;\n  overflow: hidden;\n  color: var(--text);\n  box-shadow: 0 30px 80px -24px rgba(0, 0, 0, 0.85);\n  animation: panel-in 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);\n}\n.storage-header {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  padding: 14px 18px;\n  border-bottom: 1px solid var(--hairline);\n}\n.storage-header .storage-title {\n  display: inline-flex;\n  align-items: center;\n  gap: 9px;\n  font-size: 14px;\n  font-weight: 600;\n  letter-spacing: 0.03em;\n}\n.storage-header .storage-title mat-icon {\n  font-size: 18px;\n  width: 18px;\n  height: 18px;\n  color: var(--accent);\n}\n.storage-header-actions {\n  display: flex;\n  gap: 8px;\n}\n.storage-icon-btn {\n  display: grid;\n  place-items: center;\n  width: 32px;\n  height: 32px;\n  background: rgba(255, 255, 255, 0.05);\n  border: 1px solid var(--hairline);\n  border-radius: 9px;\n  color: var(--text-dim);\n  cursor: pointer;\n  transition: color 0.15s ease, background 0.15s ease;\n}\n.storage-icon-btn:hover {\n  color: #fff;\n  background: rgba(255, 255, 255, 0.1);\n}\n.storage-icon-btn mat-icon {\n  font-size: 18px;\n  width: 18px;\n  height: 18px;\n}\n.storage-body {\n  padding: 18px;\n  overflow: auto;\n  display: flex;\n  flex-direction: column;\n  gap: 16px;\n}\n.storage-loading {\n  padding: 48px;\n  text-align: center;\n  color: var(--text-faint);\n  font-size: 13px;\n}\n.storage-gauge-row {\n  display: flex;\n  align-items: center;\n  gap: 22px;\n}\n.storage-gauge {\n  position: relative;\n  width: 124px;\n  height: 124px;\n  flex-shrink: 0;\n}\n.storage-gauge svg {\n  width: 100%;\n  height: 100%;\n  transform: rotate(-90deg);\n}\n.storage-gauge .gauge-track {\n  fill: none;\n  stroke: rgba(255, 255, 255, 0.08);\n  stroke-width: 10;\n}\n.storage-gauge .gauge-fill {\n  fill: none;\n  stroke-width: 10;\n  stroke-linecap: round;\n  transition: stroke-dashoffset 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), stroke 0.3s ease;\n}\n.gauge-center {\n  position: absolute;\n  inset: 0;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n}\n.gauge-center .gauge-pct {\n  font-size: 28px;\n  font-weight: 700;\n  font-variant-numeric: tabular-nums;\n  line-height: 1;\n}\n.gauge-center .gauge-pct small {\n  font-size: 14px;\n  font-weight: 600;\n  color: var(--text-dim);\n}\n.gauge-center .gauge-cap {\n  margin-top: 3px;\n  font-size: 10px;\n  letter-spacing: 0.08em;\n  text-transform: uppercase;\n  color: var(--text-faint);\n}\n.storage-legend {\n  flex: 1;\n  min-width: 0;\n  display: flex;\n  flex-direction: column;\n  gap: 8px;\n}\n.legend-row {\n  display: flex;\n  align-items: center;\n  gap: 9px;\n  font-size: 13px;\n}\n.legend-row .legend-dot {\n  width: 9px;\n  height: 9px;\n  border-radius: 3px;\n  background: rgba(255, 255, 255, 0.18);\n  flex-shrink: 0;\n}\n.legend-row .legend-label {\n  color: var(--text-dim);\n}\n.legend-row .legend-val {\n  margin-left: auto;\n  font-weight: 600;\n  font-variant-numeric: tabular-nums;\n}\n.legend-row.total {\n  padding-top: 8px;\n  border-top: 1px solid var(--hairline);\n}\n.legend-row.total .legend-label {\n  color: var(--text-faint);\n}\n.storage-cleaning {\n  display: inline-flex;\n  align-items: center;\n  gap: 6px;\n  margin-top: 2px;\n  font-size: 11.5px;\n  color: var(--accent);\n}\n.storage-cleaning mat-icon {\n  font-size: 15px;\n  width: 15px;\n  height: 15px;\n  animation: spin 1.1s linear infinite;\n}\n@keyframes spin {\n  to {\n    transform: rotate(360deg);\n  }\n}\n.storage-stats {\n  display: grid;\n  grid-template-columns: repeat(4, 1fr);\n  gap: 8px;\n}\n.stat-tile {\n  display: flex;\n  flex-direction: column;\n  gap: 3px;\n  padding: 11px 10px;\n  background: var(--surface-2);\n  border: 1px solid var(--hairline);\n  border-radius: 11px;\n  text-align: center;\n}\n.stat-tile .stat-val {\n  font-size: 16px;\n  font-weight: 700;\n  font-variant-numeric: tabular-nums;\n}\n.stat-tile .stat-val small {\n  font-size: 11px;\n  font-weight: 600;\n  color: var(--text-dim);\n  margin-left: 1px;\n}\n.stat-tile .stat-val.small {\n  font-size: 13px;\n}\n.stat-tile .stat-key {\n  font-size: 10px;\n  letter-spacing: 0.04em;\n  text-transform: uppercase;\n  color: var(--text-faint);\n}\n.storage-action {\n  display: flex;\n  align-items: center;\n  gap: 14px;\n  padding: 14px;\n  background: var(--surface-2);\n  border: 1px solid var(--hairline);\n  border-radius: 12px;\n}\n.storage-action .action-text {\n  display: flex;\n  flex-direction: column;\n  gap: 2px;\n  min-width: 0;\n}\n.storage-action .action-title {\n  font-size: 13px;\n  font-weight: 600;\n}\n.storage-action .action-hint {\n  font-size: 11.5px;\n  color: var(--text-faint);\n}\n.cleanup-btn {\n  display: inline-flex;\n  align-items: center;\n  gap: 7px;\n  margin-left: auto;\n  padding: 9px 15px;\n  font-size: 12.5px;\n  font-weight: 600;\n  white-space: nowrap;\n  color: #fff;\n  background: var(--accent);\n  border: none;\n  border-radius: 10px;\n  cursor: pointer;\n  transition: filter 0.15s ease, opacity 0.15s ease;\n}\n.cleanup-btn:hover:not(:disabled) {\n  filter: brightness(1.08);\n}\n.cleanup-btn:disabled {\n  opacity: 0.45;\n  cursor: default;\n}\n.cleanup-btn mat-icon {\n  font-size: 17px;\n  width: 17px;\n  height: 17px;\n}\n.cleanup-note {\n  display: flex;\n  align-items: center;\n  gap: 8px;\n  margin-top: -6px;\n  padding: 9px 12px;\n  font-size: 12.5px;\n  border-radius: 10px;\n  background: var(--accent-soft);\n  color: var(--accent);\n}\n.cleanup-note mat-icon {\n  font-size: 17px;\n  width: 17px;\n  height: 17px;\n}\n.cleanup-note.err {\n  background: rgba(240, 88, 79, 0.14);\n  color: #f0584f;\n}\n.storage-log {\n  display: flex;\n  flex-direction: column;\n  gap: 8px;\n}\n.log-head {\n  display: inline-flex;\n  align-items: center;\n  gap: 7px;\n  font-size: 12px;\n  font-weight: 600;\n  letter-spacing: 0.03em;\n  color: var(--text-dim);\n}\n.log-head mat-icon {\n  font-size: 16px;\n  width: 16px;\n  height: 16px;\n}\n.log-empty {\n  padding: 16px;\n  text-align: center;\n  font-size: 12px;\n  color: var(--text-faint);\n  background: var(--surface-2);\n  border: 1px dashed var(--hairline);\n  border-radius: 10px;\n}\n.log-list {\n  list-style: none;\n  margin: 0;\n  padding: 0;\n  display: flex;\n  flex-direction: column;\n  max-height: 184px;\n  overflow: auto;\n  border: 1px solid var(--hairline);\n  border-radius: 10px;\n}\n.log-item {\n  display: flex;\n  align-items: center;\n  gap: 10px;\n  padding: 9px 12px;\n  font-size: 12.5px;\n}\n.log-item:not(:last-child) {\n  border-bottom: 1px solid var(--hairline);\n}\n.log-item .log-trigger {\n  flex-shrink: 0;\n  padding: 2px 8px;\n  font-size: 10px;\n  font-weight: 700;\n  letter-spacing: 0.04em;\n  text-transform: uppercase;\n  border-radius: 999px;\n  color: var(--text-dim);\n  background: rgba(255, 255, 255, 0.07);\n}\n.log-item .log-trigger.manual {\n  color: var(--accent);\n  background: var(--accent-soft);\n}\n.log-item .log-main {\n  font-weight: 600;\n  font-variant-numeric: tabular-nums;\n}\n.log-item .log-main .log-frames {\n  font-weight: 400;\n  color: var(--text-faint);\n}\n.log-item .log-time {\n  margin-left: auto;\n  flex-shrink: 0;\n  font-variant-numeric: tabular-nums;\n  color: var(--text-faint);\n}\n@media (max-width: 1100px) {\n  .camera-wall {\n    grid-template-columns: repeat(2, 1fr);\n  }\n}\n@media (max-width: 680px) {\n  .cam-header {\n    flex-wrap: wrap;\n    gap: 12px;\n  }\n  .cam-subtitle {\n    display: none;\n  }\n  .camera-wall {\n    grid-template-columns: 1fr;\n    gap: 10px;\n    padding: 10px;\n  }\n  .cam-storage-bar {\n    display: none;\n  }\n  .storage-stats {\n    grid-template-columns: repeat(2, 1fr);\n  }\n  .storage-action {\n    flex-direction: column;\n    align-items: stretch;\n  }\n  .cleanup-btn {\n    margin-left: 0;\n    justify-content: center;\n  }\n}\n/*# sourceMappingURL=camera-wall.component.css.map */\n'] }]
   }], () => [{ type: HttpClient }], null);
 })();
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(CameraWallComponent, { className: "CameraWallComponent", filePath: "src/app/modules/cameras/pages/camera-wall/camera-wall.component.ts", lineNumber: 39 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(CameraWallComponent, { className: "CameraWallComponent", filePath: "src/app/modules/cameras/pages/camera-wall/camera-wall.component.ts", lineNumber: 65 });
 })();
 
 // src/app/app.routing.module.ts
