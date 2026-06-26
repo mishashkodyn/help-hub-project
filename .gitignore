@@ -492,3 +492,7 @@ _dump.txt
 _rev.txt
 _old.txt
 _new.txt
+
+# Camera wall runtime frames (persisted via docker volume, never committed)
+frames/
+WebApi/frames/

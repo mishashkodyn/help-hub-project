@@ -827,11 +827,32 @@
   .action-hint { font-size: 11.5px; color: var(--text-faint); }
 }
 
+.action-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.keep-select {
+  padding: 9px 10px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: 10px;
+  cursor: pointer;
+  outline: none;
+
+  &:disabled { opacity: 0.45; cursor: default; }
+  option { background: var(--surface); color: var(--text); }
+}
+
 .cleanup-btn {
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  margin-left: auto;
   padding: 9px 15px;
   font-size: 12.5px;
   font-weight: 600;
@@ -841,10 +862,11 @@
   border: none;
   border-radius: 10px;
   cursor: pointer;
-  transition: filter 0.15s ease, opacity 0.15s ease;
+  transition: filter 0.15s ease, opacity 0.15s ease, background 0.15s ease;
 
   &:hover:not(:disabled) { filter: brightness(1.08); }
   &:disabled { opacity: 0.45; cursor: default; }
+  &.danger { background: #f0584f; }
 
   mat-icon { font-size: 17px; width: 17px; height: 17px; }
 }

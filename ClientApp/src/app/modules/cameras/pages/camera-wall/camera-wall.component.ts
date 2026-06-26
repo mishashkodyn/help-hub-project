@@ -87,6 +87,7 @@ export class CameraWallComponent implements OnInit, OnDestroy {
   loadingStorage = false;
   cleaning = false;
   cleanupNote: string | null = null;
+  cleanupKeepDays = 7; // manual cleanup keeps frames from the last N days (0 = clear all)
 
   // archive viewer state
   viewerCamera: string | null = null;
@@ -318,12 +319,21 @@ export class CameraWallComponent implements OnInit, OnDestroy {
     });
   }
 
+  onKeepChange(event: Event): void {
+    this.cleanupKeepDays = +(event.target as HTMLSelectElement).value;
+  }
+
   runCleanup(): void {
     if (this.cleaning) return;
+    // Clearing the whole archive is destructive — confirm first.
+    if (this.cleanupKeepDays === 0 &&
+        !confirm(this.transloco.translate('cameras.storage.confirm_clear_all'))) {
+      return;
+    }
     this.cleaning = true;
     this.cleanupNote = null;
     this.http.post<{ deletedFrames: number; freedBytes: number }>(
-      '/api/frames/storage/cleanup', {},
+      `/api/frames/storage/cleanup?keepDays=${this.cleanupKeepDays}`, {},
     ).subscribe({
       next: res => {
         this.cleaning = false;

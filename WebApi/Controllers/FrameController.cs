@@ -272,22 +272,32 @@ namespace API.Controllers
             });
         }
 
-        // POST /api/frames/storage/cleanup → ручне очищення архіву найстаріших кадрів
-        // до targetPct% від ліміту (за замовчуванням 80%). Лише для адміністраторів.
+        // POST /api/frames/storage/cleanup → ручне очищення архіву. Лише для адміністраторів.
+        //   ?keepDays=N → видалити архівні кадри, старіші за N останніх календарних днів (0 = весь архів);
+        //   інакше      → обрізати найстаріші до targetPct% від ліміту (типово 80%).
         [Authorize(Roles = "Superadmin,Admin")]
         [HttpPost("storage/cleanup")]
-        public IActionResult Cleanup([FromQuery] double? targetPct)
+        public IActionResult Cleanup([FromQuery] int? keepDays, [FromQuery] double? targetPct)
         {
             if (!IsEnabled()) return NotFound();
 
             var maxBytes = GetMaxArchiveBytes();
-            if (maxBytes <= 0) return BadRequest("Ліміт архіву вимкнено");
+            var root = GetFramesRoot();
+            CleanupEvent? ev;
 
-            // Адмін може задати, до якого відсотка ліміту обрізати (0–95%); типово — 80%.
-            var pct = targetPct is >= 0 and <= 95 ? targetPct.Value : 80d;
-            var targetBytes = (long)(maxBytes * pct / 100d);
+            if (keepDays is int days && days >= 0)
+            {
+                // За днями: працює незалежно від ліміту — звільняє місце «на вимогу».
+                ev = PurgeOlderThan(root, days, maxBytes);
+            }
+            else
+            {
+                if (maxBytes <= 0) return BadRequest("Ліміт архіву вимкнено");
+                var pct = targetPct is >= 0 and <= 95 ? targetPct.Value : 80d;
+                var targetBytes = (long)(maxBytes * pct / 100d);
+                ev = TrimArchive(root, gateBytes: 0, targetBytes: targetBytes, maxBytes: maxBytes, trigger: "manual");
+            }
 
-            var ev = TrimArchive(GetFramesRoot(), gateBytes: 0, targetBytes: targetBytes, maxBytes: maxBytes, trigger: "manual");
             if (ev is not null)
             {
                 RecordCleanup(ev);
@@ -300,7 +310,6 @@ namespace API.Controllers
             {
                 deletedFrames = ev?.DeletedFrames ?? 0,
                 freedBytes = ev?.FreedBytes ?? 0,
-                targetPct = pct,
             });
         }
 
@@ -454,6 +463,60 @@ namespace API.Controllers
             return deleted == 0
                 ? null
                 : new CleanupEvent(DateTime.UtcNow, deleted, freed, total, maxBytes, trigger);
+        }
+
+        // Видаляє архівні кадри в днях, старіших за N останніх календарних днів (UTC).
+        // keepDays = 0 → видалити весь архів. Повертає null, якщо нічого не видалено.
+        private static CleanupEvent? PurgeOlderThan(string root, int keepDays, long maxBytes)
+        {
+            if (!Directory.Exists(root)) return null;
+
+            var cutoff = DateTime.UtcNow.Date.AddDays(-keepDays); // лишаємо дні >= cutoff
+            int deleted = 0;
+            long freed = 0;
+
+            foreach (var archiveDir in Directory.EnumerateDirectories(root, ArchiveDir, SearchOption.AllDirectories))
+            {
+                foreach (var dayDir in Directory.EnumerateDirectories(archiveDir))
+                {
+                    var dayName = Path.GetFileName(dayDir);
+                    if (!DayPattern.IsMatch(dayName)) continue;
+
+                    // Достатньо свіжий день — лишаємо.
+                    if (DateTime.TryParseExact(dayName, "yyyy-MM-dd",
+                            System.Globalization.CultureInfo.InvariantCulture,
+                            System.Globalization.DateTimeStyles.AssumeUniversal | System.Globalization.DateTimeStyles.AdjustToUniversal,
+                            out var day)
+                        && day.Date >= cutoff)
+                    {
+                        continue;
+                    }
+
+                    foreach (var f in Directory.EnumerateFiles(dayDir, "*.jpg"))
+                    {
+                        try
+                        {
+                            var len = new FileInfo(f).Length;
+                            System.IO.File.Delete(f);
+                            freed += len;
+                            deleted++;
+                        }
+                        catch { /* файл міг зникнути/бути зайнятим — пропускаємо */ }
+                    }
+                }
+            }
+
+            PruneEmptyDayFolders(root);
+
+            if (deleted == 0) return null;
+
+            // Перерахунок поточного розміру архіву для журналу.
+            long total = new DirectoryInfo(root)
+                .EnumerateFiles("*.jpg", SearchOption.AllDirectories)
+                .Where(f => string.Equals(f.Directory?.Parent?.Name, ArchiveDir, StringComparison.Ordinal))
+                .Sum(f => f.Length);
+
+            return new CleanupEvent(DateTime.UtcNow, deleted, freed, total, maxBytes, "manual");
         }
 
         // Прибираємо порожні папки днів archive/{день}, що лишились після видалення кадрів.

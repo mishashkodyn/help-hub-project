@@ -270,14 +270,23 @@
               <span class="action-title">{{ 'cameras.storage.cleanup_title' | transloco }}</span>
               <span class="action-hint">{{ 'cameras.storage.cleanup_hint' | transloco }}</span>
             </div>
-            <button
-              type="button"
-              class="cleanup-btn"
-              [disabled]="cleaning || !storage.quotaEnabled"
-              (click)="runCleanup()">
-              <mat-icon>{{ cleaning ? 'autorenew' : 'cleaning_services' }}</mat-icon>
-              {{ (cleaning ? 'cameras.storage.cleaning' : 'cameras.storage.clean_now') | transloco }}
-            </button>
+            <div class="action-controls">
+              <select class="keep-select" [disabled]="cleaning" (change)="onKeepChange($event)">
+                <option value="7" [selected]="cleanupKeepDays === 7">{{ 'cameras.storage.keep_7' | transloco }}</option>
+                <option value="3" [selected]="cleanupKeepDays === 3">{{ 'cameras.storage.keep_3' | transloco }}</option>
+                <option value="1" [selected]="cleanupKeepDays === 1">{{ 'cameras.storage.keep_1' | transloco }}</option>
+                <option value="0" [selected]="cleanupKeepDays === 0">{{ 'cameras.storage.keep_0' | transloco }}</option>
+              </select>
+              <button
+                type="button"
+                class="cleanup-btn"
+                [class.danger]="cleanupKeepDays === 0"
+                [disabled]="cleaning"
+                (click)="runCleanup()">
+                <mat-icon>{{ cleaning ? 'autorenew' : 'cleaning_services' }}</mat-icon>
+                {{ (cleaning ? 'cameras.storage.cleaning' : 'cameras.storage.clean_now') | transloco }}
+              </button>
+            </div>
           </div>
 
           @if (cleanupNote) {
