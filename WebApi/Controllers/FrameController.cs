@@ -1,4 +1,5 @@
-using System.Text.Json;
+using System.Globalization;
+using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -9,20 +10,24 @@ namespace API.Controllers
     [ApiController]
     public class FrameController : ControllerBase
     {
-        private static readonly Regex SlugPattern = new(@"^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$", RegexOptions.Compiled);
+        // Storage scheme: {FramesRoot}/{ip}/{date}/{HHmmss}.jpg
+        //   ip   → camera IPv4 "A.B.C.D" (the camera's identity, also the folder name)
+        //   date → capture day "yyyy-MM-dd"
+        //   file → capture time "HHmmss.jpg" (a same-second collision gets a "-N" suffix)
+        private static readonly Regex IpPattern = new(
+            @"^(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}$",
+            RegexOptions.Compiled);
         private static readonly Regex DayPattern = new(@"^\d{4}-\d{2}-\d{2}$", RegexOptions.Compiled);
-        private static readonly Regex FilePattern = new(@"^[0-9A-Za-z_-]+\.jpg$", RegexOptions.Compiled);
+        private static readonly Regex FilePattern = new(@"^\d{6}(-\d{1,3})?\.jpg$", RegexOptions.Compiled);
 
-        // Canonical camera folder name in the IP-based scheme: Box{N}. Anything else (e.g. the old
-        // "cam-1" folders from the {pc}/{cameraId} scheme) is legacy and ignored on read.
-        private static readonly Regex CameraPattern = new(@"^Box\d+$", RegexOptions.Compiled);
-        private static readonly Regex NamePattern = new(@"^([A-Za-z]+)(\d+)$", RegexOptions.Compiled);
-
-        private const string ArchiveDir = "archive";
-        private const string MetaFile = "meta.json";
+        // Capture time carried in the uploaded file name: exactly six digits "HHmmss".
+        private static readonly Regex TimePattern = new(@"^\d{6}$", RegexOptions.Compiled);
 
         // How many recent frames a camera card shows (1 main + the rest as thumbnails).
         private const int RecentFrameCount = 3;
+
+        // Cap a single multipart upload (one JPEG). Generous headroom over typical 0.2–2 MB frames.
+        private const long MaxUploadBytes = 15L * 1024 * 1024;
 
         private readonly IConfiguration _configuration;
         private readonly ILogger<FrameController> _logger;
@@ -53,40 +58,98 @@ namespace API.Controllers
             return gb <= 0 ? 0 : (long)(gb * 1024 * 1024 * 1024);
         }
 
-        // POST /api/frames  ← primary, fixed-path receiver.
-        //   Body    : raw JPEG bytes (Content-Type: image/jpeg)
-        //   Headers : X-Upload-Token (required)
-        //             X-Cam-Ip (required) → the camera's IPv4 LAN address "A.B.C.D".
-        //             X-Cam-Model (optional) → device brand+model as the camera reports it
-        //                                      (e.g. "Hikvision DS-2CD2347G3-LIS2UY/SL"); cached
-        //                                      per camera, empty/absent never overwrites the
-        //                                      previously cached value, stored as-is.
-        // The IP is the ONLY identifier of a frame and maps to the storage location:
-        //   PC number  = third octet   (10.0.1.101 → PC1,  10.0.2.103 → PC2)
-        //   Box number = last octet−100 (10.0.1.101 → Box1, 10.0.1.105 → Box5)
-        // A missing/invalid IP is rejected — there is nothing else to identify the frame by.
-        // Every frame is archived under archive/{day}; the newest archived frame is what the wall shows.
+        // POST /api/frames  ← multipart receiver for the capture agents.
+        //   Auth : Authorization: Bearer <token>  → constant-time compared to CameraWall:UploadToken.
+        //   Body : multipart/form-data
+        //            ip    (text) → camera IPv4 "A.B.C.D" (e.g. 192.168.1.101); the identity key.
+        //            date  (text) → capture day "yyyy-MM-dd".
+        //            image (file) → JPEG; the file name carries the capture time "HHmmss.jpg".
+        // The capture timestamp is taken from the file name (HHmmss) + the date field; an unexpected
+        // name falls back to the receipt time and logs a warning.
+        // Stored at {FramesRoot}/{ip}/{date}/{HHmmss}.jpg (collisions get a -N suffix, never overwrite).
         [HttpPost]
+        [RequestSizeLimit(MaxUploadBytes)]
+        [RequestFormLimits(MultipartBodyLengthLimit = MaxUploadBytes)]
         public async Task<IActionResult> Upload()
         {
             if (!IsEnabled()) return NotFound();
-            if (!TokenOk()) return Unauthorized("Невірний токен");
+            if (!BearerTokenOk()) return Unauthorized("Відсутній або невірний токен");
 
-            var ip = Request.Headers["X-Cam-Ip"].ToString().Trim();
-            if (!TryMapIp(ip, out var pc, out var cameraId, out var box))
-                return BadRequest("Відсутній або невалідний X-Cam-Ip (очікується IPv4 з боксом ≥ 101)");
+            if (!Request.HasFormContentType)
+                return BadRequest("Очікується multipart/form-data");
 
-            var bytes = await ReadBodyAsync();
-            if (bytes.Length == 0) return BadRequest("Порожнє тіло");
+            var form = await Request.ReadFormAsync();
 
-            // The IP is the stable key. We accept only the model alongside it; X-Cam-Model is
-            // optional and stored verbatim — empty/absent keeps the previously cached value.
-            var meta = new CameraMeta(CleanHeader(Request.Headers["X-Cam-Model"]), ip);
-            return await StoreFrameAsync(pc, cameraId, meta, bytes);
+            var ip = form["ip"].ToString().Trim();
+            if (!IpPattern.IsMatch(ip))
+                return BadRequest("Поле ip відсутнє або невалідне (очікується IPv4, напр. 192.168.1.101)");
+
+            var date = form["date"].ToString().Trim();
+            if (!DayPattern.IsMatch(date) || !DateTime.TryParseExact(date, "yyyy-MM-dd",
+                    CultureInfo.InvariantCulture, DateTimeStyles.None, out _))
+                return BadRequest("Поле date відсутнє або невалідне (очікується yyyy-MM-dd)");
+
+            var file = form.Files["image"] ?? (form.Files.Count > 0 ? form.Files[0] : null);
+            if (file is null || file.Length == 0)
+                return BadRequest("Файл image відсутній або порожній");
+
+            byte[] bytes;
+            await using (var src = file.OpenReadStream())
+                bytes = await ReadBody(src);
+            if (bytes.Length == 0) return BadRequest("Файл image порожній");
+
+            // Capture time from the file name (HHmmss); fall back to the receipt time if unexpected.
+            var time = ExtractFrameTime(file.FileName, out var fromName);
+            if (!fromName)
+                _logger.LogWarning(
+                    "CameraWall: ip {Ip}, дата {Date} — ім'я файлу '{File}' не у форматі HHmmss.jpg; " +
+                    "час знімку взято з моменту прийому ({Time})",
+                    ip, date, file.FileName, time);
+
+            var saved = await StoreFrameAsync(ip, date, time, bytes);
+
+            _logger.LogInformation(
+                "CameraWall: прийнято кадр — ip {Ip}, дата {Date}, час {Time}, розмір {Bytes} Б → {Saved}",
+                ip, date, time, bytes.Length, saved);
+
+            return Ok(new { saved });
         }
 
-        private bool TokenOk() =>
-            Request.Headers.TryGetValue("X-Upload-Token", out var token) && token == GetUploadToken();
+        // Validates the Authorization: Bearer <token> header against CameraWall:UploadToken in
+        // constant time. Returns false for a missing header, wrong scheme, empty or mismatched token.
+        private bool BearerTokenOk()
+        {
+            var configured = GetUploadToken();
+            if (string.IsNullOrEmpty(configured)) return false; // not configured → deny everything
+
+            if (!Request.Headers.TryGetValue("Authorization", out var header)) return false;
+
+            var raw = header.ToString();
+            const string scheme = "Bearer ";
+            if (!raw.StartsWith(scheme, StringComparison.OrdinalIgnoreCase)) return false;
+
+            var provided = raw[scheme.Length..].Trim();
+            if (provided.Length == 0) return false;
+
+            var a = System.Text.Encoding.UTF8.GetBytes(provided);
+            var b = System.Text.Encoding.UTF8.GetBytes(configured);
+            return CryptographicOperations.FixedTimeEquals(a, b);
+        }
+
+        // Pulls the "HHmmss" stem out of an uploaded file name like "173051.jpg".
+        // Sets fromName=false and returns the current local wall-clock time when the name doesn't fit.
+        private static string ExtractFrameTime(string? fileName, out bool fromName)
+        {
+            fromName = false;
+            var stem = Path.GetFileNameWithoutExtension(fileName ?? string.Empty);
+            if (TimePattern.IsMatch(stem) &&
+                DateTime.TryParseExact(stem, "HHmmss", CultureInfo.InvariantCulture, DateTimeStyles.None, out _))
+            {
+                fromName = true;
+                return stem;
+            }
+            return DateTime.Now.ToString("HHmmss");
+        }
 
         private static async Task<byte[]> ReadBody(Stream body)
         {
@@ -95,201 +158,139 @@ namespace API.Controllers
             return ms.ToArray();
         }
 
-        private Task<byte[]> ReadBodyAsync() => ReadBody(Request.Body);
-
-        // Maps an IPv4 LAN address to its storage slot: PC{thirdOctet}/Box{lastOctet-100}.
-        // Returns false for a missing/malformed IP or a last octet that can't map to a box (< 101).
-        private static bool TryMapIp(string? raw, out string pc, out string cameraId, out int box)
+        // Frame-write path: store under {ip}/{date} and enforce the disk quota. The file name is the
+        // capture time "HHmmss.jpg"; a same-second collision gets a "-N" suffix so an existing frame is
+        // never overwritten. Returns the saved relative path "{ip}/{date}/{file}".
+        private async Task<string> StoreFrameAsync(string ip, string date, string time, byte[] bytes)
         {
-            pc = string.Empty;
-            cameraId = string.Empty;
-            box = 0;
-
-            if (string.IsNullOrWhiteSpace(raw)) return false;
-
-            var parts = raw.Trim().Split('.');
-            if (parts.Length != 4) return false;
-
-            var octets = new byte[4];
-            for (var i = 0; i < 4; i++)
-                if (!byte.TryParse(parts[i], out octets[i])) return false;
-
-            box = octets[3] - 100;
-            if (box < 1) return false; // last octet must be ≥ 101 to map to a real box
-
-            pc = $"PC{octets[2]}";
-            cameraId = $"Box{box}";
-            return true;
-        }
-
-        // Shared frame-write path: cache metadata, append to the archive, enforce the disk quota.
-        private async Task<IActionResult> StoreFrameAsync(string pc, string cameraId, CameraMeta meta, byte[] bytes)
-        {
-            var now = DateTime.UtcNow;
-            var camFolder = Path.Combine(GetFramesRoot(), pc, cameraId);
-            Directory.CreateDirectory(camFolder);
-
-            // Cache any metadata that came in with this frame (only non-empty fields overwrite).
-            WriteMeta(pc, cameraId, meta);
-
-            var day = now.ToString("yyyy-MM-dd");
-            var dayFolder = Path.Combine(camFolder, ArchiveDir, day);
+            var dayFolder = Path.Combine(GetFramesRoot(), ip, date);
             Directory.CreateDirectory(dayFolder);
-            var archiveName = now.ToString("HHmmss-fffffff") + ".jpg";
-            var archivePath = Path.Combine(dayFolder, archiveName);
-            var tempPath = archivePath + ".tmp";
+
+            // Write to a temp file, then atomically move into a free name (overwrite: false). If we
+            // lose the race for that name, bump the suffix and retry.
+            var tempPath = Path.Combine(dayFolder, $"{time}-{Guid.NewGuid():N}.tmp");
             await using (var dest = new FileStream(tempPath, FileMode.Create, FileAccess.Write,
                 FileShare.None, bufferSize: 4096, useAsync: true))
             {
                 await dest.WriteAsync(bytes);
             }
-            System.IO.File.Move(tempPath, archivePath, overwrite: true);
+
+            string fileName = $"{time}.jpg";
+            for (var n = 1; ; n++)
+            {
+                var framePath = Path.Combine(dayFolder, fileName);
+                try
+                {
+                    System.IO.File.Move(tempPath, framePath, overwrite: false);
+                    break;
+                }
+                catch (IOException) when (n < 1000 && System.IO.File.Exists(tempPath))
+                {
+                    fileName = $"{time}-{n}.jpg"; // name taken — try the next suffix
+                }
+            }
 
             MaybeEnforceQuota();
 
-            return Ok(new { pc, cameraId, size = bytes.Length, at = now });
+            return $"{ip}/{date}/{fileName}";
         }
 
-        // GET /api/frames/pcs → folders that hold camera frames.
-        [HttpGet("pcs")]
-        public IActionResult Pcs()
+        // GET /api/frames/cameras → every camera (an IP folder) with its recent frames and counts.
+        [HttpGet("cameras")]
+        public IActionResult Cameras()
         {
             if (!IsEnabled()) return NotFound();
 
-            var root = GetFramesRoot();
-            if (!Directory.Exists(root)) return Ok(Array.Empty<object>());
-
-            var pcs = Directory.EnumerateDirectories(root)
-                .Select(dir => Path.GetFileName(dir)!)
-                .Where(name => SlugPattern.IsMatch(name))
-                .Select(name => new {
-                    pc = name,
-                    cameras = CameraFolders(name).Count
-                })
-                .Where(x => x.cameras > 0)
-                .OrderBy(x => x.pc, StringComparer.OrdinalIgnoreCase)
-                .ToList();
-
-            return Ok(pcs);
-        }
-
-        // GET /api/frames/{pc}/cameras → cameras with metadata, recent frames and counts.
-        [HttpGet("{pc}/cameras")]
-        public IActionResult Cameras(string pc)
-        {
-            if (!IsEnabled()) return NotFound();
-            if (!SlugPattern.IsMatch(pc)) return BadRequest("Невірний ідентифікатор ПК");
-
-            var cameras = CameraFolders(pc)
-                .Select(cameraId =>
+            var cameras = CameraIps()
+                .Select(ip =>
                 {
-                    var meta = ReadMeta(pc, cameraId);
-                    var recent = RecentFrameFiles(pc, cameraId, RecentFrameCount)
+                    var recent = RecentFrameFiles(ip, RecentFrameCount)
                         .Select(r => new {
-                            imageUrl = FrameUrl(pc, cameraId, r.day, r.file),
+                            imageUrl = FrameUrl(ip, r.day, r.file),
                             timeUtc = ParseFrameTime(r.day, r.file),
                         })
                         .ToList();
 
                     return new {
-                        cameraId,
-                        name = DisplayName(cameraId),
-                        model = meta.Model,
-                        ip = meta.Ip,
+                        ip,
+                        name = ip,
                         lastSeenUtc = recent.Count > 0 ? recent[0].timeUtc : null,
-                        todayCount = TodayCount(pc, cameraId),
-                        totalCount = TotalCount(pc, cameraId),
+                        todayCount = TodayCount(ip),
+                        totalCount = TotalCount(ip),
                         frames = recent,
                     };
                 })
-                .OrderBy(x => x.cameraId, StringComparer.OrdinalIgnoreCase)
+                .OrderBy(x => x.ip, IpComparer)
                 .ToList();
 
             return Ok(cameras);
         }
 
-        // GET /api/frames/{pc}/live → lightweight per-camera latest frame for the auto-refreshing
-        // "live grid" view. Deliberately kept SEPARATE from the /cameras card endpoint above so the
-        // two view modes can evolve (and be copied) independently — this one only carries what the
-        // live grid polls: the newest frame URL + when it was taken.
-        [HttpGet("{pc}/live")]
-        public IActionResult Live(string pc)
+        // GET /api/frames/live → lightweight per-camera latest frame for the auto-refreshing "live
+        // grid" view. Kept separate from /cameras so the two view modes can evolve independently.
+        [HttpGet("live")]
+        public IActionResult Live()
         {
             if (!IsEnabled()) return NotFound();
-            if (!SlugPattern.IsMatch(pc)) return BadRequest("Невірний ідентифікатор ПК");
 
-            var cameras = CameraFolders(pc)
-                .Select(cameraId =>
+            var cameras = CameraIps()
+                .Select(ip =>
                 {
-                    var recent = RecentFrameFiles(pc, cameraId, 1);
+                    var recent = RecentFrameFiles(ip, 1);
                     string? imageUrl = null;
                     DateTime? lastSeenUtc = null;
                     if (recent.Count > 0)
                     {
-                        imageUrl = FrameUrl(pc, cameraId, recent[0].day, recent[0].file);
+                        imageUrl = FrameUrl(ip, recent[0].day, recent[0].file);
                         lastSeenUtc = ParseFrameTime(recent[0].day, recent[0].file);
                     }
 
                     return new {
-                        cameraId,
-                        name = DisplayName(cameraId),
+                        ip,
+                        name = ip,
                         imageUrl,
                         lastSeenUtc,
                     };
                 })
-                .OrderBy(x => x.cameraId, StringComparer.OrdinalIgnoreCase)
+                .OrderBy(x => x.ip, IpComparer)
                 .ToList();
 
             return Ok(cameras);
         }
 
-        // GET /api/frames/{pc}/{cameraId}/image → newest archived frame (convenience/back-compat).
-        [HttpGet("{pc}/{cameraId}/image")]
-        public async Task<IActionResult> Image(string pc, string cameraId)
+        // GET /api/frames/{ip}/days → days that have frames for a camera, newest first.
+        [HttpGet("{ip}/days")]
+        public IActionResult Days(string ip)
         {
             if (!IsEnabled()) return NotFound();
-            if (!SlugPattern.IsMatch(pc) || !SlugPattern.IsMatch(cameraId)) return NotFound();
+            if (!IpPattern.IsMatch(ip)) return NotFound();
 
-            var recent = RecentFrameFiles(pc, cameraId, 1);
-            if (recent.Count == 0) return NotFound("Ще немає кадру");
+            var camFolder = Path.Combine(GetFramesRoot(), ip);
+            if (!Directory.Exists(camFolder)) return Ok(Array.Empty<object>());
 
-            var path = Path.Combine(ArchiveRoot(pc, cameraId), recent[0].day, recent[0].file);
-            return await ServeImage(path, "Ще немає кадру");
-        }
-
-        // GET /api/frames/{pc}/{cameraId}/days → days that have archived frames, newest first.
-        [HttpGet("{pc}/{cameraId}/days")]
-        public IActionResult Days(string pc, string cameraId)
-        {
-            if (!IsEnabled()) return NotFound();
-            if (!SlugPattern.IsMatch(pc) || !SlugPattern.IsMatch(cameraId)) return NotFound();
-
-            var archiveRoot = Path.Combine(GetFramesRoot(), pc, cameraId, ArchiveDir);
-            if (!Directory.Exists(archiveRoot)) return Ok(Array.Empty<object>());
-
-            var days = Directory.EnumerateDirectories(archiveRoot)
+            var days = Directory.EnumerateDirectories(camFolder)
                 .Select(dir => Path.GetFileName(dir)!)
                 .Where(name => DayPattern.IsMatch(name))
                 .Select(day => new {
                     day,
-                    count = Directory.EnumerateFiles(Path.Combine(archiveRoot, day), "*.jpg").Count()
+                    count = Directory.EnumerateFiles(Path.Combine(camFolder, day), "*.jpg").Count()
                 })
                 .Where(x => x.count > 0)
-                .OrderByDescending(x => x.day)
+                .OrderByDescending(x => x.day, StringComparer.Ordinal)
                 .ToList();
 
             return Ok(days);
         }
 
-        // GET /api/frames/{pc}/{cameraId}/days/{day} → archived frames for a day, oldest first.
-        [HttpGet("{pc}/{cameraId}/days/{day}")]
-        public IActionResult DayFrames(string pc, string cameraId, string day)
+        // GET /api/frames/{ip}/days/{day} → frames for a camera on a day, oldest first.
+        [HttpGet("{ip}/days/{day}")]
+        public IActionResult DayFrames(string ip, string day)
         {
             if (!IsEnabled()) return NotFound();
-            if (!SlugPattern.IsMatch(pc) || !SlugPattern.IsMatch(cameraId)) return NotFound();
+            if (!IpPattern.IsMatch(ip)) return NotFound();
             if (!DayPattern.IsMatch(day)) return BadRequest("Невірна дата");
 
-            var dayFolder = Path.Combine(GetFramesRoot(), pc, cameraId, ArchiveDir, day);
+            var dayFolder = Path.Combine(GetFramesRoot(), ip, day);
             if (!Directory.Exists(dayFolder)) return Ok(Array.Empty<object>());
 
             var frames = Directory.EnumerateFiles(dayFolder, "*.jpg")
@@ -299,26 +300,27 @@ namespace API.Controllers
                 .Select(name => new {
                     file = name,
                     timeUtc = ParseFrameTime(day, name!),
-                    imageUrl = $"/api/frames/{pc}/{cameraId}/archive/{day}/{name}"
+                    imageUrl = FrameUrl(ip, day, name!),
                 })
                 .ToList();
 
             return Ok(frames);
         }
 
-        // GET /api/frames/{pc}/{cameraId}/archive/{day}/{file} → a specific archived frame.
-        [HttpGet("{pc}/{cameraId}/archive/{day}/{file}")]
-        public async Task<IActionResult> Archive(string pc, string cameraId, string day, string file)
+        // GET /api/frames/{ip}/{day}/{file} → a specific stored frame.
+        // The literal "{ip}/days/…" routes above take precedence, so "days" can never be a {day}.
+        [HttpGet("{ip}/{day}/{file}")]
+        public async Task<IActionResult> Frame(string ip, string day, string file)
         {
             if (!IsEnabled()) return NotFound();
-            if (!SlugPattern.IsMatch(pc) || !SlugPattern.IsMatch(cameraId)) return NotFound();
-            if (!DayPattern.IsMatch(day) || !FilePattern.IsMatch(file)) return NotFound();
+            if (!IpPattern.IsMatch(ip) || !DayPattern.IsMatch(day) || !FilePattern.IsMatch(file))
+                return NotFound();
 
-            var path = Path.Combine(GetFramesRoot(), pc, cameraId, ArchiveDir, day, file);
+            var path = Path.Combine(GetFramesRoot(), ip, day, file);
             return await ServeImage(path, "Кадр не знайдено");
         }
 
-        // GET /api/frames/storage → disk usage of the archive + retention estimate (admin dashboard).
+        // GET /api/frames/storage → disk usage of the frame store + retention estimate (admin dashboard).
         [Authorize(Roles = "Superadmin,Admin")]
         [HttpGet("storage")]
         public IActionResult Storage()
@@ -335,9 +337,7 @@ namespace API.Controllers
 
             if (Directory.Exists(root))
             {
-                foreach (var f in new DirectoryInfo(root)
-                    .EnumerateFiles("*.jpg", SearchOption.AllDirectories)
-                    .Where(f => string.Equals(f.Directory?.Parent?.Name, ArchiveDir, StringComparison.Ordinal)))
+                foreach (var f in new DirectoryInfo(root).EnumerateFiles("*.jpg", SearchOption.AllDirectories))
                 {
                     usedBytes += f.Length;
                     frameCount++;
@@ -386,8 +386,8 @@ namespace API.Controllers
             });
         }
 
-        // POST /api/frames/storage/cleanup → ручне очищення архіву. Лише для адміністраторів.
-        //   ?keepDays=N → видалити архівні кадри, старіші за N останніх календарних днів (0 = весь архів);
+        // POST /api/frames/storage/cleanup → ручне очищення сховища. Лише для адміністраторів.
+        //   ?keepDays=N → видалити кадри, старіші за N останніх календарних днів (0 = усе сховище);
         //   інакше      → обрізати найстаріші до targetPct% від ліміту (типово 80%).
         [Authorize(Roles = "Superadmin,Admin")]
         [HttpPost("storage/cleanup")]
@@ -406,7 +406,7 @@ namespace API.Controllers
             }
             else
             {
-                if (maxBytes <= 0) return BadRequest("Ліміт архіву вимкнено");
+                if (maxBytes <= 0) return BadRequest("Ліміт сховища вимкнено");
                 var pct = targetPct is >= 0 and <= 95 ? targetPct.Value : 80d;
                 var targetBytes = (long)(maxBytes * pct / 100d);
                 ev = TrimArchive(root, gateBytes: 0, targetBytes: targetBytes, maxBytes: maxBytes, trigger: "manual");
@@ -427,99 +427,63 @@ namespace API.Controllers
             });
         }
 
-        // POST /api/frames/maintenance/prune-legacy → physically delete camera folders that don't
-        // follow the canonical Box{N} naming (the old "cam-1", "cam-2"… folders from the
-        // {pc}/{cameraId} scheme). Empty PC folders left behind are removed too. Admin only.
-        [Authorize(Roles = "Superadmin,Admin")]
-        [HttpPost("maintenance/prune-legacy")]
-        public IActionResult PruneLegacy()
-        {
-            if (!IsEnabled()) return NotFound();
+        // ── camera discovery ──────────────────────────────────────────────
 
+        // IP folders under the root that actually hold at least one frame.
+        private List<string> CameraIps()
+        {
             var root = GetFramesRoot();
-            int removedFolders = 0, removedFrames = 0;
-            long freedBytes = 0;
+            if (!Directory.Exists(root)) return new List<string>();
 
-            if (Directory.Exists(root))
-            {
-                foreach (var pcDir in Directory.EnumerateDirectories(root))
-                {
-                    foreach (var camDir in Directory.EnumerateDirectories(pcDir))
-                    {
-                        if (CameraPattern.IsMatch(Path.GetFileName(camDir))) continue; // canonical — keep
-
-                        try
-                        {
-                            foreach (var f in Directory.EnumerateFiles(camDir, "*.jpg", SearchOption.AllDirectories))
-                            {
-                                try { freedBytes += new FileInfo(f).Length; removedFrames++; }
-                                catch { /* file vanished — ignore */ }
-                            }
-                            Directory.Delete(camDir, recursive: true);
-                            removedFolders++;
-                        }
-                        catch { /* locked/racing — skip */ }
-                    }
-
-                    // Drop the PC folder if nothing is left in it.
-                    try
-                    {
-                        if (!Directory.EnumerateFileSystemEntries(pcDir).Any())
-                            Directory.Delete(pcDir);
-                    }
-                    catch { /* not empty / racing — leave it */ }
-                }
-            }
-
-            _logger.LogInformation(
-                "CameraWall: prune-legacy — видалено {Folders} застарілих папок камер, {Frames} кадрів, звільнено {Mb:F1} МБ",
-                removedFolders, removedFrames, freedBytes / 1024d / 1024d);
-
-            return Ok(new { removedFolders, removedFrames, freedBytes });
-        }
-
-        // camera folders under a pc that actually hold an archive of frames.
-        private List<string> CameraFolders(string pc)
-        {
-            var pcFolder = Path.Combine(GetFramesRoot(), pc);
-            if (!Directory.Exists(pcFolder)) return new List<string>();
-
-            return Directory.EnumerateDirectories(pcFolder)
-                .Where(dir => Directory.Exists(Path.Combine(dir, ArchiveDir)))
+            return Directory.EnumerateDirectories(root)
                 .Select(dir => Path.GetFileName(dir)!)
-                .Where(name => CameraPattern.IsMatch(name)) // canonical Box{N} only; legacy cam-* hidden
+                .Where(name => IpPattern.IsMatch(name))
+                .Where(HasAnyFrame)
                 .ToList();
         }
 
-        // "Box1" → "Box 1" for the card title; anything unexpected is returned unchanged.
-        private static string DisplayName(string cameraId)
+        private bool HasAnyFrame(string ip)
         {
-            var m = NamePattern.Match(cameraId);
-            return m.Success ? $"{m.Groups[1].Value} {m.Groups[2].Value}" : cameraId;
+            var camFolder = Path.Combine(GetFramesRoot(), ip);
+            return Directory.Exists(camFolder)
+                && Directory.EnumerateDirectories(camFolder)
+                    .Where(d => DayPattern.IsMatch(Path.GetFileName(d)!))
+                    .Any(d => Directory.EnumerateFiles(d, "*.jpg").Any());
         }
 
-        private string ArchiveRoot(string pc, string cameraId) =>
-            Path.Combine(GetFramesRoot(), pc, cameraId, ArchiveDir);
+        // Sort cameras by IP numerically (octet by octet) so .2 comes before .10.
+        private static readonly IComparer<string> IpComparer = Comparer<string>.Create((a, b) =>
+        {
+            var pa = a.Split('.');
+            var pb = b.Split('.');
+            for (var i = 0; i < 4; i++)
+            {
+                var na = i < pa.Length && int.TryParse(pa[i], out var x) ? x : 0;
+                var nb = i < pb.Length && int.TryParse(pb[i], out var y) ? y : 0;
+                if (na != nb) return na.CompareTo(nb);
+            }
+            return string.CompareOrdinal(a, b);
+        });
 
-        private static string FrameUrl(string pc, string cameraId, string day, string file) =>
-            $"/api/frames/{pc}/{cameraId}/archive/{day}/{file}";
+        private static string FrameUrl(string ip, string day, string file) =>
+            $"/api/frames/{ip}/{day}/{file}";
 
         // Up to `count` most-recent frames for a camera, newest first.
-        // Day folders (yyyy-MM-dd) and file names (HHmmss-fffffff) are both lexically sortable.
-        private List<(string day, string file)> RecentFrameFiles(string pc, string cameraId, int count)
+        // Day folders (yyyy-MM-dd) and file names (HHmmss) are both lexically sortable.
+        private List<(string day, string file)> RecentFrameFiles(string ip, int count)
         {
             var result = new List<(string, string)>();
-            var archiveRoot = ArchiveRoot(pc, cameraId);
-            if (!Directory.Exists(archiveRoot)) return result;
+            var camFolder = Path.Combine(GetFramesRoot(), ip);
+            if (!Directory.Exists(camFolder)) return result;
 
-            var days = Directory.EnumerateDirectories(archiveRoot)
+            var days = Directory.EnumerateDirectories(camFolder)
                 .Select(d => Path.GetFileName(d)!)
                 .Where(n => DayPattern.IsMatch(n))
                 .OrderByDescending(n => n, StringComparer.Ordinal);
 
             foreach (var day in days)
             {
-                var files = Directory.EnumerateFiles(Path.Combine(archiveRoot, day), "*.jpg")
+                var files = Directory.EnumerateFiles(Path.Combine(camFolder, day), "*.jpg")
                     .Select(Path.GetFileName)
                     .Where(n => n != null && FilePattern.IsMatch(n))
                     .OrderByDescending(n => n, StringComparer.Ordinal);
@@ -534,84 +498,22 @@ namespace API.Controllers
             return result;
         }
 
-        // Frames archived for the current UTC day.
-        private int TodayCount(string pc, string cameraId)
+        // Frames stored for the current local day.
+        private int TodayCount(string ip)
         {
-            var folder = Path.Combine(ArchiveRoot(pc, cameraId), DateTime.UtcNow.ToString("yyyy-MM-dd"));
+            var folder = Path.Combine(GetFramesRoot(), ip, DateTime.Now.ToString("yyyy-MM-dd"));
             return Directory.Exists(folder)
                 ? Directory.EnumerateFiles(folder, "*.jpg").Count()
                 : 0;
         }
 
-        // All frames the camera has in the archive.
-        private int TotalCount(string pc, string cameraId)
+        // All frames the camera has stored.
+        private int TotalCount(string ip)
         {
-            var archiveRoot = ArchiveRoot(pc, cameraId);
-            return Directory.Exists(archiveRoot)
-                ? Directory.EnumerateFiles(archiveRoot, "*.jpg", SearchOption.AllDirectories).Count()
+            var camFolder = Path.Combine(GetFramesRoot(), ip);
+            return Directory.Exists(camFolder)
+                ? Directory.EnumerateFiles(camFolder, "*.jpg", SearchOption.AllDirectories).Count()
                 : 0;
-        }
-
-        // ── Per-camera metadata (meta.json next to the archive) ───────────
-        // Only what the camera itself supplies: the device model and its IP (the identity key).
-        public sealed record CameraMeta(string? Model, string? Ip);
-
-        private static readonly JsonSerializerOptions MetaJson = new()
-        {
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-            PropertyNameCaseInsensitive = true,
-        };
-        private static readonly object _metaLock = new();
-
-        private CameraMeta ReadMeta(string pc, string cameraId)
-        {
-            var path = Path.Combine(GetFramesRoot(), pc, cameraId, MetaFile);
-            if (!System.IO.File.Exists(path)) return new CameraMeta(null, null);
-            try
-            {
-                var json = System.IO.File.ReadAllText(path);
-                return JsonSerializer.Deserialize<CameraMeta>(json, MetaJson)
-                    ?? new CameraMeta(null, null);
-            }
-            catch
-            {
-                return new CameraMeta(null, null);
-            }
-        }
-
-        // Merge incoming metadata into the stored file; only non-empty fields overwrite.
-        private void WriteMeta(string pc, string cameraId, CameraMeta incoming)
-        {
-            if (incoming is { Model: null, Ip: null }) return;
-
-            var camFolder = Path.Combine(GetFramesRoot(), pc, cameraId);
-            lock (_metaLock)
-            {
-                var existing = ReadMeta(pc, cameraId);
-                var merged = new CameraMeta(
-                    Pick(incoming.Model, existing.Model),
-                    Pick(incoming.Ip, existing.Ip));
-                if (merged == existing) return; // records compare by value → nothing changed
-
-                Directory.CreateDirectory(camFolder);
-                var path = Path.Combine(camFolder, MetaFile);
-                var tmp = path + ".tmp";
-                System.IO.File.WriteAllText(tmp, JsonSerializer.Serialize(merged, MetaJson));
-                System.IO.File.Move(tmp, path, overwrite: true);
-            }
-        }
-
-        private static string? Pick(string? incoming, string? existing) =>
-            string.IsNullOrWhiteSpace(incoming) ? existing : incoming;
-
-        // Trim header values, drop control chars, cap length so meta.json stays sane.
-        private static string? CleanHeader(string? value)
-        {
-            if (string.IsNullOrWhiteSpace(value)) return null;
-            var trimmed = value.Trim();
-            if (trimmed.Length > 120) trimmed = trimmed.Substring(0, 120);
-            var cleaned = new string(trimmed.Where(c => !char.IsControl(c)).ToArray());
-            return cleaned.Length == 0 ? null : cleaned;
         }
 
         private async Task<IActionResult> ServeImage(string path, string notFoundMessage)
@@ -642,7 +544,7 @@ namespace API.Controllers
             return NotFound(notFoundMessage);
         }
 
-        // --- Дисковий бюджет: тримаємо архів у межах CameraWall:MaxArchiveGB ---
+        // --- Дисковий бюджет: тримаємо сховище в межах CameraWall:MaxArchiveGB ---
         // Throttle: повна перевірка не частіше ніж раз на хвилину, у фоні, без блокування відповіді.
         private static long _lastQuotaCheckTicks = long.MinValue;
         private static int _quotaRunning; // 0 = вільно, 1 = вже виконується
@@ -695,7 +597,7 @@ namespace API.Controllers
                     {
                         RecordCleanup(ev);
                         logger.LogInformation(
-                            "CameraWall: авто-очищення архіву — видалено {Frames} кадрів, звільнено {Mb:F1} МБ (зайнято {Used:F1}/{Max:F1} ГБ)",
+                            "CameraWall: авто-очищення сховища — видалено {Frames} кадрів, звільнено {Mb:F1} МБ (зайнято {Used:F1}/{Max:F1} ГБ)",
                             ev.DeletedFrames, ev.FreedBytes / 1024d / 1024d,
                             ev.TotalAfter / 1024d / 1024d / 1024d, maxBytes / 1024d / 1024d / 1024d);
                     }
@@ -705,7 +607,7 @@ namespace API.Controllers
             });
         }
 
-        // Видаляє найстаріші архівні кадри, доки сумарний розмір не впаде до targetBytes.
+        // Видаляє найстаріші кадри, доки сумарний розмір не впаде до targetBytes.
         // Чистимо лише якщо розмір перевищує gateBytes (gateBytes <= 0 → чистити завжди).
         // maxBytes зберігається в журналі для відображення ліміту. Повертає null, якщо нічого не видалено.
         private static CleanupEvent? TrimArchive(string root, long gateBytes, long targetBytes, long maxBytes, string trigger)
@@ -714,7 +616,6 @@ namespace API.Controllers
 
             var files = new DirectoryInfo(root)
                 .EnumerateFiles("*.jpg", SearchOption.AllDirectories)
-                .Where(f => string.Equals(f.Directory?.Parent?.Name, ArchiveDir, StringComparison.Ordinal))
                 .ToList();
 
             long total = files.Sum(f => f.Length);
@@ -736,35 +637,35 @@ namespace API.Controllers
                 catch { /* файл міг зникнути/бути зайнятим — пропускаємо */ }
             }
 
-            PruneEmptyDayFolders(root);
+            PruneEmptyFolders(root);
 
             return deleted == 0
                 ? null
                 : new CleanupEvent(DateTime.UtcNow, deleted, freed, total, maxBytes, trigger);
         }
 
-        // Видаляє архівні кадри в днях, старіших за N останніх календарних днів (UTC).
-        // keepDays = 0 → видалити весь архів. Повертає null, якщо нічого не видалено.
+        // Видаляє кадри в днях, старіших за N останніх календарних днів (локальних).
+        // keepDays = 0 → видалити все сховище. Повертає null, якщо нічого не видалено.
         private static CleanupEvent? PurgeOlderThan(string root, int keepDays, long maxBytes)
         {
             if (!Directory.Exists(root)) return null;
 
-            var cutoff = DateTime.UtcNow.Date.AddDays(-keepDays); // лишаємо дні >= cutoff
+            var cutoff = DateTime.Now.Date.AddDays(-keepDays); // лишаємо дні >= cutoff
             int deleted = 0;
             long freed = 0;
 
-            foreach (var archiveDir in Directory.EnumerateDirectories(root, ArchiveDir, SearchOption.AllDirectories))
+            foreach (var camDir in Directory.EnumerateDirectories(root))
             {
-                foreach (var dayDir in Directory.EnumerateDirectories(archiveDir))
+                if (!IpPattern.IsMatch(Path.GetFileName(camDir)!)) continue;
+
+                foreach (var dayDir in Directory.EnumerateDirectories(camDir))
                 {
-                    var dayName = Path.GetFileName(dayDir);
+                    var dayName = Path.GetFileName(dayDir)!;
                     if (!DayPattern.IsMatch(dayName)) continue;
 
                     // Достатньо свіжий день — лишаємо.
                     if (DateTime.TryParseExact(dayName, "yyyy-MM-dd",
-                            System.Globalization.CultureInfo.InvariantCulture,
-                            System.Globalization.DateTimeStyles.AssumeUniversal | System.Globalization.DateTimeStyles.AdjustToUniversal,
-                            out var day)
+                            CultureInfo.InvariantCulture, DateTimeStyles.None, out var day)
                         && day.Date >= cutoff)
                     {
                         continue;
@@ -784,25 +685,25 @@ namespace API.Controllers
                 }
             }
 
-            PruneEmptyDayFolders(root);
+            PruneEmptyFolders(root);
 
             if (deleted == 0) return null;
 
-            // Перерахунок поточного розміру архіву для журналу.
+            // Перерахунок поточного розміру сховища для журналу.
             long total = new DirectoryInfo(root)
                 .EnumerateFiles("*.jpg", SearchOption.AllDirectories)
-                .Where(f => string.Equals(f.Directory?.Parent?.Name, ArchiveDir, StringComparison.Ordinal))
                 .Sum(f => f.Length);
 
             return new CleanupEvent(DateTime.UtcNow, deleted, freed, total, maxBytes, "manual");
         }
 
-        // Прибираємо порожні папки днів archive/{день}, що лишились після видалення кадрів.
-        private static void PruneEmptyDayFolders(string root)
+        // Прибираємо порожні папки днів {ip}/{день} (а потім і порожні папки камер), що лишились
+        // після видалення кадрів.
+        private static void PruneEmptyFolders(string root)
         {
-            foreach (var archiveDir in Directory.EnumerateDirectories(root, ArchiveDir, SearchOption.AllDirectories))
+            foreach (var camDir in Directory.EnumerateDirectories(root))
             {
-                foreach (var dayDir in Directory.EnumerateDirectories(archiveDir))
+                foreach (var dayDir in Directory.EnumerateDirectories(camDir))
                 {
                     try
                     {
@@ -811,20 +712,30 @@ namespace API.Controllers
                     }
                     catch { /* гонитва з паралельним записом — ігноруємо */ }
                 }
+
+                try
+                {
+                    if (!Directory.EnumerateFileSystemEntries(camDir).Any())
+                        Directory.Delete(camDir);
+                }
+                catch { /* не порожня / гонитва — лишаємо */ }
             }
         }
 
-        // file name is HHmmss-fffffff.jpg in UTC; combine with the day folder.
+        // Reconstructs a frame's capture time from its day folder + file name "HHmmss" (the camera's
+        // wall-clock time, kept as-is / Unspecified kind), stripping any "-N" collision suffix first.
         private static DateTime? ParseFrameTime(string day, string file)
         {
             var stem = Path.GetFileNameWithoutExtension(file);
-            if (DateTime.TryParseExact($"{day} {stem}", "yyyy-MM-dd HHmmss-fffffff",
-                System.Globalization.CultureInfo.InvariantCulture,
-                System.Globalization.DateTimeStyles.AssumeUniversal | System.Globalization.DateTimeStyles.AdjustToUniversal,
-                out var dt))
+            var dash = stem.IndexOf('-');
+            var timePart = dash >= 0 ? stem[..dash] : stem;
+
+            if (DateTime.TryParseExact($"{day} {timePart}", "yyyy-MM-dd HHmmss",
+                    CultureInfo.InvariantCulture, DateTimeStyles.None, out var dt))
             {
                 return dt;
             }
+
             return null;
         }
     }

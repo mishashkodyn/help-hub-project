@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["src/app/modules/session/pages/session-room/session-room.component.scss", "src/app/modules/session/pages/session-room/session-room.component.scss"],
-  "sourcesContent": [":host {\r\n  display: block;\r\n  height: 100%;\r\n}\r\n", ":host {\n  display: block;\n  height: 100%;\n}\n/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJmaWxlOi8vL0M6L1VzZXJzLyVEMCU5QyVEMCVCOCVEMSU4NSVEMCVCMCVEMCVCOSVEMCVCQiVEMCVCRS9zb3VyY2UvcmVwb3MvaHVscC1odWItcHJvamVjdC9DbGllbnRBcHAvc3JjL2FwcC9tb2R1bGVzL3Nlc3Npb24vcGFnZXMvc2Vzc2lvbi1yb29tL3Nlc3Npb24tcm9vbS5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNFO0VBQ0EiLCJzb3VyY2VzQ29udGVudCI6WyI6aG9zdCB7XHJcbiAgZGlzcGxheTogYmxvY2s7XHJcbiAgaGVpZ2h0OiAxMDAlO1xyXG59XHJcbiJdfQ== */"],
-  "mappings": ";AAAA;AACE,WAAA;AACA,UAAA;ACCF;",
-  "names": []
-}

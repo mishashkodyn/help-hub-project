@@ -70,7 +70,12 @@
       "unit_days": "d",
       "oldest": "Oldest frame",
       "cleanup_title": "Free up space",
-      "cleanup_hint": "Delete the oldest frames and free space down to 80% of the limit",
+      "cleanup_hint": "Delete archived frames older than the selected period",
+      "keep_7": "Keep last 7 days",
+      "keep_3": "Keep last 3 days",
+      "keep_1": "Keep last day",
+      "keep_0": "Clear entire archive",
+      "confirm_clear_all": "Delete ALL archived frames? Live views stay. This cannot be undone.",
       "clean_now": "Clean now",
       "nothing_to_clean": "Nothing to clean — enough space",
       "clean_error": "Cleanup failed",
@@ -79,6 +84,15 @@
       "log_empty": "No cleanups yet",
       "trigger_auto": "Auto",
       "trigger_manual": "Manual"
+    },
+    "card": {
+      "today": "Today",
+      "total": "Total",
+      "last": "Last"
+    },
+    "view": {
+      "cards": "Card view",
+      "live": "Live grid"
     }
   },
   "selfHelp": {

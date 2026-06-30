@@ -2,11 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { TranslocoService } from '@ngneat/transloco';
 
-interface PcInfo {
-  pc: string;
-  cameras: number;
-}
-
 /** One archive cleanup record reported by the backend (newest first). */
 interface CleanupEvent {
   atUtc: string;
@@ -16,7 +11,7 @@ interface CleanupEvent {
   trigger: 'auto' | 'manual' | string;
 }
 
-/** Camera-wall archive disk usage (GET /api/frames/storage). */
+/** Camera-wall store disk usage (GET /api/frames/storage). */
 interface StorageInfo {
   enabled: boolean;
   quotaEnabled: boolean;
@@ -38,11 +33,10 @@ interface CameraFrame {
   timeUtc: string | null;
 }
 
+/** A camera, identified by its IP (GET /api/frames/cameras). */
 interface CameraInfo {
-  cameraId: string;
+  ip: string;
   name: string | null;
-  model: string | null;
-  ip: string | null;
   lastSeenUtc: string | null;
   todayCount: number;
   totalCount: number;
@@ -50,26 +44,24 @@ interface CameraInfo {
 }
 
 interface CameraState {
-  cameraId: string;
+  ip: string;
   name: string | null;
-  model: string | null;
-  ip: string | null;
   lastSeenUtc: string | null;
   todayCount: number;
   totalCount: number;
   frames: CameraFrame[];
 }
 
-/** Lightweight payload for the live grid (GET /api/frames/{pc}/live). */
+/** Lightweight payload for the live grid (GET /api/frames/live). */
 interface LiveInfo {
-  cameraId: string;
+  ip: string;
   name: string | null;
   imageUrl: string | null;
   lastSeenUtc: string | null;
 }
 
 interface LiveCameraState {
-  cameraId: string;
+  ip: string;
   name: string | null;
   imageUrl: string | null;
   lastSeenUtc: string | null;
@@ -95,14 +87,11 @@ interface ArchiveFrame {
   styleUrl: './camera-wall.component.scss',
 })
 export class CameraWallComponent implements OnInit, OnDestroy {
-  pcs: PcInfo[] = [];
-  selectedPc: string | null = null;
   cameras: CameraState[] = [];
-  loadingPcs = false;
   loadingCameras = false;
 
   // Two ways to look at the same cameras:
-  //   'cards' → the rich card view (metadata, recent frames, counts)
+  //   'cards' → the rich card view (recent frames, counts)
   //   'live'  → a plain auto-refreshing grid of the latest frame per camera
   viewMode: ViewMode = 'cards';
   liveCameras: LiveCameraState[] = [];
@@ -126,7 +115,7 @@ export class CameraWallComponent implements OnInit, OnDestroy {
   cleanupNote: string | null = null;
   cleanupKeepDays = 7; // manual cleanup keeps frames from the last N days (0 = clear all)
 
-  // archive viewer state
+  // archive viewer state (keyed by camera IP)
   viewerCamera: string | null = null;
   days: ArchiveDay[] = [];
   selectedDay: string | null = null;
@@ -144,7 +133,7 @@ export class CameraWallComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.prevLang = this.transloco.getActiveLang();
     this.transloco.setActiveLang('en');
-    this.loadPcs();
+    this.loadWall();
     this.tickClock();
     this.clockTimer = setInterval(() => this.tickClock(), 1000);
     this.startAutoRefresh();
@@ -181,40 +170,22 @@ export class CameraWallComponent implements OnInit, OnDestroy {
     this.loadWall();
   }
 
-  // ── PCs + wall (loaded once, no auto-refresh) ─────────────────────
-
-  loadPcs(): void {
-    this.loadingPcs = true;
-    this.http.get<PcInfo[]>('/api/frames/pcs').subscribe({
-      next: pcs => {
-        this.pcs = pcs;
-        this.loadingPcs = false;
-        if (pcs.length > 0) {
-          // default to PC1 if present, otherwise the first folder
-          const preferred = pcs.find(p => p.pc.toLowerCase() === 'pc1') ?? pcs[0];
-          this.selectPc(preferred.pc);
-        }
-      },
-      error: () => { this.loadingPcs = false; },
-    });
-  }
-
-  selectPc(pc: string): void {
-    this.selectedPc = pc;
+  refresh(): void {
     this.loadWall();
   }
 
-  // Loads whichever view is active for the selected PC.
+  // ── wall (cameras + live grid) ────────────────────────────────────
+
+  // Loads whichever view is active.
   private loadWall(): void {
-    if (!this.selectedPc) return;
-    if (this.viewMode === 'cards') this.loadCards(this.selectedPc);
-    else this.loadLive(this.selectedPc);
+    if (this.viewMode === 'cards') this.loadCards();
+    else this.loadLive();
   }
 
-  private loadCards(pc: string): void {
+  private loadCards(): void {
     this.cameras = [];
     this.loadingCameras = true;
-    this.http.get<CameraInfo[]>(`/api/frames/${pc}/cameras`).subscribe({
+    this.http.get<CameraInfo[]>('/api/frames/cameras').subscribe({
       next: cams => {
         this.wallLoadedMs = Date.now();
         this.cameras = cams.map(c => this.toState(c));
@@ -224,10 +195,10 @@ export class CameraWallComponent implements OnInit, OnDestroy {
     });
   }
 
-  private loadLive(pc: string): void {
+  private loadLive(): void {
     this.liveCameras = [];
     this.loadingCameras = true;
-    this.http.get<LiveInfo[]>(`/api/frames/${pc}/live`).subscribe({
+    this.http.get<LiveInfo[]>('/api/frames/live').subscribe({
       next: cams => {
         this.wallLoadedMs = Date.now();
         this.liveCameras = cams.map(c => ({ ...c }));
@@ -239,10 +210,8 @@ export class CameraWallComponent implements OnInit, OnDestroy {
 
   private toState(c: CameraInfo): CameraState {
     return {
-      cameraId: c.cameraId,
-      name: c.name,
-      model: c.model,
       ip: c.ip,
+      name: c.name,
       lastSeenUtc: c.lastSeenUtc,
       todayCount: c.todayCount,
       totalCount: c.totalCount,
@@ -252,8 +221,8 @@ export class CameraWallComponent implements OnInit, OnDestroy {
 
   // ── card view helpers ──────────────────────────────────────────────
 
-  cameraTitle(cam: CameraState): string {
-    return cam.name || cam.cameraId;
+  cameraTitle(cam: CameraState | LiveCameraState): string {
+    return cam.name || cam.ip;
   }
 
   /** Newest frame for the big preview, or null when the camera has no frames yet. */
@@ -303,25 +272,23 @@ export class CameraWallComponent implements OnInit, OnDestroy {
 
   // Re-pull the active view in place (paused while the archive viewer is open).
   private refreshWall(): void {
-    if (!this.selectedPc || this.viewerCamera) return;
+    if (this.viewerCamera) return;
     if (this.viewMode === 'cards') this.refreshCards();
     else this.refreshLive();
   }
 
   // Merge fresh card data into existing cells so the <img> just swaps source instead of
-  // the whole grid re-rendering. Frame URLs are immutable (unique archive file names), so
-  // reusing the same CameraState object swaps the image only when a genuinely new frame lands.
+  // the whole grid re-rendering. Frame URLs are immutable (unique file names), so reusing the
+  // same CameraState object swaps the image only when a genuinely new frame lands.
   private refreshCards(): void {
-    this.http.get<CameraInfo[]>(`/api/frames/${this.selectedPc}/cameras`).subscribe({
+    this.http.get<CameraInfo[]>('/api/frames/cameras').subscribe({
       next: cams => {
         this.wallLoadedMs = Date.now();
-        const byId = new Map(this.cameras.map(c => [c.cameraId, c]));
+        const byIp = new Map(this.cameras.map(c => [c.ip, c]));
         this.cameras = cams.map(c => {
-          const state = byId.get(c.cameraId);
+          const state = byIp.get(c.ip);
           if (!state) return this.toState(c);
           state.name = c.name;
-          state.model = c.model;
-          state.ip = c.ip;
           state.lastSeenUtc = c.lastSeenUtc;
           state.todayCount = c.todayCount;
           state.totalCount = c.totalCount;
@@ -335,12 +302,12 @@ export class CameraWallComponent implements OnInit, OnDestroy {
 
   // Same in-place merge for the live grid; lighter payload, just the newest frame per camera.
   private refreshLive(): void {
-    this.http.get<LiveInfo[]>(`/api/frames/${this.selectedPc}/live`).subscribe({
+    this.http.get<LiveInfo[]>('/api/frames/live').subscribe({
       next: cams => {
         this.wallLoadedMs = Date.now();
-        const byId = new Map(this.liveCameras.map(c => [c.cameraId, c]));
+        const byIp = new Map(this.liveCameras.map(c => [c.ip, c]));
         this.liveCameras = cams.map(c => {
-          const state = byId.get(c.cameraId);
+          const state = byIp.get(c.ip);
           if (!state) return { ...c };
           state.name = c.name;
           state.imageUrl = c.imageUrl;
@@ -354,15 +321,14 @@ export class CameraWallComponent implements OnInit, OnDestroy {
 
   // ── archive viewer ────────────────────────────────────────────────
 
-  openViewer(cameraId: string): void {
-    if (!this.selectedPc) return;
-    this.viewerCamera = cameraId;
+  openViewer(ip: string): void {
+    this.viewerCamera = ip;
     this.days = [];
     this.frames = [];
     this.selectedDay = null;
     this.frameIndex = 0;
     this.loadingDays = true;
-    this.http.get<ArchiveDay[]>(`/api/frames/${this.selectedPc}/${cameraId}/days`).subscribe({
+    this.http.get<ArchiveDay[]>(`/api/frames/${ip}/days`).subscribe({
       next: days => {
         this.days = days;
         this.loadingDays = false;
@@ -381,12 +347,12 @@ export class CameraWallComponent implements OnInit, OnDestroy {
   }
 
   selectDay(day: string): void {
-    if (!this.selectedPc || !this.viewerCamera) return;
+    if (!this.viewerCamera) return;
     this.selectedDay = day;
     this.frames = [];
     this.frameIndex = 0;
     this.loadingFrames = true;
-    this.http.get<ArchiveFrame[]>(`/api/frames/${this.selectedPc}/${this.viewerCamera}/days/${day}`).subscribe({
+    this.http.get<ArchiveFrame[]>(`/api/frames/${this.viewerCamera}/days/${day}`).subscribe({
       next: frames => {
         this.frames = frames;
         this.frameIndex = frames.length > 0 ? frames.length - 1 : 0; // jump to latest frame of the day

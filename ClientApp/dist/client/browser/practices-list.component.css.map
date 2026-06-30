@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["src/app/modules/self-help/pages/practices-list/practices-list.component.scss", "src/app/modules/self-help/pages/practices-list/practices-list.component.scss"],
-  "sourcesContent": [":host {\r\n  display: block;\r\n}\r\n", ":host {\n  display: block;\n}\n/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJmaWxlOi8vL0M6L1VzZXJzLyVEMCU5QyVEMCVCOCVEMSU4NSVEMCVCMCVEMCVCOSVEMCVCQiVEMCVCRS9zb3VyY2UvcmVwb3MvaHVscC1odWItcHJvamVjdC9DbGllbnRBcHAvc3JjL2FwcC9tb2R1bGVzL3NlbGYtaGVscC9wYWdlcy9wcmFjdGljZXMtbGlzdC9wcmFjdGljZXMtbGlzdC5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNFIiwic291cmNlc0NvbnRlbnQiOlsiOmhvc3Qge1xyXG4gIGRpc3BsYXk6IGJsb2NrO1xyXG59XHJcbiJdfQ== */"],
-  "mappings": ";AAAA;AACE,WAAA;ACCF;",
-  "names": []
-}

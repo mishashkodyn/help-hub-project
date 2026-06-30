@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["src/app/modules/shared/button/button.component.scss", "src/app/modules/shared/button/button.component.scss"],
-  "sourcesContent": [".btn {\r\n    font-family: system-ui;\r\n    font-size: 14px;\r\n    font-weight: 600;\r\n    cursor: pointer;\r\n}\r\n\r\n.txt {\r\n    font-size: 5px;\r\n}", ".btn {\n  font-family: system-ui;\n  font-size: 14px;\n  font-weight: 600;\n  cursor: pointer;\n}\n\n.txt {\n  font-size: 5px;\n}\n/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJmaWxlOi8vL0M6L1VzZXJzLyVEMCU5QyVEMCVCOCVEMSU4NSVEMCVCMCVEMCVCOSVEMCVCQiVEMCVCRS9zb3VyY2UvcmVwb3MvaHVscC1odWItcHJvamVjdC9DbGllbnRBcHAvc3JjL2FwcC9tb2R1bGVzL3NoYXJlZC9idXR0b24vYnV0dG9uLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0k7RUFDQTtFQUNBO0VBQ0E7OztBQUdKO0VBQ0kiLCJzb3VyY2VzQ29udGVudCI6WyIuYnRuIHtcclxuICAgIGZvbnQtZmFtaWx5OiBzeXN0ZW0tdWk7XHJcbiAgICBmb250LXNpemU6IDE0cHg7XHJcbiAgICBmb250LXdlaWdodDogNjAwO1xyXG4gICAgY3Vyc29yOiBwb2ludGVyO1xyXG59XHJcblxyXG4udHh0IHtcclxuICAgIGZvbnQtc2l6ZTogNXB4O1xyXG59Il19 */"],
-  "mappings": ";AAAA,CAAA;AACI,eAAA;AACA,aAAA;AACA,eAAA;AACA,UAAA;ACCJ;ADEA,CAAA;AACI,aAAA;ACCJ;",
-  "names": []
-}

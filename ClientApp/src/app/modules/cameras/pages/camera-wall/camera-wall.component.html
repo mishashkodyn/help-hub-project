@@ -8,25 +8,6 @@
       </div>
     </div>
 
-    <div class="pc-bar">
-      <span class="pc-bar-label"><mat-icon>desktop_windows</mat-icon></span>
-      @if (loadingPcs) {
-        <span class="pc-muted">{{ 'cameras.loading' | transloco }}</span>
-      } @else if (pcs.length === 0) {
-        <span class="pc-muted">{{ 'cameras.no_pcs' | transloco }}</span>
-      } @else {
-        @for (p of pcs; track p.pc) {
-          <button
-            type="button"
-            class="pc-chip"
-            [class.active]="p.pc === selectedPc"
-            (click)="selectPc(p.pc)">
-            {{ p.pc }} <span class="pc-chip-count">{{ p.cameras }}</span>
-          </button>
-        }
-      }
-    </div>
-
     <div class="cam-header-right">
       @if (storageAvailable && storage) {
         <button
@@ -70,11 +51,9 @@
         <mat-icon>{{ autoRefresh ? 'sensors' : 'sensors_off' }}</mat-icon>
       </button>
 
-      @if (selectedPc) {
-        <button type="button" class="pc-refresh" (click)="selectPc(selectedPc)" [title]="'cameras.refresh' | transloco">
-          <mat-icon>refresh</mat-icon>
-        </button>
-      }
+      <button type="button" class="pc-refresh" (click)="refresh()" [title]="'cameras.refresh' | transloco">
+        <mat-icon>refresh</mat-icon>
+      </button>
     </div>
   </header>
 
@@ -85,10 +64,10 @@
       @if (liveCameras.length === 0) {
         <div class="wall-empty">{{ 'cameras.no_data' | transloco }}</div>
       } @else {
-        @for (cam of liveCameras; track cam.cameraId) {
+        @for (cam of liveCameras; track cam.ip) {
           <div class="live-cell" [class.is-live]="isLive(cam)">
             @if (cam.imageUrl) {
-              <img [src]="cam.imageUrl" [alt]="cam.name || cam.cameraId" />
+              <img [src]="cam.imageUrl" [alt]="cameraTitle(cam)" />
             } @else {
               <div class="no-signal">
                 <mat-icon>videocam_off</mat-icon>
@@ -103,7 +82,7 @@
             }
 
             <div class="cell-label">
-              <span class="cell-name">{{ cam.name || cam.cameraId }}</span>
+              <span class="cell-name">{{ cameraTitle(cam) }}</span>
               @if (cam.lastSeenUtc) {
                 <span class="cell-time">{{ cam.lastSeenUtc | date: 'dd.MM HH:mm:ss' }}</span>
               } @else {
@@ -116,8 +95,8 @@
     } @else if (cameras.length === 0) {
       <div class="wall-empty">{{ 'cameras.no_data' | transloco }}</div>
     } @else {
-      @for (cam of cameras; track cam.cameraId) {
-        <div class="camera-card" [class.is-live]="isLive(cam)" (click)="openViewer(cam.cameraId)">
+      @for (cam of cameras; track cam.ip) {
+        <div class="camera-card" [class.is-live]="isLive(cam)" (click)="openViewer(cam.ip)">
           <div class="card-head">
             <span class="card-title">{{ cameraTitle(cam) }}</span>
             <span class="card-age" [class.live]="isLive(cam)">{{ ageBadge(cam) }}</span>
@@ -149,15 +128,6 @@
               </div>
             }
           </div>
-
-          @if (cam.model) {
-            <div class="card-model" [title]="cam.model">{{ cam.model }}</div>
-          }
-          @if (cam.ip) {
-            <div class="card-ids">
-              <span class="id-ip">{{ cam.ip }}</span>
-            </div>
-          }
 
           <div class="card-stats">
             <div class="stat">
@@ -197,7 +167,7 @@
       <div class="archive-header">
         <span class="archive-title">
           <mat-icon>history</mat-icon>
-          {{ selectedPc }} <span class="archive-sep">·</span> {{ viewerCamera }}
+          {{ viewerCamera }}
         </span>
         <button class="archive-close" type="button" (click)="closeViewer()">
           <mat-icon>close</mat-icon>
