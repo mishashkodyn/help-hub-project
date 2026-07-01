@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/modules/self-help/pages/practice-detail/practice-detail.component.scss", "src/app/modules/self-help/pages/practice-detail/practice-detail.component.scss"],
+  "sourcesContent": [":host {\r\n  display: block;\r\n}\r\n\r\n.breath-circle {\r\n  width: 150px;\r\n  height: 150px;\r\n  transition-property: transform;\r\n  transition-timing-function: ease-in-out;\r\n  will-change: transform;\r\n}\r\n", ":host {\n  display: block;\n}\n\n.breath-circle {\n  width: 150px;\n  height: 150px;\n  transition-property: transform;\n  transition-timing-function: ease-in-out;\n  will-change: transform;\n}\n/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJmaWxlOi8vL0M6L1VzZXJzLyVEMCU5QyVEMCVCOCVEMSU4NSVEMCVCMCVEMCVCOSVEMCVCQiVEMCVCRS9zb3VyY2UvcmVwb3MvaHVscC1odWItcHJvamVjdC9DbGllbnRBcHAvc3JjL2FwcC9tb2R1bGVzL3NlbGYtaGVscC9wYWdlcy9wcmFjdGljZS1kZXRhaWwvcHJhY3RpY2UtZGV0YWlsLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0U7OztBQUdGO0VBQ0U7RUFDQTtFQUNBO0VBQ0E7RUFDQSIsInNvdXJjZXNDb250ZW50IjpbIjpob3N0IHtcclxuICBkaXNwbGF5OiBibG9jaztcclxufVxyXG5cclxuLmJyZWF0aC1jaXJjbGUge1xyXG4gIHdpZHRoOiAxNTBweDtcclxuICBoZWlnaHQ6IDE1MHB4O1xyXG4gIHRyYW5zaXRpb24tcHJvcGVydHk6IHRyYW5zZm9ybTtcclxuICB0cmFuc2l0aW9uLXRpbWluZy1mdW5jdGlvbjogZWFzZS1pbi1vdXQ7XHJcbiAgd2lsbC1jaGFuZ2U6IHRyYW5zZm9ybTtcclxufVxyXG4iXX0= */"],
+  "mappings": ";AAAA;AACE,WAAA;ACCF;ADEA,CAAA;AACE,SAAA;AACA,UAAA;AACA,uBAAA;AACA,8BAAA;AACA,eAAA;ACCF;",
+  "names": []
+}

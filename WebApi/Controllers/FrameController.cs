@@ -1,5 +1,6 @@
 using System.Globalization;
 using System.Security.Cryptography;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,18 +11,22 @@ namespace API.Controllers
     [ApiController]
     public class FrameController : ControllerBase
     {
-        // Storage scheme: {FramesRoot}/{ip}/{date}/{HHmmss}.jpg
+        // One AI-detected object on a frame, e.g. { "label": "person", "confidence": 87 }.
+        // Confidence arrives as a 0-100 number (not a 0-1 fraction).
+        public sealed record Detection(string Label, int Confidence);
+
+        private static readonly JsonSerializerOptions JsonOpts = new(JsonSerializerDefaults.Web);
+
+        // Storage scheme: {FramesRoot}/{ip}/{yyyy-MM-dd}/{HH-mm-ss}.jpg
         //   ip   → camera IPv4 "A.B.C.D" (the camera's identity, also the folder name)
-        //   date → capture day "yyyy-MM-dd"
-        //   file → capture time "HHmmss.jpg" (a same-second collision gets a "-N" suffix)
+        //   date → capture day "yyyy-MM-dd" (derived from the timestamp field)
+        //   file → capture time "HH-mm-ss.jpg" (a same-second collision gets a "_N" suffix)
+        // Detections/metadata live in a "{file}.meta.json" sidecar (double extension).
         private static readonly Regex IpPattern = new(
             @"^(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}$",
             RegexOptions.Compiled);
         private static readonly Regex DayPattern = new(@"^\d{4}-\d{2}-\d{2}$", RegexOptions.Compiled);
-        private static readonly Regex FilePattern = new(@"^\d{6}(-\d{1,3})?\.jpg$", RegexOptions.Compiled);
-
-        // Capture time carried in the uploaded file name: exactly six digits "HHmmss".
-        private static readonly Regex TimePattern = new(@"^\d{6}$", RegexOptions.Compiled);
+        private static readonly Regex FilePattern = new(@"^\d{2}-\d{2}-\d{2}(_\d{1,3})?\.jpg$", RegexOptions.Compiled);
 
         // How many recent frames a camera card shows (1 main + the rest as thumbnails).
         private const int RecentFrameCount = 3;
@@ -58,15 +63,21 @@ namespace API.Controllers
             return gb <= 0 ? 0 : (long)(gb * 1024 * 1024 * 1024);
         }
 
-        // POST /api/frames  ← multipart receiver for the capture agents.
+        // POST /api/frames  ← multipart receiver for the capture agents (external camera-capture client).
         //   Auth : Authorization: Bearer <token>  → constant-time compared to CameraWall:UploadToken.
+        //          An empty configured token means auth is OFF (dev mode) — no header required.
         //   Body : multipart/form-data
-        //            ip    (text) → camera IPv4 "A.B.C.D" (e.g. 192.168.1.101); the identity key.
-        //            date  (text) → capture day "yyyy-MM-dd".
-        //            image (file) → JPEG; the file name carries the capture time "HHmmss.jpg".
-        // The capture timestamp is taken from the file name (HHmmss) + the date field; an unexpected
-        // name falls back to the receipt time and logs a warning.
-        // Stored at {FramesRoot}/{ip}/{date}/{HHmmss}.jpg (collisions get a -N suffix, never overwrite).
+        //            ip         (text) → camera IPv4 "A.B.C.D" (e.g. 10.0.1.101); the identity key.
+        //            brand      (text) → camera brand/model free text, e.g. "hikvision DS-2CD2347G3".
+        //            image      (file) → JPEG. The client file name "yyyyMMdd_HHmmss.jpg" is ignored;
+        //                       the authoritative capture time is the `timestamp` field.
+        //            timestamp  (text) → ISO 8601 round-trip ("O") with offset, e.g.
+        //                       "2026-07-01T14:23:05.1234567+02:00". REQUIRED, no receipt-time fallback.
+        //            detections (text, optional) → JSON array of AI detections for this frame, e.g.
+        //                       [{"label":"person","confidence":87},{"label":"dog","confidence":65}]
+        // Stored at {FramesRoot}/{ip}/{yyyy-MM-dd}/{HH-mm-ss}.jpg using the timestamp's own wall-clock
+        // components (its reported offset), collisions get a "_N" suffix and never overwrite. Metadata
+        // is written alongside as a "{file}.meta.json" sidecar.
         [HttpPost]
         [RequestSizeLimit(MaxUploadBytes)]
         [RequestFormLimits(MultipartBodyLengthLimit = MaxUploadBytes)]
@@ -82,12 +93,14 @@ namespace API.Controllers
 
             var ip = form["ip"].ToString().Trim();
             if (!IpPattern.IsMatch(ip))
-                return BadRequest("Поле ip відсутнє або невалідне (очікується IPv4, напр. 192.168.1.101)");
+                return BadRequest("Поле ip відсутнє або невалідне (очікується IPv4, напр. 10.0.1.101)");
 
-            var date = form["date"].ToString().Trim();
-            if (!DayPattern.IsMatch(date) || !DateTime.TryParseExact(date, "yyyy-MM-dd",
-                    CultureInfo.InvariantCulture, DateTimeStyles.None, out _))
-                return BadRequest("Поле date відсутнє або невалідне (очікується yyyy-MM-dd)");
+            var brand = form["brand"].ToString().Trim();
+
+            var rawTimestamp = form["timestamp"].ToString().Trim();
+            if (string.IsNullOrEmpty(rawTimestamp) || !DateTimeOffset.TryParse(rawTimestamp,
+                    CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind, out var dto))
+                return BadRequest("Поле timestamp відсутнє або невалідне (очікується ISO 8601)");
 
             var file = form.Files["image"] ?? (form.Files.Count > 0 ? form.Files[0] : null);
             if (file is null || file.Length == 0)
@@ -98,29 +111,45 @@ namespace API.Controllers
                 bytes = await ReadBody(src);
             if (bytes.Length == 0) return BadRequest("Файл image порожній");
 
-            // Capture time from the file name (HHmmss); fall back to the receipt time if unexpected.
-            var time = ExtractFrameTime(file.FileName, out var fromName);
-            if (!fromName)
-                _logger.LogWarning(
-                    "CameraWall: ip {Ip}, дата {Date} — ім'я файлу '{File}' не у форматі HHmmss.jpg; " +
-                    "час знімку взято з моменту прийому ({Time})",
-                    ip, date, file.FileName, time);
+            var detections = ParseDetections(form["detections"].ToString());
 
-            var saved = await StoreFrameAsync(ip, date, time, bytes);
+            // Дата/час беремо з власного «настінного» часу timestamp (у його ж offset), без конвертації.
+            var date = dto.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+            var time = dto.ToString("HH-mm-ss", CultureInfo.InvariantCulture);
+
+            var saved = await StoreFrameAsync(ip, brand, rawTimestamp, date, time, bytes, detections);
 
             _logger.LogInformation(
-                "CameraWall: прийнято кадр — ip {Ip}, дата {Date}, час {Time}, розмір {Bytes} Б → {Saved}",
-                ip, date, time, bytes.Length, saved);
+                "CameraWall: прийнято кадр — ip {Ip}, бренд {Brand}, розмір {Bytes} Б, детекцій {Detections} → {Saved}",
+                ip, brand, bytes.Length, detections.Count, saved);
 
-            return Ok(new { saved });
+            return Ok(new { status = "ok", path = saved });
+        }
+
+        // Parses the optional "detections" form field: a JSON array like
+        // [{"label":"person","confidence":87}]. Missing/blank/invalid JSON → empty list (best-effort;
+        // detections are supplementary metadata, never a reason to reject the frame upload).
+        private List<Detection> ParseDetections(string? raw)
+        {
+            if (string.IsNullOrWhiteSpace(raw)) return new List<Detection>();
+            try
+            {
+                return JsonSerializer.Deserialize<List<Detection>>(raw, JsonOpts) ?? new List<Detection>();
+            }
+            catch (JsonException)
+            {
+                _logger.LogWarning("CameraWall: невалідний JSON у полі detections: {Raw}", raw);
+                return new List<Detection>();
+            }
         }
 
         // Validates the Authorization: Bearer <token> header against CameraWall:UploadToken in
-        // constant time. Returns false for a missing header, wrong scheme, empty or mismatched token.
+        // constant time. An empty configured token means auth is OFF (dev mode) → allow everything.
+        // Otherwise returns false for a missing header, wrong scheme, empty or mismatched token.
         private bool BearerTokenOk()
         {
             var configured = GetUploadToken();
-            if (string.IsNullOrEmpty(configured)) return false; // not configured → deny everything
+            if (string.IsNullOrEmpty(configured)) return true; // not configured → auth off (dev mode)
 
             if (!Request.Headers.TryGetValue("Authorization", out var header)) return false;
 
@@ -136,21 +165,6 @@ namespace API.Controllers
             return CryptographicOperations.FixedTimeEquals(a, b);
         }
 
-        // Pulls the "HHmmss" stem out of an uploaded file name like "173051.jpg".
-        // Sets fromName=false and returns the current local wall-clock time when the name doesn't fit.
-        private static string ExtractFrameTime(string? fileName, out bool fromName)
-        {
-            fromName = false;
-            var stem = Path.GetFileNameWithoutExtension(fileName ?? string.Empty);
-            if (TimePattern.IsMatch(stem) &&
-                DateTime.TryParseExact(stem, "HHmmss", CultureInfo.InvariantCulture, DateTimeStyles.None, out _))
-            {
-                fromName = true;
-                return stem;
-            }
-            return DateTime.Now.ToString("HHmmss");
-        }
-
         private static async Task<byte[]> ReadBody(Stream body)
         {
             using var ms = new MemoryStream();
@@ -158,10 +172,22 @@ namespace API.Controllers
             return ms.ToArray();
         }
 
+        // Metadata sidecar payload, written next to each frame as "{file}.meta.json".
+        private sealed record FrameMeta(
+            string Ip,
+            string Brand,
+            string Timestamp,
+            List<Detection> Detections,
+            string ImageFile,
+            long SizeBytes,
+            string ReceivedAt);
+
         // Frame-write path: store under {ip}/{date} and enforce the disk quota. The file name is the
-        // capture time "HHmmss.jpg"; a same-second collision gets a "-N" suffix so an existing frame is
-        // never overwritten. Returns the saved relative path "{ip}/{date}/{file}".
-        private async Task<string> StoreFrameAsync(string ip, string date, string time, byte[] bytes)
+        // capture time "HH-mm-ss.jpg"; a same-second collision gets a "_N" suffix (starting at _2) so an
+        // existing frame is never overwritten. Returns the saved relative path "{ip}/{date}/{file}".
+        private async Task<string> StoreFrameAsync(
+            string ip, string brand, string rawTimestamp, string date, string time,
+            byte[] bytes, List<Detection> detections)
         {
             var dayFolder = Path.Combine(GetFramesRoot(), ip, date);
             Directory.CreateDirectory(dayFolder);
@@ -176,7 +202,7 @@ namespace API.Controllers
             }
 
             string fileName = $"{time}.jpg";
-            for (var n = 1; ; n++)
+            for (var n = 2; ; n++)
             {
                 var framePath = Path.Combine(dayFolder, fileName);
                 try
@@ -186,13 +212,58 @@ namespace API.Controllers
                 }
                 catch (IOException) when (n < 1000 && System.IO.File.Exists(tempPath))
                 {
-                    fileName = $"{time}-{n}.jpg"; // name taken — try the next suffix
+                    fileName = $"{time}_{n}.jpg"; // name taken — try the next suffix
                 }
             }
+
+            // Sidecar пишемо лише після того, як .jpg опинився на місці (як і раніше).
+            var meta = new FrameMeta(
+                Ip: ip,
+                Brand: brand,
+                Timestamp: rawTimestamp,
+                Detections: detections,
+                ImageFile: fileName,
+                SizeBytes: bytes.Length,
+                ReceivedAt: DateTime.UtcNow.ToString("O", CultureInfo.InvariantCulture));
+
+            var metaPath = Path.Combine(dayFolder, fileName + ".meta.json");
+            await System.IO.File.WriteAllTextAsync(metaPath, JsonSerializer.Serialize(meta, JsonOpts));
 
             MaybeEnforceQuota();
 
             return $"{ip}/{date}/{fileName}";
+        }
+
+        // Reads back the "{file}.meta.json" sidecar for a stored frame. Returns the camera brand (null
+        // if absent/unreadable) and the detections list (empty if absent/unreadable). Best-effort — a
+        // missing or corrupt sidecar never throws.
+        private (string? brand, List<Detection> detections) ReadMeta(string ip, string day, string file)
+        {
+            var metaPath = Path.Combine(GetFramesRoot(), ip, day, file + ".meta.json");
+            if (!System.IO.File.Exists(metaPath)) return (null, new List<Detection>());
+            try
+            {
+                var json = System.IO.File.ReadAllText(metaPath);
+                var meta = JsonSerializer.Deserialize<FrameMeta>(json, JsonOpts);
+                if (meta is null) return (null, new List<Detection>());
+                var brand = string.IsNullOrWhiteSpace(meta.Brand) ? null : meta.Brand;
+                return (brand, meta.Detections ?? new List<Detection>());
+            }
+            catch (JsonException)
+            {
+                return (null, new List<Detection>());
+            }
+        }
+
+        // Deletes the "{file}.meta.json" sidecar next to a frame being purged, if one exists.
+        private static void DeleteSidecarJson(string jpgPath)
+        {
+            try
+            {
+                var metaPath = jpgPath + ".meta.json";
+                if (System.IO.File.Exists(metaPath)) System.IO.File.Delete(metaPath);
+            }
+            catch { /* best-effort — a leftover sidecar is harmless */ }
         }
 
         // GET /api/frames/cameras → every camera (an IP folder) with its recent frames and counts.
@@ -205,9 +276,15 @@ namespace API.Controllers
                 .Select(ip =>
                 {
                     var recent = RecentFrameFiles(ip, RecentFrameCount)
-                        .Select(r => new {
-                            imageUrl = FrameUrl(ip, r.day, r.file),
-                            timeUtc = ParseFrameTime(r.day, r.file),
+                        .Select(r =>
+                        {
+                            var meta = ReadMeta(ip, r.day, r.file);
+                            return new {
+                                imageUrl = FrameUrl(ip, r.day, r.file),
+                                timeUtc = ParseFrameTime(r.day, r.file),
+                                brand = meta.brand,
+                                detections = meta.detections,
+                            };
                         })
                         .ToList();
 
@@ -215,6 +292,7 @@ namespace API.Controllers
                         ip,
                         name = ip,
                         lastSeenUtc = recent.Count > 0 ? recent[0].timeUtc : null,
+                        brand = recent.Count > 0 ? recent[0].brand : null,
                         todayCount = TodayCount(ip),
                         totalCount = TotalCount(ip),
                         frames = recent,
@@ -239,10 +317,15 @@ namespace API.Controllers
                     var recent = RecentFrameFiles(ip, 1);
                     string? imageUrl = null;
                     DateTime? lastSeenUtc = null;
+                    string? brand = null;
+                    List<Detection> detections = new();
                     if (recent.Count > 0)
                     {
                         imageUrl = FrameUrl(ip, recent[0].day, recent[0].file);
                         lastSeenUtc = ParseFrameTime(recent[0].day, recent[0].file);
+                        var meta = ReadMeta(ip, recent[0].day, recent[0].file);
+                        brand = meta.brand;
+                        detections = meta.detections;
                     }
 
                     return new {
@@ -250,6 +333,8 @@ namespace API.Controllers
                         name = ip,
                         imageUrl,
                         lastSeenUtc,
+                        brand,
+                        detections,
                     };
                 })
                 .OrderBy(x => x.ip, IpComparer)
@@ -297,10 +382,16 @@ namespace API.Controllers
                 .Select(Path.GetFileName)
                 .Where(name => name != null && FilePattern.IsMatch(name))
                 .OrderBy(name => name, StringComparer.Ordinal)
-                .Select(name => new {
-                    file = name,
-                    timeUtc = ParseFrameTime(day, name!),
-                    imageUrl = FrameUrl(ip, day, name!),
+                .Select(name =>
+                {
+                    var meta = ReadMeta(ip, day, name!);
+                    return new {
+                        file = name,
+                        timeUtc = ParseFrameTime(day, name!),
+                        imageUrl = FrameUrl(ip, day, name!),
+                        brand = meta.brand,
+                        detections = meta.detections,
+                    };
                 })
                 .ToList();
 
@@ -418,6 +509,34 @@ namespace API.Controllers
                 _logger.LogInformation(
                     "CameraWall: ручне очищення — видалено {Frames} кадрів, звільнено {Mb:F1} МБ",
                     ev.DeletedFrames, ev.FreedBytes / 1024d / 1024d);
+            }
+
+            return Ok(new
+            {
+                deletedFrames = ev?.DeletedFrames ?? 0,
+                freedBytes = ev?.FreedBytes ?? 0,
+            });
+        }
+
+        // POST /api/frames/{ip}/cleanup → очистити кадри ОДНІЄЇ камери. Лише для адміністраторів.
+        // Працює завжди, незалежно від вільного місця.
+        //   ?keepDays=N → лишити останні N календарних днів (типово 0 = видалити всі кадри камери).
+        [Authorize(Roles = "Superadmin,Admin")]
+        [HttpPost("{ip}/cleanup")]
+        public IActionResult CleanupCamera(string ip, [FromQuery] int? keepDays)
+        {
+            if (!IsEnabled()) return NotFound();
+            if (!IpPattern.IsMatch(ip)) return NotFound();
+
+            var days = keepDays is int k && k >= 0 ? k : 0;
+            var ev = PurgeOlderThan(GetFramesRoot(), days, GetMaxArchiveBytes(), onlyIp: ip);
+
+            if (ev is not null)
+            {
+                RecordCleanup(ev);
+                _logger.LogInformation(
+                    "CameraWall: очищення камери {Ip} (лишити {Days} дн.) — видалено {Frames} кадрів, звільнено {Mb:F1} МБ",
+                    ip, days, ev.DeletedFrames, ev.FreedBytes / 1024d / 1024d);
             }
 
             return Ok(new
@@ -630,6 +749,7 @@ namespace API.Controllers
                 {
                     var len = f.Length;
                     f.Delete();
+                    DeleteSidecarJson(f.FullName);
                     total -= len;
                     freed += len;
                     deleted++;
@@ -645,8 +765,9 @@ namespace API.Controllers
         }
 
         // Видаляє кадри в днях, старіших за N останніх календарних днів (локальних).
-        // keepDays = 0 → видалити все сховище. Повертає null, якщо нічого не видалено.
-        private static CleanupEvent? PurgeOlderThan(string root, int keepDays, long maxBytes)
+        // keepDays = 0 → видалити все (кадри без винятку). Якщо onlyIp задано — чистить лише цю камеру,
+        // інакше всі. Працює завжди, незалежно від вільного місця. Повертає null, якщо нічого не видалено.
+        private static CleanupEvent? PurgeOlderThan(string root, int keepDays, long maxBytes, string? onlyIp = null)
         {
             if (!Directory.Exists(root)) return null;
 
@@ -656,7 +777,9 @@ namespace API.Controllers
 
             foreach (var camDir in Directory.EnumerateDirectories(root))
             {
-                if (!IpPattern.IsMatch(Path.GetFileName(camDir)!)) continue;
+                var camName = Path.GetFileName(camDir)!;
+                if (!IpPattern.IsMatch(camName)) continue;
+                if (onlyIp != null && !string.Equals(camName, onlyIp, StringComparison.OrdinalIgnoreCase)) continue;
 
                 foreach (var dayDir in Directory.EnumerateDirectories(camDir))
                 {
@@ -677,6 +800,7 @@ namespace API.Controllers
                         {
                             var len = new FileInfo(f).Length;
                             System.IO.File.Delete(f);
+                            DeleteSidecarJson(f);
                             freed += len;
                             deleted++;
                         }
@@ -722,15 +846,15 @@ namespace API.Controllers
             }
         }
 
-        // Reconstructs a frame's capture time from its day folder + file name "HHmmss" (the camera's
-        // wall-clock time, kept as-is / Unspecified kind), stripping any "-N" collision suffix first.
+        // Reconstructs a frame's capture time from its day folder + file name "HH-mm-ss" (the camera's
+        // wall-clock time, kept as-is / Unspecified kind), stripping any "_N" collision suffix first.
         private static DateTime? ParseFrameTime(string day, string file)
         {
             var stem = Path.GetFileNameWithoutExtension(file);
-            var dash = stem.IndexOf('-');
-            var timePart = dash >= 0 ? stem[..dash] : stem;
+            var us = stem.IndexOf('_');
+            var timePart = us >= 0 ? stem[..us] : stem;
 
-            if (DateTime.TryParseExact($"{day} {timePart}", "yyyy-MM-dd HHmmss",
+            if (DateTime.TryParseExact($"{day} {timePart}", "yyyy-MM-dd HH-mm-ss",
                     CultureInfo.InvariantCulture, DateTimeStyles.None, out var dt))
             {
                 return dt;

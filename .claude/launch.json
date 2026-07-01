@@ -7,6 +7,12 @@
       "runtimeArgs": ["start"],
       "cwd": "ClientApp",
       "port": 4200
+    },
+    {
+      "name": "api",
+      "runtimeExecutable": "dotnet",
+      "runtimeArgs": ["run", "--project", "WebApi", "--urls", "https://localhost:5000"],
+      "port": 5000
     }
   ]
 }

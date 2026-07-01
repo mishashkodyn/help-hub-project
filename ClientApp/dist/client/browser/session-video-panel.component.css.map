@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/modules/session/components/session-video-panel/session-video-panel.component.scss", "src/app/modules/session/components/session-video-panel/session-video-panel.component.scss"],
+  "sourcesContent": [":host { display: block; height: 100%; }\r\n", ":host {\n  display: block;\n  height: 100%;\n}\n/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJmaWxlOi8vL0M6L1VzZXJzLyVEMCU5QyVEMCVCOCVEMSU4NSVEMCVCMCVEMCVCOSVEMCVCQiVEMCVCRS9zb3VyY2UvcmVwb3MvaHVscC1odWItcHJvamVjdC9DbGllbnRBcHAvc3JjL2FwcC9tb2R1bGVzL3Nlc3Npb24vY29tcG9uZW50cy9zZXNzaW9uLXZpZGVvLXBhbmVsL3Nlc3Npb24tdmlkZW8tcGFuZWwuY29tcG9uZW50LnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFBUTtFQUFnQiIsInNvdXJjZXNDb250ZW50IjpbIjpob3N0IHsgZGlzcGxheTogYmxvY2s7IGhlaWdodDogMTAwJTsgfVxyXG4iXX0= */"],
+  "mappings": ";AAAA;AAAQ,WAAA;AAAgB,UAAA;ACGxB;",
+  "names": []
+}

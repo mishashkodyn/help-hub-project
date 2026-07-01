@@ -81,8 +81,23 @@
               <span class="media-live"><span class="media-live-dot"></span>{{ 'cameras.live' | transloco }}</span>
             }
 
+            @if (cam.detections?.length) {
+              <div class="cell-detections">
+                @for (d of cam.detections; track d.label + d.confidence) {
+                  <span class="det-badge" [class]="'tier-' + detectionTier(d.confidence)" [title]="d.label">
+                    <mat-icon>{{ detectionIcon(d.label) }}</mat-icon>{{ detectionPct(d.confidence) }}
+                  </span>
+                }
+              </div>
+            }
+
             <div class="cell-label">
-              <span class="cell-name">{{ cameraTitle(cam) }}</span>
+              <div class="cell-label-text">
+                <span class="cell-name">{{ cameraTitle(cam) }}</span>
+                @if (cam.brand) {
+                  <span class="cell-brand">{{ cam.brand }}</span>
+                }
+              </div>
               @if (cam.lastSeenUtc) {
                 <span class="cell-time">{{ cam.lastSeenUtc | date: 'dd.MM HH:mm:ss' }}</span>
               } @else {
@@ -98,7 +113,12 @@
       @for (cam of cameras; track cam.ip) {
         <div class="camera-card" [class.is-live]="isLive(cam)" (click)="openViewer(cam.ip)">
           <div class="card-head">
-            <span class="card-title">{{ cameraTitle(cam) }}</span>
+            <div class="card-head-text">
+              <span class="card-title">{{ cameraTitle(cam) }}</span>
+              @if (cam.brand) {
+                <span class="card-brand">{{ cam.brand }}</span>
+              }
+            </div>
             <span class="card-age" [class.live]="isLive(cam)">{{ ageBadge(cam) }}</span>
           </div>
 
@@ -149,12 +169,15 @@
             </div>
           </div>
 
-          <!-- reactions are visual placeholders for now -->
-          <div class="card-foot">
-            <span class="react"><mat-icon>sentiment_satisfied</mat-icon>0</span>
-            <span class="react"><mat-icon>chat_bubble_outline</mat-icon>0</span>
-            <span class="react"><mat-icon>person_outline</mat-icon>0</span>
-          </div>
+          @if (mainFrame(cam)?.detections?.length) {
+            <div class="card-foot detections">
+              @for (d of mainFrame(cam)!.detections; track d.label + d.confidence) {
+                <span class="det-badge" [class]="'tier-' + detectionTier(d.confidence)" [title]="d.label">
+                  <mat-icon>{{ detectionIcon(d.label) }}</mat-icon>{{ detectionPct(d.confidence) }}
+                </span>
+              }
+            </div>
+          }
         </div>
       }
     }
@@ -168,10 +191,25 @@
         <span class="archive-title">
           <mat-icon>history</mat-icon>
           {{ viewerCamera }}
+          @if (currentFrame?.brand) {
+            <span class="archive-brand">{{ currentFrame!.brand }}</span>
+          }
         </span>
-        <button class="archive-close" type="button" (click)="closeViewer()">
-          <mat-icon>close</mat-icon>
-        </button>
+        <div class="storage-header-actions">
+          @if (storageAvailable) {
+            <button
+              type="button"
+              class="storage-icon-btn"
+              [disabled]="clearingCamera"
+              (click)="clearCamera()"
+              [title]="'cameras.storage.clear_camera' | transloco">
+              <mat-icon>{{ clearingCamera ? 'autorenew' : 'delete_sweep' }}</mat-icon>
+            </button>
+          }
+          <button class="storage-icon-btn" type="button" (click)="closeViewer()">
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
       </div>
 
       <div class="archive-days">
@@ -196,7 +234,18 @@
         @if (loadingFrames) {
           <span class="archive-muted">{{ 'cameras.loading' | transloco }}</span>
         } @else if (currentFrame) {
-          <img [src]="currentFrame.imageUrl" [alt]="viewerCamera" />
+          <div class="stage-frame">
+            <img [src]="currentFrame.imageUrl" [alt]="viewerCamera" />
+            @if (currentFrame.detections?.length) {
+              <div class="stage-detections">
+                @for (d of currentFrame.detections; track d.label + d.confidence) {
+                  <span class="det-badge" [class]="'tier-' + detectionTier(d.confidence)" [title]="d.label">
+                    <mat-icon>{{ detectionIcon(d.label) }}</mat-icon>{{ detectionPct(d.confidence) }}
+                  </span>
+                }
+              </div>
+            }
+          </div>
         } @else if (selectedDay) {
           <span class="archive-muted">{{ 'cameras.no_frames' | transloco }}</span>
         }

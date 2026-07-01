@@ -28,15 +28,24 @@ interface StorageInfo {
   recentCleanups: CleanupEvent[];
 }
 
+/** One AI-detected object on a frame, e.g. { label: 'person', confidence: 87 } (0-100 scale). */
+interface DetectionInfo {
+  label: string;
+  confidence: number;
+}
+
 interface CameraFrame {
   imageUrl: string;
   timeUtc: string | null;
+  brand: string | null;
+  detections: DetectionInfo[];
 }
 
 /** A camera, identified by its IP (GET /api/frames/cameras). */
 interface CameraInfo {
   ip: string;
   name: string | null;
+  brand: string | null;
   lastSeenUtc: string | null;
   todayCount: number;
   totalCount: number;
@@ -46,6 +55,7 @@ interface CameraInfo {
 interface CameraState {
   ip: string;
   name: string | null;
+  brand: string | null;
   lastSeenUtc: string | null;
   todayCount: number;
   totalCount: number;
@@ -56,15 +66,19 @@ interface CameraState {
 interface LiveInfo {
   ip: string;
   name: string | null;
+  brand: string | null;
   imageUrl: string | null;
   lastSeenUtc: string | null;
+  detections: DetectionInfo[];
 }
 
 interface LiveCameraState {
   ip: string;
   name: string | null;
+  brand: string | null;
   imageUrl: string | null;
   lastSeenUtc: string | null;
+  detections: DetectionInfo[];
 }
 
 type ViewMode = 'cards' | 'live';
@@ -77,7 +91,9 @@ interface ArchiveDay {
 interface ArchiveFrame {
   file: string;
   timeUtc: string | null;
+  brand: string | null;
   imageUrl: string;
+  detections: DetectionInfo[];
 }
 
 @Component({
@@ -212,6 +228,7 @@ export class CameraWallComponent implements OnInit, OnDestroy {
     return {
       ip: c.ip,
       name: c.name,
+      brand: c.brand,
       lastSeenUtc: c.lastSeenUtc,
       todayCount: c.todayCount,
       totalCount: c.totalCount,
@@ -233,6 +250,34 @@ export class CameraWallComponent implements OnInit, OnDestroy {
   /** Older frames shown as a thumbnail strip beside the main preview. */
   thumbFrames(cam: CameraState): CameraFrame[] {
     return cam.frames.slice(1);
+  }
+
+  // Maps a detection label to a Material icon; unrecognized labels fall back to a generic one.
+  private static readonly DETECTION_ICONS: Record<string, string> = {
+    person: 'person',
+    dog: 'pets',
+    cat: 'pets',
+    bird: 'flutter_dash',
+    car: 'directions_car',
+    truck: 'local_shipping',
+    bus: 'directions_bus',
+    bicycle: 'directions_bike',
+    motorcycle: 'two_wheeler',
+  };
+
+  detectionIcon(label: string): string {
+    return CameraWallComponent.DETECTION_ICONS[label?.toLowerCase()] ?? 'category';
+  }
+
+  /** Confidence tier drives the badge color: high (≥70%), mid (≥35%), low otherwise. */
+  detectionTier(confidence: number): 'high' | 'mid' | 'low' {
+    if (confidence >= 70) return 'high';
+    if (confidence >= 35) return 'mid';
+    return 'low';
+  }
+
+  detectionPct(confidence: number): string {
+    return `${Math.round(confidence * 10) / 10}%`;
   }
 
   /** Compact "time since last frame" badge, e.g. "3m", "5h", "1d 21h". */
@@ -289,6 +334,7 @@ export class CameraWallComponent implements OnInit, OnDestroy {
           const state = byIp.get(c.ip);
           if (!state) return this.toState(c);
           state.name = c.name;
+          state.brand = c.brand;
           state.lastSeenUtc = c.lastSeenUtc;
           state.todayCount = c.todayCount;
           state.totalCount = c.totalCount;
@@ -310,6 +356,7 @@ export class CameraWallComponent implements OnInit, OnDestroy {
           const state = byIp.get(c.ip);
           if (!state) return { ...c };
           state.name = c.name;
+          state.brand = c.brand;
           state.imageUrl = c.imageUrl;
           state.lastSeenUtc = c.lastSeenUtc;
           return state;
@@ -359,6 +406,27 @@ export class CameraWallComponent implements OnInit, OnDestroy {
         this.loadingFrames = false;
       },
       error: () => { this.loadingFrames = false; },
+    });
+  }
+
+  // Clear every frame of the camera currently open in the viewer. Admin-only, runs regardless of
+  // free space, then drops the now-empty camera off the wall.
+  clearingCamera = false;
+  clearCamera(): void {
+    if (!this.viewerCamera || this.clearingCamera) return;
+    if (!confirm(this.transloco.translate('cameras.storage.confirm_clear_camera'))) return;
+    const ip = this.viewerCamera;
+    this.clearingCamera = true;
+    this.http.post<{ deletedFrames: number; freedBytes: number }>(
+      `/api/frames/${ip}/cleanup?keepDays=0`, {},
+    ).subscribe({
+      next: () => {
+        this.clearingCamera = false;
+        this.closeViewer();
+        this.loadWall();
+        if (this.storageAvailable) this.loadStorage();
+      },
+      error: () => { this.clearingCamera = false; },
     });
   }
 
