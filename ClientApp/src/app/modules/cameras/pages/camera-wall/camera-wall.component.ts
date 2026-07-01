@@ -28,17 +28,18 @@ interface StorageInfo {
   recentCleanups: CleanupEvent[];
 }
 
-/** One AI-detected object on a frame, e.g. { label: 'person', confidence: 87 } (0-100 scale). */
-interface DetectionInfo {
-  label: string;
-  confidence: number;
+/** Per-frame AI aggregates (people/dog counts, avg confidence, frame-change %). */
+interface FrameMetrics {
+  peopleCount: number;
+  dogCount: number;
+  averageConfidence: number; // 0-100
+  changedPct: number | null; // null when the uploader didn't send it
 }
 
-interface CameraFrame {
+interface CameraFrame extends FrameMetrics {
   imageUrl: string;
   timeUtc: string | null;
   brand: string | null;
-  detections: DetectionInfo[];
 }
 
 /** A camera, identified by its IP (GET /api/frames/cameras). */
@@ -63,22 +64,20 @@ interface CameraState {
 }
 
 /** Lightweight payload for the live grid (GET /api/frames/live). */
-interface LiveInfo {
+interface LiveInfo extends FrameMetrics {
   ip: string;
   name: string | null;
   brand: string | null;
   imageUrl: string | null;
   lastSeenUtc: string | null;
-  detections: DetectionInfo[];
 }
 
-interface LiveCameraState {
+interface LiveCameraState extends FrameMetrics {
   ip: string;
   name: string | null;
   brand: string | null;
   imageUrl: string | null;
   lastSeenUtc: string | null;
-  detections: DetectionInfo[];
 }
 
 type ViewMode = 'cards' | 'live';
@@ -88,12 +87,19 @@ interface ArchiveDay {
   count: number;
 }
 
-interface ArchiveFrame {
+interface ArchiveFrame extends FrameMetrics {
   file: string;
   timeUtc: string | null;
   brand: string | null;
   imageUrl: string;
-  detections: DetectionInfo[];
+}
+
+/** One badge rendered on a frame: an icon + value, tier-colored. */
+interface MetricBadge {
+  icon: string;
+  value: string;
+  tier: 'high' | 'mid' | 'low' | 'neutral';
+  title: string;
 }
 
 @Component({
@@ -252,32 +258,41 @@ export class CameraWallComponent implements OnInit, OnDestroy {
     return cam.frames.slice(1);
   }
 
-  // Maps a detection label to a Material icon; unrecognized labels fall back to a generic one.
-  private static readonly DETECTION_ICONS: Record<string, string> = {
-    person: 'person',
-    dog: 'pets',
-    cat: 'pets',
-    bird: 'flutter_dash',
-    car: 'directions_car',
-    truck: 'local_shipping',
-    bus: 'directions_bus',
-    bicycle: 'directions_bike',
-    motorcycle: 'two_wheeler',
-  };
-
-  detectionIcon(label: string): string {
-    return CameraWallComponent.DETECTION_ICONS[label?.toLowerCase()] ?? 'category';
-  }
-
   /** Confidence tier drives the badge color: high (≥70%), mid (≥35%), low otherwise. */
-  detectionTier(confidence: number): 'high' | 'mid' | 'low' {
+  confidenceTier(confidence: number): 'high' | 'mid' | 'low' {
     if (confidence >= 70) return 'high';
     if (confidence >= 35) return 'mid';
     return 'low';
   }
 
-  detectionPct(confidence: number): string {
-    return `${Math.round(confidence * 10) / 10}%`;
+  /** Rounds a percentage to one decimal (e.g. 76 → "76%", 4.786 → "4.8%"). */
+  private pct(value: number): string {
+    return `${Math.round(value * 10) / 10}%`;
+  }
+
+  /**
+   * Badges shown on a frame: people count, dog count, average confidence and — when the
+   * uploader reported it — the frame-change percentage. People/dogs are always shown (even at 0)
+   * so an operator can tell "nothing detected" from "no data"; confidence and change appear only
+   * when meaningful.
+   */
+  frameMetrics(f: FrameMetrics): MetricBadge[] {
+    const badges: MetricBadge[] = [
+      { icon: 'person', value: `${f.peopleCount}`, tier: 'neutral', title: 'People' },
+      { icon: 'pets', value: `${f.dogCount}`, tier: 'neutral', title: 'Dogs' },
+    ];
+    if (f.averageConfidence > 0) {
+      badges.push({
+        icon: 'verified',
+        value: this.pct(f.averageConfidence),
+        tier: this.confidenceTier(f.averageConfidence),
+        title: 'Confidence',
+      });
+    }
+    if (f.changedPct != null) {
+      badges.push({ icon: 'change_history', value: this.pct(f.changedPct), tier: 'neutral', title: 'Change' });
+    }
+    return badges;
   }
 
   /** Compact "time since last frame" badge, e.g. "3m", "5h", "1d 21h". */
@@ -359,6 +374,10 @@ export class CameraWallComponent implements OnInit, OnDestroy {
           state.brand = c.brand;
           state.imageUrl = c.imageUrl;
           state.lastSeenUtc = c.lastSeenUtc;
+          state.peopleCount = c.peopleCount;
+          state.dogCount = c.dogCount;
+          state.averageConfidence = c.averageConfidence;
+          state.changedPct = c.changedPct;
           return state;
         });
       },

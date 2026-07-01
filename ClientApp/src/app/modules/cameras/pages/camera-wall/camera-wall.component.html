@@ -81,15 +81,13 @@
               <span class="media-live"><span class="media-live-dot"></span>{{ 'cameras.live' | transloco }}</span>
             }
 
-            @if (cam.detections?.length) {
-              <div class="cell-detections">
-                @for (d of cam.detections; track d.label + d.confidence) {
-                  <span class="det-badge" [class]="'tier-' + detectionTier(d.confidence)" [title]="d.label">
-                    <mat-icon>{{ detectionIcon(d.label) }}</mat-icon>{{ detectionPct(d.confidence) }}
-                  </span>
-                }
-              </div>
-            }
+            <div class="cell-detections">
+              @for (m of frameMetrics(cam); track m.icon) {
+                <span class="det-badge" [class]="'tier-' + m.tier" [title]="m.title">
+                  <mat-icon>{{ m.icon }}</mat-icon>{{ m.value }}
+                </span>
+              }
+            </div>
 
             <div class="cell-label">
               <div class="cell-label-text">
@@ -169,11 +167,11 @@
             </div>
           </div>
 
-          @if (mainFrame(cam)?.detections?.length) {
+          @if (mainFrame(cam)) {
             <div class="card-foot detections">
-              @for (d of mainFrame(cam)!.detections; track d.label + d.confidence) {
-                <span class="det-badge" [class]="'tier-' + detectionTier(d.confidence)" [title]="d.label">
-                  <mat-icon>{{ detectionIcon(d.label) }}</mat-icon>{{ detectionPct(d.confidence) }}
+              @for (m of frameMetrics(mainFrame(cam)!); track m.icon) {
+                <span class="det-badge" [class]="'tier-' + m.tier" [title]="m.title">
+                  <mat-icon>{{ m.icon }}</mat-icon>{{ m.value }}
                 </span>
               }
             </div>
@@ -236,15 +234,13 @@
         } @else if (currentFrame) {
           <div class="stage-frame">
             <img [src]="currentFrame.imageUrl" [alt]="viewerCamera" />
-            @if (currentFrame.detections?.length) {
-              <div class="stage-detections">
-                @for (d of currentFrame.detections; track d.label + d.confidence) {
-                  <span class="det-badge" [class]="'tier-' + detectionTier(d.confidence)" [title]="d.label">
-                    <mat-icon>{{ detectionIcon(d.label) }}</mat-icon>{{ detectionPct(d.confidence) }}
-                  </span>
-                }
-              </div>
-            }
+            <div class="stage-detections">
+              @for (m of frameMetrics(currentFrame); track m.icon) {
+                <span class="det-badge" [class]="'tier-' + m.tier" [title]="m.title">
+                  <mat-icon>{{ m.icon }}</mat-icon>{{ m.value }}
+                </span>
+              }
+            </div>
           </div>
         } @else if (selectedDay) {
           <span class="archive-muted">{{ 'cameras.no_frames' | transloco }}</span>

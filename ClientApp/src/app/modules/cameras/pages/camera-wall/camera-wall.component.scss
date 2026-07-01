@@ -528,6 +528,7 @@
   &.tier-high { color: var(--accent); background: var(--accent-soft); border-color: var(--accent-ring); }
   &.tier-mid { color: #e0a106; background: rgba(224, 161, 6, 0.14); border-color: rgba(224, 161, 6, 0.4); }
   &.tier-low { color: #6ea8e0; background: rgba(110, 168, 224, 0.14); border-color: rgba(110, 168, 224, 0.4); }
+  &.tier-neutral { color: rgba(255, 255, 255, 0.82); background: rgba(255, 255, 255, 0.06); border-color: var(--hairline); }
 }
 
 .cell-detections {

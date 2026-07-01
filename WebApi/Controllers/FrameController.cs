@@ -1,6 +1,7 @@
 using System.Globalization;
 using System.Security.Cryptography;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -11,10 +12,6 @@ namespace API.Controllers
     [ApiController]
     public class FrameController : ControllerBase
     {
-        // One AI-detected object on a frame, e.g. { "label": "person", "confidence": 87 }.
-        // Confidence arrives as a 0-100 number (not a 0-1 fraction).
-        public sealed record Detection(string Label, int Confidence);
-
         private static readonly JsonSerializerOptions JsonOpts = new(JsonSerializerDefaults.Web);
 
         // Storage scheme: {FramesRoot}/{ip}/{yyyy-MM-dd}/{HH-mm-ss}.jpg
@@ -68,13 +65,18 @@ namespace API.Controllers
         //          An empty configured token means auth is OFF (dev mode) — no header required.
         //   Body : multipart/form-data
         //            ip         (text) → camera IPv4 "A.B.C.D" (e.g. 10.0.1.101); the identity key.
-        //            brand      (text) → camera brand/model free text, e.g. "hikvision DS-2CD2347G3".
+        //            brand      (text) → full camera model string "{Brand} {Model}", e.g.
+        //                       "UNV IPC3638SE-ADF40KMC-WP-I1". Stored in the sidecar as "cameraModel".
         //            image      (file) → JPEG. The client file name "yyyyMMdd_HHmmss.jpg" is ignored;
         //                       the authoritative capture time is the `timestamp` field.
         //            timestamp  (text) → ISO 8601 round-trip ("O") with offset, e.g.
         //                       "2026-07-01T14:23:05.1234567+02:00". REQUIRED, no receipt-time fallback.
-        //            detections (text, optional) → JSON array of AI detections for this frame, e.g.
-        //                       [{"label":"person","confidence":87},{"label":"dog","confidence":65}]
+        //            people_count       (text, optional) → int, count of "person" detections on this frame.
+        //            dog_count          (text, optional) → int, count of "dog" detections on this frame.
+        //            average_confidence (text, optional) → int 0-100, mean confidence across detections (0 if none).
+        //            changed_pct        (text, optional) → double, frame-diff/motion percentage. Absent today.
+        // The counts/confidence/changed_pct fields are best-effort — missing or unparseable values default
+        // to 0 (changed_pct → null) and never reject the upload; only ip, image and timestamp are required.
         // Stored at {FramesRoot}/{ip}/{yyyy-MM-dd}/{HH-mm-ss}.jpg using the timestamp's own wall-clock
         // components (its reported offset), collisions get a "_N" suffix and never overwrite. Metadata
         // is written alongside as a "{file}.meta.json" sidecar.
@@ -111,37 +113,34 @@ namespace API.Controllers
                 bytes = await ReadBody(src);
             if (bytes.Length == 0) return BadRequest("Файл image порожній");
 
-            var detections = ParseDetections(form["detections"].ToString());
+            // Best-effort aggregate detection fields — missing/unparseable never rejects the upload.
+            var peopleCount = ParseIntField(form["people_count"].ToString());
+            var dogCount = ParseIntField(form["dog_count"].ToString());
+            var averageConfidence = ParseDoubleField(form["average_confidence"].ToString()) ?? 0d;
+            var changedPct = ParseDoubleField(form["changed_pct"].ToString());
 
             // Дата/час беремо з власного «настінного» часу timestamp (у його ж offset), без конвертації.
             var date = dto.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
             var time = dto.ToString("HH-mm-ss", CultureInfo.InvariantCulture);
 
-            var saved = await StoreFrameAsync(ip, brand, rawTimestamp, date, time, bytes, detections);
+            var saved = await StoreFrameAsync(
+                ip, brand, rawTimestamp, date, time, bytes,
+                peopleCount, dogCount, averageConfidence, changedPct);
 
             _logger.LogInformation(
-                "CameraWall: прийнято кадр — ip {Ip}, бренд {Brand}, розмір {Bytes} Б, детекцій {Detections} → {Saved}",
-                ip, brand, bytes.Length, detections.Count, saved);
+                "CameraWall: прийнято кадр — ip {Ip}, модель {Brand}, розмір {Bytes} Б, людей {People}, собак {Dogs} → {Saved}",
+                ip, brand, bytes.Length, peopleCount, dogCount, saved);
 
             return Ok(new { status = "ok", path = saved });
         }
 
-        // Parses the optional "detections" form field: a JSON array like
-        // [{"label":"person","confidence":87}]. Missing/blank/invalid JSON → empty list (best-effort;
-        // detections are supplementary metadata, never a reason to reject the frame upload).
-        private List<Detection> ParseDetections(string? raw)
-        {
-            if (string.IsNullOrWhiteSpace(raw)) return new List<Detection>();
-            try
-            {
-                return JsonSerializer.Deserialize<List<Detection>>(raw, JsonOpts) ?? new List<Detection>();
-            }
-            catch (JsonException)
-            {
-                _logger.LogWarning("CameraWall: невалідний JSON у полі detections: {Raw}", raw);
-                return new List<Detection>();
-            }
-        }
+        // Best-effort int form-field parse: missing/blank/invalid → 0.
+        private static int ParseIntField(string? raw) =>
+            int.TryParse(raw?.Trim(), NumberStyles.Integer, CultureInfo.InvariantCulture, out var v) ? v : 0;
+
+        // Best-effort double form-field parse: missing/blank/invalid → null.
+        private static double? ParseDoubleField(string? raw) =>
+            double.TryParse(raw?.Trim(), NumberStyles.Float, CultureInfo.InvariantCulture, out var v) ? v : null;
 
         // Validates the Authorization: Bearer <token> header against CameraWall:UploadToken in
         // constant time. An empty configured token means auth is OFF (dev mode) → allow everything.
@@ -173,11 +172,17 @@ namespace API.Controllers
         }
 
         // Metadata sidecar payload, written next to each frame as "{file}.meta.json".
+        // Serialized with the Web (camelCase) policy; [JsonPropertyName] pins the snake_case keys the
+        // spec requires. User-facing keys: dogs_count, people_count, average_confidence, timestamp,
+        // cameraModel, changed_pct. Ip/ImageFile/SizeBytes/ReceivedAt are internal bookkeeping.
         private sealed record FrameMeta(
             string Ip,
-            string Brand,
+            [property: JsonPropertyName("cameraModel")] string CameraModel,
             string Timestamp,
-            List<Detection> Detections,
+            [property: JsonPropertyName("people_count")] int PeopleCount,
+            [property: JsonPropertyName("dogs_count")] int DogsCount,
+            [property: JsonPropertyName("average_confidence")] double AverageConfidence,
+            [property: JsonPropertyName("changed_pct")] double? ChangedPct,
             string ImageFile,
             long SizeBytes,
             string ReceivedAt);
@@ -186,8 +191,8 @@ namespace API.Controllers
         // capture time "HH-mm-ss.jpg"; a same-second collision gets a "_N" suffix (starting at _2) so an
         // existing frame is never overwritten. Returns the saved relative path "{ip}/{date}/{file}".
         private async Task<string> StoreFrameAsync(
-            string ip, string brand, string rawTimestamp, string date, string time,
-            byte[] bytes, List<Detection> detections)
+            string ip, string cameraModel, string rawTimestamp, string date, string time,
+            byte[] bytes, int peopleCount, int dogCount, double averageConfidence, double? changedPct)
         {
             var dayFolder = Path.Combine(GetFramesRoot(), ip, date);
             Directory.CreateDirectory(dayFolder);
@@ -219,9 +224,12 @@ namespace API.Controllers
             // Sidecar пишемо лише після того, як .jpg опинився на місці (як і раніше).
             var meta = new FrameMeta(
                 Ip: ip,
-                Brand: brand,
+                CameraModel: cameraModel,
                 Timestamp: rawTimestamp,
-                Detections: detections,
+                PeopleCount: peopleCount,
+                DogsCount: dogCount,
+                AverageConfidence: averageConfidence,
+                ChangedPct: changedPct,
                 ImageFile: fileName,
                 SizeBytes: bytes.Length,
                 ReceivedAt: DateTime.UtcNow.ToString("O", CultureInfo.InvariantCulture));
@@ -234,24 +242,25 @@ namespace API.Controllers
             return $"{ip}/{date}/{fileName}";
         }
 
-        // Reads back the "{file}.meta.json" sidecar for a stored frame. Returns the camera brand (null
-        // if absent/unreadable) and the detections list (empty if absent/unreadable). Best-effort — a
-        // missing or corrupt sidecar never throws.
-        private (string? brand, List<Detection> detections) ReadMeta(string ip, string day, string file)
+        // Reads back the "{file}.meta.json" sidecar for a stored frame. Returns the camera model (null
+        // if absent/unreadable) and the aggregate per-frame detection fields (0 counts / 0 confidence /
+        // null changed_pct if absent/unreadable). Best-effort — a missing or corrupt sidecar never throws.
+        private (string? cameraModel, int peopleCount, int dogCount, double averageConfidence, double? changedPct)
+            ReadMeta(string ip, string day, string file)
         {
             var metaPath = Path.Combine(GetFramesRoot(), ip, day, file + ".meta.json");
-            if (!System.IO.File.Exists(metaPath)) return (null, new List<Detection>());
+            if (!System.IO.File.Exists(metaPath)) return (null, 0, 0, 0d, null);
             try
             {
                 var json = System.IO.File.ReadAllText(metaPath);
                 var meta = JsonSerializer.Deserialize<FrameMeta>(json, JsonOpts);
-                if (meta is null) return (null, new List<Detection>());
-                var brand = string.IsNullOrWhiteSpace(meta.Brand) ? null : meta.Brand;
-                return (brand, meta.Detections ?? new List<Detection>());
+                if (meta is null) return (null, 0, 0, 0d, null);
+                var cameraModel = string.IsNullOrWhiteSpace(meta.CameraModel) ? null : meta.CameraModel;
+                return (cameraModel, meta.PeopleCount, meta.DogsCount, meta.AverageConfidence, meta.ChangedPct);
             }
             catch (JsonException)
             {
-                return (null, new List<Detection>());
+                return (null, 0, 0, 0d, null);
             }
         }
 
@@ -282,8 +291,11 @@ namespace API.Controllers
                             return new {
                                 imageUrl = FrameUrl(ip, r.day, r.file),
                                 timeUtc = ParseFrameTime(r.day, r.file),
-                                brand = meta.brand,
-                                detections = meta.detections,
+                                brand = meta.cameraModel,
+                                peopleCount = meta.peopleCount,
+                                dogCount = meta.dogCount,
+                                averageConfidence = meta.averageConfidence,
+                                changedPct = meta.changedPct,
                             };
                         })
                         .ToList();
@@ -318,14 +330,20 @@ namespace API.Controllers
                     string? imageUrl = null;
                     DateTime? lastSeenUtc = null;
                     string? brand = null;
-                    List<Detection> detections = new();
+                    int peopleCount = 0;
+                    int dogCount = 0;
+                    double averageConfidence = 0d;
+                    double? changedPct = null;
                     if (recent.Count > 0)
                     {
                         imageUrl = FrameUrl(ip, recent[0].day, recent[0].file);
                         lastSeenUtc = ParseFrameTime(recent[0].day, recent[0].file);
                         var meta = ReadMeta(ip, recent[0].day, recent[0].file);
-                        brand = meta.brand;
-                        detections = meta.detections;
+                        brand = meta.cameraModel;
+                        peopleCount = meta.peopleCount;
+                        dogCount = meta.dogCount;
+                        averageConfidence = meta.averageConfidence;
+                        changedPct = meta.changedPct;
                     }
 
                     return new {
@@ -334,7 +352,10 @@ namespace API.Controllers
                         imageUrl,
                         lastSeenUtc,
                         brand,
-                        detections,
+                        peopleCount,
+                        dogCount,
+                        averageConfidence,
+                        changedPct,
                     };
                 })
                 .OrderBy(x => x.ip, IpComparer)
@@ -389,8 +410,11 @@ namespace API.Controllers
                         file = name,
                         timeUtc = ParseFrameTime(day, name!),
                         imageUrl = FrameUrl(ip, day, name!),
-                        brand = meta.brand,
-                        detections = meta.detections,
+                        brand = meta.cameraModel,
+                        peopleCount = meta.peopleCount,
+                        dogCount = meta.dogCount,
+                        averageConfidence = meta.averageConfidence,
+                        changedPct = meta.changedPct,
                     };
                 })
                 .ToList();
