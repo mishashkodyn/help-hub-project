@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { TranslocoService } from '@ngneat/transloco';
+import { AuthService } from '../../../../api/services/auth.service';
 
 /** One archive cleanup record reported by the backend (newest first). */
 interface CleanupEvent {
@@ -82,6 +83,11 @@ interface LiveCameraState extends FrameMetrics {
 
 type ViewMode = 'cards' | 'live';
 
+/** Minimal shape of a File System Access API file handle (showSaveFilePicker result). */
+interface FsFileHandle {
+  createWritable(): Promise<WritableStream>;
+}
+
 interface ArchiveDay {
   day: string;
   count: number;
@@ -150,7 +156,11 @@ export class CameraWallComponent implements OnInit, OnDestroy {
   // app-wide language is saved here and restored when leaving the page.
   private prevLang: string | null = null;
 
-  constructor(private http: HttpClient, private transloco: TranslocoService) {}
+  constructor(
+    private http: HttpClient,
+    private transloco: TranslocoService,
+    private auth: AuthService,
+  ) {}
 
   ngOnInit(): void {
     this.prevLang = this.transloco.getActiveLang();
@@ -454,63 +464,79 @@ export class CameraWallComponent implements OnInit, OnDestroy {
   // operator choose *where* on their PC to save it. Chrome/Edge get a real "Save as…" dialog via
   // the File System Access API (showSaveFilePicker); other browsers fall back to the Downloads
   // folder (or the browser's own Save-As prompt). Admin-only, gated by `storageAvailable`.
+  //
+  // The save dialog is opened *before* the network request, on the click's own user gesture — the
+  // File System Access API rejects showSaveFilePicker if called after the gesture has expired
+  // (which is exactly what happens once a multi-second download has finished). We then stream the
+  // ZIP straight into the chosen file, so even a large "all cameras" archive never buffers in RAM.
   downloadingIp: string | null = null; // ip currently exporting ('*' = the whole wall)
   downloadNote: string | null = null;   // 'error' → a short failure hint in the UI
 
   // Export every camera's frames (folders 10.0.1.101–105 …) as one ZIP.
   downloadAllFrames(): void {
     const stamp = new Date().toISOString().slice(0, 10);
-    this.exportZip('/api/frames/download', `camera-frames-${stamp}.zip`, '*');
+    void this.exportZip('/api/frames/download', `camera-frames-${stamp}.zip`, '*');
   }
 
   // Export a single camera's frames as a ZIP.
   downloadCamera(ip: string): void {
-    this.exportZip(`/api/frames/${ip}/download`, `camera-${ip}.zip`, ip);
+    void this.exportZip(`/api/frames/${ip}/download`, `camera-${ip}.zip`, ip);
   }
 
-  private exportZip(url: string, suggestedName: string, key: string): void {
+  private async exportZip(url: string, suggestedName: string, key: string): Promise<void> {
     if (this.downloadingIp) return; // one export at a time
-    this.downloadingIp = key;
-    this.downloadNote = null;
-    // HttpClient goes through the JWT interceptor, so the admin-only endpoint is authenticated.
-    this.http.get(url, { responseType: 'blob' }).subscribe({
-      next: blob => { this.saveBlob(blob, suggestedName); this.downloadingIp = null; },
-      error: () => { this.downloadNote = 'error'; this.downloadingIp = null; },
-    });
-  }
 
-  private async saveBlob(blob: Blob, suggestedName: string): Promise<void> {
+    // 1) Ask where to save FIRST — while the click's user activation is still valid.
     const picker = (window as unknown as {
-      showSaveFilePicker?: (opts: unknown) => Promise<{
-        createWritable: () => Promise<{ write: (b: Blob) => Promise<void>; close: () => Promise<void> }>;
-      }>;
+      showSaveFilePicker?: (opts: unknown) => Promise<FsFileHandle>;
     }).showSaveFilePicker;
 
-    // Preferred path: let the user pick the exact folder + file name on their PC.
+    let handle: FsFileHandle | null = null;
     if (picker) {
       try {
-        const handle = await picker({
+        handle = await picker({
           suggestedName,
           types: [{ description: 'ZIP archive', accept: { 'application/zip': ['.zip'] } }],
         });
-        const writable = await handle.createWritable();
-        await writable.write(blob);
-        await writable.close();
-        return;
       } catch (err) {
-        // User dismissed the dialog — treat as a cancel, don't fall back to an auto-download.
+        // User dismissed the picker → cancel the whole export.
         if (err instanceof DOMException && err.name === 'AbortError') return;
-        // Anything else (e.g. API unavailable) → fall through to the anchor download below.
+        handle = null; // API failed/unavailable → fall back to a browser download below.
       }
     }
 
-    // Fallback: hand the blob to the browser's download flow (Downloads or its own Save-As prompt).
-    const objectUrl = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = objectUrl;
-    a.download = suggestedName;
-    a.click();
-    setTimeout(() => URL.revokeObjectURL(objectUrl), 1000);
+    // 2) Fetch the archive (can take a while) and write it out. Plain fetch + the bearer token so
+    //    the response body can be streamed to disk; HttpClient would buffer the whole blob first.
+    this.downloadingIp = key;
+    this.downloadNote = null;
+    try {
+      const token = this.auth.getAccessToken;
+      const resp = await fetch(url, {
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
+      });
+      if (!resp.ok || !resp.body) throw new Error(`HTTP ${resp.status}`);
+
+      if (handle) {
+        // Stream straight into the user-chosen file — no full-archive buffer in memory.
+        const writable = await handle.createWritable();
+        await resp.body.pipeTo(writable);
+      } else {
+        // Fallback (no File System Access API): buffer then hand off to the browser download flow.
+        const blob = await resp.blob();
+        const objectUrl = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = objectUrl;
+        a.download = suggestedName;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        setTimeout(() => URL.revokeObjectURL(objectUrl), 1000);
+      }
+    } catch {
+      this.downloadNote = 'error';
+    } finally {
+      this.downloadingIp = null;
+    }
   }
 
   get currentFrame(): ArchiveFrame | null {
