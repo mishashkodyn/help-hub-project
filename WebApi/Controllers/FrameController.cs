@@ -610,6 +610,12 @@ namespace API.Controllers
         // JPEG уже стиснені → CompressionLevel.NoCompression економить CPU без втрати розміру.
         private async Task StreamZipAsync(string downloadName, IReadOnlyList<string> ips)
         {
+            // ZipArchive writes to the underlying stream synchronously (notably the central directory
+            // on dispose). Kestrel forbids sync IO on Response.Body by default, so allow it here or the
+            // whole download fails with "Synchronous operations are disallowed" (HTTP 500).
+            var bodyControl = HttpContext.Features.Get<Microsoft.AspNetCore.Http.Features.IHttpBodyControlFeature>();
+            if (bodyControl is not null) bodyControl.AllowSynchronousIO = true;
+
             Response.ContentType = "application/zip";
             Response.Headers.ContentDisposition = $"attachment; filename=\"{downloadName}\"";
 
