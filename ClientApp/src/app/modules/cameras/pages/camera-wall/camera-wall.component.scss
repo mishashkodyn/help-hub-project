@@ -355,6 +355,34 @@
   text-overflow: ellipsis;
 }
 
+.card-head-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+/* per-camera export button on each card (shares the download/spin affordance) */
+.card-dl-btn {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--hairline);
+  border-radius: 8px;
+  color: var(--text-dim);
+  cursor: pointer;
+  transition: color 0.15s ease, background 0.15s ease;
+
+  &:hover:not(:disabled) { color: #fff; background: rgba(255, 255, 255, 0.12); }
+  &:disabled { cursor: default; opacity: 0.7; }
+
+  mat-icon { font-size: 17px; width: 17px; height: 17px; }
+}
+
+.card-dl-btn:disabled mat-icon { animation: cam-spin 0.9s linear infinite; }
+
 .card-age {
   flex-shrink: 0;
   padding: 2px 9px;

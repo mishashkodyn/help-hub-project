@@ -128,7 +128,19 @@
                 <span class="card-brand">{{ cam.brand }}</span>
               }
             </div>
-            <span class="card-age" [class.live]="isLive(cam)">{{ ageBadge(cam) }}</span>
+            <div class="card-head-actions">
+              @if (storageAvailable) {
+                <button
+                  type="button"
+                  class="card-dl-btn"
+                  [disabled]="downloadingIp !== null"
+                  (click)="$event.stopPropagation(); downloadCamera(cam.ip)"
+                  [title]="'cameras.export.camera' | transloco">
+                  <mat-icon>{{ downloadingIp === cam.ip ? 'autorenew' : 'download' }}</mat-icon>
+                </button>
+              }
+              <span class="card-age" [class.live]="isLive(cam)">{{ ageBadge(cam) }}</span>
+            </div>
           </div>
 
           <div class="card-media">
