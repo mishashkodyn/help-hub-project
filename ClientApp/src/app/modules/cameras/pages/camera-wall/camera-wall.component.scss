@@ -170,6 +170,35 @@
   mat-icon { font-size: 20px; width: 20px; height: 20px; transition: transform 0.3s ease; }
 }
 
+/* export-to-PC button (header + archive viewer share the download/spin affordance) */
+.cam-export-btn {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--hairline);
+  border-radius: 10px;
+  color: var(--text-dim);
+  cursor: pointer;
+  transition: color 0.15s ease, background 0.15s ease;
+
+  &:hover:not(:disabled) { color: #fff; background: rgba(255, 255, 255, 0.1); }
+  &:disabled { cursor: default; opacity: 0.7; }
+
+  mat-icon { font-size: 20px; width: 20px; height: 20px; }
+}
+
+/* spinning download icon while a ZIP is being fetched */
+.cam-export-btn:disabled mat-icon,
+.storage-icon-btn:disabled mat-icon {
+  animation: cam-spin 0.9s linear infinite;
+}
+
+@keyframes cam-spin {
+  to { transform: rotate(360deg); }
+}
+
 /* ── wall grid ───────────────────────────────────────────────────── */
 .camera-wall {
   flex: 1;

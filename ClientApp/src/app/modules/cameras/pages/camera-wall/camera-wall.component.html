@@ -23,6 +23,17 @@
         </button>
       }
 
+      @if (storageAvailable) {
+        <button
+          type="button"
+          class="cam-export-btn"
+          [disabled]="downloadingIp !== null"
+          (click)="downloadAllFrames()"
+          [title]="'cameras.export.all' | transloco">
+          <mat-icon>{{ downloadingIp === '*' ? 'autorenew' : 'download' }}</mat-icon>
+        </button>
+      }
+
       <span class="cam-clock"><mat-icon>schedule</mat-icon>{{ clock }}</span>
 
       <div class="view-toggle">
@@ -195,6 +206,14 @@
         </span>
         <div class="storage-header-actions">
           @if (storageAvailable) {
+            <button
+              type="button"
+              class="storage-icon-btn"
+              [disabled]="downloadingIp !== null"
+              (click)="downloadCamera(viewerCamera!)"
+              [title]="'cameras.export.camera' | transloco">
+              <mat-icon>{{ downloadingIp === viewerCamera ? 'autorenew' : 'download' }}</mat-icon>
+            </button>
             <button
               type="button"
               class="storage-icon-btn"

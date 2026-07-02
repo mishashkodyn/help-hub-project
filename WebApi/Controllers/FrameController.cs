@@ -1,4 +1,5 @@
 using System.Globalization;
+using System.IO.Compression;
 using System.Security.Cryptography;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -568,6 +569,90 @@ namespace API.Controllers
                 deletedFrames = ev?.DeletedFrames ?? 0,
                 freedBytes = ev?.FreedBytes ?? 0,
             });
+        }
+
+        // GET /api/frames/{ip}/download → ZIP усіх кадрів ОДНІЄЇ камери (jpg + сайдкари),
+        // збережених у структурі {day}/{file}. Лише для адміністраторів. Стрімимо архів прямо
+        // у відповідь (без буферизації в пам'ять), тож великий архів не з'їдає RAM.
+        [Authorize(Roles = "Superadmin,Admin")]
+        [HttpGet("{ip}/download")]
+        public async Task<IActionResult> DownloadCamera(string ip)
+        {
+            if (!IsEnabled()) return NotFound();
+            if (!IpPattern.IsMatch(ip)) return NotFound();
+
+            var camFolder = Path.Combine(GetFramesRoot(), ip);
+            if (!Directory.Exists(camFolder) || !HasAnyFrame(ip))
+                return NotFound("Кадрів для цієї камери не знайдено");
+
+            await StreamZipAsync($"camera-{ip}.zip", new[] { ip });
+            return new EmptyResult();
+        }
+
+        // GET /api/frames/download → ZIP кадрів усіх камер (папки 10.0.1.101–105 тощо) у структурі
+        // {ip}/{day}/{file}. Лише для адміністраторів. Один архів для «вивантажити все».
+        [Authorize(Roles = "Superadmin,Admin")]
+        [HttpGet("download")]
+        public async Task<IActionResult> DownloadAll()
+        {
+            if (!IsEnabled()) return NotFound();
+
+            var ips = CameraIps();
+            if (ips.Count == 0) return NotFound("Кадрів ще немає");
+
+            var stamp = DateTime.Now.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+            await StreamZipAsync($"camera-frames-{stamp}.zip", ips);
+            return new EmptyResult();
+        }
+
+        // Стрімить ZIP-архів кадрів указаних камер прямо у тіло відповіді. Записи іменуються
+        // "{ip}/{day}/{file}" (для однієї камери префікс {ip} теж лишаємо — так архіви узгоджені).
+        // JPEG уже стиснені → CompressionLevel.NoCompression економить CPU без втрати розміру.
+        private async Task StreamZipAsync(string downloadName, IReadOnlyList<string> ips)
+        {
+            Response.ContentType = "application/zip";
+            Response.Headers.ContentDisposition = $"attachment; filename=\"{downloadName}\"";
+
+            var root = GetFramesRoot();
+            using var archive = new ZipArchive(Response.Body, ZipArchiveMode.Create, leaveOpen: true);
+
+            foreach (var ip in ips)
+            {
+                var camFolder = Path.Combine(root, ip);
+                if (!Directory.Exists(camFolder)) continue;
+
+                var days = Directory.EnumerateDirectories(camFolder)
+                    .Select(d => Path.GetFileName(d)!)
+                    .Where(n => DayPattern.IsMatch(n))
+                    .OrderBy(n => n, StringComparer.Ordinal);
+
+                foreach (var day in days)
+                {
+                    var dayFolder = Path.Combine(camFolder, day);
+                    var files = Directory.EnumerateFiles(dayFolder, "*.jpg")
+                        .Select(Path.GetFileName)
+                        .Where(n => n != null && FilePattern.IsMatch(n))
+                        .OrderBy(n => n, StringComparer.Ordinal);
+
+                    foreach (var file in files)
+                    {
+                        var framePath = Path.Combine(dayFolder, file!);
+                        var entryName = $"{ip}/{day}/{file}";
+                        try
+                        {
+                            var entry = archive.CreateEntry(entryName, CompressionLevel.NoCompression);
+                            await using var es = entry.Open();
+                            await using var fs = new FileStream(framePath, FileMode.Open, FileAccess.Read,
+                                FileShare.ReadWrite | FileShare.Delete, bufferSize: 81920, useAsync: true);
+                            await fs.CopyToAsync(es);
+                        }
+                        catch (IOException)
+                        {
+                            // Кадр міг бути видалений/зайнятий під час архівації — пропускаємо його.
+                        }
+                    }
+                }
+            }
         }
 
         // ── camera discovery ──────────────────────────────────────────────

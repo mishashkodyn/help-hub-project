@@ -449,6 +449,70 @@ export class CameraWallComponent implements OnInit, OnDestroy {
     });
   }
 
+  // ── export frames to the operator's PC ────────────────────────────
+  // The backend zips the requested camera folder(s) and streams the archive; here we let the
+  // operator choose *where* on their PC to save it. Chrome/Edge get a real "Save as…" dialog via
+  // the File System Access API (showSaveFilePicker); other browsers fall back to the Downloads
+  // folder (or the browser's own Save-As prompt). Admin-only, gated by `storageAvailable`.
+  downloadingIp: string | null = null; // ip currently exporting ('*' = the whole wall)
+  downloadNote: string | null = null;   // 'error' → a short failure hint in the UI
+
+  // Export every camera's frames (folders 10.0.1.101–105 …) as one ZIP.
+  downloadAllFrames(): void {
+    const stamp = new Date().toISOString().slice(0, 10);
+    this.exportZip('/api/frames/download', `camera-frames-${stamp}.zip`, '*');
+  }
+
+  // Export a single camera's frames as a ZIP.
+  downloadCamera(ip: string): void {
+    this.exportZip(`/api/frames/${ip}/download`, `camera-${ip}.zip`, ip);
+  }
+
+  private exportZip(url: string, suggestedName: string, key: string): void {
+    if (this.downloadingIp) return; // one export at a time
+    this.downloadingIp = key;
+    this.downloadNote = null;
+    // HttpClient goes through the JWT interceptor, so the admin-only endpoint is authenticated.
+    this.http.get(url, { responseType: 'blob' }).subscribe({
+      next: blob => { this.saveBlob(blob, suggestedName); this.downloadingIp = null; },
+      error: () => { this.downloadNote = 'error'; this.downloadingIp = null; },
+    });
+  }
+
+  private async saveBlob(blob: Blob, suggestedName: string): Promise<void> {
+    const picker = (window as unknown as {
+      showSaveFilePicker?: (opts: unknown) => Promise<{
+        createWritable: () => Promise<{ write: (b: Blob) => Promise<void>; close: () => Promise<void> }>;
+      }>;
+    }).showSaveFilePicker;
+
+    // Preferred path: let the user pick the exact folder + file name on their PC.
+    if (picker) {
+      try {
+        const handle = await picker({
+          suggestedName,
+          types: [{ description: 'ZIP archive', accept: { 'application/zip': ['.zip'] } }],
+        });
+        const writable = await handle.createWritable();
+        await writable.write(blob);
+        await writable.close();
+        return;
+      } catch (err) {
+        // User dismissed the dialog — treat as a cancel, don't fall back to an auto-download.
+        if (err instanceof DOMException && err.name === 'AbortError') return;
+        // Anything else (e.g. API unavailable) → fall through to the anchor download below.
+      }
+    }
+
+    // Fallback: hand the blob to the browser's download flow (Downloads or its own Save-As prompt).
+    const objectUrl = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = objectUrl;
+    a.download = suggestedName;
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(objectUrl), 1000);
+  }
+
   get currentFrame(): ArchiveFrame | null {
     return this.frames[this.frameIndex] ?? null;
   }
