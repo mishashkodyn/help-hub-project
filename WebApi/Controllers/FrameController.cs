@@ -20,6 +20,10 @@ namespace API.Controllers
         //   date → capture day "yyyy-MM-dd" (derived from the timestamp field)
         //   file → capture time "HH-mm-ss.jpg" (a same-second collision gets a "_N" suffix)
         // Detections/metadata live in a "{file}.meta.json" sidecar (double extension).
+        // The unannotated original (no boxes) lives in a "{file}.raw.jpeg" companion. Its ".jpeg"
+        // tail keeps it out of every "*.jpg" enumeration (frame counts, quota) just like ".meta.json".
+        private const string RawSuffix = ".raw.jpeg";
+
         private static readonly Regex IpPattern = new(
             @"^(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}$",
             RegexOptions.Compiled);
@@ -114,6 +118,17 @@ namespace API.Controllers
                 bytes = await ReadBody(src);
             if (bytes.Length == 0) return BadRequest("Файл image порожній");
 
+            // Optional "image_raw" companion — the untouched original (no detection boxes). Best-effort:
+            // a missing or empty raw copy never rejects the upload.
+            byte[]? rawBytes = null;
+            var rawFile = form.Files["image_raw"];
+            if (rawFile is { Length: > 0 })
+            {
+                await using var rawSrc = rawFile.OpenReadStream();
+                rawBytes = await ReadBody(rawSrc);
+                if (rawBytes.Length == 0) rawBytes = null;
+            }
+
             // Best-effort aggregate detection fields — missing/unparseable never rejects the upload.
             var peopleCount = ParseIntField(form["people_count"].ToString());
             var dogCount = ParseIntField(form["dog_count"].ToString());
@@ -125,7 +140,7 @@ namespace API.Controllers
             var time = dto.ToString("HH-mm-ss", CultureInfo.InvariantCulture);
 
             var saved = await StoreFrameAsync(
-                ip, brand, rawTimestamp, date, time, bytes,
+                ip, brand, rawTimestamp, date, time, bytes, rawBytes,
                 peopleCount, dogCount, averageConfidence, changedPct);
 
             _logger.LogInformation(
@@ -193,7 +208,7 @@ namespace API.Controllers
         // existing frame is never overwritten. Returns the saved relative path "{ip}/{date}/{file}".
         private async Task<string> StoreFrameAsync(
             string ip, string cameraModel, string rawTimestamp, string date, string time,
-            byte[] bytes, int peopleCount, int dogCount, double averageConfidence, double? changedPct)
+            byte[] bytes, byte[]? rawBytes, int peopleCount, int dogCount, double averageConfidence, double? changedPct)
         {
             var dayFolder = Path.Combine(GetFramesRoot(), ip, date);
             Directory.CreateDirectory(dayFolder);
@@ -220,6 +235,14 @@ namespace API.Controllers
                 {
                     fileName = $"{time}_{n}.jpg"; // name taken — try the next suffix
                 }
+            }
+
+            // Оригінал без рамок (за наявності) кладемо поряд як "{file}.raw.jpeg" — тільки після того,
+            // як анотований .jpg опинився на місці, тож ім'я (з можливим суфіксом "_N") уже стале.
+            if (rawBytes is { Length: > 0 })
+            {
+                var rawPath = Path.Combine(dayFolder, fileName + RawSuffix);
+                await System.IO.File.WriteAllBytesAsync(rawPath, rawBytes);
             }
 
             // Sidecar пишемо лише після того, як .jpg опинився на місці (як і раніше).
@@ -265,16 +288,41 @@ namespace API.Controllers
             }
         }
 
-        // Deletes the "{file}.meta.json" sidecar next to a frame being purged, if one exists.
-        private static void DeleteSidecarJson(string jpgPath)
+        // Deletes the companions written next to a frame — the "{file}.meta.json" sidecar and the
+        // "{file}.raw.jpeg" original — when the frame itself is purged, so neither is orphaned.
+        private static void DeleteCompanions(string jpgPath)
+        {
+            TryDeleteFile(jpgPath + ".meta.json");
+            TryDeleteFile(jpgPath + RawSuffix);
+        }
+
+        private static void TryDeleteFile(string path)
         {
             try
             {
-                var metaPath = jpgPath + ".meta.json";
-                if (System.IO.File.Exists(metaPath)) System.IO.File.Delete(metaPath);
+                if (System.IO.File.Exists(path)) System.IO.File.Delete(path);
             }
-            catch { /* best-effort — a leftover sidecar is harmless */ }
+            catch { /* best-effort — a leftover companion is harmless */ }
         }
+
+        // Size of a frame's "{file}.raw.jpeg" original companion (0 if none). Raw copies live outside
+        // the "*.jpg" enumerations, so disk-usage/quota math must add them back explicitly.
+        private static long RawCompanionBytes(string jpgFullPath)
+        {
+            try
+            {
+                var rawPath = jpgFullPath + RawSuffix;
+                return System.IO.File.Exists(rawPath) ? new FileInfo(rawPath).Length : 0;
+            }
+            catch { return 0; }
+        }
+
+        // True when a frame has an unannotated "{file}.raw.jpeg" original stored alongside it.
+        private bool RawExists(string ip, string day, string file) =>
+            System.IO.File.Exists(Path.Combine(GetFramesRoot(), ip, day, file + RawSuffix));
+
+        private static string RawFrameUrl(string ip, string day, string file) =>
+            $"/api/frames/{ip}/{day}/{file}/raw";
 
         // GET /api/frames/cameras → every camera (an IP folder) with its recent frames and counts.
         [HttpGet("cameras")]
@@ -291,6 +339,7 @@ namespace API.Controllers
                             var meta = ReadMeta(ip, r.day, r.file);
                             return new {
                                 imageUrl = FrameUrl(ip, r.day, r.file),
+                                rawImageUrl = RawExists(ip, r.day, r.file) ? RawFrameUrl(ip, r.day, r.file) : null,
                                 timeUtc = ParseFrameTime(r.day, r.file),
                                 brand = meta.cameraModel,
                                 peopleCount = meta.peopleCount,
@@ -329,6 +378,7 @@ namespace API.Controllers
                 {
                     var recent = RecentFrameFiles(ip, 1);
                     string? imageUrl = null;
+                    string? rawImageUrl = null;
                     DateTime? lastSeenUtc = null;
                     string? brand = null;
                     int peopleCount = 0;
@@ -338,6 +388,8 @@ namespace API.Controllers
                     if (recent.Count > 0)
                     {
                         imageUrl = FrameUrl(ip, recent[0].day, recent[0].file);
+                        rawImageUrl = RawExists(ip, recent[0].day, recent[0].file)
+                            ? RawFrameUrl(ip, recent[0].day, recent[0].file) : null;
                         lastSeenUtc = ParseFrameTime(recent[0].day, recent[0].file);
                         var meta = ReadMeta(ip, recent[0].day, recent[0].file);
                         brand = meta.cameraModel;
@@ -351,6 +403,7 @@ namespace API.Controllers
                         ip,
                         name = ip,
                         imageUrl,
+                        rawImageUrl,
                         lastSeenUtc,
                         brand,
                         peopleCount,
@@ -411,6 +464,7 @@ namespace API.Controllers
                         file = name,
                         timeUtc = ParseFrameTime(day, name!),
                         imageUrl = FrameUrl(ip, day, name!),
+                        rawImageUrl = RawExists(ip, day, name!) ? RawFrameUrl(ip, day, name!) : null,
                         brand = meta.cameraModel,
                         peopleCount = meta.peopleCount,
                         dogCount = meta.dogCount,
@@ -436,6 +490,20 @@ namespace API.Controllers
             return await ServeImage(path, "Кадр не знайдено");
         }
 
+        // GET /api/frames/{ip}/{day}/{file}/raw → the unannotated original (no boxes) of a frame,
+        // stored as "{file}.raw.jpeg". 404 when the frame has no raw companion (older frames, or an
+        // agent that didn't send one).
+        [HttpGet("{ip}/{day}/{file}/raw")]
+        public async Task<IActionResult> RawFrame(string ip, string day, string file)
+        {
+            if (!IsEnabled()) return NotFound();
+            if (!IpPattern.IsMatch(ip) || !DayPattern.IsMatch(day) || !FilePattern.IsMatch(file))
+                return NotFound();
+
+            var path = Path.Combine(GetFramesRoot(), ip, day, file + RawSuffix);
+            return await ServeImage(path, "Оригінал кадру не знайдено");
+        }
+
         // GET /api/frames/storage → disk usage of the frame store + retention estimate (admin dashboard).
         [Authorize(Roles = "Superadmin,Admin")]
         [HttpGet("storage")]
@@ -455,7 +523,8 @@ namespace API.Controllers
             {
                 foreach (var f in new DirectoryInfo(root).EnumerateFiles("*.jpg", SearchOption.AllDirectories))
                 {
-                    usedBytes += f.Length;
+                    // A frame counts once, but its raw original adds to disk usage.
+                    usedBytes += f.Length + RawCompanionBytes(f.FullName);
                     frameCount++;
                     var w = f.LastWriteTimeUtc;
                     if (oldestUtc is null || w < oldestUtc) oldestUtc = w;
@@ -656,6 +725,25 @@ namespace API.Controllers
                         {
                             // Кадр міг бути видалений/зайнятий під час архівації — пропускаємо його.
                         }
+
+                        // Оригінал без рамок (за наявності) — поряд у ZIP як "{stem}.raw.jpeg".
+                        var rawPath = framePath + RawSuffix;
+                        if (System.IO.File.Exists(rawPath))
+                        {
+                            var rawEntryName = $"{ip}/{day}/{Path.GetFileNameWithoutExtension(file)}.raw.jpeg";
+                            try
+                            {
+                                var rawEntry = archive.CreateEntry(rawEntryName, CompressionLevel.NoCompression);
+                                await using var res = rawEntry.Open();
+                                await using var rfs = new FileStream(rawPath, FileMode.Open, FileAccess.Read,
+                                    FileShare.ReadWrite | FileShare.Delete, bufferSize: 81920, useAsync: true);
+                                await rfs.CopyToAsync(res);
+                            }
+                            catch (IOException)
+                            {
+                                // Оригінал міг зникнути під час архівації — пропускаємо.
+                            }
+                        }
                     }
                 }
             }
@@ -852,7 +940,7 @@ namespace API.Controllers
                 .EnumerateFiles("*.jpg", SearchOption.AllDirectories)
                 .ToList();
 
-            long total = files.Sum(f => f.Length);
+            long total = files.Sum(f => f.Length + RawCompanionBytes(f.FullName));
             if (gateBytes > 0 && total <= gateBytes) return null; // ліміт не перевищено — нема що чистити
 
             int deleted = 0;
@@ -862,9 +950,9 @@ namespace API.Controllers
                 if (total <= targetBytes) break;
                 try
                 {
-                    var len = f.Length;
+                    var len = f.Length + RawCompanionBytes(f.FullName);
                     f.Delete();
-                    DeleteSidecarJson(f.FullName);
+                    DeleteCompanions(f.FullName);
                     total -= len;
                     freed += len;
                     deleted++;
@@ -913,9 +1001,9 @@ namespace API.Controllers
                     {
                         try
                         {
-                            var len = new FileInfo(f).Length;
+                            var len = new FileInfo(f).Length + RawCompanionBytes(f);
                             System.IO.File.Delete(f);
-                            DeleteSidecarJson(f);
+                            DeleteCompanions(f);
                             freed += len;
                             deleted++;
                         }
@@ -931,7 +1019,7 @@ namespace API.Controllers
             // Перерахунок поточного розміру сховища для журналу.
             long total = new DirectoryInfo(root)
                 .EnumerateFiles("*.jpg", SearchOption.AllDirectories)
-                .Sum(f => f.Length);
+                .Sum(f => f.Length + RawCompanionBytes(f.FullName));
 
             return new CleanupEvent(DateTime.UtcNow, deleted, freed, total, maxBytes, "manual");
         }
