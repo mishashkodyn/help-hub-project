@@ -1,3 +1,28 @@
+<!-- Detection-box overlay: draws each box + "type NN%" label onto the untouched frame, scaled to the
+     image's natural size via the SVG viewBox. `fit` mirrors the <img> object-fit (slice=cover, meet=contain).
+     Rendered only while the boxes toggle is on and the frame has loaded (so its natural size is known). -->
+<ng-template #detBoxes let-f let-fit="fit">
+  @if (showBoxes && f.detections?.length && frameSize(f.imageUrl); as size) {
+    <svg class="det-overlay" [attr.viewBox]="'0 0 ' + size.w + ' ' + size.h" [attr.preserveAspectRatio]="fit">
+      @for (d of f.detections; track $index) {
+        <rect
+          class="det-rect"
+          [attr.x]="d.box.x"
+          [attr.y]="d.box.y"
+          [attr.width]="d.box.width"
+          [attr.height]="d.box.height"
+          [attr.stroke]="boxColor(d.confidence)" />
+        <text
+          class="det-label"
+          [attr.x]="d.box.x + size.h * 0.006"
+          [attr.y]="d.box.y + size.h * 0.032"
+          [attr.font-size]="size.h * 0.03"
+          [attr.fill]="boxColor(d.confidence)">{{ boxLabel(d) }}</text>
+      }
+    </svg>
+  }
+</ng-template>
+
 <div class="camera-page">
   <header class="cam-header">
     <div class="cam-brand">
@@ -87,7 +112,9 @@
         @for (cam of liveCameras; track cam.ip) {
           <div class="live-cell" [class.is-live]="isLive(cam)">
             @if (cam.imageUrl) {
-              <img [src]="frameSrc(cam)" [alt]="cameraTitle(cam)" />
+              <img [src]="cam.imageUrl" (load)="onFrameLoad($event, cam.imageUrl)" [alt]="cameraTitle(cam)" />
+              <ng-container
+                *ngTemplateOutlet="detBoxes; context: { $implicit: cam, fit: 'xMidYMid slice' }"></ng-container>
             } @else {
               <div class="no-signal">
                 <mat-icon>videocam_off</mat-icon>
@@ -155,7 +182,12 @@
           <div class="card-media">
             <div class="media-main">
               @if (mainFrame(cam)) {
-                <img [src]="frameSrc(mainFrame(cam)!)" [alt]="cameraTitle(cam)" />
+                <img
+                  [src]="mainFrame(cam)!.imageUrl"
+                  (load)="onFrameLoad($event, mainFrame(cam)!.imageUrl)"
+                  [alt]="cameraTitle(cam)" />
+                <ng-container
+                  *ngTemplateOutlet="detBoxes; context: { $implicit: mainFrame(cam)!, fit: 'xMidYMid slice' }"></ng-container>
                 @if (isLive(cam)) {
                   <span class="media-live"><span class="media-live-dot"></span>{{ 'cameras.live' | transloco }}</span>
                 }
@@ -173,7 +205,7 @@
             @if (thumbFrames(cam).length > 0) {
               <div class="media-thumbs">
                 @for (f of thumbFrames(cam); track f.imageUrl) {
-                  <img [src]="frameSrc(f)" [alt]="cameraTitle(cam)" />
+                  <img [src]="f.imageUrl" [alt]="cameraTitle(cam)" />
                 }
               </div>
             }
@@ -281,7 +313,14 @@
           <span class="archive-muted">{{ 'cameras.loading' | transloco }}</span>
         } @else if (currentFrame) {
           <div class="stage-frame">
-            <img [src]="frameSrc(currentFrame)" [alt]="viewerCamera" />
+            <div class="stage-canvas">
+              <img
+                [src]="currentFrame.imageUrl"
+                (load)="onFrameLoad($event, currentFrame.imageUrl)"
+                [alt]="viewerCamera" />
+              <ng-container
+                *ngTemplateOutlet="detBoxes; context: { $implicit: currentFrame, fit: 'xMidYMid meet' }"></ng-container>
+            </div>
             <div class="stage-detections">
               @for (m of frameMetrics(currentFrame); track m.icon) {
                 <span class="det-badge" [class]="'tier-' + m.tier" [title]="m.title">

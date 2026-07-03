@@ -19,10 +19,9 @@ namespace API.Controllers
         //   ip   → camera IPv4 "A.B.C.D" (the camera's identity, also the folder name)
         //   date → capture day "yyyy-MM-dd" (derived from the timestamp field)
         //   file → capture time "HH-mm-ss.jpg" (a same-second collision gets a "_N" suffix)
-        // Detections/metadata live in a "{file}.meta.json" sidecar (double extension).
-        // The unannotated original (no boxes) lives in a "{file}.raw.jpeg" companion. Its ".jpeg"
-        // tail keeps it out of every "*.jpg" enumeration (frame counts, quota) just like ".meta.json".
-        private const string RawSuffix = ".raw.jpeg";
+        // The stored .jpg is the untouched original — the client never burns boxes into it. Per-object
+        // detections + aggregate metadata live in a "{file}.meta.json" sidecar (double extension), and the
+        // UI (Angular) overlays labelled boxes from those coordinates, so we keep no annotated/raw copy.
 
         private static readonly Regex IpPattern = new(
             @"^(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}$",
@@ -72,17 +71,21 @@ namespace API.Controllers
         //            ip         (text) → camera IPv4 "A.B.C.D" (e.g. 10.0.1.101); the identity key.
         //            brand      (text) → full camera model string "{Brand} {Model}", e.g.
         //                       "UNV IPC3638SE-ADF40KMC-WP-I1". Stored in the sidecar as "cameraModel".
-        //            image      (file) → JPEG. The client file name "yyyyMMdd_HHmmss.jpg" is ignored;
-        //                       the authoritative capture time is the `timestamp` field.
+        //            image      (file) → JPEG, the untouched original (no boxes). The client file name
+        //                       "yyyyMMdd_HHmmss.jpg" is ignored; the authoritative capture time is `timestamp`.
         //            timestamp  (text) → ISO 8601 round-trip ("O") with offset, e.g.
         //                       "2026-07-01T14:23:05.1234567+02:00". REQUIRED, no receipt-time fallback.
         //            people_count       (text, optional) → int, count of "person" detections on this frame.
         //            dog_count          (text, optional) → int, count of "dog" detections on this frame.
         //            average_confidence (text, optional) → int 0-100, mean confidence across detections (0 if none).
         //            changed_pct        (text, optional) → double, frame-diff/motion percentage. Absent today.
-        // The counts/confidence/changed_pct fields are best-effort — missing or unparseable values default
-        // to 0 (changed_pct → null) and never reject the upload; only ip, image and timestamp are required.
-        // Stored at {FramesRoot}/{ip}/{yyyy-MM-dd}/{HH-mm-ss}.jpg using the timestamp's own wall-clock
+        //            detections (text/json, optional) → JSON array of per-object detections, each
+        //                       { "type": <label>, "confidence": <0-100 int>, "box": { x, y, width, height } }
+        //                       in this image's pixel coordinates. Stored (sanitised) in the sidecar so the UI
+        //                       can overlay labelled boxes coloured by confidence; missing/invalid → empty list.
+        // The counts/confidence/changed_pct/detections fields are best-effort — missing or unparseable values
+        // default to empty/0 (changed_pct → null) and never reject the upload; only ip, image and timestamp are
+        // required. Stored at {FramesRoot}/{ip}/{yyyy-MM-dd}/{HH-mm-ss}.jpg using the timestamp's own wall-clock
         // components (its reported offset), collisions get a "_N" suffix and never overwrite. Metadata
         // is written alongside as a "{file}.meta.json" sidecar.
         [HttpPost]
@@ -118,34 +121,26 @@ namespace API.Controllers
                 bytes = await ReadBody(src);
             if (bytes.Length == 0) return BadRequest("Файл image порожній");
 
-            // Optional "image_raw" companion — the untouched original (no detection boxes). Best-effort:
-            // a missing or empty raw copy never rejects the upload.
-            byte[]? rawBytes = null;
-            var rawFile = form.Files["image_raw"];
-            if (rawFile is { Length: > 0 })
-            {
-                await using var rawSrc = rawFile.OpenReadStream();
-                rawBytes = await ReadBody(rawSrc);
-                if (rawBytes.Length == 0) rawBytes = null;
-            }
-
             // Best-effort aggregate detection fields — missing/unparseable never rejects the upload.
             var peopleCount = ParseIntField(form["people_count"].ToString());
             var dogCount = ParseIntField(form["dog_count"].ToString());
             var averageConfidence = ParseDoubleField(form["average_confidence"].ToString()) ?? 0d;
             var changedPct = ParseDoubleField(form["changed_pct"].ToString());
 
+            // Per-object detections (label + confidence + pixel box) for the UI overlay — best-effort.
+            var detections = ParseDetections(form["detections"].ToString());
+
             // Дата/час беремо з власного «настінного» часу timestamp (у його ж offset), без конвертації.
             var date = dto.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
             var time = dto.ToString("HH-mm-ss", CultureInfo.InvariantCulture);
 
             var saved = await StoreFrameAsync(
-                ip, brand, rawTimestamp, date, time, bytes, rawBytes,
-                peopleCount, dogCount, averageConfidence, changedPct);
+                ip, brand, rawTimestamp, date, time, bytes,
+                peopleCount, dogCount, averageConfidence, changedPct, detections);
 
             _logger.LogInformation(
-                "CameraWall: прийнято кадр — ip {Ip}, модель {Brand}, розмір {Bytes} Б, людей {People}, собак {Dogs} → {Saved}",
-                ip, brand, bytes.Length, peopleCount, dogCount, saved);
+                "CameraWall: прийнято кадр — ip {Ip}, модель {Brand}, розмір {Bytes} Б, людей {People}, собак {Dogs}, детекцій {Detections} → {Saved}",
+                ip, brand, bytes.Length, peopleCount, dogCount, detections.Count, saved);
 
             return Ok(new { status = "ok", path = saved });
         }
@@ -157,6 +152,32 @@ namespace API.Controllers
         // Best-effort double form-field parse: missing/blank/invalid → null.
         private static double? ParseDoubleField(string? raw) =>
             double.TryParse(raw?.Trim(), NumberStyles.Float, CultureInfo.InvariantCulture, out var v) ? v : null;
+
+        // Best-effort parse of the multipart "detections" field: a JSON array of
+        // { "type", "confidence" (0-100), "box": { x, y, width, height } } in this image's pixel
+        // coordinates. Missing/blank/invalid JSON, or entries without a box or type, are dropped and the
+        // upload is never rejected; confidence is clamped to 0..100.
+        private static IReadOnlyList<Detection> ParseDetections(string? raw)
+        {
+            if (string.IsNullOrWhiteSpace(raw)) return Array.Empty<Detection>();
+            try
+            {
+                var parsed = JsonSerializer.Deserialize<List<Detection>>(raw, JsonOpts);
+                if (parsed is null) return Array.Empty<Detection>();
+                return parsed
+                    .Where(d => d is { Box: not null } && !string.IsNullOrWhiteSpace(d.Type))
+                    .Select(d => d with
+                    {
+                        Type = d.Type.Trim(),
+                        Confidence = Math.Clamp(d.Confidence, 0, 100)
+                    })
+                    .ToList();
+            }
+            catch (JsonException)
+            {
+                return Array.Empty<Detection>();
+            }
+        }
 
         // Validates the Authorization: Bearer <token> header against CameraWall:UploadToken in
         // constant time. An empty configured token means auth is OFF (dev mode) → allow everything.
@@ -187,10 +208,24 @@ namespace API.Controllers
             return ms.ToArray();
         }
 
+        // A single detected object as received and stored: a label, a whole-percent confidence (0..100)
+        // and the pixel bounding box in the stored image's own coordinate space. Serialized into the
+        // sidecar with these exact keys so the UI can overlay a labelled, confidence-coloured box.
+        public sealed record Detection(
+            [property: JsonPropertyName("type")] string Type,
+            [property: JsonPropertyName("confidence")] int Confidence,
+            [property: JsonPropertyName("box")] DetectionBox Box);
+
+        public sealed record DetectionBox(
+            [property: JsonPropertyName("x")] int X,
+            [property: JsonPropertyName("y")] int Y,
+            [property: JsonPropertyName("width")] int Width,
+            [property: JsonPropertyName("height")] int Height);
+
         // Metadata sidecar payload, written next to each frame as "{file}.meta.json".
         // Serialized with the Web (camelCase) policy; [JsonPropertyName] pins the snake_case keys the
         // spec requires. User-facing keys: dogs_count, people_count, average_confidence, timestamp,
-        // cameraModel, changed_pct. Ip/ImageFile/SizeBytes/ReceivedAt are internal bookkeeping.
+        // cameraModel, changed_pct, detections. Ip/ImageFile/SizeBytes/ReceivedAt are internal bookkeeping.
         private sealed record FrameMeta(
             string Ip,
             [property: JsonPropertyName("cameraModel")] string CameraModel,
@@ -199,6 +234,7 @@ namespace API.Controllers
             [property: JsonPropertyName("dogs_count")] int DogsCount,
             [property: JsonPropertyName("average_confidence")] double AverageConfidence,
             [property: JsonPropertyName("changed_pct")] double? ChangedPct,
+            [property: JsonPropertyName("detections")] IReadOnlyList<Detection> Detections,
             string ImageFile,
             long SizeBytes,
             string ReceivedAt);
@@ -208,7 +244,8 @@ namespace API.Controllers
         // existing frame is never overwritten. Returns the saved relative path "{ip}/{date}/{file}".
         private async Task<string> StoreFrameAsync(
             string ip, string cameraModel, string rawTimestamp, string date, string time,
-            byte[] bytes, byte[]? rawBytes, int peopleCount, int dogCount, double averageConfidence, double? changedPct)
+            byte[] bytes, int peopleCount, int dogCount, double averageConfidence, double? changedPct,
+            IReadOnlyList<Detection> detections)
         {
             var dayFolder = Path.Combine(GetFramesRoot(), ip, date);
             Directory.CreateDirectory(dayFolder);
@@ -237,14 +274,6 @@ namespace API.Controllers
                 }
             }
 
-            // Оригінал без рамок (за наявності) кладемо поряд як "{file}.raw.jpeg" — тільки після того,
-            // як анотований .jpg опинився на місці, тож ім'я (з можливим суфіксом "_N") уже стале.
-            if (rawBytes is { Length: > 0 })
-            {
-                var rawPath = Path.Combine(dayFolder, fileName + RawSuffix);
-                await System.IO.File.WriteAllBytesAsync(rawPath, rawBytes);
-            }
-
             // Sidecar пишемо лише після того, як .jpg опинився на місці (як і раніше).
             var meta = new FrameMeta(
                 Ip: ip,
@@ -254,6 +283,7 @@ namespace API.Controllers
                 DogsCount: dogCount,
                 AverageConfidence: averageConfidence,
                 ChangedPct: changedPct,
+                Detections: detections,
                 ImageFile: fileName,
                 SizeBytes: bytes.Length,
                 ReceivedAt: DateTime.UtcNow.ToString("O", CultureInfo.InvariantCulture));
@@ -267,33 +297,36 @@ namespace API.Controllers
         }
 
         // Reads back the "{file}.meta.json" sidecar for a stored frame. Returns the camera model (null
-        // if absent/unreadable) and the aggregate per-frame detection fields (0 counts / 0 confidence /
-        // null changed_pct if absent/unreadable). Best-effort — a missing or corrupt sidecar never throws.
-        private (string? cameraModel, int peopleCount, int dogCount, double averageConfidence, double? changedPct)
+        // if absent/unreadable), the aggregate per-frame detection fields (0 counts / 0 confidence /
+        // null changed_pct if absent/unreadable) and the per-object detections (empty if absent). Best-effort
+        // — a missing or corrupt sidecar never throws.
+        private (string? cameraModel, int peopleCount, int dogCount, double averageConfidence,
+            double? changedPct, IReadOnlyList<Detection> detections)
             ReadMeta(string ip, string day, string file)
         {
+            var empty = Array.Empty<Detection>();
             var metaPath = Path.Combine(GetFramesRoot(), ip, day, file + ".meta.json");
-            if (!System.IO.File.Exists(metaPath)) return (null, 0, 0, 0d, null);
+            if (!System.IO.File.Exists(metaPath)) return (null, 0, 0, 0d, null, empty);
             try
             {
                 var json = System.IO.File.ReadAllText(metaPath);
                 var meta = JsonSerializer.Deserialize<FrameMeta>(json, JsonOpts);
-                if (meta is null) return (null, 0, 0, 0d, null);
+                if (meta is null) return (null, 0, 0, 0d, null, empty);
                 var cameraModel = string.IsNullOrWhiteSpace(meta.CameraModel) ? null : meta.CameraModel;
-                return (cameraModel, meta.PeopleCount, meta.DogsCount, meta.AverageConfidence, meta.ChangedPct);
+                return (cameraModel, meta.PeopleCount, meta.DogsCount, meta.AverageConfidence,
+                    meta.ChangedPct, meta.Detections ?? empty);
             }
             catch (JsonException)
             {
-                return (null, 0, 0, 0d, null);
+                return (null, 0, 0, 0d, null, empty);
             }
         }
 
-        // Deletes the companions written next to a frame — the "{file}.meta.json" sidecar and the
-        // "{file}.raw.jpeg" original — when the frame itself is purged, so neither is orphaned.
+        // Deletes the "{file}.meta.json" sidecar written next to a frame when the frame itself is purged,
+        // so it is never orphaned.
         private static void DeleteCompanions(string jpgPath)
         {
             TryDeleteFile(jpgPath + ".meta.json");
-            TryDeleteFile(jpgPath + RawSuffix);
         }
 
         private static void TryDeleteFile(string path)
@@ -304,25 +337,6 @@ namespace API.Controllers
             }
             catch { /* best-effort — a leftover companion is harmless */ }
         }
-
-        // Size of a frame's "{file}.raw.jpeg" original companion (0 if none). Raw copies live outside
-        // the "*.jpg" enumerations, so disk-usage/quota math must add them back explicitly.
-        private static long RawCompanionBytes(string jpgFullPath)
-        {
-            try
-            {
-                var rawPath = jpgFullPath + RawSuffix;
-                return System.IO.File.Exists(rawPath) ? new FileInfo(rawPath).Length : 0;
-            }
-            catch { return 0; }
-        }
-
-        // True when a frame has an unannotated "{file}.raw.jpeg" original stored alongside it.
-        private bool RawExists(string ip, string day, string file) =>
-            System.IO.File.Exists(Path.Combine(GetFramesRoot(), ip, day, file + RawSuffix));
-
-        private static string RawFrameUrl(string ip, string day, string file) =>
-            $"/api/frames/{ip}/{day}/{file}/raw";
 
         // GET /api/frames/cameras → every camera (an IP folder) with its recent frames and counts.
         [HttpGet("cameras")]
@@ -339,13 +353,13 @@ namespace API.Controllers
                             var meta = ReadMeta(ip, r.day, r.file);
                             return new {
                                 imageUrl = FrameUrl(ip, r.day, r.file),
-                                rawImageUrl = RawExists(ip, r.day, r.file) ? RawFrameUrl(ip, r.day, r.file) : null,
                                 timeUtc = ParseFrameTime(r.day, r.file),
                                 brand = meta.cameraModel,
                                 peopleCount = meta.peopleCount,
                                 dogCount = meta.dogCount,
                                 averageConfidence = meta.averageConfidence,
                                 changedPct = meta.changedPct,
+                                detections = meta.detections,
                             };
                         })
                         .ToList();
@@ -378,18 +392,16 @@ namespace API.Controllers
                 {
                     var recent = RecentFrameFiles(ip, 1);
                     string? imageUrl = null;
-                    string? rawImageUrl = null;
                     DateTime? lastSeenUtc = null;
                     string? brand = null;
                     int peopleCount = 0;
                     int dogCount = 0;
                     double averageConfidence = 0d;
                     double? changedPct = null;
+                    IReadOnlyList<Detection> detections = Array.Empty<Detection>();
                     if (recent.Count > 0)
                     {
                         imageUrl = FrameUrl(ip, recent[0].day, recent[0].file);
-                        rawImageUrl = RawExists(ip, recent[0].day, recent[0].file)
-                            ? RawFrameUrl(ip, recent[0].day, recent[0].file) : null;
                         lastSeenUtc = ParseFrameTime(recent[0].day, recent[0].file);
                         var meta = ReadMeta(ip, recent[0].day, recent[0].file);
                         brand = meta.cameraModel;
@@ -397,19 +409,20 @@ namespace API.Controllers
                         dogCount = meta.dogCount;
                         averageConfidence = meta.averageConfidence;
                         changedPct = meta.changedPct;
+                        detections = meta.detections;
                     }
 
                     return new {
                         ip,
                         name = ip,
                         imageUrl,
-                        rawImageUrl,
                         lastSeenUtc,
                         brand,
                         peopleCount,
                         dogCount,
                         averageConfidence,
                         changedPct,
+                        detections,
                     };
                 })
                 .OrderBy(x => x.ip, IpComparer)
@@ -464,12 +477,12 @@ namespace API.Controllers
                         file = name,
                         timeUtc = ParseFrameTime(day, name!),
                         imageUrl = FrameUrl(ip, day, name!),
-                        rawImageUrl = RawExists(ip, day, name!) ? RawFrameUrl(ip, day, name!) : null,
                         brand = meta.cameraModel,
                         peopleCount = meta.peopleCount,
                         dogCount = meta.dogCount,
                         averageConfidence = meta.averageConfidence,
                         changedPct = meta.changedPct,
+                        detections = meta.detections,
                     };
                 })
                 .ToList();
@@ -488,20 +501,6 @@ namespace API.Controllers
 
             var path = Path.Combine(GetFramesRoot(), ip, day, file);
             return await ServeImage(path, "Кадр не знайдено");
-        }
-
-        // GET /api/frames/{ip}/{day}/{file}/raw → the unannotated original (no boxes) of a frame,
-        // stored as "{file}.raw.jpeg". 404 when the frame has no raw companion (older frames, or an
-        // agent that didn't send one).
-        [HttpGet("{ip}/{day}/{file}/raw")]
-        public async Task<IActionResult> RawFrame(string ip, string day, string file)
-        {
-            if (!IsEnabled()) return NotFound();
-            if (!IpPattern.IsMatch(ip) || !DayPattern.IsMatch(day) || !FilePattern.IsMatch(file))
-                return NotFound();
-
-            var path = Path.Combine(GetFramesRoot(), ip, day, file + RawSuffix);
-            return await ServeImage(path, "Оригінал кадру не знайдено");
         }
 
         // GET /api/frames/storage → disk usage of the frame store + retention estimate (admin dashboard).
@@ -523,8 +522,7 @@ namespace API.Controllers
             {
                 foreach (var f in new DirectoryInfo(root).EnumerateFiles("*.jpg", SearchOption.AllDirectories))
                 {
-                    // A frame counts once, but its raw original adds to disk usage.
-                    usedBytes += f.Length + RawCompanionBytes(f.FullName);
+                    usedBytes += f.Length;
                     frameCount++;
                     var w = f.LastWriteTimeUtc;
                     if (oldestUtc is null || w < oldestUtc) oldestUtc = w;
@@ -725,25 +723,6 @@ namespace API.Controllers
                         {
                             // Кадр міг бути видалений/зайнятий під час архівації — пропускаємо його.
                         }
-
-                        // Оригінал без рамок (за наявності) — поряд у ZIP як "{stem}.raw.jpeg".
-                        var rawPath = framePath + RawSuffix;
-                        if (System.IO.File.Exists(rawPath))
-                        {
-                            var rawEntryName = $"{ip}/{day}/{Path.GetFileNameWithoutExtension(file)}.raw.jpeg";
-                            try
-                            {
-                                var rawEntry = archive.CreateEntry(rawEntryName, CompressionLevel.NoCompression);
-                                await using var res = rawEntry.Open();
-                                await using var rfs = new FileStream(rawPath, FileMode.Open, FileAccess.Read,
-                                    FileShare.ReadWrite | FileShare.Delete, bufferSize: 81920, useAsync: true);
-                                await rfs.CopyToAsync(res);
-                            }
-                            catch (IOException)
-                            {
-                                // Оригінал міг зникнути під час архівації — пропускаємо.
-                            }
-                        }
                     }
                 }
             }
@@ -940,7 +919,7 @@ namespace API.Controllers
                 .EnumerateFiles("*.jpg", SearchOption.AllDirectories)
                 .ToList();
 
-            long total = files.Sum(f => f.Length + RawCompanionBytes(f.FullName));
+            long total = files.Sum(f => f.Length);
             if (gateBytes > 0 && total <= gateBytes) return null; // ліміт не перевищено — нема що чистити
 
             int deleted = 0;
@@ -950,7 +929,7 @@ namespace API.Controllers
                 if (total <= targetBytes) break;
                 try
                 {
-                    var len = f.Length + RawCompanionBytes(f.FullName);
+                    var len = f.Length;
                     f.Delete();
                     DeleteCompanions(f.FullName);
                     total -= len;
@@ -1001,7 +980,7 @@ namespace API.Controllers
                     {
                         try
                         {
-                            var len = new FileInfo(f).Length + RawCompanionBytes(f);
+                            var len = new FileInfo(f).Length;
                             System.IO.File.Delete(f);
                             DeleteCompanions(f);
                             freed += len;
@@ -1019,7 +998,7 @@ namespace API.Controllers
             // Перерахунок поточного розміру сховища для журналу.
             long total = new DirectoryInfo(root)
                 .EnumerateFiles("*.jpg", SearchOption.AllDirectories)
-                .Sum(f => f.Length + RawCompanionBytes(f.FullName));
+                .Sum(f => f.Length);
 
             return new CleanupEvent(DateTime.UtcNow, deleted, freed, total, maxBytes, "manual");
         }

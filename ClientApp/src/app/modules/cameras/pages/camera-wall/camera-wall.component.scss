@@ -605,6 +605,43 @@
   gap: 10px;
 }
 
+/* wraps the archive image so the box overlay sits exactly on the rendered photo */
+.stage-canvas {
+  position: relative;
+  display: inline-flex;
+  line-height: 0;
+}
+
+/* ── detection-box overlay (drawn client-side over the untouched frame) ── */
+.det-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: visible;
+  pointer-events: none; /* clicks fall through to the card/cell */
+}
+
+.det-rect {
+  fill: none;
+  stroke-width: 2.5;
+  vector-effect: non-scaling-stroke; /* crisp, size-independent outline */
+}
+
+.det-label {
+  font-family: inherit;
+  font-weight: 700;
+  paint-order: stroke; /* dark halo behind the text keeps it legible on any frame */
+  stroke: rgba(0, 0, 0, 0.9);
+  stroke-width: 3;
+  vector-effect: non-scaling-stroke;
+}
+
+/* keep boxes glued to the image as the card-hover zoom scales it */
+.media-main .det-overlay { transition: transform 0.4s ease; }
+.camera-card:hover .media-main .det-overlay { transform: scale(1.04); }
+
 .stage-detections {
   display: flex;
   flex-wrap: wrap;

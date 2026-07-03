@@ -29,17 +29,32 @@ interface StorageInfo {
   recentCleanups: CleanupEvent[];
 }
 
-/** Per-frame AI aggregates (people/dog counts, avg confidence, frame-change %). */
+/** A bounding box in the ORIGINAL image's pixel coordinate space. */
+interface DetectionBox {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
+
+/** One detected object: label + confidence (0-100) + its box on the untouched frame. */
+interface Detection {
+  type: string;
+  confidence: number;
+  box: DetectionBox;
+}
+
+/** Per-frame AI aggregates (people/dog counts, avg confidence, frame-change %) + raw detections. */
 interface FrameMetrics {
   peopleCount: number;
   dogCount: number;
   averageConfidence: number; // 0-100
   changedPct: number | null; // null when the uploader didn't send it
+  detections: Detection[]; // per-object boxes drawn client-side; empty when none
 }
 
 interface CameraFrame extends FrameMetrics {
-  imageUrl: string;
-  rawImageUrl: string | null; // original without detection boxes, null when the agent didn't send one
+  imageUrl: string; // the untouched original — boxes are overlaid, never baked in
   timeUtc: string | null;
   brand: string | null;
 }
@@ -71,7 +86,6 @@ interface LiveInfo extends FrameMetrics {
   name: string | null;
   brand: string | null;
   imageUrl: string | null;
-  rawImageUrl: string | null;
   lastSeenUtc: string | null;
 }
 
@@ -80,7 +94,6 @@ interface LiveCameraState extends FrameMetrics {
   name: string | null;
   brand: string | null;
   imageUrl: string | null;
-  rawImageUrl: string | null;
   lastSeenUtc: string | null;
 }
 
@@ -101,7 +114,6 @@ interface ArchiveFrame extends FrameMetrics {
   timeUtc: string | null;
   brand: string | null;
   imageUrl: string;
-  rawImageUrl: string | null;
 }
 
 /** One badge rendered on a frame: an icon + value, tier-colored. */
@@ -128,9 +140,15 @@ export class CameraWallComponent implements OnInit, OnDestroy {
   viewMode: ViewMode = 'cards';
   liveCameras: LiveCameraState[] = [];
 
-  // Toggle between the annotated frame (detection boxes drawn) and the untouched original.
-  // Applies to every view; a frame with no stored original just keeps showing the annotated one.
+  // The stored frame is always the untouched original; detection boxes are drawn as an SVG overlay.
+  // This toggle just shows/hides that overlay — the underlying photo is never modified either way.
   showBoxes = true;
+
+  // Natural pixel size of each loaded frame, keyed by its (immutable) image URL. Needed to map the
+  // detection boxes' pixel coordinates onto the scaled <img> via the SVG viewBox. Cached by URL so it
+  // survives the in-place refresh churn (which swaps frame objects but keeps identical URLs).
+  private frameDims = new Map<string, { w: number; h: number }>();
+  private static readonly MAX_DIMS = 800;
 
   // wall clock (header) + snapshot time used to decide LIVE badges
   clock = '';
@@ -214,10 +232,38 @@ export class CameraWallComponent implements OnInit, OnDestroy {
     this.showBoxes = !this.showBoxes;
   }
 
-  /** Image URL to show for a frame, honouring the boxes toggle (falls back to the annotated one). */
-  frameSrc(f: { imageUrl: string | null; rawImageUrl: string | null }): string | null {
-    if (this.showBoxes) return f.imageUrl;
-    return f.rawImageUrl ?? f.imageUrl;
+  // ── detection-box overlay ──────────────────────────────────────────
+
+  /** Records a frame's natural pixel size once it loads, so the SVG overlay can scale its boxes. */
+  onFrameLoad(event: Event, url: string | null): void {
+    if (!url) return;
+    const img = event.target as HTMLImageElement;
+    if (img.naturalWidth <= 0) return;
+    if (!this.frameDims.has(url) && this.frameDims.size >= CameraWallComponent.MAX_DIMS) {
+      // Evict the oldest entry so long-running walls don't grow the cache without bound.
+      const oldest = this.frameDims.keys().next().value;
+      if (oldest !== undefined) this.frameDims.delete(oldest);
+    }
+    this.frameDims.set(url, { w: img.naturalWidth, h: img.naturalHeight });
+  }
+
+  /** Natural size of a loaded frame (undefined until its <img> has loaded). */
+  frameSize(url: string | null): { w: number; h: number } | undefined {
+    return url ? this.frameDims.get(url) : undefined;
+  }
+
+  /** Box outline / label colour, matching the confidence tier used by the badges. */
+  boxColor(confidence: number): string {
+    switch (this.confidenceTier(confidence)) {
+      case 'high': return 'var(--accent)';
+      case 'mid': return '#e0a106';
+      default: return '#6ea8e0';
+    }
+  }
+
+  /** Label drawn beside a box, e.g. "person 92%". */
+  boxLabel(d: Detection): string {
+    return `${d.type} ${Math.round(d.confidence)}%`;
   }
 
   refresh(): void {
@@ -401,12 +447,12 @@ export class CameraWallComponent implements OnInit, OnDestroy {
           state.name = c.name;
           state.brand = c.brand;
           state.imageUrl = c.imageUrl;
-          state.rawImageUrl = c.rawImageUrl;
           state.lastSeenUtc = c.lastSeenUtc;
           state.peopleCount = c.peopleCount;
           state.dogCount = c.dogCount;
           state.averageConfidence = c.averageConfidence;
           state.changedPct = c.changedPct;
+          state.detections = c.detections;
           return state;
         });
       },
