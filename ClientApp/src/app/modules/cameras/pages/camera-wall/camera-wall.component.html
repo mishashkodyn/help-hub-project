@@ -56,6 +56,15 @@
       <button
         type="button"
         class="pc-toggle"
+        [class.on]="showBoxes"
+        (click)="toggleBoxes()"
+        [title]="(showBoxes ? 'cameras.boxes_on' : 'cameras.boxes_off') | transloco">
+        <mat-icon>{{ showBoxes ? 'crop_free' : 'crop_din' }}</mat-icon>
+      </button>
+
+      <button
+        type="button"
+        class="pc-toggle"
         [class.on]="autoRefresh"
         (click)="toggleAutoRefresh()"
         [title]="(autoRefresh ? 'cameras.live_on' : 'cameras.live_off') | transloco">
@@ -78,7 +87,7 @@
         @for (cam of liveCameras; track cam.ip) {
           <div class="live-cell" [class.is-live]="isLive(cam)">
             @if (cam.imageUrl) {
-              <img [src]="cam.imageUrl" [alt]="cameraTitle(cam)" />
+              <img [src]="frameSrc(cam)" [alt]="cameraTitle(cam)" />
             } @else {
               <div class="no-signal">
                 <mat-icon>videocam_off</mat-icon>
@@ -146,7 +155,7 @@
           <div class="card-media">
             <div class="media-main">
               @if (mainFrame(cam)) {
-                <img [src]="mainFrame(cam)!.imageUrl" [alt]="cameraTitle(cam)" />
+                <img [src]="frameSrc(mainFrame(cam)!)" [alt]="cameraTitle(cam)" />
                 @if (isLive(cam)) {
                   <span class="media-live"><span class="media-live-dot"></span>{{ 'cameras.live' | transloco }}</span>
                 }
@@ -164,7 +173,7 @@
             @if (thumbFrames(cam).length > 0) {
               <div class="media-thumbs">
                 @for (f of thumbFrames(cam); track f.imageUrl) {
-                  <img [src]="f.imageUrl" [alt]="cameraTitle(cam)" />
+                  <img [src]="frameSrc(f)" [alt]="cameraTitle(cam)" />
                 }
               </div>
             }
@@ -217,6 +226,14 @@
           }
         </span>
         <div class="storage-header-actions">
+          <button
+            type="button"
+            class="storage-icon-btn"
+            [class.on]="showBoxes"
+            (click)="toggleBoxes()"
+            [title]="(showBoxes ? 'cameras.boxes_on' : 'cameras.boxes_off') | transloco">
+            <mat-icon>{{ showBoxes ? 'crop_free' : 'crop_din' }}</mat-icon>
+          </button>
           @if (storageAvailable) {
             <button
               type="button"
@@ -264,7 +281,7 @@
           <span class="archive-muted">{{ 'cameras.loading' | transloco }}</span>
         } @else if (currentFrame) {
           <div class="stage-frame">
-            <img [src]="currentFrame.imageUrl" [alt]="viewerCamera" />
+            <img [src]="frameSrc(currentFrame)" [alt]="viewerCamera" />
             <div class="stage-detections">
               @for (m of frameMetrics(currentFrame); track m.icon) {
                 <span class="det-badge" [class]="'tier-' + m.tier" [title]="m.title">

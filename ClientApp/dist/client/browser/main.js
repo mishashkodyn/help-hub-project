@@ -66507,7 +66507,7 @@ var _forTrack4 = ($index, $item) => $item.atUtc;
 function CameraWallComponent_Conditional_14_Template(rf, ctx) {
   if (rf & 1) {
     const _r1 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "button", 18);
+    \u0275\u0275elementStart(0, "button", 19);
     \u0275\u0275pipe(1, "transloco");
     \u0275\u0275listener("click", function CameraWallComponent_Conditional_14_Template_button_click_0_listener() {
       \u0275\u0275restoreView(_r1);
@@ -66517,10 +66517,10 @@ function CameraWallComponent_Conditional_14_Template(rf, ctx) {
     \u0275\u0275elementStart(2, "mat-icon");
     \u0275\u0275text(3, "storage");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(4, "span", 19);
+    \u0275\u0275elementStart(4, "span", 20);
     \u0275\u0275text(5);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(6, "span", 20);
+    \u0275\u0275elementStart(6, "span", 21);
     \u0275\u0275element(7, "i");
     \u0275\u0275elementEnd()();
   }
@@ -66534,9 +66534,30 @@ function CameraWallComponent_Conditional_14_Template(rf, ctx) {
     \u0275\u0275styleProp("width", ctx_r1.storagePct, "%")("background", ctx_r1.storageColor);
   }
 }
-function CameraWallComponent_Conditional_37_Template(rf, ctx) {
+function CameraWallComponent_Conditional_15_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 15);
+    const _r3 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "button", 22);
+    \u0275\u0275pipe(1, "transloco");
+    \u0275\u0275listener("click", function CameraWallComponent_Conditional_15_Template_button_click_0_listener() {
+      \u0275\u0275restoreView(_r3);
+      const ctx_r1 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r1.downloadAllFrames());
+    });
+    \u0275\u0275elementStart(2, "mat-icon");
+    \u0275\u0275text(3);
+    \u0275\u0275elementEnd()();
+  }
+  if (rf & 2) {
+    const ctx_r1 = \u0275\u0275nextContext();
+    \u0275\u0275property("disabled", ctx_r1.downloadingIp !== null)("title", \u0275\u0275pipeBind1(1, 3, "cameras.export.all"));
+    \u0275\u0275advance(3);
+    \u0275\u0275textInterpolate(ctx_r1.downloadingIp === "*" ? "autorenew" : "download");
+  }
+}
+function CameraWallComponent_Conditional_42_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "div", 16);
     \u0275\u0275text(1);
     \u0275\u0275pipe(2, "transloco");
     \u0275\u0275elementEnd();
@@ -66546,9 +66567,9 @@ function CameraWallComponent_Conditional_37_Template(rf, ctx) {
     \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(2, 1, "cameras.loading"));
   }
 }
-function CameraWallComponent_Conditional_38_Conditional_0_Template(rf, ctx) {
+function CameraWallComponent_Conditional_43_Conditional_0_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 15);
+    \u0275\u0275elementStart(0, "div", 16);
     \u0275\u0275text(1);
     \u0275\u0275pipe(2, "transloco");
     \u0275\u0275elementEnd();
@@ -66558,19 +66579,19 @@ function CameraWallComponent_Conditional_38_Conditional_0_Template(rf, ctx) {
     \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(2, 1, "cameras.no_data"));
   }
 }
-function CameraWallComponent_Conditional_38_Conditional_1_For_1_Conditional_1_Template(rf, ctx) {
+function CameraWallComponent_Conditional_43_Conditional_1_For_1_Conditional_1_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275element(0, "img", 23);
+    \u0275\u0275element(0, "img", 25);
   }
   if (rf & 2) {
-    const cam_r3 = \u0275\u0275nextContext().$implicit;
+    const cam_r4 = \u0275\u0275nextContext().$implicit;
     const ctx_r1 = \u0275\u0275nextContext(3);
-    \u0275\u0275property("src", cam_r3.imageUrl, \u0275\u0275sanitizeUrl)("alt", ctx_r1.cameraTitle(cam_r3));
+    \u0275\u0275property("src", ctx_r1.frameSrc(cam_r4), \u0275\u0275sanitizeUrl)("alt", ctx_r1.cameraTitle(cam_r4));
   }
 }
-function CameraWallComponent_Conditional_38_Conditional_1_For_1_Conditional_2_Template(rf, ctx) {
+function CameraWallComponent_Conditional_43_Conditional_1_For_1_Conditional_2_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 24)(1, "mat-icon");
+    \u0275\u0275elementStart(0, "div", 26)(1, "mat-icon");
     \u0275\u0275text(2, "videocam_off");
     \u0275\u0275elementEnd();
     \u0275\u0275elementStart(3, "span");
@@ -66583,10 +66604,10 @@ function CameraWallComponent_Conditional_38_Conditional_1_For_1_Conditional_2_Te
     \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(5, 1, "cameras.no_signal"));
   }
 }
-function CameraWallComponent_Conditional_38_Conditional_1_For_1_Conditional_4_Template(rf, ctx) {
+function CameraWallComponent_Conditional_43_Conditional_1_For_1_Conditional_4_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "span", 26);
-    \u0275\u0275element(1, "span", 34);
+    \u0275\u0275elementStart(0, "span", 28);
+    \u0275\u0275element(1, "span", 36);
     \u0275\u0275text(2);
     \u0275\u0275pipe(3, "transloco");
     \u0275\u0275elementEnd();
@@ -66596,52 +66617,52 @@ function CameraWallComponent_Conditional_38_Conditional_1_For_1_Conditional_4_Te
     \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(3, 1, "cameras.live"));
   }
 }
-function CameraWallComponent_Conditional_38_Conditional_1_For_1_For_7_Template(rf, ctx) {
+function CameraWallComponent_Conditional_43_Conditional_1_For_1_For_7_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "span", 35)(1, "mat-icon");
+    \u0275\u0275elementStart(0, "span", 37)(1, "mat-icon");
     \u0275\u0275text(2);
     \u0275\u0275elementEnd();
     \u0275\u0275text(3);
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
-    const m_r4 = ctx.$implicit;
-    \u0275\u0275classMap("tier-" + m_r4.tier);
-    \u0275\u0275property("title", m_r4.title);
+    const m_r5 = ctx.$implicit;
+    \u0275\u0275classMap("tier-" + m_r5.tier);
+    \u0275\u0275property("title", m_r5.title);
     \u0275\u0275advance(2);
-    \u0275\u0275textInterpolate(m_r4.icon);
+    \u0275\u0275textInterpolate(m_r5.icon);
     \u0275\u0275advance();
-    \u0275\u0275textInterpolate1("", m_r4.value, " ");
+    \u0275\u0275textInterpolate1("", m_r5.value, " ");
   }
 }
-function CameraWallComponent_Conditional_38_Conditional_1_For_1_Conditional_12_Template(rf, ctx) {
+function CameraWallComponent_Conditional_43_Conditional_1_For_1_Conditional_12_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "span", 32);
+    \u0275\u0275elementStart(0, "span", 34);
     \u0275\u0275text(1);
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
-    const cam_r3 = \u0275\u0275nextContext().$implicit;
+    const cam_r4 = \u0275\u0275nextContext().$implicit;
     \u0275\u0275advance();
-    \u0275\u0275textInterpolate(cam_r3.brand);
+    \u0275\u0275textInterpolate(cam_r4.brand);
   }
 }
-function CameraWallComponent_Conditional_38_Conditional_1_For_1_Conditional_13_Template(rf, ctx) {
+function CameraWallComponent_Conditional_43_Conditional_1_For_1_Conditional_13_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "span", 33);
+    \u0275\u0275elementStart(0, "span", 35);
     \u0275\u0275text(1);
     \u0275\u0275pipe(2, "date");
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
-    const cam_r3 = \u0275\u0275nextContext().$implicit;
+    const cam_r4 = \u0275\u0275nextContext().$implicit;
     \u0275\u0275advance();
-    \u0275\u0275textInterpolate(\u0275\u0275pipeBind2(2, 1, cam_r3.lastSeenUtc, "dd.MM HH:mm:ss"));
+    \u0275\u0275textInterpolate(\u0275\u0275pipeBind2(2, 1, cam_r4.lastSeenUtc, "dd.MM HH:mm:ss"));
   }
 }
-function CameraWallComponent_Conditional_38_Conditional_1_For_1_Conditional_14_Template(rf, ctx) {
+function CameraWallComponent_Conditional_43_Conditional_1_For_1_Conditional_14_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "span", 33);
+    \u0275\u0275elementStart(0, "span", 35);
     \u0275\u0275text(1);
     \u0275\u0275pipe(2, "transloco");
     \u0275\u0275elementEnd();
@@ -66651,62 +66672,62 @@ function CameraWallComponent_Conditional_38_Conditional_1_For_1_Conditional_14_T
     \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(2, 1, "cameras.no_data"));
   }
 }
-function CameraWallComponent_Conditional_38_Conditional_1_For_1_Template(rf, ctx) {
+function CameraWallComponent_Conditional_43_Conditional_1_For_1_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 22);
-    \u0275\u0275template(1, CameraWallComponent_Conditional_38_Conditional_1_For_1_Conditional_1_Template, 1, 2, "img", 23)(2, CameraWallComponent_Conditional_38_Conditional_1_For_1_Conditional_2_Template, 6, 3, "div", 24);
-    \u0275\u0275element(3, "div", 25);
-    \u0275\u0275template(4, CameraWallComponent_Conditional_38_Conditional_1_For_1_Conditional_4_Template, 4, 3, "span", 26);
-    \u0275\u0275elementStart(5, "div", 27);
-    \u0275\u0275repeaterCreate(6, CameraWallComponent_Conditional_38_Conditional_1_For_1_For_7_Template, 4, 5, "span", 28, _forTrack111);
+    \u0275\u0275elementStart(0, "div", 24);
+    \u0275\u0275template(1, CameraWallComponent_Conditional_43_Conditional_1_For_1_Conditional_1_Template, 1, 2, "img", 25)(2, CameraWallComponent_Conditional_43_Conditional_1_For_1_Conditional_2_Template, 6, 3, "div", 26);
+    \u0275\u0275element(3, "div", 27);
+    \u0275\u0275template(4, CameraWallComponent_Conditional_43_Conditional_1_For_1_Conditional_4_Template, 4, 3, "span", 28);
+    \u0275\u0275elementStart(5, "div", 29);
+    \u0275\u0275repeaterCreate(6, CameraWallComponent_Conditional_43_Conditional_1_For_1_For_7_Template, 4, 5, "span", 30, _forTrack111);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(8, "div", 29)(9, "div", 30)(10, "span", 31);
+    \u0275\u0275elementStart(8, "div", 31)(9, "div", 32)(10, "span", 33);
     \u0275\u0275text(11);
     \u0275\u0275elementEnd();
-    \u0275\u0275template(12, CameraWallComponent_Conditional_38_Conditional_1_For_1_Conditional_12_Template, 2, 1, "span", 32);
+    \u0275\u0275template(12, CameraWallComponent_Conditional_43_Conditional_1_For_1_Conditional_12_Template, 2, 1, "span", 34);
     \u0275\u0275elementEnd();
-    \u0275\u0275template(13, CameraWallComponent_Conditional_38_Conditional_1_For_1_Conditional_13_Template, 3, 4, "span", 33)(14, CameraWallComponent_Conditional_38_Conditional_1_For_1_Conditional_14_Template, 3, 3, "span", 33);
+    \u0275\u0275template(13, CameraWallComponent_Conditional_43_Conditional_1_For_1_Conditional_13_Template, 3, 4, "span", 35)(14, CameraWallComponent_Conditional_43_Conditional_1_For_1_Conditional_14_Template, 3, 3, "span", 35);
     \u0275\u0275elementEnd()();
   }
   if (rf & 2) {
-    const cam_r3 = ctx.$implicit;
+    const cam_r4 = ctx.$implicit;
     const ctx_r1 = \u0275\u0275nextContext(3);
-    \u0275\u0275classProp("is-live", ctx_r1.isLive(cam_r3));
+    \u0275\u0275classProp("is-live", ctx_r1.isLive(cam_r4));
     \u0275\u0275advance();
-    \u0275\u0275conditional(cam_r3.imageUrl ? 1 : 2);
+    \u0275\u0275conditional(cam_r4.imageUrl ? 1 : 2);
     \u0275\u0275advance(3);
-    \u0275\u0275conditional(ctx_r1.isLive(cam_r3) ? 4 : -1);
+    \u0275\u0275conditional(ctx_r1.isLive(cam_r4) ? 4 : -1);
     \u0275\u0275advance(2);
-    \u0275\u0275repeater(ctx_r1.frameMetrics(cam_r3));
+    \u0275\u0275repeater(ctx_r1.frameMetrics(cam_r4));
     \u0275\u0275advance(5);
-    \u0275\u0275textInterpolate(ctx_r1.cameraTitle(cam_r3));
+    \u0275\u0275textInterpolate(ctx_r1.cameraTitle(cam_r4));
     \u0275\u0275advance();
-    \u0275\u0275conditional(cam_r3.brand ? 12 : -1);
+    \u0275\u0275conditional(cam_r4.brand ? 12 : -1);
     \u0275\u0275advance();
-    \u0275\u0275conditional(cam_r3.lastSeenUtc ? 13 : 14);
+    \u0275\u0275conditional(cam_r4.lastSeenUtc ? 13 : 14);
   }
 }
-function CameraWallComponent_Conditional_38_Conditional_1_Template(rf, ctx) {
+function CameraWallComponent_Conditional_43_Conditional_1_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275repeaterCreate(0, CameraWallComponent_Conditional_38_Conditional_1_For_1_Template, 15, 7, "div", 21, _forTrack030);
+    \u0275\u0275repeaterCreate(0, CameraWallComponent_Conditional_43_Conditional_1_For_1_Template, 15, 7, "div", 23, _forTrack030);
   }
   if (rf & 2) {
     const ctx_r1 = \u0275\u0275nextContext(2);
     \u0275\u0275repeater(ctx_r1.liveCameras);
   }
 }
-function CameraWallComponent_Conditional_38_Template(rf, ctx) {
+function CameraWallComponent_Conditional_43_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275template(0, CameraWallComponent_Conditional_38_Conditional_0_Template, 3, 3, "div", 15)(1, CameraWallComponent_Conditional_38_Conditional_1_Template, 2, 0);
+    \u0275\u0275template(0, CameraWallComponent_Conditional_43_Conditional_0_Template, 3, 3, "div", 16)(1, CameraWallComponent_Conditional_43_Conditional_1_Template, 2, 0);
   }
   if (rf & 2) {
     const ctx_r1 = \u0275\u0275nextContext();
     \u0275\u0275conditional(ctx_r1.liveCameras.length === 0 ? 0 : 1);
   }
 }
-function CameraWallComponent_Conditional_39_Template(rf, ctx) {
+function CameraWallComponent_Conditional_44_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 15);
+    \u0275\u0275elementStart(0, "div", 16);
     \u0275\u0275text(1);
     \u0275\u0275pipe(2, "transloco");
     \u0275\u0275elementEnd();
@@ -66716,22 +66737,46 @@ function CameraWallComponent_Conditional_39_Template(rf, ctx) {
     \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(2, 1, "cameras.no_data"));
   }
 }
-function CameraWallComponent_Conditional_40_For_1_Conditional_5_Template(rf, ctx) {
+function CameraWallComponent_Conditional_45_For_1_Conditional_5_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "span", 41);
+    \u0275\u0275elementStart(0, "span", 43);
     \u0275\u0275text(1);
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
-    const cam_r6 = \u0275\u0275nextContext().$implicit;
+    const cam_r7 = \u0275\u0275nextContext().$implicit;
     \u0275\u0275advance();
-    \u0275\u0275textInterpolate(cam_r6.brand);
+    \u0275\u0275textInterpolate(cam_r7.brand);
   }
 }
-function CameraWallComponent_Conditional_40_For_1_Conditional_10_Conditional_1_Template(rf, ctx) {
+function CameraWallComponent_Conditional_45_For_1_Conditional_7_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "span", 26);
-    \u0275\u0275element(1, "span", 34);
+    const _r8 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "button", 55);
+    \u0275\u0275pipe(1, "transloco");
+    \u0275\u0275listener("click", function CameraWallComponent_Conditional_45_For_1_Conditional_7_Template_button_click_0_listener($event) {
+      \u0275\u0275restoreView(_r8);
+      const cam_r7 = \u0275\u0275nextContext().$implicit;
+      const ctx_r1 = \u0275\u0275nextContext(2);
+      $event.stopPropagation();
+      return \u0275\u0275resetView(ctx_r1.downloadCamera(cam_r7.ip));
+    });
+    \u0275\u0275elementStart(2, "mat-icon");
+    \u0275\u0275text(3);
+    \u0275\u0275elementEnd()();
+  }
+  if (rf & 2) {
+    const cam_r7 = \u0275\u0275nextContext().$implicit;
+    const ctx_r1 = \u0275\u0275nextContext(2);
+    \u0275\u0275property("disabled", ctx_r1.downloadingIp !== null)("title", \u0275\u0275pipeBind1(1, 3, "cameras.export.camera"));
+    \u0275\u0275advance(3);
+    \u0275\u0275textInterpolate(ctx_r1.downloadingIp === cam_r7.ip ? "autorenew" : "download");
+  }
+}
+function CameraWallComponent_Conditional_45_For_1_Conditional_12_Conditional_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "span", 28);
+    \u0275\u0275element(1, "span", 36);
     \u0275\u0275text(2);
     \u0275\u0275pipe(3, "transloco");
     \u0275\u0275elementEnd();
@@ -66741,38 +66786,38 @@ function CameraWallComponent_Conditional_40_For_1_Conditional_10_Conditional_1_T
     \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(3, 1, "cameras.live"));
   }
 }
-function CameraWallComponent_Conditional_40_For_1_Conditional_10_Conditional_2_Template(rf, ctx) {
+function CameraWallComponent_Conditional_45_For_1_Conditional_12_Conditional_2_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "span", 51);
+    \u0275\u0275elementStart(0, "span", 56);
     \u0275\u0275text(1);
     \u0275\u0275pipe(2, "date");
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
-    const cam_r6 = \u0275\u0275nextContext(2).$implicit;
+    const cam_r7 = \u0275\u0275nextContext(2).$implicit;
     const ctx_r1 = \u0275\u0275nextContext(2);
     \u0275\u0275advance();
-    \u0275\u0275textInterpolate(\u0275\u0275pipeBind2(2, 1, ctx_r1.mainFrame(cam_r6).timeUtc, "HH:mm:ss"));
+    \u0275\u0275textInterpolate(\u0275\u0275pipeBind2(2, 1, ctx_r1.mainFrame(cam_r7).timeUtc, "HH:mm:ss"));
   }
 }
-function CameraWallComponent_Conditional_40_For_1_Conditional_10_Template(rf, ctx) {
+function CameraWallComponent_Conditional_45_For_1_Conditional_12_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275element(0, "img", 23);
-    \u0275\u0275template(1, CameraWallComponent_Conditional_40_For_1_Conditional_10_Conditional_1_Template, 4, 3, "span", 26)(2, CameraWallComponent_Conditional_40_For_1_Conditional_10_Conditional_2_Template, 3, 4, "span", 51);
+    \u0275\u0275element(0, "img", 25);
+    \u0275\u0275template(1, CameraWallComponent_Conditional_45_For_1_Conditional_12_Conditional_1_Template, 4, 3, "span", 28)(2, CameraWallComponent_Conditional_45_For_1_Conditional_12_Conditional_2_Template, 3, 4, "span", 56);
   }
   if (rf & 2) {
-    const cam_r6 = \u0275\u0275nextContext().$implicit;
+    const cam_r7 = \u0275\u0275nextContext().$implicit;
     const ctx_r1 = \u0275\u0275nextContext(2);
-    \u0275\u0275property("src", ctx_r1.mainFrame(cam_r6).imageUrl, \u0275\u0275sanitizeUrl)("alt", ctx_r1.cameraTitle(cam_r6));
+    \u0275\u0275property("src", ctx_r1.frameSrc(ctx_r1.mainFrame(cam_r7)), \u0275\u0275sanitizeUrl)("alt", ctx_r1.cameraTitle(cam_r7));
     \u0275\u0275advance();
-    \u0275\u0275conditional(ctx_r1.isLive(cam_r6) ? 1 : -1);
+    \u0275\u0275conditional(ctx_r1.isLive(cam_r7) ? 1 : -1);
     \u0275\u0275advance();
-    \u0275\u0275conditional(ctx_r1.mainFrame(cam_r6).timeUtc ? 2 : -1);
+    \u0275\u0275conditional(ctx_r1.mainFrame(cam_r7).timeUtc ? 2 : -1);
   }
 }
-function CameraWallComponent_Conditional_40_For_1_Conditional_11_Template(rf, ctx) {
+function CameraWallComponent_Conditional_45_For_1_Conditional_13_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 24)(1, "mat-icon");
+    \u0275\u0275elementStart(0, "div", 26)(1, "mat-icon");
     \u0275\u0275text(2, "videocam_off");
     \u0275\u0275elementEnd();
     \u0275\u0275elementStart(3, "span");
@@ -66785,55 +66830,55 @@ function CameraWallComponent_Conditional_40_For_1_Conditional_11_Template(rf, ct
     \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(5, 1, "cameras.no_signal"));
   }
 }
-function CameraWallComponent_Conditional_40_For_1_Conditional_12_For_2_Template(rf, ctx) {
+function CameraWallComponent_Conditional_45_For_1_Conditional_14_For_2_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275element(0, "img", 23);
+    \u0275\u0275element(0, "img", 25);
   }
   if (rf & 2) {
-    const f_r7 = ctx.$implicit;
-    const cam_r6 = \u0275\u0275nextContext(2).$implicit;
+    const f_r9 = ctx.$implicit;
+    const cam_r7 = \u0275\u0275nextContext(2).$implicit;
     const ctx_r1 = \u0275\u0275nextContext(2);
-    \u0275\u0275property("src", f_r7.imageUrl, \u0275\u0275sanitizeUrl)("alt", ctx_r1.cameraTitle(cam_r6));
+    \u0275\u0275property("src", ctx_r1.frameSrc(f_r9), \u0275\u0275sanitizeUrl)("alt", ctx_r1.cameraTitle(cam_r7));
   }
 }
-function CameraWallComponent_Conditional_40_For_1_Conditional_12_Template(rf, ctx) {
+function CameraWallComponent_Conditional_45_For_1_Conditional_14_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 45);
-    \u0275\u0275repeaterCreate(1, CameraWallComponent_Conditional_40_For_1_Conditional_12_For_2_Template, 1, 2, "img", 23, _forTrack24);
+    \u0275\u0275elementStart(0, "div", 49);
+    \u0275\u0275repeaterCreate(1, CameraWallComponent_Conditional_45_For_1_Conditional_14_For_2_Template, 1, 2, "img", 25, _forTrack24);
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
-    const cam_r6 = \u0275\u0275nextContext().$implicit;
+    const cam_r7 = \u0275\u0275nextContext().$implicit;
     const ctx_r1 = \u0275\u0275nextContext(2);
     \u0275\u0275advance();
-    \u0275\u0275repeater(ctx_r1.thumbFrames(cam_r6));
+    \u0275\u0275repeater(ctx_r1.thumbFrames(cam_r7));
   }
 }
-function CameraWallComponent_Conditional_40_For_1_Conditional_27_Template(rf, ctx) {
+function CameraWallComponent_Conditional_45_For_1_Conditional_29_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "span", 52);
+    \u0275\u0275elementStart(0, "span", 57);
     \u0275\u0275text(1);
     \u0275\u0275pipe(2, "date");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(3, "span", 49);
+    \u0275\u0275elementStart(3, "span", 53);
     \u0275\u0275text(4);
     \u0275\u0275pipe(5, "date");
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
-    const cam_r6 = \u0275\u0275nextContext().$implicit;
+    const cam_r7 = \u0275\u0275nextContext().$implicit;
     \u0275\u0275advance();
-    \u0275\u0275textInterpolate(\u0275\u0275pipeBind2(2, 2, cam_r6.lastSeenUtc, "HH:mm"));
+    \u0275\u0275textInterpolate(\u0275\u0275pipeBind2(2, 2, cam_r7.lastSeenUtc, "HH:mm"));
     \u0275\u0275advance(3);
-    \u0275\u0275textInterpolate(\u0275\u0275pipeBind2(5, 5, cam_r6.lastSeenUtc, "dd MMM"));
+    \u0275\u0275textInterpolate(\u0275\u0275pipeBind2(5, 5, cam_r7.lastSeenUtc, "dd MMM"));
   }
 }
-function CameraWallComponent_Conditional_40_For_1_Conditional_28_Template(rf, ctx) {
+function CameraWallComponent_Conditional_45_For_1_Conditional_30_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "span", 48);
+    \u0275\u0275elementStart(0, "span", 52);
     \u0275\u0275text(1, "\u2014");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(2, "span", 49);
+    \u0275\u0275elementStart(2, "span", 53);
     \u0275\u0275text(3);
     \u0275\u0275pipe(4, "transloco");
     \u0275\u0275elementEnd();
@@ -66843,121 +66888,125 @@ function CameraWallComponent_Conditional_40_For_1_Conditional_28_Template(rf, ct
     \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(4, 1, "cameras.card.last"));
   }
 }
-function CameraWallComponent_Conditional_40_For_1_Conditional_29_For_2_Template(rf, ctx) {
+function CameraWallComponent_Conditional_45_For_1_Conditional_31_For_2_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "span", 35)(1, "mat-icon");
+    \u0275\u0275elementStart(0, "span", 37)(1, "mat-icon");
     \u0275\u0275text(2);
     \u0275\u0275elementEnd();
     \u0275\u0275text(3);
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
-    const m_r8 = ctx.$implicit;
-    \u0275\u0275classMap("tier-" + m_r8.tier);
-    \u0275\u0275property("title", m_r8.title);
+    const m_r10 = ctx.$implicit;
+    \u0275\u0275classMap("tier-" + m_r10.tier);
+    \u0275\u0275property("title", m_r10.title);
     \u0275\u0275advance(2);
-    \u0275\u0275textInterpolate(m_r8.icon);
+    \u0275\u0275textInterpolate(m_r10.icon);
     \u0275\u0275advance();
-    \u0275\u0275textInterpolate1("", m_r8.value, " ");
+    \u0275\u0275textInterpolate1("", m_r10.value, " ");
   }
 }
-function CameraWallComponent_Conditional_40_For_1_Conditional_29_Template(rf, ctx) {
+function CameraWallComponent_Conditional_45_For_1_Conditional_31_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 50);
-    \u0275\u0275repeaterCreate(1, CameraWallComponent_Conditional_40_For_1_Conditional_29_For_2_Template, 4, 5, "span", 28, _forTrack111);
+    \u0275\u0275elementStart(0, "div", 54);
+    \u0275\u0275repeaterCreate(1, CameraWallComponent_Conditional_45_For_1_Conditional_31_For_2_Template, 4, 5, "span", 30, _forTrack111);
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
-    const cam_r6 = \u0275\u0275nextContext().$implicit;
+    const cam_r7 = \u0275\u0275nextContext().$implicit;
     const ctx_r1 = \u0275\u0275nextContext(2);
     \u0275\u0275advance();
-    \u0275\u0275repeater(ctx_r1.frameMetrics(ctx_r1.mainFrame(cam_r6)));
+    \u0275\u0275repeater(ctx_r1.frameMetrics(ctx_r1.mainFrame(cam_r7)));
   }
 }
-function CameraWallComponent_Conditional_40_For_1_Template(rf, ctx) {
+function CameraWallComponent_Conditional_45_For_1_Template(rf, ctx) {
   if (rf & 1) {
-    const _r5 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "div", 37);
-    \u0275\u0275listener("click", function CameraWallComponent_Conditional_40_For_1_Template_div_click_0_listener() {
-      const cam_r6 = \u0275\u0275restoreView(_r5).$implicit;
+    const _r6 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "div", 39);
+    \u0275\u0275listener("click", function CameraWallComponent_Conditional_45_For_1_Template_div_click_0_listener() {
+      const cam_r7 = \u0275\u0275restoreView(_r6).$implicit;
       const ctx_r1 = \u0275\u0275nextContext(2);
-      return \u0275\u0275resetView(ctx_r1.openViewer(cam_r6.ip));
+      return \u0275\u0275resetView(ctx_r1.openViewer(cam_r7.ip));
     });
-    \u0275\u0275elementStart(1, "div", 38)(2, "div", 39)(3, "span", 40);
+    \u0275\u0275elementStart(1, "div", 40)(2, "div", 41)(3, "span", 42);
     \u0275\u0275text(4);
     \u0275\u0275elementEnd();
-    \u0275\u0275template(5, CameraWallComponent_Conditional_40_For_1_Conditional_5_Template, 2, 1, "span", 41);
+    \u0275\u0275template(5, CameraWallComponent_Conditional_45_For_1_Conditional_5_Template, 2, 1, "span", 43);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(6, "span", 42);
-    \u0275\u0275text(7);
-    \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(8, "div", 43)(9, "div", 44);
-    \u0275\u0275template(10, CameraWallComponent_Conditional_40_For_1_Conditional_10_Template, 3, 4)(11, CameraWallComponent_Conditional_40_For_1_Conditional_11_Template, 6, 3, "div", 24);
+    \u0275\u0275elementStart(6, "div", 44);
+    \u0275\u0275template(7, CameraWallComponent_Conditional_45_For_1_Conditional_7_Template, 4, 5, "button", 45);
+    \u0275\u0275elementStart(8, "span", 46);
+    \u0275\u0275text(9);
+    \u0275\u0275elementEnd()()();
+    \u0275\u0275elementStart(10, "div", 47)(11, "div", 48);
+    \u0275\u0275template(12, CameraWallComponent_Conditional_45_For_1_Conditional_12_Template, 3, 4)(13, CameraWallComponent_Conditional_45_For_1_Conditional_13_Template, 6, 3, "div", 26);
     \u0275\u0275elementEnd();
-    \u0275\u0275template(12, CameraWallComponent_Conditional_40_For_1_Conditional_12_Template, 3, 0, "div", 45);
+    \u0275\u0275template(14, CameraWallComponent_Conditional_45_For_1_Conditional_14_Template, 3, 0, "div", 49);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(13, "div", 46)(14, "div", 47)(15, "span", 48);
-    \u0275\u0275text(16);
-    \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(17, "span", 49);
+    \u0275\u0275elementStart(15, "div", 50)(16, "div", 51)(17, "span", 52);
     \u0275\u0275text(18);
-    \u0275\u0275pipe(19, "transloco");
-    \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(20, "div", 47)(21, "span", 48);
-    \u0275\u0275text(22);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(23, "span", 49);
+    \u0275\u0275elementStart(19, "span", 53);
+    \u0275\u0275text(20);
+    \u0275\u0275pipe(21, "transloco");
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(22, "div", 51)(23, "span", 52);
     \u0275\u0275text(24);
-    \u0275\u0275pipe(25, "transloco");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(25, "span", 53);
+    \u0275\u0275text(26);
+    \u0275\u0275pipe(27, "transloco");
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(26, "div", 47);
-    \u0275\u0275template(27, CameraWallComponent_Conditional_40_For_1_Conditional_27_Template, 6, 8)(28, CameraWallComponent_Conditional_40_For_1_Conditional_28_Template, 5, 3);
+    \u0275\u0275elementStart(28, "div", 51);
+    \u0275\u0275template(29, CameraWallComponent_Conditional_45_For_1_Conditional_29_Template, 6, 8)(30, CameraWallComponent_Conditional_45_For_1_Conditional_30_Template, 5, 3);
     \u0275\u0275elementEnd()();
-    \u0275\u0275template(29, CameraWallComponent_Conditional_40_For_1_Conditional_29_Template, 3, 0, "div", 50);
+    \u0275\u0275template(31, CameraWallComponent_Conditional_45_For_1_Conditional_31_Template, 3, 0, "div", 54);
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
-    const cam_r6 = ctx.$implicit;
+    const cam_r7 = ctx.$implicit;
     const ctx_r1 = \u0275\u0275nextContext(2);
-    \u0275\u0275classProp("is-live", ctx_r1.isLive(cam_r6));
+    \u0275\u0275classProp("is-live", ctx_r1.isLive(cam_r7));
     \u0275\u0275advance(4);
-    \u0275\u0275textInterpolate(ctx_r1.cameraTitle(cam_r6));
+    \u0275\u0275textInterpolate(ctx_r1.cameraTitle(cam_r7));
     \u0275\u0275advance();
-    \u0275\u0275conditional(cam_r6.brand ? 5 : -1);
+    \u0275\u0275conditional(cam_r7.brand ? 5 : -1);
+    \u0275\u0275advance(2);
+    \u0275\u0275conditional(ctx_r1.storageAvailable ? 7 : -1);
     \u0275\u0275advance();
-    \u0275\u0275classProp("live", ctx_r1.isLive(cam_r6));
+    \u0275\u0275classProp("live", ctx_r1.isLive(cam_r7));
     \u0275\u0275advance();
-    \u0275\u0275textInterpolate(ctx_r1.ageBadge(cam_r6));
+    \u0275\u0275textInterpolate(ctx_r1.ageBadge(cam_r7));
     \u0275\u0275advance(3);
-    \u0275\u0275conditional(ctx_r1.mainFrame(cam_r6) ? 10 : 11);
+    \u0275\u0275conditional(ctx_r1.mainFrame(cam_r7) ? 12 : 13);
     \u0275\u0275advance(2);
-    \u0275\u0275conditional(ctx_r1.thumbFrames(cam_r6).length > 0 ? 12 : -1);
+    \u0275\u0275conditional(ctx_r1.thumbFrames(cam_r7).length > 0 ? 14 : -1);
     \u0275\u0275advance(4);
-    \u0275\u0275textInterpolate(cam_r6.todayCount);
+    \u0275\u0275textInterpolate(cam_r7.todayCount);
     \u0275\u0275advance(2);
-    \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(19, 15, "cameras.card.today"));
+    \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(21, 16, "cameras.card.today"));
     \u0275\u0275advance(4);
-    \u0275\u0275textInterpolate(cam_r6.totalCount);
+    \u0275\u0275textInterpolate(cam_r7.totalCount);
     \u0275\u0275advance(2);
-    \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(25, 17, "cameras.card.total"));
+    \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(27, 18, "cameras.card.total"));
     \u0275\u0275advance(3);
-    \u0275\u0275conditional(cam_r6.lastSeenUtc ? 27 : 28);
+    \u0275\u0275conditional(cam_r7.lastSeenUtc ? 29 : 30);
     \u0275\u0275advance(2);
-    \u0275\u0275conditional(ctx_r1.mainFrame(cam_r6) ? 29 : -1);
+    \u0275\u0275conditional(ctx_r1.mainFrame(cam_r7) ? 31 : -1);
   }
 }
-function CameraWallComponent_Conditional_40_Template(rf, ctx) {
+function CameraWallComponent_Conditional_45_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275repeaterCreate(0, CameraWallComponent_Conditional_40_For_1_Template, 30, 19, "div", 36, _forTrack030);
+    \u0275\u0275repeaterCreate(0, CameraWallComponent_Conditional_45_For_1_Template, 32, 20, "div", 38, _forTrack030);
   }
   if (rf & 2) {
     const ctx_r1 = \u0275\u0275nextContext();
     \u0275\u0275repeater(ctx_r1.cameras);
   }
 }
-function CameraWallComponent_Conditional_41_Conditional_7_Template(rf, ctx) {
+function CameraWallComponent_Conditional_46_Conditional_7_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "span", 57);
+    \u0275\u0275elementStart(0, "span", 62);
     \u0275\u0275text(1);
     \u0275\u0275elementEnd();
   }
@@ -66967,30 +67016,44 @@ function CameraWallComponent_Conditional_41_Conditional_7_Template(rf, ctx) {
     \u0275\u0275textInterpolate(ctx_r1.currentFrame.brand);
   }
 }
-function CameraWallComponent_Conditional_41_Conditional_9_Template(rf, ctx) {
+function CameraWallComponent_Conditional_46_Conditional_13_Template(rf, ctx) {
   if (rf & 1) {
-    const _r10 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "button", 66);
+    const _r12 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "button", 71);
     \u0275\u0275pipe(1, "transloco");
-    \u0275\u0275listener("click", function CameraWallComponent_Conditional_41_Conditional_9_Template_button_click_0_listener() {
-      \u0275\u0275restoreView(_r10);
+    \u0275\u0275listener("click", function CameraWallComponent_Conditional_46_Conditional_13_Template_button_click_0_listener() {
+      \u0275\u0275restoreView(_r12);
       const ctx_r1 = \u0275\u0275nextContext(2);
-      return \u0275\u0275resetView(ctx_r1.clearCamera());
+      return \u0275\u0275resetView(ctx_r1.downloadCamera(ctx_r1.viewerCamera));
     });
     \u0275\u0275elementStart(2, "mat-icon");
     \u0275\u0275text(3);
     \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(4, "button", 71);
+    \u0275\u0275pipe(5, "transloco");
+    \u0275\u0275listener("click", function CameraWallComponent_Conditional_46_Conditional_13_Template_button_click_4_listener() {
+      \u0275\u0275restoreView(_r12);
+      const ctx_r1 = \u0275\u0275nextContext(2);
+      return \u0275\u0275resetView(ctx_r1.clearCamera());
+    });
+    \u0275\u0275elementStart(6, "mat-icon");
+    \u0275\u0275text(7);
+    \u0275\u0275elementEnd()();
   }
   if (rf & 2) {
     const ctx_r1 = \u0275\u0275nextContext(2);
-    \u0275\u0275property("disabled", ctx_r1.clearingCamera)("title", \u0275\u0275pipeBind1(1, 3, "cameras.storage.clear_camera"));
+    \u0275\u0275property("disabled", ctx_r1.downloadingIp !== null)("title", \u0275\u0275pipeBind1(1, 6, "cameras.export.camera"));
+    \u0275\u0275advance(3);
+    \u0275\u0275textInterpolate(ctx_r1.downloadingIp === ctx_r1.viewerCamera ? "autorenew" : "download");
+    \u0275\u0275advance();
+    \u0275\u0275property("disabled", ctx_r1.clearingCamera)("title", \u0275\u0275pipeBind1(5, 8, "cameras.storage.clear_camera"));
     \u0275\u0275advance(3);
     \u0275\u0275textInterpolate(ctx_r1.clearingCamera ? "autorenew" : "delete_sweep");
   }
 }
-function CameraWallComponent_Conditional_41_Conditional_14_Template(rf, ctx) {
+function CameraWallComponent_Conditional_46_Conditional_18_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "span", 62);
+    \u0275\u0275elementStart(0, "span", 67);
     \u0275\u0275text(1);
     \u0275\u0275pipe(2, "transloco");
     \u0275\u0275elementEnd();
@@ -67000,9 +67063,9 @@ function CameraWallComponent_Conditional_41_Conditional_14_Template(rf, ctx) {
     \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(2, 1, "cameras.loading"));
   }
 }
-function CameraWallComponent_Conditional_41_Conditional_15_Template(rf, ctx) {
+function CameraWallComponent_Conditional_46_Conditional_19_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "span", 62);
+    \u0275\u0275elementStart(0, "span", 67);
     \u0275\u0275text(1);
     \u0275\u0275pipe(2, "transloco");
     \u0275\u0275elementEnd();
@@ -67012,42 +67075,42 @@ function CameraWallComponent_Conditional_41_Conditional_15_Template(rf, ctx) {
     \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(2, 1, "cameras.no_archive"));
   }
 }
-function CameraWallComponent_Conditional_41_Conditional_16_For_1_Template(rf, ctx) {
+function CameraWallComponent_Conditional_46_Conditional_20_For_1_Template(rf, ctx) {
   if (rf & 1) {
-    const _r11 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "button", 68);
-    \u0275\u0275listener("click", function CameraWallComponent_Conditional_41_Conditional_16_For_1_Template_button_click_0_listener() {
-      const d_r12 = \u0275\u0275restoreView(_r11).$implicit;
+    const _r13 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "button", 73);
+    \u0275\u0275listener("click", function CameraWallComponent_Conditional_46_Conditional_20_For_1_Template_button_click_0_listener() {
+      const d_r14 = \u0275\u0275restoreView(_r13).$implicit;
       const ctx_r1 = \u0275\u0275nextContext(3);
-      return \u0275\u0275resetView(ctx_r1.selectDay(d_r12.day));
+      return \u0275\u0275resetView(ctx_r1.selectDay(d_r14.day));
     });
     \u0275\u0275text(1);
-    \u0275\u0275elementStart(2, "span", 69);
+    \u0275\u0275elementStart(2, "span", 74);
     \u0275\u0275text(3);
     \u0275\u0275elementEnd()();
   }
   if (rf & 2) {
-    const d_r12 = ctx.$implicit;
+    const d_r14 = ctx.$implicit;
     const ctx_r1 = \u0275\u0275nextContext(3);
-    \u0275\u0275classProp("active", d_r12.day === ctx_r1.selectedDay);
+    \u0275\u0275classProp("active", d_r14.day === ctx_r1.selectedDay);
     \u0275\u0275advance();
-    \u0275\u0275textInterpolate1(" ", d_r12.day, " ");
+    \u0275\u0275textInterpolate1(" ", d_r14.day, " ");
     \u0275\u0275advance(2);
-    \u0275\u0275textInterpolate(d_r12.count);
+    \u0275\u0275textInterpolate(d_r14.count);
   }
 }
-function CameraWallComponent_Conditional_41_Conditional_16_Template(rf, ctx) {
+function CameraWallComponent_Conditional_46_Conditional_20_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275repeaterCreate(0, CameraWallComponent_Conditional_41_Conditional_16_For_1_Template, 4, 4, "button", 67, _forTrack32);
+    \u0275\u0275repeaterCreate(0, CameraWallComponent_Conditional_46_Conditional_20_For_1_Template, 4, 4, "button", 72, _forTrack32);
   }
   if (rf & 2) {
     const ctx_r1 = \u0275\u0275nextContext(2);
     \u0275\u0275repeater(ctx_r1.days);
   }
 }
-function CameraWallComponent_Conditional_41_Conditional_18_Template(rf, ctx) {
+function CameraWallComponent_Conditional_46_Conditional_22_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "span", 62);
+    \u0275\u0275elementStart(0, "span", 67);
     \u0275\u0275text(1);
     \u0275\u0275pipe(2, "transloco");
     \u0275\u0275elementEnd();
@@ -67057,43 +67120,43 @@ function CameraWallComponent_Conditional_41_Conditional_18_Template(rf, ctx) {
     \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(2, 1, "cameras.loading"));
   }
 }
-function CameraWallComponent_Conditional_41_Conditional_19_For_4_Template(rf, ctx) {
+function CameraWallComponent_Conditional_46_Conditional_23_For_4_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "span", 35)(1, "mat-icon");
+    \u0275\u0275elementStart(0, "span", 37)(1, "mat-icon");
     \u0275\u0275text(2);
     \u0275\u0275elementEnd();
     \u0275\u0275text(3);
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
-    const m_r13 = ctx.$implicit;
-    \u0275\u0275classMap("tier-" + m_r13.tier);
-    \u0275\u0275property("title", m_r13.title);
+    const m_r15 = ctx.$implicit;
+    \u0275\u0275classMap("tier-" + m_r15.tier);
+    \u0275\u0275property("title", m_r15.title);
     \u0275\u0275advance(2);
-    \u0275\u0275textInterpolate(m_r13.icon);
+    \u0275\u0275textInterpolate(m_r15.icon);
     \u0275\u0275advance();
-    \u0275\u0275textInterpolate1("", m_r13.value, " ");
+    \u0275\u0275textInterpolate1("", m_r15.value, " ");
   }
 }
-function CameraWallComponent_Conditional_41_Conditional_19_Template(rf, ctx) {
+function CameraWallComponent_Conditional_46_Conditional_23_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 64);
-    \u0275\u0275element(1, "img", 23);
-    \u0275\u0275elementStart(2, "div", 70);
-    \u0275\u0275repeaterCreate(3, CameraWallComponent_Conditional_41_Conditional_19_For_4_Template, 4, 5, "span", 28, _forTrack111);
+    \u0275\u0275elementStart(0, "div", 69);
+    \u0275\u0275element(1, "img", 25);
+    \u0275\u0275elementStart(2, "div", 75);
+    \u0275\u0275repeaterCreate(3, CameraWallComponent_Conditional_46_Conditional_23_For_4_Template, 4, 5, "span", 30, _forTrack111);
     \u0275\u0275elementEnd()();
   }
   if (rf & 2) {
     const ctx_r1 = \u0275\u0275nextContext(2);
     \u0275\u0275advance();
-    \u0275\u0275property("src", ctx_r1.currentFrame.imageUrl, \u0275\u0275sanitizeUrl)("alt", ctx_r1.viewerCamera);
+    \u0275\u0275property("src", ctx_r1.frameSrc(ctx_r1.currentFrame), \u0275\u0275sanitizeUrl)("alt", ctx_r1.viewerCamera);
     \u0275\u0275advance(2);
     \u0275\u0275repeater(ctx_r1.frameMetrics(ctx_r1.currentFrame));
   }
 }
-function CameraWallComponent_Conditional_41_Conditional_20_Template(rf, ctx) {
+function CameraWallComponent_Conditional_46_Conditional_24_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "span", 62);
+    \u0275\u0275elementStart(0, "span", 67);
     \u0275\u0275text(1);
     \u0275\u0275pipe(2, "transloco");
     \u0275\u0275elementEnd();
@@ -67103,9 +67166,9 @@ function CameraWallComponent_Conditional_41_Conditional_20_Template(rf, ctx) {
     \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(2, 1, "cameras.no_frames"));
   }
 }
-function CameraWallComponent_Conditional_41_Conditional_21_Conditional_12_Template(rf, ctx) {
+function CameraWallComponent_Conditional_46_Conditional_25_Conditional_12_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "span", 76);
+    \u0275\u0275elementStart(0, "span", 81);
     \u0275\u0275text(1);
     \u0275\u0275pipe(2, "date");
     \u0275\u0275elementEnd();
@@ -67116,38 +67179,38 @@ function CameraWallComponent_Conditional_41_Conditional_21_Conditional_12_Templa
     \u0275\u0275textInterpolate(\u0275\u0275pipeBind2(2, 1, ctx_r1.currentFrame.timeUtc, "dd.MM.yyyy HH:mm:ss"));
   }
 }
-function CameraWallComponent_Conditional_41_Conditional_21_Template(rf, ctx) {
+function CameraWallComponent_Conditional_46_Conditional_25_Template(rf, ctx) {
   if (rf & 1) {
-    const _r14 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "div", 65)(1, "div", 71)(2, "button", 72);
-    \u0275\u0275listener("click", function CameraWallComponent_Conditional_41_Conditional_21_Template_button_click_2_listener() {
-      \u0275\u0275restoreView(_r14);
+    const _r16 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "div", 70)(1, "div", 76)(2, "button", 77);
+    \u0275\u0275listener("click", function CameraWallComponent_Conditional_46_Conditional_25_Template_button_click_2_listener() {
+      \u0275\u0275restoreView(_r16);
       const ctx_r1 = \u0275\u0275nextContext(2);
       return \u0275\u0275resetView(ctx_r1.prevFrame());
     });
     \u0275\u0275elementStart(3, "mat-icon");
     \u0275\u0275text(4, "chevron_left");
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(5, "input", 73);
-    \u0275\u0275listener("input", function CameraWallComponent_Conditional_41_Conditional_21_Template_input_input_5_listener($event) {
-      \u0275\u0275restoreView(_r14);
+    \u0275\u0275elementStart(5, "input", 78);
+    \u0275\u0275listener("input", function CameraWallComponent_Conditional_46_Conditional_25_Template_input_input_5_listener($event) {
+      \u0275\u0275restoreView(_r16);
       const ctx_r1 = \u0275\u0275nextContext(2);
       return \u0275\u0275resetView(ctx_r1.onScrub($event));
     });
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(6, "button", 72);
-    \u0275\u0275listener("click", function CameraWallComponent_Conditional_41_Conditional_21_Template_button_click_6_listener() {
-      \u0275\u0275restoreView(_r14);
+    \u0275\u0275elementStart(6, "button", 77);
+    \u0275\u0275listener("click", function CameraWallComponent_Conditional_46_Conditional_25_Template_button_click_6_listener() {
+      \u0275\u0275restoreView(_r16);
       const ctx_r1 = \u0275\u0275nextContext(2);
       return \u0275\u0275resetView(ctx_r1.nextFrame());
     });
     \u0275\u0275elementStart(7, "mat-icon");
     \u0275\u0275text(8, "chevron_right");
     \u0275\u0275elementEnd()()();
-    \u0275\u0275elementStart(9, "div", 74)(10, "span", 75);
+    \u0275\u0275elementStart(9, "div", 79)(10, "span", 80);
     \u0275\u0275text(11);
     \u0275\u0275elementEnd();
-    \u0275\u0275template(12, CameraWallComponent_Conditional_41_Conditional_21_Conditional_12_Template, 3, 4, "span", 76);
+    \u0275\u0275template(12, CameraWallComponent_Conditional_46_Conditional_25_Conditional_12_Template, 3, 4, "span", 81);
     \u0275\u0275elementEnd()();
   }
   if (rf & 2) {
@@ -67164,44 +67227,53 @@ function CameraWallComponent_Conditional_41_Conditional_21_Template(rf, ctx) {
     \u0275\u0275conditional((ctx_r1.currentFrame == null ? null : ctx_r1.currentFrame.timeUtc) ? 12 : -1);
   }
 }
-function CameraWallComponent_Conditional_41_Template(rf, ctx) {
+function CameraWallComponent_Conditional_46_Template(rf, ctx) {
   if (rf & 1) {
-    const _r9 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "div", 53);
-    \u0275\u0275listener("click", function CameraWallComponent_Conditional_41_Template_div_click_0_listener() {
-      \u0275\u0275restoreView(_r9);
+    const _r11 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "div", 58);
+    \u0275\u0275listener("click", function CameraWallComponent_Conditional_46_Template_div_click_0_listener() {
+      \u0275\u0275restoreView(_r11);
       const ctx_r1 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r1.closeViewer());
     });
-    \u0275\u0275elementStart(1, "div", 54);
-    \u0275\u0275listener("click", function CameraWallComponent_Conditional_41_Template_div_click_1_listener($event) {
-      \u0275\u0275restoreView(_r9);
+    \u0275\u0275elementStart(1, "div", 59);
+    \u0275\u0275listener("click", function CameraWallComponent_Conditional_46_Template_div_click_1_listener($event) {
+      \u0275\u0275restoreView(_r11);
       return \u0275\u0275resetView($event.stopPropagation());
     });
-    \u0275\u0275elementStart(2, "div", 55)(3, "span", 56)(4, "mat-icon");
+    \u0275\u0275elementStart(2, "div", 60)(3, "span", 61)(4, "mat-icon");
     \u0275\u0275text(5, "history");
     \u0275\u0275elementEnd();
     \u0275\u0275text(6);
-    \u0275\u0275template(7, CameraWallComponent_Conditional_41_Conditional_7_Template, 2, 1, "span", 57);
+    \u0275\u0275template(7, CameraWallComponent_Conditional_46_Conditional_7_Template, 2, 1, "span", 62);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(8, "div", 58);
-    \u0275\u0275template(9, CameraWallComponent_Conditional_41_Conditional_9_Template, 4, 5, "button", 59);
-    \u0275\u0275elementStart(10, "button", 60);
-    \u0275\u0275listener("click", function CameraWallComponent_Conditional_41_Template_button_click_10_listener() {
-      \u0275\u0275restoreView(_r9);
+    \u0275\u0275elementStart(8, "div", 63)(9, "button", 64);
+    \u0275\u0275pipe(10, "transloco");
+    \u0275\u0275listener("click", function CameraWallComponent_Conditional_46_Template_button_click_9_listener() {
+      \u0275\u0275restoreView(_r11);
+      const ctx_r1 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r1.toggleBoxes());
+    });
+    \u0275\u0275elementStart(11, "mat-icon");
+    \u0275\u0275text(12);
+    \u0275\u0275elementEnd()();
+    \u0275\u0275template(13, CameraWallComponent_Conditional_46_Conditional_13_Template, 8, 10);
+    \u0275\u0275elementStart(14, "button", 65);
+    \u0275\u0275listener("click", function CameraWallComponent_Conditional_46_Template_button_click_14_listener() {
+      \u0275\u0275restoreView(_r11);
       const ctx_r1 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r1.closeViewer());
     });
-    \u0275\u0275elementStart(11, "mat-icon");
-    \u0275\u0275text(12, "close");
+    \u0275\u0275elementStart(15, "mat-icon");
+    \u0275\u0275text(16, "close");
     \u0275\u0275elementEnd()()()();
-    \u0275\u0275elementStart(13, "div", 61);
-    \u0275\u0275template(14, CameraWallComponent_Conditional_41_Conditional_14_Template, 3, 3, "span", 62)(15, CameraWallComponent_Conditional_41_Conditional_15_Template, 3, 3, "span", 62)(16, CameraWallComponent_Conditional_41_Conditional_16_Template, 2, 0);
+    \u0275\u0275elementStart(17, "div", 66);
+    \u0275\u0275template(18, CameraWallComponent_Conditional_46_Conditional_18_Template, 3, 3, "span", 67)(19, CameraWallComponent_Conditional_46_Conditional_19_Template, 3, 3, "span", 67)(20, CameraWallComponent_Conditional_46_Conditional_20_Template, 2, 0);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(17, "div", 63);
-    \u0275\u0275template(18, CameraWallComponent_Conditional_41_Conditional_18_Template, 3, 3, "span", 62)(19, CameraWallComponent_Conditional_41_Conditional_19_Template, 5, 2, "div", 64)(20, CameraWallComponent_Conditional_41_Conditional_20_Template, 3, 3, "span", 62);
+    \u0275\u0275elementStart(21, "div", 68);
+    \u0275\u0275template(22, CameraWallComponent_Conditional_46_Conditional_22_Template, 3, 3, "span", 67)(23, CameraWallComponent_Conditional_46_Conditional_23_Template, 5, 2, "div", 69)(24, CameraWallComponent_Conditional_46_Conditional_24_Template, 3, 3, "span", 67);
     \u0275\u0275elementEnd();
-    \u0275\u0275template(21, CameraWallComponent_Conditional_41_Conditional_21_Template, 13, 7, "div", 65);
+    \u0275\u0275template(25, CameraWallComponent_Conditional_46_Conditional_25_Template, 13, 7, "div", 70);
     \u0275\u0275elementEnd()();
   }
   if (rf & 2) {
@@ -67211,18 +67283,23 @@ function CameraWallComponent_Conditional_41_Template(rf, ctx) {
     \u0275\u0275advance();
     \u0275\u0275conditional((ctx_r1.currentFrame == null ? null : ctx_r1.currentFrame.brand) ? 7 : -1);
     \u0275\u0275advance(2);
-    \u0275\u0275conditional(ctx_r1.storageAvailable ? 9 : -1);
-    \u0275\u0275advance(5);
-    \u0275\u0275conditional(ctx_r1.loadingDays ? 14 : ctx_r1.days.length === 0 ? 15 : 16);
-    \u0275\u0275advance(4);
-    \u0275\u0275conditional(ctx_r1.loadingFrames ? 18 : ctx_r1.currentFrame ? 19 : ctx_r1.selectedDay ? 20 : -1);
+    \u0275\u0275classProp("on", ctx_r1.showBoxes);
+    \u0275\u0275property("title", \u0275\u0275pipeBind1(10, 10, ctx_r1.showBoxes ? "cameras.boxes_on" : "cameras.boxes_off"));
     \u0275\u0275advance(3);
-    \u0275\u0275conditional(ctx_r1.frames.length > 0 ? 21 : -1);
+    \u0275\u0275textInterpolate(ctx_r1.showBoxes ? "crop_free" : "crop_din");
+    \u0275\u0275advance();
+    \u0275\u0275conditional(ctx_r1.storageAvailable ? 13 : -1);
+    \u0275\u0275advance(5);
+    \u0275\u0275conditional(ctx_r1.loadingDays ? 18 : ctx_r1.days.length === 0 ? 19 : 20);
+    \u0275\u0275advance(4);
+    \u0275\u0275conditional(ctx_r1.loadingFrames ? 22 : ctx_r1.currentFrame ? 23 : ctx_r1.selectedDay ? 24 : -1);
+    \u0275\u0275advance(3);
+    \u0275\u0275conditional(ctx_r1.frames.length > 0 ? 25 : -1);
   }
 }
-function CameraWallComponent_Conditional_42_Conditional_16_Conditional_35_Template(rf, ctx) {
+function CameraWallComponent_Conditional_47_Conditional_16_Conditional_35_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 99)(1, "mat-icon");
+    \u0275\u0275elementStart(0, "div", 103)(1, "mat-icon");
     \u0275\u0275text(2, "autorenew");
     \u0275\u0275elementEnd();
     \u0275\u0275text(3);
@@ -67234,9 +67311,9 @@ function CameraWallComponent_Conditional_42_Conditional_16_Conditional_35_Templa
     \u0275\u0275textInterpolate1("", \u0275\u0275pipeBind1(4, 1, "cameras.storage.cleaning"), " ");
   }
 }
-function CameraWallComponent_Conditional_42_Conditional_16_Conditional_51_Template(rf, ctx) {
+function CameraWallComponent_Conditional_47_Conditional_16_Conditional_51_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "span", 48);
+    \u0275\u0275elementStart(0, "span", 52);
     \u0275\u0275text(1);
     \u0275\u0275elementStart(2, "small");
     \u0275\u0275text(3);
@@ -67251,16 +67328,16 @@ function CameraWallComponent_Conditional_42_Conditional_16_Conditional_51_Templa
     \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(4, 2, ctx_r1.retention.unit === "days" ? "cameras.storage.unit_days" : "cameras.storage.unit_hours"));
   }
 }
-function CameraWallComponent_Conditional_42_Conditional_16_Conditional_52_Template(rf, ctx) {
+function CameraWallComponent_Conditional_47_Conditional_16_Conditional_52_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "span", 48);
+    \u0275\u0275elementStart(0, "span", 52);
     \u0275\u0275text(1, "\u2014");
     \u0275\u0275elementEnd();
   }
 }
-function CameraWallComponent_Conditional_42_Conditional_16_Conditional_57_Template(rf, ctx) {
+function CameraWallComponent_Conditional_47_Conditional_16_Conditional_57_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "span", 102);
+    \u0275\u0275elementStart(0, "span", 106);
     \u0275\u0275text(1);
     \u0275\u0275pipe(2, "date");
     \u0275\u0275elementEnd();
@@ -67271,14 +67348,14 @@ function CameraWallComponent_Conditional_42_Conditional_16_Conditional_57_Templa
     \u0275\u0275textInterpolate(\u0275\u0275pipeBind2(2, 1, ctx_r1.storage.oldestUtc, "dd.MM HH:mm"));
   }
 }
-function CameraWallComponent_Conditional_42_Conditional_16_Conditional_58_Template(rf, ctx) {
+function CameraWallComponent_Conditional_47_Conditional_16_Conditional_58_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "span", 48);
+    \u0275\u0275elementStart(0, "span", 52);
     \u0275\u0275text(1, "\u2014");
     \u0275\u0275elementEnd();
   }
 }
-function CameraWallComponent_Conditional_42_Conditional_16_Conditional_89_Conditional_1_Template(rf, ctx) {
+function CameraWallComponent_Conditional_47_Conditional_16_Conditional_89_Conditional_1_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "mat-icon");
     \u0275\u0275text(1, "check_circle");
@@ -67291,7 +67368,7 @@ function CameraWallComponent_Conditional_42_Conditional_16_Conditional_89_Condit
     \u0275\u0275textInterpolate1("", \u0275\u0275pipeBind1(3, 1, "cameras.storage.nothing_to_clean"), " ");
   }
 }
-function CameraWallComponent_Conditional_42_Conditional_16_Conditional_89_Conditional_2_Template(rf, ctx) {
+function CameraWallComponent_Conditional_47_Conditional_16_Conditional_89_Conditional_2_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "mat-icon");
     \u0275\u0275text(1, "error");
@@ -67304,7 +67381,7 @@ function CameraWallComponent_Conditional_42_Conditional_16_Conditional_89_Condit
     \u0275\u0275textInterpolate1("", \u0275\u0275pipeBind1(3, 1, "cameras.storage.clean_error"), " ");
   }
 }
-function CameraWallComponent_Conditional_42_Conditional_16_Conditional_89_Conditional_3_Template(rf, ctx) {
+function CameraWallComponent_Conditional_47_Conditional_16_Conditional_89_Conditional_3_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "mat-icon");
     \u0275\u0275text(1, "check_circle");
@@ -67318,10 +67395,10 @@ function CameraWallComponent_Conditional_42_Conditional_16_Conditional_89_Condit
     \u0275\u0275textInterpolate2("", \u0275\u0275pipeBind1(3, 2, "cameras.storage.freed"), " ", ctx_r1.cleanupNote, " ");
   }
 }
-function CameraWallComponent_Conditional_42_Conditional_16_Conditional_89_Template(rf, ctx) {
+function CameraWallComponent_Conditional_47_Conditional_16_Conditional_89_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 119);
-    \u0275\u0275template(1, CameraWallComponent_Conditional_42_Conditional_16_Conditional_89_Conditional_1_Template, 4, 3)(2, CameraWallComponent_Conditional_42_Conditional_16_Conditional_89_Conditional_2_Template, 4, 3)(3, CameraWallComponent_Conditional_42_Conditional_16_Conditional_89_Conditional_3_Template, 4, 4);
+    \u0275\u0275elementStart(0, "div", 123);
+    \u0275\u0275template(1, CameraWallComponent_Conditional_47_Conditional_16_Conditional_89_Conditional_1_Template, 4, 3)(2, CameraWallComponent_Conditional_47_Conditional_16_Conditional_89_Conditional_2_Template, 4, 3)(3, CameraWallComponent_Conditional_47_Conditional_16_Conditional_89_Conditional_3_Template, 4, 4);
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
@@ -67331,9 +67408,9 @@ function CameraWallComponent_Conditional_42_Conditional_16_Conditional_89_Templa
     \u0275\u0275conditional(ctx_r1.cleanupNote === "ok" ? 1 : ctx_r1.cleanupNote === "error" ? 2 : 3);
   }
 }
-function CameraWallComponent_Conditional_42_Conditional_16_Conditional_96_Template(rf, ctx) {
+function CameraWallComponent_Conditional_47_Conditional_16_Conditional_96_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 117);
+    \u0275\u0275elementStart(0, "div", 121);
     \u0275\u0275text(1);
     \u0275\u0275pipe(2, "transloco");
     \u0275\u0275elementEnd();
@@ -67343,43 +67420,43 @@ function CameraWallComponent_Conditional_42_Conditional_16_Conditional_96_Templa
     \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(2, 1, "cameras.storage.log_empty"));
   }
 }
-function CameraWallComponent_Conditional_42_Conditional_16_Conditional_97_For_2_Template(rf, ctx) {
+function CameraWallComponent_Conditional_47_Conditional_16_Conditional_97_For_2_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "li", 120)(1, "span", 121);
+    \u0275\u0275elementStart(0, "li", 124)(1, "span", 125);
     \u0275\u0275text(2);
     \u0275\u0275pipe(3, "transloco");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(4, "span", 122);
+    \u0275\u0275elementStart(4, "span", 126);
     \u0275\u0275text(5);
-    \u0275\u0275elementStart(6, "span", 123);
+    \u0275\u0275elementStart(6, "span", 127);
     \u0275\u0275text(7);
     \u0275\u0275pipe(8, "number");
     \u0275\u0275pipe(9, "transloco");
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(10, "span", 124);
+    \u0275\u0275elementStart(10, "span", 128);
     \u0275\u0275text(11);
     \u0275\u0275pipe(12, "date");
     \u0275\u0275elementEnd()();
   }
   if (rf & 2) {
-    const e_r17 = ctx.$implicit;
+    const e_r19 = ctx.$implicit;
     const ctx_r1 = \u0275\u0275nextContext(4);
     \u0275\u0275advance();
-    \u0275\u0275classProp("manual", e_r17.trigger === "manual");
+    \u0275\u0275classProp("manual", e_r19.trigger === "manual");
     \u0275\u0275advance();
-    \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(3, 7, e_r17.trigger === "manual" ? "cameras.storage.trigger_manual" : "cameras.storage.trigger_auto"), " ");
+    \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(3, 7, e_r19.trigger === "manual" ? "cameras.storage.trigger_manual" : "cameras.storage.trigger_auto"), " ");
     \u0275\u0275advance(3);
-    \u0275\u0275textInterpolate1(" \u2212", ctx_r1.formatBytes(e_r17.freedBytes), " ");
+    \u0275\u0275textInterpolate1(" \u2212", ctx_r1.formatBytes(e_r19.freedBytes), " ");
     \u0275\u0275advance(2);
-    \u0275\u0275textInterpolate2("\xB7 ", \u0275\u0275pipeBind1(8, 9, e_r17.deletedFrames), " ", \u0275\u0275pipeBind1(9, 11, "cameras.storage.frames"), "");
+    \u0275\u0275textInterpolate2("\xB7 ", \u0275\u0275pipeBind1(8, 9, e_r19.deletedFrames), " ", \u0275\u0275pipeBind1(9, 11, "cameras.storage.frames"), "");
     \u0275\u0275advance(4);
-    \u0275\u0275textInterpolate(\u0275\u0275pipeBind2(12, 13, e_r17.atUtc, "dd.MM HH:mm"));
+    \u0275\u0275textInterpolate(\u0275\u0275pipeBind2(12, 13, e_r19.atUtc, "dd.MM HH:mm"));
   }
 }
-function CameraWallComponent_Conditional_42_Conditional_16_Conditional_97_Template(rf, ctx) {
+function CameraWallComponent_Conditional_47_Conditional_16_Conditional_97_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "ul", 118);
-    \u0275\u0275repeaterCreate(1, CameraWallComponent_Conditional_42_Conditional_16_Conditional_97_For_2_Template, 13, 16, "li", 120, _forTrack4);
+    \u0275\u0275elementStart(0, "ul", 122);
+    \u0275\u0275repeaterCreate(1, CameraWallComponent_Conditional_47_Conditional_16_Conditional_97_For_2_Template, 13, 16, "li", 124, _forTrack4);
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
@@ -67388,111 +67465,111 @@ function CameraWallComponent_Conditional_42_Conditional_16_Conditional_97_Templa
     \u0275\u0275repeater(ctx_r1.storage.recentCleanups);
   }
 }
-function CameraWallComponent_Conditional_42_Conditional_16_Template(rf, ctx) {
+function CameraWallComponent_Conditional_47_Conditional_16_Template(rf, ctx) {
   if (rf & 1) {
-    const _r16 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "div", 82)(1, "div", 84)(2, "div", 85);
+    const _r18 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "div", 86)(1, "div", 88)(2, "div", 89);
     \u0275\u0275namespaceSVG();
-    \u0275\u0275elementStart(3, "svg", 86);
-    \u0275\u0275element(4, "circle", 87)(5, "circle", 88);
+    \u0275\u0275elementStart(3, "svg", 90);
+    \u0275\u0275element(4, "circle", 91)(5, "circle", 92);
     \u0275\u0275elementEnd();
     \u0275\u0275namespaceHTML();
-    \u0275\u0275elementStart(6, "div", 89)(7, "span", 90);
+    \u0275\u0275elementStart(6, "div", 93)(7, "span", 94);
     \u0275\u0275text(8);
     \u0275\u0275elementStart(9, "small");
     \u0275\u0275text(10, "%");
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(11, "span", 91);
+    \u0275\u0275elementStart(11, "span", 95);
     \u0275\u0275text(12);
     \u0275\u0275pipe(13, "transloco");
     \u0275\u0275elementEnd()()();
-    \u0275\u0275elementStart(14, "div", 92)(15, "div", 93);
-    \u0275\u0275element(16, "span", 94);
-    \u0275\u0275elementStart(17, "span", 95);
+    \u0275\u0275elementStart(14, "div", 96)(15, "div", 97);
+    \u0275\u0275element(16, "span", 98);
+    \u0275\u0275elementStart(17, "span", 99);
     \u0275\u0275text(18);
     \u0275\u0275pipe(19, "transloco");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(20, "span", 96);
+    \u0275\u0275elementStart(20, "span", 100);
     \u0275\u0275text(21);
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(22, "div", 97);
-    \u0275\u0275element(23, "span", 94);
-    \u0275\u0275elementStart(24, "span", 95);
+    \u0275\u0275elementStart(22, "div", 101);
+    \u0275\u0275element(23, "span", 98);
+    \u0275\u0275elementStart(24, "span", 99);
     \u0275\u0275text(25);
     \u0275\u0275pipe(26, "transloco");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(27, "span", 96);
+    \u0275\u0275elementStart(27, "span", 100);
     \u0275\u0275text(28);
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(29, "div", 98)(30, "span", 95);
+    \u0275\u0275elementStart(29, "div", 102)(30, "span", 99);
     \u0275\u0275text(31);
     \u0275\u0275pipe(32, "transloco");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(33, "span", 96);
+    \u0275\u0275elementStart(33, "span", 100);
     \u0275\u0275text(34);
     \u0275\u0275elementEnd()();
-    \u0275\u0275template(35, CameraWallComponent_Conditional_42_Conditional_16_Conditional_35_Template, 5, 3, "div", 99);
+    \u0275\u0275template(35, CameraWallComponent_Conditional_47_Conditional_16_Conditional_35_Template, 5, 3, "div", 103);
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(36, "div", 100)(37, "div", 101)(38, "span", 48);
+    \u0275\u0275elementStart(36, "div", 104)(37, "div", 105)(38, "span", 52);
     \u0275\u0275text(39);
     \u0275\u0275pipe(40, "number");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(41, "span", 49);
+    \u0275\u0275elementStart(41, "span", 53);
     \u0275\u0275text(42);
     \u0275\u0275pipe(43, "transloco");
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(44, "div", 101)(45, "span", 48);
+    \u0275\u0275elementStart(44, "div", 105)(45, "span", 52);
     \u0275\u0275text(46);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(47, "span", 49);
+    \u0275\u0275elementStart(47, "span", 53);
     \u0275\u0275text(48);
     \u0275\u0275pipe(49, "transloco");
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(50, "div", 101);
-    \u0275\u0275template(51, CameraWallComponent_Conditional_42_Conditional_16_Conditional_51_Template, 5, 4, "span", 48)(52, CameraWallComponent_Conditional_42_Conditional_16_Conditional_52_Template, 2, 0, "span", 48);
-    \u0275\u0275elementStart(53, "span", 49);
+    \u0275\u0275elementStart(50, "div", 105);
+    \u0275\u0275template(51, CameraWallComponent_Conditional_47_Conditional_16_Conditional_51_Template, 5, 4, "span", 52)(52, CameraWallComponent_Conditional_47_Conditional_16_Conditional_52_Template, 2, 0, "span", 52);
+    \u0275\u0275elementStart(53, "span", 53);
     \u0275\u0275text(54);
     \u0275\u0275pipe(55, "transloco");
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(56, "div", 101);
-    \u0275\u0275template(57, CameraWallComponent_Conditional_42_Conditional_16_Conditional_57_Template, 3, 4, "span", 102)(58, CameraWallComponent_Conditional_42_Conditional_16_Conditional_58_Template, 2, 0, "span", 48);
-    \u0275\u0275elementStart(59, "span", 49);
+    \u0275\u0275elementStart(56, "div", 105);
+    \u0275\u0275template(57, CameraWallComponent_Conditional_47_Conditional_16_Conditional_57_Template, 3, 4, "span", 106)(58, CameraWallComponent_Conditional_47_Conditional_16_Conditional_58_Template, 2, 0, "span", 52);
+    \u0275\u0275elementStart(59, "span", 53);
     \u0275\u0275text(60);
     \u0275\u0275pipe(61, "transloco");
     \u0275\u0275elementEnd()()();
-    \u0275\u0275elementStart(62, "div", 103)(63, "div", 104)(64, "span", 105);
+    \u0275\u0275elementStart(62, "div", 107)(63, "div", 108)(64, "span", 109);
     \u0275\u0275text(65);
     \u0275\u0275pipe(66, "transloco");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(67, "span", 106);
+    \u0275\u0275elementStart(67, "span", 110);
     \u0275\u0275text(68);
     \u0275\u0275pipe(69, "transloco");
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(70, "div", 107)(71, "select", 108);
-    \u0275\u0275listener("change", function CameraWallComponent_Conditional_42_Conditional_16_Template_select_change_71_listener($event) {
-      \u0275\u0275restoreView(_r16);
+    \u0275\u0275elementStart(70, "div", 111)(71, "select", 112);
+    \u0275\u0275listener("change", function CameraWallComponent_Conditional_47_Conditional_16_Template_select_change_71_listener($event) {
+      \u0275\u0275restoreView(_r18);
       const ctx_r1 = \u0275\u0275nextContext(2);
       return \u0275\u0275resetView(ctx_r1.onKeepChange($event));
     });
-    \u0275\u0275elementStart(72, "option", 109);
+    \u0275\u0275elementStart(72, "option", 113);
     \u0275\u0275text(73);
     \u0275\u0275pipe(74, "transloco");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(75, "option", 110);
+    \u0275\u0275elementStart(75, "option", 114);
     \u0275\u0275text(76);
     \u0275\u0275pipe(77, "transloco");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(78, "option", 111);
+    \u0275\u0275elementStart(78, "option", 115);
     \u0275\u0275text(79);
     \u0275\u0275pipe(80, "transloco");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(81, "option", 112);
+    \u0275\u0275elementStart(81, "option", 116);
     \u0275\u0275text(82);
     \u0275\u0275pipe(83, "transloco");
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(84, "button", 113);
-    \u0275\u0275listener("click", function CameraWallComponent_Conditional_42_Conditional_16_Template_button_click_84_listener() {
-      \u0275\u0275restoreView(_r16);
+    \u0275\u0275elementStart(84, "button", 117);
+    \u0275\u0275listener("click", function CameraWallComponent_Conditional_47_Conditional_16_Template_button_click_84_listener() {
+      \u0275\u0275restoreView(_r18);
       const ctx_r1 = \u0275\u0275nextContext(2);
       return \u0275\u0275resetView(ctx_r1.runCleanup());
     });
@@ -67502,14 +67579,14 @@ function CameraWallComponent_Conditional_42_Conditional_16_Template(rf, ctx) {
     \u0275\u0275text(87);
     \u0275\u0275pipe(88, "transloco");
     \u0275\u0275elementEnd()()();
-    \u0275\u0275template(89, CameraWallComponent_Conditional_42_Conditional_16_Conditional_89_Template, 4, 5, "div", 114);
-    \u0275\u0275elementStart(90, "div", 115)(91, "div", 116)(92, "mat-icon");
+    \u0275\u0275template(89, CameraWallComponent_Conditional_47_Conditional_16_Conditional_89_Template, 4, 5, "div", 118);
+    \u0275\u0275elementStart(90, "div", 119)(91, "div", 120)(92, "mat-icon");
     \u0275\u0275text(93, "notifications");
     \u0275\u0275elementEnd();
     \u0275\u0275text(94);
     \u0275\u0275pipe(95, "transloco");
     \u0275\u0275elementEnd();
-    \u0275\u0275template(96, CameraWallComponent_Conditional_42_Conditional_16_Conditional_96_Template, 3, 3, "div", 117)(97, CameraWallComponent_Conditional_42_Conditional_16_Conditional_97_Template, 3, 0, "ul", 118);
+    \u0275\u0275template(96, CameraWallComponent_Conditional_47_Conditional_16_Conditional_96_Template, 3, 3, "div", 121)(97, CameraWallComponent_Conditional_47_Conditional_16_Conditional_97_Template, 3, 0, "ul", 122);
     \u0275\u0275elementEnd()();
   }
   if (rf & 2) {
@@ -67589,9 +67666,9 @@ function CameraWallComponent_Conditional_42_Conditional_16_Template(rf, ctx) {
     \u0275\u0275conditional(ctx_r1.storage.recentCleanups.length === 0 ? 96 : 97);
   }
 }
-function CameraWallComponent_Conditional_42_Conditional_17_Template(rf, ctx) {
+function CameraWallComponent_Conditional_47_Conditional_17_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 83);
+    \u0275\u0275elementStart(0, "div", 87);
     \u0275\u0275text(1);
     \u0275\u0275pipe(2, "transloco");
     \u0275\u0275elementEnd();
@@ -67601,46 +67678,46 @@ function CameraWallComponent_Conditional_42_Conditional_17_Template(rf, ctx) {
     \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(2, 1, "cameras.loading"));
   }
 }
-function CameraWallComponent_Conditional_42_Template(rf, ctx) {
+function CameraWallComponent_Conditional_47_Template(rf, ctx) {
   if (rf & 1) {
-    const _r15 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "div", 77);
-    \u0275\u0275listener("click", function CameraWallComponent_Conditional_42_Template_div_click_0_listener() {
-      \u0275\u0275restoreView(_r15);
+    const _r17 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "div", 82);
+    \u0275\u0275listener("click", function CameraWallComponent_Conditional_47_Template_div_click_0_listener() {
+      \u0275\u0275restoreView(_r17);
       const ctx_r1 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r1.closeStorage());
     });
-    \u0275\u0275elementStart(1, "div", 78);
-    \u0275\u0275listener("click", function CameraWallComponent_Conditional_42_Template_div_click_1_listener($event) {
-      \u0275\u0275restoreView(_r15);
+    \u0275\u0275elementStart(1, "div", 83);
+    \u0275\u0275listener("click", function CameraWallComponent_Conditional_47_Template_div_click_1_listener($event) {
+      \u0275\u0275restoreView(_r17);
       return \u0275\u0275resetView($event.stopPropagation());
     });
-    \u0275\u0275elementStart(2, "div", 79)(3, "span", 80)(4, "mat-icon");
+    \u0275\u0275elementStart(2, "div", 84)(3, "span", 85)(4, "mat-icon");
     \u0275\u0275text(5, "storage");
     \u0275\u0275elementEnd();
     \u0275\u0275text(6);
     \u0275\u0275pipe(7, "transloco");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(8, "div", 58)(9, "button", 81);
+    \u0275\u0275elementStart(8, "div", 63)(9, "button", 64);
     \u0275\u0275pipe(10, "transloco");
-    \u0275\u0275listener("click", function CameraWallComponent_Conditional_42_Template_button_click_9_listener() {
-      \u0275\u0275restoreView(_r15);
+    \u0275\u0275listener("click", function CameraWallComponent_Conditional_47_Template_button_click_9_listener() {
+      \u0275\u0275restoreView(_r17);
       const ctx_r1 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r1.loadStorage());
     });
     \u0275\u0275elementStart(11, "mat-icon");
     \u0275\u0275text(12, "refresh");
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(13, "button", 60);
-    \u0275\u0275listener("click", function CameraWallComponent_Conditional_42_Template_button_click_13_listener() {
-      \u0275\u0275restoreView(_r15);
+    \u0275\u0275elementStart(13, "button", 65);
+    \u0275\u0275listener("click", function CameraWallComponent_Conditional_47_Template_button_click_13_listener() {
+      \u0275\u0275restoreView(_r17);
       const ctx_r1 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r1.closeStorage());
     });
     \u0275\u0275elementStart(14, "mat-icon");
     \u0275\u0275text(15, "close");
     \u0275\u0275elementEnd()()()();
-    \u0275\u0275template(16, CameraWallComponent_Conditional_42_Conditional_16_Template, 98, 78, "div", 82)(17, CameraWallComponent_Conditional_42_Conditional_17_Template, 3, 3, "div", 83);
+    \u0275\u0275template(16, CameraWallComponent_Conditional_47_Conditional_16_Template, 98, 78, "div", 86)(17, CameraWallComponent_Conditional_47_Conditional_17_Template, 3, 3, "div", 87);
     \u0275\u0275elementEnd()();
   }
   if (rf & 2) {
@@ -67656,6 +67733,7 @@ function CameraWallComponent_Conditional_42_Template(rf, ctx) {
 var CameraWallComponent = class _CameraWallComponent {
   http;
   transloco;
+  auth;
   cameras = [];
   loadingCameras = false;
   // Two ways to look at the same cameras:
@@ -67663,6 +67741,9 @@ var CameraWallComponent = class _CameraWallComponent {
   //   'live'  → a plain auto-refreshing grid of the latest frame per camera
   viewMode = "cards";
   liveCameras = [];
+  // Toggle between the annotated frame (detection boxes drawn) and the untouched original.
+  // Applies to every view; a frame with no stored original just keeps showing the annotated one.
+  showBoxes = true;
   // wall clock (header) + snapshot time used to decide LIVE badges
   clock = "";
   wallLoadedMs = Date.now();
@@ -67691,9 +67772,10 @@ var CameraWallComponent = class _CameraWallComponent {
   // The camera wall is operator-facing and always shown in English; the user's
   // app-wide language is saved here and restored when leaving the page.
   prevLang = null;
-  constructor(http, transloco) {
+  constructor(http, transloco, auth) {
     this.http = http;
     this.transloco = transloco;
+    this.auth = auth;
   }
   ngOnInit() {
     this.prevLang = this.transloco.getActiveLang();
@@ -67730,6 +67812,15 @@ var CameraWallComponent = class _CameraWallComponent {
       return;
     this.viewMode = mode;
     this.loadWall();
+  }
+  toggleBoxes() {
+    this.showBoxes = !this.showBoxes;
+  }
+  /** Image URL to show for a frame, honouring the boxes toggle (falls back to the annotated one). */
+  frameSrc(f) {
+    if (this.showBoxes)
+      return f.imageUrl;
+    return f.rawImageUrl ?? f.imageUrl;
   }
   refresh() {
     this.loadWall();
@@ -67912,6 +68003,7 @@ var CameraWallComponent = class _CameraWallComponent {
           state.name = c.name;
           state.brand = c.brand;
           state.imageUrl = c.imageUrl;
+          state.rawImageUrl = c.rawImageUrl;
           state.lastSeenUtc = c.lastSeenUtc;
           state.peopleCount = c.peopleCount;
           state.dogCount = c.dogCount;
@@ -67989,6 +68081,77 @@ var CameraWallComponent = class _CameraWallComponent {
       },
       error: () => {
         this.clearingCamera = false;
+      }
+    });
+  }
+  // ── export frames to the operator's PC ────────────────────────────
+  // The backend zips the requested camera folder(s) and streams the archive; here we let the
+  // operator choose *where* on their PC to save it. Chrome/Edge get a real "Save as…" dialog via
+  // the File System Access API (showSaveFilePicker); other browsers fall back to the Downloads
+  // folder (or the browser's own Save-As prompt). Admin-only, gated by `storageAvailable`.
+  //
+  // The save dialog is opened *before* the network request, on the click's own user gesture — the
+  // File System Access API rejects showSaveFilePicker if called after the gesture has expired
+  // (which is exactly what happens once a multi-second download has finished). We then stream the
+  // ZIP straight into the chosen file, so even a large "all cameras" archive never buffers in RAM.
+  downloadingIp = null;
+  // ip currently exporting ('*' = the whole wall)
+  downloadNote = null;
+  // 'error' → a short failure hint in the UI
+  // Export every camera's frames (folders 10.0.1.101–105 …) as one ZIP.
+  downloadAllFrames() {
+    const stamp = (/* @__PURE__ */ new Date()).toISOString().slice(0, 10);
+    void this.exportZip("/api/frames/download", `camera-frames-${stamp}.zip`, "*");
+  }
+  // Export a single camera's frames as a ZIP.
+  downloadCamera(ip) {
+    void this.exportZip(`/api/frames/${ip}/download`, `camera-${ip}.zip`, ip);
+  }
+  exportZip(url, suggestedName, key) {
+    return __async(this, null, function* () {
+      if (this.downloadingIp)
+        return;
+      const picker = window.showSaveFilePicker;
+      let handle = null;
+      if (picker) {
+        try {
+          handle = yield picker({
+            suggestedName,
+            types: [{ description: "ZIP archive", accept: { "application/zip": [".zip"] } }]
+          });
+        } catch (err) {
+          if (err instanceof DOMException && err.name === "AbortError")
+            return;
+          handle = null;
+        }
+      }
+      this.downloadingIp = key;
+      this.downloadNote = null;
+      try {
+        const token = this.auth.getAccessToken;
+        const resp = yield fetch(url, {
+          headers: token ? { Authorization: `Bearer ${token}` } : {}
+        });
+        if (!resp.ok || !resp.body)
+          throw new Error(`HTTP ${resp.status}`);
+        if (handle) {
+          const writable = yield handle.createWritable();
+          yield resp.body.pipeTo(writable);
+        } else {
+          const blob = yield resp.blob();
+          const objectUrl = URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.href = objectUrl;
+          a.download = suggestedName;
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+          setTimeout(() => URL.revokeObjectURL(objectUrl), 1e3);
+        }
+      } catch {
+        this.downloadNote = "error";
+      } finally {
+        this.downloadingIp = null;
       }
     });
   }
@@ -68101,9 +68264,9 @@ var CameraWallComponent = class _CameraWallComponent {
     return `${Math.max(1, Math.round(mb))} \u041C\u0411`;
   }
   static \u0275fac = function CameraWallComponent_Factory(__ngFactoryType__) {
-    return new (__ngFactoryType__ || _CameraWallComponent)(\u0275\u0275directiveInject(HttpClient), \u0275\u0275directiveInject(TranslocoService));
+    return new (__ngFactoryType__ || _CameraWallComponent)(\u0275\u0275directiveInject(HttpClient), \u0275\u0275directiveInject(TranslocoService), \u0275\u0275directiveInject(AuthService));
   };
-  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _CameraWallComponent, selectors: [["app-camera-wall"]], standalone: false, decls: 43, vars: 32, consts: [[1, "camera-page"], [1, "cam-header"], [1, "cam-brand"], [1, "cam-brand-icon"], [1, "cam-brand-text"], [1, "cam-title"], [1, "cam-subtitle"], [1, "cam-header-right"], ["type", "button", 1, "cam-storage-chip", 3, "warn", "crit", "title"], [1, "cam-clock"], [1, "view-toggle"], ["type", "button", 3, "click", "title"], ["type", "button", 1, "pc-toggle", 3, "click", "title"], ["type", "button", 1, "pc-refresh", 3, "click", "title"], [1, "camera-wall"], [1, "wall-empty"], [1, "archive-overlay"], [1, "storage-overlay"], ["type", "button", 1, "cam-storage-chip", 3, "click", "title"], [1, "cam-storage-pct"], [1, "cam-storage-bar"], [1, "live-cell", 3, "is-live"], [1, "live-cell"], [3, "src", "alt"], [1, "no-signal"], [1, "cell-scrim"], [1, "media-live"], [1, "cell-detections"], [1, "det-badge", 3, "class", "title"], [1, "cell-label"], [1, "cell-label-text"], [1, "cell-name"], [1, "cell-brand"], [1, "cell-time"], [1, "media-live-dot"], [1, "det-badge", 3, "title"], [1, "camera-card", 3, "is-live"], [1, "camera-card", 3, "click"], [1, "card-head"], [1, "card-head-text"], [1, "card-title"], [1, "card-brand"], [1, "card-age"], [1, "card-media"], [1, "media-main"], [1, "media-thumbs"], [1, "card-stats"], [1, "stat"], [1, "stat-val"], [1, "stat-key"], [1, "card-foot", "detections"], [1, "media-stamp"], [1, "stat-val", "accent"], [1, "archive-overlay", 3, "click"], [1, "archive-panel", 3, "click"], [1, "archive-header"], [1, "archive-title"], [1, "archive-brand"], [1, "storage-header-actions"], ["type", "button", 1, "storage-icon-btn", 3, "disabled", "title"], ["type", "button", 1, "storage-icon-btn", 3, "click"], [1, "archive-days"], [1, "archive-muted"], [1, "archive-stage"], [1, "stage-frame"], [1, "archive-footer"], ["type", "button", 1, "storage-icon-btn", 3, "click", "disabled", "title"], ["type", "button", 1, "archive-day-chip", 3, "active"], ["type", "button", 1, "archive-day-chip", 3, "click"], [1, "archive-day-count"], [1, "stage-detections"], [1, "archive-controls"], ["type", "button", 3, "click", "disabled"], ["type", "range", "min", "0", 3, "input", "max", "value"], [1, "archive-meta"], [1, "archive-count"], [1, "archive-stamp"], [1, "storage-overlay", 3, "click"], [1, "storage-panel", 3, "click"], [1, "storage-header"], [1, "storage-title"], ["type", "button", 1, "storage-icon-btn", 3, "click", "title"], [1, "storage-body"], [1, "storage-loading"], [1, "storage-gauge-row"], [1, "storage-gauge"], ["viewBox", "0 0 120 120"], ["cx", "60", "cy", "60", "r", "52", 1, "gauge-track"], ["cx", "60", "cy", "60", "r", "52", 1, "gauge-fill"], [1, "gauge-center"], [1, "gauge-pct"], [1, "gauge-cap"], [1, "storage-legend"], [1, "legend-row", "used"], [1, "legend-dot"], [1, "legend-label"], [1, "legend-val"], [1, "legend-row", "free"], [1, "legend-row", "total"], [1, "storage-cleaning"], [1, "storage-stats"], [1, "stat-tile"], [1, "stat-val", "small"], [1, "storage-action"], [1, "action-text"], [1, "action-title"], [1, "action-hint"], [1, "action-controls"], [1, "keep-select", 3, "change", "disabled"], ["value", "7", 3, "selected"], ["value", "3", 3, "selected"], ["value", "1", 3, "selected"], ["value", "0", 3, "selected"], ["type", "button", 1, "cleanup-btn", 3, "click", "disabled"], [1, "cleanup-note", 3, "ok", "err"], [1, "storage-log"], [1, "log-head"], [1, "log-empty"], [1, "log-list"], [1, "cleanup-note"], [1, "log-item"], [1, "log-trigger"], [1, "log-main"], [1, "log-frames"], [1, "log-time"]], template: function CameraWallComponent_Template(rf, ctx) {
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _CameraWallComponent, selectors: [["app-camera-wall"]], standalone: false, decls: 48, vars: 39, consts: [[1, "camera-page"], [1, "cam-header"], [1, "cam-brand"], [1, "cam-brand-icon"], [1, "cam-brand-text"], [1, "cam-title"], [1, "cam-subtitle"], [1, "cam-header-right"], ["type", "button", 1, "cam-storage-chip", 3, "warn", "crit", "title"], ["type", "button", 1, "cam-export-btn", 3, "disabled", "title"], [1, "cam-clock"], [1, "view-toggle"], ["type", "button", 3, "click", "title"], ["type", "button", 1, "pc-toggle", 3, "click", "title"], ["type", "button", 1, "pc-refresh", 3, "click", "title"], [1, "camera-wall"], [1, "wall-empty"], [1, "archive-overlay"], [1, "storage-overlay"], ["type", "button", 1, "cam-storage-chip", 3, "click", "title"], [1, "cam-storage-pct"], [1, "cam-storage-bar"], ["type", "button", 1, "cam-export-btn", 3, "click", "disabled", "title"], [1, "live-cell", 3, "is-live"], [1, "live-cell"], [3, "src", "alt"], [1, "no-signal"], [1, "cell-scrim"], [1, "media-live"], [1, "cell-detections"], [1, "det-badge", 3, "class", "title"], [1, "cell-label"], [1, "cell-label-text"], [1, "cell-name"], [1, "cell-brand"], [1, "cell-time"], [1, "media-live-dot"], [1, "det-badge", 3, "title"], [1, "camera-card", 3, "is-live"], [1, "camera-card", 3, "click"], [1, "card-head"], [1, "card-head-text"], [1, "card-title"], [1, "card-brand"], [1, "card-head-actions"], ["type", "button", 1, "card-dl-btn", 3, "disabled", "title"], [1, "card-age"], [1, "card-media"], [1, "media-main"], [1, "media-thumbs"], [1, "card-stats"], [1, "stat"], [1, "stat-val"], [1, "stat-key"], [1, "card-foot", "detections"], ["type", "button", 1, "card-dl-btn", 3, "click", "disabled", "title"], [1, "media-stamp"], [1, "stat-val", "accent"], [1, "archive-overlay", 3, "click"], [1, "archive-panel", 3, "click"], [1, "archive-header"], [1, "archive-title"], [1, "archive-brand"], [1, "storage-header-actions"], ["type", "button", 1, "storage-icon-btn", 3, "click", "title"], ["type", "button", 1, "storage-icon-btn", 3, "click"], [1, "archive-days"], [1, "archive-muted"], [1, "archive-stage"], [1, "stage-frame"], [1, "archive-footer"], ["type", "button", 1, "storage-icon-btn", 3, "click", "disabled", "title"], ["type", "button", 1, "archive-day-chip", 3, "active"], ["type", "button", 1, "archive-day-chip", 3, "click"], [1, "archive-day-count"], [1, "stage-detections"], [1, "archive-controls"], ["type", "button", 3, "click", "disabled"], ["type", "range", "min", "0", 3, "input", "max", "value"], [1, "archive-meta"], [1, "archive-count"], [1, "archive-stamp"], [1, "storage-overlay", 3, "click"], [1, "storage-panel", 3, "click"], [1, "storage-header"], [1, "storage-title"], [1, "storage-body"], [1, "storage-loading"], [1, "storage-gauge-row"], [1, "storage-gauge"], ["viewBox", "0 0 120 120"], ["cx", "60", "cy", "60", "r", "52", 1, "gauge-track"], ["cx", "60", "cy", "60", "r", "52", 1, "gauge-fill"], [1, "gauge-center"], [1, "gauge-pct"], [1, "gauge-cap"], [1, "storage-legend"], [1, "legend-row", "used"], [1, "legend-dot"], [1, "legend-label"], [1, "legend-val"], [1, "legend-row", "free"], [1, "legend-row", "total"], [1, "storage-cleaning"], [1, "storage-stats"], [1, "stat-tile"], [1, "stat-val", "small"], [1, "storage-action"], [1, "action-text"], [1, "action-title"], [1, "action-hint"], [1, "action-controls"], [1, "keep-select", 3, "change", "disabled"], ["value", "7", 3, "selected"], ["value", "3", 3, "selected"], ["value", "1", 3, "selected"], ["value", "0", 3, "selected"], ["type", "button", 1, "cleanup-btn", 3, "click", "disabled"], [1, "cleanup-note", 3, "ok", "err"], [1, "storage-log"], [1, "log-head"], [1, "log-empty"], [1, "log-list"], [1, "cleanup-note"], [1, "log-item"], [1, "log-trigger"], [1, "log-main"], [1, "log-frames"], [1, "log-time"]], template: function CameraWallComponent_Template(rf, ctx) {
     if (rf & 1) {
       \u0275\u0275elementStart(0, "div", 0)(1, "header", 1)(2, "div", 2)(3, "span", 3)(4, "mat-icon");
       \u0275\u0275text(5, "videocam");
@@ -68117,81 +68280,96 @@ var CameraWallComponent = class _CameraWallComponent {
       \u0275\u0275pipe(12, "transloco");
       \u0275\u0275elementEnd()()();
       \u0275\u0275elementStart(13, "div", 7);
-      \u0275\u0275template(14, CameraWallComponent_Conditional_14_Template, 8, 12, "button", 8);
-      \u0275\u0275elementStart(15, "span", 9)(16, "mat-icon");
-      \u0275\u0275text(17, "schedule");
+      \u0275\u0275template(14, CameraWallComponent_Conditional_14_Template, 8, 12, "button", 8)(15, CameraWallComponent_Conditional_15_Template, 4, 5, "button", 9);
+      \u0275\u0275elementStart(16, "span", 10)(17, "mat-icon");
+      \u0275\u0275text(18, "schedule");
       \u0275\u0275elementEnd();
-      \u0275\u0275text(18);
+      \u0275\u0275text(19);
       \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(19, "div", 10)(20, "button", 11);
-      \u0275\u0275pipe(21, "transloco");
-      \u0275\u0275listener("click", function CameraWallComponent_Template_button_click_20_listener() {
+      \u0275\u0275elementStart(20, "div", 11)(21, "button", 12);
+      \u0275\u0275pipe(22, "transloco");
+      \u0275\u0275listener("click", function CameraWallComponent_Template_button_click_21_listener() {
         return ctx.setViewMode("cards");
       });
-      \u0275\u0275elementStart(22, "mat-icon");
-      \u0275\u0275text(23, "space_dashboard");
+      \u0275\u0275elementStart(23, "mat-icon");
+      \u0275\u0275text(24, "space_dashboard");
       \u0275\u0275elementEnd()();
-      \u0275\u0275elementStart(24, "button", 11);
-      \u0275\u0275pipe(25, "transloco");
-      \u0275\u0275listener("click", function CameraWallComponent_Template_button_click_24_listener() {
+      \u0275\u0275elementStart(25, "button", 12);
+      \u0275\u0275pipe(26, "transloco");
+      \u0275\u0275listener("click", function CameraWallComponent_Template_button_click_25_listener() {
         return ctx.setViewMode("live");
       });
-      \u0275\u0275elementStart(26, "mat-icon");
-      \u0275\u0275text(27, "grid_view");
+      \u0275\u0275elementStart(27, "mat-icon");
+      \u0275\u0275text(28, "grid_view");
       \u0275\u0275elementEnd()()();
-      \u0275\u0275elementStart(28, "button", 12);
-      \u0275\u0275pipe(29, "transloco");
-      \u0275\u0275listener("click", function CameraWallComponent_Template_button_click_28_listener() {
+      \u0275\u0275elementStart(29, "button", 13);
+      \u0275\u0275pipe(30, "transloco");
+      \u0275\u0275listener("click", function CameraWallComponent_Template_button_click_29_listener() {
+        return ctx.toggleBoxes();
+      });
+      \u0275\u0275elementStart(31, "mat-icon");
+      \u0275\u0275text(32);
+      \u0275\u0275elementEnd()();
+      \u0275\u0275elementStart(33, "button", 13);
+      \u0275\u0275pipe(34, "transloco");
+      \u0275\u0275listener("click", function CameraWallComponent_Template_button_click_33_listener() {
         return ctx.toggleAutoRefresh();
       });
-      \u0275\u0275elementStart(30, "mat-icon");
-      \u0275\u0275text(31);
+      \u0275\u0275elementStart(35, "mat-icon");
+      \u0275\u0275text(36);
       \u0275\u0275elementEnd()();
-      \u0275\u0275elementStart(32, "button", 13);
-      \u0275\u0275pipe(33, "transloco");
-      \u0275\u0275listener("click", function CameraWallComponent_Template_button_click_32_listener() {
+      \u0275\u0275elementStart(37, "button", 14);
+      \u0275\u0275pipe(38, "transloco");
+      \u0275\u0275listener("click", function CameraWallComponent_Template_button_click_37_listener() {
         return ctx.refresh();
       });
-      \u0275\u0275elementStart(34, "mat-icon");
-      \u0275\u0275text(35, "refresh");
+      \u0275\u0275elementStart(39, "mat-icon");
+      \u0275\u0275text(40, "refresh");
       \u0275\u0275elementEnd()()()();
-      \u0275\u0275elementStart(36, "div", 14);
-      \u0275\u0275template(37, CameraWallComponent_Conditional_37_Template, 3, 3, "div", 15)(38, CameraWallComponent_Conditional_38_Template, 2, 1)(39, CameraWallComponent_Conditional_39_Template, 3, 3, "div", 15)(40, CameraWallComponent_Conditional_40_Template, 2, 0);
+      \u0275\u0275elementStart(41, "div", 15);
+      \u0275\u0275template(42, CameraWallComponent_Conditional_42_Template, 3, 3, "div", 16)(43, CameraWallComponent_Conditional_43_Template, 2, 1)(44, CameraWallComponent_Conditional_44_Template, 3, 3, "div", 16)(45, CameraWallComponent_Conditional_45_Template, 2, 0);
       \u0275\u0275elementEnd()();
-      \u0275\u0275template(41, CameraWallComponent_Conditional_41_Template, 22, 6, "div", 16)(42, CameraWallComponent_Conditional_42_Template, 18, 7, "div", 17);
+      \u0275\u0275template(46, CameraWallComponent_Conditional_46_Template, 26, 12, "div", 17)(47, CameraWallComponent_Conditional_47_Template, 18, 7, "div", 18);
     }
     if (rf & 2) {
       \u0275\u0275advance(8);
-      \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(9, 20, "cameras.title"));
+      \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(9, 25, "cameras.title"));
       \u0275\u0275advance(3);
-      \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(12, 22, "cameras.subtitle"));
+      \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(12, 27, "cameras.subtitle"));
       \u0275\u0275advance(3);
       \u0275\u0275conditional(ctx.storageAvailable && ctx.storage ? 14 : -1);
+      \u0275\u0275advance();
+      \u0275\u0275conditional(ctx.storageAvailable ? 15 : -1);
       \u0275\u0275advance(4);
       \u0275\u0275textInterpolate(ctx.clock);
       \u0275\u0275advance(2);
       \u0275\u0275classProp("active", ctx.viewMode === "cards");
-      \u0275\u0275property("title", \u0275\u0275pipeBind1(21, 24, "cameras.view.cards"));
+      \u0275\u0275property("title", \u0275\u0275pipeBind1(22, 29, "cameras.view.cards"));
       \u0275\u0275advance(4);
       \u0275\u0275classProp("active", ctx.viewMode === "live");
-      \u0275\u0275property("title", \u0275\u0275pipeBind1(25, 26, "cameras.view.live"));
+      \u0275\u0275property("title", \u0275\u0275pipeBind1(26, 31, "cameras.view.live"));
       \u0275\u0275advance(4);
+      \u0275\u0275classProp("on", ctx.showBoxes);
+      \u0275\u0275property("title", \u0275\u0275pipeBind1(30, 33, ctx.showBoxes ? "cameras.boxes_on" : "cameras.boxes_off"));
+      \u0275\u0275advance(3);
+      \u0275\u0275textInterpolate(ctx.showBoxes ? "crop_free" : "crop_din");
+      \u0275\u0275advance();
       \u0275\u0275classProp("on", ctx.autoRefresh);
-      \u0275\u0275property("title", \u0275\u0275pipeBind1(29, 28, ctx.autoRefresh ? "cameras.live_on" : "cameras.live_off"));
+      \u0275\u0275property("title", \u0275\u0275pipeBind1(34, 35, ctx.autoRefresh ? "cameras.live_on" : "cameras.live_off"));
       \u0275\u0275advance(3);
       \u0275\u0275textInterpolate(ctx.autoRefresh ? "sensors" : "sensors_off");
       \u0275\u0275advance();
-      \u0275\u0275property("title", \u0275\u0275pipeBind1(33, 30, "cameras.refresh"));
+      \u0275\u0275property("title", \u0275\u0275pipeBind1(38, 37, "cameras.refresh"));
       \u0275\u0275advance(4);
       \u0275\u0275classProp("live-mode", ctx.viewMode === "live");
       \u0275\u0275advance();
-      \u0275\u0275conditional(ctx.loadingCameras ? 37 : ctx.viewMode === "live" ? 38 : ctx.cameras.length === 0 ? 39 : 40);
+      \u0275\u0275conditional(ctx.loadingCameras ? 42 : ctx.viewMode === "live" ? 43 : ctx.cameras.length === 0 ? 44 : 45);
       \u0275\u0275advance(4);
-      \u0275\u0275conditional(ctx.viewerCamera ? 41 : -1);
+      \u0275\u0275conditional(ctx.viewerCamera ? 46 : -1);
       \u0275\u0275advance();
-      \u0275\u0275conditional(ctx.storageOpen ? 42 : -1);
+      \u0275\u0275conditional(ctx.storageOpen ? 47 : -1);
     }
-  }, dependencies: [MatIcon, DecimalPipe, DatePipe, TranslocoPipe], styles: ['@charset "UTF-8";\n\n\n\n[_nghost-%COMP%] {\n  --accent: #22c55e;\n  --accent-soft: rgba(34, 197, 94, 0.16);\n  --accent-ring: rgba(34, 197, 94, 0.55);\n  --bg: #0a0b0d;\n  --surface: #111317;\n  --surface-2: #15181d;\n  --hairline: rgba(255, 255, 255, 0.08);\n  --text: #eef1f5;\n  --text-dim: rgba(255, 255, 255, 0.55);\n  --text-faint: rgba(255, 255, 255, 0.38);\n}\n.camera-page[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  width: 100vw;\n  height: 100vh;\n  background:\n    radial-gradient(\n      1200px 600px at 80% -10%,\n      rgba(34, 197, 94, 0.06),\n      transparent 60%),\n    var(--bg);\n  color: var(--text);\n  overflow: hidden;\n}\n.cam-header[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  gap: 18px;\n  padding: 12px 20px;\n  background: rgba(17, 19, 23, 0.72);\n  border-bottom: 1px solid var(--hairline);\n  backdrop-filter: blur(12px);\n}\n.cam-brand[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  min-width: 0;\n}\n.cam-brand-icon[_ngcontent-%COMP%] {\n  display: grid;\n  place-items: center;\n  width: 38px;\n  height: 38px;\n  border-radius: 11px;\n  color: var(--accent);\n  background: var(--accent-soft);\n  box-shadow: inset 0 0 0 1px var(--accent-ring);\n}\n.cam-brand-icon[_ngcontent-%COMP%]   mat-icon[_ngcontent-%COMP%] {\n  font-size: 20px;\n  width: 20px;\n  height: 20px;\n}\n.cam-brand-text[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  line-height: 1.25;\n  min-width: 0;\n}\n.cam-title[_ngcontent-%COMP%] {\n  font-size: 15px;\n  font-weight: 700;\n  letter-spacing: 0.01em;\n}\n.cam-subtitle[_ngcontent-%COMP%] {\n  font-size: 11.5px;\n  color: var(--text-faint);\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n.cam-header-right[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  margin-left: auto;\n}\n.cam-clock[_ngcontent-%COMP%] {\n  display: inline-flex;\n  align-items: center;\n  gap: 6px;\n  padding: 6px 12px;\n  font-size: 13px;\n  font-weight: 600;\n  font-variant-numeric: tabular-nums;\n  color: var(--text);\n  background: rgba(255, 255, 255, 0.05);\n  border: 1px solid var(--hairline);\n  border-radius: 999px;\n}\n.cam-clock[_ngcontent-%COMP%]   mat-icon[_ngcontent-%COMP%] {\n  font-size: 16px;\n  width: 16px;\n  height: 16px;\n  color: var(--text-dim);\n}\n.pc-bar[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  gap: 8px;\n  flex-wrap: wrap;\n}\n.pc-bar-label[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  color: var(--text-faint);\n}\n.pc-bar-label[_ngcontent-%COMP%]   mat-icon[_ngcontent-%COMP%] {\n  font-size: 18px;\n  width: 18px;\n  height: 18px;\n}\n.pc-muted[_ngcontent-%COMP%] {\n  color: var(--text-faint);\n  font-size: 12px;\n}\n.pc-chip[_ngcontent-%COMP%] {\n  display: inline-flex;\n  align-items: center;\n  gap: 6px;\n  padding: 5px 13px;\n  font-size: 12px;\n  font-weight: 600;\n  letter-spacing: 0.03em;\n  color: rgba(255, 255, 255, 0.82);\n  background: rgba(255, 255, 255, 0.05);\n  border: 1px solid var(--hairline);\n  border-radius: 999px;\n  cursor: pointer;\n  transition:\n    background 0.15s ease,\n    border-color 0.15s ease,\n    transform 0.1s ease;\n}\n.pc-chip[_ngcontent-%COMP%]:hover {\n  background: rgba(255, 255, 255, 0.1);\n}\n.pc-chip[_ngcontent-%COMP%]:active {\n  transform: translateY(1px);\n}\n.pc-chip.active[_ngcontent-%COMP%] {\n  background: var(--accent-soft);\n  border-color: var(--accent-ring);\n  color: #fff;\n}\n.pc-chip-count[_ngcontent-%COMP%] {\n  font-size: 10px;\n  padding: 1px 6px;\n  border-radius: 999px;\n  background: rgba(255, 255, 255, 0.08);\n  color: rgba(255, 255, 255, 0.6);\n}\n.pc-refresh[_ngcontent-%COMP%] {\n  display: grid;\n  place-items: center;\n  width: 34px;\n  height: 34px;\n  background: rgba(255, 255, 255, 0.05);\n  border: 1px solid var(--hairline);\n  border-radius: 10px;\n  color: var(--text-dim);\n  cursor: pointer;\n  transition: color 0.15s ease, background 0.15s ease;\n}\n.pc-refresh[_ngcontent-%COMP%]:hover {\n  color: #fff;\n  background: rgba(255, 255, 255, 0.1);\n}\n.pc-refresh[_ngcontent-%COMP%]:active   mat-icon[_ngcontent-%COMP%] {\n  transform: rotate(180deg);\n}\n.pc-refresh[_ngcontent-%COMP%]   mat-icon[_ngcontent-%COMP%] {\n  font-size: 20px;\n  width: 20px;\n  height: 20px;\n  transition: transform 0.3s ease;\n}\n.camera-wall[_ngcontent-%COMP%] {\n  flex: 1;\n  min-height: 0;\n  display: grid;\n  grid-template-columns: repeat(3, 1fr);\n  grid-auto-rows: min-content;\n  align-content: start;\n  gap: 14px;\n  padding: 16px;\n  overflow: auto;\n}\n.wall-empty[_ngcontent-%COMP%] {\n  grid-column: 1/-1;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  color: var(--text-faint);\n  font-size: 13px;\n}\n.camera-wall.live-mode[_ngcontent-%COMP%] {\n  grid-auto-rows: 1fr;\n  align-content: stretch;\n}\n.live-cell[_ngcontent-%COMP%] {\n  position: relative;\n  min-height: 0;\n  border-radius: 14px;\n  background: var(--surface);\n  border: 1px solid var(--hairline);\n  overflow: hidden;\n  transition: border-color 0.18s ease;\n}\n.live-cell.is-live[_ngcontent-%COMP%] {\n  border-color: rgba(34, 197, 94, 0.32);\n}\n.live-cell[_ngcontent-%COMP%]   img[_ngcontent-%COMP%] {\n  position: absolute;\n  inset: 0;\n  width: 100%;\n  height: 100%;\n  object-fit: cover;\n  display: block;\n}\n.live-cell[_ngcontent-%COMP%]   .no-signal[_ngcontent-%COMP%] {\n  position: absolute;\n  inset: 0;\n}\n.cell-scrim[_ngcontent-%COMP%] {\n  position: absolute;\n  inset: 0;\n  background:\n    linear-gradient(\n      to top,\n      rgba(0, 0, 0, 0.6) 0%,\n      rgba(0, 0, 0, 0) 38%);\n  pointer-events: none;\n}\n.cell-label[_ngcontent-%COMP%] {\n  position: absolute;\n  bottom: 10px;\n  left: 12px;\n  right: 12px;\n  display: flex;\n  align-items: baseline;\n  justify-content: space-between;\n  gap: 8px;\n  pointer-events: none;\n}\n.cell-label[_ngcontent-%COMP%]   .cell-label-text[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  gap: 1px;\n  min-width: 0;\n}\n.cell-label[_ngcontent-%COMP%]   .cell-name[_ngcontent-%COMP%] {\n  font-size: 12px;\n  font-weight: 700;\n  letter-spacing: 0.05em;\n  color: #fff;\n  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);\n}\n.cell-label[_ngcontent-%COMP%]   .cell-brand[_ngcontent-%COMP%] {\n  font-size: 10px;\n  color: rgba(255, 255, 255, 0.65);\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);\n}\n.cell-label[_ngcontent-%COMP%]   .cell-time[_ngcontent-%COMP%] {\n  font-size: 11px;\n  font-variant-numeric: tabular-nums;\n  color: rgba(255, 255, 255, 0.72);\n  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);\n}\n.camera-card[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  gap: 11px;\n  padding: 14px;\n  border-radius: 16px;\n  background: var(--surface);\n  border: 1px solid var(--hairline);\n  cursor: pointer;\n  transition:\n    transform 0.18s ease,\n    border-color 0.18s ease,\n    box-shadow 0.18s ease;\n}\n.camera-card[_ngcontent-%COMP%]:hover {\n  transform: translateY(-2px);\n  border-color: rgba(255, 255, 255, 0.18);\n  box-shadow: 0 14px 34px -16px rgba(0, 0, 0, 0.8);\n}\n.camera-card[_ngcontent-%COMP%]:hover   .media-main[_ngcontent-%COMP%]   img[_ngcontent-%COMP%] {\n  transform: scale(1.04);\n}\n.camera-card.is-live[_ngcontent-%COMP%] {\n  border-color: rgba(34, 197, 94, 0.3);\n}\n.card-head[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  gap: 10px;\n}\n.card-head-text[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  line-height: 1.25;\n  min-width: 0;\n}\n.card-title[_ngcontent-%COMP%] {\n  font-size: 15px;\n  font-weight: 700;\n  letter-spacing: 0.01em;\n  color: var(--text);\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n.card-brand[_ngcontent-%COMP%] {\n  font-size: 11.5px;\n  color: var(--text-faint);\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n.card-age[_ngcontent-%COMP%] {\n  flex-shrink: 0;\n  padding: 2px 9px;\n  font-size: 10.5px;\n  font-weight: 700;\n  letter-spacing: 0.03em;\n  border-radius: 999px;\n  color: #f0a3a0;\n  background: rgba(240, 88, 79, 0.14);\n  font-variant-numeric: tabular-nums;\n}\n.card-age.live[_ngcontent-%COMP%] {\n  color: var(--accent);\n  background: var(--accent-soft);\n}\n.card-media[_ngcontent-%COMP%] {\n  display: flex;\n  gap: 8px;\n}\n.media-main[_ngcontent-%COMP%] {\n  position: relative;\n  flex: 1;\n  min-width: 0;\n  aspect-ratio: 16/10;\n  border-radius: 11px;\n  overflow: hidden;\n  background: #000;\n}\n.media-main[_ngcontent-%COMP%]   img[_ngcontent-%COMP%] {\n  width: 100%;\n  height: 100%;\n  object-fit: cover;\n  display: block;\n  transition: transform 0.4s ease;\n}\n.media-thumbs[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  gap: 8px;\n  width: 64px;\n  flex-shrink: 0;\n}\n.media-thumbs[_ngcontent-%COMP%]   img[_ngcontent-%COMP%] {\n  width: 100%;\n  flex: 1;\n  min-height: 0;\n  object-fit: cover;\n  display: block;\n  border-radius: 9px;\n  border: 1px solid var(--hairline);\n}\n.media-live[_ngcontent-%COMP%] {\n  position: absolute;\n  top: 8px;\n  left: 8px;\n  display: inline-flex;\n  align-items: center;\n  gap: 6px;\n  padding: 3px 9px 3px 8px;\n  font-size: 10px;\n  font-weight: 800;\n  letter-spacing: 0.08em;\n  color: #fff;\n  background: rgba(220, 38, 38, 0.92);\n  border-radius: 999px;\n  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);\n}\n.media-live-dot[_ngcontent-%COMP%] {\n  width: 7px;\n  height: 7px;\n  border-radius: 50%;\n  background: #fff;\n  animation: _ngcontent-%COMP%_live-pulse 1.4s ease-in-out infinite;\n}\n@keyframes _ngcontent-%COMP%_live-pulse {\n  0%, 100% {\n    opacity: 1;\n    transform: scale(1);\n  }\n  50% {\n    opacity: 0.35;\n    transform: scale(0.7);\n  }\n}\n.media-stamp[_ngcontent-%COMP%] {\n  position: absolute;\n  bottom: 8px;\n  right: 8px;\n  padding: 2px 8px;\n  font-size: 11px;\n  font-weight: 600;\n  font-variant-numeric: tabular-nums;\n  color: #fff;\n  background: rgba(10, 11, 13, 0.72);\n  border-radius: 7px;\n  backdrop-filter: blur(3px);\n}\n.no-signal[_ngcontent-%COMP%] {\n  width: 100%;\n  height: 100%;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n  gap: 6px;\n  color: #3a3f47;\n  background:\n    repeating-linear-gradient(\n      45deg,\n      #0e1013,\n      #0e1013 12px,\n      #121519 12px,\n      #121519 24px);\n}\n.no-signal[_ngcontent-%COMP%]   mat-icon[_ngcontent-%COMP%] {\n  font-size: 32px;\n  width: 32px;\n  height: 32px;\n}\n.no-signal[_ngcontent-%COMP%]   span[_ngcontent-%COMP%] {\n  font-size: 10px;\n  letter-spacing: 0.05em;\n  text-transform: uppercase;\n}\n.card-model[_ngcontent-%COMP%] {\n  font-size: 12px;\n  color: var(--text-dim);\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n.card-ids[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  gap: 8px;\n  font-size: 11px;\n  font-variant-numeric: tabular-nums;\n}\n.card-ids[_ngcontent-%COMP%]   .id-ip[_ngcontent-%COMP%] {\n  padding: 2px 7px;\n  border-radius: 6px;\n  font-weight: 600;\n  color: #e0b46b;\n  background: rgba(224, 161, 6, 0.12);\n}\n.card-stats[_ngcontent-%COMP%] {\n  display: grid;\n  grid-template-columns: repeat(3, 1fr);\n  gap: 8px;\n  padding: 10px 0 2px;\n  border-top: 1px solid var(--hairline);\n}\n.card-stats[_ngcontent-%COMP%]   .stat[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  gap: 2px;\n}\n.card-stats[_ngcontent-%COMP%]   .stat-val[_ngcontent-%COMP%] {\n  font-size: 17px;\n  font-weight: 700;\n  font-variant-numeric: tabular-nums;\n  color: var(--text);\n}\n.card-stats[_ngcontent-%COMP%]   .stat-val.accent[_ngcontent-%COMP%] {\n  color: var(--accent);\n}\n.card-stats[_ngcontent-%COMP%]   .stat-key[_ngcontent-%COMP%] {\n  font-size: 9.5px;\n  letter-spacing: 0.05em;\n  text-transform: uppercase;\n  color: var(--text-faint);\n}\n.card-foot[_ngcontent-%COMP%] {\n  display: flex;\n  gap: 8px;\n  flex-wrap: wrap;\n}\n.det-badge[_ngcontent-%COMP%] {\n  display: inline-flex;\n  align-items: center;\n  gap: 5px;\n  padding: 3px 10px;\n  font-size: 11px;\n  font-weight: 700;\n  font-variant-numeric: tabular-nums;\n  color: var(--text-faint);\n  background: rgba(255, 255, 255, 0.04);\n  border: 1px solid var(--hairline);\n  border-radius: 999px;\n}\n.det-badge[_ngcontent-%COMP%]   mat-icon[_ngcontent-%COMP%] {\n  font-size: 14px;\n  width: 14px;\n  height: 14px;\n}\n.det-badge.tier-high[_ngcontent-%COMP%] {\n  color: var(--accent);\n  background: var(--accent-soft);\n  border-color: var(--accent-ring);\n}\n.det-badge.tier-mid[_ngcontent-%COMP%] {\n  color: #e0a106;\n  background: rgba(224, 161, 6, 0.14);\n  border-color: rgba(224, 161, 6, 0.4);\n}\n.det-badge.tier-low[_ngcontent-%COMP%] {\n  color: #6ea8e0;\n  background: rgba(110, 168, 224, 0.14);\n  border-color: rgba(110, 168, 224, 0.4);\n}\n.det-badge.tier-neutral[_ngcontent-%COMP%] {\n  color: rgba(255, 255, 255, 0.82);\n  background: rgba(255, 255, 255, 0.06);\n  border-color: var(--hairline);\n}\n.cell-detections[_ngcontent-%COMP%] {\n  position: absolute;\n  top: 10px;\n  right: 10px;\n  display: flex;\n  flex-direction: column;\n  align-items: flex-end;\n  gap: 5px;\n}\n.stage-frame[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  gap: 10px;\n}\n.stage-detections[_ngcontent-%COMP%] {\n  display: flex;\n  flex-wrap: wrap;\n  justify-content: center;\n  gap: 6px;\n}\n.archive-overlay[_ngcontent-%COMP%] {\n  position: fixed;\n  inset: 0;\n  z-index: 1000;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  padding: 24px;\n  background: rgba(4, 5, 7, 0.78);\n  backdrop-filter: blur(6px);\n  animation: _ngcontent-%COMP%_overlay-in 0.16s ease;\n}\n@keyframes _ngcontent-%COMP%_overlay-in {\n  from {\n    opacity: 0;\n  }\n  to {\n    opacity: 1;\n  }\n}\n.archive-panel[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  width: min(92vw, 980px);\n  max-height: 92vh;\n  background: var(--surface);\n  border: 1px solid var(--hairline);\n  border-radius: 16px;\n  overflow: hidden;\n  color: var(--text);\n  box-shadow: 0 30px 80px -24px rgba(0, 0, 0, 0.85);\n  animation: _ngcontent-%COMP%_panel-in 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);\n}\n@keyframes _ngcontent-%COMP%_panel-in {\n  from {\n    opacity: 0;\n    transform: translateY(10px) scale(0.985);\n  }\n  to {\n    opacity: 1;\n    transform: translateY(0) scale(1);\n  }\n}\n.archive-header[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  padding: 14px 18px;\n  border-bottom: 1px solid var(--hairline);\n}\n.archive-header[_ngcontent-%COMP%]   .archive-title[_ngcontent-%COMP%] {\n  display: inline-flex;\n  align-items: center;\n  gap: 9px;\n  font-size: 14px;\n  font-weight: 600;\n  letter-spacing: 0.03em;\n}\n.archive-header[_ngcontent-%COMP%]   .archive-title[_ngcontent-%COMP%]   mat-icon[_ngcontent-%COMP%] {\n  font-size: 18px;\n  width: 18px;\n  height: 18px;\n  color: var(--accent);\n}\n.archive-header[_ngcontent-%COMP%]   .archive-title[_ngcontent-%COMP%]   .archive-brand[_ngcontent-%COMP%] {\n  font-size: 12px;\n  font-weight: 400;\n  letter-spacing: 0;\n  color: var(--text-faint);\n}\n.archive-header[_ngcontent-%COMP%]   .archive-sep[_ngcontent-%COMP%] {\n  color: var(--text-faint);\n}\n.archive-header[_ngcontent-%COMP%]   .archive-close[_ngcontent-%COMP%] {\n  display: grid;\n  place-items: center;\n  width: 32px;\n  height: 32px;\n  background: rgba(255, 255, 255, 0.05);\n  border: 1px solid var(--hairline);\n  border-radius: 9px;\n  color: var(--text-dim);\n  cursor: pointer;\n  transition: color 0.15s ease, background 0.15s ease;\n}\n.archive-header[_ngcontent-%COMP%]   .archive-close[_ngcontent-%COMP%]:hover {\n  color: #fff;\n  background: rgba(255, 255, 255, 0.1);\n}\n.archive-days[_ngcontent-%COMP%] {\n  display: flex;\n  flex-wrap: wrap;\n  gap: 6px;\n  padding: 12px 18px;\n  border-bottom: 1px solid var(--hairline);\n  background: var(--surface-2);\n}\n.archive-day-chip[_ngcontent-%COMP%] {\n  display: inline-flex;\n  align-items: center;\n  gap: 6px;\n  padding: 5px 11px;\n  font-size: 12px;\n  color: rgba(255, 255, 255, 0.82);\n  background: rgba(255, 255, 255, 0.05);\n  border: 1px solid var(--hairline);\n  border-radius: 999px;\n  cursor: pointer;\n  transition: background 0.15s ease, border-color 0.15s ease;\n}\n.archive-day-chip[_ngcontent-%COMP%]:hover {\n  background: rgba(255, 255, 255, 0.1);\n}\n.archive-day-chip.active[_ngcontent-%COMP%] {\n  background: var(--accent-soft);\n  border-color: var(--accent-ring);\n  color: #fff;\n}\n.archive-day-count[_ngcontent-%COMP%] {\n  font-size: 10px;\n  padding: 1px 6px;\n  border-radius: 999px;\n  background: rgba(255, 255, 255, 0.08);\n  color: rgba(255, 255, 255, 0.6);\n}\n.archive-stage[_ngcontent-%COMP%] {\n  flex: 1;\n  min-height: 0;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  padding: 14px;\n  background:\n    radial-gradient(\n      60% 60% at 50% 40%,\n      rgba(255, 255, 255, 0.03),\n      transparent),\n    #000;\n}\n.archive-stage[_ngcontent-%COMP%]   img[_ngcontent-%COMP%] {\n  max-width: 100%;\n  max-height: 62vh;\n  object-fit: contain;\n  display: block;\n  border-radius: 8px;\n}\n.archive-muted[_ngcontent-%COMP%] {\n  color: var(--text-faint);\n  font-size: 13px;\n  padding: 32px;\n}\n.archive-footer[_ngcontent-%COMP%] {\n  border-top: 1px solid var(--hairline);\n  background: var(--surface-2);\n}\n.archive-controls[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  padding: 14px 18px 8px;\n}\n.archive-controls[_ngcontent-%COMP%]   button[_ngcontent-%COMP%] {\n  display: grid;\n  place-items: center;\n  width: 34px;\n  height: 34px;\n  background: rgba(255, 255, 255, 0.06);\n  border: 1px solid var(--hairline);\n  border-radius: 9px;\n  color: var(--text);\n  cursor: pointer;\n  transition: background 0.15s ease;\n}\n.archive-controls[_ngcontent-%COMP%]   button[_ngcontent-%COMP%]:hover:not(:disabled) {\n  background: rgba(255, 255, 255, 0.14);\n}\n.archive-controls[_ngcontent-%COMP%]   button[_ngcontent-%COMP%]:disabled {\n  opacity: 0.3;\n  cursor: default;\n}\n.archive-controls[_ngcontent-%COMP%]   input[type=range][_ngcontent-%COMP%] {\n  flex: 1;\n  height: 4px;\n  accent-color: var(--accent);\n  cursor: pointer;\n}\n.archive-meta[_ngcontent-%COMP%] {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  padding: 4px 20px 16px;\n  font-size: 12px;\n  color: var(--text-dim);\n  font-variant-numeric: tabular-nums;\n}\n.archive-meta[_ngcontent-%COMP%]   .archive-count[_ngcontent-%COMP%] {\n  padding: 2px 9px;\n  border-radius: 999px;\n  background: rgba(255, 255, 255, 0.06);\n}\n.archive-meta[_ngcontent-%COMP%]   .archive-stamp[_ngcontent-%COMP%] {\n  color: var(--text);\n  font-weight: 600;\n}\n.view-toggle[_ngcontent-%COMP%] {\n  display: inline-flex;\n  gap: 3px;\n  padding: 3px;\n  background: rgba(255, 255, 255, 0.05);\n  border: 1px solid var(--hairline);\n  border-radius: 10px;\n}\n.view-toggle[_ngcontent-%COMP%]   button[_ngcontent-%COMP%] {\n  display: grid;\n  place-items: center;\n  width: 32px;\n  height: 28px;\n  border: none;\n  border-radius: 7px;\n  background: transparent;\n  color: var(--text-faint);\n  cursor: pointer;\n  transition: color 0.15s ease, background 0.15s ease;\n}\n.view-toggle[_ngcontent-%COMP%]   button[_ngcontent-%COMP%]:hover {\n  color: #fff;\n}\n.view-toggle[_ngcontent-%COMP%]   button.active[_ngcontent-%COMP%] {\n  color: #fff;\n  background: rgba(255, 255, 255, 0.1);\n}\n.view-toggle[_ngcontent-%COMP%]   button[_ngcontent-%COMP%]   mat-icon[_ngcontent-%COMP%] {\n  font-size: 18px;\n  width: 18px;\n  height: 18px;\n}\n.pc-toggle[_ngcontent-%COMP%] {\n  display: grid;\n  place-items: center;\n  width: 34px;\n  height: 34px;\n  background: rgba(255, 255, 255, 0.05);\n  border: 1px solid var(--hairline);\n  border-radius: 10px;\n  color: var(--text-faint);\n  cursor: pointer;\n  transition:\n    color 0.15s ease,\n    background 0.15s ease,\n    border-color 0.15s ease;\n}\n.pc-toggle[_ngcontent-%COMP%]:hover {\n  color: #fff;\n  background: rgba(255, 255, 255, 0.1);\n}\n.pc-toggle.on[_ngcontent-%COMP%] {\n  color: var(--accent);\n  border-color: var(--accent-ring);\n  background: var(--accent-soft);\n}\n.pc-toggle[_ngcontent-%COMP%]   mat-icon[_ngcontent-%COMP%] {\n  font-size: 20px;\n  width: 20px;\n  height: 20px;\n}\n.cam-storage-chip[_ngcontent-%COMP%] {\n  display: inline-flex;\n  align-items: center;\n  gap: 8px;\n  padding: 5px 12px;\n  background: rgba(255, 255, 255, 0.05);\n  border: 1px solid var(--hairline);\n  border-radius: 999px;\n  color: var(--text);\n  cursor: pointer;\n  transition: background 0.15s ease, border-color 0.15s ease;\n}\n.cam-storage-chip[_ngcontent-%COMP%]:hover {\n  background: rgba(255, 255, 255, 0.1);\n}\n.cam-storage-chip.warn[_ngcontent-%COMP%] {\n  border-color: rgba(224, 161, 6, 0.5);\n}\n.cam-storage-chip.crit[_ngcontent-%COMP%] {\n  border-color: rgba(240, 88, 79, 0.55);\n}\n.cam-storage-chip[_ngcontent-%COMP%]   mat-icon[_ngcontent-%COMP%] {\n  font-size: 17px;\n  width: 17px;\n  height: 17px;\n  color: var(--text-dim);\n}\n.cam-storage-pct[_ngcontent-%COMP%] {\n  font-size: 12px;\n  font-weight: 700;\n  font-variant-numeric: tabular-nums;\n}\n.cam-storage-bar[_ngcontent-%COMP%] {\n  position: relative;\n  width: 46px;\n  height: 5px;\n  border-radius: 999px;\n  background: rgba(255, 255, 255, 0.12);\n  overflow: hidden;\n}\n.cam-storage-bar[_ngcontent-%COMP%]   i[_ngcontent-%COMP%] {\n  position: absolute;\n  inset: 0 auto 0 0;\n  display: block;\n  border-radius: 999px;\n  transition: width 0.4s ease;\n}\n.storage-overlay[_ngcontent-%COMP%] {\n  position: fixed;\n  inset: 0;\n  z-index: 1000;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  padding: 24px;\n  background: rgba(4, 5, 7, 0.78);\n  backdrop-filter: blur(6px);\n  animation: _ngcontent-%COMP%_overlay-in 0.16s ease;\n}\n.storage-panel[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  width: min(94vw, 560px);\n  max-height: 92vh;\n  background: var(--surface);\n  border: 1px solid var(--hairline);\n  border-radius: 16px;\n  overflow: hidden;\n  color: var(--text);\n  box-shadow: 0 30px 80px -24px rgba(0, 0, 0, 0.85);\n  animation: _ngcontent-%COMP%_panel-in 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);\n}\n.storage-header[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  padding: 14px 18px;\n  border-bottom: 1px solid var(--hairline);\n}\n.storage-header[_ngcontent-%COMP%]   .storage-title[_ngcontent-%COMP%] {\n  display: inline-flex;\n  align-items: center;\n  gap: 9px;\n  font-size: 14px;\n  font-weight: 600;\n  letter-spacing: 0.03em;\n}\n.storage-header[_ngcontent-%COMP%]   .storage-title[_ngcontent-%COMP%]   mat-icon[_ngcontent-%COMP%] {\n  font-size: 18px;\n  width: 18px;\n  height: 18px;\n  color: var(--accent);\n}\n.storage-header-actions[_ngcontent-%COMP%] {\n  display: flex;\n  gap: 8px;\n}\n.storage-icon-btn[_ngcontent-%COMP%] {\n  display: grid;\n  place-items: center;\n  width: 32px;\n  height: 32px;\n  background: rgba(255, 255, 255, 0.05);\n  border: 1px solid var(--hairline);\n  border-radius: 9px;\n  color: var(--text-dim);\n  cursor: pointer;\n  transition: color 0.15s ease, background 0.15s ease;\n}\n.storage-icon-btn[_ngcontent-%COMP%]:hover {\n  color: #fff;\n  background: rgba(255, 255, 255, 0.1);\n}\n.storage-icon-btn[_ngcontent-%COMP%]   mat-icon[_ngcontent-%COMP%] {\n  font-size: 18px;\n  width: 18px;\n  height: 18px;\n}\n.storage-body[_ngcontent-%COMP%] {\n  padding: 18px;\n  overflow: auto;\n  display: flex;\n  flex-direction: column;\n  gap: 16px;\n}\n.storage-loading[_ngcontent-%COMP%] {\n  padding: 48px;\n  text-align: center;\n  color: var(--text-faint);\n  font-size: 13px;\n}\n.storage-gauge-row[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  gap: 22px;\n}\n.storage-gauge[_ngcontent-%COMP%] {\n  position: relative;\n  width: 124px;\n  height: 124px;\n  flex-shrink: 0;\n}\n.storage-gauge[_ngcontent-%COMP%]   svg[_ngcontent-%COMP%] {\n  width: 100%;\n  height: 100%;\n  transform: rotate(-90deg);\n}\n.storage-gauge[_ngcontent-%COMP%]   .gauge-track[_ngcontent-%COMP%] {\n  fill: none;\n  stroke: rgba(255, 255, 255, 0.08);\n  stroke-width: 10;\n}\n.storage-gauge[_ngcontent-%COMP%]   .gauge-fill[_ngcontent-%COMP%] {\n  fill: none;\n  stroke-width: 10;\n  stroke-linecap: round;\n  transition: stroke-dashoffset 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), stroke 0.3s ease;\n}\n.gauge-center[_ngcontent-%COMP%] {\n  position: absolute;\n  inset: 0;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n}\n.gauge-center[_ngcontent-%COMP%]   .gauge-pct[_ngcontent-%COMP%] {\n  font-size: 28px;\n  font-weight: 700;\n  font-variant-numeric: tabular-nums;\n  line-height: 1;\n}\n.gauge-center[_ngcontent-%COMP%]   .gauge-pct[_ngcontent-%COMP%]   small[_ngcontent-%COMP%] {\n  font-size: 14px;\n  font-weight: 600;\n  color: var(--text-dim);\n}\n.gauge-center[_ngcontent-%COMP%]   .gauge-cap[_ngcontent-%COMP%] {\n  margin-top: 3px;\n  font-size: 10px;\n  letter-spacing: 0.08em;\n  text-transform: uppercase;\n  color: var(--text-faint);\n}\n.storage-legend[_ngcontent-%COMP%] {\n  flex: 1;\n  min-width: 0;\n  display: flex;\n  flex-direction: column;\n  gap: 8px;\n}\n.legend-row[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  gap: 9px;\n  font-size: 13px;\n}\n.legend-row[_ngcontent-%COMP%]   .legend-dot[_ngcontent-%COMP%] {\n  width: 9px;\n  height: 9px;\n  border-radius: 3px;\n  background: rgba(255, 255, 255, 0.18);\n  flex-shrink: 0;\n}\n.legend-row[_ngcontent-%COMP%]   .legend-label[_ngcontent-%COMP%] {\n  color: var(--text-dim);\n}\n.legend-row[_ngcontent-%COMP%]   .legend-val[_ngcontent-%COMP%] {\n  margin-left: auto;\n  font-weight: 600;\n  font-variant-numeric: tabular-nums;\n}\n.legend-row.total[_ngcontent-%COMP%] {\n  padding-top: 8px;\n  border-top: 1px solid var(--hairline);\n}\n.legend-row.total[_ngcontent-%COMP%]   .legend-label[_ngcontent-%COMP%] {\n  color: var(--text-faint);\n}\n.storage-cleaning[_ngcontent-%COMP%] {\n  display: inline-flex;\n  align-items: center;\n  gap: 6px;\n  margin-top: 2px;\n  font-size: 11.5px;\n  color: var(--accent);\n}\n.storage-cleaning[_ngcontent-%COMP%]   mat-icon[_ngcontent-%COMP%] {\n  font-size: 15px;\n  width: 15px;\n  height: 15px;\n  animation: _ngcontent-%COMP%_spin 1.1s linear infinite;\n}\n@keyframes _ngcontent-%COMP%_spin {\n  to {\n    transform: rotate(360deg);\n  }\n}\n.storage-stats[_ngcontent-%COMP%] {\n  display: grid;\n  grid-template-columns: repeat(4, 1fr);\n  gap: 8px;\n}\n.stat-tile[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  gap: 3px;\n  padding: 11px 10px;\n  background: var(--surface-2);\n  border: 1px solid var(--hairline);\n  border-radius: 11px;\n  text-align: center;\n}\n.stat-tile[_ngcontent-%COMP%]   .stat-val[_ngcontent-%COMP%] {\n  font-size: 16px;\n  font-weight: 700;\n  font-variant-numeric: tabular-nums;\n}\n.stat-tile[_ngcontent-%COMP%]   .stat-val[_ngcontent-%COMP%]   small[_ngcontent-%COMP%] {\n  font-size: 11px;\n  font-weight: 600;\n  color: var(--text-dim);\n  margin-left: 1px;\n}\n.stat-tile[_ngcontent-%COMP%]   .stat-val.small[_ngcontent-%COMP%] {\n  font-size: 13px;\n}\n.stat-tile[_ngcontent-%COMP%]   .stat-key[_ngcontent-%COMP%] {\n  font-size: 10px;\n  letter-spacing: 0.04em;\n  text-transform: uppercase;\n  color: var(--text-faint);\n}\n.storage-action[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  gap: 14px;\n  padding: 14px;\n  background: var(--surface-2);\n  border: 1px solid var(--hairline);\n  border-radius: 12px;\n}\n.storage-action[_ngcontent-%COMP%]   .action-text[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  gap: 2px;\n  min-width: 0;\n}\n.storage-action[_ngcontent-%COMP%]   .action-title[_ngcontent-%COMP%] {\n  font-size: 13px;\n  font-weight: 600;\n}\n.storage-action[_ngcontent-%COMP%]   .action-hint[_ngcontent-%COMP%] {\n  font-size: 11.5px;\n  color: var(--text-faint);\n}\n.action-controls[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  gap: 8px;\n  margin-left: auto;\n}\n.keep-select[_ngcontent-%COMP%] {\n  padding: 9px 10px;\n  font-size: 12.5px;\n  font-weight: 600;\n  color: var(--text);\n  background: var(--surface);\n  border: 1px solid var(--hairline);\n  border-radius: 10px;\n  cursor: pointer;\n  outline: none;\n}\n.keep-select[_ngcontent-%COMP%]:disabled {\n  opacity: 0.45;\n  cursor: default;\n}\n.keep-select[_ngcontent-%COMP%]   option[_ngcontent-%COMP%] {\n  background: var(--surface);\n  color: var(--text);\n}\n.cleanup-btn[_ngcontent-%COMP%] {\n  display: inline-flex;\n  align-items: center;\n  gap: 7px;\n  padding: 9px 15px;\n  font-size: 12.5px;\n  font-weight: 600;\n  white-space: nowrap;\n  color: #fff;\n  background: var(--accent);\n  border: none;\n  border-radius: 10px;\n  cursor: pointer;\n  transition:\n    filter 0.15s ease,\n    opacity 0.15s ease,\n    background 0.15s ease;\n}\n.cleanup-btn[_ngcontent-%COMP%]:hover:not(:disabled) {\n  filter: brightness(1.08);\n}\n.cleanup-btn[_ngcontent-%COMP%]:disabled {\n  opacity: 0.45;\n  cursor: default;\n}\n.cleanup-btn.danger[_ngcontent-%COMP%] {\n  background: #f0584f;\n}\n.cleanup-btn[_ngcontent-%COMP%]   mat-icon[_ngcontent-%COMP%] {\n  font-size: 17px;\n  width: 17px;\n  height: 17px;\n}\n.cleanup-note[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  gap: 8px;\n  margin-top: -6px;\n  padding: 9px 12px;\n  font-size: 12.5px;\n  border-radius: 10px;\n  background: var(--accent-soft);\n  color: var(--accent);\n}\n.cleanup-note[_ngcontent-%COMP%]   mat-icon[_ngcontent-%COMP%] {\n  font-size: 17px;\n  width: 17px;\n  height: 17px;\n}\n.cleanup-note.err[_ngcontent-%COMP%] {\n  background: rgba(240, 88, 79, 0.14);\n  color: #f0584f;\n}\n.storage-log[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  gap: 8px;\n}\n.log-head[_ngcontent-%COMP%] {\n  display: inline-flex;\n  align-items: center;\n  gap: 7px;\n  font-size: 12px;\n  font-weight: 600;\n  letter-spacing: 0.03em;\n  color: var(--text-dim);\n}\n.log-head[_ngcontent-%COMP%]   mat-icon[_ngcontent-%COMP%] {\n  font-size: 16px;\n  width: 16px;\n  height: 16px;\n}\n.log-empty[_ngcontent-%COMP%] {\n  padding: 16px;\n  text-align: center;\n  font-size: 12px;\n  color: var(--text-faint);\n  background: var(--surface-2);\n  border: 1px dashed var(--hairline);\n  border-radius: 10px;\n}\n.log-list[_ngcontent-%COMP%] {\n  list-style: none;\n  margin: 0;\n  padding: 0;\n  display: flex;\n  flex-direction: column;\n  max-height: 184px;\n  overflow: auto;\n  border: 1px solid var(--hairline);\n  border-radius: 10px;\n}\n.log-item[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  gap: 10px;\n  padding: 9px 12px;\n  font-size: 12.5px;\n}\n.log-item[_ngcontent-%COMP%]:not(:last-child) {\n  border-bottom: 1px solid var(--hairline);\n}\n.log-item[_ngcontent-%COMP%]   .log-trigger[_ngcontent-%COMP%] {\n  flex-shrink: 0;\n  padding: 2px 8px;\n  font-size: 10px;\n  font-weight: 700;\n  letter-spacing: 0.04em;\n  text-transform: uppercase;\n  border-radius: 999px;\n  color: var(--text-dim);\n  background: rgba(255, 255, 255, 0.07);\n}\n.log-item[_ngcontent-%COMP%]   .log-trigger.manual[_ngcontent-%COMP%] {\n  color: var(--accent);\n  background: var(--accent-soft);\n}\n.log-item[_ngcontent-%COMP%]   .log-main[_ngcontent-%COMP%] {\n  font-weight: 600;\n  font-variant-numeric: tabular-nums;\n}\n.log-item[_ngcontent-%COMP%]   .log-main[_ngcontent-%COMP%]   .log-frames[_ngcontent-%COMP%] {\n  font-weight: 400;\n  color: var(--text-faint);\n}\n.log-item[_ngcontent-%COMP%]   .log-time[_ngcontent-%COMP%] {\n  margin-left: auto;\n  flex-shrink: 0;\n  font-variant-numeric: tabular-nums;\n  color: var(--text-faint);\n}\n@media (max-width: 1100px) {\n  .camera-wall[_ngcontent-%COMP%] {\n    grid-template-columns: repeat(2, 1fr);\n  }\n}\n@media (max-width: 680px) {\n  .cam-header[_ngcontent-%COMP%] {\n    flex-wrap: wrap;\n    gap: 12px;\n  }\n  .cam-subtitle[_ngcontent-%COMP%] {\n    display: none;\n  }\n  .camera-wall[_ngcontent-%COMP%] {\n    grid-template-columns: 1fr;\n    gap: 10px;\n    padding: 10px;\n  }\n  .cam-storage-bar[_ngcontent-%COMP%] {\n    display: none;\n  }\n  .storage-stats[_ngcontent-%COMP%] {\n    grid-template-columns: repeat(2, 1fr);\n  }\n  .storage-action[_ngcontent-%COMP%] {\n    flex-direction: column;\n    align-items: stretch;\n  }\n  .cleanup-btn[_ngcontent-%COMP%] {\n    margin-left: 0;\n    justify-content: center;\n  }\n}\n/*# sourceMappingURL=camera-wall.component.css.map */'] });
+  }, dependencies: [MatIcon, DecimalPipe, DatePipe, TranslocoPipe], styles: ['@charset "UTF-8";\n\n\n\n[_nghost-%COMP%] {\n  --accent: #22c55e;\n  --accent-soft: rgba(34, 197, 94, 0.16);\n  --accent-ring: rgba(34, 197, 94, 0.55);\n  --bg: #0a0b0d;\n  --surface: #111317;\n  --surface-2: #15181d;\n  --hairline: rgba(255, 255, 255, 0.08);\n  --text: #eef1f5;\n  --text-dim: rgba(255, 255, 255, 0.55);\n  --text-faint: rgba(255, 255, 255, 0.38);\n}\n.camera-page[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  width: 100vw;\n  height: 100vh;\n  background:\n    radial-gradient(\n      1200px 600px at 80% -10%,\n      rgba(34, 197, 94, 0.06),\n      transparent 60%),\n    var(--bg);\n  color: var(--text);\n  overflow: hidden;\n}\n.cam-header[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  gap: 18px;\n  padding: 12px 20px;\n  background: rgba(17, 19, 23, 0.72);\n  border-bottom: 1px solid var(--hairline);\n  backdrop-filter: blur(12px);\n}\n.cam-brand[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  min-width: 0;\n}\n.cam-brand-icon[_ngcontent-%COMP%] {\n  display: grid;\n  place-items: center;\n  width: 38px;\n  height: 38px;\n  border-radius: 11px;\n  color: var(--accent);\n  background: var(--accent-soft);\n  box-shadow: inset 0 0 0 1px var(--accent-ring);\n}\n.cam-brand-icon[_ngcontent-%COMP%]   mat-icon[_ngcontent-%COMP%] {\n  font-size: 20px;\n  width: 20px;\n  height: 20px;\n}\n.cam-brand-text[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  line-height: 1.25;\n  min-width: 0;\n}\n.cam-title[_ngcontent-%COMP%] {\n  font-size: 15px;\n  font-weight: 700;\n  letter-spacing: 0.01em;\n}\n.cam-subtitle[_ngcontent-%COMP%] {\n  font-size: 11.5px;\n  color: var(--text-faint);\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n.cam-header-right[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  margin-left: auto;\n}\n.cam-clock[_ngcontent-%COMP%] {\n  display: inline-flex;\n  align-items: center;\n  gap: 6px;\n  padding: 6px 12px;\n  font-size: 13px;\n  font-weight: 600;\n  font-variant-numeric: tabular-nums;\n  color: var(--text);\n  background: rgba(255, 255, 255, 0.05);\n  border: 1px solid var(--hairline);\n  border-radius: 999px;\n}\n.cam-clock[_ngcontent-%COMP%]   mat-icon[_ngcontent-%COMP%] {\n  font-size: 16px;\n  width: 16px;\n  height: 16px;\n  color: var(--text-dim);\n}\n.pc-bar[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  gap: 8px;\n  flex-wrap: wrap;\n}\n.pc-bar-label[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  color: var(--text-faint);\n}\n.pc-bar-label[_ngcontent-%COMP%]   mat-icon[_ngcontent-%COMP%] {\n  font-size: 18px;\n  width: 18px;\n  height: 18px;\n}\n.pc-muted[_ngcontent-%COMP%] {\n  color: var(--text-faint);\n  font-size: 12px;\n}\n.pc-chip[_ngcontent-%COMP%] {\n  display: inline-flex;\n  align-items: center;\n  gap: 6px;\n  padding: 5px 13px;\n  font-size: 12px;\n  font-weight: 600;\n  letter-spacing: 0.03em;\n  color: rgba(255, 255, 255, 0.82);\n  background: rgba(255, 255, 255, 0.05);\n  border: 1px solid var(--hairline);\n  border-radius: 999px;\n  cursor: pointer;\n  transition:\n    background 0.15s ease,\n    border-color 0.15s ease,\n    transform 0.1s ease;\n}\n.pc-chip[_ngcontent-%COMP%]:hover {\n  background: rgba(255, 255, 255, 0.1);\n}\n.pc-chip[_ngcontent-%COMP%]:active {\n  transform: translateY(1px);\n}\n.pc-chip.active[_ngcontent-%COMP%] {\n  background: var(--accent-soft);\n  border-color: var(--accent-ring);\n  color: #fff;\n}\n.pc-chip-count[_ngcontent-%COMP%] {\n  font-size: 10px;\n  padding: 1px 6px;\n  border-radius: 999px;\n  background: rgba(255, 255, 255, 0.08);\n  color: rgba(255, 255, 255, 0.6);\n}\n.pc-refresh[_ngcontent-%COMP%] {\n  display: grid;\n  place-items: center;\n  width: 34px;\n  height: 34px;\n  background: rgba(255, 255, 255, 0.05);\n  border: 1px solid var(--hairline);\n  border-radius: 10px;\n  color: var(--text-dim);\n  cursor: pointer;\n  transition: color 0.15s ease, background 0.15s ease;\n}\n.pc-refresh[_ngcontent-%COMP%]:hover {\n  color: #fff;\n  background: rgba(255, 255, 255, 0.1);\n}\n.pc-refresh[_ngcontent-%COMP%]:active   mat-icon[_ngcontent-%COMP%] {\n  transform: rotate(180deg);\n}\n.pc-refresh[_ngcontent-%COMP%]   mat-icon[_ngcontent-%COMP%] {\n  font-size: 20px;\n  width: 20px;\n  height: 20px;\n  transition: transform 0.3s ease;\n}\n.cam-export-btn[_ngcontent-%COMP%] {\n  display: grid;\n  place-items: center;\n  width: 34px;\n  height: 34px;\n  background: rgba(255, 255, 255, 0.05);\n  border: 1px solid var(--hairline);\n  border-radius: 10px;\n  color: var(--text-dim);\n  cursor: pointer;\n  transition: color 0.15s ease, background 0.15s ease;\n}\n.cam-export-btn[_ngcontent-%COMP%]:hover:not(:disabled) {\n  color: #fff;\n  background: rgba(255, 255, 255, 0.1);\n}\n.cam-export-btn[_ngcontent-%COMP%]:disabled {\n  cursor: default;\n  opacity: 0.7;\n}\n.cam-export-btn[_ngcontent-%COMP%]   mat-icon[_ngcontent-%COMP%] {\n  font-size: 20px;\n  width: 20px;\n  height: 20px;\n}\n.cam-export-btn[_ngcontent-%COMP%]:disabled   mat-icon[_ngcontent-%COMP%], \n.storage-icon-btn[_ngcontent-%COMP%]:disabled   mat-icon[_ngcontent-%COMP%] {\n  animation: _ngcontent-%COMP%_cam-spin 0.9s linear infinite;\n}\n@keyframes _ngcontent-%COMP%_cam-spin {\n  to {\n    transform: rotate(360deg);\n  }\n}\n.camera-wall[_ngcontent-%COMP%] {\n  flex: 1;\n  min-height: 0;\n  display: grid;\n  grid-template-columns: repeat(3, 1fr);\n  grid-auto-rows: min-content;\n  align-content: start;\n  gap: 14px;\n  padding: 16px;\n  overflow: auto;\n}\n.wall-empty[_ngcontent-%COMP%] {\n  grid-column: 1/-1;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  color: var(--text-faint);\n  font-size: 13px;\n}\n.camera-wall.live-mode[_ngcontent-%COMP%] {\n  grid-auto-rows: 1fr;\n  align-content: stretch;\n}\n.live-cell[_ngcontent-%COMP%] {\n  position: relative;\n  min-height: 0;\n  border-radius: 14px;\n  background: var(--surface);\n  border: 1px solid var(--hairline);\n  overflow: hidden;\n  transition: border-color 0.18s ease;\n}\n.live-cell.is-live[_ngcontent-%COMP%] {\n  border-color: rgba(34, 197, 94, 0.32);\n}\n.live-cell[_ngcontent-%COMP%]   img[_ngcontent-%COMP%] {\n  position: absolute;\n  inset: 0;\n  width: 100%;\n  height: 100%;\n  object-fit: cover;\n  display: block;\n}\n.live-cell[_ngcontent-%COMP%]   .no-signal[_ngcontent-%COMP%] {\n  position: absolute;\n  inset: 0;\n}\n.cell-scrim[_ngcontent-%COMP%] {\n  position: absolute;\n  inset: 0;\n  background:\n    linear-gradient(\n      to top,\n      rgba(0, 0, 0, 0.6) 0%,\n      rgba(0, 0, 0, 0) 38%);\n  pointer-events: none;\n}\n.cell-label[_ngcontent-%COMP%] {\n  position: absolute;\n  bottom: 10px;\n  left: 12px;\n  right: 12px;\n  display: flex;\n  align-items: baseline;\n  justify-content: space-between;\n  gap: 8px;\n  pointer-events: none;\n}\n.cell-label[_ngcontent-%COMP%]   .cell-label-text[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  gap: 1px;\n  min-width: 0;\n}\n.cell-label[_ngcontent-%COMP%]   .cell-name[_ngcontent-%COMP%] {\n  font-size: 12px;\n  font-weight: 700;\n  letter-spacing: 0.05em;\n  color: #fff;\n  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);\n}\n.cell-label[_ngcontent-%COMP%]   .cell-brand[_ngcontent-%COMP%] {\n  font-size: 10px;\n  color: rgba(255, 255, 255, 0.65);\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);\n}\n.cell-label[_ngcontent-%COMP%]   .cell-time[_ngcontent-%COMP%] {\n  font-size: 11px;\n  font-variant-numeric: tabular-nums;\n  color: rgba(255, 255, 255, 0.72);\n  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);\n}\n.camera-card[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  gap: 11px;\n  padding: 14px;\n  border-radius: 16px;\n  background: var(--surface);\n  border: 1px solid var(--hairline);\n  cursor: pointer;\n  transition:\n    transform 0.18s ease,\n    border-color 0.18s ease,\n    box-shadow 0.18s ease;\n}\n.camera-card[_ngcontent-%COMP%]:hover {\n  transform: translateY(-2px);\n  border-color: rgba(255, 255, 255, 0.18);\n  box-shadow: 0 14px 34px -16px rgba(0, 0, 0, 0.8);\n}\n.camera-card[_ngcontent-%COMP%]:hover   .media-main[_ngcontent-%COMP%]   img[_ngcontent-%COMP%] {\n  transform: scale(1.04);\n}\n.camera-card.is-live[_ngcontent-%COMP%] {\n  border-color: rgba(34, 197, 94, 0.3);\n}\n.card-head[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  gap: 10px;\n}\n.card-head-text[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  line-height: 1.25;\n  min-width: 0;\n}\n.card-title[_ngcontent-%COMP%] {\n  font-size: 15px;\n  font-weight: 700;\n  letter-spacing: 0.01em;\n  color: var(--text);\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n.card-brand[_ngcontent-%COMP%] {\n  font-size: 11.5px;\n  color: var(--text-faint);\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n.card-head-actions[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  gap: 8px;\n  flex-shrink: 0;\n}\n.card-dl-btn[_ngcontent-%COMP%] {\n  display: grid;\n  place-items: center;\n  width: 28px;\n  height: 28px;\n  background: rgba(255, 255, 255, 0.05);\n  border: 1px solid var(--hairline);\n  border-radius: 8px;\n  color: var(--text-dim);\n  cursor: pointer;\n  transition: color 0.15s ease, background 0.15s ease;\n}\n.card-dl-btn[_ngcontent-%COMP%]:hover:not(:disabled) {\n  color: #fff;\n  background: rgba(255, 255, 255, 0.12);\n}\n.card-dl-btn[_ngcontent-%COMP%]:disabled {\n  cursor: default;\n  opacity: 0.7;\n}\n.card-dl-btn[_ngcontent-%COMP%]   mat-icon[_ngcontent-%COMP%] {\n  font-size: 17px;\n  width: 17px;\n  height: 17px;\n}\n.card-dl-btn[_ngcontent-%COMP%]:disabled   mat-icon[_ngcontent-%COMP%] {\n  animation: _ngcontent-%COMP%_cam-spin 0.9s linear infinite;\n}\n.card-age[_ngcontent-%COMP%] {\n  flex-shrink: 0;\n  padding: 2px 9px;\n  font-size: 10.5px;\n  font-weight: 700;\n  letter-spacing: 0.03em;\n  border-radius: 999px;\n  color: #f0a3a0;\n  background: rgba(240, 88, 79, 0.14);\n  font-variant-numeric: tabular-nums;\n}\n.card-age.live[_ngcontent-%COMP%] {\n  color: var(--accent);\n  background: var(--accent-soft);\n}\n.card-media[_ngcontent-%COMP%] {\n  display: flex;\n  gap: 8px;\n}\n.media-main[_ngcontent-%COMP%] {\n  position: relative;\n  flex: 1;\n  min-width: 0;\n  aspect-ratio: 16/10;\n  border-radius: 11px;\n  overflow: hidden;\n  background: #000;\n}\n.media-main[_ngcontent-%COMP%]   img[_ngcontent-%COMP%] {\n  width: 100%;\n  height: 100%;\n  object-fit: cover;\n  display: block;\n  transition: transform 0.4s ease;\n}\n.media-thumbs[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  gap: 8px;\n  width: 64px;\n  flex-shrink: 0;\n}\n.media-thumbs[_ngcontent-%COMP%]   img[_ngcontent-%COMP%] {\n  width: 100%;\n  flex: 1;\n  min-height: 0;\n  object-fit: cover;\n  display: block;\n  border-radius: 9px;\n  border: 1px solid var(--hairline);\n}\n.media-live[_ngcontent-%COMP%] {\n  position: absolute;\n  top: 8px;\n  left: 8px;\n  display: inline-flex;\n  align-items: center;\n  gap: 6px;\n  padding: 3px 9px 3px 8px;\n  font-size: 10px;\n  font-weight: 800;\n  letter-spacing: 0.08em;\n  color: #fff;\n  background: rgba(220, 38, 38, 0.92);\n  border-radius: 999px;\n  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);\n}\n.media-live-dot[_ngcontent-%COMP%] {\n  width: 7px;\n  height: 7px;\n  border-radius: 50%;\n  background: #fff;\n  animation: _ngcontent-%COMP%_live-pulse 1.4s ease-in-out infinite;\n}\n@keyframes _ngcontent-%COMP%_live-pulse {\n  0%, 100% {\n    opacity: 1;\n    transform: scale(1);\n  }\n  50% {\n    opacity: 0.35;\n    transform: scale(0.7);\n  }\n}\n.media-stamp[_ngcontent-%COMP%] {\n  position: absolute;\n  bottom: 8px;\n  right: 8px;\n  padding: 2px 8px;\n  font-size: 11px;\n  font-weight: 600;\n  font-variant-numeric: tabular-nums;\n  color: #fff;\n  background: rgba(10, 11, 13, 0.72);\n  border-radius: 7px;\n  backdrop-filter: blur(3px);\n}\n.no-signal[_ngcontent-%COMP%] {\n  width: 100%;\n  height: 100%;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n  gap: 6px;\n  color: #3a3f47;\n  background:\n    repeating-linear-gradient(\n      45deg,\n      #0e1013,\n      #0e1013 12px,\n      #121519 12px,\n      #121519 24px);\n}\n.no-signal[_ngcontent-%COMP%]   mat-icon[_ngcontent-%COMP%] {\n  font-size: 32px;\n  width: 32px;\n  height: 32px;\n}\n.no-signal[_ngcontent-%COMP%]   span[_ngcontent-%COMP%] {\n  font-size: 10px;\n  letter-spacing: 0.05em;\n  text-transform: uppercase;\n}\n.card-model[_ngcontent-%COMP%] {\n  font-size: 12px;\n  color: var(--text-dim);\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n.card-ids[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  gap: 8px;\n  font-size: 11px;\n  font-variant-numeric: tabular-nums;\n}\n.card-ids[_ngcontent-%COMP%]   .id-ip[_ngcontent-%COMP%] {\n  padding: 2px 7px;\n  border-radius: 6px;\n  font-weight: 600;\n  color: #e0b46b;\n  background: rgba(224, 161, 6, 0.12);\n}\n.card-stats[_ngcontent-%COMP%] {\n  display: grid;\n  grid-template-columns: repeat(3, 1fr);\n  gap: 8px;\n  padding: 10px 0 2px;\n  border-top: 1px solid var(--hairline);\n}\n.card-stats[_ngcontent-%COMP%]   .stat[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  gap: 2px;\n}\n.card-stats[_ngcontent-%COMP%]   .stat-val[_ngcontent-%COMP%] {\n  font-size: 17px;\n  font-weight: 700;\n  font-variant-numeric: tabular-nums;\n  color: var(--text);\n}\n.card-stats[_ngcontent-%COMP%]   .stat-val.accent[_ngcontent-%COMP%] {\n  color: var(--accent);\n}\n.card-stats[_ngcontent-%COMP%]   .stat-key[_ngcontent-%COMP%] {\n  font-size: 9.5px;\n  letter-spacing: 0.05em;\n  text-transform: uppercase;\n  color: var(--text-faint);\n}\n.card-foot[_ngcontent-%COMP%] {\n  display: flex;\n  gap: 8px;\n  flex-wrap: wrap;\n}\n.det-badge[_ngcontent-%COMP%] {\n  display: inline-flex;\n  align-items: center;\n  gap: 5px;\n  padding: 3px 10px;\n  font-size: 11px;\n  font-weight: 700;\n  font-variant-numeric: tabular-nums;\n  color: var(--text-faint);\n  background: rgba(255, 255, 255, 0.04);\n  border: 1px solid var(--hairline);\n  border-radius: 999px;\n}\n.det-badge[_ngcontent-%COMP%]   mat-icon[_ngcontent-%COMP%] {\n  font-size: 14px;\n  width: 14px;\n  height: 14px;\n}\n.det-badge.tier-high[_ngcontent-%COMP%] {\n  color: var(--accent);\n  background: var(--accent-soft);\n  border-color: var(--accent-ring);\n}\n.det-badge.tier-mid[_ngcontent-%COMP%] {\n  color: #e0a106;\n  background: rgba(224, 161, 6, 0.14);\n  border-color: rgba(224, 161, 6, 0.4);\n}\n.det-badge.tier-low[_ngcontent-%COMP%] {\n  color: #6ea8e0;\n  background: rgba(110, 168, 224, 0.14);\n  border-color: rgba(110, 168, 224, 0.4);\n}\n.det-badge.tier-neutral[_ngcontent-%COMP%] {\n  color: rgba(255, 255, 255, 0.82);\n  background: rgba(255, 255, 255, 0.06);\n  border-color: var(--hairline);\n}\n.cell-detections[_ngcontent-%COMP%] {\n  position: absolute;\n  top: 10px;\n  right: 10px;\n  display: flex;\n  flex-direction: column;\n  align-items: flex-end;\n  gap: 5px;\n}\n.stage-frame[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  gap: 10px;\n}\n.stage-detections[_ngcontent-%COMP%] {\n  display: flex;\n  flex-wrap: wrap;\n  justify-content: center;\n  gap: 6px;\n}\n.archive-overlay[_ngcontent-%COMP%] {\n  position: fixed;\n  inset: 0;\n  z-index: 1000;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  padding: 24px;\n  background: rgba(4, 5, 7, 0.78);\n  backdrop-filter: blur(6px);\n  animation: _ngcontent-%COMP%_overlay-in 0.16s ease;\n}\n@keyframes _ngcontent-%COMP%_overlay-in {\n  from {\n    opacity: 0;\n  }\n  to {\n    opacity: 1;\n  }\n}\n.archive-panel[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  width: min(92vw, 980px);\n  max-height: 92vh;\n  background: var(--surface);\n  border: 1px solid var(--hairline);\n  border-radius: 16px;\n  overflow: hidden;\n  color: var(--text);\n  box-shadow: 0 30px 80px -24px rgba(0, 0, 0, 0.85);\n  animation: _ngcontent-%COMP%_panel-in 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);\n}\n@keyframes _ngcontent-%COMP%_panel-in {\n  from {\n    opacity: 0;\n    transform: translateY(10px) scale(0.985);\n  }\n  to {\n    opacity: 1;\n    transform: translateY(0) scale(1);\n  }\n}\n.archive-header[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  padding: 14px 18px;\n  border-bottom: 1px solid var(--hairline);\n}\n.archive-header[_ngcontent-%COMP%]   .archive-title[_ngcontent-%COMP%] {\n  display: inline-flex;\n  align-items: center;\n  gap: 9px;\n  font-size: 14px;\n  font-weight: 600;\n  letter-spacing: 0.03em;\n}\n.archive-header[_ngcontent-%COMP%]   .archive-title[_ngcontent-%COMP%]   mat-icon[_ngcontent-%COMP%] {\n  font-size: 18px;\n  width: 18px;\n  height: 18px;\n  color: var(--accent);\n}\n.archive-header[_ngcontent-%COMP%]   .archive-title[_ngcontent-%COMP%]   .archive-brand[_ngcontent-%COMP%] {\n  font-size: 12px;\n  font-weight: 400;\n  letter-spacing: 0;\n  color: var(--text-faint);\n}\n.archive-header[_ngcontent-%COMP%]   .archive-sep[_ngcontent-%COMP%] {\n  color: var(--text-faint);\n}\n.archive-header[_ngcontent-%COMP%]   .archive-close[_ngcontent-%COMP%] {\n  display: grid;\n  place-items: center;\n  width: 32px;\n  height: 32px;\n  background: rgba(255, 255, 255, 0.05);\n  border: 1px solid var(--hairline);\n  border-radius: 9px;\n  color: var(--text-dim);\n  cursor: pointer;\n  transition: color 0.15s ease, background 0.15s ease;\n}\n.archive-header[_ngcontent-%COMP%]   .archive-close[_ngcontent-%COMP%]:hover {\n  color: #fff;\n  background: rgba(255, 255, 255, 0.1);\n}\n.archive-days[_ngcontent-%COMP%] {\n  display: flex;\n  flex-wrap: wrap;\n  gap: 6px;\n  padding: 12px 18px;\n  border-bottom: 1px solid var(--hairline);\n  background: var(--surface-2);\n}\n.archive-day-chip[_ngcontent-%COMP%] {\n  display: inline-flex;\n  align-items: center;\n  gap: 6px;\n  padding: 5px 11px;\n  font-size: 12px;\n  color: rgba(255, 255, 255, 0.82);\n  background: rgba(255, 255, 255, 0.05);\n  border: 1px solid var(--hairline);\n  border-radius: 999px;\n  cursor: pointer;\n  transition: background 0.15s ease, border-color 0.15s ease;\n}\n.archive-day-chip[_ngcontent-%COMP%]:hover {\n  background: rgba(255, 255, 255, 0.1);\n}\n.archive-day-chip.active[_ngcontent-%COMP%] {\n  background: var(--accent-soft);\n  border-color: var(--accent-ring);\n  color: #fff;\n}\n.archive-day-count[_ngcontent-%COMP%] {\n  font-size: 10px;\n  padding: 1px 6px;\n  border-radius: 999px;\n  background: rgba(255, 255, 255, 0.08);\n  color: rgba(255, 255, 255, 0.6);\n}\n.archive-stage[_ngcontent-%COMP%] {\n  flex: 1;\n  min-height: 0;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  padding: 14px;\n  background:\n    radial-gradient(\n      60% 60% at 50% 40%,\n      rgba(255, 255, 255, 0.03),\n      transparent),\n    #000;\n}\n.archive-stage[_ngcontent-%COMP%]   img[_ngcontent-%COMP%] {\n  max-width: 100%;\n  max-height: 62vh;\n  object-fit: contain;\n  display: block;\n  border-radius: 8px;\n}\n.archive-muted[_ngcontent-%COMP%] {\n  color: var(--text-faint);\n  font-size: 13px;\n  padding: 32px;\n}\n.archive-footer[_ngcontent-%COMP%] {\n  border-top: 1px solid var(--hairline);\n  background: var(--surface-2);\n}\n.archive-controls[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  padding: 14px 18px 8px;\n}\n.archive-controls[_ngcontent-%COMP%]   button[_ngcontent-%COMP%] {\n  display: grid;\n  place-items: center;\n  width: 34px;\n  height: 34px;\n  background: rgba(255, 255, 255, 0.06);\n  border: 1px solid var(--hairline);\n  border-radius: 9px;\n  color: var(--text);\n  cursor: pointer;\n  transition: background 0.15s ease;\n}\n.archive-controls[_ngcontent-%COMP%]   button[_ngcontent-%COMP%]:hover:not(:disabled) {\n  background: rgba(255, 255, 255, 0.14);\n}\n.archive-controls[_ngcontent-%COMP%]   button[_ngcontent-%COMP%]:disabled {\n  opacity: 0.3;\n  cursor: default;\n}\n.archive-controls[_ngcontent-%COMP%]   input[type=range][_ngcontent-%COMP%] {\n  flex: 1;\n  height: 4px;\n  accent-color: var(--accent);\n  cursor: pointer;\n}\n.archive-meta[_ngcontent-%COMP%] {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  padding: 4px 20px 16px;\n  font-size: 12px;\n  color: var(--text-dim);\n  font-variant-numeric: tabular-nums;\n}\n.archive-meta[_ngcontent-%COMP%]   .archive-count[_ngcontent-%COMP%] {\n  padding: 2px 9px;\n  border-radius: 999px;\n  background: rgba(255, 255, 255, 0.06);\n}\n.archive-meta[_ngcontent-%COMP%]   .archive-stamp[_ngcontent-%COMP%] {\n  color: var(--text);\n  font-weight: 600;\n}\n.view-toggle[_ngcontent-%COMP%] {\n  display: inline-flex;\n  gap: 3px;\n  padding: 3px;\n  background: rgba(255, 255, 255, 0.05);\n  border: 1px solid var(--hairline);\n  border-radius: 10px;\n}\n.view-toggle[_ngcontent-%COMP%]   button[_ngcontent-%COMP%] {\n  display: grid;\n  place-items: center;\n  width: 32px;\n  height: 28px;\n  border: none;\n  border-radius: 7px;\n  background: transparent;\n  color: var(--text-faint);\n  cursor: pointer;\n  transition: color 0.15s ease, background 0.15s ease;\n}\n.view-toggle[_ngcontent-%COMP%]   button[_ngcontent-%COMP%]:hover {\n  color: #fff;\n}\n.view-toggle[_ngcontent-%COMP%]   button.active[_ngcontent-%COMP%] {\n  color: #fff;\n  background: rgba(255, 255, 255, 0.1);\n}\n.view-toggle[_ngcontent-%COMP%]   button[_ngcontent-%COMP%]   mat-icon[_ngcontent-%COMP%] {\n  font-size: 18px;\n  width: 18px;\n  height: 18px;\n}\n.pc-toggle[_ngcontent-%COMP%] {\n  display: grid;\n  place-items: center;\n  width: 34px;\n  height: 34px;\n  background: rgba(255, 255, 255, 0.05);\n  border: 1px solid var(--hairline);\n  border-radius: 10px;\n  color: var(--text-faint);\n  cursor: pointer;\n  transition:\n    color 0.15s ease,\n    background 0.15s ease,\n    border-color 0.15s ease;\n}\n.pc-toggle[_ngcontent-%COMP%]:hover {\n  color: #fff;\n  background: rgba(255, 255, 255, 0.1);\n}\n.pc-toggle.on[_ngcontent-%COMP%] {\n  color: var(--accent);\n  border-color: var(--accent-ring);\n  background: var(--accent-soft);\n}\n.pc-toggle[_ngcontent-%COMP%]   mat-icon[_ngcontent-%COMP%] {\n  font-size: 20px;\n  width: 20px;\n  height: 20px;\n}\n.cam-storage-chip[_ngcontent-%COMP%] {\n  display: inline-flex;\n  align-items: center;\n  gap: 8px;\n  padding: 5px 12px;\n  background: rgba(255, 255, 255, 0.05);\n  border: 1px solid var(--hairline);\n  border-radius: 999px;\n  color: var(--text);\n  cursor: pointer;\n  transition: background 0.15s ease, border-color 0.15s ease;\n}\n.cam-storage-chip[_ngcontent-%COMP%]:hover {\n  background: rgba(255, 255, 255, 0.1);\n}\n.cam-storage-chip.warn[_ngcontent-%COMP%] {\n  border-color: rgba(224, 161, 6, 0.5);\n}\n.cam-storage-chip.crit[_ngcontent-%COMP%] {\n  border-color: rgba(240, 88, 79, 0.55);\n}\n.cam-storage-chip[_ngcontent-%COMP%]   mat-icon[_ngcontent-%COMP%] {\n  font-size: 17px;\n  width: 17px;\n  height: 17px;\n  color: var(--text-dim);\n}\n.cam-storage-pct[_ngcontent-%COMP%] {\n  font-size: 12px;\n  font-weight: 700;\n  font-variant-numeric: tabular-nums;\n}\n.cam-storage-bar[_ngcontent-%COMP%] {\n  position: relative;\n  width: 46px;\n  height: 5px;\n  border-radius: 999px;\n  background: rgba(255, 255, 255, 0.12);\n  overflow: hidden;\n}\n.cam-storage-bar[_ngcontent-%COMP%]   i[_ngcontent-%COMP%] {\n  position: absolute;\n  inset: 0 auto 0 0;\n  display: block;\n  border-radius: 999px;\n  transition: width 0.4s ease;\n}\n.storage-overlay[_ngcontent-%COMP%] {\n  position: fixed;\n  inset: 0;\n  z-index: 1000;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  padding: 24px;\n  background: rgba(4, 5, 7, 0.78);\n  backdrop-filter: blur(6px);\n  animation: _ngcontent-%COMP%_overlay-in 0.16s ease;\n}\n.storage-panel[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  width: min(94vw, 560px);\n  max-height: 92vh;\n  background: var(--surface);\n  border: 1px solid var(--hairline);\n  border-radius: 16px;\n  overflow: hidden;\n  color: var(--text);\n  box-shadow: 0 30px 80px -24px rgba(0, 0, 0, 0.85);\n  animation: _ngcontent-%COMP%_panel-in 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);\n}\n.storage-header[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  padding: 14px 18px;\n  border-bottom: 1px solid var(--hairline);\n}\n.storage-header[_ngcontent-%COMP%]   .storage-title[_ngcontent-%COMP%] {\n  display: inline-flex;\n  align-items: center;\n  gap: 9px;\n  font-size: 14px;\n  font-weight: 600;\n  letter-spacing: 0.03em;\n}\n.storage-header[_ngcontent-%COMP%]   .storage-title[_ngcontent-%COMP%]   mat-icon[_ngcontent-%COMP%] {\n  font-size: 18px;\n  width: 18px;\n  height: 18px;\n  color: var(--accent);\n}\n.storage-header-actions[_ngcontent-%COMP%] {\n  display: flex;\n  gap: 8px;\n}\n.storage-icon-btn[_ngcontent-%COMP%] {\n  display: grid;\n  place-items: center;\n  width: 32px;\n  height: 32px;\n  background: rgba(255, 255, 255, 0.05);\n  border: 1px solid var(--hairline);\n  border-radius: 9px;\n  color: var(--text-dim);\n  cursor: pointer;\n  transition: color 0.15s ease, background 0.15s ease;\n}\n.storage-icon-btn[_ngcontent-%COMP%]:hover {\n  color: #fff;\n  background: rgba(255, 255, 255, 0.1);\n}\n.storage-icon-btn.on[_ngcontent-%COMP%] {\n  color: var(--accent);\n  border-color: var(--accent-ring);\n  background: var(--accent-soft);\n}\n.storage-icon-btn[_ngcontent-%COMP%]   mat-icon[_ngcontent-%COMP%] {\n  font-size: 18px;\n  width: 18px;\n  height: 18px;\n}\n.storage-body[_ngcontent-%COMP%] {\n  padding: 18px;\n  overflow: auto;\n  display: flex;\n  flex-direction: column;\n  gap: 16px;\n}\n.storage-loading[_ngcontent-%COMP%] {\n  padding: 48px;\n  text-align: center;\n  color: var(--text-faint);\n  font-size: 13px;\n}\n.storage-gauge-row[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  gap: 22px;\n}\n.storage-gauge[_ngcontent-%COMP%] {\n  position: relative;\n  width: 124px;\n  height: 124px;\n  flex-shrink: 0;\n}\n.storage-gauge[_ngcontent-%COMP%]   svg[_ngcontent-%COMP%] {\n  width: 100%;\n  height: 100%;\n  transform: rotate(-90deg);\n}\n.storage-gauge[_ngcontent-%COMP%]   .gauge-track[_ngcontent-%COMP%] {\n  fill: none;\n  stroke: rgba(255, 255, 255, 0.08);\n  stroke-width: 10;\n}\n.storage-gauge[_ngcontent-%COMP%]   .gauge-fill[_ngcontent-%COMP%] {\n  fill: none;\n  stroke-width: 10;\n  stroke-linecap: round;\n  transition: stroke-dashoffset 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), stroke 0.3s ease;\n}\n.gauge-center[_ngcontent-%COMP%] {\n  position: absolute;\n  inset: 0;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n}\n.gauge-center[_ngcontent-%COMP%]   .gauge-pct[_ngcontent-%COMP%] {\n  font-size: 28px;\n  font-weight: 700;\n  font-variant-numeric: tabular-nums;\n  line-height: 1;\n}\n.gauge-center[_ngcontent-%COMP%]   .gauge-pct[_ngcontent-%COMP%]   small[_ngcontent-%COMP%] {\n  font-size: 14px;\n  font-weight: 600;\n  color: var(--text-dim);\n}\n.gauge-center[_ngcontent-%COMP%]   .gauge-cap[_ngcontent-%COMP%] {\n  margin-top: 3px;\n  font-size: 10px;\n  letter-spacing: 0.08em;\n  text-transform: uppercase;\n  color: var(--text-faint);\n}\n.storage-legend[_ngcontent-%COMP%] {\n  flex: 1;\n  min-width: 0;\n  display: flex;\n  flex-direction: column;\n  gap: 8px;\n}\n.legend-row[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  gap: 9px;\n  font-size: 13px;\n}\n.legend-row[_ngcontent-%COMP%]   .legend-dot[_ngcontent-%COMP%] {\n  width: 9px;\n  height: 9px;\n  border-radius: 3px;\n  background: rgba(255, 255, 255, 0.18);\n  flex-shrink: 0;\n}\n.legend-row[_ngcontent-%COMP%]   .legend-label[_ngcontent-%COMP%] {\n  color: var(--text-dim);\n}\n.legend-row[_ngcontent-%COMP%]   .legend-val[_ngcontent-%COMP%] {\n  margin-left: auto;\n  font-weight: 600;\n  font-variant-numeric: tabular-nums;\n}\n.legend-row.total[_ngcontent-%COMP%] {\n  padding-top: 8px;\n  border-top: 1px solid var(--hairline);\n}\n.legend-row.total[_ngcontent-%COMP%]   .legend-label[_ngcontent-%COMP%] {\n  color: var(--text-faint);\n}\n.storage-cleaning[_ngcontent-%COMP%] {\n  display: inline-flex;\n  align-items: center;\n  gap: 6px;\n  margin-top: 2px;\n  font-size: 11.5px;\n  color: var(--accent);\n}\n.storage-cleaning[_ngcontent-%COMP%]   mat-icon[_ngcontent-%COMP%] {\n  font-size: 15px;\n  width: 15px;\n  height: 15px;\n  animation: _ngcontent-%COMP%_spin 1.1s linear infinite;\n}\n@keyframes _ngcontent-%COMP%_spin {\n  to {\n    transform: rotate(360deg);\n  }\n}\n.storage-stats[_ngcontent-%COMP%] {\n  display: grid;\n  grid-template-columns: repeat(4, 1fr);\n  gap: 8px;\n}\n.stat-tile[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  gap: 3px;\n  padding: 11px 10px;\n  background: var(--surface-2);\n  border: 1px solid var(--hairline);\n  border-radius: 11px;\n  text-align: center;\n}\n.stat-tile[_ngcontent-%COMP%]   .stat-val[_ngcontent-%COMP%] {\n  font-size: 16px;\n  font-weight: 700;\n  font-variant-numeric: tabular-nums;\n}\n.stat-tile[_ngcontent-%COMP%]   .stat-val[_ngcontent-%COMP%]   small[_ngcontent-%COMP%] {\n  font-size: 11px;\n  font-weight: 600;\n  color: var(--text-dim);\n  margin-left: 1px;\n}\n.stat-tile[_ngcontent-%COMP%]   .stat-val.small[_ngcontent-%COMP%] {\n  font-size: 13px;\n}\n.stat-tile[_ngcontent-%COMP%]   .stat-key[_ngcontent-%COMP%] {\n  font-size: 10px;\n  letter-spacing: 0.04em;\n  text-transform: uppercase;\n  color: var(--text-faint);\n}\n.storage-action[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  gap: 14px;\n  padding: 14px;\n  background: var(--surface-2);\n  border: 1px solid var(--hairline);\n  border-radius: 12px;\n}\n.storage-action[_ngcontent-%COMP%]   .action-text[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  gap: 2px;\n  min-width: 0;\n}\n.storage-action[_ngcontent-%COMP%]   .action-title[_ngcontent-%COMP%] {\n  font-size: 13px;\n  font-weight: 600;\n}\n.storage-action[_ngcontent-%COMP%]   .action-hint[_ngcontent-%COMP%] {\n  font-size: 11.5px;\n  color: var(--text-faint);\n}\n.action-controls[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  gap: 8px;\n  margin-left: auto;\n}\n.keep-select[_ngcontent-%COMP%] {\n  padding: 9px 10px;\n  font-size: 12.5px;\n  font-weight: 600;\n  color: var(--text);\n  background: var(--surface);\n  border: 1px solid var(--hairline);\n  border-radius: 10px;\n  cursor: pointer;\n  outline: none;\n}\n.keep-select[_ngcontent-%COMP%]:disabled {\n  opacity: 0.45;\n  cursor: default;\n}\n.keep-select[_ngcontent-%COMP%]   option[_ngcontent-%COMP%] {\n  background: var(--surface);\n  color: var(--text);\n}\n.cleanup-btn[_ngcontent-%COMP%] {\n  display: inline-flex;\n  align-items: center;\n  gap: 7px;\n  padding: 9px 15px;\n  font-size: 12.5px;\n  font-weight: 600;\n  white-space: nowrap;\n  color: #fff;\n  background: var(--accent);\n  border: none;\n  border-radius: 10px;\n  cursor: pointer;\n  transition:\n    filter 0.15s ease,\n    opacity 0.15s ease,\n    background 0.15s ease;\n}\n.cleanup-btn[_ngcontent-%COMP%]:hover:not(:disabled) {\n  filter: brightness(1.08);\n}\n.cleanup-btn[_ngcontent-%COMP%]:disabled {\n  opacity: 0.45;\n  cursor: default;\n}\n.cleanup-btn.danger[_ngcontent-%COMP%] {\n  background: #f0584f;\n}\n.cleanup-btn[_ngcontent-%COMP%]   mat-icon[_ngcontent-%COMP%] {\n  font-size: 17px;\n  width: 17px;\n  height: 17px;\n}\n.cleanup-note[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  gap: 8px;\n  margin-top: -6px;\n  padding: 9px 12px;\n  font-size: 12.5px;\n  border-radius: 10px;\n  background: var(--accent-soft);\n  color: var(--accent);\n}\n.cleanup-note[_ngcontent-%COMP%]   mat-icon[_ngcontent-%COMP%] {\n  font-size: 17px;\n  width: 17px;\n  height: 17px;\n}\n.cleanup-note.err[_ngcontent-%COMP%] {\n  background: rgba(240, 88, 79, 0.14);\n  color: #f0584f;\n}\n.storage-log[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  gap: 8px;\n}\n.log-head[_ngcontent-%COMP%] {\n  display: inline-flex;\n  align-items: center;\n  gap: 7px;\n  font-size: 12px;\n  font-weight: 600;\n  letter-spacing: 0.03em;\n  color: var(--text-dim);\n}\n.log-head[_ngcontent-%COMP%]   mat-icon[_ngcontent-%COMP%] {\n  font-size: 16px;\n  width: 16px;\n  height: 16px;\n}\n.log-empty[_ngcontent-%COMP%] {\n  padding: 16px;\n  text-align: center;\n  font-size: 12px;\n  color: var(--text-faint);\n  background: var(--surface-2);\n  border: 1px dashed var(--hairline);\n  border-radius: 10px;\n}\n.log-list[_ngcontent-%COMP%] {\n  list-style: none;\n  margin: 0;\n  padding: 0;\n  display: flex;\n  flex-direction: column;\n  max-height: 184px;\n  overflow: auto;\n  border: 1px solid var(--hairline);\n  border-radius: 10px;\n}\n.log-item[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  gap: 10px;\n  padding: 9px 12px;\n  font-size: 12.5px;\n}\n.log-item[_ngcontent-%COMP%]:not(:last-child) {\n  border-bottom: 1px solid var(--hairline);\n}\n.log-item[_ngcontent-%COMP%]   .log-trigger[_ngcontent-%COMP%] {\n  flex-shrink: 0;\n  padding: 2px 8px;\n  font-size: 10px;\n  font-weight: 700;\n  letter-spacing: 0.04em;\n  text-transform: uppercase;\n  border-radius: 999px;\n  color: var(--text-dim);\n  background: rgba(255, 255, 255, 0.07);\n}\n.log-item[_ngcontent-%COMP%]   .log-trigger.manual[_ngcontent-%COMP%] {\n  color: var(--accent);\n  background: var(--accent-soft);\n}\n.log-item[_ngcontent-%COMP%]   .log-main[_ngcontent-%COMP%] {\n  font-weight: 600;\n  font-variant-numeric: tabular-nums;\n}\n.log-item[_ngcontent-%COMP%]   .log-main[_ngcontent-%COMP%]   .log-frames[_ngcontent-%COMP%] {\n  font-weight: 400;\n  color: var(--text-faint);\n}\n.log-item[_ngcontent-%COMP%]   .log-time[_ngcontent-%COMP%] {\n  margin-left: auto;\n  flex-shrink: 0;\n  font-variant-numeric: tabular-nums;\n  color: var(--text-faint);\n}\n@media (max-width: 1100px) {\n  .camera-wall[_ngcontent-%COMP%] {\n    grid-template-columns: repeat(2, 1fr);\n  }\n}\n@media (max-width: 680px) {\n  .cam-header[_ngcontent-%COMP%] {\n    flex-wrap: wrap;\n    gap: 12px;\n  }\n  .cam-subtitle[_ngcontent-%COMP%] {\n    display: none;\n  }\n  .camera-wall[_ngcontent-%COMP%] {\n    grid-template-columns: 1fr;\n    gap: 10px;\n    padding: 10px;\n  }\n  .cam-storage-bar[_ngcontent-%COMP%] {\n    display: none;\n  }\n  .storage-stats[_ngcontent-%COMP%] {\n    grid-template-columns: repeat(2, 1fr);\n  }\n  .storage-action[_ngcontent-%COMP%] {\n    flex-direction: column;\n    align-items: stretch;\n  }\n  .cleanup-btn[_ngcontent-%COMP%] {\n    margin-left: 0;\n    justify-content: center;\n  }\n}\n/*# sourceMappingURL=camera-wall.component.css.map */'] });
 };
 (() => {
   (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(CameraWallComponent, [{
@@ -68221,6 +68399,17 @@ var CameraWallComponent = class _CameraWallComponent {
         </button>
       }
 
+      @if (storageAvailable) {
+        <button
+          type="button"
+          class="cam-export-btn"
+          [disabled]="downloadingIp !== null"
+          (click)="downloadAllFrames()"
+          [title]="'cameras.export.all' | transloco">
+          <mat-icon>{{ downloadingIp === '*' ? 'autorenew' : 'download' }}</mat-icon>
+        </button>
+      }
+
       <span class="cam-clock"><mat-icon>schedule</mat-icon>{{ clock }}</span>
 
       <div class="view-toggle">
@@ -68239,6 +68428,15 @@ var CameraWallComponent = class _CameraWallComponent {
           <mat-icon>grid_view</mat-icon>
         </button>
       </div>
+
+      <button
+        type="button"
+        class="pc-toggle"
+        [class.on]="showBoxes"
+        (click)="toggleBoxes()"
+        [title]="(showBoxes ? 'cameras.boxes_on' : 'cameras.boxes_off') | transloco">
+        <mat-icon>{{ showBoxes ? 'crop_free' : 'crop_din' }}</mat-icon>
+      </button>
 
       <button
         type="button"
@@ -68265,7 +68463,7 @@ var CameraWallComponent = class _CameraWallComponent {
         @for (cam of liveCameras; track cam.ip) {
           <div class="live-cell" [class.is-live]="isLive(cam)">
             @if (cam.imageUrl) {
-              <img [src]="cam.imageUrl" [alt]="cameraTitle(cam)" />
+              <img [src]="frameSrc(cam)" [alt]="cameraTitle(cam)" />
             } @else {
               <div class="no-signal">
                 <mat-icon>videocam_off</mat-icon>
@@ -68315,13 +68513,25 @@ var CameraWallComponent = class _CameraWallComponent {
                 <span class="card-brand">{{ cam.brand }}</span>
               }
             </div>
-            <span class="card-age" [class.live]="isLive(cam)">{{ ageBadge(cam) }}</span>
+            <div class="card-head-actions">
+              @if (storageAvailable) {
+                <button
+                  type="button"
+                  class="card-dl-btn"
+                  [disabled]="downloadingIp !== null"
+                  (click)="$event.stopPropagation(); downloadCamera(cam.ip)"
+                  [title]="'cameras.export.camera' | transloco">
+                  <mat-icon>{{ downloadingIp === cam.ip ? 'autorenew' : 'download' }}</mat-icon>
+                </button>
+              }
+              <span class="card-age" [class.live]="isLive(cam)">{{ ageBadge(cam) }}</span>
+            </div>
           </div>
 
           <div class="card-media">
             <div class="media-main">
               @if (mainFrame(cam)) {
-                <img [src]="mainFrame(cam)!.imageUrl" [alt]="cameraTitle(cam)" />
+                <img [src]="frameSrc(mainFrame(cam)!)" [alt]="cameraTitle(cam)" />
                 @if (isLive(cam)) {
                   <span class="media-live"><span class="media-live-dot"></span>{{ 'cameras.live' | transloco }}</span>
                 }
@@ -68339,7 +68549,7 @@ var CameraWallComponent = class _CameraWallComponent {
             @if (thumbFrames(cam).length > 0) {
               <div class="media-thumbs">
                 @for (f of thumbFrames(cam); track f.imageUrl) {
-                  <img [src]="f.imageUrl" [alt]="cameraTitle(cam)" />
+                  <img [src]="frameSrc(f)" [alt]="cameraTitle(cam)" />
                 }
               </div>
             }
@@ -68392,7 +68602,23 @@ var CameraWallComponent = class _CameraWallComponent {
           }
         </span>
         <div class="storage-header-actions">
+          <button
+            type="button"
+            class="storage-icon-btn"
+            [class.on]="showBoxes"
+            (click)="toggleBoxes()"
+            [title]="(showBoxes ? 'cameras.boxes_on' : 'cameras.boxes_off') | transloco">
+            <mat-icon>{{ showBoxes ? 'crop_free' : 'crop_din' }}</mat-icon>
+          </button>
           @if (storageAvailable) {
+            <button
+              type="button"
+              class="storage-icon-btn"
+              [disabled]="downloadingIp !== null"
+              (click)="downloadCamera(viewerCamera!)"
+              [title]="'cameras.export.camera' | transloco">
+              <mat-icon>{{ downloadingIp === viewerCamera ? 'autorenew' : 'download' }}</mat-icon>
+            </button>
             <button
               type="button"
               class="storage-icon-btn"
@@ -68431,7 +68657,7 @@ var CameraWallComponent = class _CameraWallComponent {
           <span class="archive-muted">{{ 'cameras.loading' | transloco }}</span>
         } @else if (currentFrame) {
           <div class="stage-frame">
-            <img [src]="currentFrame.imageUrl" [alt]="viewerCamera" />
+            <img [src]="frameSrc(currentFrame)" [alt]="viewerCamera" />
             <div class="stage-detections">
               @for (m of frameMetrics(currentFrame); track m.icon) {
                 <span class="det-badge" [class]="'tier-' + m.tier" [title]="m.title">
@@ -68635,11 +68861,11 @@ var CameraWallComponent = class _CameraWallComponent {
     </div>
   </div>
 }
-`, styles: ['@charset "UTF-8";\n\n/* src/app/modules/cameras/pages/camera-wall/camera-wall.component.scss */\n:host {\n  --accent: #22c55e;\n  --accent-soft: rgba(34, 197, 94, 0.16);\n  --accent-ring: rgba(34, 197, 94, 0.55);\n  --bg: #0a0b0d;\n  --surface: #111317;\n  --surface-2: #15181d;\n  --hairline: rgba(255, 255, 255, 0.08);\n  --text: #eef1f5;\n  --text-dim: rgba(255, 255, 255, 0.55);\n  --text-faint: rgba(255, 255, 255, 0.38);\n}\n.camera-page {\n  display: flex;\n  flex-direction: column;\n  width: 100vw;\n  height: 100vh;\n  background:\n    radial-gradient(\n      1200px 600px at 80% -10%,\n      rgba(34, 197, 94, 0.06),\n      transparent 60%),\n    var(--bg);\n  color: var(--text);\n  overflow: hidden;\n}\n.cam-header {\n  display: flex;\n  align-items: center;\n  gap: 18px;\n  padding: 12px 20px;\n  background: rgba(17, 19, 23, 0.72);\n  border-bottom: 1px solid var(--hairline);\n  backdrop-filter: blur(12px);\n}\n.cam-brand {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  min-width: 0;\n}\n.cam-brand-icon {\n  display: grid;\n  place-items: center;\n  width: 38px;\n  height: 38px;\n  border-radius: 11px;\n  color: var(--accent);\n  background: var(--accent-soft);\n  box-shadow: inset 0 0 0 1px var(--accent-ring);\n}\n.cam-brand-icon mat-icon {\n  font-size: 20px;\n  width: 20px;\n  height: 20px;\n}\n.cam-brand-text {\n  display: flex;\n  flex-direction: column;\n  line-height: 1.25;\n  min-width: 0;\n}\n.cam-title {\n  font-size: 15px;\n  font-weight: 700;\n  letter-spacing: 0.01em;\n}\n.cam-subtitle {\n  font-size: 11.5px;\n  color: var(--text-faint);\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n.cam-header-right {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  margin-left: auto;\n}\n.cam-clock {\n  display: inline-flex;\n  align-items: center;\n  gap: 6px;\n  padding: 6px 12px;\n  font-size: 13px;\n  font-weight: 600;\n  font-variant-numeric: tabular-nums;\n  color: var(--text);\n  background: rgba(255, 255, 255, 0.05);\n  border: 1px solid var(--hairline);\n  border-radius: 999px;\n}\n.cam-clock mat-icon {\n  font-size: 16px;\n  width: 16px;\n  height: 16px;\n  color: var(--text-dim);\n}\n.pc-bar {\n  display: flex;\n  align-items: center;\n  gap: 8px;\n  flex-wrap: wrap;\n}\n.pc-bar-label {\n  display: flex;\n  align-items: center;\n  color: var(--text-faint);\n}\n.pc-bar-label mat-icon {\n  font-size: 18px;\n  width: 18px;\n  height: 18px;\n}\n.pc-muted {\n  color: var(--text-faint);\n  font-size: 12px;\n}\n.pc-chip {\n  display: inline-flex;\n  align-items: center;\n  gap: 6px;\n  padding: 5px 13px;\n  font-size: 12px;\n  font-weight: 600;\n  letter-spacing: 0.03em;\n  color: rgba(255, 255, 255, 0.82);\n  background: rgba(255, 255, 255, 0.05);\n  border: 1px solid var(--hairline);\n  border-radius: 999px;\n  cursor: pointer;\n  transition:\n    background 0.15s ease,\n    border-color 0.15s ease,\n    transform 0.1s ease;\n}\n.pc-chip:hover {\n  background: rgba(255, 255, 255, 0.1);\n}\n.pc-chip:active {\n  transform: translateY(1px);\n}\n.pc-chip.active {\n  background: var(--accent-soft);\n  border-color: var(--accent-ring);\n  color: #fff;\n}\n.pc-chip-count {\n  font-size: 10px;\n  padding: 1px 6px;\n  border-radius: 999px;\n  background: rgba(255, 255, 255, 0.08);\n  color: rgba(255, 255, 255, 0.6);\n}\n.pc-refresh {\n  display: grid;\n  place-items: center;\n  width: 34px;\n  height: 34px;\n  background: rgba(255, 255, 255, 0.05);\n  border: 1px solid var(--hairline);\n  border-radius: 10px;\n  color: var(--text-dim);\n  cursor: pointer;\n  transition: color 0.15s ease, background 0.15s ease;\n}\n.pc-refresh:hover {\n  color: #fff;\n  background: rgba(255, 255, 255, 0.1);\n}\n.pc-refresh:active mat-icon {\n  transform: rotate(180deg);\n}\n.pc-refresh mat-icon {\n  font-size: 20px;\n  width: 20px;\n  height: 20px;\n  transition: transform 0.3s ease;\n}\n.camera-wall {\n  flex: 1;\n  min-height: 0;\n  display: grid;\n  grid-template-columns: repeat(3, 1fr);\n  grid-auto-rows: min-content;\n  align-content: start;\n  gap: 14px;\n  padding: 16px;\n  overflow: auto;\n}\n.wall-empty {\n  grid-column: 1/-1;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  color: var(--text-faint);\n  font-size: 13px;\n}\n.camera-wall.live-mode {\n  grid-auto-rows: 1fr;\n  align-content: stretch;\n}\n.live-cell {\n  position: relative;\n  min-height: 0;\n  border-radius: 14px;\n  background: var(--surface);\n  border: 1px solid var(--hairline);\n  overflow: hidden;\n  transition: border-color 0.18s ease;\n}\n.live-cell.is-live {\n  border-color: rgba(34, 197, 94, 0.32);\n}\n.live-cell img {\n  position: absolute;\n  inset: 0;\n  width: 100%;\n  height: 100%;\n  object-fit: cover;\n  display: block;\n}\n.live-cell .no-signal {\n  position: absolute;\n  inset: 0;\n}\n.cell-scrim {\n  position: absolute;\n  inset: 0;\n  background:\n    linear-gradient(\n      to top,\n      rgba(0, 0, 0, 0.6) 0%,\n      rgba(0, 0, 0, 0) 38%);\n  pointer-events: none;\n}\n.cell-label {\n  position: absolute;\n  bottom: 10px;\n  left: 12px;\n  right: 12px;\n  display: flex;\n  align-items: baseline;\n  justify-content: space-between;\n  gap: 8px;\n  pointer-events: none;\n}\n.cell-label .cell-label-text {\n  display: flex;\n  flex-direction: column;\n  gap: 1px;\n  min-width: 0;\n}\n.cell-label .cell-name {\n  font-size: 12px;\n  font-weight: 700;\n  letter-spacing: 0.05em;\n  color: #fff;\n  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);\n}\n.cell-label .cell-brand {\n  font-size: 10px;\n  color: rgba(255, 255, 255, 0.65);\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);\n}\n.cell-label .cell-time {\n  font-size: 11px;\n  font-variant-numeric: tabular-nums;\n  color: rgba(255, 255, 255, 0.72);\n  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);\n}\n.camera-card {\n  display: flex;\n  flex-direction: column;\n  gap: 11px;\n  padding: 14px;\n  border-radius: 16px;\n  background: var(--surface);\n  border: 1px solid var(--hairline);\n  cursor: pointer;\n  transition:\n    transform 0.18s ease,\n    border-color 0.18s ease,\n    box-shadow 0.18s ease;\n}\n.camera-card:hover {\n  transform: translateY(-2px);\n  border-color: rgba(255, 255, 255, 0.18);\n  box-shadow: 0 14px 34px -16px rgba(0, 0, 0, 0.8);\n}\n.camera-card:hover .media-main img {\n  transform: scale(1.04);\n}\n.camera-card.is-live {\n  border-color: rgba(34, 197, 94, 0.3);\n}\n.card-head {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  gap: 10px;\n}\n.card-head-text {\n  display: flex;\n  flex-direction: column;\n  line-height: 1.25;\n  min-width: 0;\n}\n.card-title {\n  font-size: 15px;\n  font-weight: 700;\n  letter-spacing: 0.01em;\n  color: var(--text);\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n.card-brand {\n  font-size: 11.5px;\n  color: var(--text-faint);\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n.card-age {\n  flex-shrink: 0;\n  padding: 2px 9px;\n  font-size: 10.5px;\n  font-weight: 700;\n  letter-spacing: 0.03em;\n  border-radius: 999px;\n  color: #f0a3a0;\n  background: rgba(240, 88, 79, 0.14);\n  font-variant-numeric: tabular-nums;\n}\n.card-age.live {\n  color: var(--accent);\n  background: var(--accent-soft);\n}\n.card-media {\n  display: flex;\n  gap: 8px;\n}\n.media-main {\n  position: relative;\n  flex: 1;\n  min-width: 0;\n  aspect-ratio: 16/10;\n  border-radius: 11px;\n  overflow: hidden;\n  background: #000;\n}\n.media-main img {\n  width: 100%;\n  height: 100%;\n  object-fit: cover;\n  display: block;\n  transition: transform 0.4s ease;\n}\n.media-thumbs {\n  display: flex;\n  flex-direction: column;\n  gap: 8px;\n  width: 64px;\n  flex-shrink: 0;\n}\n.media-thumbs img {\n  width: 100%;\n  flex: 1;\n  min-height: 0;\n  object-fit: cover;\n  display: block;\n  border-radius: 9px;\n  border: 1px solid var(--hairline);\n}\n.media-live {\n  position: absolute;\n  top: 8px;\n  left: 8px;\n  display: inline-flex;\n  align-items: center;\n  gap: 6px;\n  padding: 3px 9px 3px 8px;\n  font-size: 10px;\n  font-weight: 800;\n  letter-spacing: 0.08em;\n  color: #fff;\n  background: rgba(220, 38, 38, 0.92);\n  border-radius: 999px;\n  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);\n}\n.media-live-dot {\n  width: 7px;\n  height: 7px;\n  border-radius: 50%;\n  background: #fff;\n  animation: live-pulse 1.4s ease-in-out infinite;\n}\n@keyframes live-pulse {\n  0%, 100% {\n    opacity: 1;\n    transform: scale(1);\n  }\n  50% {\n    opacity: 0.35;\n    transform: scale(0.7);\n  }\n}\n.media-stamp {\n  position: absolute;\n  bottom: 8px;\n  right: 8px;\n  padding: 2px 8px;\n  font-size: 11px;\n  font-weight: 600;\n  font-variant-numeric: tabular-nums;\n  color: #fff;\n  background: rgba(10, 11, 13, 0.72);\n  border-radius: 7px;\n  backdrop-filter: blur(3px);\n}\n.no-signal {\n  width: 100%;\n  height: 100%;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n  gap: 6px;\n  color: #3a3f47;\n  background:\n    repeating-linear-gradient(\n      45deg,\n      #0e1013,\n      #0e1013 12px,\n      #121519 12px,\n      #121519 24px);\n}\n.no-signal mat-icon {\n  font-size: 32px;\n  width: 32px;\n  height: 32px;\n}\n.no-signal span {\n  font-size: 10px;\n  letter-spacing: 0.05em;\n  text-transform: uppercase;\n}\n.card-model {\n  font-size: 12px;\n  color: var(--text-dim);\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n.card-ids {\n  display: flex;\n  align-items: center;\n  gap: 8px;\n  font-size: 11px;\n  font-variant-numeric: tabular-nums;\n}\n.card-ids .id-ip {\n  padding: 2px 7px;\n  border-radius: 6px;\n  font-weight: 600;\n  color: #e0b46b;\n  background: rgba(224, 161, 6, 0.12);\n}\n.card-stats {\n  display: grid;\n  grid-template-columns: repeat(3, 1fr);\n  gap: 8px;\n  padding: 10px 0 2px;\n  border-top: 1px solid var(--hairline);\n}\n.card-stats .stat {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  gap: 2px;\n}\n.card-stats .stat-val {\n  font-size: 17px;\n  font-weight: 700;\n  font-variant-numeric: tabular-nums;\n  color: var(--text);\n}\n.card-stats .stat-val.accent {\n  color: var(--accent);\n}\n.card-stats .stat-key {\n  font-size: 9.5px;\n  letter-spacing: 0.05em;\n  text-transform: uppercase;\n  color: var(--text-faint);\n}\n.card-foot {\n  display: flex;\n  gap: 8px;\n  flex-wrap: wrap;\n}\n.det-badge {\n  display: inline-flex;\n  align-items: center;\n  gap: 5px;\n  padding: 3px 10px;\n  font-size: 11px;\n  font-weight: 700;\n  font-variant-numeric: tabular-nums;\n  color: var(--text-faint);\n  background: rgba(255, 255, 255, 0.04);\n  border: 1px solid var(--hairline);\n  border-radius: 999px;\n}\n.det-badge mat-icon {\n  font-size: 14px;\n  width: 14px;\n  height: 14px;\n}\n.det-badge.tier-high {\n  color: var(--accent);\n  background: var(--accent-soft);\n  border-color: var(--accent-ring);\n}\n.det-badge.tier-mid {\n  color: #e0a106;\n  background: rgba(224, 161, 6, 0.14);\n  border-color: rgba(224, 161, 6, 0.4);\n}\n.det-badge.tier-low {\n  color: #6ea8e0;\n  background: rgba(110, 168, 224, 0.14);\n  border-color: rgba(110, 168, 224, 0.4);\n}\n.det-badge.tier-neutral {\n  color: rgba(255, 255, 255, 0.82);\n  background: rgba(255, 255, 255, 0.06);\n  border-color: var(--hairline);\n}\n.cell-detections {\n  position: absolute;\n  top: 10px;\n  right: 10px;\n  display: flex;\n  flex-direction: column;\n  align-items: flex-end;\n  gap: 5px;\n}\n.stage-frame {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  gap: 10px;\n}\n.stage-detections {\n  display: flex;\n  flex-wrap: wrap;\n  justify-content: center;\n  gap: 6px;\n}\n.archive-overlay {\n  position: fixed;\n  inset: 0;\n  z-index: 1000;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  padding: 24px;\n  background: rgba(4, 5, 7, 0.78);\n  backdrop-filter: blur(6px);\n  animation: overlay-in 0.16s ease;\n}\n@keyframes overlay-in {\n  from {\n    opacity: 0;\n  }\n  to {\n    opacity: 1;\n  }\n}\n.archive-panel {\n  display: flex;\n  flex-direction: column;\n  width: min(92vw, 980px);\n  max-height: 92vh;\n  background: var(--surface);\n  border: 1px solid var(--hairline);\n  border-radius: 16px;\n  overflow: hidden;\n  color: var(--text);\n  box-shadow: 0 30px 80px -24px rgba(0, 0, 0, 0.85);\n  animation: panel-in 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);\n}\n@keyframes panel-in {\n  from {\n    opacity: 0;\n    transform: translateY(10px) scale(0.985);\n  }\n  to {\n    opacity: 1;\n    transform: translateY(0) scale(1);\n  }\n}\n.archive-header {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  padding: 14px 18px;\n  border-bottom: 1px solid var(--hairline);\n}\n.archive-header .archive-title {\n  display: inline-flex;\n  align-items: center;\n  gap: 9px;\n  font-size: 14px;\n  font-weight: 600;\n  letter-spacing: 0.03em;\n}\n.archive-header .archive-title mat-icon {\n  font-size: 18px;\n  width: 18px;\n  height: 18px;\n  color: var(--accent);\n}\n.archive-header .archive-title .archive-brand {\n  font-size: 12px;\n  font-weight: 400;\n  letter-spacing: 0;\n  color: var(--text-faint);\n}\n.archive-header .archive-sep {\n  color: var(--text-faint);\n}\n.archive-header .archive-close {\n  display: grid;\n  place-items: center;\n  width: 32px;\n  height: 32px;\n  background: rgba(255, 255, 255, 0.05);\n  border: 1px solid var(--hairline);\n  border-radius: 9px;\n  color: var(--text-dim);\n  cursor: pointer;\n  transition: color 0.15s ease, background 0.15s ease;\n}\n.archive-header .archive-close:hover {\n  color: #fff;\n  background: rgba(255, 255, 255, 0.1);\n}\n.archive-days {\n  display: flex;\n  flex-wrap: wrap;\n  gap: 6px;\n  padding: 12px 18px;\n  border-bottom: 1px solid var(--hairline);\n  background: var(--surface-2);\n}\n.archive-day-chip {\n  display: inline-flex;\n  align-items: center;\n  gap: 6px;\n  padding: 5px 11px;\n  font-size: 12px;\n  color: rgba(255, 255, 255, 0.82);\n  background: rgba(255, 255, 255, 0.05);\n  border: 1px solid var(--hairline);\n  border-radius: 999px;\n  cursor: pointer;\n  transition: background 0.15s ease, border-color 0.15s ease;\n}\n.archive-day-chip:hover {\n  background: rgba(255, 255, 255, 0.1);\n}\n.archive-day-chip.active {\n  background: var(--accent-soft);\n  border-color: var(--accent-ring);\n  color: #fff;\n}\n.archive-day-count {\n  font-size: 10px;\n  padding: 1px 6px;\n  border-radius: 999px;\n  background: rgba(255, 255, 255, 0.08);\n  color: rgba(255, 255, 255, 0.6);\n}\n.archive-stage {\n  flex: 1;\n  min-height: 0;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  padding: 14px;\n  background:\n    radial-gradient(\n      60% 60% at 50% 40%,\n      rgba(255, 255, 255, 0.03),\n      transparent),\n    #000;\n}\n.archive-stage img {\n  max-width: 100%;\n  max-height: 62vh;\n  object-fit: contain;\n  display: block;\n  border-radius: 8px;\n}\n.archive-muted {\n  color: var(--text-faint);\n  font-size: 13px;\n  padding: 32px;\n}\n.archive-footer {\n  border-top: 1px solid var(--hairline);\n  background: var(--surface-2);\n}\n.archive-controls {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  padding: 14px 18px 8px;\n}\n.archive-controls button {\n  display: grid;\n  place-items: center;\n  width: 34px;\n  height: 34px;\n  background: rgba(255, 255, 255, 0.06);\n  border: 1px solid var(--hairline);\n  border-radius: 9px;\n  color: var(--text);\n  cursor: pointer;\n  transition: background 0.15s ease;\n}\n.archive-controls button:hover:not(:disabled) {\n  background: rgba(255, 255, 255, 0.14);\n}\n.archive-controls button:disabled {\n  opacity: 0.3;\n  cursor: default;\n}\n.archive-controls input[type=range] {\n  flex: 1;\n  height: 4px;\n  accent-color: var(--accent);\n  cursor: pointer;\n}\n.archive-meta {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  padding: 4px 20px 16px;\n  font-size: 12px;\n  color: var(--text-dim);\n  font-variant-numeric: tabular-nums;\n}\n.archive-meta .archive-count {\n  padding: 2px 9px;\n  border-radius: 999px;\n  background: rgba(255, 255, 255, 0.06);\n}\n.archive-meta .archive-stamp {\n  color: var(--text);\n  font-weight: 600;\n}\n.view-toggle {\n  display: inline-flex;\n  gap: 3px;\n  padding: 3px;\n  background: rgba(255, 255, 255, 0.05);\n  border: 1px solid var(--hairline);\n  border-radius: 10px;\n}\n.view-toggle button {\n  display: grid;\n  place-items: center;\n  width: 32px;\n  height: 28px;\n  border: none;\n  border-radius: 7px;\n  background: transparent;\n  color: var(--text-faint);\n  cursor: pointer;\n  transition: color 0.15s ease, background 0.15s ease;\n}\n.view-toggle button:hover {\n  color: #fff;\n}\n.view-toggle button.active {\n  color: #fff;\n  background: rgba(255, 255, 255, 0.1);\n}\n.view-toggle button mat-icon {\n  font-size: 18px;\n  width: 18px;\n  height: 18px;\n}\n.pc-toggle {\n  display: grid;\n  place-items: center;\n  width: 34px;\n  height: 34px;\n  background: rgba(255, 255, 255, 0.05);\n  border: 1px solid var(--hairline);\n  border-radius: 10px;\n  color: var(--text-faint);\n  cursor: pointer;\n  transition:\n    color 0.15s ease,\n    background 0.15s ease,\n    border-color 0.15s ease;\n}\n.pc-toggle:hover {\n  color: #fff;\n  background: rgba(255, 255, 255, 0.1);\n}\n.pc-toggle.on {\n  color: var(--accent);\n  border-color: var(--accent-ring);\n  background: var(--accent-soft);\n}\n.pc-toggle mat-icon {\n  font-size: 20px;\n  width: 20px;\n  height: 20px;\n}\n.cam-storage-chip {\n  display: inline-flex;\n  align-items: center;\n  gap: 8px;\n  padding: 5px 12px;\n  background: rgba(255, 255, 255, 0.05);\n  border: 1px solid var(--hairline);\n  border-radius: 999px;\n  color: var(--text);\n  cursor: pointer;\n  transition: background 0.15s ease, border-color 0.15s ease;\n}\n.cam-storage-chip:hover {\n  background: rgba(255, 255, 255, 0.1);\n}\n.cam-storage-chip.warn {\n  border-color: rgba(224, 161, 6, 0.5);\n}\n.cam-storage-chip.crit {\n  border-color: rgba(240, 88, 79, 0.55);\n}\n.cam-storage-chip mat-icon {\n  font-size: 17px;\n  width: 17px;\n  height: 17px;\n  color: var(--text-dim);\n}\n.cam-storage-pct {\n  font-size: 12px;\n  font-weight: 700;\n  font-variant-numeric: tabular-nums;\n}\n.cam-storage-bar {\n  position: relative;\n  width: 46px;\n  height: 5px;\n  border-radius: 999px;\n  background: rgba(255, 255, 255, 0.12);\n  overflow: hidden;\n}\n.cam-storage-bar i {\n  position: absolute;\n  inset: 0 auto 0 0;\n  display: block;\n  border-radius: 999px;\n  transition: width 0.4s ease;\n}\n.storage-overlay {\n  position: fixed;\n  inset: 0;\n  z-index: 1000;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  padding: 24px;\n  background: rgba(4, 5, 7, 0.78);\n  backdrop-filter: blur(6px);\n  animation: overlay-in 0.16s ease;\n}\n.storage-panel {\n  display: flex;\n  flex-direction: column;\n  width: min(94vw, 560px);\n  max-height: 92vh;\n  background: var(--surface);\n  border: 1px solid var(--hairline);\n  border-radius: 16px;\n  overflow: hidden;\n  color: var(--text);\n  box-shadow: 0 30px 80px -24px rgba(0, 0, 0, 0.85);\n  animation: panel-in 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);\n}\n.storage-header {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  padding: 14px 18px;\n  border-bottom: 1px solid var(--hairline);\n}\n.storage-header .storage-title {\n  display: inline-flex;\n  align-items: center;\n  gap: 9px;\n  font-size: 14px;\n  font-weight: 600;\n  letter-spacing: 0.03em;\n}\n.storage-header .storage-title mat-icon {\n  font-size: 18px;\n  width: 18px;\n  height: 18px;\n  color: var(--accent);\n}\n.storage-header-actions {\n  display: flex;\n  gap: 8px;\n}\n.storage-icon-btn {\n  display: grid;\n  place-items: center;\n  width: 32px;\n  height: 32px;\n  background: rgba(255, 255, 255, 0.05);\n  border: 1px solid var(--hairline);\n  border-radius: 9px;\n  color: var(--text-dim);\n  cursor: pointer;\n  transition: color 0.15s ease, background 0.15s ease;\n}\n.storage-icon-btn:hover {\n  color: #fff;\n  background: rgba(255, 255, 255, 0.1);\n}\n.storage-icon-btn mat-icon {\n  font-size: 18px;\n  width: 18px;\n  height: 18px;\n}\n.storage-body {\n  padding: 18px;\n  overflow: auto;\n  display: flex;\n  flex-direction: column;\n  gap: 16px;\n}\n.storage-loading {\n  padding: 48px;\n  text-align: center;\n  color: var(--text-faint);\n  font-size: 13px;\n}\n.storage-gauge-row {\n  display: flex;\n  align-items: center;\n  gap: 22px;\n}\n.storage-gauge {\n  position: relative;\n  width: 124px;\n  height: 124px;\n  flex-shrink: 0;\n}\n.storage-gauge svg {\n  width: 100%;\n  height: 100%;\n  transform: rotate(-90deg);\n}\n.storage-gauge .gauge-track {\n  fill: none;\n  stroke: rgba(255, 255, 255, 0.08);\n  stroke-width: 10;\n}\n.storage-gauge .gauge-fill {\n  fill: none;\n  stroke-width: 10;\n  stroke-linecap: round;\n  transition: stroke-dashoffset 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), stroke 0.3s ease;\n}\n.gauge-center {\n  position: absolute;\n  inset: 0;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n}\n.gauge-center .gauge-pct {\n  font-size: 28px;\n  font-weight: 700;\n  font-variant-numeric: tabular-nums;\n  line-height: 1;\n}\n.gauge-center .gauge-pct small {\n  font-size: 14px;\n  font-weight: 600;\n  color: var(--text-dim);\n}\n.gauge-center .gauge-cap {\n  margin-top: 3px;\n  font-size: 10px;\n  letter-spacing: 0.08em;\n  text-transform: uppercase;\n  color: var(--text-faint);\n}\n.storage-legend {\n  flex: 1;\n  min-width: 0;\n  display: flex;\n  flex-direction: column;\n  gap: 8px;\n}\n.legend-row {\n  display: flex;\n  align-items: center;\n  gap: 9px;\n  font-size: 13px;\n}\n.legend-row .legend-dot {\n  width: 9px;\n  height: 9px;\n  border-radius: 3px;\n  background: rgba(255, 255, 255, 0.18);\n  flex-shrink: 0;\n}\n.legend-row .legend-label {\n  color: var(--text-dim);\n}\n.legend-row .legend-val {\n  margin-left: auto;\n  font-weight: 600;\n  font-variant-numeric: tabular-nums;\n}\n.legend-row.total {\n  padding-top: 8px;\n  border-top: 1px solid var(--hairline);\n}\n.legend-row.total .legend-label {\n  color: var(--text-faint);\n}\n.storage-cleaning {\n  display: inline-flex;\n  align-items: center;\n  gap: 6px;\n  margin-top: 2px;\n  font-size: 11.5px;\n  color: var(--accent);\n}\n.storage-cleaning mat-icon {\n  font-size: 15px;\n  width: 15px;\n  height: 15px;\n  animation: spin 1.1s linear infinite;\n}\n@keyframes spin {\n  to {\n    transform: rotate(360deg);\n  }\n}\n.storage-stats {\n  display: grid;\n  grid-template-columns: repeat(4, 1fr);\n  gap: 8px;\n}\n.stat-tile {\n  display: flex;\n  flex-direction: column;\n  gap: 3px;\n  padding: 11px 10px;\n  background: var(--surface-2);\n  border: 1px solid var(--hairline);\n  border-radius: 11px;\n  text-align: center;\n}\n.stat-tile .stat-val {\n  font-size: 16px;\n  font-weight: 700;\n  font-variant-numeric: tabular-nums;\n}\n.stat-tile .stat-val small {\n  font-size: 11px;\n  font-weight: 600;\n  color: var(--text-dim);\n  margin-left: 1px;\n}\n.stat-tile .stat-val.small {\n  font-size: 13px;\n}\n.stat-tile .stat-key {\n  font-size: 10px;\n  letter-spacing: 0.04em;\n  text-transform: uppercase;\n  color: var(--text-faint);\n}\n.storage-action {\n  display: flex;\n  align-items: center;\n  gap: 14px;\n  padding: 14px;\n  background: var(--surface-2);\n  border: 1px solid var(--hairline);\n  border-radius: 12px;\n}\n.storage-action .action-text {\n  display: flex;\n  flex-direction: column;\n  gap: 2px;\n  min-width: 0;\n}\n.storage-action .action-title {\n  font-size: 13px;\n  font-weight: 600;\n}\n.storage-action .action-hint {\n  font-size: 11.5px;\n  color: var(--text-faint);\n}\n.action-controls {\n  display: flex;\n  align-items: center;\n  gap: 8px;\n  margin-left: auto;\n}\n.keep-select {\n  padding: 9px 10px;\n  font-size: 12.5px;\n  font-weight: 600;\n  color: var(--text);\n  background: var(--surface);\n  border: 1px solid var(--hairline);\n  border-radius: 10px;\n  cursor: pointer;\n  outline: none;\n}\n.keep-select:disabled {\n  opacity: 0.45;\n  cursor: default;\n}\n.keep-select option {\n  background: var(--surface);\n  color: var(--text);\n}\n.cleanup-btn {\n  display: inline-flex;\n  align-items: center;\n  gap: 7px;\n  padding: 9px 15px;\n  font-size: 12.5px;\n  font-weight: 600;\n  white-space: nowrap;\n  color: #fff;\n  background: var(--accent);\n  border: none;\n  border-radius: 10px;\n  cursor: pointer;\n  transition:\n    filter 0.15s ease,\n    opacity 0.15s ease,\n    background 0.15s ease;\n}\n.cleanup-btn:hover:not(:disabled) {\n  filter: brightness(1.08);\n}\n.cleanup-btn:disabled {\n  opacity: 0.45;\n  cursor: default;\n}\n.cleanup-btn.danger {\n  background: #f0584f;\n}\n.cleanup-btn mat-icon {\n  font-size: 17px;\n  width: 17px;\n  height: 17px;\n}\n.cleanup-note {\n  display: flex;\n  align-items: center;\n  gap: 8px;\n  margin-top: -6px;\n  padding: 9px 12px;\n  font-size: 12.5px;\n  border-radius: 10px;\n  background: var(--accent-soft);\n  color: var(--accent);\n}\n.cleanup-note mat-icon {\n  font-size: 17px;\n  width: 17px;\n  height: 17px;\n}\n.cleanup-note.err {\n  background: rgba(240, 88, 79, 0.14);\n  color: #f0584f;\n}\n.storage-log {\n  display: flex;\n  flex-direction: column;\n  gap: 8px;\n}\n.log-head {\n  display: inline-flex;\n  align-items: center;\n  gap: 7px;\n  font-size: 12px;\n  font-weight: 600;\n  letter-spacing: 0.03em;\n  color: var(--text-dim);\n}\n.log-head mat-icon {\n  font-size: 16px;\n  width: 16px;\n  height: 16px;\n}\n.log-empty {\n  padding: 16px;\n  text-align: center;\n  font-size: 12px;\n  color: var(--text-faint);\n  background: var(--surface-2);\n  border: 1px dashed var(--hairline);\n  border-radius: 10px;\n}\n.log-list {\n  list-style: none;\n  margin: 0;\n  padding: 0;\n  display: flex;\n  flex-direction: column;\n  max-height: 184px;\n  overflow: auto;\n  border: 1px solid var(--hairline);\n  border-radius: 10px;\n}\n.log-item {\n  display: flex;\n  align-items: center;\n  gap: 10px;\n  padding: 9px 12px;\n  font-size: 12.5px;\n}\n.log-item:not(:last-child) {\n  border-bottom: 1px solid var(--hairline);\n}\n.log-item .log-trigger {\n  flex-shrink: 0;\n  padding: 2px 8px;\n  font-size: 10px;\n  font-weight: 700;\n  letter-spacing: 0.04em;\n  text-transform: uppercase;\n  border-radius: 999px;\n  color: var(--text-dim);\n  background: rgba(255, 255, 255, 0.07);\n}\n.log-item .log-trigger.manual {\n  color: var(--accent);\n  background: var(--accent-soft);\n}\n.log-item .log-main {\n  font-weight: 600;\n  font-variant-numeric: tabular-nums;\n}\n.log-item .log-main .log-frames {\n  font-weight: 400;\n  color: var(--text-faint);\n}\n.log-item .log-time {\n  margin-left: auto;\n  flex-shrink: 0;\n  font-variant-numeric: tabular-nums;\n  color: var(--text-faint);\n}\n@media (max-width: 1100px) {\n  .camera-wall {\n    grid-template-columns: repeat(2, 1fr);\n  }\n}\n@media (max-width: 680px) {\n  .cam-header {\n    flex-wrap: wrap;\n    gap: 12px;\n  }\n  .cam-subtitle {\n    display: none;\n  }\n  .camera-wall {\n    grid-template-columns: 1fr;\n    gap: 10px;\n    padding: 10px;\n  }\n  .cam-storage-bar {\n    display: none;\n  }\n  .storage-stats {\n    grid-template-columns: repeat(2, 1fr);\n  }\n  .storage-action {\n    flex-direction: column;\n    align-items: stretch;\n  }\n  .cleanup-btn {\n    margin-left: 0;\n    justify-content: center;\n  }\n}\n/*# sourceMappingURL=camera-wall.component.css.map */\n'] }]
-  }], () => [{ type: HttpClient }, { type: TranslocoService }], null);
+`, styles: ['@charset "UTF-8";\n\n/* src/app/modules/cameras/pages/camera-wall/camera-wall.component.scss */\n:host {\n  --accent: #22c55e;\n  --accent-soft: rgba(34, 197, 94, 0.16);\n  --accent-ring: rgba(34, 197, 94, 0.55);\n  --bg: #0a0b0d;\n  --surface: #111317;\n  --surface-2: #15181d;\n  --hairline: rgba(255, 255, 255, 0.08);\n  --text: #eef1f5;\n  --text-dim: rgba(255, 255, 255, 0.55);\n  --text-faint: rgba(255, 255, 255, 0.38);\n}\n.camera-page {\n  display: flex;\n  flex-direction: column;\n  width: 100vw;\n  height: 100vh;\n  background:\n    radial-gradient(\n      1200px 600px at 80% -10%,\n      rgba(34, 197, 94, 0.06),\n      transparent 60%),\n    var(--bg);\n  color: var(--text);\n  overflow: hidden;\n}\n.cam-header {\n  display: flex;\n  align-items: center;\n  gap: 18px;\n  padding: 12px 20px;\n  background: rgba(17, 19, 23, 0.72);\n  border-bottom: 1px solid var(--hairline);\n  backdrop-filter: blur(12px);\n}\n.cam-brand {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  min-width: 0;\n}\n.cam-brand-icon {\n  display: grid;\n  place-items: center;\n  width: 38px;\n  height: 38px;\n  border-radius: 11px;\n  color: var(--accent);\n  background: var(--accent-soft);\n  box-shadow: inset 0 0 0 1px var(--accent-ring);\n}\n.cam-brand-icon mat-icon {\n  font-size: 20px;\n  width: 20px;\n  height: 20px;\n}\n.cam-brand-text {\n  display: flex;\n  flex-direction: column;\n  line-height: 1.25;\n  min-width: 0;\n}\n.cam-title {\n  font-size: 15px;\n  font-weight: 700;\n  letter-spacing: 0.01em;\n}\n.cam-subtitle {\n  font-size: 11.5px;\n  color: var(--text-faint);\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n.cam-header-right {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  margin-left: auto;\n}\n.cam-clock {\n  display: inline-flex;\n  align-items: center;\n  gap: 6px;\n  padding: 6px 12px;\n  font-size: 13px;\n  font-weight: 600;\n  font-variant-numeric: tabular-nums;\n  color: var(--text);\n  background: rgba(255, 255, 255, 0.05);\n  border: 1px solid var(--hairline);\n  border-radius: 999px;\n}\n.cam-clock mat-icon {\n  font-size: 16px;\n  width: 16px;\n  height: 16px;\n  color: var(--text-dim);\n}\n.pc-bar {\n  display: flex;\n  align-items: center;\n  gap: 8px;\n  flex-wrap: wrap;\n}\n.pc-bar-label {\n  display: flex;\n  align-items: center;\n  color: var(--text-faint);\n}\n.pc-bar-label mat-icon {\n  font-size: 18px;\n  width: 18px;\n  height: 18px;\n}\n.pc-muted {\n  color: var(--text-faint);\n  font-size: 12px;\n}\n.pc-chip {\n  display: inline-flex;\n  align-items: center;\n  gap: 6px;\n  padding: 5px 13px;\n  font-size: 12px;\n  font-weight: 600;\n  letter-spacing: 0.03em;\n  color: rgba(255, 255, 255, 0.82);\n  background: rgba(255, 255, 255, 0.05);\n  border: 1px solid var(--hairline);\n  border-radius: 999px;\n  cursor: pointer;\n  transition:\n    background 0.15s ease,\n    border-color 0.15s ease,\n    transform 0.1s ease;\n}\n.pc-chip:hover {\n  background: rgba(255, 255, 255, 0.1);\n}\n.pc-chip:active {\n  transform: translateY(1px);\n}\n.pc-chip.active {\n  background: var(--accent-soft);\n  border-color: var(--accent-ring);\n  color: #fff;\n}\n.pc-chip-count {\n  font-size: 10px;\n  padding: 1px 6px;\n  border-radius: 999px;\n  background: rgba(255, 255, 255, 0.08);\n  color: rgba(255, 255, 255, 0.6);\n}\n.pc-refresh {\n  display: grid;\n  place-items: center;\n  width: 34px;\n  height: 34px;\n  background: rgba(255, 255, 255, 0.05);\n  border: 1px solid var(--hairline);\n  border-radius: 10px;\n  color: var(--text-dim);\n  cursor: pointer;\n  transition: color 0.15s ease, background 0.15s ease;\n}\n.pc-refresh:hover {\n  color: #fff;\n  background: rgba(255, 255, 255, 0.1);\n}\n.pc-refresh:active mat-icon {\n  transform: rotate(180deg);\n}\n.pc-refresh mat-icon {\n  font-size: 20px;\n  width: 20px;\n  height: 20px;\n  transition: transform 0.3s ease;\n}\n.cam-export-btn {\n  display: grid;\n  place-items: center;\n  width: 34px;\n  height: 34px;\n  background: rgba(255, 255, 255, 0.05);\n  border: 1px solid var(--hairline);\n  border-radius: 10px;\n  color: var(--text-dim);\n  cursor: pointer;\n  transition: color 0.15s ease, background 0.15s ease;\n}\n.cam-export-btn:hover:not(:disabled) {\n  color: #fff;\n  background: rgba(255, 255, 255, 0.1);\n}\n.cam-export-btn:disabled {\n  cursor: default;\n  opacity: 0.7;\n}\n.cam-export-btn mat-icon {\n  font-size: 20px;\n  width: 20px;\n  height: 20px;\n}\n.cam-export-btn:disabled mat-icon,\n.storage-icon-btn:disabled mat-icon {\n  animation: cam-spin 0.9s linear infinite;\n}\n@keyframes cam-spin {\n  to {\n    transform: rotate(360deg);\n  }\n}\n.camera-wall {\n  flex: 1;\n  min-height: 0;\n  display: grid;\n  grid-template-columns: repeat(3, 1fr);\n  grid-auto-rows: min-content;\n  align-content: start;\n  gap: 14px;\n  padding: 16px;\n  overflow: auto;\n}\n.wall-empty {\n  grid-column: 1/-1;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  color: var(--text-faint);\n  font-size: 13px;\n}\n.camera-wall.live-mode {\n  grid-auto-rows: 1fr;\n  align-content: stretch;\n}\n.live-cell {\n  position: relative;\n  min-height: 0;\n  border-radius: 14px;\n  background: var(--surface);\n  border: 1px solid var(--hairline);\n  overflow: hidden;\n  transition: border-color 0.18s ease;\n}\n.live-cell.is-live {\n  border-color: rgba(34, 197, 94, 0.32);\n}\n.live-cell img {\n  position: absolute;\n  inset: 0;\n  width: 100%;\n  height: 100%;\n  object-fit: cover;\n  display: block;\n}\n.live-cell .no-signal {\n  position: absolute;\n  inset: 0;\n}\n.cell-scrim {\n  position: absolute;\n  inset: 0;\n  background:\n    linear-gradient(\n      to top,\n      rgba(0, 0, 0, 0.6) 0%,\n      rgba(0, 0, 0, 0) 38%);\n  pointer-events: none;\n}\n.cell-label {\n  position: absolute;\n  bottom: 10px;\n  left: 12px;\n  right: 12px;\n  display: flex;\n  align-items: baseline;\n  justify-content: space-between;\n  gap: 8px;\n  pointer-events: none;\n}\n.cell-label .cell-label-text {\n  display: flex;\n  flex-direction: column;\n  gap: 1px;\n  min-width: 0;\n}\n.cell-label .cell-name {\n  font-size: 12px;\n  font-weight: 700;\n  letter-spacing: 0.05em;\n  color: #fff;\n  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);\n}\n.cell-label .cell-brand {\n  font-size: 10px;\n  color: rgba(255, 255, 255, 0.65);\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);\n}\n.cell-label .cell-time {\n  font-size: 11px;\n  font-variant-numeric: tabular-nums;\n  color: rgba(255, 255, 255, 0.72);\n  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);\n}\n.camera-card {\n  display: flex;\n  flex-direction: column;\n  gap: 11px;\n  padding: 14px;\n  border-radius: 16px;\n  background: var(--surface);\n  border: 1px solid var(--hairline);\n  cursor: pointer;\n  transition:\n    transform 0.18s ease,\n    border-color 0.18s ease,\n    box-shadow 0.18s ease;\n}\n.camera-card:hover {\n  transform: translateY(-2px);\n  border-color: rgba(255, 255, 255, 0.18);\n  box-shadow: 0 14px 34px -16px rgba(0, 0, 0, 0.8);\n}\n.camera-card:hover .media-main img {\n  transform: scale(1.04);\n}\n.camera-card.is-live {\n  border-color: rgba(34, 197, 94, 0.3);\n}\n.card-head {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  gap: 10px;\n}\n.card-head-text {\n  display: flex;\n  flex-direction: column;\n  line-height: 1.25;\n  min-width: 0;\n}\n.card-title {\n  font-size: 15px;\n  font-weight: 700;\n  letter-spacing: 0.01em;\n  color: var(--text);\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n.card-brand {\n  font-size: 11.5px;\n  color: var(--text-faint);\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n.card-head-actions {\n  display: flex;\n  align-items: center;\n  gap: 8px;\n  flex-shrink: 0;\n}\n.card-dl-btn {\n  display: grid;\n  place-items: center;\n  width: 28px;\n  height: 28px;\n  background: rgba(255, 255, 255, 0.05);\n  border: 1px solid var(--hairline);\n  border-radius: 8px;\n  color: var(--text-dim);\n  cursor: pointer;\n  transition: color 0.15s ease, background 0.15s ease;\n}\n.card-dl-btn:hover:not(:disabled) {\n  color: #fff;\n  background: rgba(255, 255, 255, 0.12);\n}\n.card-dl-btn:disabled {\n  cursor: default;\n  opacity: 0.7;\n}\n.card-dl-btn mat-icon {\n  font-size: 17px;\n  width: 17px;\n  height: 17px;\n}\n.card-dl-btn:disabled mat-icon {\n  animation: cam-spin 0.9s linear infinite;\n}\n.card-age {\n  flex-shrink: 0;\n  padding: 2px 9px;\n  font-size: 10.5px;\n  font-weight: 700;\n  letter-spacing: 0.03em;\n  border-radius: 999px;\n  color: #f0a3a0;\n  background: rgba(240, 88, 79, 0.14);\n  font-variant-numeric: tabular-nums;\n}\n.card-age.live {\n  color: var(--accent);\n  background: var(--accent-soft);\n}\n.card-media {\n  display: flex;\n  gap: 8px;\n}\n.media-main {\n  position: relative;\n  flex: 1;\n  min-width: 0;\n  aspect-ratio: 16/10;\n  border-radius: 11px;\n  overflow: hidden;\n  background: #000;\n}\n.media-main img {\n  width: 100%;\n  height: 100%;\n  object-fit: cover;\n  display: block;\n  transition: transform 0.4s ease;\n}\n.media-thumbs {\n  display: flex;\n  flex-direction: column;\n  gap: 8px;\n  width: 64px;\n  flex-shrink: 0;\n}\n.media-thumbs img {\n  width: 100%;\n  flex: 1;\n  min-height: 0;\n  object-fit: cover;\n  display: block;\n  border-radius: 9px;\n  border: 1px solid var(--hairline);\n}\n.media-live {\n  position: absolute;\n  top: 8px;\n  left: 8px;\n  display: inline-flex;\n  align-items: center;\n  gap: 6px;\n  padding: 3px 9px 3px 8px;\n  font-size: 10px;\n  font-weight: 800;\n  letter-spacing: 0.08em;\n  color: #fff;\n  background: rgba(220, 38, 38, 0.92);\n  border-radius: 999px;\n  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);\n}\n.media-live-dot {\n  width: 7px;\n  height: 7px;\n  border-radius: 50%;\n  background: #fff;\n  animation: live-pulse 1.4s ease-in-out infinite;\n}\n@keyframes live-pulse {\n  0%, 100% {\n    opacity: 1;\n    transform: scale(1);\n  }\n  50% {\n    opacity: 0.35;\n    transform: scale(0.7);\n  }\n}\n.media-stamp {\n  position: absolute;\n  bottom: 8px;\n  right: 8px;\n  padding: 2px 8px;\n  font-size: 11px;\n  font-weight: 600;\n  font-variant-numeric: tabular-nums;\n  color: #fff;\n  background: rgba(10, 11, 13, 0.72);\n  border-radius: 7px;\n  backdrop-filter: blur(3px);\n}\n.no-signal {\n  width: 100%;\n  height: 100%;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n  gap: 6px;\n  color: #3a3f47;\n  background:\n    repeating-linear-gradient(\n      45deg,\n      #0e1013,\n      #0e1013 12px,\n      #121519 12px,\n      #121519 24px);\n}\n.no-signal mat-icon {\n  font-size: 32px;\n  width: 32px;\n  height: 32px;\n}\n.no-signal span {\n  font-size: 10px;\n  letter-spacing: 0.05em;\n  text-transform: uppercase;\n}\n.card-model {\n  font-size: 12px;\n  color: var(--text-dim);\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n.card-ids {\n  display: flex;\n  align-items: center;\n  gap: 8px;\n  font-size: 11px;\n  font-variant-numeric: tabular-nums;\n}\n.card-ids .id-ip {\n  padding: 2px 7px;\n  border-radius: 6px;\n  font-weight: 600;\n  color: #e0b46b;\n  background: rgba(224, 161, 6, 0.12);\n}\n.card-stats {\n  display: grid;\n  grid-template-columns: repeat(3, 1fr);\n  gap: 8px;\n  padding: 10px 0 2px;\n  border-top: 1px solid var(--hairline);\n}\n.card-stats .stat {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  gap: 2px;\n}\n.card-stats .stat-val {\n  font-size: 17px;\n  font-weight: 700;\n  font-variant-numeric: tabular-nums;\n  color: var(--text);\n}\n.card-stats .stat-val.accent {\n  color: var(--accent);\n}\n.card-stats .stat-key {\n  font-size: 9.5px;\n  letter-spacing: 0.05em;\n  text-transform: uppercase;\n  color: var(--text-faint);\n}\n.card-foot {\n  display: flex;\n  gap: 8px;\n  flex-wrap: wrap;\n}\n.det-badge {\n  display: inline-flex;\n  align-items: center;\n  gap: 5px;\n  padding: 3px 10px;\n  font-size: 11px;\n  font-weight: 700;\n  font-variant-numeric: tabular-nums;\n  color: var(--text-faint);\n  background: rgba(255, 255, 255, 0.04);\n  border: 1px solid var(--hairline);\n  border-radius: 999px;\n}\n.det-badge mat-icon {\n  font-size: 14px;\n  width: 14px;\n  height: 14px;\n}\n.det-badge.tier-high {\n  color: var(--accent);\n  background: var(--accent-soft);\n  border-color: var(--accent-ring);\n}\n.det-badge.tier-mid {\n  color: #e0a106;\n  background: rgba(224, 161, 6, 0.14);\n  border-color: rgba(224, 161, 6, 0.4);\n}\n.det-badge.tier-low {\n  color: #6ea8e0;\n  background: rgba(110, 168, 224, 0.14);\n  border-color: rgba(110, 168, 224, 0.4);\n}\n.det-badge.tier-neutral {\n  color: rgba(255, 255, 255, 0.82);\n  background: rgba(255, 255, 255, 0.06);\n  border-color: var(--hairline);\n}\n.cell-detections {\n  position: absolute;\n  top: 10px;\n  right: 10px;\n  display: flex;\n  flex-direction: column;\n  align-items: flex-end;\n  gap: 5px;\n}\n.stage-frame {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  gap: 10px;\n}\n.stage-detections {\n  display: flex;\n  flex-wrap: wrap;\n  justify-content: center;\n  gap: 6px;\n}\n.archive-overlay {\n  position: fixed;\n  inset: 0;\n  z-index: 1000;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  padding: 24px;\n  background: rgba(4, 5, 7, 0.78);\n  backdrop-filter: blur(6px);\n  animation: overlay-in 0.16s ease;\n}\n@keyframes overlay-in {\n  from {\n    opacity: 0;\n  }\n  to {\n    opacity: 1;\n  }\n}\n.archive-panel {\n  display: flex;\n  flex-direction: column;\n  width: min(92vw, 980px);\n  max-height: 92vh;\n  background: var(--surface);\n  border: 1px solid var(--hairline);\n  border-radius: 16px;\n  overflow: hidden;\n  color: var(--text);\n  box-shadow: 0 30px 80px -24px rgba(0, 0, 0, 0.85);\n  animation: panel-in 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);\n}\n@keyframes panel-in {\n  from {\n    opacity: 0;\n    transform: translateY(10px) scale(0.985);\n  }\n  to {\n    opacity: 1;\n    transform: translateY(0) scale(1);\n  }\n}\n.archive-header {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  padding: 14px 18px;\n  border-bottom: 1px solid var(--hairline);\n}\n.archive-header .archive-title {\n  display: inline-flex;\n  align-items: center;\n  gap: 9px;\n  font-size: 14px;\n  font-weight: 600;\n  letter-spacing: 0.03em;\n}\n.archive-header .archive-title mat-icon {\n  font-size: 18px;\n  width: 18px;\n  height: 18px;\n  color: var(--accent);\n}\n.archive-header .archive-title .archive-brand {\n  font-size: 12px;\n  font-weight: 400;\n  letter-spacing: 0;\n  color: var(--text-faint);\n}\n.archive-header .archive-sep {\n  color: var(--text-faint);\n}\n.archive-header .archive-close {\n  display: grid;\n  place-items: center;\n  width: 32px;\n  height: 32px;\n  background: rgba(255, 255, 255, 0.05);\n  border: 1px solid var(--hairline);\n  border-radius: 9px;\n  color: var(--text-dim);\n  cursor: pointer;\n  transition: color 0.15s ease, background 0.15s ease;\n}\n.archive-header .archive-close:hover {\n  color: #fff;\n  background: rgba(255, 255, 255, 0.1);\n}\n.archive-days {\n  display: flex;\n  flex-wrap: wrap;\n  gap: 6px;\n  padding: 12px 18px;\n  border-bottom: 1px solid var(--hairline);\n  background: var(--surface-2);\n}\n.archive-day-chip {\n  display: inline-flex;\n  align-items: center;\n  gap: 6px;\n  padding: 5px 11px;\n  font-size: 12px;\n  color: rgba(255, 255, 255, 0.82);\n  background: rgba(255, 255, 255, 0.05);\n  border: 1px solid var(--hairline);\n  border-radius: 999px;\n  cursor: pointer;\n  transition: background 0.15s ease, border-color 0.15s ease;\n}\n.archive-day-chip:hover {\n  background: rgba(255, 255, 255, 0.1);\n}\n.archive-day-chip.active {\n  background: var(--accent-soft);\n  border-color: var(--accent-ring);\n  color: #fff;\n}\n.archive-day-count {\n  font-size: 10px;\n  padding: 1px 6px;\n  border-radius: 999px;\n  background: rgba(255, 255, 255, 0.08);\n  color: rgba(255, 255, 255, 0.6);\n}\n.archive-stage {\n  flex: 1;\n  min-height: 0;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  padding: 14px;\n  background:\n    radial-gradient(\n      60% 60% at 50% 40%,\n      rgba(255, 255, 255, 0.03),\n      transparent),\n    #000;\n}\n.archive-stage img {\n  max-width: 100%;\n  max-height: 62vh;\n  object-fit: contain;\n  display: block;\n  border-radius: 8px;\n}\n.archive-muted {\n  color: var(--text-faint);\n  font-size: 13px;\n  padding: 32px;\n}\n.archive-footer {\n  border-top: 1px solid var(--hairline);\n  background: var(--surface-2);\n}\n.archive-controls {\n  display: flex;\n  align-items: center;\n  gap: 12px;\n  padding: 14px 18px 8px;\n}\n.archive-controls button {\n  display: grid;\n  place-items: center;\n  width: 34px;\n  height: 34px;\n  background: rgba(255, 255, 255, 0.06);\n  border: 1px solid var(--hairline);\n  border-radius: 9px;\n  color: var(--text);\n  cursor: pointer;\n  transition: background 0.15s ease;\n}\n.archive-controls button:hover:not(:disabled) {\n  background: rgba(255, 255, 255, 0.14);\n}\n.archive-controls button:disabled {\n  opacity: 0.3;\n  cursor: default;\n}\n.archive-controls input[type=range] {\n  flex: 1;\n  height: 4px;\n  accent-color: var(--accent);\n  cursor: pointer;\n}\n.archive-meta {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  padding: 4px 20px 16px;\n  font-size: 12px;\n  color: var(--text-dim);\n  font-variant-numeric: tabular-nums;\n}\n.archive-meta .archive-count {\n  padding: 2px 9px;\n  border-radius: 999px;\n  background: rgba(255, 255, 255, 0.06);\n}\n.archive-meta .archive-stamp {\n  color: var(--text);\n  font-weight: 600;\n}\n.view-toggle {\n  display: inline-flex;\n  gap: 3px;\n  padding: 3px;\n  background: rgba(255, 255, 255, 0.05);\n  border: 1px solid var(--hairline);\n  border-radius: 10px;\n}\n.view-toggle button {\n  display: grid;\n  place-items: center;\n  width: 32px;\n  height: 28px;\n  border: none;\n  border-radius: 7px;\n  background: transparent;\n  color: var(--text-faint);\n  cursor: pointer;\n  transition: color 0.15s ease, background 0.15s ease;\n}\n.view-toggle button:hover {\n  color: #fff;\n}\n.view-toggle button.active {\n  color: #fff;\n  background: rgba(255, 255, 255, 0.1);\n}\n.view-toggle button mat-icon {\n  font-size: 18px;\n  width: 18px;\n  height: 18px;\n}\n.pc-toggle {\n  display: grid;\n  place-items: center;\n  width: 34px;\n  height: 34px;\n  background: rgba(255, 255, 255, 0.05);\n  border: 1px solid var(--hairline);\n  border-radius: 10px;\n  color: var(--text-faint);\n  cursor: pointer;\n  transition:\n    color 0.15s ease,\n    background 0.15s ease,\n    border-color 0.15s ease;\n}\n.pc-toggle:hover {\n  color: #fff;\n  background: rgba(255, 255, 255, 0.1);\n}\n.pc-toggle.on {\n  color: var(--accent);\n  border-color: var(--accent-ring);\n  background: var(--accent-soft);\n}\n.pc-toggle mat-icon {\n  font-size: 20px;\n  width: 20px;\n  height: 20px;\n}\n.cam-storage-chip {\n  display: inline-flex;\n  align-items: center;\n  gap: 8px;\n  padding: 5px 12px;\n  background: rgba(255, 255, 255, 0.05);\n  border: 1px solid var(--hairline);\n  border-radius: 999px;\n  color: var(--text);\n  cursor: pointer;\n  transition: background 0.15s ease, border-color 0.15s ease;\n}\n.cam-storage-chip:hover {\n  background: rgba(255, 255, 255, 0.1);\n}\n.cam-storage-chip.warn {\n  border-color: rgba(224, 161, 6, 0.5);\n}\n.cam-storage-chip.crit {\n  border-color: rgba(240, 88, 79, 0.55);\n}\n.cam-storage-chip mat-icon {\n  font-size: 17px;\n  width: 17px;\n  height: 17px;\n  color: var(--text-dim);\n}\n.cam-storage-pct {\n  font-size: 12px;\n  font-weight: 700;\n  font-variant-numeric: tabular-nums;\n}\n.cam-storage-bar {\n  position: relative;\n  width: 46px;\n  height: 5px;\n  border-radius: 999px;\n  background: rgba(255, 255, 255, 0.12);\n  overflow: hidden;\n}\n.cam-storage-bar i {\n  position: absolute;\n  inset: 0 auto 0 0;\n  display: block;\n  border-radius: 999px;\n  transition: width 0.4s ease;\n}\n.storage-overlay {\n  position: fixed;\n  inset: 0;\n  z-index: 1000;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  padding: 24px;\n  background: rgba(4, 5, 7, 0.78);\n  backdrop-filter: blur(6px);\n  animation: overlay-in 0.16s ease;\n}\n.storage-panel {\n  display: flex;\n  flex-direction: column;\n  width: min(94vw, 560px);\n  max-height: 92vh;\n  background: var(--surface);\n  border: 1px solid var(--hairline);\n  border-radius: 16px;\n  overflow: hidden;\n  color: var(--text);\n  box-shadow: 0 30px 80px -24px rgba(0, 0, 0, 0.85);\n  animation: panel-in 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);\n}\n.storage-header {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  padding: 14px 18px;\n  border-bottom: 1px solid var(--hairline);\n}\n.storage-header .storage-title {\n  display: inline-flex;\n  align-items: center;\n  gap: 9px;\n  font-size: 14px;\n  font-weight: 600;\n  letter-spacing: 0.03em;\n}\n.storage-header .storage-title mat-icon {\n  font-size: 18px;\n  width: 18px;\n  height: 18px;\n  color: var(--accent);\n}\n.storage-header-actions {\n  display: flex;\n  gap: 8px;\n}\n.storage-icon-btn {\n  display: grid;\n  place-items: center;\n  width: 32px;\n  height: 32px;\n  background: rgba(255, 255, 255, 0.05);\n  border: 1px solid var(--hairline);\n  border-radius: 9px;\n  color: var(--text-dim);\n  cursor: pointer;\n  transition: color 0.15s ease, background 0.15s ease;\n}\n.storage-icon-btn:hover {\n  color: #fff;\n  background: rgba(255, 255, 255, 0.1);\n}\n.storage-icon-btn.on {\n  color: var(--accent);\n  border-color: var(--accent-ring);\n  background: var(--accent-soft);\n}\n.storage-icon-btn mat-icon {\n  font-size: 18px;\n  width: 18px;\n  height: 18px;\n}\n.storage-body {\n  padding: 18px;\n  overflow: auto;\n  display: flex;\n  flex-direction: column;\n  gap: 16px;\n}\n.storage-loading {\n  padding: 48px;\n  text-align: center;\n  color: var(--text-faint);\n  font-size: 13px;\n}\n.storage-gauge-row {\n  display: flex;\n  align-items: center;\n  gap: 22px;\n}\n.storage-gauge {\n  position: relative;\n  width: 124px;\n  height: 124px;\n  flex-shrink: 0;\n}\n.storage-gauge svg {\n  width: 100%;\n  height: 100%;\n  transform: rotate(-90deg);\n}\n.storage-gauge .gauge-track {\n  fill: none;\n  stroke: rgba(255, 255, 255, 0.08);\n  stroke-width: 10;\n}\n.storage-gauge .gauge-fill {\n  fill: none;\n  stroke-width: 10;\n  stroke-linecap: round;\n  transition: stroke-dashoffset 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), stroke 0.3s ease;\n}\n.gauge-center {\n  position: absolute;\n  inset: 0;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n}\n.gauge-center .gauge-pct {\n  font-size: 28px;\n  font-weight: 700;\n  font-variant-numeric: tabular-nums;\n  line-height: 1;\n}\n.gauge-center .gauge-pct small {\n  font-size: 14px;\n  font-weight: 600;\n  color: var(--text-dim);\n}\n.gauge-center .gauge-cap {\n  margin-top: 3px;\n  font-size: 10px;\n  letter-spacing: 0.08em;\n  text-transform: uppercase;\n  color: var(--text-faint);\n}\n.storage-legend {\n  flex: 1;\n  min-width: 0;\n  display: flex;\n  flex-direction: column;\n  gap: 8px;\n}\n.legend-row {\n  display: flex;\n  align-items: center;\n  gap: 9px;\n  font-size: 13px;\n}\n.legend-row .legend-dot {\n  width: 9px;\n  height: 9px;\n  border-radius: 3px;\n  background: rgba(255, 255, 255, 0.18);\n  flex-shrink: 0;\n}\n.legend-row .legend-label {\n  color: var(--text-dim);\n}\n.legend-row .legend-val {\n  margin-left: auto;\n  font-weight: 600;\n  font-variant-numeric: tabular-nums;\n}\n.legend-row.total {\n  padding-top: 8px;\n  border-top: 1px solid var(--hairline);\n}\n.legend-row.total .legend-label {\n  color: var(--text-faint);\n}\n.storage-cleaning {\n  display: inline-flex;\n  align-items: center;\n  gap: 6px;\n  margin-top: 2px;\n  font-size: 11.5px;\n  color: var(--accent);\n}\n.storage-cleaning mat-icon {\n  font-size: 15px;\n  width: 15px;\n  height: 15px;\n  animation: spin 1.1s linear infinite;\n}\n@keyframes spin {\n  to {\n    transform: rotate(360deg);\n  }\n}\n.storage-stats {\n  display: grid;\n  grid-template-columns: repeat(4, 1fr);\n  gap: 8px;\n}\n.stat-tile {\n  display: flex;\n  flex-direction: column;\n  gap: 3px;\n  padding: 11px 10px;\n  background: var(--surface-2);\n  border: 1px solid var(--hairline);\n  border-radius: 11px;\n  text-align: center;\n}\n.stat-tile .stat-val {\n  font-size: 16px;\n  font-weight: 700;\n  font-variant-numeric: tabular-nums;\n}\n.stat-tile .stat-val small {\n  font-size: 11px;\n  font-weight: 600;\n  color: var(--text-dim);\n  margin-left: 1px;\n}\n.stat-tile .stat-val.small {\n  font-size: 13px;\n}\n.stat-tile .stat-key {\n  font-size: 10px;\n  letter-spacing: 0.04em;\n  text-transform: uppercase;\n  color: var(--text-faint);\n}\n.storage-action {\n  display: flex;\n  align-items: center;\n  gap: 14px;\n  padding: 14px;\n  background: var(--surface-2);\n  border: 1px solid var(--hairline);\n  border-radius: 12px;\n}\n.storage-action .action-text {\n  display: flex;\n  flex-direction: column;\n  gap: 2px;\n  min-width: 0;\n}\n.storage-action .action-title {\n  font-size: 13px;\n  font-weight: 600;\n}\n.storage-action .action-hint {\n  font-size: 11.5px;\n  color: var(--text-faint);\n}\n.action-controls {\n  display: flex;\n  align-items: center;\n  gap: 8px;\n  margin-left: auto;\n}\n.keep-select {\n  padding: 9px 10px;\n  font-size: 12.5px;\n  font-weight: 600;\n  color: var(--text);\n  background: var(--surface);\n  border: 1px solid var(--hairline);\n  border-radius: 10px;\n  cursor: pointer;\n  outline: none;\n}\n.keep-select:disabled {\n  opacity: 0.45;\n  cursor: default;\n}\n.keep-select option {\n  background: var(--surface);\n  color: var(--text);\n}\n.cleanup-btn {\n  display: inline-flex;\n  align-items: center;\n  gap: 7px;\n  padding: 9px 15px;\n  font-size: 12.5px;\n  font-weight: 600;\n  white-space: nowrap;\n  color: #fff;\n  background: var(--accent);\n  border: none;\n  border-radius: 10px;\n  cursor: pointer;\n  transition:\n    filter 0.15s ease,\n    opacity 0.15s ease,\n    background 0.15s ease;\n}\n.cleanup-btn:hover:not(:disabled) {\n  filter: brightness(1.08);\n}\n.cleanup-btn:disabled {\n  opacity: 0.45;\n  cursor: default;\n}\n.cleanup-btn.danger {\n  background: #f0584f;\n}\n.cleanup-btn mat-icon {\n  font-size: 17px;\n  width: 17px;\n  height: 17px;\n}\n.cleanup-note {\n  display: flex;\n  align-items: center;\n  gap: 8px;\n  margin-top: -6px;\n  padding: 9px 12px;\n  font-size: 12.5px;\n  border-radius: 10px;\n  background: var(--accent-soft);\n  color: var(--accent);\n}\n.cleanup-note mat-icon {\n  font-size: 17px;\n  width: 17px;\n  height: 17px;\n}\n.cleanup-note.err {\n  background: rgba(240, 88, 79, 0.14);\n  color: #f0584f;\n}\n.storage-log {\n  display: flex;\n  flex-direction: column;\n  gap: 8px;\n}\n.log-head {\n  display: inline-flex;\n  align-items: center;\n  gap: 7px;\n  font-size: 12px;\n  font-weight: 600;\n  letter-spacing: 0.03em;\n  color: var(--text-dim);\n}\n.log-head mat-icon {\n  font-size: 16px;\n  width: 16px;\n  height: 16px;\n}\n.log-empty {\n  padding: 16px;\n  text-align: center;\n  font-size: 12px;\n  color: var(--text-faint);\n  background: var(--surface-2);\n  border: 1px dashed var(--hairline);\n  border-radius: 10px;\n}\n.log-list {\n  list-style: none;\n  margin: 0;\n  padding: 0;\n  display: flex;\n  flex-direction: column;\n  max-height: 184px;\n  overflow: auto;\n  border: 1px solid var(--hairline);\n  border-radius: 10px;\n}\n.log-item {\n  display: flex;\n  align-items: center;\n  gap: 10px;\n  padding: 9px 12px;\n  font-size: 12.5px;\n}\n.log-item:not(:last-child) {\n  border-bottom: 1px solid var(--hairline);\n}\n.log-item .log-trigger {\n  flex-shrink: 0;\n  padding: 2px 8px;\n  font-size: 10px;\n  font-weight: 700;\n  letter-spacing: 0.04em;\n  text-transform: uppercase;\n  border-radius: 999px;\n  color: var(--text-dim);\n  background: rgba(255, 255, 255, 0.07);\n}\n.log-item .log-trigger.manual {\n  color: var(--accent);\n  background: var(--accent-soft);\n}\n.log-item .log-main {\n  font-weight: 600;\n  font-variant-numeric: tabular-nums;\n}\n.log-item .log-main .log-frames {\n  font-weight: 400;\n  color: var(--text-faint);\n}\n.log-item .log-time {\n  margin-left: auto;\n  flex-shrink: 0;\n  font-variant-numeric: tabular-nums;\n  color: var(--text-faint);\n}\n@media (max-width: 1100px) {\n  .camera-wall {\n    grid-template-columns: repeat(2, 1fr);\n  }\n}\n@media (max-width: 680px) {\n  .cam-header {\n    flex-wrap: wrap;\n    gap: 12px;\n  }\n  .cam-subtitle {\n    display: none;\n  }\n  .camera-wall {\n    grid-template-columns: 1fr;\n    gap: 10px;\n    padding: 10px;\n  }\n  .cam-storage-bar {\n    display: none;\n  }\n  .storage-stats {\n    grid-template-columns: repeat(2, 1fr);\n  }\n  .storage-action {\n    flex-direction: column;\n    align-items: stretch;\n  }\n  .cleanup-btn {\n    margin-left: 0;\n    justify-content: center;\n  }\n}\n/*# sourceMappingURL=camera-wall.component.css.map */\n'] }]
+  }], () => [{ type: HttpClient }, { type: TranslocoService }, { type: AuthService }], null);
 })();
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(CameraWallComponent, { className: "CameraWallComponent", filePath: "src/app/modules/cameras/pages/camera-wall/camera-wall.component.ts", lineNumber: 111 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(CameraWallComponent, { className: "CameraWallComponent", filePath: "src/app/modules/cameras/pages/camera-wall/camera-wall.component.ts", lineNumber: 121 });
 })();
 
 // src/app/app.routing.module.ts

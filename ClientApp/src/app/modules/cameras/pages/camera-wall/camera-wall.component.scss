@@ -972,6 +972,13 @@
   transition: color 0.15s ease, background 0.15s ease;
 
   &:hover { color: #fff; background: rgba(255, 255, 255, 0.1); }
+
+  &.on {
+    color: var(--accent);
+    border-color: var(--accent-ring);
+    background: var(--accent-soft);
+  }
+
   mat-icon { font-size: 18px; width: 18px; height: 18px; }
 }
 

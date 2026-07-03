@@ -55,6 +55,8 @@
     "live": "LIVE",
     "live_on": "Auto-refresh on",
     "live_off": "Auto-refresh off",
+    "boxes_on": "Detection boxes on",
+    "boxes_off": "Original (no boxes)",
     "open_archive": "Open archive",
     "export": {
       "all": "Export all cameras' frames (ZIP)",

@@ -39,6 +39,7 @@ interface FrameMetrics {
 
 interface CameraFrame extends FrameMetrics {
   imageUrl: string;
+  rawImageUrl: string | null; // original without detection boxes, null when the agent didn't send one
   timeUtc: string | null;
   brand: string | null;
 }
@@ -70,6 +71,7 @@ interface LiveInfo extends FrameMetrics {
   name: string | null;
   brand: string | null;
   imageUrl: string | null;
+  rawImageUrl: string | null;
   lastSeenUtc: string | null;
 }
 
@@ -78,6 +80,7 @@ interface LiveCameraState extends FrameMetrics {
   name: string | null;
   brand: string | null;
   imageUrl: string | null;
+  rawImageUrl: string | null;
   lastSeenUtc: string | null;
 }
 
@@ -98,6 +101,7 @@ interface ArchiveFrame extends FrameMetrics {
   timeUtc: string | null;
   brand: string | null;
   imageUrl: string;
+  rawImageUrl: string | null;
 }
 
 /** One badge rendered on a frame: an icon + value, tier-colored. */
@@ -123,6 +127,10 @@ export class CameraWallComponent implements OnInit, OnDestroy {
   //   'live'  → a plain auto-refreshing grid of the latest frame per camera
   viewMode: ViewMode = 'cards';
   liveCameras: LiveCameraState[] = [];
+
+  // Toggle between the annotated frame (detection boxes drawn) and the untouched original.
+  // Applies to every view; a frame with no stored original just keeps showing the annotated one.
+  showBoxes = true;
 
   // wall clock (header) + snapshot time used to decide LIVE badges
   clock = '';
@@ -200,6 +208,16 @@ export class CameraWallComponent implements OnInit, OnDestroy {
     if (this.viewMode === mode) return;
     this.viewMode = mode;
     this.loadWall();
+  }
+
+  toggleBoxes(): void {
+    this.showBoxes = !this.showBoxes;
+  }
+
+  /** Image URL to show for a frame, honouring the boxes toggle (falls back to the annotated one). */
+  frameSrc(f: { imageUrl: string | null; rawImageUrl: string | null }): string | null {
+    if (this.showBoxes) return f.imageUrl;
+    return f.rawImageUrl ?? f.imageUrl;
   }
 
   refresh(): void {
@@ -383,6 +401,7 @@ export class CameraWallComponent implements OnInit, OnDestroy {
           state.name = c.name;
           state.brand = c.brand;
           state.imageUrl = c.imageUrl;
+          state.rawImageUrl = c.rawImageUrl;
           state.lastSeenUtc = c.lastSeenUtc;
           state.peopleCount = c.peopleCount;
           state.dogCount = c.dogCount;
